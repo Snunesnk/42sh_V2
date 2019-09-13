@@ -13,7 +13,7 @@
 
 function make_test_launch
 {
-	TESTS_PATH='./tools/tests/'
+	TESTS_PATH='./tools/'
 	tests_array=(${TESTS_PATH}*.test)
 	make -j
 	for file in "${tests_array[@]}"
@@ -31,7 +31,7 @@ function make_test_launch
 
 function direct_launch
 {
-	MINISHELL_PATH='../../'
+	MINISHELL_PATH='../'
 	tests_array=(*.test)
 	make -j -C $MINISHELL_PATH
 	for file in "${tests_array[@]}"

@@ -12,15 +12,13 @@
 
 -include 21sh.mk
 
-CFLAGS += -Wall -Wextra -Werror -ansi -D_POSIX_C_SOURCE
-
 .PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME)	: $(OBJECTS)
+$(NAME): $(OBJECTS)
 	@$(MAKE) lib -j -C $(PATH_LIB)
-	@$(CC) $(CFLAGS) $^ -o $@ $(LIB)
+	@$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
 
 clean:
@@ -34,7 +32,7 @@ fclean:
 re: fclean $(NAME)
 
 test: all
-	@$(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
+	@$(TEST)
 
 -include $(DEPENDS)
 
