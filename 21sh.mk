@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    21sh.mk                                       :+:      :+:    :+:    #
+#    21sh.mk                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -44,19 +44,28 @@ SOURCES :=	main.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
-INCLUDES := -I./include/ -I./libft/include/
+PATH_LIB := ./libft/
 
-PATH_LIB = ./libft/
-
-LIB = $(PATH_LIB)libft.a
+INCLUDES := -I./include/ -I$(PATH_LIB)include/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 SH := bash
 
-TESTS_PATH := ./tools/tests/
+TESTS_PATH := ./tools/
 
 TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
-CFLAGS += -fno-builtin -O2 -flto=full
+TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
+
+LDLIBS += $(PATH_LIB)libft.a
+
+LDFLAGS += -flto=full
+
+CFLAGS += -Wall -Wextra -Werror -D_POSIX_C_SOURCE
+ifneq ($(shell uname -s),Darwin)
+	CFLAGS += -ansi
+endif
+
+CFLAGS += -fno-builtin -O2
 #CFLAGS += -g -fsanitize=address
