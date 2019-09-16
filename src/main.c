@@ -66,8 +66,10 @@ int		main(int argc, char **argv)
 	extern char	**environ;
 	char		*input;
 	char		**args;
+	int		status;
 	
 	(void)argc;
+	status = 0;
 	g_progname = argv[0];
 	if (!(environ = ft_tabcpy(environ)))
 	{
@@ -88,9 +90,10 @@ int		main(int argc, char **argv)
 		ft_memdel((void**)&input);
 		if (!args)
 			continue;
-		g_retval = synt(args);
-		if (g_retval != e_success)
+		status = synt(args);
+		if (status != e_success)
 		{
+			g_retval = status;
 			ft_tabdel(&args);
 			continue;
 		}
