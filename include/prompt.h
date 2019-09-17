@@ -15,4 +15,8 @@
 
 _Bool			prompt_display(int status);
 
+int			initialize_prompt_fd(void);
+
+extern int		g_fd_prompt;
+
 #endif
