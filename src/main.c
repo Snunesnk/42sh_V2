@@ -64,6 +64,7 @@ static int	set_minimal_env(void)
 int		main(int argc, char **argv)
 {
 	extern char	**environ;
+	extern int	g_fd_prompt;
 	char		*input;
 	char		**args;
 	int		status;
@@ -84,6 +85,11 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	set_signals(0);
+	if ((g_fd_prompt = initialize_prompt_fd()) == -1)
+	{
+		ft_tabdel(&environ);
+		return (2);
+	}
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
 		args = lexer(&input);
