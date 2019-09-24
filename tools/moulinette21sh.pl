@@ -19,6 +19,7 @@ use Term::ANSIColor;
 sub test_shell{
 
 	my $shell = $_[0];
+	my $refname_shell = $_[1];
 
 	foreach my $arg (@ARGV)
 	{
@@ -42,7 +43,7 @@ sub test_shell{
 		
 		# Test the shell
 		my $output =  `$shell < $filename 2>&1`;
-		$output =~ s/$shell//g;
+		$output =~ s/$refname_shell//g;
 
 		system("rm $filename");
 
@@ -99,11 +100,13 @@ testFile;
 my $testnb = -1;
 my $ret_value = 0;
 
-my $reference_shell = 'bash';
+my $reference_shell = 'bash --posix';
+my $refname_shell = 'bash';
 my $tested_shell = './21sh';
+my $testname_shell = '\./21sh';
 
-my $first_shell_output = test_shell($reference_shell);
-my $second_shell_output = test_shell($tested_shell);
+my $first_shell_output = test_shell($reference_shell, $refname_shell);
+my $second_shell_output = test_shell($tested_shell, $testname_shell);
 
 foreach my $arg (@ARGV)
 {
