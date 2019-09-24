@@ -32,7 +32,7 @@ static int 	check_type(char **arg)
 
 	buf = (struct stat){.st_mode = 0};
 	pathname = *arg;
-	if (reserved_keyword(*arg))
+	if (prior_builtin(*arg))
 	{
 		ft_memdel((void**)arg);
 		return (e_command_not_found);

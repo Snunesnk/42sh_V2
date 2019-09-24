@@ -25,19 +25,21 @@ static const t_builtins	g_builtins[] =
 	{ "unsetenv", &cmd_unsetenv},
 	{ "pwd", &cmd_pwd},
 	{ "cd", &cmd_cd},
+	{ "true", &cmd_true},
+	{ "false", &cmd_false},
 	{ "\0", NULL}
 };
 
-_Bool	reserved_keyword(char *str)
+_Bool	prior_builtin(char *str)
 {
-	struct s_reserved_keyword	keyword_list[] =
+	struct s_prior_builtin	pbuiltin_list[] =
 	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"\0"} };
 	int	i;
 
 	i = 0;
-	while (*(keyword_list[i].keyword))
+	while (*(pbuiltin_list[i].pbuiltin))
 	{
-		if (!ft_strcmp(str, keyword_list[i].keyword))
+		if (!ft_strcmp(str, pbuiltin_list[i].pbuiltin))
 			return (1);
 		++i;
 	}
