@@ -27,6 +27,8 @@ int				cmd_unsetenv(int argc, char **argv);
 int				cmd_setenv(int argc, char **argv);
 int				cmd_echo(int agrc, char **argv);
 int				cmd_exit(int argc, char **argv);
+int				cmd_true(int argc, char **argv);
+int				cmd_false(int argc, char **argv);
 int				cmd_env(int argc, char **argv);
 int				cmd_pwd(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
@@ -41,9 +43,9 @@ typedef struct	s_builtins
 	int		(*f)(int, char**);
 }				t_builtins;
 
-_Bool				reserved_keyword(char *str);
-struct	s_reserved_keyword
+_Bool				prior_builtin(char *str);
+struct	s_prior_builtin
 {
-	char	*keyword;
+	char	*pbuiltin;
 };
 #endif
