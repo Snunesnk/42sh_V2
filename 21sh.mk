@@ -62,12 +62,10 @@ TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
 LDLIBS += $(PATH_LIB)libft.a
 
+LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_C_SOURCE -std=c99
-ifneq ($(shell uname -s),Darwin)
-	CFLAGS += -ansi
-endif
-
+CFLAGS += -Wall -Wextra -Werror -D_POSIX_C_SOURCE -std=c99 -ansi $(DEBUG)
 #CFLAGS += -fno-builtin -O2
-CFLAGS += -g -fsanitize=address
+
+DEBUG += -g -fsanitize=address
