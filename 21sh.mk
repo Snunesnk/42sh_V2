@@ -34,6 +34,7 @@ SOURCES :=	main.c \
 			job/path_concat.c \
 			job/builtins/builtin_cd.c \
 			job/builtins/builtin_echo.c \
+			job/builtins/builtin_type.c \
 			job/builtins/builtin_env.c \
 			job/builtins/builtin_exit.c \
 			job/builtins/builtin_pwd.c \
