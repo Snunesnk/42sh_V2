@@ -99,3 +99,4 @@ i=0 ; name () { ((++i)); if (($i < 1000)); then name ; echo $i; fi;}; name
 echo $?
 i=0 ; name () { ((++i)); if ((i < 1000)); then name ; return 10 ; echo $i; fi;}; name
 echo $?
+bash-5.0# i=42;name () { local i=245; ((++i)); if ((i < 1000)); then echo $i ; return $i ; echo $i; fi;}; name; echo $i
