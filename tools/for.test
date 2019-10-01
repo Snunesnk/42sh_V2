@@ -1,0 +1,10 @@
+for i in ok; do echo ${ok[$i]} ; done
+for i in ok; do echo ${ok} ; done
+for i in ok[@]; do echo ${ok} ; done
+for i in ${ok[$i]; do echo ${ok} ; done
+for i in ${ok[$i]}; do echo ${ok} ; done
+for i in ${ok[@]}; do echo ${ok} ; done
+for i in ${ok[]}; do echo ${ok} ; done
+for i in ok[@]; do echo ${ok} ; done
+for i in ok[@]; do echo ${ok[@]} ; done
+for i in ok[@]; do echo ${ok[@]} ; done
