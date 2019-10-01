@@ -95,3 +95,7 @@ toto    (  )   {  echo $1 ; echo $# ; echo ok bonhomme;return 42 ;}
 echo $?
 toto
 echo $?
+i=0 ; name () { ((++i)); if (($i < 1000)); then name ; echo $i; fi;}; name
+echo $?
+i=0 ; name () { ((++i)); if ((i < 1000)); then name ; echo $i; fi;}; name
+echo $?
