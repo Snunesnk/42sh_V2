@@ -1,0 +1,14 @@
+name () { pwd ;}
+name(){ pwd;}
+name( ){ pwd;}
+name (){ pwd;}
+name()(pwd)
+function toto () { type name ;}
+function toto { ls ; }
+toto    (   )   {  ls;     }
+toto    (   )   {  ls         ;      }
+toto(){ echo $#;}
+toto(){ echo $0;}
+toto(){ echo $LOGNAME;}
+a=42
+toto(){ echo $a;}
