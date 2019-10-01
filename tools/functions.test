@@ -1,14 +1,97 @@
 name () { pwd ;}
+echo $?
+name
+echo $?
 name(){ pwd;}
+echo $?
+name
+echo $?
 name( ){ pwd;}
+echo $?
+name
+echo $?
 name (){ pwd;}
+echo $?
+name
+echo $?
 name()(pwd)
+echo $?
+name
+echo $?
 function toto () { type name ;}
+echo $?
+name
+echo $?
+toto
+echo $?
 function toto { ls ; }
+echo $?
+toto
+echo $?
 toto    (   )   {  ls;     }
+echo $?
+toto
+echo $?
+toto
 toto    (   )   {  ls         ;      }
+echo $?
+toto
+echo $?
 toto(){ echo $#;}
+echo $?
+toto
+echo $?
 toto(){ echo $0;}
+echo $?
+toto
+echo $?
 toto(){ echo $LOGNAME;}
+echo $?
+toto
+echo $?
 a=42
+echo $?
 toto(){ echo $a;}
+echo $?
+toto
+echo $?
+toto    (  )   {  ls   ;   return 10 ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  ls  return 10 ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  ls ; return (10) ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  ls ; return10 ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  ls return (10) ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  return ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  return 10;}
+echo $?
+toto
+echo $?
+toto    (  )   {  return 10000 ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  return a ;}
+echo $?
+toto
+echo $?
+toto    (  )   {  echo $1 ; echo $# ; echo ok bonhomme;return 42 ;}
+echo $?
+toto
+echo $?
