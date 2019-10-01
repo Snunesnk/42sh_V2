@@ -97,5 +97,5 @@ toto
 echo $?
 i=0 ; name () { ((++i)); if (($i < 1000)); then name ; echo $i; fi;}; name
 echo $?
-i=0 ; name () { ((++i)); if ((i < 1000)); then name ; echo $i; fi;}; name
+i=0 ; name () { ((++i)); if ((i < 1000)); then name ; return 10 ; echo $i; fi;}; name
 echo $?
