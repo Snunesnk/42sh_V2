@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/21 15:09:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:01:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
+#include "shell_variables.h"
 
 int		g_retval;
 char	g_pwd[] = {0};
@@ -90,6 +91,10 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (2);
 	}
+	/* test set function */
+	ft_split_assignement("ok=ploop");
+	ft_split_assignement("second=sdfasdfploop");
+	ft_split_assignement("THIRD=dsfploop");
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
 		args = lexer(&input);

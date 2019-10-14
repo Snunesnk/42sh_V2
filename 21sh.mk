@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/11 14:14:53 by abarthel         ###   ########.fr        #
+#    Updated: 2019/10/14 15:51:09 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SOURCES :=	main.c \
 			job/job.c \
 			job/path_concat.c \
 			job/builtins/builtin_cd.c \
+			job/builtins/builtin_set.c \
 			job/builtins/builtin_echo.c \
 			job/builtins/builtin_type.c \
 			job/builtins/builtin_env.c \
@@ -64,7 +65,7 @@ TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 LDLIBS += $(PATH_LIB)libft.a
 
 #LDFLAGS += $(DEBUG)
-#LDFLAGS += -flto=full
+LDFLAGS += -flto=full
 
 CFLAGS += -Wall -Wextra -Werror -D_POSIX_C_SOURCE -std=c99 -ansi $(DEBUG)
 CFLAGS += -fno-builtin -O2
