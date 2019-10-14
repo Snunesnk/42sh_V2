@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:22:55 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/11 18:11:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:44:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ struct	s_shvar
 };
 
 extern struct s_shvar		*g_shellvar;
+
+int	ft_split_assignement(const char *const name);
 
 #endif
