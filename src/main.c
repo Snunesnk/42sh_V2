@@ -94,9 +94,12 @@ int		main(int argc, char **argv)
 	/* test set function */
 	init_shvar("_", argv[0]);
 	shellvar_assignement_parsing("ok=ploop");
+	shellvar_assignement_parsing("KKO[42]=qwerty");
 	shellvar_assignement_parsing("second=sdfasdfploop");
 	shellvar_assignement_parsing("THIRD=dsfploop");
+	shellvar_assignement_parsing("THIRD[6]=dsfploop");
 	shellvar_assignement_parsing("arr=(dsfploop (sdgf), sdfg )");
+	shellvar_assignement_parsing("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
 		args = lexer(&input);
