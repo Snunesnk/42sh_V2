@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 17:01:15 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/15 13:13:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int		main(int argc, char **argv)
 	extern int	g_fd_prompt;
 	char		*input;
 	char		**args;
-	int		status;
+	int			status;
 	
 	(void)argc;
 	status = 0;
@@ -92,9 +92,11 @@ int		main(int argc, char **argv)
 		return (2);
 	}
 	/* test set function */
-	ft_split_assignement("ok=ploop");
-	ft_split_assignement("second=sdfasdfploop");
-	ft_split_assignement("THIRD=dsfploop");
+	init_shvar("_", argv[0]);
+	shellvar_assignement_parsing("ok=ploop");
+	shellvar_assignement_parsing("second=sdfasdfploop");
+	shellvar_assignement_parsing("THIRD=dsfploop");
+	shellvar_assignement_parsing("arr=(dsfploop (sdgf), sdfg )");
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
 		args = lexer(&input);
