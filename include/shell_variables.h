@@ -23,6 +23,8 @@ struct	s_shvar
 
 extern struct s_shvar		*g_shellvar;
 
-int	ft_split_assignement(const char *const name);
+int	init_shvar(const char *name, const char *const content);
+
+int	shellvar_assignement_parsing(const char *const str);
 
 #endif

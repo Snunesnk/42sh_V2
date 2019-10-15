@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:10:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 15:50:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/15 13:17:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	init_shvar(const char *name, const char *const content)
 	return (e_success);
 }
 
-int	append_shvar(const char *const name, const char *const content)
+static int	append_shvar(const char *const name, const char *const content)
 {
 	extern struct s_shvar	*g_shellvar;
 	struct s_shvar		*tmp;
@@ -65,21 +65,55 @@ int	append_shvar(const char *const name, const char *const content)
 	return (e_success);
 }
 
-int	ft_split_assignement(const char *const name)
+static int	assign_lit_value(const char *const name, const char *const value)
 {
-	extern struct s_shvar	*g_shellvar;
-	char *ptr;
-	char *cpy;
-	
-	cpy = ft_strdup(name);
-	if (!cpy)
-		return (e_cannot_allocate_memory);
-	ptr = ft_strstr(cpy, "=");
-	*ptr = '\0';
-	++ptr;
-	if (!g_shellvar)
-		init_shvar(cpy, ptr);
-	else
-		append_shvar(cpy, ptr);
+		if (!g_shellvar)
+			return (init_shvar(name, value));
+		else
+			return (append_shvar(name, value));
+}
+
+static int	assign_array(char *name, char **tokens)
+{
+	(void)name;
+	(void)tokens;
 	return (e_success);
+}
+
+static int	assign_shvar(char *name, char *content)
+{
+	char *end;
+	char **tok;
+
+	tok = NULL;
+	end = content;
+	while (*end)
+		++end;
+	--end;
+	if (*end == ')' && *content == '(')
+	{
+		*end = '\0';
+		++content;
+		tok = ft_strsplit(content, ' ');
+		if (!tok)
+			return (e_cannot_allocate_memory);
+		else
+			return (assign_array(name, tok));
+	}
+	else
+		return (assign_lit_value(name, content));
+}
+
+int	shellvar_assignement_parsing(const char *const str)
+{
+	char *content;
+	char *name;
+	
+	name = ft_strdup(str);
+	if (!name)
+		return (e_cannot_allocate_memory);
+	content = ft_strstr(name, "=");
+	*content = '\0';
+	++content;
+	return (assign_shvar(name, content));
 }
