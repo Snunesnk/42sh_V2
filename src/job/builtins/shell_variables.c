@@ -16,8 +16,6 @@
 #include "shell_variables.h"
 #include "error.h"
 
-/* to test index overflow  9223372036854775810*/
-
 struct s_shvar	*g_shellvar = NULL;
 
 int	init_shvar(const char *name, const char *const content)
@@ -67,10 +65,11 @@ static int	append_shvar(const char *const name, const char *const content)
 
 static int	assign_lit_value(const char *const name, const char *const value)
 {
+	/*
 		if (!g_shellvar)
 			return (init_shvar(name, value));
 		else
-			return (append_shvar(name, value));
+	*/		return (append_shvar(name, value));
 }
 
 static int	assign_array(char *name, char **tokens)
@@ -104,10 +103,26 @@ static int	assign_shvar(char *name, char *content)
 		return (assign_lit_value(name, content));
 }
 
+static int	name_index(char *name)
+{
+	while (*name && *name != '[')
+		++name;
+	if (*name != '[')
+		  return (-1);
+	else
+	{
+		*name = '\0';
+		++name;
+		return (ft_atoi(name)); /* should be a special atoi, maybe a ft_atoull63bits() */
+	}
+}
+
 int	shellvar_assignement_parsing(const char *const str)
 {
-	char *content;
-	char *name;
+	int		ret;
+	int		index;
+	char 	*content;
+	char 	*name;
 	
 	name = ft_strdup(str);
 	if (!name)
@@ -115,5 +130,13 @@ int	shellvar_assignement_parsing(const char *const str)
 	content = ft_strstr(name, "=");
 	*content = '\0';
 	++content;
-	return (assign_shvar(name, content));
+	index = name_index(name);
+	if (index == -1)
+		ret = assign_shvar(name, content);
+	else
+	{
+		/* here case in must input at a certain index */
+		return (e_success);
+	}
+	return (ret);
 }

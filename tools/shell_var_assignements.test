@@ -1,0 +1,14 @@
+arr=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+y=asfasfasdfdsa
+y[s]=asfd
+y[@]=safd
+arr[1]=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+araDSr[10]=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+ok[9223372036854775810]=qwerqewrq
+ok[0]=weq
+ok[9223372036854775810]=aaaaa
+ok[9223372036854775811]=bbbbb
+ok[9223372036854775807]=ccccc
+hello=lllllllllllllllllllllllllllllllllllllll
+hello[343]=pppppppppppppppppp
+hello[W]=asdf
