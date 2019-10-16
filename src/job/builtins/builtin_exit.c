@@ -15,6 +15,7 @@
 #include "libft.h"
 #include "error.h"
 #include "jcont.h"
+#include "shell_variables.h"
 
 static int	part_sep(int argc, char **argv)
 {

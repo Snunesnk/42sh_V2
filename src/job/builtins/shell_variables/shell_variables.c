@@ -17,28 +17,6 @@
 #include "error.h"
 #include "shell_variables.h"
 
-static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
-						struct s_shvar *next_var, int index)
-{
-	struct s_shvar	*node;
-
-	node = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
-	if (!node)
-		return (NULL);
-	node->value = ft_strdup(value);
-	if (!node->value)
-	{
-		free(node);
-		return (NULL);
-	}
-	node->next_content = next_content;
-	node->next_var = next_var;
-	node->index = index;
-	if (index != -1)
-		node->isarray |= 1;
-	return (node);
-}
-
 static int	append_shvar(const char *const name, const char *const content)
 {
 	struct s_shvar		*tmp;
@@ -52,23 +30,14 @@ static int	append_shvar(const char *const name, const char *const content)
 	if (!tmp)
 		return (e_cannot_allocate_memory);
 	tmp = tmp->next_var;
-	tmp->value = (char*)name;
+	tmp->value = ft_strdup(name);
 	tmp->next_content = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
 	if (!tmp->next_content)
 		return (e_cannot_allocate_memory);
-	tmp->next_content->value = (char*)content;
+	tmp->next_content->value = ft_strdup(content);
 	tmp->index = 0;
 	tmp->next_var = NULL;
 	return (e_success);
-}
-
-static int	assign_lit_value(const char *const name, const char *const value)
-{
-	/*
-		if (!g_shellvar)
-			return (init_shvar(name, value));
-		else
-	*/		return (append_shvar(name, value));
 }
 
 static int	assign_array(char *name, char **tokens)
@@ -78,21 +47,11 @@ static int	assign_array(char *name, char **tokens)
 	return (e_success);
 }
 
-
-
 static int	assign_at_index(char *name, char *content, int index)
 {
-	struct s_shvar	*tmp;
-
-	tmp = g_shellvar;
-	if (!g_shellvar)
-	{
-		g_shellvar = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
-		g_shellvar->value = name;
-		g_shellvar->next_var = NULL;
-		g_shellvar->next_content = (struct s_shar*)ft_memalloc;
-	}
-
+	(void)name;
+	(void)content;
+	(void)index;
 	return (e_success);
 }
 
@@ -120,7 +79,7 @@ static int	assign_shvar(char *name, char *content, int index, _Bool has_array_su
 				return (assign_array(name, tok));
 		}
 		else
-			return (assign_lit_value(name, content));
+			return (append_shvar(name, content));
 	}
 	else
 	{
@@ -170,5 +129,6 @@ int	shellvar_assignement(const char *const str)
 		return (e_cannot_assign_list_to_array_member);
 	}
 	ret = assign_shvar(name, content, index, has_array_subscript);
+	ft_memdel((void**)&name);
 	return (ret);
 }

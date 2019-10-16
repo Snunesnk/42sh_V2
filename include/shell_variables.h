@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:22:55 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 14:44:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:02:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ extern struct s_shvar		*g_shellvar;
 
 int	initialize_shell_variables(char *argv);
 
-int	init_shvar(const char *name, const char *const content);
-
-int	shellvar_assignement_parsing(const char *const str);
+int	shellvar_assignement(const char *const str);
 
 void	free_all_shvar(void);
 

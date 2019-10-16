@@ -98,15 +98,15 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 
-	/* test assignements */
-	shellvar_assignement_parsing("ok=ploop");
-	shellvar_assignement_parsing("KKO[42]=qwerty");
-	shellvar_assignement_parsing("second=sdfasdfploop");
-	shellvar_assignement_parsing("THIRD=dsfploop");
-	shellvar_assignement_parsing("THIRD[6]=dsfploop");
-	shellvar_assignement_parsing("arr=(dsfploop (sdgf), sdfg )");
-	shellvar_assignement_parsing("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-	shellvar_assignement_parsing("ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+	/* test assignements and free */
+	shellvar_assignement("ok=ploop");
+	shellvar_assignement("KKO[42]=qwerty");
+	shellvar_assignement("second=sdfasdfploop");
+	shellvar_assignement("THIRD=dsfploop");
+	shellvar_assignement("THIRD[6]=dsfploop");
+	shellvar_assignement("arr=(dsfploop (sdgf), sdfg )");
+	shellvar_assignement("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+	shellvar_assignement("ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 
 
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
