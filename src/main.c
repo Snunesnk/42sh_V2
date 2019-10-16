@@ -126,5 +126,6 @@ int		main(int argc, char **argv)
 		ft_tabdel(&args);
 	}
 	ft_tabdel(&environ);
+	free_all_shvar();
 	return (0);
 }

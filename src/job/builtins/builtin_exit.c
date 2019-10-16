@@ -28,6 +28,7 @@ static int	part_sep(int argc, char **argv)
 		{
 			ft_tabdel(&argv);
 			ft_tabdel(&environ);
+			free_all_shvar();
 			ft_dprintf(STDERR_FILENO, "exit\n");
 			exit(status);
 		}
@@ -52,6 +53,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 	status = (unsigned char)ft_atoi(argv[i]);
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_all_shvar();
 	exit(status);
 }
 
@@ -65,6 +67,7 @@ static void	nomatter_exit(char **argv, int i)
 			g_progname, argv[0], argv[i]);
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_all_shvar();
 	exit(2);
 }
 
@@ -87,5 +90,6 @@ int		cmd_exit(int argc, char **argv)
 	}
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_all_shvar();
 	exit(status);
 }
