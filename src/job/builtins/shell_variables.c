@@ -14,8 +14,8 @@
 #include <unistd.h>
 
 #include "libft.h"
-#include "shell_variables.h"
 #include "error.h"
+#include "shell_variables.h"
 
 struct s_shvar	*g_shellvar = NULL;
 
@@ -114,9 +114,7 @@ static int	assign_shvar(char *name, char *content, int index)
 				return (assign_array(name, tok));
 		}
 		else
-		{
 			return (assign_lit_value(name, content));
-		}
 	}
 	else
 	{
@@ -138,13 +136,13 @@ static int	assign_shvar(char *name, char *content, int index)
 		else
 		{
 			return (e_success);
-		/*	assign_at_index();
-		*/}
+			assign_at_index();
+		}
 		
 	}
 }
 
-static int	name_index(char *name)
+static int	get_name_index(char *name)
 {
 	while (*name && *name != '[')
 		++name;
@@ -171,7 +169,7 @@ int	shellvar_assignement_parsing(const char *const str)
 	content = ft_strstr(name, "=");
 	*content = '\0';
 	++content;
-	index = name_index(name);
+	index = get_name_index(name);
 	ret = assign_shvar(name, content, index);
 	return (ret);
 }
