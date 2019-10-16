@@ -23,6 +23,8 @@ struct	s_shvar
 
 extern struct s_shvar		*g_shellvar;
 
+int	initialize_shell_variables(char *argv);
+
 int	init_shvar(const char *name, const char *const content);
 
 int	shellvar_assignement_parsing(const char *const str);

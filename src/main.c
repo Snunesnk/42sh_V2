@@ -17,6 +17,7 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "shell_variables.h"
 #include "sig_handler.h"
 #include "builtins.h"
 #include "prompt.h"
@@ -26,7 +27,6 @@
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
-#include "shell_variables.h"
 
 int		g_retval;
 char	g_pwd[] = {0};
@@ -91,8 +91,14 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (2);
 	}
-	/* test set function */
-	init_shvar("_", argv[0]);
+	/* Initialize shell variables */
+	if (initialize_shell_variables(argv[0]))
+	{
+		ft_tabdel(&environ);
+		return (1);
+	}
+
+	/* test assignements */
 	shellvar_assignement_parsing("ok=ploop");
 	shellvar_assignement_parsing("KKO[42]=qwerty");
 	shellvar_assignement_parsing("second=sdfasdfploop");
@@ -100,6 +106,9 @@ int		main(int argc, char **argv)
 	shellvar_assignement_parsing("THIRD[6]=dsfploop");
 	shellvar_assignement_parsing("arr=(dsfploop (sdgf), sdfg )");
 	shellvar_assignement_parsing("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+	shellvar_assignement_parsing("ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+
+
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
 		args = lexer(&input);

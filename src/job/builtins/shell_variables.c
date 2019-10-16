@@ -11,12 +11,23 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libft.h"
 #include "shell_variables.h"
 #include "error.h"
 
 struct s_shvar	*g_shellvar = NULL;
+
+int	initialize_shell_variables(char *argv)
+{
+	int	ret;
+
+	ret = init_shvar("_", argv);
+	if (ret)
+		ft_dprintf(STDERR_FILENO, "Could not assign minimal shell variables\n");
+	return (ret);
+}
 
 int	init_shvar(const char *name, const char *const content)
 {
@@ -79,8 +90,9 @@ static int	assign_array(char *name, char **tokens)
 	return (e_success);
 }
 
-static int	assign_shvar(char *name, char *content)
+static int	assign_shvar(char *name, char *content, int index)
 {
+	char *str;
 	char *end;
 	char **tok;
 
@@ -89,18 +101,47 @@ static int	assign_shvar(char *name, char *content)
 	while (*end)
 		++end;
 	--end;
-	if (*end == ')' && *content == '(')
+	if (index == -1)
 	{
-		*end = '\0';
-		++content;
-		tok = ft_strsplit(content, ' ');
-		if (!tok)
-			return (e_cannot_allocate_memory);
+		if (*end == ')' && *content == '(')
+		{
+			*end = '\0';
+			++content;
+			tok = ft_strsplit(content, ' ');
+			if (!tok)
+				return (e_cannot_allocate_memory);
+			else
+				return (assign_array(name, tok));
+		}
 		else
-			return (assign_array(name, tok));
+		{
+			return (assign_lit_value(name, content));
+		}
 	}
 	else
-		return (assign_lit_value(name, content));
+	{
+		if (*end == ')' && *content == '(')
+		{
+			str = name;
+			while (*str)
+			{
+				++str;
+			}
+			*str = '[';
+			while (*str && *str != '=')
+				++str;
+			if (*str == '=')
+				*str = '\0';
+			psherror(e_cannot_assign_list_to_array_member, name, e_cmd_type);
+			return (e_cannot_assign_list_to_array_member);
+		}
+		else
+		{
+			return (e_success);
+		/*	assign_at_index();
+		*/}
+		
+	}
 }
 
 static int	name_index(char *name)
@@ -131,12 +172,6 @@ int	shellvar_assignement_parsing(const char *const str)
 	*content = '\0';
 	++content;
 	index = name_index(name);
-	if (index == -1)
-		ret = assign_shvar(name, content);
-	else
-	{
-		/* here case in must input at a certain index */
-		return (e_success);
-	}
+	ret = assign_shvar(name, content, index);
 	return (ret);
 }

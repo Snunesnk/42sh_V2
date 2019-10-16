@@ -20,6 +20,7 @@ enum	e_minishell_error
 	e_syntax_error,
 	e_no_builtin,
 	e_bad_substitution,
+	e_cannot_assign_list_to_array_member,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
