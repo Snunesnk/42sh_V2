@@ -24,6 +24,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "syntax error near unexpected token" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
+	{ 1, "cannot assign list to array member" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
