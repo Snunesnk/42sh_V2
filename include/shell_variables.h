@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 13:22:55 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/16 17:02:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 17:01:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	initialize_shell_variables(char *argv);
 int	shellvar_assignement(const char *const str);
 
 void	free_all_shvar(void);
+
+struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content, struct s_shvar *next_var, int index);
 
 /* Utils */
 int		get_index(char *str);

@@ -17,7 +17,7 @@
 #include "error.h"
 #include "shell_variables.h"
 
-static int	append_shvar(const char *const name, const char *const content)
+int	append_shvar(const char *const name, const char *const content)
 {
 	struct s_shvar		*tmp;
 
@@ -56,11 +56,10 @@ static struct s_shvar	*find_root_of_var(const char *const name)
 	{
 		while (lookup && ft_strcmp(name, lookup->value))
 			lookup = lookup->next_var;
-		if (!lookup)
-			return (NULL);
-		else
+		if (lookup)
 			return (lookup);
 	}
+	return (NULL);
 }
 
 static int	assign_at_index(char *name, char *content, int index)
@@ -69,16 +68,38 @@ static int	assign_at_index(char *name, char *content, int index)
 	ft_printf("content %s\n", content);
 	ft_printf("index %d\n", index); */
 	struct s_shvar	*root;
+	struct s_shvar	*prev_root;
+	
+	struct s_shvar	*next_content;
 	
 	root = find_root_of_var(name);
 	if (!root)
 	{
 		/* create var at lexico sorted(name) point in tree */
+		root = g_shellvar;
+		prev_root = g_shellvar;
+		while (root && ft_strlexicmp(root->value, name) < 0) /* lexicogr sort instead */
+		{
+			prev_root = root;
+			root = root->next_var;
+		}
+		if (root)
+		{
+			next_content = create_shvar_node(content, NULL, NULL, index);
+			prev_root->next_var = create_shvar_node(name, next_content, root->next_var, 0);
+			/* insert */
+		}
+		else
+		{
+			/* append or prefix ? */
+			append_shvar(name, content);
+		}
 	}
 	else
 	{
 		return (e_success);
 	}
+	return (e_success);
 }
 
 static int	assign_shvar(char *name, char *content, int index, _Bool has_array_subscript)
@@ -105,7 +126,7 @@ static int	assign_shvar(char *name, char *content, int index, _Bool has_array_su
 				return (assign_array(name, tok));
 		}
 		else
-			return (append_shvar(name, content));
+			return (assign_at_index(name, content, index));
 	}
 	else
 	{

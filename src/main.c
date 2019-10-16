@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:32:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/15 13:13:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 19:22:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,14 @@ int		main(int argc, char **argv)
 	shellvar_assignement("arr=(dsfploop (sdgf), sdfg )");
 	shellvar_assignement("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 	shellvar_assignement("ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+	shellvar_assignement("okk=ploop");
+	shellvar_assignement("KKOO[42]=qwerty");
+	shellvar_assignement("wer=sdfasdfploop");
+	shellvar_assignement("THIRDd=dsfploop");
+	shellvar_assignement("THIRDd[6]=dsfploop");
+	shellvar_assignement("Arr=(dsfploop (sdgf), sdfg )");
+	shellvar_assignement("ARryo=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
+	shellvar_assignement("ARryo[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 
 
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
