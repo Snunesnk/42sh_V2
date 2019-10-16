@@ -26,11 +26,13 @@ static void	free_nodes(struct s_shvar **node)
 	{
 		*node = stofree;
 		stofree = (*node)->next_content;
-		ft_memdel((void**)node->value);
+	/*	ft_memdel((void**)&(*node->value);
+	*/	ft_printf("%s\n", ((*node)->value));
+		free((*node)->value);
 		ft_memdel((void**)node);
 	}
 }
-
+/* For UNSET builtin use or set that erase preivously stored value
 static void	free_a_shvar(struct s_shvar **previous, struct s_shvar **node)
 {
 	if (!*previous)
@@ -49,7 +51,7 @@ static void	free_a_shvar(struct s_shvar **previous, struct s_shvar **node)
 	}
 	free_nodes(node);
 }
-
+*/
 static void	free_all_tree(struct s_shvar **tree)
 {
 	struct s_shvar	*ltofree;
