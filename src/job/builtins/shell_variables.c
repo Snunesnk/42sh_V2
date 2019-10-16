@@ -51,31 +51,52 @@ static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_conte
 	return (node);
 }
 
-static void	delete_a_shvar(struct s_shvar *previous, struct s_shvar *node)
+static void			free_nodes(struct s_shvar **node)
 {
 	struct s_shvar	*stofree;
 
-	stofree = node;
-	if (!previous)
+	stofree = *node;
+	while (stofree)
 	{
-		if (!node->next_var)
+		*node = stofree;
+		stofree = (*node)->next_content;
+		ft_memdel((void**)node->value);
+		ft_memdel((void**)node);
+	}
+}
+
+static void			free_a_shvar(struct s_shvar **previous, struct s_shvar **node)
+{
+	if (!*previous)
+	{
+		if (!(*node)->next_var)
 			g_shellvar = NULL;
 		else
-			g_shellvar = node->next_var;
+			g_shellvar = (*node)->next_var;
 	}
 	else
 	{
-		if (!node->next_var)
-			previous->next_var = NULL;
+		if (!(*node)->next_var)
+			(*previous)->next_var = NULL;
 		else
-			previous->next_var = node->next_var;
+			(*previous)->next_var = (*node)->next_var;
 	}
-	while (stofree)
+	free_nodes(node);
+}
+
+void				free_all_shvar(void)
+{
+	struct s_shvar	*ltofree;
+
+	if (g_shellvar)
 	{
-		node = stofree;
-		stofree = node->next_content;
-		ft_memdel((void**)node->value);
-		ft_memdel((void**)node);
+		ltofree = g_shellvar;
+		while (ltofree)
+		{
+			g_shellvar = ltofree;
+			ltofree = g_shellvar->next_var;
+			free_nodes(&g_shellvar);
+		}
 	}
 }
 
