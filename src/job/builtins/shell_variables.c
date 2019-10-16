@@ -51,7 +51,33 @@ static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_conte
 	return (node);
 }
 
-static void	free_shvar_node()
+static void	delete_a_shvar(struct s_shvar *previous, struct s_shvar *node)
+{
+	struct s_shvar	*stofree;
+
+	stofree = node;
+	if (!previous)
+	{
+		if (!node->next_var)
+			g_shellvar = NULL;
+		else
+			g_shellvar = node->next_var;
+	}
+	else
+	{
+		if (!node->next_var)
+			previous->next_var = NULL;
+		else
+			previous->next_var = node->next_var;
+	}
+	while (stofree)
+	{
+		node = stofree;
+		stofree = node->next_content;
+		ft_memdel((void**)node->value);
+		ft_memdel((void**)node);
+	}
+}
 
 int	init_shvar(const char *name, const char *const content)
 {
