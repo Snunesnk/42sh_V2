@@ -47,12 +47,38 @@ static int	assign_array(char *name, char **tokens)
 	return (e_success);
 }
 
-static int	assign_at_index(char *name, char *content, int index)
+static struct s_shvar	*find_root_of_var(const char *const name)
 {
-	(void)name;
-	(void)content;
-	(void)index;
-	return (e_success);
+	struct s_shvar	*lookup;
+
+	lookup = g_shellvar;
+	if (g_shellvar)
+	{
+		while (lookup && ft_strcmp(name, lookup->value))
+			lookup = lookup->next_var;
+		if (!lookup)
+			return (NULL);
+		else
+			return (lookup);
+	}
+}
+
+static int	assign_at_index(char *name, char *content, int index)
+{/*
+	ft_printf("name %s\n", name);
+	ft_printf("content %s\n", content);
+	ft_printf("index %d\n", index); */
+	struct s_shvar	*root;
+	
+	root = find_root_of_var(name);
+	if (!root)
+	{
+		/* create var at lexico sorted(name) point in tree */
+	}
+	else
+	{
+		return (e_success);
+	}
 }
 
 static int	assign_shvar(char *name, char *content, int index, _Bool has_array_subscript)
@@ -100,8 +126,8 @@ static int	assign_shvar(char *name, char *content, int index, _Bool has_array_su
 		}
 		else
 		{
-			return (e_success);
 			assign_at_index(name, content, index);
+			return (e_success);
 		}
 		
 	}
