@@ -18,7 +18,7 @@
 #include "shell_variables.h"
 
 static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
-						struct s_shvar *next_var, unsigned long long index)
+						struct s_shvar *next_var, int index)
 {
 	struct s_shvar	*node;
 
@@ -96,7 +96,7 @@ static int	assign_at_index(char *name, char *content, int index)
 	return (e_success);
 }
 
-static int	assign_shvar(char *name, char *content, int index)
+static int	assign_shvar(char *name, char *content, int index, _Bool has_array_subscript)
 {
 	char *str;
 	char *end;
@@ -109,7 +109,7 @@ static int	assign_shvar(char *name, char *content, int index)
 	--end;
 	if (index == -1)
 	{
-		if (*end == ')' && *content == '(')
+		if (has_array_subscript)
 		{
 			*end = '\0';
 			++content;
@@ -124,7 +124,7 @@ static int	assign_shvar(char *name, char *content, int index)
 	}
 	else
 	{
-		if (*end == ')' && *content == '(')
+		if (has_array_subscript)
 		{
 			str = name;
 			while (*str)
@@ -148,26 +148,13 @@ static int	assign_shvar(char *name, char *content, int index)
 	}
 }
 
-static int	get_name_index(char *name)
-{
-	while (*name && *name != '[')
-		++name;
-	if (*name != '[')
-		  return (-1);
-	else
-	{
-		*name = '\0';
-		++name;
-		return (ft_atoi(name)); /* should be a special atoi, maybe a ft_atoull63bits() */
-	}
-}
-
-int	shellvar_assignement_parsing(const char *const str)
-{
-	int		ret;
-	int		index;
+int	shellvar_assignement(const char *const str)
+{ /* parsing of str containing a shell variable assignement */
 	char 	*content;
 	char 	*name;
+	int		index;
+	int		ret;
+	_Bool	has_array_subscript;
 	
 	name = ft_strdup(str);
 	if (!name)
@@ -175,7 +162,13 @@ int	shellvar_assignement_parsing(const char *const str)
 	content = ft_strstr(name, "=");
 	*content = '\0';
 	++content;
-	index = get_name_index(name);
-	ret = assign_shvar(name, content, index);
+	index = get_index(name);
+	has_array_subscript = contains_array_subscript(content);
+	if (index != -1 && has_array_subscript)
+	{
+		psherror(e_cannot_assign_list_to_array_member, name, e_cmd_type);
+		return (e_cannot_assign_list_to_array_member);
+	}
+	ret = assign_shvar(name, content, index, has_array_subscript);
 	return (ret);
 }

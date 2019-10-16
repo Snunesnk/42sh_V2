@@ -44,7 +44,10 @@ SOURCES :=	main.c \
 			job/builtins/builtin_truefalse.c \
 			job/builtins/builtins_dispatcher.c \
 			job/builtins/ft_putenv_table.c \
-			job/builtins/shell_variables.c \
+			job/builtins/shell_variables/shell_variables.c \
+			job/builtins/shell_variables/free_shell_variables.c \
+			job/builtins/shell_variables/init_shell_variables.c \
+			job/builtins/shell_variables/utils_shell_variables.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

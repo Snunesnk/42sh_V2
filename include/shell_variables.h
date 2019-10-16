@@ -30,4 +30,10 @@ int	init_shvar(const char *name, const char *const content);
 
 int	shellvar_assignement_parsing(const char *const str);
 
+void	free_all_shvar(void);
+
+/* Utils */
+int		get_index(char *str);
+_Bool	contains_array_subscript(char *str);
+
 #endif
