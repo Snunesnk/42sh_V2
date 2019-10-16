@@ -29,10 +29,32 @@ int	initialize_shell_variables(char *argv)
 	return (ret);
 }
 
+static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
+						struct s_shvar *next_var, unsigned long long index)
+{
+	struct s_shvar	*node;
+
+	node = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
+	if (!node)
+		return (NULL);
+	node->value = ft_strdup(value);
+	if (!node->value)
+	{
+		free(node);
+		return (NULL);
+	}
+	node->next_content = next_content;
+	node->next_var = next_var;
+	node->index = index;
+	if (index != -1)
+		node->isarray |= 1;
+	return (node);
+}
+
+static void	free_shvar_node()
+
 int	init_shvar(const char *name, const char *const content)
 {
-	extern struct s_shvar	*g_shellvar;
-	
 	g_shellvar = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
 	if (!g_shellvar)
 	{
@@ -52,7 +74,6 @@ int	init_shvar(const char *name, const char *const content)
 
 static int	append_shvar(const char *const name, const char *const content)
 {
-	extern struct s_shvar	*g_shellvar;
 	struct s_shvar		*tmp;
 
 	tmp = g_shellvar;
@@ -87,6 +108,24 @@ static int	assign_array(char *name, char **tokens)
 {
 	(void)name;
 	(void)tokens;
+	return (e_success);
+}
+
+
+
+static int	assign_at_index(char *name, char *content, int index)
+{
+	struct s_shvar	*tmp;
+
+	tmp = g_shellvar;
+	if (!g_shellvar)
+	{
+		g_shellvar = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
+		g_shellvar->value = name;
+		g_shellvar->next_var = NULL;
+		g_shellvar->next_content = (struct s_shar*)ft_memalloc;
+	}
+
 	return (e_success);
 }
 
@@ -136,7 +175,7 @@ static int	assign_shvar(char *name, char *content, int index)
 		else
 		{
 			return (e_success);
-			assign_at_index();
+			assign_at_index(name, content, index);
 		}
 		
 	}

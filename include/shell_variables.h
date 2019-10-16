@@ -18,7 +18,8 @@ struct	s_shvar
 	char				*value;
 	struct s_shvar		*next_var;
 	struct s_shvar		*next_content;
-	unsigned long long	index:63;	
+	unsigned long long	index:63;
+	_Bool				isarray:1;	
 };
 
 extern struct s_shvar		*g_shellvar;
