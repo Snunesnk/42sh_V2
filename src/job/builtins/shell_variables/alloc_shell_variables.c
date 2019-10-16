@@ -16,7 +16,7 @@
 #include "error.h"
 #include "shell_variables.h"
 
-static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
+struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
 						struct s_shvar *next_var, int index)
 {
 	struct s_shvar	*node;

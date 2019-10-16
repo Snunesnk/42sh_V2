@@ -26,9 +26,7 @@ static void	free_nodes(struct s_shvar **node)
 	{
 		*node = stofree;
 		stofree = (*node)->next_content;
-	/*	ft_memdel((void**)&(*node->value);
-	*/	ft_printf("%s\n", ((*node)->value));
-		free((*node)->value);
+		ft_memdel((void**)&(*node)->value);
 		ft_memdel((void**)node);
 	}
 }

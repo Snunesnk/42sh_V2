@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/15 16:15:12 by abarthel         ###   ########.fr        #
+#    Updated: 2019/10/16 19:18:42 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SOURCES :=	main.c \
 			job/builtins/builtins_dispatcher.c \
 			job/builtins/ft_putenv_table.c \
 			job/builtins/shell_variables/shell_variables.c \
+			job/builtins/shell_variables/alloc_shell_variables.c \
 			job/builtins/shell_variables/free_shell_variables.c \
 			job/builtins/shell_variables/init_shell_variables.c \
 			job/builtins/shell_variables/utils_shell_variables.c \
