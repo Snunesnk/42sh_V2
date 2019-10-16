@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/11 12:10:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/15 13:17:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/16 15:07:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,6 @@
 #include "libft.h"
 #include "error.h"
 #include "shell_variables.h"
-
-struct s_shvar	*g_shellvar = NULL;
-
-int	initialize_shell_variables(char *argv)
-{
-	int	ret;
-
-	ret = init_shvar("_", argv);
-	if (ret)
-		ft_dprintf(STDERR_FILENO, "Could not assign minimal shell variables\n");
-	return (ret);
-}
 
 static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_content,
 						struct s_shvar *next_var, unsigned long long index)
@@ -49,74 +37,6 @@ static struct s_shvar	*create_shvar_node(char *value, struct s_shvar *next_conte
 	if (index != -1)
 		node->isarray |= 1;
 	return (node);
-}
-
-static void			free_nodes(struct s_shvar **node)
-{
-	struct s_shvar	*stofree;
-
-	stofree = *node;
-	while (stofree)
-	{
-		*node = stofree;
-		stofree = (*node)->next_content;
-		ft_memdel((void**)node->value);
-		ft_memdel((void**)node);
-	}
-}
-
-static void			free_a_shvar(struct s_shvar **previous, struct s_shvar **node)
-{
-	if (!*previous)
-	{
-		if (!(*node)->next_var)
-			g_shellvar = NULL;
-		else
-			g_shellvar = (*node)->next_var;
-	}
-	else
-	{
-		if (!(*node)->next_var)
-			(*previous)->next_var = NULL;
-		else
-			(*previous)->next_var = (*node)->next_var;
-	}
-	free_nodes(node);
-}
-
-void				free_all_shvar(void)
-{
-	struct s_shvar	*ltofree;
-
-	if (g_shellvar)
-	{
-		ltofree = g_shellvar;
-		while (ltofree)
-		{
-			g_shellvar = ltofree;
-			ltofree = g_shellvar->next_var;
-			free_nodes(&g_shellvar);
-		}
-	}
-}
-
-int	init_shvar(const char *name, const char *const content)
-{
-	g_shellvar = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
-	if (!g_shellvar)
-	{
-		return (e_cannot_allocate_memory);
-	}
-	g_shellvar->value = (char*)name;
-	g_shellvar->next_content = (struct s_shvar*)ft_memalloc(sizeof(struct s_shvar));
-	if (!g_shellvar->next_content)
-	{
-		return (e_cannot_allocate_memory);
-	}
-	g_shellvar->next_content->value = (char*)content;
-	g_shellvar->index = 0;
-	g_shellvar->next_var = NULL;
-	return (e_success);
 }
 
 static int	append_shvar(const char *const name, const char *const content)
