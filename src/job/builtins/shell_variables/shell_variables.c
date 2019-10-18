@@ -81,9 +81,10 @@ static int insert_node(char *name, char *content, int index)
 	if (!leaf)
 		return (e_cannot_allocate_memory);
 	if (next)
-		next = previous->next_var;
+		next = node;
 	if (previous)
 	{
+		ft_printf("previous %s\n", name);
 		previous->next_var = create_shvar_node(name, leaf, next, 0);
 		if (!previous->next_var)
 			return (e_cannot_allocate_memory);

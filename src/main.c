@@ -99,11 +99,11 @@ int		main(int argc, char **argv)
 	}
 */
 	/* test assignements and free */
-	shellvar_assignement("c=ploop");
-/*
-	shellvar_assignement("i=ploop");
-	shellvar_assignement("u=ploop");
-		shellvar_assignement("y=ploop");
+	shellvar_assignement("z=ploop");
+
+	shellvar_assignement("a=ploop");
+	shellvar_assignement("b=ploop");
+/*		shellvar_assignement("y=ploop");
 	shellvar_assignement("t=ploop");
 	shellvar_assignement("r=ploop");
 	shellvar_assignement("r=ploop");
