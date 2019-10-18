@@ -92,17 +92,33 @@ int		main(int argc, char **argv)
 		return (2);
 	}
 	/* Initialize shell variables */
-	if (initialize_shell_variables(argv[0]))
+/*	if (initialize_shell_variables(argv[0]))
 	{
 		ft_tabdel(&environ);
 		return (1);
 	}
-
+*/
 	/* test assignements and free */
-	shellvar_assignement("ok=ploop");
+	shellvar_assignement("c=ploop");
+/*
+	shellvar_assignement("i=ploop");
+	shellvar_assignement("u=ploop");
+		shellvar_assignement("y=ploop");
+	shellvar_assignement("t=ploop");
+	shellvar_assignement("r=ploop");
+	shellvar_assignement("r=ploop");
+	shellvar_assignement("w=ploop");
+	shellvar_assignement("q=ploop");
+	shellvar_assignement("e=ploop");
+	shellvar_assignement("w=ploop");
+	shellvar_assignement("g=ploop");
+	shellvar_assignement("f=ploop");
 	shellvar_assignement("KKO[42]=qwerty");
 	shellvar_assignement("second=sdfasdfploop");
 	shellvar_assignement("THIRD=dsfploop");
+	shellvar_assignement("b=ploop");
+	shellvar_assignement("ok=ploop");
+	shellvar_assignement("oka=ploop");
 	shellvar_assignement("THIRD[6]=dsfploop");
 	shellvar_assignement("arr=(dsfploop (sdgf), sdfg )");
 	shellvar_assignement("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
@@ -115,7 +131,8 @@ int		main(int argc, char **argv)
 	shellvar_assignement("Arr=(dsfploop (sdgf), sdfg )");
 	shellvar_assignement("ARryo=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 	shellvar_assignement("ARryo[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-
+	shellvar_assignement("Z=ploop");
+*/
 
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{

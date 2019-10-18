@@ -62,40 +62,49 @@ static struct s_shvar	*find_root_of_var(const char *const name)
 	return (NULL);
 }
 
-static int	assign_at_index(char *name, char *content, int index)
-{/*
-	ft_printf("name %s\n", name);
-	ft_printf("content %s\n", content);
-	ft_printf("index %d\n", index); */
-	struct s_shvar	*root;
-	struct s_shvar	*prev_root;
+static int insert_node(char *name, char *content, int index)
+{
+	struct s_shvar	*node;
+	struct s_shvar	*previous;
+	struct s_shvar	*next;
+	struct s_shvar	*leaf;
 	
-	struct s_shvar	*next_content;
+	next = NULL;
+	node = g_shellvar;
+	previous = g_shellvar;
+	while (node && ft_strcmp(node->value, name) < 0)
+	{
+		previous = node;
+		node = node->next_var;
+	}
+	leaf = create_shvar_node(content, NULL, NULL, index);
+	if (!leaf)
+		return (e_cannot_allocate_memory);
+	if (next)
+		next = previous->next_var;
+	if (previous)
+	{
+		previous->next_var = create_shvar_node(name, leaf, next, 0);
+		if (!previous->next_var)
+			return (e_cannot_allocate_memory);
+	}
+	else
+	{
+		g_shellvar = create_shvar_node(name, leaf, NULL, 0);
+		if (!g_shellvar)
+			return (e_cannot_allocate_memory);
+	}
+	return (e_success);
+}
+
+static int	assign_at_index(char *name, char *content, int index)
+{
+	struct s_shvar	*root;
 	
 	root = find_root_of_var(name);
 	if (!root)
-	{
-		/* create var at lexico sorted(name) point in tree */
-		root = g_shellvar;
-		prev_root = g_shellvar;
-		while (root && ft_strlexicmp(root->value, name) < 0) /* lexicogr sort instead */
-		{
-			prev_root = root;
-			root = root->next_var;
-		}
-		if (root)
-		{
-			next_content = create_shvar_node(content, NULL, NULL, index);
-			prev_root->next_var = create_shvar_node(name, next_content, root->next_var, 0);
-			/* insert */
-		}
-		else
-		{
-			/* append or prefix ? */
-			append_shvar(name, content);
-		}
-	}
-	else
+		insert_node(name, content, index);
+	else /* the var exists, replace or add index */
 	{
 		return (e_success);
 	}
