@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 15:08:12 by yberramd         ###   ########.fr       */
+/*   Updated: 2019/10/18 17:39:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ int		cmd_exit(int argc, char **argv)
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
 	free_all_shvar();
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(status);
 }
