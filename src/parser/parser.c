@@ -1,10 +1,14 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "libft.h"
 #include "ft_errno.h"
 #include "ft_queue.h"
 #include "error.h"
 #include "tokens.h"
+#include "grammar.h"
+
+#include "job.h"
 
 void	display_tokens(t_token *token)
 {
@@ -14,6 +18,16 @@ void	display_tokens(t_token *token)
 
 int	parser(struct s_queue *queue)
 {
-	queue_apply_to_each(queue, display_tokens);
+	t_token	*token;
+
+	queue_apply_to_each(queue, display_tokens); /* Verify tokens */
+
+	/* This part should not be in parser, just for test during the building */
+	extern char **environ;
+	while ((token = queue_dequeue(queue, free))) /* not right free function for tokens */
+	{
+/*		*arg = token->symbol;
+		job(arg, environ);
+*/	}
 	return (e_success);
 }
