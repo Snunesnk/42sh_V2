@@ -6,7 +6,7 @@
 
 /* ------------------------------- UTILS -----------------------------------------------*/
 
-static int	get_token_type(char *str)
+static int	get_token_type(char *str) /* get the token type comparing first characters of str with known token in grammar */
 {
 	int	i;
 
@@ -20,7 +20,7 @@ static int	get_token_type(char *str)
 	return (-1);
 }
 
-static char	*get_token_symbol(int token)
+static char	*get_token_symbol(int token) /* return pointer to the grammar symbol corresponding to the token type */
 {
 	int	i;
 
@@ -47,29 +47,30 @@ char	*get_word(char **input)
 	open_quotes = 0;
 	while ((*input)[i])
 	{
-		if (!open_quotes && ((*input)[i] == '\'' || (*input)[i] == '\"'))
+		if (!open_quotes && ((*input)[i] == '\'' || (*input)[i] == '\"')) /* check if quotes are open */
 		{
 			open_quotes ^= 1;
 			quote_type = (*input)[i];
 			++i;
 			continue;
 		}
-		if (!open_quotes && (get_token_type(&(*input)[i]) != -1 || ((*input)[i] == ' ' || (*input)[i] == '\t')))
+		if (!open_quotes && (get_token_type(&(*input)[i]) != -1 || ((*input)[i] == ' ' || (*input)[i] == '\t'))) /* stop if meet other token or delimiter */
 			break;
-		if ((*input)[i] == quote_type)
+		if ((*input)[i] == quote_type) /* Handle closing quotes */
 		{
 			++i;
 			open_quotes ^= 1;
 			continue;
 		}
 		if ((*input)[i] == '\\' &&
-			((open_quotes && quote_type != '\'') || !open_quotes))
+			((open_quotes && quote_type != '\'') || !open_quotes)) /* handle backslashes and single quote cases  */
 			++i;
 		++i;
 	}
 	if (!(word = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
-	word = (char*)ft_memcpy((void*)word, (void*)(*str), i);
+	word = (char*)ft_memcpy((void*)word, (void*)(*input), i); /* Copy the part of the string that has been
+									above-identified as WORD token */
 	*input += i;
 	return (word);
 }
@@ -95,12 +96,13 @@ t_token	tokenizer(char **input)
 	t_token	token;
 	char	*str;
 	char	*digit_start;
-	int	token_type;
 
 	str = *input;
 	token = (t_token){.symbol = NULL, .type = -1}; /* set to "no type" the token */
 	while (*str == ' ' || *str == '\t') /* skip all useless characters */
 		++str;
+	if (!*str) /* Jump to the end if no more input. */
+		return (token);
 	if (ft_isdigit(*str)) /* check for IO_NUMBER */
 	{
 		digit_start = str;
@@ -114,7 +116,7 @@ t_token	tokenizer(char **input)
 			*input = str; /* set input line read to the end of the taken token */
 		}
 	}
-	if ((token.type = get_token_type(str)) != -1) /* get token type if among metacharacters */
+	else if ((token.type = get_token_type(str)) != -1) /* get token type if among metacharacters */
 	{
 		token.symbol = ft_strdup(get_token_symbol(token.type)); /* get symbol of the token of known type */
 		*input += ft_strlen(token.symbol); /* Move input to next token */
@@ -123,7 +125,7 @@ t_token	tokenizer(char **input)
 	{
 		*input = str;
 		token.type = WORD;
-		token.symbol = get_symbol(input); /* get symbol and move input to next token */
+		token.symbol = get_word(input); /* get symbol and move input to next token */
 	}
 	return (token);
 }
