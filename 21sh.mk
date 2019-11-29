@@ -20,6 +20,7 @@ SOURCES :=	main.c \
 		input/prompt.c \
 		lexer/lexer.c \
 		lexer/unglue_sep.c \
+		lexer/grammar_symbols.c \
 		parser/jcont.c \
 		parser/job.c \
 		parser/path_concat.c \

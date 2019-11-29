@@ -8,7 +8,7 @@
 
 struct s_token	g_grammar_symbols[] =
 {
-/*	{ AND_IF, "&&" },
+	{ AND_IF, "&&" },
 	{ OR_IF, "||" },
 	{ DLESS , "<<" },
 	{ DGREAT, ">>" },
@@ -23,5 +23,5 @@ struct s_token	g_grammar_symbols[] =
 	{ Fi, "fi" },
 	{ Lbrace, "{" },
 	{ Rbrace, "}" },
-*/	{ -1, NULL }
+	{ -1, NULL }
 };
