@@ -56,33 +56,47 @@ char	*get_symbol(char **str)
 	return (tmp);
 }
 
+/* Function copy the io_number to the symbol section of a token */
+static t_token	get_io_number(char *io_nb_start, char *io_nb_end)
+{
+	t_token token;
+
+	token.type = IO_NUMBER;
+	token.symbol = ft_strndup(io_nb_start, (size_t)(io_nb_end - io_nb_start)); /* Copy the "numbers" into a string */
+	if (!token.symbol)
+	{
+		g_errno = E_ENOMEM; /* If malloc failed, g_errno is set for further error mgt  */
+		return ((t_token){0}); /* return empty token */
+	}
+	return (token);
+}
+
 /* Analyze the input string and eat the first chunck of that input which correspond to a token */
 t_token	tokenizer(char *input)
 {
 	t_token	token;
-	char	*start;
+/*	char	*start; */
 	char	*digit_start;
 
-	start = input;
-	while (*input == ' ' || *input == '\t') /* skip all useless characters */
+/*	start = input;
+*/	while (*input == ' ' || *input == '\t') /* skip all useless characters */
 		++input;
 	if (ft_isdigit(*input))
 	{
 		digit_start = input;
-		while (ft_isdigit(*digit_start)) /* skip digit to know if a <, <<, > or >> follows the digit,
+		while (ft_isdigit(*input)) /* skip digit to know if a <, <<, > or >> follows the digit,
 					in this case the number is a IO_NUMBER, eg ls 124> toto */
-			++digit_start;
-		if (*digit_start == '>' || *digit_start == '<')
-		{
-			/* return the IO_NUMBER token here */
-		}
+			++input;
+		if (*input == '>' || *input == '<')
+			token = get_io_number(digit_start, input); /* get the io_number abd return it
+									as token, e.g. ls 2> ok, 2 is io_number */
 	}
-	else
+/*	else
 	{
 	}
 	token.symbol = get_symbol(input);
 	token.type = WORD;
-	return (token);
+*/	return (token);
 }
 
 /* malloc a token and set its value before returning it to the lexer */
