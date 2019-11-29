@@ -142,8 +142,10 @@ int		main(int argc, char **argv)
 		if (lexer(input, &queue) != e_success)
 			exit(1);
 		ft_memdel((void**)&input);
-		status = parser(&queue);
-		exit (0);
+		if ((status = parser(&queue)) != e_success)
+			exit(1);
+		ft_printf("Tree execution places here\n");
+		exit(0);
 		if (status != e_success)
 		{
 			g_retval = status;
