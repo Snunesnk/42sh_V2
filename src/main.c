@@ -69,7 +69,7 @@ int		main(int argc, char **argv)
 	char		*input;
 	char		**args;
 	int			status;
-	
+
 	(void)argc;
 	status = 0;
 	g_progname = argv[0];
@@ -97,13 +97,13 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-*/
-	/* test assignements and free */
+
+	 test assignements and free
 	shellvar_assignement("z=ploop");
 
 	shellvar_assignement("a=ploop");
 	shellvar_assignement("b=ploop");
-/*		shellvar_assignement("y=ploop");
+		shellvar_assignement("y=ploop");
 	shellvar_assignement("t=ploop");
 	shellvar_assignement("r=ploop");
 	shellvar_assignement("r=ploop");
