@@ -15,40 +15,40 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
-			transv/error.c \
-			transv/signals.c \
-			input/path.c \
-			input/prompt.c \
-			input/input.c \
-			lex/lexer.c \
-			lex/expansions/expansions.c \
-			lex/expansions/expansion_utils.c \
-			lex/expansions/get_param.c \
-			lex/expansions/parameter_expansions.c \
-			lex/expansions/tilde_expansion.c \
-			lex/separators/unglue_sep.c \
-			synt/synt.c \
-			synt/synt_const.c \
-			jcont/jcont.c \
-			job/job.c \
-			job/path_concat.c \
-			job/builtins/builtin_cd.c \
-			job/builtins/builtin_set.c \
-			job/builtins/builtin_echo.c \
-			job/builtins/builtin_type.c \
-			job/builtins/builtin_env.c \
-			job/builtins/builtin_exit.c \
-			job/builtins/builtin_pwd.c \
-			job/builtins/builtin_setenv.c \
-			job/builtins/builtin_unsetenv.c \
-			job/builtins/builtin_truefalse.c \
-			job/builtins/builtins_dispatcher.c \
-			job/builtins/ft_putenv_table.c \
-			job/builtins/shell_variables/shell_variables.c \
-			job/builtins/shell_variables/alloc_shell_variables.c \
-			job/builtins/shell_variables/free_shell_variables.c \
-			job/builtins/shell_variables/init_shell_variables.c \
-			job/builtins/shell_variables/utils_shell_variables.c \
+		input/input.c \
+		input/path.c \
+		input/prompt.c \
+		lexer/lexer.c \
+		lexer/unglue_sep.c \
+		parser/jcont.c \
+		parser/job.c \
+		parser/path_concat.c \
+		parser/synt.c \
+		parser/synt_const.c \
+		modules/error.c \
+		modules/signals.c \
+		modules/builtins/builtin_cd.c \
+		modules/builtins/builtin_echo.c \
+		modules/builtins/builtin_env.c \
+		modules/builtins/builtin_exit.c \
+		modules/builtins/builtin_pwd.c \
+		modules/builtins/builtins_dispatcher.c \
+		modules/builtins/builtin_set.c \
+		modules/builtins/builtin_setenv.c \
+		modules/builtins/builtin_truefalse.c \
+		modules/builtins/builtin_type.c \
+		modules/builtins/builtin_unsetenv.c \
+		modules/builtins/ft_putenv_table.c \
+		modules/builtins/shell_variables/alloc_shell_variables.c \
+		modules/builtins/shell_variables/free_shell_variables.c \
+		modules/builtins/shell_variables/init_shell_variables.c \
+		modules/builtins/shell_variables/shell_variables.c \
+		modules/builtins/shell_variables/utils_shell_variables.c \
+		modules/expansions/expansions.c \
+		modules/expansions/expansion_utils.c \
+		modules/expansions/get_param.c \
+		modules/expansions/parameter_expansions.c \
+		modules/expansions/tilde_expansion.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
