@@ -79,7 +79,8 @@ t_token	tokenizer(char *input)
 	char	*digit_start;
 
 /*	start = input;
-*/	while (*input == ' ' || *input == '\t') /* skip all useless characters */
+*/	token = (t_token){.symbol = NULL, .type = -1}; /* set to "no type" the token */
+	while (*input == ' ' || *input == '\t') /* skip all useless characters */
 		++input;
 	if (ft_isdigit(*input))
 	{
@@ -111,6 +112,8 @@ t_token	*get_next_token(char *input)
 		return (NULL);
 	}
 	*token = tokenizer(input); /* assign value of the token without memcpy */
+	if (token->type == -1) /* if type does not exist, then the token is empty. */
+		return (NULL);
 	return (token);
 }
 
