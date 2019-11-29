@@ -36,7 +36,7 @@ char	*get_symbol(char **str)
 				++i;
 				continue;
 			}
-			if (!open_quotes && (get_token_type(&(*str)[i]) != -1 || ft_isspace((*str)[i])))
+			if (!open_quotes && (get_token_type(&(*str)[i]) != -1 || ((*str)[i] == ' ' || (*str)[i] == '\t')))
 				break;
 			if ((*str)[i] == quote_type)
 			{
