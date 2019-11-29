@@ -25,6 +25,7 @@
 #include "input.h"
 #include "error.h"
 #include "lexer.h"
+#include "parser.h"
 #include "jcont.h"
 #include "synt.h"
 #include "path.h"
@@ -138,14 +139,11 @@ int		main(int argc, char **argv)
 */
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
-		if (lexer(input, &queue) == e_success)
-			exit(0);
-		else    /* debug */
-			exit (1);
+		if (lexer(input, &queue) != e_success)
+			exit(1);
 		ft_memdel((void**)&input);
-		if (!args)
-			continue;
-		status = synt(args);
+		status = parser(&queue);
+		exit (0);
 		if (status != e_success)
 		{
 			g_retval = status;

@@ -160,8 +160,6 @@ int	lexer(char *input, struct s_queue *queue)
 	while ((token = get_next_token(&input))) /* Get a token from the input until no more token */
 	{
 		queue_enqueue(queue, token); /* Put that token into a queue to speed up the recursive descent during parsing */
-		ft_printf("symbol: %s\n", token->symbol);/* deebug */
-		ft_printf("type: %d\n\n", token->type);/* deebug */
 	}
 	if (g_errno == E_ENOMEM) /* If a malloc failed, g_errno set error value and then return the corresponding error value */
 		return (e_cannot_allocate_memory);
