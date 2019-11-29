@@ -17,6 +17,7 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "ft_queue.h"
 #include "shell_variables.h"
 #include "sig_handler.h"
 #include "builtins.h"
@@ -64,6 +65,7 @@ static int	set_minimal_env(void)
 
 int		main(int argc, char **argv)
 {
+	struct s_queue	queue;
 	extern char	**environ;
 	extern int	g_fd_prompt;
 	char		*input;
@@ -71,6 +73,7 @@ int		main(int argc, char **argv)
 	int			status;
 
 	(void)argc;
+	queue = (struct s_queue){.front = NULL, .rear = NULL};
 	status = 0;
 	g_progname = argv[0];
 	if (!(environ = ft_tabcpy(environ)))
@@ -133,10 +136,12 @@ int		main(int argc, char **argv)
 	shellvar_assignement("ARryo[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
 	shellvar_assignement("Z=ploop");
 */
-
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
-		args = lexer(&input);
+		if (lexer(input, &queue) == e_success)
+			exit(0);
+		else    /* debug */
+			exit (1);
 		ft_memdel((void**)&input);
 		if (!args)
 			continue;
