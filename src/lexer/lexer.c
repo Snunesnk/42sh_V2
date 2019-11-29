@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "libft.h"
 #include "ft_errno.h"
 #include "ft_queue.h"
