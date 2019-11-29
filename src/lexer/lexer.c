@@ -72,11 +72,14 @@ t_token	tokenizer(char *input)
 		while (ft_isdigit(*digit_start)) /* skip digit to know if a <, <<, > or >> follows the digit,
 					in this case the number is a IO_NUMBER, eg ls 124> toto */
 			++digit_start;
-		
+		if (*digit_start == '>' || *digit_start == '<')
+		{
+			/* return the IO_NUMBER token here */
+		}
 	}
-	/* check if atoi then >> > < << etc
-	if (input[x] == '<' || input[x] == '>')
-	*/
+	else
+	{
+	}
 	token.symbol = get_symbol(input);
 	token.type = WORD;
 	return (token);
