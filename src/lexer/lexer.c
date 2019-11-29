@@ -4,7 +4,7 @@
 #include "error.h"
 #include "tokens.h"
 
-static enum e_tokens	get_token_type(char *str)
+static int	get_token_type(char *str)
 {
 	int	i;
 
@@ -29,7 +29,7 @@ char	*get_symbol(char **str)
 	open_quotes = 0;
 	while ((*str)[i])
 	{
-		if (!open_quotes && (c == '\'' || c == '\"'))
+		if (!open_quotes && ((*str)[i] == '\'' || (*str)[i] == '\"'))
 		{
 			open_quotes ^= 1;
 			quote_type = (*str)[i];
@@ -61,19 +61,24 @@ t_token	tokenizer(char *input)
 {
 	t_token	token;
 	char	*start;
-	char	*;
+	char	*digit_start;
 
 	start = input;
 	while (*input == ' ' || *input == '\t') /* skip all useless characters */
 		++input;
-	while (ft_isdigit(input)) /* skip digit to know if a <, <<, > or >> follows the digit,
+	if (ft_isdigit(*input))
+	{
+		digit_start = input;
+		while (ft_isdigit(*digit_start)) /* skip digit to know if a <, <<, > or >> follows the digit,
 					in this case the number is a IO_NUMBER, eg ls 124> toto */
-		++input;
+			++digit_start;
+		
+	}
 	/* check if atoi then >> > < << etc
 	if (input[x] == '<' || input[x] == '>')
 	*/
-	token->symbol = get_symbol(input);
-	token->type = WORD;
+	token.symbol = get_symbol(input);
+	token.type = WORD;
 	return (token);
 }
 
