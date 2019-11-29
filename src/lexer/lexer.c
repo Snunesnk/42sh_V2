@@ -29,25 +29,25 @@ char	*get_symbol(char **str)
 	open_quotes = 0;
 	while ((*str)[i])
 	{
-			if (!open_quotes && (c == '\'' || c == '\"'))
-			{
-				open_quotes ^= 1;
-				quote_type = (*str)[i];
-				++i;
-				continue;
-			}
-			if (!open_quotes && (get_token_type(&(*str)[i]) != -1 || ((*str)[i] == ' ' || (*str)[i] == '\t')))
-				break;
-			if ((*str)[i] == quote_type)
-			{
-				++i;
-				open_quotes ^= 1;
-				continue;
-			}
-			if ((*str)[i] == '\\' &&
-				((open_quotes && quote_type != '\'') || !open_quotes))
-				++i;
+		if (!open_quotes && (c == '\'' || c == '\"'))
+		{
+			open_quotes ^= 1;
+			quote_type = (*str)[i];
 			++i;
+			continue;
+		}
+		if (!open_quotes && (get_token_type(&(*str)[i]) != -1 || ((*str)[i] == ' ' || (*str)[i] == '\t')))
+			break;
+		if ((*str)[i] == quote_type)
+		{
+			++i;
+			open_quotes ^= 1;
+			continue;
+		}
+		if ((*str)[i] == '\\' &&
+			((open_quotes && quote_type != '\'') || !open_quotes))
+			++i;
+		++i;
 	}
 	if (!(tmp = (char*)ft_memalloc(sizeof(char) * (i + 1))))
 		return (NULL);
