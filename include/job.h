@@ -17,6 +17,7 @@
 int	job(char **argv, char **envp);
 int	path_concat(char **bin);
 
+extern int	g_retval;
 extern pid_t	g_childpid;
 
 #endif

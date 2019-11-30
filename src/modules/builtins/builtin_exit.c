@@ -14,14 +14,14 @@
 
 #include "libft.h"
 #include "error.h"
-#include "jcont.h"
 #include "shell_variables.h"
+#include "job.h"
 
 static int	part_sep(int argc, char **argv)
 {
 	extern char	**environ;
 	unsigned char	status;
-	
+
 	status = g_retval;
 	if (!ft_strcmp("--", argv[1]))
 	{
@@ -42,7 +42,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 {
 	extern char	**environ;
 	unsigned char	status;
-	
+
 	status = g_retval;
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (argc > i + 1)

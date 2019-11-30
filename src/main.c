@@ -26,8 +26,6 @@
 #include "error.h"
 #include "lexer.h"
 #include "parser.h"
-#include "jcont.h"
-#include "synt.h"
 #include "path.h"
 
 int		g_retval;
@@ -152,8 +150,8 @@ int		main(int argc, char **argv)
 			ft_tabdel(&args);
 			continue;
 		}
-		g_retval = jcont(args, environ);
-		ft_tabdel(&args);
+/*		g_retval = jcont(args, environ); Will be the execution module of the tree
+*/		ft_tabdel(&args);
 	}
 	ft_tabdel(&environ);
 	free_all_shvar();

@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "error.h"
 #include "expansions.h"
-#include "jcont.h"
+#include "job.h"
 
 static char	*get_retval(const char *str)
 {
