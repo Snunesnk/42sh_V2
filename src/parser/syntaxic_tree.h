@@ -21,7 +21,7 @@ struct s_process
   int			status;      /* reported status value */
 };
 
-/* A job is a pipeline of processes.  */
+/* A job is a pipeline (a singly-linked list or FIFO, refers to ft_queue methods) of processes.  */
 struct s_job
 {
   struct s_job		*next;          /* next active job */
