@@ -17,36 +17,68 @@ void	display_tokens(t_token *token)
 	ft_printf("type: %d\n\n", token->type);/* deebug */
 }
 
-/*
-int	execute_tree()
+int	execute_jobs(t_job *s_job)
 {
-	argv = (char**)ft_memalloc(sizeof(char*) * 2);
-	*argv = token->symbol;
-	job(argv, environ);
-	return (0);
-} */
-
-int	build_tree(t_node **root, t_token *token)
-{
-	(void)root;
-	(void)token;
+	t_process	*ptmp;
+	extern char **environ; /* not the correct environ, should be the modified one */
+	while (1) /* execute all jobs */
+	{
+		ptmp = s_job->first_process;
+		while (2) /* execute all processes in a job */
+		{
+			job(ptmp->argv, environ); /* should be modified just for execution, no more path_concat at this stage */
+			if (!(ptmp->next))
+				break;
+			ptmp = ptmp->next;
+		}
+		if (!(s_job->next))
+			break;
+		s_job = s_job->next;
+	}
 	return (0);
 }
 
 int	parser(struct s_queue *queue)
 {
-	t_node	*tree;
 	t_token	*token;
 /*	char	**argv;
 */
 	queue_apply_to_each(queue, display_tokens); /* Verify tokens */
 
-	/* This part should not be in parser, just for test during the building */
+	/* Experimental This part should not be in parser, just for test during the building */
 /*	extern char **environ;
-*/	while ((token = queue_dequeue(queue, NULL))) /* not right free function for tokens */
+*/
+	t_process	*process;
+	t_job		*job;
+
+	job = (t_job*)ft_memalloc(sizeof(t_job));
+	process = (t_process*)ft_memalloc(sizeof(t_process));
+	size_t i = 0;
+	char **ar;
+	while ((token = queue_dequeue(queue, NULL)) && token->type == WORD) /* try to build a single process in a single job,
+										process is a simple_command */
 	{
-		build_tree(&tree, token);
+		if (process->argv == NULL)
+		{
+			process->argv = (char**)ft_tabmalloc(2);
+			process->argv[0] = token->symbol; /* here should be path concat (try to find the command) */
+		}
+		else
+		{
+			i = ft_tablen(process->argv);
+			ar = (char**)ft_tabmalloc(i + 2);
+			size_t e = 0;
+			while (e < i)
+			{
+				ar[e] = process->argv[e];
+				++e;
+			}
+			ar[e] = token->symbol;
+			process->argv = ar;
+		}
 	}
+	job->first_process = process;
+	execute_jobs(job);
 	/* End of test part */
 	return (e_success);
 }
