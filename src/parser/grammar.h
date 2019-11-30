@@ -99,12 +99,21 @@ brace_group      : Lbrace compound_list Rbrace
                  ;
 do_group         : Do compound_list Done
                  ;
+
+
+********
+* HERE *
+********
+
+// ---  1st rule to implement in gradient descent: simple command -- //
+
 simple_command   : cmd_prefix cmd_word cmd_suffix
                  | cmd_prefix cmd_word
                  | cmd_prefix
-                 | cmd_name cmd_suffix
-                 | cmd_name
+                 | cmd_name cmd_suffix   // #2
+                 | cmd_name              // #1
                  ;
+
 cmd_name         : WORD
                  ;
 cmd_word         : WORD
