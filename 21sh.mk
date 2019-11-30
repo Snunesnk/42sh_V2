@@ -21,11 +21,8 @@ SOURCES :=	main.c \
 		lexer/lexer.c \
 		lexer/grammar_symbols.c \
 		parser/parser.c \
-		parser/jcont.c \
 		parser/job.c \
 		parser/path_concat.c \
-		parser/synt.c \
-		parser/synt_const.c \
 		modules/error.c \
 		modules/signals.c \
 		modules/builtins/builtin_cd.c \
