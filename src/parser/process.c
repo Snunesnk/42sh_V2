@@ -6,7 +6,7 @@
 
 #include "job_control.h"
 
-int	launch_process(process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
+int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
 	pid_t	pid;
 	if (shell_is_interactive)
@@ -51,30 +51,4 @@ int	launch_process(process *p, pid_t pgid, int infile, int outfile, int errfile,
 	execve(p->argv[0], p->argv);
 	perror("Failed to launch process using execve");
 	exit(1);
-}
-
-int my_launch(const char *command, char *const argv[], char *const envp[])
-{
-	int	status;
-	pid_t	pid;
-
-	pid = fork ();
-	if (pid == 0)
-	{
-		/* This is the child process. Execute the shell command. */
-		status = launch_process();
-		exit(status);
-	}
-	else if (pid < 0)
-	{
-		/* The fork failed. Report failure. */
-		status = -1;
-	}
-	else
-	{
-		/* This is the parent process. Wait for the child to complete. */
-		if (waitpid (pid, &status, 0) != pid)
-			status = -1;
-	}
-	return (status);
 }

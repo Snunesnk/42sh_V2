@@ -1,4 +1,5 @@
 #include <sys/types.h>
+#include <signal.h>
 #include <termios.h>
 #include <unistd.h>
 #include <stdlib.h>

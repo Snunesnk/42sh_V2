@@ -3,13 +3,48 @@
 
 #include "job_control.h"
 
-t_job	*first_job = NULL;
+t_job			*first_job = NULL;
+extern pid_t           shell_pgid;
+extern struct termios  shell_tmodes;
+extern int             shell_terminal;
+extern int             shell_is_interactive;
+
+
 
 /* MEMO: A subshell that runs non-interactively cannot and should not support job control. It
 ** must leave all processes it creates in the same process group as the shell itself; this allows
 ** the non-interactive shell and its child processes to be treated as a single job by the parent
 ** shell. This is easy to do—just don’t use any of the job control primitives—but you must
 ** remember to make the shell do it. */
+
+
+/* Put job j in the foreground. If cont is nonzero,
+restore the saved terminal modes and send the process group a
+SIGCONT signal to wake it up before we block. */
+
+/* Put the job into the foreground. */
+void	put_job_in_foreground(t_job *j, int cont)
+{
+	tcsetpgrp(shell_terminal, j->pgid);
+	/* Send the job a continue signal, if necessary. */
+	if (cont)
+	{
+		tcsetattr(shell_terminal, TCSADRAIN, &j->tmodes);
+		if(kill(- j->pgid, SIGCONT) < 0)
+			perror("kill (SIGCONT)");
+	}
+	/* Wait for it to report. */
+	 wait_for_job(j);
+	/* Put the shell back in the foreground. */
+	tcsetpgrp(shell_terminal, shell_pgid);
+	/* Restore the shell’s terminal modes. */
+	tcgetattr(shell_terminal, &j->tmodes);
+	tcsetattr(shell_terminal, TCSADRAIN, &shell_tmodes);
+}
+
+
+
+
 
 /* Find the active job with the indicated pgid. */
 t_job	*find_job(pid_t pgid)

@@ -34,6 +34,12 @@ typedef struct s_process	t_process;
 typedef struct s_job		t_job;
 
 /* The active jobs are linked into a list. This is its head. */
-extern t_job	*first_job;
+extern t_job		*first_job;
+extern pid_t		shell_pgid;
+extern struct termios	shell_tmodes;
+extern int		shell_terminal;
+extern int		shell_is_interactive;
+
+int	init_shell(void);
 
 #endif
