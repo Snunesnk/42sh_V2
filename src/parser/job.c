@@ -1,152 +1,44 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   job.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/21 16:20:30 by abarthel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <stddef.h>
+#include <stdlib.h>
 
-#include <errno.h>
-#include <stdio.h>
-#include <signal.h>
-#include <unistd.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
+#include "job_control.h"
 
-#include "sig_handler.h"
-#include "builtins.h"
-#include "error.h"
-#include "libft.h"
-#include "job.h"
+t_job	*first_job = NULL;
 
-pid_t		g_childpid = 0;
+/* MEMO: A subshell that runs non-interactively cannot and should not support job control. It
+** must leave all processes it creates in the same process group as the shell itself; this allows
+** the non-interactive shell and its child processes to be treated as a single job by the parent
+** shell. This is easy to do—just don’t use any of the job control primitives—but you must
+** remember to make the shell do it. */
 
-static int 	check_type(char **arg)
+/* Find the active job with the indicated pgid. */
+t_job	*find_job(pid_t pgid)
 {
-	struct stat	buf;
-	char		*pathname;
+	t_job	*j;
 
-	buf = (struct stat){.st_mode = 0};
-	pathname = *arg;
-	if (prior_builtin(*arg))
-	{
-		ft_memdel((void**)arg);
-		return (e_command_not_found);
-	}
-	if (!ft_strcmp(*arg, "."))
-		return (e_filename_arg_required);
-	if (ft_strstr(*arg, "/"))
-	{
-		if (access(*arg, F_OK))
-			return (e_no_such_file_or_directory);
-		else if (stat(*arg, &buf))
-			return (e_system_call_error);
-	}
-	else
-	{
-		if (path_concat(arg))
-			*arg = pathname;
-		if (stat(*arg, &buf))
-			return (e_command_not_found);
-	}
-	return (e_success);
+	for (j = first_job; j; j = j->next)
+		if (j->pgid == pgid)
+			return (j);
+	return (NULL);
 }
 
-static int	check_access(char *arg)
+/* Return true if all processes in the job have stopped or completed. */
+int	job_is_stopped(t_job *j)
 {
-	int ret;
+	t_process	*p;
 
-	ret = e_success;
-	if ((ret = access(arg, X_OK)))
-	{
-		psherror(e_permission_denied, arg, e_cmd_type);
-		return (e_permission_denied);
-	}
-	return (e_success);
+	for (p = j->first_process; p; p = p->next)
+		if (!p->completed && !p->stopped)
+			return (0);
+	return (1);
 }
 
-static int	builtin_keyword_exec(char **argv)
+/* Return true if all processes in the job have completed. */
+int	job_is_completed(t_job *j)
 {
-	int	ret;
-
-	ret = e_success;
-	if (argv[1] && (ret = builtins_dispatcher(&argv[1])) != e_command_not_found)
-	{
-		return (ret);
-	}
-	else
-	{
-		psherror(e_no_builtin, argv[1], e_cmd_type);
-		return (g_errordesc[e_no_builtin].code);
-	}
-}
-
-static int	process_launch(char **argv, char **envp, char *pathname)
-{
-	extern pid_t	g_childpid;
-	int		wstatus;
-	int		ret;
-
-	wstatus = 0;
-	ret = e_success;
-	ft_swap((void**)&argv[0], (void**)&pathname);
-
-	if ((g_childpid = fork()) == 0) /*add fork protection, check SHLVL and resources */
-	{
-		ret = execve(pathname, argv, envp);
-		ft_tabdel(&argv);
-		ft_tabdel(&envp);
-		ft_memdel((void**)&pathname);
-		exit (ret);
-	}
-	else
-	{
-		set_signals(1);
-		waitpid(g_childpid, &wstatus, WUNTRACED);
-		ret = WEXITSTATUS(wstatus);
-		ft_memdel((void**)&pathname);
-		return (ret);
-	}
-}
-
-int	job(char **argv, char **envp)
-{
-	int	ret;
-	char	*pathname;
-
-	ret = e_success;
-	if (!ft_strcmp(argv[0], "builtin"))
-		return (builtin_keyword_exec(argv));
-	pathname = ft_strdup(argv[0]);
-	if ((ret = check_type(&argv[0])) != e_command_not_found && ret != e_success) /* check type of the argument */
-	{
-		psherror(ret, pathname, e_cmd_type);
-		ft_memdel((void**)&pathname);
-		return (g_errordesc[ret].code);
-	}
-	if (ret == e_success)
-	{
-		if (!check_access(argv[0]))
-			return (process_launch(argv, envp, pathname));
-		else
-		{
-			ft_memdel((void**)&pathname);
-			return (g_errordesc[e_permission_denied].code);
-		}
-	}
-	else
-	{
-		argv[0] = pathname;
-		ret = builtins_dispatcher(&argv[0]);
-	   	if (ret == e_command_not_found)
-		{
-			psherror(e_command_not_found, argv[0], e_cmd_type);
-			return (g_errordesc[e_command_not_found].code);
-		}
-		return (ret);
-	}
+	t_process	*p;
+	for (p = j->first_process; p; p = p->next)
+		if (!p->completed)
+			return (0);
+	return (1);
 }
