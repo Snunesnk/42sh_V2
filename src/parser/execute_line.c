@@ -153,11 +153,10 @@ int	build_jobs(t_job **j, t_list **lst)
 
 int	execute_line(t_list *lst)
 {
-	t_list		*lst_beg;
+	t_job		*j_beg;
 	t_job		*j;
 	t_process	*p;
 
-	lst_beg = lst;
 	lst = lst->next;
 	j = NULL;
 	if (build_jobs(&j, &lst) == FAILURE)
@@ -172,7 +171,14 @@ int	execute_line(t_list *lst)
 		}
 		j = j->next;
 	}
-*/	launch_job(j, 1);
-	
+*/	j_beg = j;
+	launch_job(j, 1);
+	j = j_beg;
+	while (j)
+	{
+		j_beg = j->next;
+		free_job(j);
+		j = j_beg;
+	}
 	return (SUCCESS);
 }
