@@ -23,6 +23,21 @@ extern int             shell_is_interactive;
 restore the saved terminal modes and send the process group a
 SIGCONT signal to wake it up before we block. */
 
+void	free_job(t_job *j) /* temporary for test purposes ? */
+{
+	t_process	*p;
+	t_process	*next_p;
+
+	p = j->first_process;
+	while (p)
+	{
+		next_p = p->next;
+		free_process(p);
+		p = next_p;
+	}
+	free(j);
+}
+
 /* Put the job into the foreground. */
 void	put_job_in_foreground(t_job *j, int cont)
 {
@@ -215,6 +230,7 @@ void	wait_for_job(t_job *j)
 /* Format information about job status for the user to look at. */
 void	format_job_info (t_job *j, const char *status)
 {
+	printf("DONE\n");
 	return ; // DEBUGG
 	fprintf(STDERR_FILENO, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
@@ -243,7 +259,7 @@ void	do_job_notification(void)
 				jlast->next = jnext;
 			else
 				first_job = jnext;
-		//	free_job(j);
+			free_job(j);
 		}
 		/* Notify the user about stopped jobs, marking them so that we won’t do this more than once. */
 		else if (job_is_stopped(j) && !j->notified)

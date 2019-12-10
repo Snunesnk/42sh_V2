@@ -6,6 +6,12 @@
 
 #include "job_control.h"
 
+void	free_process(t_process *p) /* temporary for tests purposes ? */
+{
+	free(p->argv);
+	free(p);
+}
+
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
 	extern char	**environ;
