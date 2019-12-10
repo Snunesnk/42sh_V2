@@ -41,5 +41,6 @@ extern int		shell_terminal;
 extern int		shell_is_interactive;
 
 int	init_shell(void);
+void	launch_job(t_job *j, int foreground);
 
 #endif

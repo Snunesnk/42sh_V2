@@ -1,5 +1,9 @@
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <errno.h>
+#include <sys/wait.h>
 
 #include "job_control.h"
 
@@ -88,7 +92,7 @@ void	launch_job(t_job *j, int foreground)
 	t_process	*p;
 	pid_t		pid;
 	int		mypipe[2];
-	int		infile
+	int		infile;
 	int		outfile;
 
 	infile = j->stdin;
@@ -163,13 +167,13 @@ int	mark_process_status(pid_t pid, int status)
 					{
 						p->completed = 1;
 						if (WIFSIGNALED(status))
-							fprintf(stderr, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
+							fprintf(STDERR_FILENO, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
 					}
 					return (0);
 				}
 			}
 		}
-		fprintf (stderr, "No child process %d.\n", pid);
+		fprintf (STDERR_FILENO, "No child process %d.\n", pid);
 		return (-1);
 	}
 	else if (pid == 0 || errno == ECHILD) /* No processes ready to report. */
@@ -211,7 +215,8 @@ void	wait_for_job(t_job *j)
 /* Format information about job status for the user to look at. */
 void	format_job_info (t_job *j, const char *status)
 {
-	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
+	return ; // DEBUGG
+	fprintf(STDERR_FILENO, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
 
 /* Notify the user about stopped or terminated jobs.
@@ -238,7 +243,7 @@ void	do_job_notification(void)
 				jlast->next = jnext;
 			else
 				first_job = jnext;
-			free_job(j);
+		//	free_job(j);
 		}
 		/* Notify the user about stopped jobs, marking them so that we won’t do this more than once. */
 		else if (job_is_stopped(j) && !j->notified)
