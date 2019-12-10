@@ -8,7 +8,9 @@
 
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
-	pid_t	pid;
+	extern char	**environ;
+	pid_t		pid;
+
 	if (shell_is_interactive)
 	{ /* Put the process into the process group and give the process group
 	  the terminal, if appropriate. This has to be done both by the shell
@@ -48,7 +50,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		close(errfile);
 	}
 	/* Exec the new process. Make sure we exit */
-	execve(p->argv[0], p->argv);
+	execve(p->argv[0], p->argv, environ);
 	perror("Failed to launch process using execve");
 	exit(1);
 }
