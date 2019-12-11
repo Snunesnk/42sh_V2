@@ -107,8 +107,10 @@ int	build_processes(t_process **first_process, t_list **lst)
 	p = *first_process;
 	while (*lst)
 	{
-		while (*lst && (t = (*lst)->content) && t->type != WORD)
+		while (*lst && (t = (*lst)->content) && t->type == PIPE)
 			(*lst) = (*lst)->next;
+		if (t->type != WORD)
+			return (SUCCESS);
 		if (*lst == NULL)
 			break;
 		if (build_a_process(&(p->next), lst) == FAILURE)
@@ -124,34 +126,44 @@ int	build_processes(t_process **first_process, t_list **lst)
 
 int	build_a_job(t_job **j, t_list **lst)
 {
-	t_token	*t;
-
-	while (*lst)
-	{
-		*j = (t_job*)ft_memalloc(sizeof(t_job));
-		/* try simple pipe */
-		(*j)->stdin = STDIN_FILENO;
-		(*j)->stdout = STDOUT_FILENO;
-		(*j)->stderr = STDERR_FILENO;
-		/* end config */
-		if (*j == NULL)
-			return (FAILURE);
-		if (build_processes(&((*j)->first_process), lst) == FAILURE)
-			return (FAILURE);
-/*		print_p((*j)->first_process); // debug 
-*/		while (*lst && (t = (*lst)->content) && t->type != WORD)
-			(*lst) = (*lst)->next;
-	}
+	*j = (t_job*)ft_memalloc(sizeof(t_job));
+	/* try simple pipe */
+	(*j)->stdin = STDIN_FILENO;
+	(*j)->stdout = STDOUT_FILENO;
+	(*j)->stderr = STDERR_FILENO;
+	/* end config */
+	if (*j == NULL)
+		return (FAILURE);
+	if (build_processes(&((*j)->first_process), lst) == FAILURE)
+		return (FAILURE);
+/*		print_p((*j)->first_process); */
 	return (SUCCESS);
 
 }
 
 int	build_jobs(t_job **j, t_list **lst)
 {
-	return (build_a_job(j, lst));
+	t_job	*newj;
+	t_token	*t;
+
+	if (build_a_job(&newj, lst) == FAILURE)
+		return (FAILURE);
+	*j = newj;
+	while (*lst)
+	{
+		t = (*lst)->content;
+		if (t->type == SEMICOLON)
+			(*lst) = (*lst)->next;
+		else
+			break;
+		if (build_a_job(&(newj->next), lst) == FAILURE)
+			return (FAILURE);
+		newj = newj->next;
+	}
+	return (SUCCESS);
 }
 
-int	execute_line(t_list *lst)
+int	launch_all_jobs(t_list *lst)
 {
 	t_job		*j_beg;
 	t_job		*j;
@@ -161,22 +173,10 @@ int	execute_line(t_list *lst)
 	j = NULL;
 	if (build_jobs(&j, &lst) == FAILURE)
 		return (FAILURE);
-/*	while (j) // DEBUGG
-	{
-		p = j->first_process;
-		while (p)
-		{
-			ft_print_tables(p->argv);
-			p = p->next;
-		}
-		j = j->next;
-	}
-*/	j_beg = j;
-	launch_job(j, 1);
-	j = j_beg;
 	while (j)
 	{
 		j_beg = j->next;
+		launch_job(j, 1);
 		free_job(j);
 		j = j_beg;
 	}
