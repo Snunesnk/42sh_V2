@@ -11,6 +11,12 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "token.h"
+
+int		ft_isblank(int c)
+{
+	return (c == ' ' || c == '\t');
+}
 
 static void	init_token_tab(char **token_tab)
 {
@@ -86,12 +92,11 @@ static int	add_token_to_list(t_token *token, t_list **lst)
 	t_list	*new;
 	int		ret;
 
-	ret = SUCCESS;
 	new = ft_lstnew(token, sizeof(*token));
 	if (new == NULL)
-		ret = FAILURE;
+		return(EXIT_FAILURE);
 	ft_lstaddend(lst, new);
-	return (ret);
+	return (EXIT_SUCCESS);
 }
 
 static int	border_token_list(t_list **lst, uint64_t token_type)
@@ -113,7 +118,6 @@ static int	get_token_list(const char *str, t_list **lst)
 	int		ret;
 
 	pos = 0;
-	ret = SUCCESS;
 	while (str[pos] != '\0')
 	{
 		while (ft_isblank(str[pos]) == TRUE)
@@ -124,13 +128,10 @@ static int	get_token_list(const char *str, t_list **lst)
 		last_pos = pos;
 		pos += get_next_token(str + pos, &token);
 		ret = add_token_to_list(&token, lst);
-		if (pos == last_pos || ret == FAILURE)
-		{
-			ret = FAILURE;
-			break ;
-		}
+		if (pos == last_pos || ret == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	return (ret);
+	return (EXIT_SUCCESS);
 }
 
 int			lexer(const char *str, t_list **lst)
@@ -138,10 +139,10 @@ int			lexer(const char *str, t_list **lst)
 	int		ret;
 
 	ret = border_token_list(lst, START);
-	if (ret == SUCCESS)
+	if (ret == EXIT_SUCCESS)
 	{
 		ret = get_token_list(str, lst);
-		if (ret == SUCCESS)
+		if (ret == EXIT_SUCCESS)
 			ret = border_token_list(lst, END);
 	}
 	return (ret);
