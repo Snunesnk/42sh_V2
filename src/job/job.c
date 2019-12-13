@@ -9,6 +9,8 @@
 
 #define WAIT_ANY -1
 
+#include "libft.h"
+#include "shell.h"
 #include "job_control.h"
 
 t_job			*first_job = NULL;

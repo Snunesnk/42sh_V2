@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "21sh.h"
+#include "shell.h"
 
 static void	init_token_tab(char **token_tab)
 {
@@ -45,7 +45,7 @@ static void	print(t_list *lst, t_list **elem)
 	{
 		if (((t_token*)(lst->content))->type == i)
 		{
-			print_content = ft_asprintf("%s -> [%s]\n", token_tab[i],
+			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i],
 				((t_token*)(lst->content))->value);
 			break ;
 		}
