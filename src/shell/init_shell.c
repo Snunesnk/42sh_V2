@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include "libft.h"
+#include "ft_errno.h"
 #include "job_control.h"
 
 /* Keep track of attributes of the shell. */
@@ -38,7 +40,7 @@ int	init_shell(void)
 		shell_pgid = getpid();
 		if (setpgid(shell_pgid, shell_pgid) < 0)
 		{
-			perror("Couldn't put the shell in its own process group");
+			ft_perror("Couldn't put the shell in its own process group");
 			return (1);
 		}
 		/* Grab control of the terminal. */
