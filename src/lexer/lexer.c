@@ -1,167 +1,148 @@
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 14:08:45 by efischer          #+#    #+#             */
+/*   Updated: 2019/12/04 16:50:04 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_errno.h"
-#include "ft_queue.h"
-#include "error.h"
-#include "tokens.h"
 
-/* ------------------------------- UTILS -----------------------------------------------*/
-
-static int	get_token_type(char *str) /* get the token type comparing first characters of str with known token in grammar */
+static void	init_token_tab(char **token_tab)
 {
-	int	i;
-
-	i = 0;
-	while (g_grammar_symbols[i].type != -1)
-	{
-		if (!ft_strncmp(g_grammar_symbols[i].symbol, str, ft_strlen(g_grammar_symbols[i].symbol)))
-			return (g_grammar_symbols[i].type);
-		++i;
-	}
-	return (-1);
+	token_tab[PIPE] = "|";
+	token_tab[AND] = "&";
+	token_tab[SEMICOLON] = ";";
+	token_tab[OP_BRACKET] = "(";
+	token_tab[CL_BRACKET] = ")";
+	token_tab[R_DB_REDIR] = ">>";
+	token_tab[L_DB_REDIR] = "<<";
+	token_tab[R_REDIR] = ">";
+	token_tab[L_REDIR] = "<";
+	token_tab[COMMENT] = NULL;
+	token_tab[WORD] = NULL;
+	token_tab[START] = NULL;
+	token_tab[END] = NULL;
 }
 
-static char	*get_token_symbol(int token) /* return pointer to the grammar symbol corresponding to the token type */
+static int	get_word(const char *str, t_token *token)
 {
-	int	i;
+	size_t	len;
 
-	i = 0;
-	while (g_grammar_symbols[i].type != -1)
+	len = 0;
+	if (str[len] == '#')
 	{
-		if (g_grammar_symbols[i].type == token)
-			return (g_grammar_symbols[i].symbol);
-		++i;
+		token->type = COMMENT;
+		token->value = ft_strdup(str);
+		if (token->value != NULL)
+			len = ft_strlen(token->value);
 	}
-	return (NULL);
-}
-
-/* --------------------------------- GET NEXT TOKEN ------------------------------------ */
-
-char	*get_word(char **input)
-{
-	char	*word;
-	int	i;
-	char	quote_type;
-	_Bool	open_quotes;
-
-	i = 0;
-	open_quotes = 0;
-	while ((*input)[i])
+	else
 	{
-		if (!open_quotes && ((*input)[i] == '\'' || (*input)[i] == '\"')) /* check if quotes are open */
+		while (ft_isblank(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
+				&& str[len] != '\0')
 		{
-			open_quotes ^= 1;
-			quote_type = (*input)[i];
-			++i;
-			continue;
+			len++;
 		}
-		if (!open_quotes && (get_token_type(&(*input)[i]) != -1 || ((*input)[i] == ' ' || (*input)[i] == '\t'))) /* stop if meet other token or delimiter */
-			break;
-		if ((*input)[i] == quote_type) /* Handle closing quotes */
-		{
-			++i;
-			open_quotes ^= 1;
-			continue;
-		}
-		if ((*input)[i] == '\\' &&
-			((open_quotes && quote_type != '\'') || !open_quotes)) /* handle backslashes and single quote cases  */
-			++i;
-		++i;
+		token->type = WORD;
+		token->value = ft_strndup(str, len);
+		if (token->value == NULL)
+			len = 0;
 	}
-	if (!(word = (char*)ft_memalloc(sizeof(char) * (i + 1))))
-		return (NULL);
-	word = (char*)ft_memcpy((void*)word, (void*)(*input), i); /* Copy the part of the string that has been
-									above-identified as WORD token */
-	*input += i;
-	return (word);
+	return (len);
 }
 
-/* Function copy the io_number to the symbol section of a token */
-static t_token	get_io_number(char *io_nb_start, char *io_nb_end)
+static int	get_next_token(const char *str, t_token *token)
 {
-	t_token token;
+	char	*token_tab[NB_TOKEN];
+	size_t	token_index;
+	size_t	pos;
 
-	token.type = IO_NUMBER;
-	token.symbol = ft_strndup(io_nb_start, (size_t)(io_nb_end - io_nb_start)); /* Copy the "numbers" into a string */
-	if (!token.symbol)
+	pos = 0;
+	token_index = 0;
+	init_token_tab(token_tab);
+	while (token_index < NB_TOKEN)
 	{
-		g_errno = E_ENOMEM; /* If malloc failed, g_errno is set for further error mgt  */
-		return ((t_token){0}); /* return empty token */
+		if (ft_strnequ(str, token_tab[token_index],
+					ft_strlen(token_tab[token_index])) == TRUE)
+		{
+			token->type = token_index;
+			pos = ft_strlen(token_tab[token_index]);
+			break ;
+		}
+		token_index++;
 	}
-	return (token);
+	if (token_index == NB_TOKEN)
+		pos = get_word(str, token);
+	return (pos);
 }
 
-/* Analyze the input string and eat the first chunck of that input which correspond to a token */
-t_token	tokenizer(char **input)
+static int	add_token_to_list(t_token *token, t_list **lst)
+{
+	t_list	*new;
+	int		ret;
+
+	ret = SUCCESS;
+	new = ft_lstnew(token, sizeof(*token));
+	if (new == NULL)
+		ret = FAILURE;
+	ft_lstaddend(lst, new);
+	return (ret);
+}
+
+static int	border_token_list(t_list **lst, uint64_t token_type)
 {
 	t_token	token;
-	char	*str;
-	char	*digit_start;
+	int		ret;
 
-	str = *input;
-	token = (t_token){.symbol = NULL, .type = -1}; /* set to "no type" the token */
-	while (*str == ' ' || *str == '\t') /* skip all useless characters */
-		++str;
-	if (!*str) /* Jump to the end if no more input. */
-		return (token);
-	if (ft_isdigit(*str)) /* check for IO_NUMBER */
+	ft_bzero(&token, sizeof(token));
+	token.type = token_type;
+	ret = add_token_to_list(&token, lst);
+	return (ret);
+}
+
+static int	get_token_list(const char *str, t_list **lst)
+{
+	t_token	token;
+	size_t	last_pos;
+	size_t	pos;
+	int		ret;
+
+	pos = 0;
+	ret = SUCCESS;
+	while (str[pos] != '\0')
 	{
-		digit_start = str;
-		while (ft_isdigit(*str)) /* skip digit to know if a <, <<, > or >> follows the digit,
-					in this case the number is a IO_NUMBER, eg ls 124> toto */
-			++str;
-		if (*str == '>' || *str == '<')
+		while (ft_isblank(str[pos]) == TRUE)
+			pos++;
+		if (str[pos] == '\0')
+			break ;
+		ft_bzero(&token, sizeof(token));
+		last_pos = pos;
+		pos += get_next_token(str + pos, &token);
+		ret = add_token_to_list(&token, lst);
+		if (pos == last_pos || ret == FAILURE)
 		{
-			token = get_io_number(digit_start, str); /* get the io_number abd return it
-									as token, e.g. ls 2> ok, 2 is io_number */
-			*input = str; /* set input line read to the end of the taken token */
+			ret = FAILURE;
+			break ;
 		}
 	}
-	else if ((token.type = get_token_type(str)) != -1) /* get token type if among metacharacters */
-	{
-		token.symbol = ft_strdup(get_token_symbol(token.type)); /* get symbol of the token of known type */
-		*input += ft_strlen(token.symbol); /* Move input to next token */
-	}
-	else /* treat input as it is a word token */
-	{
-		*input = str;
-		token.type = WORD;
-		token.symbol = get_word(input); /* get symbol and move input to next token */
-	}
-	return (token);
+	return (ret);
 }
 
-/* malloc a token and set its value before returning it to the lexer */
-t_token	*get_next_token(char **input)
+int			lexer(const char *str, t_list **lst)
 {
-	t_token	*token;
+	int		ret;
 
-	token = (t_token*)ft_memalloc(sizeof(t_token));
-	if (!token) /* if malloc fails, g_errno value is set */
+	ret = border_token_list(lst, START);
+	if (ret == SUCCESS)
 	{
-		g_errno = E_ENOMEM;
-		return (NULL);
+		ret = get_token_list(str, lst);
+		if (ret == SUCCESS)
+			ret = border_token_list(lst, END);
 	}
-	*token = tokenizer(input); /* assign value of the token without memcpy */
-	if (token->type == -1) /* if type does not exist, then the token is empty. */
-		return (NULL);
-	return (token);
-}
-
-/* ------------------------------------------------- LEXER -------------------------------------- */
-
-/* this function will transform the input into token.
-   token will be put into a queue */
-int	lexer(char *input, struct s_queue *queue)
-{
-	t_token	*token;
-
-	while ((token = get_next_token(&input))) /* Get a token from the input until no more token */
-	{
-		queue_enqueue(queue, token); /* Put that token into a queue to speed up the recursive descent during parsing */
-	}
-	if (g_errno == E_ENOMEM) /* If a malloc failed, g_errno set error value and then return the corresponding error value */
-		return (e_cannot_allocate_memory);
-	return (e_success);
+	return (ret);
 }

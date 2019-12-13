@@ -1,84 +1,77 @@
-#include <stdlib.h>
-#include <unistd.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
+/*   Updated: 2019/12/04 16:47:13 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_errno.h"
-#include "ft_queue.h"
-#include "error.h"
-#include "tokens.h"
-#include "grammar.h"
-#include "syntaxic_tree.h"
 
-#include "job.h"
-
-void	display_tokens(t_token *token)
+static void	init_token_tab(int **token_tab)
 {
-	ft_printf("symbol: %s\n", token->symbol);/* deebug */
-	ft_printf("type: %d\n\n", token->type);/* deebug */
+	int		token_meta[NB_TOKEN] = { WORD, COMMENT, TAB_END };
+	int		token_word[NB_TOKEN] = { PIPE, AND, SEMICOLON, R_DB_REDIR,
+					L_DB_REDIR, R_REDIR, L_REDIR, WORD, COMMENT, END, TAB_END };
+	int		token_redir[NB_TOKEN] = { AND, WORD, COMMENT, TAB_END };
+	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, END, TAB_END };
+
+	token_tab[PIPE] = token_meta;
+	token_tab[AND] = token_meta;
+	token_tab[SEMICOLON] = token_semicolon;
+	token_tab[OP_BRACKET] = NULL;
+	token_tab[CL_BRACKET] = NULL;
+	token_tab[R_DB_REDIR] = token_redir;
+	token_tab[L_DB_REDIR] = token_redir;
+	token_tab[R_REDIR] = token_redir;
+	token_tab[L_REDIR] = token_redir;
+	token_tab[WORD] = token_word;
+	token_tab[COMMENT] = token_word;
+	token_tab[START] = token_meta;
+	token_tab[END] = NULL;
 }
 
-int	execute_jobs(t_job *s_job)
+static int	check_next_token(t_token *token, int *token_tab)
 {
-	t_process	*ptmp;
-	extern char **environ; /* not the correct environ, should be the modified one */
-	while (1) /* execute all jobs */
+	size_t	token_index;
+	int		ret;
+
+	ret = FAILURE;
+	token_index = 0;
+	if (token_tab != NULL)
 	{
-		ptmp = s_job->first_process;
-		while (2) /* execute all processes in a job */
+		while (token_tab[token_index] != TAB_END)
 		{
-			job(ptmp->argv, environ); /* should be modified just for execution, no more path_concat at this stage */
-			if (!(ptmp->next))
-				break;
-			ptmp = ptmp->next;
-		}
-		if (!(s_job->next))
-			break;
-		s_job = s_job->next;
-	}
-	return (0);
-}
-
-int	parser(struct s_queue *queue)
-{
-	t_token	*token;
-/*	char	**argv;
-*/
-	queue_apply_to_each(queue, display_tokens); /* Verify tokens */
-
-	/* Experimental This part should not be in parser, just for test during the building */
-/*	extern char **environ;
-*/
-	t_process	*process;
-	t_job		*job;
-
-	job = (t_job*)ft_memalloc(sizeof(t_job));
-	process = (t_process*)ft_memalloc(sizeof(t_process));
-	size_t i = 0;
-	char **ar;
-	while ((token = queue_dequeue(queue, NULL)) && token->type == WORD) /* try to build a single process in a single job,
-										process is a simple_command */
-	{
-		if (process->argv == NULL)
-		{
-			process->argv = (char**)ft_tabmalloc(2);
-			process->argv[0] = token->symbol; /* here should be path concat (try to find the command) */
-		}
-		else
-		{
-			i = ft_tablen(process->argv);
-			ar = (char**)ft_tabmalloc(i + 2);
-			size_t e = 0;
-			while (e < i)
+			if (token->type == (uint64_t)token_tab[token_index])
 			{
-				ar[e] = process->argv[e];
-				++e;
+				ret = SUCCESS;
+				break ;
 			}
-			ar[e] = token->symbol;
-			process->argv = ar;
+			token_index++;
 		}
 	}
-	job->first_process = process;
-	execute_jobs(job);
-	/* End of test part */
-	return (e_success);
+	return (ret);
+}
+
+int			parser(t_list *lst)
+{
+	static int	*token_tab[NB_TOKEN];
+	int			token_index;
+	int			ret;
+	
+	ret = SUCCESS;
+	init_token_tab(token_tab);
+	while (lst->next != NULL)
+	{
+		token_index = ((t_token*)(lst->content))->type;
+		lst = lst->next;
+		ret = check_next_token(lst->content, token_tab[token_index]);
+		if (ret == FAILURE)
+			break ;
+	}
+	return (ret);
 }
