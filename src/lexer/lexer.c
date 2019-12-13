@@ -13,10 +13,40 @@
 #include "libft.h"
 #include "token.h"
 
+void	ft_lstaddend(t_list **alst, t_list *new)
+{
+	t_list	*tmp;
+
+	if (!alst || !new)
+		return ;
+	if (*alst == NULL)
+	{
+		*alst = new;
+		return ;
+	}
+	tmp = *alst;
+	while ((*alst)->next != NULL)
+		*alst = (*alst)->next;
+	(*alst)->next = new;
+	*alst = tmp;
+}
+
+
 int		ft_isblank(int c)
 {
 	return (c == ' ' || c == '\t');
 }
+
+int		ft_ismeta(int c)
+{
+	if (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
+		|| c == '<' || c == '>')
+	{
+		return (c);
+	}
+	return (0);
+}
+
 
 static void	init_token_tab(char **token_tab)
 {
@@ -49,8 +79,7 @@ static int	get_word(const char *str, t_token *token)
 	}
 	else
 	{
-		while (ft_isblank(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
-				&& str[len] != '\0')
+		while (!ft_isblank(str[len]) && !ft_ismeta(str[len]) && str[len] != '\0')
 		{
 			len++;
 		}
@@ -73,8 +102,7 @@ static int	get_next_token(const char *str, t_token *token)
 	init_token_tab(token_tab);
 	while (token_index < NB_TOKEN)
 	{
-		if (ft_strnequ(str, token_tab[token_index],
-					ft_strlen(token_tab[token_index])) == TRUE)
+		if (ft_strnequ(str, token_tab[token_index], ft_strlen(token_tab[token_index])))
 		{
 			token->type = token_index;
 			pos = ft_strlen(token_tab[token_index]);
@@ -90,7 +118,6 @@ static int	get_next_token(const char *str, t_token *token)
 static int	add_token_to_list(t_token *token, t_list **lst)
 {
 	t_list	*new;
-	int		ret;
 
 	new = ft_lstnew(token, sizeof(*token));
 	if (new == NULL)
@@ -99,7 +126,7 @@ static int	add_token_to_list(t_token *token, t_list **lst)
 	return (EXIT_SUCCESS);
 }
 
-static int	border_token_list(t_list **lst, uint64_t token_type)
+static int	border_token_list(t_list **lst, int token_type)
 {
 	t_token	token;
 	int		ret;
@@ -120,7 +147,7 @@ static int	get_token_list(const char *str, t_list **lst)
 	pos = 0;
 	while (str[pos] != '\0')
 	{
-		while (ft_isblank(str[pos]) == TRUE)
+		while (ft_isblank(str[pos]))
 			pos++;
 		if (str[pos] == '\0')
 			break ;
