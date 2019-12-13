@@ -17,7 +17,6 @@
 #include <signal.h>
 
 #include "libft.h"
-#include "ft_queue.h"
 #include "shell_variables.h"
 #include "sig_handler.h"
 #include "builtins.h"
@@ -30,6 +29,8 @@
 
 int		g_retval;
 char	g_pwd[] = {0};
+extern char	**environ;
+extern int	g_fd_prompt;
 
 static int	set_minimal_env(void)
 {
@@ -62,17 +63,37 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
+static void	del(void *content, size_t content_size)
+{
+	(void)content_size;
+	ft_strdel(&((t_token*)(content))->value);
+	free(content);
+}
+
+static char	*tab_to_str(char **av)
+{
+	char	*str;
+	size_t	i;
+
+	i = 0;
+	str = NULL;
+	while (av[i] != NULL)
+	{
+		str = ft_join_free(str, av[i], 1);
+		if (str == NULL)
+			break ;
+		i++;
+	}
+	return (str);
+}
+
 int		main(int argc, char **argv)
 {
-	struct s_queue	queue;
-	extern char	**environ;
-	extern int	g_fd_prompt;
+	volatile int	status;
+	t_list		*lst;
 	char		*input;
-	char		**args;
-	int			status;
 
 	(void)argc;
-	queue = (struct s_queue){.front = NULL, .rear = NULL};
 	status = 0;
 	g_progname = argv[0];
 	if (!(environ = ft_tabcpy(environ)))
@@ -93,65 +114,21 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (2);
 	}
-	/* Initialize shell variables */
-/*	if (initialize_shell_variables(argv[0]))
-	{
-		ft_tabdel(&environ);
-		return (1);
-	}
-
-	 test assignements and free
-	shellvar_assignement("z=ploop");
-
-	shellvar_assignement("a=ploop");
-	shellvar_assignement("b=ploop");
-		shellvar_assignement("y=ploop");
-	shellvar_assignement("t=ploop");
-	shellvar_assignement("r=ploop");
-	shellvar_assignement("r=ploop");
-	shellvar_assignement("w=ploop");
-	shellvar_assignement("q=ploop");
-	shellvar_assignement("e=ploop");
-	shellvar_assignement("w=ploop");
-	shellvar_assignement("g=ploop");
-	shellvar_assignement("f=ploop");
-	shellvar_assignement("KKO[42]=qwerty");
-	shellvar_assignement("second=sdfasdfploop");
-	shellvar_assignement("THIRD=dsfploop");
-	shellvar_assignement("b=ploop");
-	shellvar_assignement("ok=ploop");
-	shellvar_assignement("oka=ploop");
-	shellvar_assignement("THIRD[6]=dsfploop");
-	shellvar_assignement("arr=(dsfploop (sdgf), sdfg )");
-	shellvar_assignement("ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-	shellvar_assignement("ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-	shellvar_assignement("okk=ploop");
-	shellvar_assignement("KKOO[42]=qwerty");
-	shellvar_assignement("wer=sdfasdfploop");
-	shellvar_assignement("THIRDd=dsfploop");
-	shellvar_assignement("THIRDd[6]=dsfploop");
-	shellvar_assignement("Arr=(dsfploop (sdgf), sdfg )");
-	shellvar_assignement("ARryo=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-	shellvar_assignement("ARryo[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )");
-	shellvar_assignement("Z=ploop");
-*/
+	if (init_shell())
+		return (EXIT_FAILURE);
 	while (prompt_display(g_retval) && get_stdin(&input) >= 0)
 	{
-		if (lexer(input, &queue) != e_success)
-			exit(1);
-		ft_memdel((void**)&input);
-		if ((status = parser(&queue)) != e_success)
-			exit(1);
-		ft_printf("Tree execution places here\n");
-		exit(0);
-		if (status != e_success)
+		lexer(input, &lst);
+		free(input);
+		debug(lst);
+		if (parser(lst) == FAILURE)
+			ft_putendl_fd("\nParse error", 2);
+		else
 		{
-			g_retval = status;
-			ft_tabdel(&args);
-			continue;
+			ft_putendl("\nOK");
+			status = launch_all_jobs(lst); /* to capture */
 		}
-/*		g_retval = jcont(args, environ); Will be the execution module of the tree
-*/		ft_tabdel(&args);
+		ft_lstdel(&lst, del);
 	}
 	ft_tabdel(&environ);
 	free_all_shvar();
