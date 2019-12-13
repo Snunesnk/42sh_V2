@@ -1,9 +1,15 @@
 #ifndef SHELL_H
 # define SHELL_H
 
-# include "libft.h"
 # include <termios.h>
+# include <stdint.h>
+# include "libft.h"
+# include "job_control.h"
 
+# define FAILURE EXIT_FAILURE
+# define SUCCESS EXIT_SUCCESS
+
+# define BUF_SIZE	32
 # define NB_TOKEN	15
 # define NB_BRACKET	2
 # define TAB_END	-1 
@@ -48,6 +54,6 @@ typedef struct	s_bracket
 int		lexer(const char* str, t_list **lst);
 int		parser(t_list *lst, uint64_t *buffer, size_t index);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
-void	debug(t_list *lst);
+void		debug(t_list *lst);
 
 #endif
