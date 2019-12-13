@@ -15,6 +15,7 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
+		debug.c \
 		job/execute_jobs.c \
 		job/job.c \
 		job/process.c \

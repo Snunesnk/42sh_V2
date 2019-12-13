@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "21sh.h"
+#include "shell.h"
 
 static void	init_token_tab(int **token_tab)
 {
