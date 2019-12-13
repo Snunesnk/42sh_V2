@@ -15,40 +15,6 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
-		init_shell.c \
-		input/input.c \
-		input/path.c \
-		input/prompt.c \
-		job/job.c \
-		job/launch_all_jobs.c \
-		job/path_concat.c \
-		job/process.c \
-		lexer/lexer.c \
-		modules/error.c \
-		modules/signals.c \
-		modules/builtins/builtin_cd.c \
-		modules/builtins/builtin_echo.c \
-		modules/builtins/builtin_env.c \
-		modules/builtins/builtin_exit.c \
-		modules/builtins/builtin_pwd.c \
-		modules/builtins/builtins_dispatcher.c \
-		modules/builtins/builtin_set.c \
-		modules/builtins/builtin_setenv.c \
-		modules/builtins/builtin_truefalse.c \
-		modules/builtins/builtin_type.c \
-		modules/builtins/builtin_unsetenv.c \
-		modules/builtins/ft_putenv_table.c \
-		modules/builtins/shell_variables/alloc_shell_variables.c \
-		modules/builtins/shell_variables/free_shell_variables.c \
-		modules/builtins/shell_variables/init_shell_variables.c \
-		modules/builtins/shell_variables/shell_variables.c \
-		modules/builtins/shell_variables/utils_shell_variables.c \
-		modules/expansions/expansions.c \
-		modules/expansions/expansion_utils.c \
-		modules/expansions/get_param.c \
-		modules/expansions/parameter_expansions.c \
-		modules/expansions/tilde_expansion.c \
-		parser/parser.c \
 
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
