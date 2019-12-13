@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "libft.h"
+#include "shell.h"
 #include "job_control.h"
 
 /* Debugg function */
@@ -59,7 +61,6 @@ char		*get_tokvalue(t_list *lst)
 
 int		build_argv(char ***argv, t_list **lst)
 {
-	t_token	*t;
 	int	argc;
 	int	i;
 
@@ -81,9 +82,6 @@ int		build_argv(char ***argv, t_list **lst)
 
 int	build_a_process(t_process **p, t_list **lst)
 {
-	t_token		*t;
-	char		**argv;
-
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
 	while (*lst)
 	{
@@ -167,7 +165,6 @@ int	launch_all_jobs(t_list *lst)
 {
 	t_job		*j_beg;
 	t_job		*j;
-	t_process	*p;
 
 	lst = lst->next;
 	j = NULL;

@@ -3,7 +3,10 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 
+#include "libft.h"
+#include "ft_errno.h"
 #include "job_control.h"
 
 void	free_process(t_process *p) /* temporary for tests purposes ? */
@@ -57,6 +60,6 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	}
 	/* Exec the new process. Make sure we exit */
 	execve(p->argv[0], p->argv, environ);
-	perror("Failed to launch process using execve");
+	ft_perror("Failed to launch process using execve");
 	exit(1);
 }
