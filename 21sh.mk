@@ -15,6 +15,12 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
+		job/execute_jobs.c \
+		job/job.c \
+		job/process.c \
+		lexer/lexer.c \
+		parser/parser.c \
+		shell/init_shell.c \
 
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
