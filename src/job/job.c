@@ -1,9 +1,13 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 #include <errno.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <signal.h>
+#include <unistd.h>
+
+#define WAIT_ANY -1
 
 #include "job_control.h"
 
@@ -182,13 +186,13 @@ int	mark_process_status(pid_t pid, int status)
 					{
 						p->completed = 1;
 						if (WIFSIGNALED(status))
-							fprintf(STDERR_FILENO, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
+							fprintf(stderr, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
 					}
 					return (0);
 				}
 			}
 		}
-		fprintf (STDERR_FILENO, "No child process %d.\n", pid);
+		fprintf (stderr, "No child process %d.\n", pid);
 		return (-1);
 	}
 	else if (pid == 0 || errno == ECHILD) /* No processes ready to report. */
@@ -231,8 +235,8 @@ void	wait_for_job(t_job *j)
 void	format_job_info (t_job *j, const char *status)
 {
 	printf("DONE\n");
-	return ; // DEBUGG
-	fprintf(STDERR_FILENO, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
+	return ; /* DEBUGG */
+	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
 
 /* Notify the user about stopped or terminated jobs.
@@ -242,7 +246,6 @@ void	do_job_notification(void)
 	t_job		*j;
 	t_job		*jlast;
 	t_job		*jnext;
-	t_process	*p;
 
 	/* Update status information for child processes. */
 	update_status();
