@@ -18,7 +18,7 @@
 #include "libft.h"
 #include "sig_handler.h"
 #include "job.h"
-
+/*
 void	kill_child(int sig)
 {
 	extern pid_t	g_childpid;
@@ -45,4 +45,4 @@ int	set_signals(int type)
 			exit(2);
 	}
 	return (0);
-}
+}*/

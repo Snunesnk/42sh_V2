@@ -97,8 +97,8 @@ int		main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	set_signals(0);
-	if ((g_fd_prompt = initialize_prompt_fd()) == -1)
+/*	set_signals(0);
+*/	if ((g_fd_prompt = initialize_prompt_fd()) == -1)
 	{
 		ft_tabdel(&environ);
 		return (2);
@@ -109,8 +109,8 @@ int		main(int argc, char **argv)
 	{
 		lexer(input, &lst);
 		free(input);
-		debug(lst);
-		if (parser(lst) == EXIT_FAILURE)
+/*		debug(lst);
+*/		if (parser(lst) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{

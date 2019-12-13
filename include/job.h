@@ -20,5 +20,6 @@ int	launch_all_jobs(t_list *lst);
 extern int	g_retval;
 extern pid_t	g_childpid;
 
+int	path_concat(char **bin);
 
 #endif

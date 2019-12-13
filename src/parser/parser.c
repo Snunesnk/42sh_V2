@@ -45,7 +45,7 @@ static int	check_next_token(t_token *token, int *token_tab)
 	{
 		while (token_tab[token_index] != TAB_END)
 		{
-			if (token->type == (uint64_t)token_tab[token_index])
+			if (token->type == token_tab[token_index])
 				return (EXIT_SUCCESS);
 			token_index++;
 		}
