@@ -55,5 +55,9 @@ int		lexer(const char* str, t_list **lst);
 int		parser(t_list *lst, uint64_t *buffer, size_t index);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void		debug(t_list *lst);
+int				get_stdin(char **line);
+int	initialize_prompt_fd(void);
+int	launch_all_jobs(t_list *lst);
+_Bool   prompt_display(int status);
 
 #endif
