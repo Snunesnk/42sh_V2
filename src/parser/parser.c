@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "token.h"
 
 static void	init_token_tab(int **token_tab)
 {
@@ -38,23 +39,18 @@ static void	init_token_tab(int **token_tab)
 static int	check_next_token(t_token *token, int *token_tab)
 {
 	size_t	token_index;
-	int		ret;
 
-	ret = FAILURE;
 	token_index = 0;
 	if (token_tab != NULL)
 	{
 		while (token_tab[token_index] != TAB_END)
 		{
 			if (token->type == (uint64_t)token_tab[token_index])
-			{
-				ret = SUCCESS;
-				break ;
-			}
+				return (EXIT_SUCCESS);
 			token_index++;
 		}
 	}
-	return (ret);
+	return (EXIT_FAILURE);
 }
 
 int			parser(t_list *lst)
@@ -62,16 +58,15 @@ int			parser(t_list *lst)
 	static int	*token_tab[NB_TOKEN];
 	int			token_index;
 	int			ret;
-	
-	ret = SUCCESS;
+
 	init_token_tab(token_tab);
 	while (lst->next != NULL)
 	{
 		token_index = ((t_token*)(lst->content))->type;
 		lst = lst->next;
 		ret = check_next_token(lst->content, token_tab[token_index]);
-		if (ret == FAILURE)
-			break ;
+		if (ret == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	return (ret);
+	return (EXIT_SUCCESS);
 }

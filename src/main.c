@@ -17,6 +17,7 @@
 #include <signal.h>
 
 #include "libft.h"
+#include "shell.h"
 #include "shell_variables.h"
 #include "sig_handler.h"
 #include "builtins.h"
@@ -26,6 +27,8 @@
 #include "lexer.h"
 #include "parser.h"
 #include "path.h"
+#include "job.h"
+#include "token.h"
 
 int		g_retval;
 char	g_pwd[] = {0};
@@ -63,28 +66,14 @@ static int	set_minimal_env(void)
 	return (e_success);
 }
 
-static void	del(void *content, size_t content_size)
+void	del(void *content, size_t content_size)
 {
+	t_token	*t;
+
+	t = (t_token*)(content);
 	(void)content_size;
-	ft_strdel(&((t_token*)(content))->value);
+	free(t->value);
 	free(content);
-}
-
-static char	*tab_to_str(char **av)
-{
-	char	*str;
-	size_t	i;
-
-	i = 0;
-	str = NULL;
-	while (av[i] != NULL)
-	{
-		str = ft_join_free(str, av[i], 1);
-		if (str == NULL)
-			break ;
-		i++;
-	}
-	return (str);
 }
 
 int		main(int argc, char **argv)
@@ -121,7 +110,7 @@ int		main(int argc, char **argv)
 		lexer(input, &lst);
 		free(input);
 		debug(lst);
-		if (parser(lst) == FAILURE)
+		if (parser(lst) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
@@ -129,6 +118,7 @@ int		main(int argc, char **argv)
 			status = launch_all_jobs(lst); /* to capture */
 		}
 		ft_lstdel(&lst, del);
+		g_retval = status;
 	}
 	ft_tabdel(&environ);
 	free_all_shvar();

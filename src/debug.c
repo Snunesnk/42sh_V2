@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "token.h"
 
 static void	init_token_tab(char **token_tab)
 {
@@ -33,7 +34,7 @@ static void	print(t_list *lst, t_list **elem)
 {
 	static char	*token_tab[NB_TOKEN];
 	char		*print_content;
-	size_t		i;
+	int		i;
 
 	i = 0;
 	print_content = NULL;
@@ -42,8 +43,7 @@ static void	print(t_list *lst, t_list **elem)
 	{
 		if (((t_token*)(lst->content))->type == i)
 		{
-			print_content = ft_asprintf("%s -> [%s]\n", token_tab[i],
-				((t_token*)(lst->content))->value);
+			ft_printf("%s -> [%s]\n", token_tab[i], ((t_token*)(lst->content))->value);
 			break ;
 		}
 		i++;
