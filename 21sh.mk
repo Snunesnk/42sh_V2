@@ -22,6 +22,7 @@ SOURCES :=	main.c \
 		lexer/lexer.c \
 		parser/parser.c \
 		shell/init_shell.c \
+		input/input.c \
 
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))

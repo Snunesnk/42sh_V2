@@ -13,24 +13,6 @@
 #include "libft.h"
 #include "shell.h"
 
-static char	*ft_join_free(char *s1, char *s2, int op)
-{
-	char	*str;
-
-	str = ft_strjoin(s1, s2);
-	if (op == 1)
-		ft_strdel(&s1);
-	else if (op == 2)
-		ft_strdel(&s2);
-	else
-	{
-		ft_strdel(&s1);
-		ft_strdel(&s2);
-	}
-	return (str);
-}
-
-
 static void	del(void *content, size_t content_size)
 {
 	(void)content_size;
@@ -38,47 +20,34 @@ static void	del(void *content, size_t content_size)
 	free(content);
 }
 
-static char	*tab_to_str(char **av)
-{
-	char	*str;
-	size_t	i;
 
-	i = 0;
-	str = NULL;
-	while (av[i] != NULL)
-	{
-		str = ft_join_free(str, av[i], 1);
-		if (str == NULL)
-			break ;
-		i++;
-	}
-	return (str);
-}
-
-int			main(int ac, char **av)
+int			main(int argc, char **argv)
 {
+	int		index;
 	uint64_t	buffer[BUF_SIZE];
-	size_t		index;
 	t_list		*lst;
-	char		*str;
+	char		*input;
 
-	lst = NULL;
-	if (ac >= 2)
+	(void)argc;
+	(void)argv;
+	if (init_shell())
+		return (EXIT_FAILURE);
+	while (ft_printf("$> ") && get_stdin(&input) >= 0)
 	{
+		lst = NULL;
 		index = 0;
 		ft_bzero(&buffer, sizeof(buffer));
-		str = tab_to_str(av + 1);
-		if (str != NULL)
+		lexer(input, &lst);
+/*		debug(lst);
+*/		if (parser(lst, buffer, index) == EXIT_FAILURE)
+			ft_putendl_fd("\nParse error", 2);
+		else
 		{
-			lexer(str, &lst);
-			debug(lst);
-			if (parser(lst, buffer, index) == FAILURE)
-				ft_putendl_fd("\nParse error", 2);
-			else
-				ft_putendl("\nOK");
+			ft_putendl("\nOK");
+			launch_all_jobs(lst); /* to capture */
 		}
 		ft_lstdel(&lst, del);
-		ft_strdel(&str);
+		ft_strdel(&input);
 	}
 	return (EXIT_SUCCESS);
 }
