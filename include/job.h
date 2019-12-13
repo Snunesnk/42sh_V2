@@ -13,11 +13,12 @@
 #ifndef JOB_H
 # define JOB_H
 # include <sys/types.h>
+# include "job_control.h"
 
-int	job(char **argv, char **envp);
-int	path_concat(char **bin);
+int	launch_all_jobs(t_list *lst);
 
 extern int	g_retval;
 extern pid_t	g_childpid;
+
 
 #endif

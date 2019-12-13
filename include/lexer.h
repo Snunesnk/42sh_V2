@@ -13,6 +13,6 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-int	lexer(char *input, struct s_queue *queue);
+int	lexer(const char *str, t_list **lst);
 
 #endif

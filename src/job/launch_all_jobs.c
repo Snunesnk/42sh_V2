@@ -1,8 +1,10 @@
 #include <stdlib.h>
+#include <unistd.h>
 #include <stdio.h>
 
 #include "libft.h"
 #include "job_control.h"
+#include "token.h"
 
 /* Debugg function */
 void	print_p(t_process *p)
@@ -59,7 +61,6 @@ char		*get_tokvalue(t_list *lst)
 
 int		build_argv(char ***argv, t_list **lst)
 {
-	t_token	*t;
 	int	argc;
 	int	i;
 
@@ -74,25 +75,22 @@ int		build_argv(char ***argv, t_list **lst)
 			++i;
 			(*lst) = (*lst)->next;
 		}
-		return (SUCCESS);
+		return (EXIT_SUCCESS);
 	}
-	return (FAILURE);
+	return (EXIT_FAILURE);
 }
 
 int	build_a_process(t_process **p, t_list **lst)
 {
-	t_token		*t;
-	char		**argv;
-
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
 	while (*lst)
 	{
-		if (build_argv(&((*p)->argv), lst) == FAILURE)
-			return (FAILURE);
+		if (build_argv(&((*p)->argv), lst) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		else
-			return (SUCCESS);
+			return (EXIT_SUCCESS);
 	}
-	return (FAILURE);
+	return (EXIT_FAILURE);
 }
 
 int	build_processes(t_process **first_process, t_list **lst)
@@ -100,9 +98,9 @@ int	build_processes(t_process **first_process, t_list **lst)
 	t_process	*p;
 	t_token		*t;
 
-	if (build_a_process(first_process, lst) == FAILURE)
+	if (build_a_process(first_process, lst) == EXIT_FAILURE)
 	{
-		return (FAILURE);
+		return (EXIT_FAILURE);
 	}
 	p = *first_process;
 	while (*lst)
@@ -110,18 +108,18 @@ int	build_processes(t_process **first_process, t_list **lst)
 		while (*lst && (t = (*lst)->content) && t->type == PIPE)
 			(*lst) = (*lst)->next;
 		if (t->type != WORD)
-			return (SUCCESS);
+			return (EXIT_SUCCESS);
 		if (*lst == NULL)
 			break;
-		if (build_a_process(&(p->next), lst) == FAILURE)
-			return (FAILURE);
+		if (build_a_process(&(p->next), lst) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		p = p->next;
 /*		printf("--- next job ---\n");  //Debug
 		ft_print_tables(p->argv);      //Debug
 */	}
 /*	printf("ALL:\n");
 	print_p(first_process);
-*/	return (SUCCESS);
+*/	return (EXIT_SUCCESS);
 }
 
 int	build_a_job(t_job **j, t_list **lst)
@@ -133,11 +131,11 @@ int	build_a_job(t_job **j, t_list **lst)
 	(*j)->stderr = STDERR_FILENO;
 	/* end config */
 	if (*j == NULL)
-		return (FAILURE);
-	if (build_processes(&((*j)->first_process), lst) == FAILURE)
-		return (FAILURE);
+		return (EXIT_FAILURE);
+	if (build_processes(&((*j)->first_process), lst) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 /*		print_p((*j)->first_process); */
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 
 }
 
@@ -146,8 +144,8 @@ int	build_jobs(t_job **j, t_list **lst)
 	t_job	*newj;
 	t_token	*t;
 
-	if (build_a_job(&newj, lst) == FAILURE)
-		return (FAILURE);
+	if (build_a_job(&newj, lst) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	*j = newj;
 	while (*lst)
 	{
@@ -156,23 +154,22 @@ int	build_jobs(t_job **j, t_list **lst)
 			(*lst) = (*lst)->next;
 		else
 			break;
-		if (build_a_job(&(newj->next), lst) == FAILURE)
-			return (FAILURE);
+		if (build_a_job(&(newj->next), lst) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		newj = newj->next;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }
 
 int	launch_all_jobs(t_list *lst)
 {
 	t_job		*j_beg;
 	t_job		*j;
-	t_process	*p;
 
 	lst = lst->next;
 	j = NULL;
-	if (build_jobs(&j, &lst) == FAILURE)
-		return (FAILURE);
+	if (build_jobs(&j, &lst) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	while (j)
 	{
 		j_beg = j->next;
@@ -180,5 +177,5 @@ int	launch_all_jobs(t_list *lst)
 		free_job(j);
 		j = j_beg;
 	}
-	return (SUCCESS);
+	return (EXIT_SUCCESS);
 }

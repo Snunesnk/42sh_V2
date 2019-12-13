@@ -15,14 +15,15 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
+		init_shell.c \
 		input/input.c \
 		input/path.c \
 		input/prompt.c \
+		job/job.c \
+		job/launch_all_jobs.c \
+		job/path_concat.c \
+		job/process.c \
 		lexer/lexer.c \
-		lexer/grammar_symbols.c \
-		parser/parser.c \
-		parser/job.c \
-		parser/path_concat.c \
 		modules/error.c \
 		modules/signals.c \
 		modules/builtins/builtin_cd.c \
@@ -46,7 +47,9 @@ SOURCES :=	main.c \
 		modules/expansions/expansion_utils.c \
 		modules/expansions/get_param.c \
 		modules/expansions/parameter_expansions.c \
-		modules/expansions/tilde_expansion.c
+		modules/expansions/tilde_expansion.c \
+		parser/parser.c \
+
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
