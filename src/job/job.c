@@ -12,6 +12,7 @@
 #include "libft.h"
 #include "shell.h"
 #include "job_control.h"
+#include "builtins.h"
 
 t_job			*first_job = NULL;
 extern pid_t           shell_pgid;
@@ -130,23 +131,27 @@ void	launch_job(t_job *j, int foreground)
 		}
 		else
 			outfile = j->stdout;
-		/* Fork the child processes. */
-		pid = fork();
-		if (pid == 0) /* This is the child process. */
-			launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
-		else if (pid < 0)
-		{ /* The fork failed. */
-			perror("Fork failed");
-			exit(1);
-		}
-		else
-		{ /* This is the parent process. */
-			p->pid = pid;
-			if (shell_is_interactive)
-			{
-				if (!j->pgid)
-					j->pgid = pid;
-				setpgid (pid, j->pgid);
+		if (is_a_builtin(p->argv[0])) /* execute builtin */
+			launch_builtin(p, infile, outfile, j->stderr, foreground);
+		else /* Fork the child processes. */
+		{
+			pid = fork();
+			if (pid == 0) /* This is the child process. */
+				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+			else if (pid < 0)
+			{ /* The fork failed. */
+				perror("Fork failed");
+				exit(1);
+			}
+			else
+			{ /* This is the parent process. */
+				p->pid = pid;
+				if (shell_is_interactive)
+				{
+					if (!j->pgid)
+						j->pgid = pid;
+					setpgid (pid, j->pgid);
+				}
 			}
 		}
 		/* Clean up after pipes. */
