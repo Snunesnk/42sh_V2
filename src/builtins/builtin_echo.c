@@ -11,22 +11,24 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "shell.h"
+#include "job_control.h"
 
-int	cmd_echo(int argc, char **argv)
+int	cmd_echo(int argc, t_process *p)
 {
 	int	i;
 
 	(void)argc;
 	i = 1;
-	while (argv[i])
+	while (p->argv[i])
 	{
-		if (argv[i + 1])
+		if (p->argv[i + 1])
 		{
-			ft_printf("%s ", argv[i]);
+			ft_dprintf(p->outfile, "%s ", p->argv[i]);
 		}
 		else
 		{
-			ft_printf("%s\n", argv[i]);
+			ft_dprintf(p->outfile, "%s\n", p->argv[i]);
 		}
 		++i;
 	}
