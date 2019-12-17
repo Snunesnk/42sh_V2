@@ -70,7 +70,7 @@ static char		*getbinpath(char *bin)
 	}
 }
 
-int				cmd_type(int argc, char **argv)
+int				cmd_type(int argc, t_process *p)
 {
 	_Bool	error;
 	int		i;
@@ -80,23 +80,23 @@ int				cmd_type(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (is_a_builtin(argv[i]))
-			ft_printf("%s is a shell builtin\n", argv[i]);
-		else if (is_a_keyword(argv[i]))
-			ft_printf("%s is a shell keyword\n", argv[i]);
-/*		else if ((str = gethash(argv[i])))
-			ft_printf("%s is hashed (%s)\n", argv[i], str);*/
-/*		else if ((str = getalias(argv[i])))
-			ft_printf("%s is aliased to `%s'\n", argv[i], str);*/
-		else if ((str = getbinpath(argv[i])))
+		if (is_a_builtin(p->argv[i]))
+			ft_dprintf(p->outfile, "%s is a shell builtin\n", p->argv[i]);
+		else if (is_a_keyword(p->argv[i]))
+			ft_dprintf(p->outfile, "%s is a shell keyword\n", p->argv[i]);
+/*		else if ((str = gethash(p->argv[i])))
+			ft_dprintf(p->outfile, "%s is hashed (%s)\n", p->argv[i], str);*/
+/*		else if ((str = getalias(p->argv[i])))
+			ft_dprintf(p->outfile, "%s is aliased to `%s'\n", p->argv[i], str);*/
+		else if ((str = getbinpath(p->argv[i])))
 		{
-			ft_printf("%s is %s\n", argv[i], str);
+			ft_dprintf(p->outfile, "%s is %s\n", p->argv[i], str);
 			ft_memdel((void**)&str);
 		}
 		else
 		{
 			error |= 1;
-			ft_dprintf(STDERR_FILENO, "%s: %s: %s: not found\n", g_progname, *argv, argv[i]);
+			ft_dprintf(p->errfile, "%s: %s: %s: not found\n", g_progname, *p->argv, p->argv[i]);
 		}
 		++i;
 	}

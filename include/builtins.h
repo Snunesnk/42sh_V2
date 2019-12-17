@@ -13,6 +13,8 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
+# include "job_control.h"
+
 /*
 ** Utils for builtins
 */
@@ -23,26 +25,26 @@ int				is_a_builtin(char *cmd);
 /*
 ** Functions in builtins.c
 */
-int				cmd_unsetenv(int argc, char **argv);
-int				cmd_setenv(int argc, char **argv);
-int				cmd_echo(int agrc, char **argv);
-int				cmd_type(int agrc, char **argv);
-int				cmd_exit(int argc, char **argv);
-int				cmd_true(int argc, char **argv);
-int				cmd_false(int argc, char **argv);
-int				cmd_env(int argc, char **argv);
-int				cmd_pwd(int argc, char **argv);
-int				cmd_cd(int argc, char **argv);
-int				cmd_set(int argc, char **argv);
+int				cmd_unsetenv(int argc, t_process *p);
+int				cmd_setenv(int argc, t_process *p);
+int				cmd_echo(int agrc, t_process *p);
+int				cmd_type(int agrc, t_process *p);
+int				cmd_exit(int argc, t_process *p);
+int				cmd_true(int argc, t_process *p);
+int				cmd_false(int argc, t_process *p);
+int				cmd_env(int argc, t_process *p);
+int				cmd_pwd(int argc, t_process *p);
+int				cmd_cd(int argc, t_process *p);
+int				cmd_set(int argc, t_process *p);
 
 /*
 ** Functions in builtins_dispatcher.c
 */
-int				builtins_dispatcher(char **argv);
+int				builtins_dispatcher(t_process *p);
 typedef struct	s_builtins
 {
 	const char *const	key;
-	int		(*const f)(int, char**);
+	int		(*const f)(int, t_process *p);
 }				t_builtins;
 
 _Bool				prior_builtin(char *str);
