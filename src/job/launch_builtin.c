@@ -10,28 +10,8 @@
 #include "job_control.h"
 #include "builtins.h"
 
-int	launch_builtin(t_process *p, int infile, int outfile, int errfile, int foreground)
+int	launch_builtin(t_process *p)
 {
-	/* Set the standard input/output channels of the new process. */
-/*	if (infile != STDIN_FILENO)
-	{
-		dup2(infile, STDIN_FILENO);
-		close(infile);
-	}
-	if (outfile != STDOUT_FILENO)
-	{
-		dup2(outfile, STDOUT_FILENO);
-		close(outfile);
-	}
-	if (errfile != STDERR_FILENO)
-	{
-		dup2(errfile, STDERR_FILENO);
-		close(errfile);
-	}
-*/	/* Execute the builtin. Retreive return value */
-	(void)(foreground);
-	(void)(infile);
-	(void)(outfile);
-	(void)(errfile);
-	return builtins_dispatcher(p->argv);
+	/* Execute the builtin. Retreive return value */
+	return builtins_dispatcher(p);
 }

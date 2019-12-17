@@ -132,7 +132,12 @@ void	launch_job(t_job *j, int foreground)
 		else
 			outfile = j->stdout;
 		if (is_a_builtin(p->argv[0])) /* execute builtin */
-			launch_builtin(p, infile, outfile, j->stderr, foreground);
+		{
+			p->infile = infile;
+			p->outfile = outfile;
+			p->errfile = j->stderr;
+			launch_builtin(p);
+		}
 		else /* Fork the child processes. */
 		{
 			pid = fork();

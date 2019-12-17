@@ -68,19 +68,19 @@ int		is_a_builtin(char *cmd)
 		return (0);
 }
 
-int			builtins_dispatcher(char **argv)
+int			builtins_dispatcher(t_process *p)
 {
-	int			(*f)(int, char**);
+	int			(*f)(int, t_process*);
 	int			ret;
 	int			argc;
 
 	argc = 0;
 	ret = e_command_not_found;
-	if ((f = dispatcher(*argv)))
+	if ((f = dispatcher(p->argv[0])))
 	{
-		while (argv[argc])
+		while (p->argv[argc])
 			++argc;
-		ret = f(argc, argv);
+		ret = f(argc, p);
 	}
 	return (ret);
 }
