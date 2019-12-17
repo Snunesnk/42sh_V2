@@ -23,6 +23,7 @@ SOURCES :=	main.c \
 		parser/parser.c \
 		shell/init_shell.c \
 		input/input.c \
+		modules/error.c \
 
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))

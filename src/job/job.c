@@ -236,8 +236,8 @@ void	wait_for_job(t_job *j)
 /* Format information about job status for the user to look at. */
 void	format_job_info (t_job *j, const char *status)
 {
-	printf("DONE\n");
-	return ; /* DEBUGG */
+/*	printf("DONE\n");
+	return ;*/ /* DEBUGG */
 	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
 
