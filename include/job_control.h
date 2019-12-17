@@ -47,5 +47,6 @@ void	wait_for_job(t_job *j);
 void    free_job(t_job *j);
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
+int	execp(char **agrv, char **environ);
 
 #endif
