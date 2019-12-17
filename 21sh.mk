@@ -19,12 +19,25 @@ SOURCES :=	main.c \
 		job/execute_jobs.c \
 		job/job.c \
 		job/process.c \
+		job/launch_builtin.c \
+		job/path_concat.c \
 		lexer/lexer.c \
 		parser/parser.c \
 		shell/init_shell.c \
+		shell/path.c \
 		input/input.c \
 		modules/error.c \
-
+		builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_env.c \
+		builtins/builtin_exit.c \
+		builtins/builtin_pwd.c \
+		builtins/builtins_dispatcher.c \
+		builtins/builtin_setenv.c \
+		builtins/builtin_truefalse.c \
+		builtins/builtin_type.c \
+		builtins/builtin_unsetenv.c \
+		builtins/ft_putenv_table.c \
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

@@ -59,5 +59,9 @@ int				get_stdin(char **line);
 int	initialize_prompt_fd(void);
 int	launch_all_jobs(t_list *lst);
 _Bool   prompt_display(int status);
+int	path_concat(char **bin);
+
+extern int	g_retval;
+extern char	g_pwd[];
 
 #endif
