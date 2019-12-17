@@ -32,18 +32,19 @@ int			main(int argc, char **argv)
 	(void)argv;
 	if (init_shell())
 		return (EXIT_FAILURE);
-	while (ft_printf("$> ") && get_stdin(&input) >= 0)
+/*	while (ft_printf("$> ") && get_stdin(&input) >= 0)
+*/	if (ft_printf("$> ") && get_stdin(&input) >= 0)
 	{
 		lst = NULL;
 		index = 0;
 		ft_bzero(&buffer, sizeof(buffer));
 		lexer(input, &lst);
-/*		debug(lst);
-*/		if (parser(lst, buffer, index) == EXIT_FAILURE)
+		debug(lst);
+		if (parser(lst, buffer, index) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
-			ft_putendl("\nOK");
+		/*	ft_putendl("\nOK"); */
 			launch_all_jobs(lst); /* to capture */
 		}
 		ft_lstdel(&lst, del);
