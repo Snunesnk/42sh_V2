@@ -88,8 +88,8 @@ int			main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-/*	while (ft_printf("$> ") && get_stdin(&input) >= 0)
-*/	if (ft_printf("$> ") && get_stdin(&input) >= 0)
+	while (ft_printf("$> ") && get_stdin(&input) >= 0)
+/*	if (ft_printf("$> ") && get_stdin(&input) >= 0) */ /* Debugg purpose */
 	{
 		lst = NULL;
 		index = 0;
