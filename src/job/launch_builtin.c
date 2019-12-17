@@ -13,7 +13,7 @@
 int	launch_builtin(t_process *p, int infile, int outfile, int errfile, int foreground)
 {
 	/* Set the standard input/output channels of the new process. */
-	if (infile != STDIN_FILENO)
+/*	if (infile != STDIN_FILENO)
 	{
 		dup2(infile, STDIN_FILENO);
 		close(infile);
@@ -28,7 +28,10 @@ int	launch_builtin(t_process *p, int infile, int outfile, int errfile, int foreg
 		dup2(errfile, STDERR_FILENO);
 		close(errfile);
 	}
-	/* Execute the builtin. Retreive return value */
+*/	/* Execute the builtin. Retreive return value */
 	(void)(foreground);
+	(void)(infile);
+	(void)(outfile);
+	(void)(errfile);
 	return builtins_dispatcher(p->argv);
 }
