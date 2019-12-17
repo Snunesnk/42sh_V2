@@ -14,6 +14,9 @@ struct s_process
   char			completed;   /* true if process has completed */
   char			stopped;     /* true if process has stopped */
   int			status;      /* reported status value */
+  int			infile;      /* standard i/o channels for proc */
+  int			outfile;     /* standard i/o channels for proc */
+  int			errfile;     /* standard i/o channels for proc */
 };
 
 /* A job is a pipeline of processes.  */
@@ -47,7 +50,8 @@ void	wait_for_job(t_job *j);
 void    free_job(t_job *j);
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
-int	execp(char **agrv, char **environ);
-int     launch_builtin(t_process *p, int infile, int outfile, int errfile, int foreground);
+/*int	execp(char **agrv, char **environ);
+*/
+int     launch_builtin(t_process *p);
 
 #endif
