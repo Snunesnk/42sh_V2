@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 14:53:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 10:30:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "libft.h"
 #include "builtins.h"
 #include "error.h"
+#include "job_control.h"
+#include "shell.h"
 
 const t_builtins	g_builtins[] =
 {
@@ -28,13 +30,14 @@ const t_builtins	g_builtins[] =
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
+	{ "fg", &cmd_fg},
 	{ "\0", NULL}
 };
 
 _Bool	prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"\0"} };
+	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"fg"}, {"\0"} };
 	int	i;
 
 	i = 0;

@@ -269,7 +269,7 @@ void	do_job_notification(void)
 			completed and delete it from the list of active jobs. */
 		if (job_is_completed(j))
 		{
-			format_job_info (j, "completed");
+			format_job_info(j, "completed");
 			if (jlast)
 				jlast->next = jnext;
 			else
