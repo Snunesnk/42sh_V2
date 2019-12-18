@@ -6,19 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:49:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:55:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-
-#include "ft_getopt.h"
-#include "libft.h"
-#include "error.h"
-#include "path.h"
-#include "job_control.h"
-#include "builtins.h"
+#include "shell.h"
 
 static int	parse_opt(int argc, t_process *p, _Bool *b)
 {

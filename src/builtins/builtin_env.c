@@ -6,17 +6,10 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 14:44:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:54:09 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "ft_getopt.h"
-#include "builtins.h"
-#include "libft.h"
-#include "error.h"
-#include "job_control.h"
 #include "shell.h"
 
 static void	print_env_tables(int outfile)
