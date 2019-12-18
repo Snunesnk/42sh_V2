@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/23 18:25:39 by abarthel         ###   ########.fr        #
+#    Updated: 2019/12/18 12:15:30 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,23 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_btree/btree_search_data.c \
 		ds_btree/btree_delete.c \
 		ds_bstree/bstree_remove_data.c \
+		ds_vct/vct_addchar.c \
+		ds_vct/vct_addstr.c \
+		ds_vct/vct_clear.c \
+		ds_vct/vct_del.c \
+		ds_vct/vct_delchar.c \
+		ds_vct/vct_delfirstchar.c \
+		ds_vct/vct_dellastchar.c \
+		ds_vct/vct_delnchar.c \
+		ds_vct/vct_insertchar.c \
+		ds_vct/vct_insertstr.c \
+		ds_vct/vct_new.c \
+		ds_vct/vct_newstr.c \
+		ds_vct/vct_pushchar.c \
+		ds_vct/vct_pushstr.c \
+		ds_vct/vct_replace.c \
+		ds_vct/vct_reset.c \
+		ds_vct/vct_resize.c \
 		ds_queue/queue_create_node.c \
 		ds_queue/queue_enqueue.c \
 		ds_queue/queue_dequeue.c \
