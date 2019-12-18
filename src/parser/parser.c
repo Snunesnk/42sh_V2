@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/04 16:47:13 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:11:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
-	int		token_word[NB_TOKEN] = { PIPE, AND, SEMICOLON, OP_PARENTHESIS,
-					CL_PARENTHESIS, WHILE_WORD, DONE, R_DB_REDIR, L_DB_REDIR,
-					R_REDIR, L_REDIR, WORD, COMMENT, END, TAB_END };
+	int		token_word[NB_TOKEN] = { PIPE, AND, SEMI, OP_PARENTHESIS,
+					CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT, DLESS,
+					GREAT, LESS, WORD, COMMENT, END, TAB_END };
 	int		token_redir[NB_TOKEN] = { AND, WORD, COMMENT, TAB_END };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
@@ -29,15 +29,15 @@ static void	init_token_tab(int **token_tab)
 
 	token_tab[PIPE] = token_meta;
 	token_tab[AND] = token_meta;
-	token_tab[SEMICOLON] = token_semicolon;
+	token_tab[SEMI] = token_semicolon;
 	token_tab[OP_PARENTHESIS] = token_op_parenthesis;
 	token_tab[CL_PARENTHESIS] = token_word;
 	token_tab[WHILE_WORD] = token_while;
 	token_tab[DONE] = token_word;
-	token_tab[R_DB_REDIR] = token_redir;
-	token_tab[L_DB_REDIR] = token_redir;
-	token_tab[R_REDIR] = token_redir;
-	token_tab[L_REDIR] = token_redir;
+	token_tab[DGREAT] = token_redir;
+	token_tab[DLESS] = token_redir;
+	token_tab[GREAT] = token_redir;
+	token_tab[LESS] = token_redir;
 	token_tab[WORD] = token_word;
 	token_tab[COMMENT] = token_word;
 	token_tab[START] = token_meta;

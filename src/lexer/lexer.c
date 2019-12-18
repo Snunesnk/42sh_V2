@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:45 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 12:19:20 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:01:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,6 @@ static int		ft_isblank(int c)
 {
 	return (c == ' ' || c == '\t');
 }
-
-/*static int		ft_ismeta(int c)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
-		|| c == '<' || c == '>')
-	{
-		ret = TRUE;
-	}
-	return (ret);
-}*/
 
 static int	add_token_to_list(t_token *token, t_list **lst)
 {

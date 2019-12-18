@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_token.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
+/*   Updated: 2019/12/18 13:06:31 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "vctlib.h"
 #include "shell.h"
@@ -27,15 +39,15 @@ static void	init_token_tab(char **token_tab)
 {
 	token_tab[PIPE] = "|";
 	token_tab[AND] = "&";
-	token_tab[SEMICOLON] = ";";
+	token_tab[SEMI] = ";";
 	token_tab[OP_PARENTHESIS] = "(";
 	token_tab[CL_PARENTHESIS] = ")";
 	token_tab[WHILE_WORD] = "while";
 	token_tab[DONE] = "done";
-	token_tab[R_DB_REDIR] = ">>";
-	token_tab[L_DB_REDIR] = "<<";
-	token_tab[R_REDIR] = ">";
-	token_tab[L_REDIR] = "<";
+	token_tab[DGREAT] = ">>";
+	token_tab[DLESS] = "<<";
+	token_tab[GREAT] = ">";
+	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
