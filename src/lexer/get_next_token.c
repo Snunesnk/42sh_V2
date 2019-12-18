@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 14:49:28 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:32:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,18 @@ static int	get_word(const char *str, t_token *token)
 		while (ft_isblank(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
 				&& str[len] != '\0')
 		{
-			len++;
+			if (str[len] == '"')
+			{
+				len++;
+				while (str[len] != '"' && str[len] != '\0')
+				{
+					if (str[len] == '\\' && str[len + 1] == '"')
+						len++;
+					len++;
+				}
+			}
+			if (str[len] != '\0')
+				len++;
 		}
 		token->type = WORD;
 		tmp = ft_strndup(str, len);
