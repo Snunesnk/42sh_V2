@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 12:24:21 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:08:48 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@ static void	init_token_tab(char **token_tab)
 {
 	token_tab[PIPE] = "PIPE";
 	token_tab[AND] = "AND";
-	token_tab[SEMICOLON] = "SEMICOLON";
+	token_tab[SEMI] = "SEMI";
 	token_tab[OP_PARENTHESIS] = "OP_PARENTHESIS";
 	token_tab[CL_PARENTHESIS] = "CL_PARENTHESIS";
 	token_tab[WHILE_WORD] = "WHILE_LOOP";
 	token_tab[DONE] = "DONE";
-	token_tab[R_DB_REDIR] = "R_DB_REDIR";
-	token_tab[L_DB_REDIR] = "L_DB_REDIR";
-	token_tab[R_REDIR] = "R_REDIR";
-	token_tab[L_REDIR] = "L_REDIR";
+	token_tab[DGREAT] = "DGREAT";
+	token_tab[DLESS] = "DLESS";
+	token_tab[GREAT] = "GREAT";
+	token_tab[LESS] = "LESS";
 	token_tab[WORD] = "WORD";
 	token_tab[COMMENT] = "COMMENT";
 	token_tab[START] = "START";
