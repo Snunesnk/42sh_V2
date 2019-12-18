@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:45 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/04 16:50:04 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:19:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int		ft_isblank(int c)
 	return (c == ' ' || c == '\t');
 }
 
-static int		ft_ismeta(int c)
+/*static int		ft_ismeta(int c)
 {
 	int		ret;
 
@@ -32,79 +32,7 @@ static int		ft_ismeta(int c)
 		ret = TRUE;
 	}
 	return (ret);
-}
-
-
-static void	init_token_tab(char **token_tab)
-{
-	token_tab[PIPE] = "|";
-	token_tab[AND] = "&";
-	token_tab[SEMICOLON] = ";";
-	token_tab[OP_PARENTHESIS] = "(";
-	token_tab[CL_PARENTHESIS] = ")";
-	token_tab[WHILE_WORD] = "while";
-	token_tab[DONE] = "done";
-	token_tab[R_DB_REDIR] = ">>";
-	token_tab[L_DB_REDIR] = "<<";
-	token_tab[R_REDIR] = ">";
-	token_tab[L_REDIR] = "<";
-	token_tab[COMMENT] = NULL;
-	token_tab[WORD] = NULL;
-	token_tab[START] = NULL;
-	token_tab[END] = NULL;
-}
-
-static int	get_word(const char *str, t_token *token)
-{
-	size_t	len;
-
-	len = 0;
-	if (str[len] == '#')
-	{
-		token->type = COMMENT;
-		token->value = ft_strdup(str);
-		if (token->value != NULL)
-			len = ft_strlen(token->value);
-	}
-	else
-	{
-		while (ft_isblank(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
-				&& str[len] != '\0')
-		{
-			len++;
-		}
-		token->type = WORD;
-		token->value = ft_strndup(str, len);
-		if (token->value == NULL)
-			len = 0;
-	}
-	return (len);
-}
-
-static int	get_next_token(const char *str, t_token *token)
-{
-	char	*token_tab[NB_TOKEN];
-	size_t	token_index;
-	size_t	pos;
-
-	pos = 0;
-	token_index = 0;
-	init_token_tab(token_tab);
-	while (token_index < NB_TOKEN)
-	{
-		if (ft_strnequ(str, token_tab[token_index],
-					ft_strlen(token_tab[token_index])) == TRUE)
-		{
-			token->type = token_index;
-			pos = ft_strlen(token_tab[token_index]);
-			break ;
-		}
-		token_index++;
-	}
-	if (token_index == NB_TOKEN)
-		pos = get_word(str, token);
-	return (pos);
-}
+}*/
 
 static int	add_token_to_list(t_token *token, t_list **lst)
 {
