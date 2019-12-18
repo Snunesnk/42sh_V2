@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/04 16:49:33 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:24:21 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	print(t_list *lst, t_list **elem)
 {
 	static char	*token_tab[NB_TOKEN];
 	char		*print_content;
+	char		*tmp;
 	size_t		i;
 
 	i = 0;
@@ -43,10 +44,12 @@ static void	print(t_list *lst, t_list **elem)
 	init_token_tab(token_tab);
 	while (i < NB_TOKEN)
 	{
+		tmp = NULL;
 		if (((t_token*)(lst->content))->type == i)
 		{
-			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i],
-				((t_token*)(lst->content))->value);
+			if (i == WORD)
+				tmp = ((t_token*)(lst->content))->value->str;
+			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
 			break ;
 		}
 		i++;

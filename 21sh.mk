@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/16 19:18:42 by abarthel         ###   ########.fr        #
+#    Updated: 2019/12/18 12:11:56 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SOURCES :=	main.c \
 		job/launch_builtin.c \
 		job/path_concat.c \
 		lexer/lexer.c \
+		lexer/get_next_token.c \
 		parser/parser.c \
 		shell/init_shell.c \
 		shell/path.c \
