@@ -8,6 +8,7 @@
 #include "libft.h"
 #include "ft_errno.h"
 #include "job_control.h"
+#include "shell.h"
 
 void	free_process(t_process *p) /* temporary for tests purposes ? */
 {
@@ -18,6 +19,7 @@ void	free_process(t_process *p) /* temporary for tests purposes ? */
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
 	extern char	**environ;
+	char		*path;
 	pid_t		pid;
 
 	if (shell_is_interactive)
@@ -59,7 +61,9 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		close(errfile);
 	}
 	/* Exec the new process. Make sure we exit */
-	execve(p->argv[0], p->argv, environ);
+	path = p->argv[0];
+	path_concat(&path);
+	execve(path, p->argv, environ);
 	ft_perror("Failed to launch process using execve");
 	exit(1);
 }
