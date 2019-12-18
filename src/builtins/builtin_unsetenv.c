@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:51:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:53:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "ft_errno.h"
 #include "error.h"
 #include "libft.h"
+#include "builtins.h"
+#include "job_control.h"
 
 static char	**getenvvar(const char *name)
 {
