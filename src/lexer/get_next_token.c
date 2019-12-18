@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 13:06:31 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 13:22:29 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,11 @@ static int		ft_ismeta(int c)
 
 static void	init_token_tab(char **token_tab)
 {
+	token_tab[OR_IF] = "||";
 	token_tab[PIPE] = "|";
+	token_tab[AND_IF] = "&&";
 	token_tab[AND] = "&";
+	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";
 	token_tab[OP_PARENTHESIS] = "(";
 	token_tab[CL_PARENTHESIS] = ")";
