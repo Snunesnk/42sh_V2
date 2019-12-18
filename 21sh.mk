@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/10/16 19:18:42 by abarthel         ###   ########.fr        #
+#    Updated: 2019/12/18 10:30:58 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SOURCES :=	main.c \
 		builtins/builtin_setenv.c \
 		builtins/builtin_truefalse.c \
 		builtins/builtin_type.c \
+		builtins/builtin_fg.c \
 		builtins/builtin_unsetenv.c \
 		builtins/ft_putenv_table.c \
 

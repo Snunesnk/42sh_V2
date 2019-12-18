@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 14:54:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 10:29:23 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int				cmd_env(int argc, t_process *p);
 int				cmd_pwd(int argc, t_process *p);
 int				cmd_cd(int argc, t_process *p);
 int				cmd_set(int argc, t_process *p);
+int				cmd_fg(int argc, t_process *p);
 
 /*
 ** Functions in builtins_dispatcher.c
