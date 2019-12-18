@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 13:19:54 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 14:57:08 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define SUCCESS EXIT_SUCCESS
 
 # define BUF_SIZE	32
-# define NB_TOKEN	18
+# define NB_TOKEN	19
 # define NB_BRACKET	2
 # define TAB_END	-1 
 
@@ -56,6 +56,7 @@ enum	e_token
 	GREAT,
 	LESS,
 	WORD,
+	IO_NB,
 	COMMENT,
 	START,
 	END

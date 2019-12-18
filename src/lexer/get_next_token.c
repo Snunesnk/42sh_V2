@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 13:22:29 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 14:49:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,26 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREAT] = ">";
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
+	token_tab[IO_NB] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
 	token_tab[END] = NULL;
+}
+
+static int	is_io_number(const char *str)
+{
+	size_t	i;
+	int		ret;
+
+	i = 0;
+	ret = FALSE;
+	while (ft_isdigit(str[i]) == TRUE)
+		i++;
+	while (ft_isblank(str[i]) == TRUE)
+		i++;
+	if (str[i] == '>' || str[i] == '<')
+		ret = TRUE;
+	return (ret);
 }
 
 static int	get_word(const char *str, t_token *token)
@@ -69,6 +86,18 @@ static int	get_word(const char *str, t_token *token)
 		token->value = vct_newstr(str);
 		if (token->value != NULL)
 			len = ft_strlen(token->value->str);
+	}
+	else if (ft_isdigit(str[len]) == TRUE && is_io_number(str) == TRUE)
+	{
+		while (ft_isdigit(str[len]) == TRUE)
+			len++;
+		token->type = IO_NB;
+		tmp = ft_strndup(str, len);
+		ft_printf("tmp: %s\n", tmp);
+		token->value = vct_newstr(tmp);
+		ft_strdel(&tmp);
+		if (token->value == NULL)
+			len = 0;
 	}
 	else
 	{
