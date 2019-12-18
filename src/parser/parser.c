@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 14:57:08 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:04:29 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
+	int		token_and[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
 	int		token_word[NB_TOKEN] = { PIPE, AND, SEMI, OP_PARENTHESIS,
 					CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT, DLESS,
 					GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
@@ -31,7 +32,7 @@ static void	init_token_tab(int **token_tab)
 	token_tab[OR_IF] = NULL;
 	token_tab[PIPE] = token_meta;
 	token_tab[AND_IF] = NULL;
-	token_tab[AND] = token_meta;
+	token_tab[AND] = token_and;
 	token_tab[DSEMI] = NULL;
 	token_tab[SEMI] = token_semicolon;
 	token_tab[OP_PARENTHESIS] = token_op_parenthesis;
