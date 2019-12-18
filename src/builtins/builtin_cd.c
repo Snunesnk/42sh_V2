@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:39:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:53:37 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 ** https://www.unix.com/man-page/posix/1posix/cd/
 */
 
-#include <unistd.h>
-#include <sys/stat.h>
-
-#include "ft_getopt.h"
-#include "libft.h"
-#include "error.h"
-#include "path.h"
-#include "job_control.h"
 #include "shell.h"
-#include "builtins.h"
 
 extern char	g_pwd[];
 

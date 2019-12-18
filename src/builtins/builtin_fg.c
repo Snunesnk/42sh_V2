@@ -6,14 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 10:23:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 10:44:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:54:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "builtins.h"
-#include "job_control.h"
-
+#include "shell.h"
 
 int	cmd_fg(int argc, t_process *p)
 {

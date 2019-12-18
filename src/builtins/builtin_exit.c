@@ -6,17 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:35:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:54:18 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
 #include "shell.h"
-#include "error.h"
-#include "job_control.h"
-#include "builtins.h"
 
 static int	part_sep(int argc, t_process *p)
 {

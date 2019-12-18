@@ -6,15 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:48:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:13:05 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
-#include "error.h"
-#include "builtins.h"
+#include "shell.h"
 
 static void	print_setenv_syntax_error(t_process *p)
 {
