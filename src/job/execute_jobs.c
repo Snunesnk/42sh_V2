@@ -150,7 +150,7 @@ int	build_jobs(t_job **j, t_list **lst)
 	while (*lst)
 	{
 		t = (*lst)->content;
-		if (t->type == SEMICOLON)
+		if (t->type == SEMI)
 			(*lst) = (*lst)->next;
 		else
 			break;
