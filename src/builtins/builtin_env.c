@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:58:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 14:44:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@
 #include "error.h"
 #include "job_control.h"
 #include "shell.h"
+
+static void	print_env_tables(int outfile)
+{
+	char extern	**environ;
+	size_t		i;
+
+	i = 0;
+	if (environ)
+	{
+		while (environ[i])
+		{
+			if (environ[i][0])
+				ft_putendl_fd(environ[i], outfile);
+			++i;
+		}
+	}
+}
 
 static int	set_envcpy(char *arg, char ***env_cpy, char *pequal)
 {
@@ -46,7 +63,7 @@ int		cmd_env(int argc, t_process *p)
 	g_optind = RESET_OPTIND;
 	if (argc == 1)
 	{
-		ft_print_tables(environ);
+		print_env_tables(p->outfile);
 		return (0);
 	}
 	while ((opt = ft_getopt(argc, p->argv, "+i")) != -1)
