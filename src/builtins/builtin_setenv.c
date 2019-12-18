@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:48:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 #include "libft.h"
 #include "error.h"
+#include "builtins.h"
 
-static void	print_setenv_syntax_error(char *cmd_name, char *str)
+static void	print_setenv_syntax_error(t_process *p)
 {
-	ft_dprintf(STDERR_FILENO, "%s: %s: \'%s\': not a valid identifier\n",
-					g_progname, cmd_name, str);
+	ft_dprintf(p->errfile, "%s: %s: \'%s\': not a valid identifier\n",
+					g_progname, p->argv[0], p->argv[1]);
 }
 
 static int	is_valid_chr(const char c)
@@ -44,27 +45,27 @@ static int	has_invalid_syntax(const char *str)
 	return (e_success);
 }
 
-int		cmd_setenv(int argc, char **argv)
+int		cmd_setenv(int argc, t_process *p)
 {
 	if (argc != 3)
 	{
-		psherror(e_invalid_input, argv[0], e_cmd_type);
-		ft_dprintf(STDERR_FILENO, "Usage: %s VAR [VALUE]\n", argv[0]);
+		psherror(e_invalid_input, p->argv[0], e_cmd_type);
+		ft_dprintf(p->errfile, "Usage: %s VAR [VALUE]\n", p->argv[0]);
 		return (g_errordesc[e_invalid_input].code);
 	}
-	if (has_invalid_syntax(argv[1]))
+	if (has_invalid_syntax(p->argv[1]))
 	{
-		print_setenv_syntax_error(argv[0], argv[1]);
+		print_setenv_syntax_error(p);
 		return (g_errordesc[e_invalid_input].code);
 	}
-	else if (has_invalid_syntax(argv[2]))
+	else if (has_invalid_syntax(p->argv[2]))
 	{
-		print_setenv_syntax_error(argv[0], argv[2]);
+		print_setenv_syntax_error(p);
 		return (g_errordesc[e_invalid_input].code);
 	}
 	else
 	{
-		if ((ft_setenv(argv[1], argv[2], 1)))
+		if ((ft_setenv(p->argv[1], p->argv[2], 1)))
 			return (g_errordesc[e_cannot_allocate_memory].code);
 	}
 	return (e_success);
