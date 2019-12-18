@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
+/*   Updated: 2019/12/18 13:19:54 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SHELL_H
 # define SHELL_H
 
@@ -11,7 +23,7 @@
 # define SUCCESS EXIT_SUCCESS
 
 # define BUF_SIZE	32
-# define NB_TOKEN	15
+# define NB_TOKEN	18
 # define NB_BRACKET	2
 # define TAB_END	-1 
 
@@ -29,8 +41,11 @@ enum	e_bracket
 
 enum	e_token
 {
+	OR_IF,
 	PIPE,
+	AND_IF,
 	AND,
+	DSEMI,
 	SEMI,
 	OP_PARENTHESIS,
 	CL_PARENTHESIS,
