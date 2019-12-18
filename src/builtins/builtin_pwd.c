@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:44:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:49:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "libft.h"
 #include "error.h"
 #include "path.h"
+#include "job_control.h"
+#include "builtins.h"
 
 static int	parse_opt(int argc, t_process *p, _Bool *b)
 {
@@ -47,7 +49,7 @@ int	cmd_pwd(int argc, t_process *p)
 	b = 0;
 	ret = 0;
 	g_optind = RESET_OPTIND;
-	if ((ret = parse_opt(argc, p->argv, &b)))
+	if ((ret = parse_opt(argc, p, &b)))
 		return (ret);
 	if (b)
 	{
