@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/04 16:43:13 by efischer         ###   ########.fr       */
+/*   Updated: 2019/12/18 12:21:06 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	set_minimal_env(void)
 static void	del(void *content, size_t content_size)
 {
 	(void)content_size;
-	ft_strdel(&((t_token*)(content))->value);
+	vct_del(((t_token*)(content))->value);
 	free(content);
 }
 

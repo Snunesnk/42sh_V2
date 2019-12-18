@@ -5,6 +5,7 @@
 # include <stdint.h>
 # include "libft.h"
 # include "job_control.h"
+# include "vctlib.h"
 
 # define FAILURE EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
@@ -17,7 +18,7 @@
 typedef struct		s_token
 {
 	uint64_t		type;
-	char			*value;
+	t_vector		*value;
 }					t_token;
 
 enum	e_bracket
@@ -60,6 +61,7 @@ int	initialize_prompt_fd(void);
 int	launch_all_jobs(t_list *lst);
 _Bool   prompt_display(int status);
 int	path_concat(char **bin);
+int			get_next_token(const char *str, t_token *token);
 
 extern int	g_retval;
 extern char	g_pwd[];

@@ -56,7 +56,7 @@ char		*get_tokvalue(t_list *lst)
 	t_token	*t;
 
 	t = lst->content;
-	return (t->value);
+	return (t->value->str);
 }
 
 int		build_argv(char ***argv, t_list **lst)
