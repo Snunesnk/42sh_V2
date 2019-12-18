@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 16:32:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/12/18 09:39:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 #include "path.h"
 #include "job_control.h"
 #include "shell.h"
+#include "builtins.h"
 
 extern char	g_pwd[];
 
