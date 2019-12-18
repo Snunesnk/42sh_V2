@@ -17,7 +17,7 @@ void	print_p(t_process *p)
 }
 
 /* Debugg function */
-void	ft_print_tables(char **tables)
+/*void	ft_print_tables(char **tables)
 {
 	size_t	i;
 
@@ -31,7 +31,7 @@ void	ft_print_tables(char **tables)
 		}
 		printf("\n");
 	}
-}
+}*/
 
 int		get_argc(t_list *lst)
 {
