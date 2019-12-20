@@ -14,7 +14,7 @@
 
 static void	print_env_tables(int outfile)
 {
-	char extern	**environ;
+	extern char	**environ;
 	size_t		i;
 
 	i = 0;
