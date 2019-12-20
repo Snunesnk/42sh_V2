@@ -14,7 +14,6 @@
 
 static int	part_sep(int argc, t_process *p)
 {
-	extern char	**environ;
 	unsigned char	status;
 
 	status = g_retval;
@@ -36,7 +35,6 @@ static int	part_sep(int argc, t_process *p)
 
 static int	numarg_exit(int argc, t_process *p, int i)
 {
-	extern char	**environ;
 	unsigned char	status;
 
 	ft_dprintf(p->errfile, "exit\n");
@@ -56,8 +54,6 @@ static int	numarg_exit(int argc, t_process *p, int i)
 
 static void	nomatter_exit(t_process *p, int i)
 {
-	extern char	**environ;
-
 	ft_dprintf(p->errfile, "exit\n");
 	ft_dprintf(p->errfile,
 	"%s: %s: %s: numeric argument required\n",
@@ -71,7 +67,6 @@ static void	nomatter_exit(t_process *p, int i)
 
 int		cmd_exit(int argc, t_process *p)
 {
-	extern char	**environ;
 	unsigned char	status;
 	int		i;
 
