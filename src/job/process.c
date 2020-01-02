@@ -61,7 +61,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		close(errfile);
 	}
 	/* Exec the new process. Make sure we exit */
-	path = p->argv[0];
+	path = ft_strdup(p->argv[0]);
 	path_concat(&path);
 	execve(path, p->argv, environ);
 	ft_perror("Failed to launch process using execve");
