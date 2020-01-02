@@ -128,21 +128,36 @@ void	launch_job(t_job *j, int foreground)
 				exit(1);
 			}
 			outfile = mypipe[1];
+			ft_printf("PIPE j->stdout:%d, outfile:%d, mypipe[1]:%d\n", j->stdout, outfile, mypipe[1]);
 		}
 		else
+		{
 			outfile = j->stdout;
-		if (is_a_builtin(p->argv[0])) /* execute builtin */
+			ft_printf("CMD j->stdout:%d, outfile:%d, mypipe[1]:%d\n", j->stdout, outfile, mypipe[1]);
+		}
+		if (is_a_builtin(p->argv[0]) && outfile != mypipe[1])
 		{
 			p->infile = infile;
 			p->outfile = outfile;
 			p->errfile = j->stderr;
 			launch_builtin(p);
 		}
-		else /* Fork the child processes. */
+		else
 		{
 			pid = fork();
 			if (pid == 0) /* This is the child process. */
-				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+			{
+
+				if (is_a_builtin(p->argv[0]))
+				{
+					p->infile = infile;
+					p->outfile = outfile;
+					p->errfile = j->stderr;
+					exit(launch_builtin(p));
+				}
+				else
+					launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+			}
 			else if (pid < 0)
 			{ /* The fork failed. */
 				perror("Fork failed");
