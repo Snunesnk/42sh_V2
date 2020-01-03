@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 #include "libft.h"
 #include "shell.h"
@@ -59,6 +60,14 @@ char		*get_tokvalue(t_list *lst)
 	return (t->value->str);
 }
 
+int		get_tokentype(t_list *lst)
+{
+	t_token	*t;
+
+	t = lst->content;
+	return (t->type);
+}
+
 int		build_argv(char ***argv, t_list **lst)
 {
 	int	argc;
@@ -83,12 +92,23 @@ int		build_argv(char ***argv, t_list **lst)
 int	build_a_process(t_process **p, t_list **lst)
 {
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
-	while (*lst)
+	if (*lst)
 	{
 		if (build_argv(&((*p)->argv), lst) == FAILURE)
 			return (FAILURE);
-		else
+		else if (get_tokentype(*lst) == GREAT)
+		{
+			if (get_tokentype((*lst)->next) == WORD)
+			{
+				int fd = open("./toto", O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				close(fd);
+			}
 			return (SUCCESS);
+		}
+		else
+		{
+			return (SUCCESS);
+		}
 	}
 	return (FAILURE);
 }
