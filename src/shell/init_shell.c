@@ -7,6 +7,7 @@
 #include "libft.h"
 #include "ft_errno.h"
 #include "job_control.h"
+#include "shell.h"
 
 /* Keep track of attributes of the shell. */
 
@@ -14,6 +15,10 @@ pid_t		shell_pgid;
 struct termios	shell_tmodes;
 int		shell_terminal;
 int		shell_is_interactive;
+
+/* Return value of last program and path tracking for cd builtin */
+int             g_retval;
+char            g_pwd[] = {0};
 
 /* Make sure the shell is running interactively as the foreground job
 before proceeding. */
@@ -49,4 +54,42 @@ int	init_shell(void)
 		tcgetattr(shell_terminal, &shell_tmodes);
 	}
 	return (0);
+}
+
+int	set_minimal_env(void)
+{
+	char	*tmp;
+	int		shlvl;
+
+	tmp = getcwd(NULL, 0);
+	if (ft_setenv("PWD", tmp, 1))
+		return (e_cannot_allocate_memory);
+	ft_memdel((void**)&tmp);
+	if (!(tmp = ft_getenv("SHLVL")))
+	{
+		if (ft_setenv("SHLVL", "1", 1))
+			return (e_cannot_allocate_memory);
+	}
+	else
+	{
+		shlvl = ft_atoi(tmp) + 1;
+		tmp = ft_itoa(shlvl);
+		if (ft_setenv("SHLVL", tmp, 1))
+			return (e_cannot_allocate_memory);
+		ft_memdel((void**)&tmp);
+	}
+	if (PATH_MAX > 0)
+	{
+		tmp = ft_getenv("PWD");
+		if (ft_strlen(tmp) <= PATH_MAX)
+			ft_strcpy(g_pwd, ft_getenv("PWD"));
+	}
+	return (e_success);
+}
+
+void	del(void *content, size_t content_size)
+{
+	(void)content_size;
+	vct_del(((t_token*)(content))->value);
+	free(content);
 }
