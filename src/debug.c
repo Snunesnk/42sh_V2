@@ -19,6 +19,8 @@ static void	init_token_tab(char **token_tab)
 	token_tab[PIPE] = "PIPE";
 	token_tab[AND_IF] = "AND_IF";
 	token_tab[AND] = "AND";
+	token_tab[GREATAND] = "GREATAND";
+	token_tab[LESSAND] = "LESSAND";
 	token_tab[DSEMI] = "DSEMI";
 	token_tab[SEMI] = "SEMI";
 	token_tab[OP_PARENTHESIS] = "OP_PARENTHESIS";
