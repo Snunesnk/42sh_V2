@@ -40,6 +40,8 @@ static void	init_token_tab(char **token_tab)
 	token_tab[OR_IF] = "||";
 	token_tab[PIPE] = "|";
 	token_tab[AND_IF] = "&&";
+	token_tab[GREATAND] = ">&";
+	token_tab[LESSAND] = "<&";
 	token_tab[AND] = "&";
 	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";

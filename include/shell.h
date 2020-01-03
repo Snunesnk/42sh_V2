@@ -31,9 +31,9 @@
 # define SUCCESS EXIT_SUCCESS
 
 # define BUF_SIZE	32
-# define NB_TOKEN	19
+# define NB_TOKEN	21
 # define NB_BRACKET	2
-# define TAB_END	-1 
+# define TAB_END	-1
 
 typedef struct		s_token
 {
@@ -52,6 +52,8 @@ enum	e_token
 	OR_IF,
 	PIPE,
 	AND_IF,
+	GREATAND,
+	LESSAND,
 	AND,
 	DSEMI,
 	SEMI,

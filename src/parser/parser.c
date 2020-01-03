@@ -16,12 +16,14 @@
 static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
+	int		token_greatand[NB_TOKEN] = { WORD };
+	int		token_lessand[NB_TOKEN] = { WORD };
 	int		token_and[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
-	int		token_word[NB_TOKEN] = { PIPE, AND, SEMI, OP_PARENTHESIS,
+	int		token_word[NB_TOKEN] = { PIPE, GREATAND, LESSAND, AND, SEMI, OP_PARENTHESIS,
 					CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT, DLESS,
 					GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, TAB_END };
-	int		token_redir[NB_TOKEN] = { AND, WORD, COMMENT, TAB_END };
+	int		token_redir[NB_TOKEN] = { WORD };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
 	int		token_op_parenthesis[NB_TOKEN] = { OP_PARENTHESIS, CL_PARENTHESIS,
@@ -32,6 +34,8 @@ static void	init_token_tab(int **token_tab)
 	token_tab[OR_IF] = NULL;
 	token_tab[PIPE] = token_meta;
 	token_tab[AND_IF] = NULL;
+	token_tab[GREATAND] = token_greatand;
+	token_tab[LESSAND] = token_lessand;
 	token_tab[AND] = token_and;
 	token_tab[DSEMI] = NULL;
 	token_tab[SEMI] = token_semicolon;
