@@ -89,6 +89,8 @@ int		build_argv(char ***argv, t_list **lst)
 	return (FAILURE);
 }
 
+void		debug(t_list *lst);
+
 int	build_a_process(t_process **p, t_list **lst)
 {
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
@@ -96,6 +98,21 @@ int	build_a_process(t_process **p, t_list **lst)
 	{
 		if (build_argv(&((*p)->argv), lst) == FAILURE)
 			return (FAILURE);
+		else if (get_tokentype(*lst) == IO_NB)
+		{
+			if (ft_atoi(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
+			{
+				ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
+	/*			if (fcntl(ft_atoi(get_tokvalue(*lst)), F_GETFL) < 0)
+				{
+					ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
+				}
+	*/		}
+			else
+			{
+				printf("test");
+			}
+		}
 		else if (get_tokentype(*lst) == GREAT)
 		{
 			if (get_tokentype((*lst)->next) == WORD)

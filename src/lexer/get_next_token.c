@@ -63,17 +63,18 @@ static void	init_token_tab(char **token_tab)
 static int	is_io_number(const char *str)
 {
 	size_t	i;
-	int		ret;
 
 	i = 0;
-	ret = FALSE;
-	while (ft_isdigit(str[i]) == TRUE)
-		i++;
-	while (ft_isblank(str[i]) == TRUE)
-		i++;
-	if (str[i] == '>' || str[i] == '<')
-		ret = TRUE;
-	return (ret);
+	if (ft_atoi(str) < 0)
+		return (FALSE);
+	else
+	{
+		while (ft_isdigit(str[i]) == TRUE)
+			i++;
+		if (str[i] == '>' || str[i] == '<')
+			return (TRUE);
+	}
+	return (FALSE);
 }
 
 static int	get_word(const char *str, t_token *token)
