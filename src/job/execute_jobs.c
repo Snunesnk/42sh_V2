@@ -94,6 +94,9 @@ void		debug(t_list *lst);
 int	build_a_process(t_process **p, t_list **lst)
 {
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
+	(*p)->infile = -1;
+	(*p)->outfile = -1;
+	(*p)->errfile = -1;
 	if (*lst)
 	{
 		if (build_argv(&((*p)->argv), lst) == FAILURE)
@@ -117,9 +120,12 @@ int	build_a_process(t_process **p, t_list **lst)
 		{
 			if (get_tokentype((*lst)->next) == WORD)
 			{
-				int fd = open("./toto", O_CREAT, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				int fd = open("./toto", O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				(*p)->outfile = fd;
+				(*p)->errfile = fd;
+		/*		ft_printf(">> ret:%d\n", (int)write(fd, "OKOKOK", 6));
 				close(fd);
-			}
+		*/	}
 			return (SUCCESS);
 		}
 		else
