@@ -135,11 +135,16 @@ void	launch_job(t_job *j, int foreground)
 			outfile = j->stdout;
 			ft_printf("CMD j->stdout:%d, outfile:%d, mypipe[1]:%d\n", j->stdout, outfile, mypipe[1]);
 		}
+
+		ft_printf("\n --- \ninfile:%d\noutfile:%d\nerrfile:%d\n", p->infile, p->outfile, p->errfile);
 		if (is_a_builtin(p->argv[0]) && outfile != mypipe[1])
 		{
-			p->infile = infile;
-			p->outfile = outfile;
-			p->errfile = j->stderr;
+			if (p->infile == -1)
+				p->infile = infile;
+			if (p->outfile == -1)
+				p->outfile = outfile;
+			if (p->errfile == -1)
+				p->errfile = j->stderr;
 			launch_builtin(p);
 		}
 		else
@@ -150,13 +155,28 @@ void	launch_job(t_job *j, int foreground)
 
 				if (is_a_builtin(p->argv[0]))
 				{
-					p->infile = infile;
-					p->outfile = outfile;
-					p->errfile = j->stderr;
+					if (p->infile == -1)
+						p->infile = infile;
+					if (p->outfile == -1)
+						p->outfile = outfile;
+					if (p->errfile == -1)
+						p->errfile = j->stderr;
 					exit(launch_builtin(p));
 				}
 				else
-					launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+				{
+					if (p->infile == -1)
+						p->infile = infile;
+					if (p->outfile == -1)
+						p->outfile = outfile;
+					if (p->errfile == -1)
+						p->errfile = j->stderr;
+					launch_process(p, j->pgid,
+						infile == -1 ? infile : p->infile,
+						outfile == -1 ? outfile : p->outfile,
+						j->stderr == -1 ? j->stderr : p->errfile,
+						foreground);
+				}
 			}
 			else if (pid < 0)
 			{ /* The fork failed. */
