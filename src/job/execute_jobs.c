@@ -89,8 +89,6 @@ int		build_argv(char ***argv, t_list **lst)
 	return (FAILURE);
 }
 
-void		debug(t_list *lst);
-
 int	build_a_process(t_process **p, t_list **lst)
 {
 	*p = (t_process*)ft_memalloc(sizeof(t_process));
