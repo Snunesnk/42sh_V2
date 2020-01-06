@@ -65,7 +65,7 @@ static int	is_io_number(const char *str)
 	size_t	i;
 
 	i = 0;
-	if (ft_atoi(str) < 0)
+	if (ft_atoifd(str) < 0)
 		return (FALSE);
 	else
 	{
