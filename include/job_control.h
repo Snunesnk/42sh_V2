@@ -4,6 +4,13 @@
 # include <sys/types.h>
 # include <termios.h>
 
+/* A redirection structure for process redirections */
+struct	s_redirection
+{
+	int	oldfd; /* cf man dup2 */
+	int	newfd;
+};
+
 /* A process is a single process.  */
 struct s_process
 {
@@ -14,9 +21,11 @@ struct s_process
   char			completed;   /* true if process has completed */
   char			stopped;     /* true if process has stopped */
   int			status;      /* reported status value */
+	/* below to be deleted and replaced by redirection struct */
   int			infile;      /* standard i/o channels for proc */
   int			outfile;     /* standard i/o channels for proc */
   int			errfile;     /* standard i/o channels for proc */
+  struct s_redirection	redir[];     /* all recirections to be applied */
 };
 
 /* A job is a pipeline of processes.  */
@@ -35,6 +44,7 @@ struct s_job
 
 typedef struct s_process	t_process;
 typedef struct s_job		t_job;
+typedef struct s_redirection	t_redicretion;
 
 /* The active jobs are linked into a list. This is its head. */
 extern t_job		*first_job;
