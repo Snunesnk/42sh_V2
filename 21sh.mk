@@ -21,6 +21,7 @@ SOURCES :=	main.c \
 		job/process.c \
 		job/launch_builtin.c \
 		job/path_concat.c \
+		job/utils_job.c \
 		lexer/lexer.c \
 		lexer/get_next_token.c \
 		parser/parser.c \
