@@ -100,7 +100,7 @@ int	build_a_process(t_process **p, t_list **lst)
 			return (FAILURE);
 		else if (get_tokentype(*lst) == IO_NB)
 		{
-			if (ft_atoi(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
+			if (ft_atoifd(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
 			{
 				ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
 	/*			if (fcntl(ft_atoi(get_tokvalue(*lst)), F_GETFL) < 0)

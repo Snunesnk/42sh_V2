@@ -90,6 +90,7 @@ int		path_concat(char **bin);
 int		get_next_token(const char *str, t_token *token);
 int    		set_minimal_env(void);
 void    del(void *content, size_t content_size);
+int             ft_atoifd(const char *str);
 
 extern int	g_retval;
 extern char	g_pwd[];
