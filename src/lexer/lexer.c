@@ -48,6 +48,7 @@ static int	border_token_list(t_list **lst, uint64_t token_type)
 static int	get_token_list(const char *str, t_list **lst)
 {
 	t_token	token;
+	t_token	last_token;
 	size_t	last_pos;
 	size_t	pos;
 	int		ret;
@@ -63,12 +64,15 @@ static int	get_token_list(const char *str, t_list **lst)
 		ft_bzero(&token, sizeof(token));
 		last_pos = pos;
 		pos += get_next_token(str + pos, &token);
+		if (last_token.type == DLESS && token.type == WORD)
+			token.type = END_OF_FILE;
 		ret = add_token_to_list(&token, lst);
 		if (pos == last_pos || ret == FAILURE)
 		{
 			ret = FAILURE;
 			break ;
 		}
+		last_token = token;
 	}
 	return (ret);
 }

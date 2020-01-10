@@ -32,6 +32,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREAT] = "GREAT";
 	token_tab[LESS] = "LESS";
 	token_tab[WORD] = "WORD";
+	token_tab[END_OF_FILE] = "EOF";
 	token_tab[IO_NB] = "IO_NB";
 	token_tab[COMMENT] = "COMMENT";
 	token_tab[START] = "START";
@@ -53,7 +54,7 @@ static void	print(t_list *lst, t_list **elem)
 		tmp = NULL;
 		if (((t_token*)(lst->content))->type == i)
 		{
-			if (i == WORD || i == IO_NB)
+			if (i == WORD || i == IO_NB || i == END_OF_FILE)
 				tmp = ((t_token*)(lst->content))->value->str;
 			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
 			break ;
