@@ -31,8 +31,8 @@
 # define SUCCESS EXIT_SUCCESS
 
 # define BUF_SIZE	32
-# define NB_TOKEN	21
-# define NB_BRACKET	2
+# define NB_TOKEN	22
+# define NB_BRACKET	3
 # define TAB_END	-1
 
 typedef struct		s_token
@@ -44,7 +44,8 @@ typedef struct		s_token
 enum	e_bracket
 {
 	PARENTHESIS,
-	WHILE_LOOP
+	WHILE_LOOP,
+	EARDOCS
 };
 
 enum	e_token
@@ -67,6 +68,7 @@ enum	e_token
 	LESS,
 	WORD,
 	IO_NB,
+	END_OF_FILE,
 	COMMENT,
 	START,
 	END

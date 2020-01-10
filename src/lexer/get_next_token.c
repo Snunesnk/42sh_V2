@@ -55,6 +55,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
 	token_tab[IO_NB] = NULL;
+	token_tab[END_OF_FILE] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
 	token_tab[END] = NULL;
