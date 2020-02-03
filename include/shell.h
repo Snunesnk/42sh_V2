@@ -27,6 +27,9 @@
 # include "path.h"
 # include "builtins.h"
 
+# define TRUE	0
+# define FALSE	1
+
 # define FAILURE EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
 
