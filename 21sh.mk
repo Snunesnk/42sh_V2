@@ -16,33 +16,33 @@ SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
 		debug.c \
-		job/execute_jobs.c \
-		job/job.c \
-		job/process.c \
-		job/launch_builtin.c \
-		job/path_concat.c \
-		job/utils_job.c \
-		lexer/lexer.c \
-		lexer/get_next_token.c \
-		lexer/ast_order.c \
-		lexer/debug_ast.c \
-		parser/parser.c \
-		shell/init_shell.c \
-		shell/path.c \
-		input/input.c \
-		modules/error.c \
-		builtins/builtin_cd.c \
-		builtins/builtin_echo.c \
-		builtins/builtin_env.c \
-		builtins/builtin_exit.c \
-		builtins/builtin_pwd.c \
-		builtins/builtins_dispatcher.c \
-		builtins/builtin_setenv.c \
-		builtins/builtin_truefalse.c \
-		builtins/builtin_type.c \
-		builtins/builtin_fg.c \
-		builtins/builtin_unsetenv.c \
-		builtins/ft_putenv_table.c \
+		execute_jobs.c \
+		job.c \
+		process.c \
+		launch_builtin.c \
+		path_concat.c \
+		utils_job.c \
+		lexer.c \
+		get_next_token.c \
+		ast_order.c \
+		debug_ast.c \
+		parser.c \
+		init_shell.c \
+		path.c \
+		input.c \
+		error.c \
+		builtin_cd.c \
+		builtin_echo.c \
+		builtin_env.c \
+		builtin_exit.c \
+		builtin_pwd.c \
+		builtins_dispatcher.c \
+		builtin_setenv.c \
+		builtin_truefalse.c \
+		builtin_type.c \
+		builtin_fg.c \
+		builtin_unsetenv.c \
+		ft_putenv_table.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
