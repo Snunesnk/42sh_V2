@@ -11,29 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "vctlib.h"
 #include "shell.h"
-
-#define TRUE 1
-#define FALSE 0
-
-static int		ft_isblank(int c)
-{
-	return (c == ' ' || c == '\t');
-}
-
-static int		ft_ismeta(int c)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
-		|| c == '<' || c == '>')
-	{
-		ret = TRUE;
-	}
-	return (ret);
-}
 
 static void	init_token_tab(char **token_tab)
 {
