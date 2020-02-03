@@ -79,6 +79,7 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_stack/stack_sort.c \
 		ds_stack/stack_swap.c \
 		f_ctype/ft_isalnum.c \
+		f_ctype/ft_isblank.c \
 		f_ctype/ft_isalpha.c \
 		f_ctype/ft_isascii.c \
 		f_ctype/ft_isdigit.c \
