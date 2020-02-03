@@ -22,6 +22,8 @@
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
 
+int				ft_isblank(int c);
+
 int				ft_isalpha(int c);
 
 int				ft_isdigit(int c);
