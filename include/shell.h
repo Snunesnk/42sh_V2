@@ -31,7 +31,7 @@
 # define SUCCESS EXIT_SUCCESS
 
 # define BUF_SIZE	32
-# define NB_TOKEN	22
+# define NB_TOKEN	23
 # define NB_BRACKET	3
 # define TAB_END	-1
 
@@ -50,6 +50,7 @@ enum	e_bracket
 
 enum	e_token
 {
+	SEMI,
 	OR_IF,
 	PIPE,
 	AND_IF,
@@ -57,7 +58,6 @@ enum	e_token
 	LESSAND,
 	AND,
 	DSEMI,
-	SEMI,
 	OP_PARENTHESIS,
 	CL_PARENTHESIS,
 	WHILE_WORD,
@@ -71,7 +71,8 @@ enum	e_token
 	END_OF_FILE,
 	COMMENT,
 	START,
-	END
+	END,
+	NONE
 };
 
 typedef struct	s_bracket
@@ -80,7 +81,15 @@ typedef struct	s_bracket
 	uint64_t	close;
 }				t_bracket;
 
-int		lexer(const char* str, t_list **lst);
+typedef struct	s_ast
+{
+	uint64_t	type;
+	t_list		*content;
+	void		*left;
+	void		*right;
+}				t_ast;
+
+int		lexer(const char* str, t_ast **ast);
 int		parser(t_list *lst, uint64_t *buffer, size_t index);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void	debug(t_list *lst);
@@ -93,6 +102,10 @@ int		get_next_token(const char *str, t_token *token);
 int    		set_minimal_env(void);
 void    del(void *content, size_t content_size);
 int             ft_atoifd(const char *str);
+void	debug_ast(t_ast *ast);
+void	ast_order(t_ast **ast);
+void	astdel(t_ast **ast);
+int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index);
 
 extern int	g_retval;
 extern char	g_pwd[];

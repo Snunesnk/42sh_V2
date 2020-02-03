@@ -24,6 +24,8 @@ SOURCES :=	main.c \
 		job/utils_job.c \
 		lexer/lexer.c \
 		lexer/get_next_token.c \
+		lexer/ast_order.c \
+		lexer/debug_ast.c \
 		parser/parser.c \
 		shell/init_shell.c \
 		shell/path.c \
