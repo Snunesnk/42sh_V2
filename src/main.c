@@ -23,9 +23,9 @@ extern char	**environ;
 
 int			main(int argc, char **argv)
 {
-	int		index;
-	uint64_t	buffer[BUF_SIZE];
-	t_list		*lst;
+/*	int		index;
+	uint64_t	buffer[BUF_SIZE];*/
+	t_ast		*ast;
 	char		*input;
 	volatile int	status;
 
@@ -50,19 +50,20 @@ int			main(int argc, char **argv)
 	while (ft_printf("$> ") && get_stdin(&input) >= 0)
 /*	if (ft_printf("$> ") && get_stdin(&input) >= 0) */ /* Debugg purpose */
 	{
-		lst = NULL;
-		index = 0;
-		ft_bzero(&buffer, sizeof(buffer));
-		lexer(input, &lst);
-		debug(lst);
-		if (parser(lst, buffer, index) == EXIT_FAILURE)
+		ast = NULL;
+/*		index = 0;
+		ft_bzero(&buffer, sizeof(buffer));*/
+		lexer(input, &ast);
+/*		debug(lst);*/
+		debug_ast(ast);
+/*		if (parser(lst, buffer, index) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
-		/*	ft_putendl("\nOK"); */
-			status = launch_all_jobs(lst); /* to capture */
-		}
-		ft_lstdel(&lst, del);
+			ft_putendl("\nOK"); */
+			status = launch_all_jobs(ast); /* to capture */
+/*		}*/
+/*		ft_lstdel(&lst, del);*/
 		ft_strdel(&input);
 		g_retval = status;
 	}
