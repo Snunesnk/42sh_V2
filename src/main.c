@@ -61,7 +61,7 @@ int			main(int argc, char **argv)
 		else
 		{
 			ft_putendl("\nOK"); */
-			status = launch_all_jobs(ast); /* to capture */
+			status = execute_node(ast); /* to capture */
 /*		}*/
 /*		ft_lstdel(&lst, del);*/
 		ft_strdel(&input);
