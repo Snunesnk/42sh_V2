@@ -34,16 +34,39 @@ int	execute_or(t_ast *node)
 		return (execute_node(node->right));
 }
 
+int	execute_while(t_ast *node)
+{
+	int	ret;
+
+	ret = 1;
+	while (!execute_node(node->left))
+		ret = execute_node(node->right);
+	return (ret);
+}
+
+/*
+int	execute_if(t_ast *node)
+{
+	if (!execute_node(node->left))
+		return (execute_node(node->right));
+}
+*/
+
 int	execute_node(t_ast *node)
 {
 	if (node->type == NONE)
 		return (execute_pipeline(node));
 	else if (node->type == SEMI)
 		return (execute_semi(node));
-	else if (node->type == AND)
+	else if (node->type == AND_IF)
 		return (execute_and(node));
 	else if (node->type == ANDAND)
 		return (execute_andand(node));
-	else if (node->type == OR)
+	else if (node->type == OR_IF)
 		return (execute_or(node));
+	else if (node->type == WHILE_WORD)
+		return (execute_while(node));
+/*	else if (node->type == IF)
+		return (execute_if(node));
+*/
 }
