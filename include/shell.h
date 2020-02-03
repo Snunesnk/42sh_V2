@@ -106,6 +106,7 @@ void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index);
+int		execute_node(t_ast *node);
 
 extern int	g_retval;
 extern char	g_pwd[];
