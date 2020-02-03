@@ -17,7 +17,7 @@ int	execute_and(t_ast *node)
 {
 	/* launch a subshell with node->left */
 	if (node->left)
-		execute_subshell(node->left);
+		execute_subshell(node->left); /* Get the PID and add it to the list ????  not sure */
 	if (node->right)
 		return (execute_node(node->right));
 }
