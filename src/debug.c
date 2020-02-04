@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 14:57:09 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:24:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	print(t_list *lst, t_list **elem)
 		if (((t_token*)(lst->content))->type == i)
 		{
 			if (i == WORD || i == IO_NB || i == END_OF_FILE)
-				tmp = ((t_token*)(lst->content))->value->str;
+				tmp = ((t_token*)(lst->content))->value;
 			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
 			break ;
 		}

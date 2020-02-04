@@ -1,5 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
+/*   Updated: 2020/02/04 15:21:54 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
+
+static int		ft_is_space_tab(int c)
+{
+	int		ret;
+
+	ret = FALSE;
+	if (c == ' ' || c == '\t')
+		ret = TRUE;
+	return (ret);
+}
 
 static void		astadd_left(t_ast **ast, t_ast *new_ast)
 {
@@ -81,7 +103,7 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst, uint64_t *
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
 	{
-		while (ft_isblank(str[*pos]) == TRUE)
+		while (ft_is_space_tab(str[*pos]) == TRUE)
 			(*pos)++;
 		if (str[*pos] == '\0')
 			break ;

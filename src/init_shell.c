@@ -90,6 +90,6 @@ int	set_minimal_env(void)
 void	del(void *content, size_t content_size)
 {
 	(void)content_size;
-	vct_del(((t_token*)(content))->value);
+	ft_strdel(&((t_token*)(content))->value);
 	free(content);
 }
