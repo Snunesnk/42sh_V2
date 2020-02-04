@@ -6,14 +6,24 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 15:42:11 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:29:08 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-int		ft_ismeta(int c)
+static int	ft_is_space_tab(int c)
+{
+	int		ret;
+
+	ret = FALSE;
+	if (c == ' ' || c == '\t')
+		ret = TRUE;
+	return (ret);
+}
+
+int			ft_ismeta(int c)
 {
 	int		ret;
 
@@ -50,6 +60,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
 	token_tab[END] = NULL;
+	token_tab[NONE] = NULL;
 }
 
 static int	is_io_number(const char *str)
@@ -78,9 +89,9 @@ static int	get_word(const char *str, t_token *token)
 	if (str[len] == '#')
 	{
 		token->type = COMMENT;
-		token->value = vct_newstr(str);
+		token->value = ft_strdup(str);
 		if (token->value != NULL)
-			len = ft_strlen(token->value->str);
+			len = ft_strlen(token->value);
 	}
 	else if (ft_isdigit(str[len]) == TRUE && is_io_number(str) == TRUE)
 	{
@@ -89,14 +100,14 @@ static int	get_word(const char *str, t_token *token)
 		token->type = IO_NB;
 		tmp = ft_strndup(str, len);
 		ft_printf("tmp: %s\n", tmp);
-		token->value = vct_newstr(tmp);
+		token->value = ft_strdup(tmp);
 		ft_strdel(&tmp);
 		if (token->value == NULL)
 			len = 0;
 	}
 	else
 	{
-		while (ft_isblank(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
+		while (ft_is_space_tab(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
 				&& str[len] != '\0')
 		{
 			if (str[len] == '"')
@@ -114,7 +125,7 @@ static int	get_word(const char *str, t_token *token)
 		}
 		token->type = WORD;
 		tmp = ft_strndup(str, len);
-		token->value = vct_newstr(tmp);
+		token->value = ft_strdup(tmp);
 		ft_strdel(&tmp);
 		if (token->value == NULL)
 			len = 0;
@@ -134,7 +145,7 @@ int			get_next_token(const char *str, t_token *token)
 	while (token_index < NB_TOKEN)
 	{
 		if (ft_strnequ(str, token_tab[token_index],
-					ft_strlen(token_tab[token_index])) == TRUE)
+				ft_strlen(token_tab[token_index])) == TRUE)
 		{
 			token->type = token_index;
 			pos = ft_strlen(token_tab[token_index]);
