@@ -23,8 +23,6 @@ extern char	**environ;
 
 int			main(int argc, char **argv)
 {
-/*	int		index;
-	uint64_t	buffer[BUF_SIZE];*/
 	t_ast		*ast;
 	char		*input;
 	volatile int	status;
@@ -56,13 +54,13 @@ int			main(int argc, char **argv)
 		lexer(input, &ast);
 /*		debug(lst);*/
 		debug_ast(ast);
-/*		if (parser(lst, buffer, index) == EXIT_FAILURE)
+		if (parser(ast) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
-			ft_putendl("\nOK"); */
+			ft_putendl("\nOK"); 
 			status = execute_node(ast); /* to capture */
-/*		}*/
+		}
 /*		ft_lstdel(&lst, del);*/
 		ft_strdel(&input);
 		g_retval = status;
