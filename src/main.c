@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 12:21:06 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:29:10 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			main(int argc, char **argv)
 		else
 		{
 			ft_putendl("\nOK"); 
+			ast_order(&ast);
 			status = execute_node(ast); /* to capture */
 		}
 /*		ft_lstdel(&lst, del);*/

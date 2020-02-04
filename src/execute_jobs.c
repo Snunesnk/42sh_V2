@@ -57,7 +57,7 @@ char		*get_tokvalue(t_list *lst)
 	t_token	*t;
 
 	t = lst->content;
-	return (t->value->str);
+	return (t->value);
 }
 
 int		get_tokentype(t_list *lst)

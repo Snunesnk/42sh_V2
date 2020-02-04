@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2019/12/18 16:13:10 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:29:09 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "path.h"
 # include "builtins.h"
 
-# define TRUE	0
-# define FALSE	1
+# define TRUE	1
+# define FALSE	0
 
 # define FAILURE EXIT_FAILURE
 # define SUCCESS EXIT_SUCCESS
@@ -41,7 +41,7 @@
 typedef struct		s_token
 {
 	uint64_t		type;
-	t_vector		*value;
+	char			*value;
 }					t_token;
 
 enum	e_bracket
