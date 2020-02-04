@@ -13,6 +13,19 @@
 #include "libft.h"
 #include "shell.h"
 
+int		ft_ismeta(int c)
+{
+	int		ret;
+
+	ret = FALSE;
+	if (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
+		|| c == '<' || c == '>')
+	{
+		ret = TRUE;
+	}
+	return (ret);
+}
+
 static void	init_token_tab(char **token_tab)
 {
 	token_tab[OR_IF] = "||";
