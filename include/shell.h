@@ -93,7 +93,7 @@ typedef struct	s_ast
 }				t_ast;
 
 int		lexer(const char* str, t_ast **ast);
-int		parser(t_list *lst, uint64_t *buffer, size_t index);
+int		parser(t_ast *ast);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void	debug(t_list *lst);
 int		get_stdin(char **line);
