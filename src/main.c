@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:29:10 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:58:07 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int			main(int argc, char **argv)
 		ft_bzero(&buffer, sizeof(buffer));*/
 		lexer(input, &ast);
 /*		debug(lst);*/
-		debug_ast(ast);
 		if (parser(ast) == EXIT_FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
 			ft_putendl("\nOK"); 
 			ast_order(&ast);
+			debug_ast(ast);
 			status = execute_node(ast); /* to capture */
 		}
 /*		ft_lstdel(&lst, del);*/
