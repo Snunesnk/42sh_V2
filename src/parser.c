@@ -16,6 +16,7 @@
 static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
+	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
 	int		token_greatand[NB_TOKEN] = { WORD };
 	int		token_lessand[NB_TOKEN] = { WORD };
 	int		token_and[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
@@ -50,7 +51,7 @@ static void	init_token_tab(int **token_tab)
 	token_tab[WORD] = token_word;
 	token_tab[IO_NB] = token_io_nb;
 	token_tab[COMMENT] = token_word;
-	token_tab[START] = token_meta;
+	token_tab[START] = token_start;
 	token_tab[END] = NULL;
 }
 
@@ -99,14 +100,14 @@ static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			buffer[index] = 0;
 			if (index > 0)
 				index--;
-			return (parser(lst, buffer, index));
+			return (parser_pipeline(lst, buffer, index));
 		}
 		return (FAILURE);
 	}
 	if (buffer[index] != 0)
 		index++;
 	buffer[index] = bracket.open;
-	return (parser(lst, buffer, index));
+	return (parser_pipeline(lst, buffer, index));
 }
 
 int			bracket(t_list *lst, uint64_t *buffer, size_t index)
@@ -120,7 +121,7 @@ int			bracket(t_list *lst, uint64_t *buffer, size_t index)
 	return (check_bracket(lst, buffer, index, bracket_tab[WHILE_LOOP]));
 }
 
-int			parser(t_list *lst, uint64_t *buffer, size_t index)
+int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 {
 	static int	*token_tab[NB_TOKEN];
 	int			token_index;
@@ -128,11 +129,7 @@ int			parser(t_list *lst, uint64_t *buffer, size_t index)
 	
 	init_token_tab(token_tab);
 	if (lst->next == NULL)
-	{
-		if (buffer[0] == 0)
-			return (SUCCESS);
-		return (FAILURE);
-	}
+		return (SUCCESS);
 	token_index = ((t_token*)(lst->content))->type;
 	lst = lst->next;
 	ret = check_next_token(lst->content, token_tab[token_index]);
@@ -143,7 +140,37 @@ int			parser(t_list *lst, uint64_t *buffer, size_t index)
 			|| ((t_token*)(lst->content))->type == WHILE_WORD
 			|| ((t_token*)(lst->content))->type == DONE)
 			return (bracket(lst, buffer, index));
-		return (parser(lst, buffer, index));
+		return (parser_pipeline(lst, buffer, index));
+	}
+	return (ret);
+}
+
+int			parser(t_ast *ast)
+{
+	int			ret;
+	size_t		index;
+	uint64_t	buffer[BUF_SIZE];
+
+	ret = SUCCESS;
+	index = 0;
+	ft_bzero(buffer, sizeof(buffer));
+	if (ast != NULL)
+	{
+		while (ast != NULL)
+		{
+			ft_putendl("PARSER");
+			if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
+			{
+				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer, index);
+				debug(((t_ast*)(ast->left))->content);
+			}
+			if (ret == FAILURE)
+				break ;
+			ast = ast->right;
+		}
+		if (buffer[0] == 0)
+			return (SUCCESS);
+		return (FAILURE);
 	}
 	return (ret);
 }
