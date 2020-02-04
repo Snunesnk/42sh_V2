@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2019/12/18 12:48:20 by abarthel         ###   ########.fr        #
+#    Updated: 2020/02/04 10:37:02 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SOURCES :=	main.c \
 		builtin_type.c \
 		builtin_fg.c \
 		builtin_unsetenv.c \
+		execute_ast.c \
 		ft_putenv_table.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
