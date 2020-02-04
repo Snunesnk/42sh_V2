@@ -1,5 +1,7 @@
 #include "shell.h"
 
+# define ASTERROR 125
+
 int	execute_pipeline(t_ast *node)
 {
 	return (launch_all_jobs(node->content));
@@ -11,27 +13,31 @@ int	execute_semi(t_ast *node)
 		execute_node(node->left);
 	if (node->right)
 		return (execute_node(node->right));
+	return (ASTERROR);
 }
 
 int	execute_and(t_ast *node)
 {
-	/* launch a subshell with node->left */
+	/* launch a subshell with node->left 
 	if (node->left)
-		execute_subshell(node->left); /* Get the PID and add it to the list in case fg and ctrl + c */
+		execute_subshell(node->left);  Get the PID and add it to the list in case fg and ctrl + c */
 	if (node->right)
 		return (execute_node(node->right));
+	return (ASTERROR);
 }
 
 int	execute_andand(t_ast *node)
 {
 	if (!execute_node(node->left))
 		return (execute_node(node->right));
+	return (ASTERROR);
 }
 
 int	execute_or(t_ast *node)
 {
 	if (execute_node(node->left))
 		return (execute_node(node->right));
+	return (ASTERROR);
 }
 
 int	execute_while(t_ast *node)
@@ -58,9 +64,9 @@ int	execute_node(t_ast *node)
 		return (execute_pipeline(node));
 	else if (node->type == SEMI)
 		return (execute_semi(node));
-	else if (node->type == AND_IF)
+	else if (node->type == AND)
 		return (execute_and(node));
-	else if (node->type == ANDAND)
+	else if (node->type == AND_IF)
 		return (execute_andand(node));
 	else if (node->type == OR_IF)
 		return (execute_or(node));
@@ -69,4 +75,5 @@ int	execute_node(t_ast *node)
 /*	else if (node->type == IF)
 		return (execute_if(node));
 */
+	return (ASTERROR);
 }
