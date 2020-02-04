@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:21:54 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/04 15:58:04 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,10 +151,18 @@ int			lexer(const char *str, t_ast **ast)
 			else
 				ret = FAILURE;
 		}
-		new_ast = astnew(NULL, type);
-		astadd_right(ast, new_ast);
-		new_ast = astnew(lst, NONE);
-		astadd_left(ast, new_ast);
+		if (type != NONE)
+		{
+			new_ast = astnew(NULL, type);
+			astadd_right(ast, new_ast);
+			new_ast = astnew(lst, NONE);
+			astadd_left(ast, new_ast);
+		}
+		else
+		{
+			new_ast = astnew(lst, type);
+			astadd_right(ast, new_ast);
+		}
 	}
 	return (ret);
 }
