@@ -13,6 +13,23 @@
 #include "libft.h"
 #include "shell.h"
 
+static char		*ft_join_free(char *s1, char *s2, int op)
+{
+	char	*str;
+
+	str = ft_strjoin(s1, s2);
+	if (op == 1)
+		ft_strdel(&s1);
+	else if (op == 2)
+		ft_strdel(&s2);
+	else
+	{
+		ft_strdel(&s1);
+		ft_strdel(&s2);
+	}
+	return (str);
+}
+
 static int		ft_is_space_tab(int c)
 {
 	int		ret;
@@ -99,6 +116,8 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst, uint64_t *
 	t_token	last_token;
 	size_t	last_pos;
 	int		ret;
+	char	*tmp;
+	char	*eof;
 
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
@@ -111,7 +130,24 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst, uint64_t *
 		last_pos = *pos;
 		*pos += get_next_token(str + *pos, &token);
 		if (last_token.type == DLESS && token.type == WORD)
-			token.type = END_OF_FILE;
+		{
+			eof = ft_strdup(token.value);
+			ft_strdel(&token.value);
+			while (1)
+			{
+				ft_printf(">");
+				get_stdin(&tmp);
+				if (ft_strstr(tmp, eof) != NULL)
+				{
+					ft_strdel(&tmp);
+					break ;
+				}
+				if (token.value == NULL)
+					token.value = ft_strdup(tmp);
+				else
+					token.value = ft_join_free(token.value, tmp, 3);
+			}
+		}
 		if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
 			|| token.type == AND)
 		{
