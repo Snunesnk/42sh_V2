@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 static void	print_setenv_syntax_error(t_process *p)
 {
