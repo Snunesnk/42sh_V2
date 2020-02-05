@@ -130,29 +130,34 @@ void	launch_job(t_job *j, int foreground)
 		else
 			outfile = j->stdout;
 
-		/* Fork the child processes.  */
-		pid = fork ();
-		if (pid == 0)
-			/* This is the child process.  */
-			launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
-		else if (pid < 0)
+		if (is_a_builtin(p->argv[0]))   /* 1. Check if process is a shell builtin */
 		{
-			/* The fork failed.  */
-			perror ("fork");
-			exit (1);
+			launch_builtin(p->argv);
 		}
-		else
+		else                    	/* 2. Fork the child processes.  */
 		{
-			/* This is the parent process.  */
-			p->pid = pid;
-			if (shell_is_interactive)
+			pid = fork ();
+			if (pid == 0)
+				/* This is the child process.  */
+				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+			else if (pid < 0)
 			{
-				if (!j->pgid)
-					j->pgid = pid;
-				setpgid(pid, j->pgid);
+				/* The fork failed.  */
+				perror ("fork");
+				exit (1);
+			}
+			else
+			{
+				/* This is the parent process.  */
+				p->pid = pid;
+				if (shell_is_interactive)
+				{
+					if (!j->pgid)
+						j->pgid = pid;
+					setpgid(pid, j->pgid);
+				}
 			}
 		}
-
 		/* Clean up after pipes.  */
 		if (infile != j->stdin)
 			close (infile);
