@@ -60,11 +60,7 @@ struct s_process
   char			completed;   /* true if process has completed */
   char			stopped;     /* true if process has stopped */
   int			status;      /* reported status value */
-	/* below to be deleted and replaced by redirection struct */
-  int			infile;      /* standard i/o channels for proc */
-  int			outfile;     /* standard i/o channels for proc */
-  int			errfile;     /* standard i/o channels for proc */
-  struct s_redirection	redir[];     /* all recirections to be applied */
+  struct s_redirection	redir[10];     /* all recirections to be applied */
 };
 
 /* A job is a pipeline of processes.  */
@@ -83,7 +79,7 @@ struct s_job
 
 typedef struct s_process	t_process;
 typedef struct s_job		t_job;
-typedef struct s_redirection	t_redicretion;
+typedef struct s_redirection	t_redirection;
 
 /* The active jobs are linked into a list. This is its head. */
 extern t_job		*first_job;
@@ -102,7 +98,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 void	free_process(t_process *p);
 /*int	execp(char **agrv, char **environ);
 */
-int     launch_builtin(t_process *p);
+int     launch_builtin(char **argv);
 
 
 
@@ -199,7 +195,7 @@ int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void	debug(t_list *lst);
 int		get_stdin(char **line);
 int		initialize_prompt_fd(void);
-int		launch_all_jobs(t_list *lst);
+int		execute_job(t_list *lst);
 _Bool   prompt_display(int status);
 int		path_concat(char **bin);
 int		get_next_token(const char *str, t_token *token);
