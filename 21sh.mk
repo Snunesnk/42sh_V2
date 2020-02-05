@@ -16,7 +16,7 @@ SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
 		debug.c \
-		execute_jobs.c \
+		execute_job.c \
 		job.c \
 		process.c \
 		launch_builtin.c \
@@ -31,25 +31,23 @@ SOURCES :=	main.c \
 		path.c \
 		input.c \
 		error.c \
-		builtin_cd.c \
-		builtin_echo.c \
-		builtin_env.c \
-		builtin_exit.c \
-		builtin_pwd.c \
-		builtins_dispatcher.c \
-		builtin_setenv.c \
-		builtin_truefalse.c \
-		builtin_type.c \
-		builtin_fg.c \
-		builtin_unsetenv.c \
+		ft_putenv_table.c \
 		execute_ast.c \
-		ft_putenv_table.c
+		builtins/builtin_cd.c \
+		builtins/builtin_echo.c \
+		builtins/builtin_exit.c \
+		builtins/builtin_pwd.c \
+		builtins/builtins_dispatcher.c \
+		builtins/builtin_setenv.c \
+		builtins/builtin_truefalse.c \
+		builtins/builtin_type.c \
+		builtins/builtin_unsetenv.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I$(PATH_LIB)include/
+INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

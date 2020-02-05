@@ -26,8 +26,8 @@ extern int             shell_is_interactive;
 ** remember to make the shell do it. */
 
 /* Put job j in the foreground. If cont is nonzero,
-restore the saved terminal modes and send the process group a
-SIGCONT signal to wake it up before we block. */
+   restore the saved terminal modes and send the process group a
+   SIGCONT signal to wake it up before we block. */
 
 void	free_job(t_job *j) /* temporary for test purposes ? */
 {
@@ -56,7 +56,7 @@ void	put_job_in_foreground(t_job *j, int cont)
 			perror("kill failed sending (SIGCONT)");
 	}
 	/* Wait for it to report. */
-	 wait_for_job(j);
+	wait_for_job(j);
 	/* Put the shell back in the foreground. */
 	tcsetpgrp(shell_terminal, shell_pgid);
 	/* Restore the shell’s terminal modes. */
@@ -65,7 +65,7 @@ void	put_job_in_foreground(t_job *j, int cont)
 }
 
 /* Put a job in the background. If the cont argument is true, send
-the process group a SIGCONT signal to wake it up. */
+   the process group a SIGCONT signal to wake it up. */
 
 void	put_job_in_background(t_job *j, int cont)
 {
@@ -110,107 +110,66 @@ int	job_is_completed(t_job *j)
 
 void	launch_job(t_job *j, int foreground)
 {
-	t_process	*p;
-	pid_t		pid;
-	int		mypipe[2];
-	int		infile;
-	int		outfile;
+	t_process *p;
+	pid_t pid;
+	int mypipe[2], infile, outfile;
 
 	infile = j->stdin;
-	p = j->first_process;
-	while (p)
-	{ /* Set up pipes, if necessary. */
+	for (p = j->first_process; p; p = p->next)
+	{
+		/* Set up pipes, if necessary.  */
 		if (p->next)
 		{
 			if (pipe(mypipe) < 0)
 			{
-				perror("pipe");
-				exit(1);
+				perror ("pipe");
+				exit (1);
 			}
 			outfile = mypipe[1];
-			ft_printf("PIPE j->stdout:%d, outfile:%d, mypipe[1]:%d\n", j->stdout, outfile, mypipe[1]);
 		}
 		else
-		{
 			outfile = j->stdout;
-			ft_printf("CMD j->stdout:%d, outfile:%d, mypipe[1]:%d\n", j->stdout, outfile, mypipe[1]);
-		}
 
-		ft_printf("\n --- \ninfile:%d\noutfile:%d\nerrfile:%d\n", p->infile, p->outfile, p->errfile);
-		if (is_a_builtin(p->argv[0]) && outfile != mypipe[1])
+		/* Fork the child processes.  */
+		pid = fork ();
+		if (pid == 0)
+			/* This is the child process.  */
+			launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
+		else if (pid < 0)
 		{
-			if (p->infile == -1)
-				p->infile = infile;
-			if (p->outfile == -1)
-				p->outfile = outfile;
-			if (p->errfile == -1)
-				p->errfile = j->stderr;
-			launch_builtin(p);
+			/* The fork failed.  */
+			perror ("fork");
+			exit (1);
 		}
 		else
 		{
-			pid = fork();
-			if (pid == 0) /* This is the child process. */
+			/* This is the parent process.  */
+			p->pid = pid;
+			if (shell_is_interactive)
 			{
-
-				if (is_a_builtin(p->argv[0]))
-				{
-					if (p->infile == -1)
-						p->infile = infile;
-					if (p->outfile == -1)
-						p->outfile = outfile;
-					if (p->errfile == -1)
-						p->errfile = j->stderr;
-					exit(launch_builtin(p));
-				}
-				else
-				{
-					if (p->infile == -1)
-						p->infile = infile;
-					if (p->outfile == -1)
-						p->outfile = outfile;
-					if (p->errfile == -1)
-						p->errfile = j->stderr;
-					launch_process(p, j->pgid,
-						infile == -1 ? infile : p->infile,
-						outfile == -1 ? outfile : p->outfile,
-						j->stderr == -1 ? j->stderr : p->errfile,
-						foreground);
-				}
-			}
-			else if (pid < 0)
-			{ /* The fork failed. */
-				perror("Fork failed");
-				exit(1);
-			}
-			else
-			{ /* This is the parent process. */
-				p->pid = pid;
-				if (shell_is_interactive)
-				{
-					if (!j->pgid)
-						j->pgid = pid;
-					setpgid (pid, j->pgid);
-				}
+				if (!j->pgid)
+					j->pgid = pid;
+				setpgid(pid, j->pgid);
 			}
 		}
-		/* Clean up after pipes. */
+
+		/* Clean up after pipes.  */
 		if (infile != j->stdin)
-			close(infile);
+			close (infile);
 		if (outfile != j->stdout)
-			close (outfile);
+			close(outfile);
 		infile = mypipe[0];
-		p = p->next;
 	}
+
 	format_job_info(j, "launched");
+
 	if (!shell_is_interactive)
 		wait_for_job(j);
 	else if (foreground)
-		put_job_in_foreground (j, 0);
+		put_job_in_foreground(j, 0);
 	else
-		put_job_in_background (j, 0);
+		put_job_in_background(j, 0);
 }
-
 /* Store the status of the process pid that was returned by waitpid.
    Return 0 if all went well, nonzero otherwise. */
 
@@ -282,8 +241,8 @@ void	wait_for_job(t_job *j)
 /* Format information about job status for the user to look at. */
 void	format_job_info (t_job *j, const char *status)
 {
-/*	printf("DONE\n");
-	return ;*/ /* DEBUGG */
+	/*	printf("DONE\n");
+		return ;*/ /* DEBUGG */
 	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
 
@@ -302,7 +261,7 @@ void	do_job_notification(void)
 	{
 		jnext = j->next;
 		/* If all processes have completed, tell the user the job has
-			completed and delete it from the list of active jobs. */
+		   completed and delete it from the list of active jobs. */
 		if (job_is_completed(j))
 		{
 			format_job_info(j, "completed");
