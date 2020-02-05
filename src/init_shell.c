@@ -6,7 +6,6 @@
 
 #include "libft.h"
 #include "ft_errno.h"
-#include "job_control.h"
 #include "shell.h"
 
 /* Keep track of attributes of the shell. */

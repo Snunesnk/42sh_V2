@@ -14,10 +14,9 @@
 #include <unistd.h>
 
 #include "ft_errno.h"
-#include "error.h"
 #include "libft.h"
+#include "error.h"
 #include "builtins.h"
-#include "job_control.h"
 
 static char	**getenvvar(const char *name)
 {

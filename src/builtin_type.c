@@ -16,7 +16,6 @@
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
-#include "job_control.h"
 #include "builtins.h"
 
 static const struct s_keywords	g_keywords[] =

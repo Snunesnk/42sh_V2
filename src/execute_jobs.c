@@ -5,7 +5,6 @@
 
 #include "libft.h"
 #include "shell.h"
-#include "job_control.h"
 
 /* Debugg function */
 void	print_p(t_process *p)

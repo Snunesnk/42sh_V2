@@ -13,10 +13,9 @@
 #include <stdlib.h>
 
 #include "libft.h"
-#include "builtins.h"
 #include "error.h"
-#include "job_control.h"
 #include "shell.h"
+#include "builtins.h"
 
 const t_builtins	g_builtins[] =
 {
