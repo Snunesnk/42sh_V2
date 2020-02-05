@@ -7,7 +7,6 @@
 
 #include "libft.h"
 #include "ft_errno.h"
-#include "job_control.h"
 #include "builtins.h"
 
 int	launch_builtin(t_process *p)

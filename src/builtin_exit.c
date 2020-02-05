@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 static int	part_sep(int argc, t_process *p)
 {

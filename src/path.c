@@ -12,7 +12,7 @@
 
 #include <unistd.h>
 
-#include "path.h"
+#include "shell.h"
 
 char	*short_logical_path(char **cwd)
 {

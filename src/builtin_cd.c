@@ -15,6 +15,7 @@
 */
 
 #include "shell.h"
+#include "builtins.h"
 
 extern char	g_pwd[];
 

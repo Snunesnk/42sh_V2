@@ -11,7 +11,6 @@
 
 #include "libft.h"
 #include "shell.h"
-#include "job_control.h"
 #include "builtins.h"
 
 t_job			*first_job = NULL;

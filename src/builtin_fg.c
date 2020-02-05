@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 int	cmd_fg(int argc, t_process *p)
 {

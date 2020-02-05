@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "job_control.h"
+#include "shell.h"
 #include "builtins.h"
 
 int	cmd_true(int argc, t_process *p)

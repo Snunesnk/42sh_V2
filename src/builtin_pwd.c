@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 static int	parse_opt(int argc, t_process *p, _Bool *b)
 {
