@@ -9,8 +9,8 @@
 #include "ft_errno.h"
 #include "builtins.h"
 
-int	launch_builtin(t_process *p)
+int	launch_builtin(char **argv)
 {
 	/* Execute the builtin. Retreive return value */
-	return builtins_dispatcher(p);
+	return (builtins_dispatcher(argv));
 }

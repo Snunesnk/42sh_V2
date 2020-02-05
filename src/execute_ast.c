@@ -4,7 +4,7 @@
 
 int	execute_pipeline(t_ast *node)
 {
-	return (launch_all_jobs(node->content));
+	return (execute_job(node->content));
 }
 
 int	execute_semi(t_ast *node)
