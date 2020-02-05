@@ -6,22 +6,21 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 10:30:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:53:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
 #include "libft.h"
-#include "error.h"
 #include "shell.h"
+#include "error.h"
 #include "builtins.h"
 
 const t_builtins	g_builtins[] =
 {
 	{ "echo", &cmd_echo},
 	{ "exit", &cmd_exit},
-	{ "env", &cmd_env},
 	{ "setenv", &cmd_setenv},
 	{ "unsetenv", &cmd_unsetenv},
 	{ "pwd", &cmd_pwd},
@@ -29,14 +28,13 @@ const t_builtins	g_builtins[] =
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
-	{ "fg", &cmd_fg},
 	{ "\0", NULL}
 };
 
 _Bool	prior_builtin(char *str)
 {
 	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"fg"}, {"\0"} };
+	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"\0"} };
 	int	i;
 
 	i = 0;
@@ -70,19 +68,19 @@ int		is_a_builtin(char *cmd)
 		return (0);
 }
 
-int			builtins_dispatcher(t_process *p)
+int			builtins_dispatcher(char **argv)
 {
-	int			(*f)(int, t_process*);
+	int			(*f)(int, char**);
 	int			ret;
 	int			argc;
 
 	argc = 0;
 	ret = e_command_not_found;
-	if ((f = dispatcher(p->argv[0])))
+	if ((f = dispatcher(*argv)))
 	{
-		while (p->argv[argc])
+		while (argv[argc])
 			++argc;
-		ret = f(argc, p);
+		ret = f(argc, argv);
 	}
 	return (ret);
 }

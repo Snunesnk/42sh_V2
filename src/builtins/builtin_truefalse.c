@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_echo.c                                     :+:      :+:    :+:   */
+/*   builtin_truefalse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 15:53:50 by efischer         ###   ########.fr       */
+/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-#include "builtins.h"
 
-int	cmd_echo(int argc, t_process *p)
+int	cmd_true(int argc, char **argv)
 {
-	int	i;
-
 	(void)argc;
-	i = 1;
-	while (p->argv[i])
-	{
-		if (p->argv[i + 1])
-		{
-			ft_dprintf(p->outfile, "%s ", p->argv[i]);
-		}
-		else
-		{
-			ft_dprintf(p->outfile, "%s\n", p->argv[i]);
-		}
-		++i;
-	}
+	(void)argv;
+	return (1);
+}
+
+int	cmd_false(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
 	return (0);
 }
