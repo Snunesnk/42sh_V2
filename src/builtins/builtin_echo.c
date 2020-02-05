@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_truefalse.c                                :+:      :+:    :+:   */
+/*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:52:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "shell.h"
-#include "builtins.h"
 
-int	cmd_true(int argc, t_process *p)
+int	cmd_echo(int argc, char **argv)
 {
-	(void)argc;
-	(void)p;
-	return (1);
-}
+	int	i;
 
-int	cmd_false(int argc, t_process *p)
-{
 	(void)argc;
-	(void)p;
+	i = 1;
+	while (argv[i])
+	{
+		if (argv[i + 1])
+		{
+			ft_printf("%s ", argv[i]);
+		}
+		else
+		{
+			ft_printf("%s\n", argv[i]);
+		}
+		++i;
+	}
 	return (0);
 }
