@@ -57,10 +57,10 @@ int			main(int argc, char **argv)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
-			ft_putendl("\nOK"); 
-			ast_order(&ast);
-			debug_ast(ast);
-			status = execute_node(ast); /* to capture */
+/*			ft_putendl("\nOK"); 
+*/			ast_order(&ast);
+		/*	debug_ast(ast);
+		*/	status = execute_node(ast); /* to capture */
 		}
 /*		ft_lstdel(&lst, del);*/
 		ft_strdel(&input);

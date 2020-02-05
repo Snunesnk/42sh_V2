@@ -13,7 +13,7 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include "job_control.h"
+# include "shell.h"
 
 /*
 ** Utils for builtins
