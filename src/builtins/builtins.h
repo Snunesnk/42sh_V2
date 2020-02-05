@@ -6,14 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 10:29:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/10/14 14:54:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
-
-# include "shell.h"
 
 /*
 ** Utils for builtins
@@ -25,27 +23,25 @@ int				is_a_builtin(char *cmd);
 /*
 ** Functions in builtins.c
 */
-int				cmd_unsetenv(int argc, t_process *p);
-int				cmd_setenv(int argc, t_process *p);
-int				cmd_echo(int agrc, t_process *p);
-int				cmd_type(int agrc, t_process *p);
-int				cmd_exit(int argc, t_process *p);
-int				cmd_true(int argc, t_process *p);
-int				cmd_false(int argc, t_process *p);
-int				cmd_env(int argc, t_process *p);
-int				cmd_pwd(int argc, t_process *p);
-int				cmd_cd(int argc, t_process *p);
-int				cmd_set(int argc, t_process *p);
-int				cmd_fg(int argc, t_process *p);
+int				cmd_unsetenv(int argc, char **argv);
+int				cmd_setenv(int argc, char **argv);
+int				cmd_echo(int agrc, char **argv);
+int				cmd_type(int agrc, char **argv);
+int				cmd_exit(int argc, char **argv);
+int				cmd_true(int argc, char **argv);
+int				cmd_false(int argc, char **argv);
+int				cmd_pwd(int argc, char **argv);
+int				cmd_cd(int argc, char **argv);
+int				cmd_set(int argc, char **argv);
 
 /*
 ** Functions in builtins_dispatcher.c
 */
-int				builtins_dispatcher(t_process *p);
+int				builtins_dispatcher(char **argv);
 typedef struct	s_builtins
 {
 	const char *const	key;
-	int		(*const f)(int, t_process *p);
+	int		(*const f)(int, char**);
 }				t_builtins;
 
 _Bool				prior_builtin(char *str);
