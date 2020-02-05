@@ -135,6 +135,8 @@ t_process	*build_a_process(t_list **lst)
 		/*		ft_printf(">> ret:%d\n", (int)write(fd, "OKOKOK", 6));
 				close(fd);
 		*/	}
+			*lst = (*lst)->next;
+			*lst = (*lst)->next;
 			return (p);
 		}
 		else
@@ -149,30 +151,33 @@ t_process	*build_a_process(t_list **lst)
 t_process	*build_processes(t_list **lst)
 {
 	t_process	*first_p;
-/*	t_process	*p;
-	t_token		*t;
-*/
+	t_process	**p;
+	int		type;
+
 	first_p = build_a_process(lst);
 	if (first_p == NULL)
 		return (NULL);
-
-/*
+	p = &(first_p->next);
 	while (*lst)
 	{
-		while (*lst && (t = (*lst)->content) && t->type == PIPE)
+		type = get_tokentype(*lst);
+		if (type == PIPE)
 			(*lst) = (*lst)->next;
-		if (t->type != WORD)
-			return (SUCCESS);
-		if (*lst == NULL)
+		else if (type == END)
 			break;
-		if (build_a_process(&(p->next), lst) == FAILURE)
-			return (FAILURE);
-		p = p->next;
-*//*		printf("--- next job ---\n");  //Debug
-		ft_print_tables(p->argv);      //Debug
+		else
+		{
+			*p = build_a_process(lst);
+			if (*p == NULL)
+			{
+				/* should free all processes and return NULL */
+				return (NULL);
+			}
+			p = &((*p)->next);
+		}
 	}
-*//*	printf("ALL:\n");
-	print_p(first_process);
+/*	printf("ALL:\n");
+	print_p(first_p);
 */	return (first_p);
 }
 
