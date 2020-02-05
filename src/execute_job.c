@@ -33,7 +33,7 @@ void	print_p(t_process *p)
 	}
 }*/
 
-int		get_argc(t_list *lst)
+static int	get_argc(t_list *lst)
 {
 	t_token	*t;
 	int	argc;
@@ -51,7 +51,7 @@ int		get_argc(t_list *lst)
 	return (argc);
 }
 
-char		*get_tokvalue(t_list *lst)
+static char	*get_tokvalue(t_list *lst)
 {
 	t_token	*t;
 
@@ -59,7 +59,7 @@ char		*get_tokvalue(t_list *lst)
 	return (t->value);
 }
 
-int		get_tokentype(t_list *lst)
+static int	get_tokentype(t_list *lst)
 {
 	t_token	*t;
 
@@ -67,38 +67,50 @@ int		get_tokentype(t_list *lst)
 	return (t->type);
 }
 
-int		build_argv(char ***argv, t_list **lst)
+char	**build_argv(t_list **lst)
 {
+	char	**argv;
 	int	argc;
 	int	i;
 
 	i = 0;
 	argc = get_argc(*lst);
-	*argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
-	if (*argv != NULL)
+	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
+	if (argv != NULL)
 	{
 		while (*lst && i < argc)
 		{
-			(*argv)[i] = get_tokvalue(*lst);
+			argv[i] = get_tokvalue(*lst);
 			++i;
 			(*lst) = (*lst)->next;
 		}
-		return (SUCCESS);
+		return (argv);
 	}
-	return (FAILURE);
+	return (NULL);
 }
 
-int	build_a_process(t_process **p, t_list **lst)
+t_process	*build_a_process(t_list **lst)
 {
-	*p = (t_process*)ft_memalloc(sizeof(t_process));
-	(*p)->infile = -1;
-	(*p)->outfile = -1;
-	(*p)->errfile = -1;
+	t_process	*p;
+
+	p = (t_process*)ft_memalloc(sizeof(t_process));
+	if (p == NULL)
+		return (NULL);
+	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
+	ft_bzero(p->redir, 10 * sizeof(t_redirection));
+/*	p->infile = -1;
+	p->outfile = -1;
+	p->errfile = -1; */
+	/* End redirections of process */
 	if (*lst)
 	{
-		if (build_argv(&((*p)->argv), lst) == FAILURE)
-			return (FAILURE);
-		else if (get_tokentype(*lst) == IO_NB)
+		p->argv = build_argv(lst);
+		if (p->argv == NULL)
+		{
+			free(p);
+			return (NULL);
+		}
+		else if (get_tokentype(*lst) == IO_NB) /* Get IO_NUMBERS */
 		{
 			if (ft_atoifd(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
 			{
@@ -118,31 +130,33 @@ int	build_a_process(t_process **p, t_list **lst)
 			if (get_tokentype((*lst)->next) == WORD)
 			{
 				int fd = open("./toto", O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-				(*p)->outfile = fd;
-				(*p)->errfile = fd;
+				p->redir[0].newfd = fd;
+				p->redir[0].oldfd = STDOUT_FILENO;
 		/*		ft_printf(">> ret:%d\n", (int)write(fd, "OKOKOK", 6));
 				close(fd);
 		*/	}
-			return (SUCCESS);
+			return (p);
 		}
 		else
 		{
-			return (SUCCESS);
+			return (p);
 		}
 	}
-	return (FAILURE);
+	free(p);
+	return (NULL);
 }
 
-int	build_processes(t_process **first_process, t_list **lst)
+t_process	*build_processes(t_list **lst)
 {
-	t_process	*p;
+	t_process	*first_p;
+/*	t_process	*p;
 	t_token		*t;
+*/
+	first_p = build_a_process(lst);
+	if (first_p == NULL)
+		return (NULL);
 
-	if (build_a_process(first_process, lst) == FAILURE)
-	{
-		return (FAILURE);
-	}
-	p = *first_process;
+/*
 	while (*lst)
 	{
 		while (*lst && (t = (*lst)->content) && t->type == PIPE)
@@ -154,68 +168,48 @@ int	build_processes(t_process **first_process, t_list **lst)
 		if (build_a_process(&(p->next), lst) == FAILURE)
 			return (FAILURE);
 		p = p->next;
-/*		printf("--- next job ---\n");  //Debug
+*//*		printf("--- next job ---\n");  //Debug
 		ft_print_tables(p->argv);      //Debug
-*/	}
-/*	printf("ALL:\n");
-	print_p(first_process);
-*/	return (SUCCESS);
-}
-
-int	build_a_job(t_job **j, t_list **lst)
-{
-	*j = (t_job*)ft_memalloc(sizeof(t_job));
-	/* try simple pipe */
-	(*j)->stdin = STDIN_FILENO;
-	(*j)->stdout = STDOUT_FILENO;
-	(*j)->stderr = STDERR_FILENO;
-	/* end config */
-	if (*j == NULL)
-		return (FAILURE);
-	if (build_processes(&((*j)->first_process), lst) == FAILURE)
-		return (FAILURE);
-/*		print_p((*j)->first_process); */
-	return (SUCCESS);
-
-}
-
-int	build_jobs(t_job **j, t_list **lst)
-{
-	t_job	*newj;
-	t_token	*t;
-
-	if (build_a_job(&newj, lst) == FAILURE)
-		return (FAILURE);
-	*j = newj;
-	while (*lst)
-	{
-		t = (*lst)->content;
-		if (t->type == SEMI)
-			(*lst) = (*lst)->next;
-		else
-			break;
-		if (build_a_job(&(newj->next), lst) == FAILURE)
-			return (FAILURE);
-		newj = newj->next;
 	}
-	return (SUCCESS);
+*//*	printf("ALL:\n");
+	print_p(first_process);
+*/	return (first_p);
 }
 
-int	launch_all_jobs(t_list *lst)
+t_job	*build_job(t_list **lst)
 {
-	t_job		*j_beg;
+	t_job	*j;
+
+	j = (t_job*)ft_memalloc(sizeof(t_job));
+	if (j == NULL)
+		return (NULL);
+
+	/* try simple pipe */
+	j->stdin = STDIN_FILENO;
+	j->stdout = STDOUT_FILENO;
+	j->stderr = STDERR_FILENO;
+	/* end config */
+
+	j->first_process = build_processes(lst);
+	if (j->first_process == NULL)
+	{
+		free(j);
+		return (NULL);
+	}
+	return (j);
+
+}
+
+int	execute_job(t_list *lst)
+{
 	t_job		*j;
 
 	lst = lst->next;
 	j = NULL;
-	if (build_jobs(&j, &lst) == FAILURE)
+	j = build_job(&lst);
+	if (j == NULL)
 		return (FAILURE);
-	while (j)
-	{
-		j_beg = j->next;
-		launch_job(j, 1);
-		free_job(j);
-		j = j_beg;
-	}
+	launch_job(j, 1);
+	free_job(j);
 	return (SUCCESS);
 }

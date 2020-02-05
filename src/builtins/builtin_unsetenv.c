@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/12/18 09:53:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2019/07/21 19:13:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include <unistd.h>
 
 #include "ft_errno.h"
-#include "libft.h"
 #include "error.h"
-#include "builtins.h"
+#include "libft.h"
+#include "shell.h"
 
 static char	**getenvvar(const char *name)
 {
@@ -69,17 +69,17 @@ static int		ft_unset_alloc_env(const char *name)
 	}
 }
 
-int		cmd_unsetenv(int argc, t_process *p)
+int		cmd_unsetenv(int argc, char **argv)
 {
 	if (argc != 2)
 	{
-		psherror(e_invalid_input, p->argv[0], e_cmd_type);
-		ft_dprintf(p->errfile, "Usage: %s VAR [VALUE]\n", p->argv[0]);
+		psherror(e_invalid_input, argv[0], e_cmd_type);
+		ft_dprintf(STDERR_FILENO, "Usage: %s VAR [VALUE]\n", argv[0]);
 		return (g_errordesc[e_invalid_input].code);
 	}
 	else
 	{
-		if (ft_unset_alloc_env(p->argv[1]))
+		if (ft_unset_alloc_env(argv[1]))
 		{
 			ft_perror(NULL);
 			return (1);
