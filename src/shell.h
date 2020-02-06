@@ -53,12 +53,12 @@ typedef union {
 /* Structure describing a redirection */
 struct	s_redirection
 {
-	struct s_redirection	*next;         /* Next redirection or NULL */
-	t_redirectee		redirector;    /* Descriptor or varname to be redirected cf man dup2() */
-	int			instruction;   /* What to do with the information, i.e. redirection type */
-	int			flags;         /* Flag value for open() */
-	t_redirectee		redirectee;    /* File descriptor or filename */
-	char			*here_doc_eof; /* The word that appeared in <<eof */
+	struct s_redirection	*next;         /* next redirection or NULL */
+	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
+	int			instruction;   /* what to do with the information, i.e. redirection type */
+	int			flags;         /* flag value for open() */
+	t_redirectee		redirectee;    /* file descriptor or filename */
+	char			*here_doc_eof; /* the word that appeared in <<eof */
 };
 
 /* A process is a single process.  */
@@ -110,7 +110,8 @@ void	free_process(t_process *p);
 /*int	execp(char **agrv, char **environ);
 */
 int     launch_builtin(t_process *p);
-
+int	has_redirections(int type);
+t_redirection	*parse_redirections(t_list **lst);
 
 # define TRUE		1
 # define FALSE		0
