@@ -16,23 +16,6 @@ void	print_p(t_process *p)
 	}
 }
 
-/* Debugg function */
-/*void	ft_print_tables(char **tables)
-{
-	size_t	i;
-
-	i = 0;
-	if (tables)
-	{
-		while (tables[i])
-		{
-			printf("[%s], ", tables[i]);
-			++i;
-		}
-		printf("\n");
-	}
-}*/
-
 static int	get_argc(t_list *lst)
 {
 	t_token	*t;
@@ -97,11 +80,6 @@ t_process	*build_a_process(t_list **lst)
 	if (p == NULL)
 		return (NULL);
 	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
-	ft_bzero(p->redir, 10 * sizeof(t_redirection));
-/*	p->infile = -1;
-	p->outfile = -1;
-	p->errfile = -1; */
-	/* End redirections of process */
 	if (*lst)
 	{
 		p->argv = build_argv(lst);
@@ -110,39 +88,12 @@ t_process	*build_a_process(t_list **lst)
 			free(p);
 			return (NULL);
 		}
-		else if (get_tokentype(*lst) == IO_NB) /* Get IO_NUMBERS */
+		else if (has_redirections(get_tokentype(*lst)))
 		{
-			if (ft_atoifd(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
-			{
-				ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
-	/*			if (fcntl(ft_atoi(get_tokvalue(*lst)), F_GETFL) < 0)
-				{
-					ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
-				}
-	*/		}
-			else
-			{
-				printf("test");
-			}
+			/* Add redirection instruction calling parse_redirection */
+			p->redir = parse_redirections(lst);
 		}
-		else if (get_tokentype(*lst) == GREAT)
-		{
-			if (get_tokentype((*lst)->next) == WORD)
-			{
-				int fd = open("./toto", O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-				p->redir[0].newfd = fd;
-				p->redir[0].oldfd = STDOUT_FILENO;
-		/*		ft_printf(">> ret:%d\n", (int)write(fd, "OKOKOK", 6));
-				close(fd);
-		*/	}
-			*lst = (*lst)->next;
-			*lst = (*lst)->next;
-			return (p);
-		}
-		else
-		{
-			return (p);
-		}
+		return (p);
 	}
 	free(p);
 	return (NULL);
