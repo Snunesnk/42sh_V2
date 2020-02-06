@@ -50,9 +50,8 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 
 	r->redirector.dest = io_nb;
 
-	r->instruction = GREAT;
+	r->instruction = IOWRITE;
 	r->flags = O_CREAT | O_WRONLY;
-	r->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
 
 	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
 	r->redirectee.filename = get_tokvalue(*lst);
@@ -211,13 +210,29 @@ t_redirection	*build_redirections(t_list **lst)
 	return (r);
 }
 
-/*
-int	do_redirection(t_process *p)
+
+int	do_redirection(t_redirection *r)
 {
-	(void)p;
+	int	fd;
+
+	while (r)
+	{
+		if (r->instruction == IOWRITE)
+		{
+			fd = open(r->redirectee.filename, r->flags, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (fd < 0)
+			{
+				ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+				return (1);
+			}
+			dup2(fd, r->redirector.dest);
+			close(fd);
+		}
+		r = r->next;
+	}
 	return (0);
 }
-*/
+
 
 /*		if (r->redirector.dest >= sysconf(_SC_OPEN_MAX)) //  Should be checked at launch time...
 			ft_printf("%s: %s: Bad file descriptor\n", g_progname, r->redirector.dest);
