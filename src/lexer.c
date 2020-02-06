@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 13:27:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:32:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,17 +146,14 @@ static int	new_token(const char *str, uint64_t *type, size_t *pos, t_list **lst)
 	*pos += get_next_token(str + *pos, &token);
 	if (last_token.type == DLESS && token.type == WORD)
 		manage_eardoc(&token);
-	if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
+	ret = add_token_to_list(&token, lst);
+	if (*pos == last_pos || ret == FAILURE)
+		ret = FAILURE;
+	else if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
 		|| token.type == AND)
 	{
 		*type = token.type;
 		ret = SEPARATOR;
-	}
-	else
-	{
-		ret = add_token_to_list(&token, lst);
-		if (*pos == last_pos || ret == FAILURE)
-			ret = FAILURE;
 	}
 	last_token = token;
 	return (ret);
@@ -175,8 +172,13 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst,
 		if (str[*pos] == '\0')
 			break ;
 		ret = new_token(str, type, pos, lst);
-		if (ret == FAILURE || ret == SEPARATOR)
+		if (ret == FAILURE)
 			break ;
+		else if (ret == SEPARATOR)
+		{
+			ret = SUCCESS;
+			break ;
+		}
 	}
 	return (ret);
 }
