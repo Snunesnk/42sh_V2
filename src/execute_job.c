@@ -34,7 +34,7 @@ static int	get_argc(t_list *lst)
 	return (argc);
 }
 
-static char	*get_tokvalue(t_list *lst)
+char	*get_tokvalue(t_list *lst)
 {
 	t_token	*t;
 
@@ -42,7 +42,7 @@ static char	*get_tokvalue(t_list *lst)
 	return (t->value);
 }
 
-static int	get_tokentype(t_list *lst)
+int	get_tokentype(t_list *lst)
 {
 	t_token	*t;
 
