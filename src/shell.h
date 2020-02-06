@@ -31,6 +31,15 @@
 # define PATH_MAX 1024
 # endif
 
+/* Flags for instruction type of redirection */
+# define IOTYPE  0xF		/* type: bits 0:3 */
+# define IOREAD  0x1		/* < */
+# define IOWRITE 0x2		/* > */
+# define IORDWR  0x3		/* <>: todo */
+# define IOHERE  0x4		/* << (here file) */
+# define IOCAT   0x5		/* >> */
+# define IODUP   0x6		/* <&/>& */
+
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
 
@@ -50,7 +59,6 @@ struct	s_redirection
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
 	int			flags;         /* flag value for open() */
-	mode_t			mode;          /* file mode bits to be applied when a new file is created */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 };
@@ -108,6 +116,7 @@ int	has_redirections(int type);
 t_redirection	*build_redirections(t_list **lst);
 int	get_tokentype(t_list *lst);
 char	*get_tokvalue(t_list *lst);
+int	do_redirection(t_redirection *r);
 
 # define TRUE		1
 # define FALSE		0
