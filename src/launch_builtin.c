@@ -7,10 +7,22 @@
 
 #include "libft.h"
 #include "ft_errno.h"
+#include "shell.h"
 #include "builtins.h"
 
-int	launch_builtin(char **argv)
+int	launch_builtin(t_process *p)
 {
+	int ret;
+
+	/* 1. Set redirections */
+
+
 	/* Execute the builtin. Retreive return value */
-	return (builtins_dispatcher(argv));
+	ret = builtins_dispatcher(p->argv);
+
+	/* 2. Undo redirections */
+
+
+	/* Retreive return value */
+	return (ret);
 }
