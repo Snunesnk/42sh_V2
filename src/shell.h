@@ -98,30 +98,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 void	free_process(t_process *p);
 /*int	execp(char **agrv, char **environ);
 */
-int     launch_builtin(char **argv);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int     launch_builtin(t_process *p);
 
 
 # define TRUE		1
