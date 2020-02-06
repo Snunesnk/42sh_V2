@@ -13,7 +13,7 @@ int	has_redirections(int type)
 		|| type == GREATAND);
 }
 
-int	set_redirection_flags(int r_instruction)
+static int	set_redirection_flags(int r_instruction)
 {
 	if (r_instruction == DGREAT)
 		return (O_CREAT | O_APPEND | O_WRONLY);
@@ -22,7 +22,7 @@ int	set_redirection_flags(int r_instruction)
 	return (0);
 }
 
-t_redirection	*parse_redirections(t_list **lst)
+static t_redirection	*parse_redirections(t_list **lst)
 {
 	t_redirection	*r;
 	char		*content;
@@ -45,6 +45,21 @@ t_redirection	*parse_redirections(t_list **lst)
 	else if (r->instruction == GREAT)
 		r->redirectee.filename = content; /* Should char* be dynamically allocated ? */
 	(*lst) = (*lst)->next;
+	return (r);
+}
+
+t_redirection	*build_redirections(t_list **lst)
+{
+	t_redirection	*r;
+	t_redirection	**n;
+
+	r = parse_redirections(lst);
+	n = &(r->next);
+	while (has_redirections(get_tokentype(*lst)))
+	{
+		*n = parse_redirections(lst);
+		n = &((*n)->next);
+	}
 	return (r);
 }
 
