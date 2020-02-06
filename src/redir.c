@@ -15,9 +15,18 @@ int	has_redirections(int type)
 
 t_redirection	*parse_redirections(t_list **lst)
 {
-	(void)lst;
-	ft_printf("\nIN PARSING REDIR\n\n");
-	return (NULL);
+	t_redirection	*r;
+
+	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
+	if (get_tokentype(*lst) == IO_NB)
+	{
+		r->redirector.dest = ft_atoifd(get_tokvalue(*lst));
+/*		if (r->redirector.dest >= sysconf(_SC_OPEN_MAX)) //  Should be checked at launch time...
+			ft_printf("%s: %s: Bad file descriptor\n", g_progname, r->redirector.dest);
+*/
+		(*lst) = (*lst)->next;
+	}
+	return (r);
 }
 
 int	do_redirection(t_process *p)
@@ -28,20 +37,10 @@ int	do_redirection(t_process *p)
 
 
 /*
-		else if (get_tokentype(*lst) == IO_NB)
-		{
-			if (ft_atoifd(get_tokvalue(*lst)) >= sysconf(_SC_OPEN_MAX))
-			{
-				ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
  //				if (fcntl(ft_atoi(get_tokvalue(*lst)), F_GETFL) < 0)
 //				{
-//					ft_printf("%s: %s: Bad file descriptor\n", g_progname, get_tokvalue(*lst));
+//					ft_printf("%s: %s: File descriptor not openm do not write on it\n", g_progname, get_tokvalue(*lst));
 //				}
-			}
-			else
-			{
-				printf("test");
-			}
 		}
 		else if (get_tokentype(*lst) == GREAT)
 		{
