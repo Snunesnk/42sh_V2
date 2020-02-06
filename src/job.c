@@ -133,7 +133,7 @@ void	launch_job(t_job *j, int foreground)
 		/* 1. Check if process is a shell builtin */
 		if (outfile != mypipe[1] && is_a_builtin(p->argv[0]))
 		{
-			launch_builtin(p->argv);
+			launch_builtin(p);
 		}
 		/* 2. Fork the child processes.  */
 		else
