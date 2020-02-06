@@ -46,10 +46,6 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	}
 	/* Set the standard input/output channels of the new process. */
 
-	/* Sepcial redirections */
-	if (do_redirection(p->redir))
-		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
-
 	/* Pipeline common redirection, to minimise the dup of file descriptor */
 	if (infile != STDIN_FILENO)
 	{
@@ -66,6 +62,11 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		dup2(errfile, STDERR_FILENO);
 		close(errfile);
 	}
+
+	/* Sepcial redirections */
+	if (do_redirection(p->redir))
+		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
+
 	/* Exec the new process. Make sure we exit */
 	if (is_a_builtin(p->argv[0]))
 		exit(builtins_dispatcher(p->argv));
