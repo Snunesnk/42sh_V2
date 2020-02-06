@@ -88,10 +88,10 @@ t_process	*build_a_process(t_list **lst)
 			free(p);
 			return (NULL);
 		}
-		while (has_redirections(get_tokentype(*lst)))
+		if (has_redirections(get_tokentype(*lst)))
 		{
 			/* Add redirection instruction calling parse_redirection */
-			p->redir = parse_redirections(lst);
+			p->redir = build_redirections(lst);
 		}
 		return (p);
 	}
