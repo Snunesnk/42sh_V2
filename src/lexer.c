@@ -110,7 +110,51 @@ static int	border_token_list(t_list **lst, uint64_t token_type)
 	return (ret);
 }
 
-static int	get_token_list(const char *str, size_t *pos, t_list **lst, uint64_t *type)
+static int	tokenizer()
+{
+	while (ft_is_space_tab(str[*pos]) == TRUE)
+		(*pos)++;
+	if (str[*pos] == '\0')
+		break ;
+	ft_bzero(&token, sizeof(token));
+	last_pos = *pos;
+	*pos += get_next_token(str + *pos, &token);
+	if (last_token.type == DLESS && token.type == WORD)
+	{
+		eof = ft_strdup(token.value);
+		ft_strdel(&token.value);
+		while (1)
+		{
+			ft_printf(">");
+			get_stdin(&tmp);
+			if (ft_strstr(tmp, eof) != NULL)
+			{
+				ft_strdel(&tmp);
+				break ;
+			}
+			if (token.value == NULL)
+				token.value = ft_strdup(tmp);
+			else
+				token.value = ft_join_free(token.value, tmp, 3);
+		}
+	}
+	if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
+		|| token.type == AND)
+	{
+		*type = token.type;
+		break ;
+	}
+	ret = add_token_to_list(&token, lst);
+	if (*pos == last_pos || ret == FAILURE)
+	{
+		ret = FAILURE;
+		break ;
+	}
+	last_token = token;
+}
+
+static int	get_token_list(const char *str, size_t *pos, t_list **lst,
+							uint64_t *type)
 {
 	t_token	token;
 	t_token	last_token;
@@ -122,47 +166,40 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst, uint64_t *
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
 	{
-		while (ft_is_space_tab(str[*pos]) == TRUE)
-			(*pos)++;
-		if (str[*pos] == '\0')
-			break ;
-		ft_bzero(&token, sizeof(token));
-		last_pos = *pos;
-		*pos += get_next_token(str + *pos, &token);
-		if (last_token.type == DLESS && token.type == WORD)
-		{
-			eof = ft_strdup(token.value);
-			ft_strdel(&token.value);
-			while (1)
-			{
-				ft_printf(">");
-				get_stdin(&tmp);
-				if (ft_strstr(tmp, eof) != NULL)
-				{
-					ft_strdel(&tmp);
-					break ;
-				}
-				if (token.value == NULL)
-					token.value = ft_strdup(tmp);
-				else
-					token.value = ft_join_free(token.value, tmp, 3);
-			}
-		}
-		if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
-			|| token.type == AND)
-		{
-			*type = token.type;
-			break ;
-		}
-		ret = add_token_to_list(&token, lst);
-		if (*pos == last_pos || ret == FAILURE)
-		{
-			ret = FAILURE;
-			break ;
-		}
-		last_token = token;
+		tokenizer();
 	}
 	return (ret);
+}
+
+static int	get_pipeline(const char *str, size_t *pos, t_list **lst,
+						uint64_t *type)
+{
+	int		ret;
+
+	ret = get_token_list(str, pos, lst, type);
+	if (ret == SUCCESS)
+		ret = border_token_list(lst, END);
+	else
+		ret = FAILURE;
+	return (ret);
+}
+
+static void	build_ast(uint64_t type, t_ast **ast, t_list *lst)
+{
+	t_ast		*new_ast;
+
+	if (type != NONE)
+	{
+		new_ast = astnew(NULL, type);
+		astadd_right(ast, new_ast);
+		new_ast = astnew(lst, NONE);
+		astadd_left(ast, new_ast);
+	}
+	else
+	{
+		new_ast = astnew(lst, type);
+		astadd_right(ast, new_ast);
+	}
 }
 
 int			lexer(const char *str, t_ast **ast)
@@ -171,7 +208,6 @@ int			lexer(const char *str, t_ast **ast)
 	uint64_t	type;
 	size_t		pos;
 	t_list		*lst;
-	t_ast		*new_ast;
 
 	pos = 0;
 	while (str[pos] != '\0')
@@ -180,25 +216,8 @@ int			lexer(const char *str, t_ast **ast)
 		lst = NULL;
 		ret = border_token_list(&lst, START);
 		if (ret == SUCCESS)
-		{
-			ret = get_token_list(str, &pos, &lst, &type);
-			if (ret == SUCCESS)
-				ret = border_token_list(&lst, END);
-			else
-				ret = FAILURE;
-		}
-		if (type != NONE)
-		{
-			new_ast = astnew(NULL, type);
-			astadd_right(ast, new_ast);
-			new_ast = astnew(lst, NONE);
-			astadd_left(ast, new_ast);
-		}
-		else
-		{
-			new_ast = astnew(lst, type);
-			astadd_right(ast, new_ast);
-		}
+			ret = get_pipeline(str, &pos, &lst, &type);
+		build_ast(type, ast, lst);
 	}
 	return (ret);
 }
