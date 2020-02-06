@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:58:04 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:27:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,63 +110,73 @@ static int	border_token_list(t_list **lst, uint64_t token_type)
 	return (ret);
 }
 
-static int	tokenizer()
+static void	manage_eardoc(t_token *token)
 {
-	while (ft_is_space_tab(str[*pos]) == TRUE)
-		(*pos)++;
-	if (str[*pos] == '\0')
-		break ;
+	char	*tmp;
+	char	*eof;
+
+	eof = ft_strdup(token->value);
+	ft_strdel(&token->value);
+	while (1)
+	{
+		ft_printf(">");
+		get_stdin(&tmp);
+		if (ft_strstr(tmp, eof) != NULL)
+		{
+			ft_strdel(&tmp);
+			break ;
+		}
+		if (token->value == NULL)
+			token->value = ft_strdup(tmp);
+		else
+			token->value = ft_join_free(token->value, tmp, 3);
+	}
+}
+
+static int	new_token(const char *str, uint64_t *type, size_t *pos, t_list **lst)
+{
+	int				ret;
+	t_token			token;
+	static t_token	last_token;
+	static size_t	last_pos;
+
+	ret = SUCCESS;
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
 	if (last_token.type == DLESS && token.type == WORD)
-	{
-		eof = ft_strdup(token.value);
-		ft_strdel(&token.value);
-		while (1)
-		{
-			ft_printf(">");
-			get_stdin(&tmp);
-			if (ft_strstr(tmp, eof) != NULL)
-			{
-				ft_strdel(&tmp);
-				break ;
-			}
-			if (token.value == NULL)
-				token.value = ft_strdup(tmp);
-			else
-				token.value = ft_join_free(token.value, tmp, 3);
-		}
-	}
+		manage_eardoc(&token);
 	if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
 		|| token.type == AND)
 	{
 		*type = token.type;
-		break ;
+		ret = SEPARATOR;
 	}
-	ret = add_token_to_list(&token, lst);
-	if (*pos == last_pos || ret == FAILURE)
+	else
 	{
-		ret = FAILURE;
-		break ;
+		ret = add_token_to_list(&token, lst);
+		if (*pos == last_pos || ret == FAILURE)
+			ret = FAILURE;
 	}
 	last_token = token;
+	return (ret);
 }
 
 static int	get_token_list(const char *str, size_t *pos, t_list **lst,
 							uint64_t *type)
 {
-	t_token	token;
-	t_token	last_token;
-	size_t	last_pos;
 	int		ret;
-	char	*tmp;
-	char	*eof;
 
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
 	{
-		tokenizer();
+		while (ft_is_space_tab(str[*pos]) == TRUE)
+			(*pos)++;
+		if (str[*pos] == '\0')
+			break ;
+		ret = new_token(str, type, pos, lst);
+		if (ret == FAILURE || ret == SEPARATOR)
+			break ;
 	}
 	return (ret);
 }

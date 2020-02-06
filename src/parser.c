@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:33:23 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:33:48 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@ static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
 	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
-	int		token_greatand[NB_TOKEN] = { WORD };
-	int		token_lessand[NB_TOKEN] = { WORD };
-	int		token_and[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
+	int		token_redir[NB_TOKEN] = { WORD };
 	int		token_word[NB_TOKEN] = { PIPE, GREATAND, LESSAND, AND, SEMI, OP_PARENTHESIS,
 					CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT, DLESS,
 					GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, TAB_END };
-	int		token_redir[NB_TOKEN] = { WORD };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
 	int		token_op_parenthesis[NB_TOKEN] = { OP_PARENTHESIS, CL_PARENTHESIS,
@@ -35,9 +32,9 @@ static void	init_token_tab(int **token_tab)
 	token_tab[OR_IF] = NULL;
 	token_tab[PIPE] = token_meta;
 	token_tab[AND_IF] = NULL;
-	token_tab[GREATAND] = token_greatand;
-	token_tab[LESSAND] = token_lessand;
-	token_tab[AND] = token_and;
+	token_tab[GREATAND] = token_redir;
+	token_tab[LESSAND] = token_redir;
+	token_tab[AND] = token_start;
 	token_tab[DSEMI] = NULL;
 	token_tab[SEMI] = token_semicolon;
 	token_tab[OP_PARENTHESIS] = token_op_parenthesis;
