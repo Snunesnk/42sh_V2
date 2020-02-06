@@ -113,7 +113,7 @@ void	free_process(t_process *p);
 */
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
-t_redirection	*parse_redirections(t_list **lst);
+t_redirection	*build_redirections(t_list **lst);
 int	get_tokentype(t_list *lst);
 char	*get_tokvalue(t_list *lst);
 
