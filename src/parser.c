@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 15:00:44 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 16:02:08 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void	init_bracket_tab(t_bracket *bracket_tab)
 	bracket_tab[WHILE_LOOP] = while_loop;
 }
 
-static int	check_next_token(t_token *token, int *token_tab)
+static int	check_next_token(uint64_t type, int *token_tab)
 {
 	size_t	token_index;
 	int		ret;
@@ -76,7 +76,7 @@ static int	check_next_token(t_token *token, int *token_tab)
 	{
 		while (token_tab[token_index] != TAB_END)
 		{
-			if (token->type == (uint64_t)token_tab[token_index])
+			if (type == (uint64_t)token_tab[token_index])
 			{
 				ret = SUCCESS;
 				break ;
@@ -129,7 +129,7 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 		return (SUCCESS);
 	token_index = ((t_token*)(lst->content))->type;
 	lst = lst->next;
-	ret = check_next_token(lst->content, token_tab[token_index]);
+	ret = check_next_token(((t_token*)(lst->content))->type, token_tab[token_index]);
 	if (ret == SUCCESS)
 	{
 		if (((t_token*)(lst->content))->type == OP_PARENTHESIS
