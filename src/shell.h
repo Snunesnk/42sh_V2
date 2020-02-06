@@ -18,6 +18,7 @@
 # include <stdint.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 
@@ -57,6 +58,7 @@ struct	s_redirection
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
 	int			flags;         /* flag value for open() */
+	mode_t			mode;          /* file mode bits to be applied when a new file is created */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 };
