@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 14:32:23 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 15:00:44 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 	static int	*token_tab[NB_TOKEN];
 	int			token_index;
 	int			ret;
-	
+
 	init_token_tab(token_tab);
 	if (lst->next == NULL)
 		return (SUCCESS);
@@ -136,9 +136,10 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 			|| ((t_token*)(lst->content))->type == CL_PARENTHESIS
 			|| ((t_token*)(lst->content))->type == WHILE_WORD
 			|| ((t_token*)(lst->content))->type == DONE)
-			return (bracket(lst, buffer, index));
-		return (parser_pipeline(lst, buffer, index));
-	}
+			ret = bracket(lst, buffer, index);
+		else
+			ret = parser_pipeline(lst, buffer, index);
+	} 
 	return (ret);
 }
 
