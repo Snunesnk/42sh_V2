@@ -43,11 +43,22 @@ extern char	g_pwd[PATH_MAX];
 # define IOCAT   0x5		/* >> */
 # define IODUP   0x6		/* <&/>& */
 
+/* Union containing Descriptor or filename */
+typedef union {
+	int	dest;         /* Place to redirect to or .... */
+	char	*filename;    /* filename to redirect to. */
+}	t_redirectee;
+
 /* A redirection structure for process redirections */
+/* Structure describing a redirection */
 struct	s_redirection
 {
-	int	oldfd; /* cf man dup2 */
-	int	newfd;
+	struct s_redirection	*next;         /* Next redirection or NULL */
+	t_redirectee		redirector;    /* Descriptor or varname to be redirected cf man dup2() */
+	int			instruction;   /* What to do with the information, i.e. redirection type */
+	int			flags;         /* Flag value for open() */
+	t_redirectee		redirectee;    /* File descriptor or filename */
+	char			*here_doc_eof; /* The word that appeared in <<eof */
 };
 
 /* A process is a single process.  */
@@ -60,7 +71,7 @@ struct s_process
   char			completed;   /* true if process has completed */
   char			stopped;     /* true if process has stopped */
   int			status;      /* reported status value */
-  struct s_redirection	redir[10];     /* all recirections to be applied */
+  struct s_redirection	*redir;      /* all recirections to be applied */
 };
 
 /* A job is a pipeline of processes.  */
