@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:29:09 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:17:43 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,11 +124,10 @@ int     launch_builtin(char **argv);
 
 
 
-# define TRUE	1
-# define FALSE	0
+# define TRUE		1
+# define FALSE		0
 
-# define FAILURE EXIT_FAILURE
-# define SUCCESS EXIT_SUCCESS
+# define SEPARATOR	1
 
 # define BUF_SIZE	32
 # define NB_TOKEN	23

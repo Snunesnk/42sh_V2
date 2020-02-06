@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 18:21:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/02/06 13:17:32 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-# define SUCCESS EXIT_SUCCESS
-# define FAILURE EXIT_FAILURE
+# define SUCCESS 0
+# define FAILURE -1
 
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
