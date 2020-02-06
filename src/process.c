@@ -45,6 +45,12 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		signal(SIGCHLD, SIG_DFL);
 	}
 	/* Set the standard input/output channels of the new process. */
+
+	/* Sepcial redirections */
+	if (do_redirection(p->redir))
+		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
+
+	/* Pipeline common redirection, to minimise the dup of file descriptor */
 	if (infile != STDIN_FILENO)
 	{
 		dup2(infile, STDIN_FILENO);
