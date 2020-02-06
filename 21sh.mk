@@ -18,6 +18,7 @@ SOURCES :=	main.c \
 		debug.c \
 		execute_job.c \
 		job.c \
+		redir.c \
 		process.c \
 		launch_builtin.c \
 		path_concat.c \
