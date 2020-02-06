@@ -36,14 +36,6 @@ char	*short_physical_path(char **cwd);
 
 extern char	g_pwd[PATH_MAX];
 
-# define IOTYPE  0xF		/* type: bits 0:3 */
-# define IOREAD  0x1		/* < */
-# define IOWRITE 0x2		/* > */
-# define IORDWR  0x3		/* <>: todo */
-# define IOHERE  0x4		/* << (here file) */
-# define IOCAT   0x5		/* >> */
-# define IODUP   0x6		/* <&/>& */
-
 /* Union containing Descriptor or filename */
 typedef union {
 	int	dest;         /* Place to redirect to or .... */
