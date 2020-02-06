@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 13:33:48 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/06 14:32:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,15 +155,16 @@ int			parser(t_ast *ast)
 	{
 		while (ast != NULL)
 		{
-			if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
+			if (ast->content != NULL)
+				ret = parser_pipeline(ast->content, buffer, index);
+			else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
 				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer, index);
 			if (ret == FAILURE)
 				break ;
 			ast = ast->right;
 		}
-		if (buffer[0] == 0)
-			return (SUCCESS);
-		return (FAILURE);
+		if (buffer[0] != 0)
+			ret = FAILURE;
 	}
 	return (ret);
 }
