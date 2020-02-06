@@ -8,6 +8,7 @@
 #include "libft.h"
 #include "ft_errno.h"
 #include "shell.h"
+#include "builtins.h"
 
 void	free_process(t_process *p) /* temporary for tests purposes ? */
 {
@@ -60,9 +61,14 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		close(errfile);
 	}
 	/* Exec the new process. Make sure we exit */
-	path = ft_strdup(p->argv[0]);
-	path_concat(&path);
-	execve(path, p->argv, environ);
-	ft_perror("Failed to launch process using execve");
-	exit(1);
+	if (is_a_builtin(p->argv[0]))
+		exit(launch_builtin(p->argv));
+	else
+	{
+		path = ft_strdup(p->argv[0]);
+		path_concat(&path);
+		execve(path, p->argv, environ);
+		ft_perror("Failed to launch process using execve");
+		exit(1);
+	}
 }
