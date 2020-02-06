@@ -62,7 +62,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	}
 	/* Exec the new process. Make sure we exit */
 	if (is_a_builtin(p->argv[0]))
-		exit(launch_builtin(p->argv));
+		exit(builtins_dispatcher(p->argv));
 	else
 	{
 		path = ft_strdup(p->argv[0]);
