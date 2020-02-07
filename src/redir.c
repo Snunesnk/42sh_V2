@@ -13,12 +13,6 @@ int	has_redirections(int type)
 		|| type == GREATAND);
 }
 
-/* Redirection of input causes the file whose name results from the expansion
-** of word to be opened for reading on file descriptor n, or the standard
-** input (file descriptor 0) if n is not specified.
-**
-** The general format for redirecting input is: [n]<word
-*/
 static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -35,13 +29,6 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* Redirection of output causes the file whose name results from the expansion
-** of word to be opened for writing on file descriptor n, or the standard output
-** (file descriptor 1) if n is not specified. If the file does not exist it is
-** created; if it does exist it is truncated to zero size.
-**
-** The general format for redirecting output is: [n]>[|]word
-*/
 static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -58,13 +45,6 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* Redirection of output in this fashion causes the file whose name results from
-** the expansion of word to be opened for appending on file descriptor n, or the
-** standard output (file descriptor 1) if n is not specified. If the file does
-** not exist it is created.
-**
-** The general format for appending output is: [n]>>word
-*/
 static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -81,20 +61,6 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* This construct allows both the standard output (file descriptor 1) and the
-** standard error output (file descriptor 2) to be redirected to the file whose
-** name is the expansion of word.
-**
-** There are two formats for redirecting standard output and standard error:
-**
-**        [n]&>word
-** and,
-**        [n]>&word
-**
-** When using the second form, word may not expand to a number or ‘-’. If it does,
-** other redirection operators apply (see Duplicating File Descriptors below) for
-** compatibility reasons.
-*/
 static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -128,21 +94,6 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* This type of redirection instructs the shell to read input from the current
-** source until a line containing only word (with no trailing blanks) is seen.
-** All of the lines read up to that point are then used as the standard input
-** (or file descriptor n if n is specified) for a command.
-**
-** The format of here-documents is:
-**                                     [n]<<[-]word
-**                                             here-document
-**                                     delimiter
-**
-** No expansions done on here-doc.
-** If the redirection operator is ‘<<-’, then all leading tab characters are
-** stripped from input lines and the line containing delimiter. This allows
-** here-documents within shell scripts to be indented in a natural fashion.
-*/
 		/* NOT COMPLETE CAUSE I COULD NOT TEST IT */
 static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 {
@@ -160,15 +111,6 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* Duplicating File Descriptors
-** It is used to duplicate input file descriptors. If word expands to one
-** or more digits, the file descriptor denoted by n is made to be a copy
-** of that file descriptor. If the digits in word do not specify a file
-** descriptor open for input, a redirection error occurs. If word evaluates
-** to ‘-’, file descriptor n is closed. If n is not specified, the standard input (file descriptor 0) is used.
-**
-** The redirection operator: [n]<&word
-*/
 static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
