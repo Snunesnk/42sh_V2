@@ -338,20 +338,18 @@ static int	do_iodread(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
 		close(r->redirector.dest);
-	else if (r->flags & FILENAME)
-	{
+/*	else if (r->flags & FILENAME)
+	{ // Ambiguous redirection
 		r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 		if (r->redirector.dest < 0)
 		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+			ft_printf("\nOPEN ERRRROOOORRR\n\n");
 			return (1);
 		}
-		if (r->flags & NOFORK)
-			r->save = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
 		close(r->redirector.dest);
 	}
-	else if (r->flags & DEST)
+*/	else if (r->flags & DEST)
 	{
 		if (r->flags & NOFORK)
 			r->save = dup(r->redirectee.dest);
@@ -395,23 +393,28 @@ static int	undo_iowrite(t_redirection *r)
 	return (0);
 }
 
+static int	undo_ioread(t_redirection *r)
+{
+	dup2(r->save, r->redirectee.dest);
+	close(r->save);
+	return (0);
+}
+
 int	undo_redirection_internal(t_redirection *r)
 {
 	while (r)
 	{
 		if (r->instruction == IOWRITE)
 			undo_iowrite(r);
-/*		else if (r->instruction == IOCAT)
-			do_iocat(r);
+		else if (r->instruction == IOCAT)
+			undo_iowrite(r);
 		else if (r->instruction == IOREAD)
-			do_ioread(r);
-		else if (r->instruction == IOHERE)
-			do_iohere(r);
-		else if (r->instruction == IODUP)
-			do_iodup(r);
-		else if (r->instruction == (IODUP | IOREAD))
-			do_iodread(r);
-*/		r = r->next;
+			undo_ioread(r);
+		else if (r->instruction == IODUP && !(r->flags & FDCLOSE))
+			undo_iowrite(r);
+		else if (r->instruction == (IODUP | IOREAD) && !(r->flags & FDCLOSE))
+			undo_ioread(r);
+		r = r->next;
 	}
 	return (0);
 }
