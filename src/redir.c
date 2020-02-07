@@ -47,12 +47,8 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 	t_redirection	*r;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-
 	r->redirector.dest = io_nb;
-
 	r->instruction = IOWRITE;
-	r->flags = O_CREAT | O_WRONLY;
-
 	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
 	r->redirectee.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
@@ -66,20 +62,19 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 **
 ** The general format for appending output is: [n]>>word
 */
-/*
 static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	char		*content;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->flags = O_CREAT | O_APPEND | O_WRONLY;
-	r->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	r->redirectee.filename = content;
+	r->redirector.dest = io_nb;
+	r->instruction = IOCAT;
+	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	r->redirectee.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
-	content = get_tokvalue(*lst);
+	return (r);
 }
-*/
+
 /* This construct allows both the standard output (file descriptor 1) and the
 ** standard error output (file descriptor 2) to be redirected to the file whose
 ** name is the expansion of word.
@@ -167,9 +162,9 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 	type = get_tokentype(*lst);
 	if (type == GREAT)
 		return (type_great_redirection(lst, io_nb));
-/*	else if (type == DGREAT)
+	else if (type == DGREAT)
 		return (type_dgreat_redirection(lst, io_nb));
-	else if (type == LESS)
+/*	else if (type == LESS)
 		return (type_less_redirection(lst, io_nb));
 	else if (type == DLESS)
 		return (type_dless_redirection(lst, io_nb));
@@ -210,24 +205,44 @@ t_redirection	*build_redirections(t_list **lst)
 	return (r);
 }
 
-
-int	do_redirection(t_redirection *r)
+static int	do_iowrite(t_redirection *r)
 {
 	int	fd;
 
+	fd = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0)
+	{
+		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+		return (1);
+	}
+	dup2(fd, r->redirector.dest);
+	close(fd);
+	return (0);
+}
+
+static int	do_iocat(t_redirection *r)
+{
+	int	fd;
+
+	fd = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (fd < 0)
+	{
+		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+		return (1);
+	}
+	dup2(fd, r->redirector.dest);
+	close(fd);
+	return (0);
+}
+
+int	do_redirection(t_redirection *r)
+{
 	while (r)
 	{
 		if (r->instruction == IOWRITE)
-		{
-			fd = open(r->redirectee.filename, r->flags, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (fd < 0)
-			{
-				ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-				return (1);
-			}
-			dup2(fd, r->redirector.dest);
-			close(fd);
-		}
+			do_iowrite(r);
+		else if (r->instruction == IOCAT)
+			do_iocat(r);
 		r = r->next;
 	}
 	return (0);
