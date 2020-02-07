@@ -64,7 +64,6 @@ char	**build_argv(t_list **lst)
 		while (*lst && i < argc)
 		{
 			argv[i] = get_tokvalue(*lst);
-			treat_expansions(&(argv[i])); /* Here we treat expansions */
 			++i;
 			(*lst) = (*lst)->next;
 		}
