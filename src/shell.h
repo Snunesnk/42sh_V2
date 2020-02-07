@@ -48,7 +48,8 @@ extern char	g_pwd[PATH_MAX];
 /* Union containing Descriptor or filename */
 typedef union {
 	int	dest;         /* Place to redirect to or .... */
-	char	*filename;    /* filename to redirect to. */
+	char	*filename;    /* filename to redirect to or ... */
+	char	*hereword;    /* here-doc content used as input. */
 }	t_redirectee;
 
 /* A redirection structure for process redirections */
