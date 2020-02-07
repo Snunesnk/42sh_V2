@@ -29,7 +29,7 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	else
 		r->redirectee.dest = io_nb;
 	r->instruction = IOREAD;
-	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	(*lst) = (*lst)->next;
 	r->redirector.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
 	return (r);
@@ -52,7 +52,7 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 	else
 		r->redirector.dest = io_nb;
 	r->instruction = IOWRITE;
-	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	(*lst) = (*lst)->next;
 	r->redirectee.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
 	return (r);
@@ -75,7 +75,7 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 	else
 		r->redirector.dest = io_nb;
 	r->instruction = IOCAT;
-	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	(*lst) = (*lst)->next;
 	r->redirectee.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
 	return (r);
@@ -106,7 +106,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	else
 		r->redirector.dest = io_nb;
 	r->instruction = IODUP;
-	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	(*lst) = (*lst)->next;
 	r->redirectee.filename = get_tokvalue(*lst);
 	if (r->redirectee.filename[0] == '-')
 		r->flags = FDCLOSE;
@@ -143,6 +143,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 ** stripped from input lines and the line containing delimiter. This allows
 ** here-documents within shell scripts to be indented in a natural fashion.
 */
+		/* NOT COMPLETE CAUSE I COULD NOT TEST IT */
 static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -153,7 +154,7 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	else
 		r->redirectee.dest = io_nb;
 	r->instruction = IOHERE;
-	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	(*lst) = (*lst)->next;
 	r->redirector.hereword = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
 	return (r);
@@ -168,20 +169,39 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 **
 ** The redirection operator: [n]<&word
 */
-/*
 static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	char		*content;
+	int		fd;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->flags = O_CREAT | O_APPEND | O_WRONLY;
-	r->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	r->redirectee.filename = content;
+	if (io_nb == -1)
+		r->redirectee.dest = STDIN_FILENO;
+	else
+		r->redirectee.dest = io_nb;
+	r->instruction = IODUP | IOREAD;
 	(*lst) = (*lst)->next;
-	content = get_tokvalue(*lst);
+	r->redirector.filename = get_tokvalue(*lst);
+	if (r->redirector.filename[0] == '-')
+		r->flags = FDCLOSE;
+	else if (ft_str_is_numeric(r->redirector.filename))
+	{
+		fd = ft_atoifd(r->redirector.filename);
+		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+		{
+			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
+			free(r);
+			return (NULL);
+		}
+		r->redirector.dest = fd;
+		r->flags = DEST;
+	}
+	else
+		r->flags = FILENAME;
+	(*lst) = (*lst)->next;
+	return (r);
 }
-*/
+
 static t_redirection	*set_redirection(t_list **lst, int io_nb)
 {
 	int	type;
@@ -197,9 +217,9 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_dless_redirection(lst, io_nb));
 	else if (type == GREATAND)
 		return (type_greatand_redirection(lst, io_nb));
-/*	else if (type == LESSAND)
+	else if (type == LESSAND)
 		return (type_lessand_redirection(lst, io_nb));
-*/	return (NULL);
+	return (NULL);
 }
 
 static t_redirection	*parse_redirection(t_list **lst)
@@ -292,16 +312,7 @@ static int	do_iodup(t_redirection *r)
 	int	fd;
 
 	if (r->flags == FDCLOSE)
-	{
-		fd = open("/dev/null", O_WRONLY);
-		if (fd < 0)
-		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-			return (1);
-		}
-		dup2(fd, r->redirector.dest);
-		close(fd);
-	}
+		close(r->redirectee.dest);
 	else if (r->flags == FILENAME)
 	{
 		fd = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -321,6 +332,31 @@ static int	do_iodup(t_redirection *r)
 	return (0);
 }
 
+static int	do_iodread(t_redirection *r)
+{
+	int	fd;
+
+	if (r->flags == FDCLOSE)
+		close(r->redirector.dest);
+	else if (r->flags == FILENAME)
+	{
+		fd = open(r->redirector.filename, O_RDONLY);
+		if (fd < 0)
+		{
+			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+			return (1);
+		}
+		dup2(fd, r->redirectee.dest);
+		close(fd);
+	}
+	else if (r->flags == DEST)
+	{
+		dup2(r->redirector.dest, r->redirectee.dest);
+		close(r->redirector.dest);
+	}
+	return (0);
+}
+
 int	do_redirection(t_redirection *r)
 {
 	while (r)
@@ -335,19 +371,9 @@ int	do_redirection(t_redirection *r)
 			do_iohere(r);
 		else if (r->instruction == IODUP)
 			do_iodup(r);
-/*		else if (r->instruction == IODUP | IOREAD)
-			do_iohere(r);
-*/		r = r->next;
+		else if (r->instruction == (IODUP | IOREAD))
+			do_iodread(r);
+		r = r->next;
 	}
 	return (0);
 }
-
-
-/*		if (r->redirector.dest >= sysconf(_SC_OPEN_MAX)) //  Should be checked at launch time...
-			ft_printf("%s: %s: Bad file descriptor\n", g_progname, r->redirector.dest);
-*/
-/*                              // Way to check if file descriptor exists and is open.
- //				if (fcntl(ft_atoi(get_tokvalue(*lst)), F_GETFL) < 0)
-//				{
-//					ft_printf("%s: %s: File descriptor not openm do not write on it\n", g_progname, get_tokvalue(*lst));
-*/
