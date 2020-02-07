@@ -14,16 +14,16 @@ int	launch_builtin(t_process *p)
 {
 	int ret;
 
+	if (p->redir != NULL)
+		p->redir->flags = NOFORK;
 	/* 1. Set redirections */
-	if (do_redirection(p->redir))
-		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
+	do_redirection(p->redir);
 
 	/* Execute the builtin. Retreive return value */
 	ret = builtins_dispatcher(p->argv);
 
 	/* 2. Undo redirections */
-	if (undo_redirection(p->redir))
-		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
+	undo_redirection(p->redir);
 
 	/* Retreive return value */
 	return (ret);

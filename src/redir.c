@@ -109,7 +109,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = get_tokvalue(*lst);
 	if (r->redirectee.filename[0] == '-')
-		r->flags = FDCLOSE;
+		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
 	{
 		fd = ft_atoifd(r->redirectee.filename);
@@ -120,10 +120,10 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 			return (NULL);
 		}
 		r->redirectee.dest = fd;
-		r->flags = DEST;
+		r->flags |= DEST;
 	}
 	else
-		r->flags = FILENAME;
+		r->flags |= FILENAME;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -183,7 +183,7 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	r->redirector.filename = get_tokvalue(*lst);
 	if (r->redirector.filename[0] == '-')
-		r->flags = FDCLOSE;
+		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
 	{
 		fd = ft_atoifd(r->redirector.filename);
@@ -194,10 +194,10 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 			return (NULL);
 		}
 		r->redirector.dest = fd;
-		r->flags = DEST;
+		r->flags |= DEST;
 	}
 	else
-		r->flags = FILENAME;
+		r->flags |= FILENAME;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -260,10 +260,11 @@ static int	do_iowrite(t_redirection *r)
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	r->save = dup(r->redirector.dest);
+	if (r->flags & NOFORK)
+		r->save = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
-	return (r->save);
+	return (0);
 }
 
 static int	do_iocat(t_redirection *r)
@@ -274,7 +275,8 @@ static int	do_iocat(t_redirection *r)
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	r->save = dup(r->redirector.dest);
+	if (r->flags & NOFORK)
+		r->save = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
@@ -288,7 +290,8 @@ static int	do_ioread(t_redirection *r)
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	r->save = dup(r->redirectee.dest);
+	if (r->flags & NOFORK)
+		r->save = dup(r->redirectee.dest);
 	dup2(r->redirector.dest, r->redirectee.dest);
 	close(r->redirector.dest);
 	return (0);
@@ -306,23 +309,25 @@ static int	do_iohere(t_redirection *r)
 
 static int	do_iodup(t_redirection *r)
 {
-	int	fd;
-
-	if (r->flags == FDCLOSE)
+	if (r->flags & FDCLOSE)
 		close(r->redirectee.dest);
-	else if (r->flags == FILENAME)
+	else if (r->flags & FILENAME)
 	{
-		fd = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (fd < 0)
+		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		if (r->redirectee.dest < 0)
 		{
 			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 			return (1);
 		}
-		dup2(fd, r->redirector.dest);
-		close(fd);
+		if (r->flags & NOFORK)
+			r->save = dup(r->redirector.dest);
+		dup2(r->redirectee.dest, r->redirector.dest);
+		close(r->redirectee.dest);
 	}
-	else if (r->flags == DEST)
+	else if (r->flags & DEST)
 	{
+		if (r->flags & NOFORK)
+			r->save = dup(r->redirector.dest);
 		dup2(r->redirectee.dest, r->redirector.dest);
 		close(r->redirectee.dest);
 	}
@@ -331,23 +336,25 @@ static int	do_iodup(t_redirection *r)
 
 static int	do_iodread(t_redirection *r)
 {
-	int	fd;
-
-	if (r->flags == FDCLOSE)
+	if (r->flags & FDCLOSE)
 		close(r->redirector.dest);
-	else if (r->flags == FILENAME)
+	else if (r->flags & FILENAME)
 	{
-		fd = open(r->redirector.filename, O_RDONLY);
-		if (fd < 0)
+		r->redirector.dest = open(r->redirector.filename, O_RDONLY);
+		if (r->redirector.dest < 0)
 		{
 			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 			return (1);
 		}
-		dup2(fd, r->redirectee.dest);
-		close(fd);
+		if (r->flags & NOFORK)
+			r->save = dup(r->redirectee.dest);
+		dup2(r->redirector.dest, r->redirectee.dest);
+		close(r->redirector.dest);
 	}
-	else if (r->flags == DEST)
+	else if (r->flags & DEST)
 	{
+		if (r->flags & NOFORK)
+			r->save = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
 		close(r->redirector.dest);
 	}
@@ -414,7 +421,6 @@ int	undo_redirection(t_redirection *r)
 	while (r)
 	{
 		undo_redirection_internal(r);
-	/* Do something here */
 		/* should we free at that point ? */
 		r = r->next;
 	}
