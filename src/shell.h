@@ -31,7 +31,7 @@
 # define PATH_MAX 1024
 # endif
 
-/* Flags for instruction type of redirection */
+/* Flags of instruction type of redirection */
 # define IOTYPE  0xF		/* type: bits 0:3 */
 # define IOREAD  0x1		/* < */
 # define IOWRITE 0x2		/* > */
@@ -40,10 +40,12 @@
 # define IOCAT   0x5		/* >> */
 # define IODUP   0x6		/* <&/>& */
 
+/* Flags for complex redirection */
 # define FILENAME  0x1
 # define DEST      0x2
-# define HEREWORD  0x3
-# define FDCLOSE   0x4
+# define HEREWORD  0x4
+# define FDCLOSE   0x8
+# define NOFORK    0x10
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
