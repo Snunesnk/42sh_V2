@@ -254,46 +254,43 @@ t_redirection	*build_redirections(t_list **lst)
 
 static int	do_iowrite(t_redirection *r)
 {
-	int	fd;
-
-	fd = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (fd < 0)
+	r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (r->redirectee.dest < 0)
 	{
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	dup2(fd, r->redirector.dest);
-	close(fd);
-	return (0);
+	r->save = dup(r->redirector.dest);
+	dup2(r->redirectee.dest, r->redirector.dest);
+	close(r->redirectee.dest);
+	return (r->save);
 }
 
 static int	do_iocat(t_redirection *r)
 {
-	int	fd;
-
-	fd = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (fd < 0)
+	r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (r->redirectee.dest < 0)
 	{
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	dup2(fd, r->redirector.dest);
-	close(fd);
+	r->save = dup(r->redirector.dest);
+	dup2(r->redirectee.dest, r->redirector.dest);
+	close(r->redirectee.dest);
 	return (0);
 }
 
 static int	do_ioread(t_redirection *r)
 {
-	int	fd;
-
-	fd = open(r->redirector.filename, O_RDONLY);
-	if (fd < 0)
+	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
+	if (r->redirector.dest < 0)
 	{
 		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
 		return (1);
 	}
-	dup2(fd, r->redirectee.dest);
-	close(fd);
+	r->save = dup(r->redirectee.dest);
+	dup2(r->redirector.dest, r->redirectee.dest);
+	close(r->redirector.dest);
 	return (0);
 }
 
@@ -378,10 +375,45 @@ int	do_redirection(t_redirection *r)
 	return (0);
 }
 
+/* ************************************************* **
+**                                                   **
+**             UNDO REDIRECTIONS                     **
+**                                                   **
+** ************************************************* */
+
+static int	undo_iowrite(t_redirection *r)
+{
+	dup2(r->save, r->redirector.dest);
+	close(r->save);
+	return (0);
+}
+
+int	undo_redirection_internal(t_redirection *r)
+{
+	while (r)
+	{
+		if (r->instruction == IOWRITE)
+			undo_iowrite(r);
+/*		else if (r->instruction == IOCAT)
+			do_iocat(r);
+		else if (r->instruction == IOREAD)
+			do_ioread(r);
+		else if (r->instruction == IOHERE)
+			do_iohere(r);
+		else if (r->instruction == IODUP)
+			do_iodup(r);
+		else if (r->instruction == (IODUP | IOREAD))
+			do_iodread(r);
+*/		r = r->next;
+	}
+	return (0);
+}
+
 int	undo_redirection(t_redirection *r)
 {
 	while (r)
 	{
+		undo_redirection_internal(r);
 	/* Do something here */
 		/* should we free at that point ? */
 		r = r->next;
