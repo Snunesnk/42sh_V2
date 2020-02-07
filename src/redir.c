@@ -19,22 +19,22 @@ int	has_redirections(int type)
 **
 ** The general format for redirecting input is: [n]<word
 */
-/*
 static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	char		*content;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->redirector.dest = io_nb;
-	r->flags = O_CREAT | O_APPEND | O_WRONLY;
-	r->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	r->redirectee.filename = content;
+	if (io_nb == -1)
+		r->redirectee.dest = STDIN_FILENO;
+	else
+		r->redirectee.dest = io_nb;
+	r->instruction = IOREAD;
+	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	r->redirector.filename = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
-	content = get_tokvalue(*lst);
 	return (r);
 }
-*/
+
 /* Redirection of output causes the file whose name results from the expansion
 ** of word to be opened for writing on file descriptor n, or the standard output
 ** (file descriptor 1) if n is not specified. If the file does not exist it is
@@ -47,7 +47,10 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 	t_redirection	*r;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->redirector.dest = io_nb;
+	if (io_nb == -1)
+		r->redirector.dest = STDOUT_FILENO;
+	else
+		r->redirector.dest = io_nb;
 	r->instruction = IOWRITE;
 	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
 	r->redirectee.filename = get_tokvalue(*lst);
@@ -67,7 +70,10 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 	t_redirection	*r;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->redirector.dest = io_nb;
+	if (io_nb == -1)
+		r->redirector.dest = STDOUT_FILENO;
+	else
+		r->redirector.dest = io_nb;
 	r->instruction = IOCAT;
 	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
 	r->redirectee.filename = get_tokvalue(*lst);
@@ -164,9 +170,9 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_great_redirection(lst, io_nb));
 	else if (type == DGREAT)
 		return (type_dgreat_redirection(lst, io_nb));
-/*	else if (type == LESS)
+	else if (type == LESS)
 		return (type_less_redirection(lst, io_nb));
-	else if (type == DLESS)
+/*	else if (type == DLESS)
 		return (type_dless_redirection(lst, io_nb));
 	else if (type == GREATAND)
 		return (type_greatand_redirection(lst, io_nb));
@@ -186,7 +192,7 @@ static t_redirection	*parse_redirection(t_list **lst)
 		(*lst) = (*lst)->next;
 	}
 	else
-		io_nb = STDOUT_FILENO;
+		io_nb = -1;
 	return (set_redirection(lst, io_nb));
 }
 
@@ -235,6 +241,21 @@ static int	do_iocat(t_redirection *r)
 	return (0);
 }
 
+static int	do_ioread(t_redirection *r)
+{
+	int	fd;
+
+	fd = open(r->redirector.filename, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
+		return (1);
+	}
+	dup2(fd, r->redirectee.dest);
+	close(fd);
+	return (0);
+}
+
 int	do_redirection(t_redirection *r)
 {
 	while (r)
@@ -243,6 +264,8 @@ int	do_redirection(t_redirection *r)
 			do_iowrite(r);
 		else if (r->instruction == IOCAT)
 			do_iocat(r);
+		else if (r->instruction == IOREAD)
+			do_ioread(r);
 		r = r->next;
 	}
 	return (0);
