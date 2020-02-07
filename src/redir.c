@@ -377,3 +377,14 @@ int	do_redirection(t_redirection *r)
 	}
 	return (0);
 }
+
+int	undo_redirection(t_redirection *r)
+{
+	while (r)
+	{
+	/* Do something here */
+		/* should we free at that point ? */
+		r = r->next;
+	}
+	return (0);
+}
