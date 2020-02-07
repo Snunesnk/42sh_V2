@@ -15,7 +15,7 @@ int	launch_builtin(t_process *p)
 	int ret;
 
 	if (p->redir != NULL)
-		p->redir->flags = NOFORK;
+		p->redir->flags |= NOFORK;
 	/* 1. Set redirections */
 	do_redirection(p->redir);
 
