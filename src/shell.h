@@ -212,6 +212,28 @@ int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index);
 int		execute_node(t_ast *node, int foreground);
 
 extern int	g_retval;
-extern char	g_pwd[];
+
+struct	s_tags
+{
+	char	*opentag;
+	int	(*f)(size_t*, char**, const char*, const char*);
+	char	*closetag;
+};
+
+struct	s_param
+{
+	char	*pname;
+	char	*(*g)(const char*);
+};
+
+int		treat_expansions(char **tokens);
+int		getenv_content(char **content, char *str, const char *closetag);
+size_t		ft_varlen(const char *s, const char *closetag);
+int		is_a_valid_chr(const char c);
+int		is_valid_param(const char *str);
+int		parameter_expansions(size_t *index, char **str,
+		const char *opentag, const char *closetag);
+int		tilde_expansion(size_t *index, char **str,
+		const char *opentag, const char *closetag);
 
 #endif

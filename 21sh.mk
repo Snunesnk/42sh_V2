@@ -34,6 +34,11 @@ SOURCES :=	main.c \
 		error.c \
 		ft_putenv_table.c \
 		execute_ast.c \
+		expansions.c \
+		expansion_utils.c \
+		get_param.c \
+		parameter_expansions.c \
+		tilde_expansion.c \
 		builtins/builtin_cd.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
