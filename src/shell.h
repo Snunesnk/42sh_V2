@@ -198,7 +198,7 @@ int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void	debug(t_list *lst);
 int		get_stdin(char **line);
 int		initialize_prompt_fd(void);
-int		execute_job(t_list *lst);
+int		execute_job(t_list *lst, int foreground);
 _Bool   prompt_display(int status);
 int		path_concat(char **bin);
 int		get_next_token(const char *str, t_token *token);
@@ -209,7 +209,7 @@ void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index);
-int		execute_node(t_ast *node);
+int		execute_node(t_ast *node, int foreground);
 
 extern int	g_retval;
 extern char	g_pwd[];

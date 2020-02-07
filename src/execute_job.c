@@ -156,7 +156,7 @@ t_job	*build_job(t_list **lst)
 
 }
 
-int	execute_job(t_list *lst)
+int	execute_job(t_list *lst, int foreground)
 {
 	t_job		*j;
 
@@ -165,7 +165,7 @@ int	execute_job(t_list *lst)
 	j = build_job(&lst);
 	if (j == NULL)
 		return (FAILURE);
-	launch_job(j, 1);
+	launch_job(j, foreground);
 	free_job(j);
 	return (SUCCESS);
 }
