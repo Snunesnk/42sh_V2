@@ -124,20 +124,22 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 ** stripped from input lines and the line containing delimiter. This allows
 ** here-documents within shell scripts to be indented in a natural fashion.
 */
-/*
 static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	char		*content;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->flags = O_CREAT | O_APPEND | O_WRONLY;
-	r->mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH;
-	r->redirectee.filename = content;
+	if (io_nb == -1)
+		r->redirectee.dest = STDIN_FILENO;
+	else
+		r->redirectee.dest = io_nb;
+	r->instruction = IOHERE;
+	(*lst) = (*lst)->next; /* Go to next token which is inevitably a word */
+	r->redirector.hereword = get_tokvalue(*lst);
 	(*lst) = (*lst)->next;
-	content = get_tokvalue(*lst);
+	return (r);
 }
-*/
+
 /* Duplicating File Descriptors
 ** It is used to duplicate input file descriptors. If word expands to one
 ** or more digits, the file descriptor denoted by n is made to be a copy
@@ -172,9 +174,9 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_dgreat_redirection(lst, io_nb));
 	else if (type == LESS)
 		return (type_less_redirection(lst, io_nb));
-/*	else if (type == DLESS)
+	else if (type == DLESS)
 		return (type_dless_redirection(lst, io_nb));
-	else if (type == GREATAND)
+/*	else if (type == GREATAND)
 		return (type_greatand_redirection(lst, io_nb));
 	else if (type == LESSAND)
 		return (type_lessand_redirection(lst, io_nb));
@@ -256,6 +258,16 @@ static int	do_ioread(t_redirection *r)
 	return (0);
 }
 
+static int	do_iohere(t_redirection *r)
+{
+	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
+	{
+		ft_printf("\nWRITE ERRRROOOORRR\n\n"); /* should be in error mgt */
+		return (1);
+	}
+	return (0);
+}
+
 int	do_redirection(t_redirection *r)
 {
 	while (r)
@@ -266,6 +278,8 @@ int	do_redirection(t_redirection *r)
 			do_iocat(r);
 		else if (r->instruction == IOREAD)
 			do_ioread(r);
+		else if (r->instruction == IOHERE)
+			do_iohere(r);
 		r = r->next;
 	}
 	return (0);
