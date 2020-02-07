@@ -40,6 +40,11 @@
 # define IOCAT   0x5		/* >> */
 # define IODUP   0x6		/* <&/>& */
 
+# define FILENAME  0x1
+# define DEST      0x2
+# define HEREWORD  0x3
+# define FDCLOSE   0x4
+
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
 
@@ -59,6 +64,7 @@ struct	s_redirection
 	struct s_redirection	*next;         /* next redirection or NULL */
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
+	int			flags;         /* additional information for complex redirections */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 };
