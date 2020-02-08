@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 15:50:04 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 13:15:33 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ static int	new_token(const char *str, uint64_t *type, size_t *pos, t_list **lst)
 	*pos += get_next_token(str + *pos, &token);
 	if (last_token.type == DLESS && token.type == WORD)
 		manage_eardoc(&token);
-	else if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
+	if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
 		|| token.type == AND)
 	{
 		*type = token.type;
