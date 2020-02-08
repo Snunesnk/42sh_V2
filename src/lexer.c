@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 13:27:42 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 14:31:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,24 @@ static void	manage_eardoc(t_token *token)
 	}
 }
 
-static int	new_token(const char *str, uint64_t *type, size_t *pos, t_list **lst)
+static void	get_input(char *str)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	while (1)
+	{
+		ft_printf(">");
+		get_stdin(&tmp);
+		if (tmp != NULL)
+		{
+			ft_strcat(str, tmp);
+			break ;
+		}
+	}
+}
+
+static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 {
 	int				ret;
 	t_token			token;
@@ -145,23 +162,23 @@ static int	new_token(const char *str, uint64_t *type, size_t *pos, t_list **lst)
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
-	if (last_token.type == DLESS && token.type == WORD)
+	*type = token.type;
+	if (str[*pos] == '\0' && *type == PIPE)
+		get_input(str);
+	else if (last_token.type == DLESS && token.type == WORD)
 		manage_eardoc(&token);
-	if (token.type == SEMI || token.type == OR_IF || token.type == AND_IF
-		|| token.type == AND)
+	if (token.type != SEMI && token.type != OR_IF && token.type != AND_IF
+		&& token.type != AND)
 	{
-		*type = token.type;
-		ret = SEPARATOR;
-	}
-	else
 		ret = add_token_to_list(&token, lst);
+	}
 	if (*pos == last_pos || ret == FAILURE)
 		ret = FAILURE;
 	last_token = token;
 	return (ret);
 }
 
-static int	get_token_list(const char *str, size_t *pos, t_list **lst,
+static int	get_token_list(char *str, size_t *pos, t_list **lst,
 							uint64_t *type)
 {
 	int		ret;
@@ -176,7 +193,7 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst,
 		ret = new_token(str, type, pos, lst);
 		if (ret == FAILURE)
 			break ;
-		else if (ret == SEPARATOR)
+		if (*type == SEMI || *type == OR_IF || *type == AND_IF || *type == AND)
 		{
 			ret = SUCCESS;
 			break ;
@@ -185,7 +202,7 @@ static int	get_token_list(const char *str, size_t *pos, t_list **lst,
 	return (ret);
 }
 
-static int	get_pipeline(const char *str, size_t *pos, t_list **lst,
+static int	get_pipeline(char *str, size_t *pos, t_list **lst,
 						uint64_t *type)
 {
 	int		ret;
@@ -216,7 +233,7 @@ static void	build_ast(uint64_t type, t_ast **ast, t_list *lst)
 	}
 }
 
-int			lexer(const char *str, t_ast **ast)
+int			lexer(char *str, t_ast **ast)
 {
 	int			ret;
 	uint64_t	type;
@@ -232,6 +249,8 @@ int			lexer(const char *str, t_ast **ast)
 		if (ret == SUCCESS)
 			ret = get_pipeline(str, &pos, &lst, &type);
 		build_ast(type, ast, lst);
+		if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
+			get_input(str);
 	}
 	return (ret);
 }
