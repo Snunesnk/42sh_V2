@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 12:13:35 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 14:07:24 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ typedef struct	s_ast
 	void		*right;
 }				t_ast;
 
-int		lexer(const char* str, t_ast **ast);
+int		lexer(char* str, t_ast **ast);
 int		parser(t_ast *ast);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
 void	debug(t_list *lst);
