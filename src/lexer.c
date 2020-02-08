@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 13:15:33 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 13:27:42 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ static void	manage_eardoc(t_token *token)
 	{
 		ft_printf(">");
 		get_stdin(&tmp);
+		tmp = ft_join_free(tmp, "\n", 1);
 		if (ft_strstr(tmp, eof) != NULL)
 		{
 			ft_strdel(&tmp);
