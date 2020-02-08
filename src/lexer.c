@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 15:36:40 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 15:48:25 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,18 +155,17 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 {
 	int				ret;
 	t_token			token;
-	static t_token	last_token;
 	static size_t	last_pos;
 
 	ret = SUCCESS;
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
-	*type = token.type;
 	if (str[*pos] == '\0' && *type == PIPE)
 		get_input(str);
-	else if (last_token.type == DLESS && token.type == WORD)
+	else if (*type == DLESS && token.type == WORD)
 		manage_eardoc(&token);
+	*type = token.type;
 	if (token.type != SEMI && token.type != OR_IF && token.type != AND_IF
 		&& token.type != AND)
 	{
@@ -174,7 +173,6 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	}
 	if (*pos == last_pos || ret == FAILURE)
 		ret = FAILURE;
-	last_token = token;
 	return (ret);
 }
 
@@ -194,12 +192,7 @@ static int	get_token_list(char *str, size_t *pos, t_list **lst,
 		if (ret == FAILURE)
 			break ;
 		if (*type == SEMI || *type == OR_IF || *type == AND_IF || *type == AND)
-		{
-			ret = SUCCESS;
 			break ;
-		}
-		else
-			*type = NONE;
 	}
 	return (ret);
 }
@@ -221,7 +214,7 @@ static void	build_ast(uint64_t type, t_ast **ast, t_list *lst)
 {
 	t_ast		*new_ast;
 
-	if (type != NONE)
+	if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
 	{
 		new_ast = astnew(NULL, type);
 		astadd_right(ast, new_ast);
@@ -230,7 +223,7 @@ static void	build_ast(uint64_t type, t_ast **ast, t_list *lst)
 	}
 	else
 	{
-		new_ast = astnew(lst, type);
+		new_ast = astnew(lst, NONE);
 		astadd_right(ast, new_ast);
 	}
 }
