@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 12:13:37 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 13:52:29 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 #include "error.h"
 
 extern char	**environ;
+
+void	astdel(t_ast **ast)
+{
+	if (*ast != NULL)
+	{
+		ft_lstdel(&(*ast)->content, del);
+		if ((*ast)->left != NULL)
+			astdel((t_ast**)&(*ast)->left);
+		if ((*ast)->right != NULL)
+			astdel((t_ast**)&(*ast)->right);
+		free(*ast);
+		*ast = NULL;
+	}
+}
 
 int			main(int argc, char **argv)
 {
@@ -64,6 +78,7 @@ int			main(int argc, char **argv)
 */			status = execute_node(ast, 1); /* to capture */
 		}
 /*		ft_lstdel(&lst, del);*/
+		astdel(&ast);
 		ft_strdel(&input);
 		g_retval = status;
 	}
