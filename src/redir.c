@@ -252,7 +252,7 @@ static int	do_iohere(t_redirection *r)
 static int	do_iodup(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
-		close(r->redirectee.dest);
+		close(r->redirector.dest);
 	else if (r->flags & FILENAME)
 	{
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -279,7 +279,7 @@ static int	do_iodup(t_redirection *r)
 static int	do_iodread(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
-		close(r->redirector.dest);
+		close(r->redirectee.dest);
 /*	else if (r->flags & FILENAME)
 	{ // Ambiguous redirection
 		r->redirector.dest = open(r->redirector.filename, O_RDONLY);
