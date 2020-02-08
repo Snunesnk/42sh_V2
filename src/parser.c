@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 16:02:08 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 12:13:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void	init_token_tab(int **token_tab)
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
 	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
 	int		token_redir[NB_TOKEN] = { WORD };
-	int		token_word[NB_TOKEN] = { PIPE, GREATAND, LESSAND, AND, SEMI, OP_PARENTHESIS,
-					CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT, DLESS,
-					GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
+	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND, AND,
+					SEMI, OP_PARENTHESIS, CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT,
+					DLESS, GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, TAB_END };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
@@ -90,6 +90,8 @@ static int	check_next_token(uint64_t type, int *token_tab)
 static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			t_bracket bracket)
 {
+	static uint64_t	type = 0;
+
 	if (((t_token*)(lst->content))->type == bracket.close)
 	{
 		if (buffer[index] == bracket.open)
@@ -97,14 +99,14 @@ static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			buffer[index] = 0;
 			if (index > 0)
 				index--;
-			return (parser_pipeline(lst, buffer, index));
+			return (parser_pipeline(lst, buffer, index, type));
 		}
 		return (FAILURE);
 	}
 	if (buffer[index] != 0)
 		index++;
 	buffer[index] = bracket.open;
-	return (parser_pipeline(lst, buffer, index));
+	return (parser_pipeline(lst, buffer, index, type));
 }
 
 int			bracket(t_list *lst, uint64_t *buffer, size_t index)
@@ -118,7 +120,7 @@ int			bracket(t_list *lst, uint64_t *buffer, size_t index)
 	return (check_bracket(lst, buffer, index, bracket_tab[WHILE_LOOP]));
 }
 
-int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
+int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type)
 {
 	static int	*token_tab[NB_TOKEN];
 	int			token_index;
@@ -129,7 +131,10 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 		return (SUCCESS);
 	token_index = ((t_token*)(lst->content))->type;
 	lst = lst->next;
-	ret = check_next_token(((t_token*)(lst->content))->type, token_tab[token_index]);
+	if (((t_token*)(lst->content))->type != END)
+		ret = check_next_token(((t_token*)(lst->content))->type, token_tab[token_index]);
+	else
+		ret = check_next_token(type, token_tab[token_index]);
 	if (ret == SUCCESS)
 	{
 		if (((t_token*)(lst->content))->type == OP_PARENTHESIS
@@ -138,7 +143,7 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index)
 			|| ((t_token*)(lst->content))->type == DONE)
 			ret = bracket(lst, buffer, index);
 		else
-			ret = parser_pipeline(lst, buffer, index);
+			ret = parser_pipeline(lst, buffer, index, type);
 	} 
 	return (ret);
 }
@@ -157,9 +162,9 @@ int			parser(t_ast *ast)
 		while (ast != NULL)
 		{
 			if (ast->content != NULL)
-				ret = parser_pipeline(ast->content, buffer, index);
+				ret = parser_pipeline(ast->content, buffer, index, SEMI);
 			else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
-				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer, index);
+				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer, index, ast->type);
 			if (ret == FAILURE)
 				break ;
 			ast = ast->right;
