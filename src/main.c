@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 15:48:26 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 16:01:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int			main(int argc, char **argv)
 		debug_ast(ast);
 		if (parser(ast) == FAILURE)
 			ft_putendl_fd("\nParse error", 2);
-		else
+		else if (ast != NULL)
 		{
 /*			ft_putendl("\nOK"); 
 */			ast_order(&ast);
