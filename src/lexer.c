@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 14:31:23 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 14:52:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,8 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 
 	ret = SUCCESS;
 	ft_bzero(&token, sizeof(token));
+	if (((t_token*)((*lst)->content))->type == START)
+		last_token = token;
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
 	*type = token.type;
