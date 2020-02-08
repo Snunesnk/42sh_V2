@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/06 16:02:07 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 12:13:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int     ft_atoifd(const char *str);
 void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index);
+int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type);
 int		execute_node(t_ast *node, int foreground);
 
 extern int	g_retval;
