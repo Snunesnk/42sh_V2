@@ -115,7 +115,8 @@ void	launch_job(t_job *j, int foreground)
 	int mypipe[2], infile, outfile;
 
 	infile = j->stdin;
-	for (p = j->first_process; p; p = p->next)
+	p = j->first_process;
+	while (p)
 	{
 		/* Set up pipes, if necessary.  */
 		if (p->next)
@@ -168,6 +169,7 @@ void	launch_job(t_job *j, int foreground)
 		if (outfile != j->stdout)
 			close(outfile);
 		infile = mypipe[0];
+		p = p->next;
 	}
 
 	format_job_info(j, "launched");
