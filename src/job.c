@@ -114,6 +114,7 @@ void	launch_job(t_job *j, int foreground)
 	pid_t pid;
 	int mypipe[2], infile, outfile;
 
+	outfile = -1;
 	infile = j->stdin;
 	p = j->first_process;
 	while (p)
@@ -131,11 +132,9 @@ void	launch_job(t_job *j, int foreground)
 		else
 			outfile = j->stdout;
 
-		/* 1. Check if process is a shell builtin */
-		if (outfile != mypipe[1] && is_a_builtin(p->argv[0]))
-		{
+		/* 1. Check if process is a shell builtin, NOFORK */
+		if (outfile == j->stdout && is_a_builtin(p->argv[0]))
 			launch_builtin(p);
-		}
 		/* 2. Fork the child processes.  */
 		else
 		{
@@ -163,6 +162,7 @@ void	launch_job(t_job *j, int foreground)
 				}
 			}
 		}
+
 		/* Clean up after pipes.  */
 		if (infile != j->stdin)
 			close (infile);
