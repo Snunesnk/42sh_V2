@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/11 12:55:01 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/11 13:15:27 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,6 @@ static int	get_token_list(char *str, size_t *pos, t_list **lst,
 			(*pos)++;
 		if (str[*pos] == '\0')
 			break ;
-		ft_printf("type: %llu\n", *type);
 		ret = new_token(str, type, pos, lst);
 		if (ret == FAILURE)
 			break ;
