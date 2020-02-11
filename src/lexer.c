@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/11 13:15:27 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/11 17:35:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,12 +240,17 @@ int			lexer(char *str, t_ast **ast)
 	{
 		type = NONE;
 		lst = NULL;
-		ret = border_token_list(&lst, START);
-		if (ret == SUCCESS)
-			ret = get_pipeline(str, &pos, &lst, &type);
-		build_ast(type, ast, lst);
-		if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
-			get_input(str);
+		while (ft_is_space_tab(str[pos]) == TRUE)
+			pos++;
+		if (str[pos] != '\0')
+		{
+			ret = border_token_list(&lst, START);
+			if (ret == SUCCESS)
+				ret = get_pipeline(str, &pos, &lst, &type);
+			build_ast(type, ast, lst);
+			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
+				get_input(str);
+		}
 	}
 	return (ret);
 }
