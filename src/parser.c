@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 15:36:40 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/08 16:06:50 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	init_token_tab(int **token_tab)
 	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND, AND,
 					SEMI, OP_PARENTHESIS, CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT,
 					DLESS, GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
-	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, TAB_END };
+	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, GREATAND,
+					TAB_END };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
 	int		token_op_parenthesis[NB_TOKEN] = { OP_PARENTHESIS, CL_PARENTHESIS,

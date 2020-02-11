@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/08 15:48:25 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/11 12:55:01 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
-	if (str[*pos] == '\0' && *type == PIPE)
+	if (str[*pos] == '\0' && token.type == PIPE)
 		get_input(str);
 	else if (*type == DLESS && token.type == WORD)
 		manage_eardoc(&token);
@@ -188,6 +188,7 @@ static int	get_token_list(char *str, size_t *pos, t_list **lst,
 			(*pos)++;
 		if (str[*pos] == '\0')
 			break ;
+		ft_printf("type: %llu\n", *type);
 		ret = new_token(str, type, pos, lst);
 		if (ret == FAILURE)
 			break ;
