@@ -19,8 +19,8 @@ void	free_process(t_process *p) /* temporary for tests purposes ? */
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
 	extern char	**environ;
-	char		*path;
 	pid_t		pid;
+	int		ret;
 
 	if (shell_is_interactive)
 	{ /* Put the process into the process group and give the process group
@@ -68,14 +68,8 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
 
 	/* Exec the new process. Make sure we exit */
-	if (is_a_builtin(p->argv[0]))
-		exit(builtins_dispatcher(p->argv));
-	else
-	{
-		path = ft_strdup(p->argv[0]);
-		path_concat(&path);
-		execve(path, p->argv, environ);
-		ft_perror("Failed to launch process using execve");
-		exit(1);
-	}
+	/* Check access, etc... and send value to exit if error launching of if builtin */
+	ret = execute_process(p->argv, environ);
+	ft_perror("Failed to launch process using execve");
+	exit(ret);
 }

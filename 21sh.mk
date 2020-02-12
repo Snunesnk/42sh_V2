@@ -20,6 +20,7 @@ SOURCES :=	main.c \
 		job.c \
 		redir.c \
 		process.c \
+		execute_process.c \
 		launch_builtin.c \
 		path_concat.c \
 		utils_job.c \
