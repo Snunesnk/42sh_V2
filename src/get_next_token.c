@@ -6,35 +6,12 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/04 15:29:08 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:54:17 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-
-static int	ft_is_space_tab(int c)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (c == ' ' || c == '\t')
-		ret = TRUE;
-	return (ret);
-}
-
-int			ft_ismeta(int c)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (c == '|' || c == '&' || c == ';' || c == '(' || c == ')'
-		|| c == '<' || c == '>')
-	{
-		ret = TRUE;
-	}
-	return (ret);
-}
 
 static void	init_token_tab(char **token_tab)
 {
