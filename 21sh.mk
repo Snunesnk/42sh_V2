@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/04 13:46:37 by efischer         ###   ########.fr        #
+#    Updated: 2020/02/12 10:46:27 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SOURCES :=	main.c \
 		utils_job.c \
 		lexer.c \
 		get_next_token.c \
+		ast.c \
 		ast_order.c \
 		debug_ast.c \
 		parser.c \

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/11 12:55:02 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:46:07 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type);
 int		execute_node(t_ast *node, int foreground);
+void	build_ast(uint64_t type, t_ast **ast, t_list *lst);
 
 extern int	g_retval;
 
