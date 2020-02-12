@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/11 17:27:40 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:42:02 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static void	init_token_tab(int **token_tab)
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
 	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
 	int		token_redir[NB_TOKEN] = { WORD, TAB_END };
-	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND, AND,
-					SEMI, OP_PARENTHESIS, CL_PARENTHESIS, WHILE_WORD, DONE, DGREAT,
-					DLESS, GREAT, LESS, WORD, IO_NB, COMMENT, END, TAB_END };
+	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND,
+					AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS, WHILE_WORD, DONE,
+					DGREAT, DLESS, GREAT, LESS, WORD, IO_NB, COMMENT, END,
+					TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, GREATAND,
 					TAB_END };
 	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
@@ -121,9 +122,11 @@ int			bracket(t_list *lst, uint64_t *buffer, size_t index)
 	return (check_bracket(lst, buffer, index, bracket_tab[WHILE_LOOP]));
 }
 
-int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type)
+int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
+					uint64_t type)
 {
 	static int	*token_tab[NB_TOKEN];
+	uint64_t	token_type;
 	int			token_index;
 	int			ret;
 
@@ -133,14 +136,13 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type
 	{
 		token_index = ((t_token*)(lst->content))->type;
 		lst = lst->next;
+		token_type = ((t_token*)(lst->content))->type;
 		if (((t_token*)(lst->content))->type != END)
-			ret = check_next_token(((t_token*)(lst->content))->type, token_tab[token_index]);
+			ret = check_next_token(token_type, token_tab[token_index]);
 		if (ret == SUCCESS)
 		{
-			if (((t_token*)(lst->content))->type == OP_PARENTHESIS
-				|| ((t_token*)(lst->content))->type == CL_PARENTHESIS
-				|| ((t_token*)(lst->content))->type == WHILE_WORD
-				|| ((t_token*)(lst->content))->type == DONE)
+			if (token_type == OP_PARENTHESIS || token_type == CL_PARENTHESIS
+				|| token_type == WHILE_WORD || token_type == DONE)
 				ret = bracket(lst, buffer, index);
 			else
 				ret = parser_pipeline(lst, buffer, index, type);
@@ -164,12 +166,12 @@ int			parser(t_ast *ast)
 		{
 			if (ast->content != NULL)
 				ret = parser_pipeline(ast->content, buffer, index, SEMI);
-			else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
-				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer, index, ast->type);
+			else if (ast->left != NULL
+					&& ((t_ast*)(ast->left))->content != NULL)
+				ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer,
+				index, ast->type);
 			if (ret == FAILURE)
-			{
 				break ;
-			}
 			ast = ast->right;
 		}
 		if (buffer[0] != 0)
