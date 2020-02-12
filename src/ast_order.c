@@ -1,19 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_order.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/12 11:00:22 by efischer          #+#    #+#             */
+/*   Updated: 2020/02/12 11:17:05 by efischer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
-
-/*static t_ast	*astnew(t_list *lst, uint64_t type)
-{
-	t_ast	*ast;
-
-	ast = (t_ast*)malloc(sizeof(t_ast));
-	if (ast != NULL)
-	{
-		ft_bzero(ast, sizeof(t_ast));
-		ast->type = type;
-		ast->content = lst;
-	}
-	return (ast);
-}*/
 
 static void	node_rot(t_ast **ast, t_ast *prev_node, t_ast **head)
 {
@@ -35,6 +33,29 @@ static void	node_rot(t_ast **ast, t_ast *prev_node, t_ast **head)
 	}
 }
 
+static void	check_order(t_ast **ast, t_ast **prev_node, t_ast **head)
+{
+	if ((*ast)->type == AND_IF || (*ast)->type == OR_IF)
+	{
+		if (((t_ast*)((*ast)->right))->type == AND)
+		{
+			node_rot(ast, *prev_node, head);
+			*ast = *head;
+			*prev_node = NULL;
+		}
+		else
+		{
+			*prev_node = *ast;
+			*ast = (*ast)->right;
+		}
+	}
+	else
+	{
+		*prev_node = *ast;
+		*ast = (*ast)->right;
+	}
+}
+
 void		ast_order(t_ast **ast)
 {
 	t_ast	*head;
@@ -45,27 +66,7 @@ void		ast_order(t_ast **ast)
 	if (*ast != NULL)
 	{
 		while ((*ast)->right)
-		{
-			if ((*ast)->type == AND_IF || (*ast)->type == OR_IF)
-			{
-				if (((t_ast*)((*ast)->right))->type == AND)
-				{
-					node_rot(ast, prev_node, &head);
-					*ast = head;
-					prev_node = NULL;
-				}
-				else
-				{
-					prev_node = *ast;
-					*ast = (*ast)->right;
-				}
-			}
-			else
-			{
-				prev_node = *ast;
-				*ast = (*ast)->right;
-			}
-		}
+			check_order(ast, &prev_node, &head);
 	}
 	*ast = head;
 }

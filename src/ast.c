@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:45:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:59:56 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 	return (ast);
 }
 
-void		build_ast(uint64_t type, t_ast **ast, t_list *lst)
+void			build_ast(uint64_t type, t_ast **ast, t_list *lst)
 {
 	t_ast		*new_ast;
 

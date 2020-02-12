@@ -6,14 +6,14 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:51:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:54:22 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:00:09 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-int			ft_ismeta(int c)
+int		ft_ismeta(int c)
 {
 	int		ret;
 
