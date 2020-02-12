@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 13:12:00 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 15:44:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token);
-	if (str[*pos] == '\0' && token.type == PIPE)
+	if (str[*pos] == '\0' && token.type == PIPE && *type != NONE)
 		get_input(str);
 	else if (*type == DLESS && token.type == WORD)
 		manage_heredoc(&token);
@@ -156,11 +156,11 @@ int			lexer(char *str, t_ast **ast)
 			ret = border_token_list(&lst, START);
 			if (ret == SUCCESS)
 				ret = get_pipeline(str, &pos, &lst, &type);
+			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
+				get_input(str);
 			ret = build_ast(type, ast, lst);
 			if (ret == FAILURE)
 				break ;
-			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
-				get_input(str);
 		}
 	}
 	return (ret);

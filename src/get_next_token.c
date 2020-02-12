@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 14:22:47 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 	char	*tmp;
 
 	tmp = NULL;
-	while (ft_is_space_tab(str[*len]) == FALSE && ft_ismeta(str[*len]) == FALSE
-			&& str[*len] != '\0')
+	while (str[*len] != '\0' && ft_is_space_tab(str[*len]) == FALSE
+		&& ft_ismeta(str[*len]) == FALSE)
 	{
 		if (str[*len] == '"')
 		{
-			len++;
-			while (str[*len] != '"' && str[*len] != '\0')
+			(*len)++;
+			while (str[*len] != '\0' && str[*len] != '"')
 			{
-				if (str[*len] == '\\' && str[*len + 1] == '"')
+				if (str[*len] == '\\' && str[(*len) + 1] == '"')
 					(*len)++;
 				(*len)++;
 			}
