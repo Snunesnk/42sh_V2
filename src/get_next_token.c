@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 11:29:57 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:22:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	init_token_tab(char **token_tab)
 	token_tab[AND_IF] = "&&";
 	token_tab[GREATAND] = ">&";
 	token_tab[LESSAND] = "<&";
+	token_tab[ANDGREAT] = "&>";
+	token_tab[ANDLESS] = "&<";
 	token_tab[AND] = "&";
 	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";
