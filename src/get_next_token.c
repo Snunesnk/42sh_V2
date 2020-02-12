@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:54:17 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 11:29:57 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,35 @@ static int	is_io_number(const char *str)
 	return (FALSE);
 }
 
+static void	get_token_word(const char *str, t_token *token, size_t *len)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	while (ft_is_space_tab(str[*len]) == FALSE && ft_ismeta(str[*len]) == FALSE
+			&& str[*len] != '\0')
+	{
+		if (str[*len] == '"')
+		{
+			len++;
+			while (str[*len] != '"' && str[*len] != '\0')
+			{
+				if (str[*len] == '\\' && str[*len + 1] == '"')
+					(*len)++;
+				(*len)++;
+			}
+		}
+		if (str[*len] != '\0')
+			(*len)++;
+	}
+	token->type = WORD;
+	tmp = ft_strndup(str, *len);
+	token->value = ft_strdup(tmp);
+	ft_strdel(&tmp);
+	if (token->value == NULL)
+		*len = 0;
+}
+
 static int	get_word(const char *str, t_token *token)
 {
 	size_t	len;
@@ -76,37 +105,13 @@ static int	get_word(const char *str, t_token *token)
 			len++;
 		token->type = IO_NB;
 		tmp = ft_strndup(str, len);
-		ft_printf("tmp: %s\n", tmp);
 		token->value = ft_strdup(tmp);
 		ft_strdel(&tmp);
 		if (token->value == NULL)
 			len = 0;
 	}
 	else
-	{
-		while (ft_is_space_tab(str[len]) == FALSE && ft_ismeta(str[len]) == FALSE
-				&& str[len] != '\0')
-		{
-			if (str[len] == '"')
-			{
-				len++;
-				while (str[len] != '"' && str[len] != '\0')
-				{
-					if (str[len] == '\\' && str[len + 1] == '"')
-						len++;
-					len++;
-				}
-			}
-			if (str[len] != '\0')
-				len++;
-		}
-		token->type = WORD;
-		tmp = ft_strndup(str, len);
-		token->value = ft_strdup(tmp);
-		ft_strdel(&tmp);
-		if (token->value == NULL)
-			len = 0;
-	}
+		get_token_word(str, token, &len);
 	return (len);
 }
 
