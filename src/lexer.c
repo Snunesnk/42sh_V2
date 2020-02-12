@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/11 17:35:23 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 10:46:54 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,52 +40,6 @@ static int		ft_is_space_tab(int c)
 	return (ret);
 }
 
-static void		astadd_left(t_ast **ast, t_ast *new_ast)
-{
-	t_ast	*head;
-
-	head = *ast;
-	if (*ast == NULL)
-		*ast = new_ast;
-	else
-	{
-		while ((*ast)->left != NULL)
-			*ast = (*ast)->right;
-		(*ast)->left = new_ast;
-		*ast = head;
-	}
-}
-
-static void		astadd_right(t_ast **ast, t_ast *new_ast)
-{
-	t_ast	*head;
-
-	head = *ast;
-	if (*ast == NULL)
-		*ast = new_ast;
-	else
-	{
-		while ((*ast)->right != NULL)
-			*ast = (*ast)->right;
-		(*ast)->right = new_ast;
-		*ast = head;
-	}
-}
-
-static t_ast	*astnew(t_list *lst, uint64_t type)
-{
-	t_ast	*ast;
-
-	ast = (t_ast*)malloc(sizeof(t_ast));
-	if (ast != NULL)
-	{
-		ft_bzero(ast, sizeof(t_ast));
-		ast->type = type;
-		ast->content = lst;
-	}
-	return (ast);
-}
-
 static int	add_token_to_list(t_token *token, t_list **lst)
 {
 	t_list	*new;
@@ -110,7 +64,7 @@ static int	border_token_list(t_list **lst, uint64_t token_type)
 	return (ret);
 }
 
-static void	manage_eardoc(t_token *token)
+static void	manage_heredoc(t_token *token)
 {
 	char	*tmp;
 	char	*eof;
@@ -164,7 +118,7 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	if (str[*pos] == '\0' && token.type == PIPE)
 		get_input(str);
 	else if (*type == DLESS && token.type == WORD)
-		manage_eardoc(&token);
+		manage_heredoc(&token);
 	*type = token.type;
 	if (token.type != SEMI && token.type != OR_IF && token.type != AND_IF
 		&& token.type != AND)
@@ -208,24 +162,6 @@ static int	get_pipeline(char *str, size_t *pos, t_list **lst,
 	else
 		ret = FAILURE;
 	return (ret);
-}
-
-static void	build_ast(uint64_t type, t_ast **ast, t_list *lst)
-{
-	t_ast		*new_ast;
-
-	if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
-	{
-		new_ast = astnew(NULL, type);
-		astadd_right(ast, new_ast);
-		new_ast = astnew(lst, NONE);
-		astadd_left(ast, new_ast);
-	}
-	else
-	{
-		new_ast = astnew(lst, NONE);
-		astadd_right(ast, new_ast);
-	}
 }
 
 int			lexer(char *str, t_ast **ast)
