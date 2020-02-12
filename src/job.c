@@ -124,8 +124,8 @@ void	launch_job(t_job *j, int foreground)
 		{
 			if (pipe(mypipe) < 0)
 			{
-				perror ("pipe");
-				exit (1);
+				perror("pipe");
+				exit(1);
 			}
 			outfile = mypipe[1];
 		}
@@ -142,6 +142,8 @@ void	launch_job(t_job *j, int foreground)
 			if (pid == 0)
 			{
 				/* This is the child process.  */
+				if (infile != mypipe[0])
+					close(mypipe[0]);
 				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
 			}
 			else if (pid < 0)
