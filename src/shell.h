@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 13:50:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 14:22:19 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int	undo_redirection(t_redirection *r);
 # define FALSE		0
 
 # define BUF_SIZE	32
-# define NB_TOKEN	23
+# define NB_TOKEN	25
 # define NB_BRACKET	3
 # define TAB_END	-1
 
@@ -157,6 +157,8 @@ enum	e_token
 	AND_IF,
 	GREATAND,
 	LESSAND,
+	ANDGREAT,
+	ANDLESS,
 	AND,
 	DSEMI,
 	OP_PARENTHESIS,
