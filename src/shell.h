@@ -118,8 +118,8 @@ void    continue_job(t_job *j, int foreground);
 void    free_job(t_job *j);
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
-/*int	execp(char **agrv, char **environ);
-*/
+int     execute_process(char **argv, char **envp);
+
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
 t_redirection	*build_redirections(t_list **lst);
