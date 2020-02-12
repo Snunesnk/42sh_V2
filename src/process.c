@@ -70,6 +70,5 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	/* Exec the new process. Make sure we exit */
 	/* Check access, etc... and send value to exit if error launching of if builtin */
 	ret = execute_process(p->argv, environ);
-	ft_perror("Failed to launch process using execve");
 	exit(ret);
 }

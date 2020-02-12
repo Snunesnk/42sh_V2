@@ -46,7 +46,10 @@ static int 	check_type(char *pathname)
 	else if (S_ISCHR(buf.st_mode))
 		ft_printf("character device\n");
 	else if (S_ISDIR(buf.st_mode))
+	{
 		ft_printf("directory\n");
+		return (e_is_a_directory);
+	}
 	else if (S_ISFIFO(buf.st_mode))
 		ft_printf("FIFO/pipe\n");
 	else if (S_ISLNK(buf.st_mode))
@@ -84,6 +87,7 @@ static int	process_execve(char **argv, char **envp, char *pathname)
 	int	ret;
 
 	ret = execve(pathname, argv, envp);
+	ft_perror("Failed to launch process using execve");
 	ft_tabdel(&argv);
 	ft_tabdel(&envp);
 	ft_memdel((void**)&pathname);

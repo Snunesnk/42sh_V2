@@ -26,6 +26,7 @@
 # include "vctlib.h"
 # include "ft_getopt.h"
 # include "error.h"
+# include "ft_errno.h"
 
 # ifndef PATH_MAX
 # define PATH_MAX 1024
