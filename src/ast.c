@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:59:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:12:01 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 	return (ast);
 }
 
-void			build_ast(uint64_t type, t_ast **ast, t_list *lst)
+int				build_ast(uint64_t type, t_ast **ast, t_list *lst)
 {
-	t_ast		*new_ast;
+	t_ast	*new_ast;
+	int		ret;
 
+	ret = SUCCESS;
 	if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
 	{
 		new_ast = astnew(NULL, type);
@@ -75,4 +77,7 @@ void			build_ast(uint64_t type, t_ast **ast, t_list *lst)
 		new_ast = astnew(lst, NONE);
 		astadd_right(ast, new_ast);
 	}
+	if (new_ast == NULL)
+		ret = FAILURE;
+	return (ret);
 }
