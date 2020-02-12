@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:56:39 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:12:00 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ int			lexer(char *str, t_ast **ast)
 			ret = border_token_list(&lst, START);
 			if (ret == SUCCESS)
 				ret = get_pipeline(str, &pos, &lst, &type);
-			build_ast(type, ast, lst);
+			ret = build_ast(type, ast, lst);
+			if (ret == FAILURE)
+				break ;
 			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
 				get_input(str);
 		}

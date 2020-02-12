@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 10:56:42 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:57:10 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,19 @@ int			main(int argc, char **argv)
 		lexer(input, &ast);
 /*		debug(lst);*/
 		debug_ast(ast);
-		if (parser(ast) == FAILURE)
-			ft_putendl_fd("\nParse error", 2);
-		else if (ast != NULL)
+		if (ast != NULL)
 		{
-/*			ft_putendl("\nOK"); 
-*/			ast_order(&ast);
-/*			debug_ast(ast);
-*/			status = execute_node(ast, 1); /* to capture */
+			expansions(ast);
+			debug_ast(ast);
+			if (parser(ast) == FAILURE)
+				ft_putendl_fd("\nParse error", 2);
+			else
+			{
+/*				ft_putendl("\nOK"); 
+*/				ast_order(&ast);
+/*				debug_ast(ast);
+*/				status = execute_node(ast, 1); /* to capture */
+			}
 		}
 /*		ft_lstdel(&lst, del);*/
 		astdel(&ast);
