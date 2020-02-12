@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:48:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/02/12 13:55:33 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	expansion_dispatcher(char *str)
 
 static char	*get_closest_exp(char *str)
 {
-	int	i;
+	int		i;
 	char	*ptr;
 	char	*closest;
 
@@ -66,10 +66,10 @@ static char	*get_closest_exp(char *str)
 static int		replace_expansion(char **token, char **next, int ref)
 {
 	static size_t	index;
-	char		*new;
-	size_t		lnew;
-	size_t		lprefix;
-	int		ret;
+	char			*new;
+	size_t			lnew;
+	size_t			lprefix;
+	int				ret;
 
 	ret = e_success;
 	if (*token == *next)
@@ -90,33 +90,54 @@ static int		replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-int			treat_expansions(char **tokens)
+int			treat_expansions(t_list *lst)
 {
-	int	ref;
-	int	i;
-	int	ret;
+	int		ref;
+	int		ret;
 	char	*next;
 
-	i = 0;
-	if (!tokens)
+	if (((t_token*)(lst->content))->type != START)
 		return (e_invalid_input);
+	lst = lst->next;
 	/* Tokens might be wrong, strsplit is not ok fpor instance "echo ${LOGNAME }KO" does not work*/
 	/*ft_print_tables(tokens);
 	exit(1);
 */	/* END debugg */
-	while (tokens[i])
+	while (((t_token*)(lst->content))->type != END)
 	{
-		next = tokens[i];
-		while ((next = get_closest_exp(next)))
+		next = ((t_token*)(lst->content))->value;
+		if (next != NULL)
 		{
-			ref = expansion_dispatcher(next);
-			if ((ret = replace_expansion(&tokens[i], &next, ref)))
+			while ((next = get_closest_exp(next)))
 			{
-				psherror(ret, tokens[i], e_cmd_type);
-				return (ret);
+				ref = expansion_dispatcher(next);
+				if ((ret = replace_expansion(&((t_token*)(lst->content))->value,
+						&next, ref)))
+				{
+					psherror(ret, ((t_token*)(lst->content))->value, e_cmd_type);
+					return (ret);
+				}
 			}
 		}
-		++i;
+		lst = lst->next;
 	}
 	return (e_success);
+}
+
+int			expansions(t_ast *ast)
+{
+	int		ret;
+
+	ret = SUCCESS;
+	while (ast != NULL)
+	{
+		if (ast->content != NULL)
+			ret = treat_expansions(ast->content);
+		else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
+			ret = treat_expansions(((t_ast*)(ast->left))->content);
+		if (ret != e_success)
+			break ;
+		ast = ast->right;
+	}
+	return (ret);
 }
