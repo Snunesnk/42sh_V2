@@ -41,28 +41,10 @@ static int 	check_type(char *pathname)
 	}
 	if (stat(pathname, &buf))
 		return (e_system_call_error);
-	if (S_ISBLK(buf.st_mode))
-		ft_printf("block device\n");
-	else if (S_ISCHR(buf.st_mode))
-		ft_printf("character device\n");
-	else if (S_ISDIR(buf.st_mode))
-	{
-		ft_printf("directory\n");
+	if (S_ISDIR(buf.st_mode))
 		return (e_is_a_directory);
-	}
-	else if (S_ISFIFO(buf.st_mode))
-		ft_printf("FIFO/pipe\n");
-	else if (S_ISLNK(buf.st_mode))
-		ft_printf("symlink\n");
 	else if (S_ISREG(buf.st_mode))
-	{
-		ft_printf("regular file\n");
 		return (check_access(pathname));
-	}
-/*	else if (S_ISSOCK(buf.st_mode))
-		ft_printf("socket\n");
-*/	else
-		ft_printf("unknown?\n");
 	return (e_permission_denied);
 }
 
