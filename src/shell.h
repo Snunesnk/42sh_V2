@@ -209,7 +209,7 @@ int     ft_atoifd(const char *str);
 void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t type);
+int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t *type);
 int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 int		ft_is_space_tab(int c);
