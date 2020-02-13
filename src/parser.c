@@ -94,8 +94,9 @@ static int	check_next_token(uint64_t type, int *token_tab)
 static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			t_bracket bracket)
 {
-	static uint64_t	type = 0;
+	uint64_t	type;
 
+	type = NONE;
 	if (((t_token*)(lst->content))->type == bracket.close)
 	{
 		if (buffer[index] == bracket.open)
@@ -103,14 +104,14 @@ static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			buffer[index] = 0;
 			if (index > 0)
 				index--;
-			return (parser_pipeline(lst, buffer, index, type));
+			return (parser_pipeline(lst, buffer, index, &type));
 		}
 		return (FAILURE);
 	}
 	if (buffer[index] != 0)
 		index++;
 	buffer[index] = bracket.open;
-	return (parser_pipeline(lst, buffer, index, type));
+	return (parser_pipeline(lst, buffer, index, &type));
 }
 
 int			bracket(t_list *lst, uint64_t *buffer, size_t index)
@@ -125,7 +126,7 @@ int			bracket(t_list *lst, uint64_t *buffer, size_t index)
 }
 
 int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
-					uint64_t type)
+				uint64_t *type)
 {
 	static int	*token_tab[NB_TOKEN];
 	uint64_t	token_type;
@@ -139,8 +140,9 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
 		token_index = ((t_token*)(lst->content))->type;
 		lst = lst->next;
 		token_type = ((t_token*)(lst->content))->type;
-		if (((t_token*)(lst->content))->type != END)
-			ret = check_next_token(token_type, token_tab[token_index]);
+		if (token_type != START && token_type != END)
+			*type = token_type;
+		ret = check_next_token(token_type, token_tab[token_index]);
 		if (ret == SUCCESS)
 		{
 			if (token_type == OP_PARENTHESIS || token_type == CL_PARENTHESIS
@@ -158,18 +160,24 @@ int			parser(t_ast *ast)
 	int			ret;
 	size_t		index;
 	uint64_t	buffer[BUF_SIZE];
+	uint64_t	type;
 
 	ret = SUCCESS;
 	index = 0;
 	ft_bzero(buffer, sizeof(buffer));
 	while (ast != NULL)
 	{
+		type = NONE;
 		if (ast->content != NULL)
-			ret = parser_pipeline(ast->content, buffer, index, SEMI);
+			ret = parser_pipeline(ast->content, buffer, index, &type);
 		else if (ast->left != NULL
 				&& ((t_ast*)(ast->left))->content != NULL)
+		{
 			ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer,
-			index, ast->type);
+			index, &type);
+		}
+		if (type == NONE)
+			ret = FAILURE;
 		if (ret == FAILURE)
 			break ;
 		ast = ast->right;
