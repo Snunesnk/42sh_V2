@@ -64,16 +64,23 @@ static void	manage_heredoc(t_token *token)
 static void	get_input(char *str)
 {
 	char	*tmp;
+	size_t	i;
 
 	tmp = NULL;
 	while (1)
 	{
+		i = 0;
 		ft_printf(">");
 		get_stdin(&tmp);
 		if (tmp != NULL)
 		{
-			ft_strcat(str, tmp);
-			break ;
+			while (tmp[i] != '\0' && ft_is_space_tab(tmp[i]) == TRUE)
+				i++;
+			if (tmp[i] != '\0')
+			{
+				ft_strcat(str, tmp);
+				break ;
+			}
 		}
 	}
 }
@@ -156,7 +163,8 @@ int			lexer(char *str, t_ast **ast)
 			ret = border_token_list(&lst, START);
 			if (ret == SUCCESS)
 				ret = get_pipeline(str, &pos, &lst, &type);
-			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF))
+			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF)
+				&& ((t_token*)(lst->next->content))->type != END)
 				get_input(str);
 			ret = build_ast(type, ast, lst);
 			if (ret == FAILURE)
