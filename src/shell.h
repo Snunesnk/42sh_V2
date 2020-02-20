@@ -13,14 +13,18 @@
 #ifndef SHELL_H
 # define SHELL_H
 
+# include <signal.h>
 # include <limits.h>
 # include <termios.h>
+# include <stddef.h>
 # include <stdint.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 
 # include "libft.h"
 # include "vctlib.h"
@@ -28,8 +32,12 @@
 # include "error.h"
 # include "ft_errno.h"
 
+# ifndef WAIT_ANY
+#  define WAIT_ANY -1
+# endif
+
 # ifndef PATH_MAX
-# define PATH_MAX 1024
+#  define PATH_MAX 1024
 # endif
 
 /* Flags of instruction type of redirection */
@@ -120,6 +128,8 @@ void    free_job(t_job *j);
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
 int     execute_process(char **argv, char **envp);
+void	put_job_in_foreground(t_job *j, int cont);
+void    put_job_in_background(t_job *j, int cont);
 
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
