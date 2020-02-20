@@ -18,6 +18,7 @@ SOURCES :=	main.c \
 		debug.c \
 		execute_job.c \
 		job.c \
+		job_control.c \
 		redir.c \
 		process.c \
 		execute_process.c \
