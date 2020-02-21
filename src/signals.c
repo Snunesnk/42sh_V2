@@ -21,6 +21,6 @@ void	init_shell_sset(void)
 		|| sigaddset(&g_shell_sset.sa_mask, SIGTTOU)
 		|| sigaddset(&g_shell_sset.sa_mask, SIGCHLD))
 		exit(1);
-	g_shell_sset.sa_flags = SA_SIGINFO;
+	g_shell_sset.sa_flags = SA_SIGINFO | SA_RESTART;
 	g_shell_sset.sa_sigaction = handle_chld; /* Update child status handler, function */
 }
