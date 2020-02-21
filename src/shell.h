@@ -131,6 +131,8 @@ int     execute_process(char **argv, char **envp);
 void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
+void    init_shell_sset(void);
+void    restore_procmask(void);
 
 extern sigset_t			g_save_procmask;
 extern struct sigaction		g_shell_sset;
