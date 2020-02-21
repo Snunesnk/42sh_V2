@@ -1,6 +1,7 @@
 #include "shell.h"
 
-struct sigaction g_shell_sset;
+sigset_t		g_save_procmask;
+struct sigaction	g_shell_sset;
 
 void	handle_chld(int signo, siginfo_t *info, void *context)
 {
@@ -12,6 +13,8 @@ void	handle_chld(int signo, siginfo_t *info, void *context)
 
 void	init_shell_sset(void)
 {
+	if (sigprocmask(SIG_UNBLOCK, NULL, &g_save_procmask))
+		exit(1);
 	if (sigemptyset(&g_shell_sset.sa_mask))
 		exit(1);
 	if (sigaddset(&g_shell_sset.sa_mask, SIGINT)
