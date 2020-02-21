@@ -132,6 +132,7 @@ void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
 
+extern sigset_t			g_save_procmask;
 extern struct sigaction		g_shell_sset;
 
 int     launch_builtin(t_process *p);
