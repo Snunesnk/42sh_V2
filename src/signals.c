@@ -2,6 +2,14 @@
 
 struct sigaction g_shell_sset;
 
+void	handle_chld(int signo, siginfo_t *info, void *context)
+{
+	(void)signo;
+	(void)context;
+	ft_printf("\nsending pid:%d\n", info->si_pid);
+	update_status();
+}
+
 void	init_shell_sset(void)
 {
 	if (sigemptyset(&g_shell_sset.sa_mask))
@@ -13,6 +21,6 @@ void	init_shell_sset(void)
 		|| sigaddset(&g_shell_sset.sa_mask, SIGTTOU)
 		|| sigaddset(&g_shell_sset.sa_mask, SIGCHLD))
 		exit(1);
-	g_shell_sset.sa_handler = (void (*)(int))update_status; /* Update child status handler, function */
-	g_shell_sset.sa_flags = 0;
+	g_shell_sset.sa_flags = SA_SIGINFO;
+	g_shell_sset.sa_sigaction = handle_chld; /* Update child status handler, function */
 }
