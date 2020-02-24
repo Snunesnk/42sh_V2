@@ -40,11 +40,13 @@ void	put_job_in_foreground(t_job *j, int cont)
    the process group a SIGCONT signal to wake it up. */
 void	put_job_in_background(t_job *j, int cont)
 {
-	if (cont) /* Send the job a continue signal, if necessary.*/
-	{
-		if (kill(-j->pgid, SIGCONT) < 0)
-			ft_perror("kill failed sending (SIGCONT)");
-	}
+	(void)j;
+	(void)cont;
+//	if (cont) /* Send the job a continue signal, if necessary.*/
+//	{
+//		if (kill(-j->pgid, SIGCONT) < 0)
+//			ft_perror("kill failed sending (SIGCONT)");
+//	}
 }
 
 /* Find the active job with the indicated pgid. */
