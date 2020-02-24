@@ -133,6 +133,7 @@ void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
 int     get_exit_value(int status);
 int     get_job_status(t_job *j, int foreground);
+void    add_job_to_queue(t_job *j);
 void    init_shell_sset(void);
 void    restore_procmask(void);
 

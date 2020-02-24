@@ -61,6 +61,7 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
+	//	update_status();
 		ft_printf("$> ");
 		if (get_stdin(&input) < 0)
 			break;
