@@ -19,7 +19,6 @@ SOURCES :=	main.c \
 		execute_job.c \
 		job.c \
 		job_control.c \
-		signals.c \
 		redir.c \
 		process.c \
 		execute_process.c \
