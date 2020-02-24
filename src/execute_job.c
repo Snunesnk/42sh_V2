@@ -166,7 +166,6 @@ int	execute_job(t_list *lst, int foreground)
 	add_job_to_queue(j);
 	launch_job(j, foreground);
 	ret = get_exit_value(get_job_status(j, foreground));
-	ft_printf("Return value of pipeline:%d\n", ret);
 	free_job(j);
 	return (ret);
 }
@@ -179,10 +178,7 @@ void	add_job_to_queue(t_job *j)
 	{
 		j_next = first_job;
 		while (j_next->next)
-		{
-			ft_printf("Job pgid:%d\n", j->pgid);
 			j = j->next;
-		}
 		j_next->next = j;
 	}
 	else
