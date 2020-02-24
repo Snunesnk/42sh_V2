@@ -4,17 +4,18 @@
 
 void	free_job(t_job *j) /* temporary for test purposes ? */
 {
-	t_process	*p;
-	t_process	*next_p;
-
-	p = j->first_process;
-	while (p)
-	{
-		next_p = p->next;
-		free_process(p);
-		p = next_p;
-	}
-	free(j);
+	(void)j;
+//	t_process	*p;
+//	t_process	*next_p;
+//
+//	p = j->first_process;
+//	while (p)
+//	{
+//		next_p = p->next;
+//		free_process(p);
+//		p = next_p;
+//	}
+//	free(j);
 }
 
 void	launch_job(t_job *j, int foreground)
