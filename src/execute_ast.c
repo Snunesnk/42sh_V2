@@ -17,17 +17,19 @@ int	execute_semi(t_ast *node, int foreground)
 }
 
 int	execute_subshell(t_ast *node, int foreground)
-{ /* Here is the idea */
+{ /* Here is an idea for subshells */
 	pid_t	pid;
+	int	status;
 
-	if ((pid = fork()) == 0) /* get the pid and add it to the first_job list */
+	if ((pid = fork()) == 0)
 		exit(execute_node(node, foreground));
 	else if (pid < 0)
 	{
 		ft_printf("Fork subshell failed\n");
 		exit(0);
 	}
-	return (0);
+	waitpid(pid, &status, WUNTRACED);
+	return (get_exit_value(status));
 }
 
 int	execute_and(t_ast *node, int foreground)
@@ -35,12 +37,9 @@ int	execute_and(t_ast *node, int foreground)
 	/* Fork, get the pid to put it in job list and then pursue execute_node in the fork itself */
 	/* Launch a subshell with node->left */
 	if (node->left)
-		execute_subshell(node->left, 0); /*  Get the PID and add it to the list in case fg and ctrl + c */
+		execute_node(node->left, 0); /*  Get the PID and add it to the list in case fg and ctrl + c */
 	if (node->right)
-	{
-		ft_printf("\n\nRight\n\n");
 		return (execute_node(node->right, foreground));
-	}
 	return (ASTERROR);
 }
 
