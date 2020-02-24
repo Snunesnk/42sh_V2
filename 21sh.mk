@@ -78,4 +78,5 @@ LDFLAGS += $(DEBUG)
 CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L  $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
-DEBUG += -g3 -fsanitize=address,undefined
+DEBUG += -g3
+# -fsanitize=address,undefined

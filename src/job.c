@@ -50,6 +50,8 @@ void	launch_job(t_job *j, int foreground)
 	outfile = -1;
 	infile = j->stdin;
 	p = j->first_process;
+	mypipe[0] = -1;
+	mypipe[1]  = -1;
 	while (p)
 	{
 		/* Set up pipes, if necessary.  */
@@ -75,7 +77,7 @@ void	launch_job(t_job *j, int foreground)
 			if (pid == 0)
 			{
 				/* This is the child process.  */
-				if (infile != mypipe[0])
+				if (infile != mypipe[0] && mypipe[0] != -1)
 					close(mypipe[0]);
 				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
 			}
