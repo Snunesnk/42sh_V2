@@ -26,7 +26,7 @@ void	free_job(t_job *j) /* Free a given job in the job queue */
 	else
 	{
 		j_next = first_job;
-		while (j_next->next)
+		while (j_next && j_next->next)
 		{
 			if (j_next->next->pgid == j->pgid)
 			{
