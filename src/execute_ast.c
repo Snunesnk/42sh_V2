@@ -18,8 +18,7 @@ int	execute_semi(t_ast *node, int foreground)
 
 int	execute_subshell(t_ast *node, int foreground)
 { /* Here is the idea */
-	foreground = 0;
-	if (fork() == 0)
+	if (fork() == 0) /* get the pid and add it to the first_job list */
 		exit(execute_node(node, foreground));
 	else
 		return (0);
@@ -27,10 +26,10 @@ int	execute_subshell(t_ast *node, int foreground)
 
 int	execute_and(t_ast *node, int foreground)
 {
-	/* fork, get the pid to put it in job list and then pursue execute_node in the fork itself */
-	/* launch a subshell with node->left
+	/* Fork, get the pid to put it in job list and then pursue execute_node in the fork itself */
+	/* Launch a subshell with node->left
 */	if (node->left)
-		execute_subshell(node->left, foreground); /*  Get the PID and add it to the list in case fg and ctrl + c */
+		execute_subshell(node->left, 0); /*  Get the PID and add it to the list in case fg and ctrl + c */
 	if (node->right)
 		return (execute_node(node->right, foreground));
 	return (ASTERROR);
