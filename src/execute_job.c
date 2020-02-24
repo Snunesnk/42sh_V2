@@ -156,6 +156,8 @@ int	execute_job(t_list *lst, int foreground)
 	int		ret;
 	t_job		*j;
 
+	if (lst == NULL)
+		ft_printf("VVVVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDDDDEEEEEEEEEEE\n");
 	lst = lst->next;
 	j = NULL;
 	j = build_job(&lst);
