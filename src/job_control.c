@@ -191,7 +191,8 @@ void	do_job_notification(void)
 }
 
 
-/* Shell internal jobs bookkeeping
+/*
+** Shell internal jobs bookkeeping
 */
 
 /* Mark a stopped job J as being running again. */
@@ -247,4 +248,20 @@ int	get_exit_value(int status)
 	}
 	else /* Cannot catch status */
 		return (128);
+}
+
+/* Add a job to the job queue */
+void	add_job_to_queue(t_job *j)
+{
+	t_job	*j_next;
+
+	if (first_job)
+	{
+		j_next = first_job;
+		while (j_next->next)
+			j = j->next;
+		j_next->next = j;
+	}
+	else
+		first_job = j;
 }

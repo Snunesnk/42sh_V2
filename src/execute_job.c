@@ -171,18 +171,3 @@ int	execute_job(t_list *lst, int foreground)
 		free_job(j);
 	return (ret);
 }
-
-void	add_job_to_queue(t_job *j)
-{
-	t_job	*j_next;
-
-	if (first_job)
-	{
-		j_next = first_job;
-		while (j_next->next)
-			j = j->next;
-		j_next->next = j;
-	}
-	else
-		first_job = j;
-}
