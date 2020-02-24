@@ -131,6 +131,7 @@ int     execute_process(char **argv, char **envp);
 void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
+void    do_job_notification(void);
 int     get_exit_value(int status);
 int     get_job_status(t_job *j, int foreground);
 void    add_job_to_queue(t_job *j);
