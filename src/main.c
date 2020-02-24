@@ -69,7 +69,6 @@ int			main(int argc, char **argv)
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break;
 		}
-		update_status();
 		ast = NULL;
 		lexer(input, &ast);
 /*		debug(lst);*/
