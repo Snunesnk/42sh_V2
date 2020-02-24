@@ -259,7 +259,7 @@ void	add_job_to_queue(t_job *j)
 	{
 		j_next = first_job;
 		while (j_next->next)
-			j = j->next;
+			j_next = j_next->next;
 		j_next->next = j;
 	}
 	else
