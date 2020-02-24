@@ -61,7 +61,7 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-	//	update_status();
+		do_job_notification();
 		ft_printf("$> ");
 		if (get_stdin(&input) < 0)
 			break;
