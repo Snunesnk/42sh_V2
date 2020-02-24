@@ -2,20 +2,43 @@
 #include "shell.h"
 #include "builtins.h"
 
-void	free_job(t_job *j) /* temporary for test purposes ? */
+void	free_all_processes(t_process *p)
 {
-	(void)j;
-//	t_process	*p;
-//	t_process	*next_p;
-//
-//	p = j->first_process;
-//	while (p)
-//	{
-//		next_p = p->next;
-//		free_process(p);
-//		p = next_p;
-//	}
-//	free(j);
+	t_process	*next_p;
+	while (p)
+	{
+		next_p = p->next;
+		free_process(p);
+		p = next_p;
+	}
+}
+
+void	free_job(t_job *j) /* Free a given job in the job queue */
+{
+	t_job		*j_next;
+	t_job		*tmp;
+
+	if (j == first_job)
+	{
+		free(j);
+		first_job = NULL;
+	}
+	else
+	{
+		j_next = first_job;
+		while (j_next->next)
+		{
+			if (j_next->next->pgid == j->pgid)
+			{
+				tmp = j_next->next;
+				j_next->next = tmp->next;
+				free_all_processes(tmp->first_process);
+				free(tmp);
+				return ;
+			}
+			j_next = j_next->next;
+		}
+	}
 }
 
 void	launch_job(t_job *j, int foreground)

@@ -157,16 +157,34 @@ int	execute_job(t_list *lst, int foreground)
 	t_job		*j;
 
 	if (lst == NULL)
-		ft_printf("VVVVVVVVVVVVVVVVVVVVVVIIIIIIIIIIIIIIIIIIIIIDDDDDDDDDDDDDEEEEEEEEEEE\n");
+		return (EXIT_FAILURE);
 	lst = lst->next;
 	j = NULL;
 	j = build_job(&lst);
 	if (j == NULL)
 		return (FAILURE);
-	first_job = j; /* Here is the thing to change for a queue that is being updated */
+	add_job_to_queue(j);
 	launch_job(j, foreground);
 	ret = get_exit_value(get_job_status(j, foreground));
 	ft_printf("Return value of pipeline:%d\n", ret);
 	free_job(j);
 	return (ret);
+}
+
+void	add_job_to_queue(t_job *j)
+{
+	t_job	*j_next;
+
+	if (first_job)
+	{
+		j_next = first_job;
+		while (j_next->next)
+		{
+			ft_printf("Job pgid:%d\n", j->pgid);
+			j = j->next;
+		}
+		j_next->next = j;
+	}
+	else
+		first_job = j;
 }
