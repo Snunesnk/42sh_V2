@@ -71,8 +71,6 @@ int			main(int argc, char **argv)
 		}
 		update_status();
 		ast = NULL;
-/*		index = 0;
-		ft_bzero(&buffer, sizeof(buffer));*/
 		lexer(input, &ast);
 /*		debug(lst);*/
 //		debug_ast(ast);
