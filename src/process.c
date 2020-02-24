@@ -37,7 +37,12 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 			tcsetpgrp(shell_terminal, pgid);
 		}
 		/* Set the handling for job control signals back to the default. */
-		restore_procmask();
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGTSTP, SIG_DFL);
+		signal(SIGTTIN, SIG_DFL);
+		signal(SIGTTOU, SIG_DFL);
+		signal(SIGCHLD, SIG_DFL);
 	}
 	/* Set the standard input/output channels of the new process. */
 
