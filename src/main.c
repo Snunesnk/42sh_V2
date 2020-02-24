@@ -15,6 +15,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 
+#include <readline/readline.h>
+
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
@@ -62,9 +64,12 @@ int			main(int argc, char **argv)
 	while (21)
 	{
 		do_job_notification();
-		ft_printf("$> ");
-		if (get_stdin(&input) < 0)
+		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
+		{
+			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break;
+		}
+		update_status();
 		ast = NULL;
 /*		index = 0;
 		ft_bzero(&buffer, sizeof(buffer));*/
@@ -80,7 +85,7 @@ int			main(int argc, char **argv)
 			{
 /*				ft_putendl("\nOK"); 
 */				ast_order(&ast);
-				debug_ast(ast);
+		//		debug_ast(ast);
 				status = execute_node(ast, 1); /* to capture */
 			}
 		}
