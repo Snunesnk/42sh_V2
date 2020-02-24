@@ -128,6 +128,7 @@ void	update_status(void)
 	do
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
+		ft_printf("Process lookup pid:%d\n", pid);
 	}
 	while (!mark_process_status(pid, status));
 }
