@@ -70,7 +70,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a
+LDLIBS += $(PATH_LIB)libft.a -lreadline
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
