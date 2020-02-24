@@ -59,9 +59,12 @@ int			main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	while (ft_printf("$> ") && get_stdin(&input) >= 0)
-/*	if (ft_printf("$> ") && get_stdin(&input) >= 0) */ /* Debugg purpose */
+	while (21)
 	{
+		update_status();
+		ft_printf("$> ");
+		if (get_stdin(&input) < 0)
+			break;
 		ast = NULL;
 /*		index = 0;
 		ft_bzero(&buffer, sizeof(buffer));*/

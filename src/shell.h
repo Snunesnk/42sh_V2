@@ -130,6 +130,7 @@ void	free_process(t_process *p);
 int     execute_process(char **argv, char **envp);
 void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
+void    update_status(void);
 
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
