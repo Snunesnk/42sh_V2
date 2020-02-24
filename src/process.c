@@ -32,12 +32,8 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 			pgid = pid;
 		}
 		setpgid(pid, pgid);
-		(void)foreground; /* WTF, why commenting this avoid crashes ????? */
-//		if (foreground)
-//		{
-	//		(void)foreground;
-//			tcsetpgrp(shell_terminal, pgid);
-//		}
+		if (foreground)
+			tcsetpgrp(shell_terminal, pgid);
 		/* Set the handling for job control signals back to the default. */
 		restore_procmask();
 	}
