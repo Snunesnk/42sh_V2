@@ -40,13 +40,11 @@ void	put_job_in_foreground(t_job *j, int cont)
    the process group a SIGCONT signal to wake it up. */
 void	put_job_in_background(t_job *j, int cont)
 {
-	(void)j;
-	(void)cont;
-//	if (cont) /* Send the job a continue signal, if necessary.*/
-//	{
-//		if (kill(-j->pgid, SIGCONT) < 0)
-//			ft_perror("kill failed sending (SIGCONT)");
-//	}
+	if (cont) /* Send the job a continue signal, if necessary.*/
+	{
+		if (kill(-j->pgid, SIGCONT) < 0)
+			ft_perror("kill failed sending (SIGCONT)");
+	}
 }
 
 /* Find the active job with the indicated pgid. */
@@ -130,7 +128,6 @@ void	update_status(void)
 	do
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-		ft_printf("update status:%d\n", pid);
 	}
 	while (!mark_process_status(pid, status));
 }
@@ -145,7 +142,6 @@ void	wait_for_job(t_job *j)
 	do
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-		ft_printf(">pid%d\n", pid);
 	}
 	while (!mark_process_status(pid, status) && !job_is_stopped(j) && !job_is_completed(j));
 }
@@ -153,8 +149,6 @@ void	wait_for_job(t_job *j)
 /* Format information about job status for the user to look at. */
 void	format_job_info (t_job *j, const char *status)
 {
-	/*	printf("DONE\n");
-		return ;*/ /* DEBUGG */
 	fprintf(stderr, "%ld (%s): %s\n", (long)j->pgid, status, j->command);
 }
 
@@ -232,7 +226,6 @@ int	get_job_status(t_job *j, int foreground)
 	while (p)
 	{
 		status = p->status;
-		ft_printf("pid%d\n, status:%d\n", p->pid, status);
 		p = p->next;
 	}
 	return (status);
