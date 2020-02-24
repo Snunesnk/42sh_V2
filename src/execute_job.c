@@ -165,6 +165,7 @@ int	execute_job(t_list *lst, int foreground)
 	j = build_job(&lst);
 	if (j == NULL)
 		return (FAILURE);
+	first_job = j; /* Here is the thing to change for a queue that is being updated */
 	launch_job(j, foreground);
 	free_job(j);
 	return (SUCCESS);
