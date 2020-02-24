@@ -15,8 +15,8 @@ void	free_all_processes(t_process *p)
 
 void	free_job(t_job *j) /* Free a given job in the job queue */
 {
-	t_job		*j_next;
-	t_job		*tmp;
+	t_job	*j_next;
+	t_job	*tmp;
 
 	if (j == first_job)
 	{
@@ -51,7 +51,7 @@ void	launch_job(t_job *j, int foreground)
 	infile = j->stdin;
 	p = j->first_process;
 	mypipe[0] = -1;
-	mypipe[1]  = -1;
+	mypipe[1] = -1;
 	while (p)
 	{
 		/* Set up pipes, if necessary.  */
