@@ -1,8 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <fcntl.h>
-
 #include "libft.h"
 #include "shell.h"
 
@@ -158,6 +153,7 @@ t_job	*build_job(t_list **lst)
 
 int	execute_job(t_list *lst, int foreground)
 {
+	int		ret;
 	t_job		*j;
 
 	lst = lst->next;
@@ -167,6 +163,8 @@ int	execute_job(t_list *lst, int foreground)
 		return (FAILURE);
 	first_job = j; /* Here is the thing to change for a queue that is being updated */
 	launch_job(j, foreground);
+	ret = get_exit_value(get_job_status(j, foreground));
+	ft_printf("Return value of pipeline:%d\n", ret);
 	free_job(j);
-	return (SUCCESS);
+	return (ret);
 }

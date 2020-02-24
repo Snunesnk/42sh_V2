@@ -217,3 +217,39 @@ void	continue_job(t_job *j, int foreground)
 	else
 		put_job_in_background(j, 1);
 }
+
+/* Get exit status of last process in pipeline */
+int	get_job_status(t_job *j, int foreground)
+{
+	t_process	*p;
+	int		status;
+
+	if (!foreground)
+		return (0);
+	p = j->first_process;
+	while (p)
+	{
+		status = p->status;
+		ft_printf("pid%d\n, status:%d\n", p->pid, status);
+		p = p->next;
+	}
+	return (status);
+}
+
+int	get_exit_value(int status)
+{
+	if (WIFEXITED(status))
+	{
+		return (WEXITSTATUS(status));
+	}
+	else if (WIFSIGNALED(status))
+	{ /* Check also for core dump */
+		return (WTERMSIG(status) + 128);
+	}
+	else if (WIFSTOPPED(status))
+	{
+		return (WSTOPSIG(status) + 128);
+	}
+	else /* Cannot catch status */
+		return (128);
+}
