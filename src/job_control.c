@@ -99,7 +99,7 @@ int	mark_process_status(pid_t pid, int status)
 					{
 						p->completed = 1;
 						if (WIFSIGNALED(status))
-							fprintf(stderr, "%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
+							fprintf(stderr, "\n%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
 					}
 					return (0);
 				}
