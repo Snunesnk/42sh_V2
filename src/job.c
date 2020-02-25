@@ -109,12 +109,14 @@ void	launch_job(t_job *j, int foreground)
 		p = p->next;
 	}
 
-	format_job_info(j, "launched");
 
 	if (!shell_is_interactive)
 		wait_for_job(j);
 	else if (foreground)
 		put_job_in_foreground(j, 0);
 	else
+	{
 		put_job_in_background(j, 0);
+		format_job_info(j, "launched");
+	}
 }
