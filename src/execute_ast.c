@@ -18,6 +18,7 @@ int	execute_semi(t_ast *node, int foreground)
 
 int	execute_subshell(t_ast *node, int foreground)
 { /* Here is an idea for subshells */
+	t_job	*j;
 	pid_t	pid;
 	int	status;
 
@@ -34,7 +35,15 @@ int	execute_subshell(t_ast *node, int foreground)
 		waitpid(pid, &status, WUNTRACED);
 		return (get_exit_value(status));
 	}
-	return (0);
+	else
+	{
+		j = (t_job*)ft_memalloc(sizeof(t_job));
+		j->pgid = pid;
+		j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
+		j->first_process->pid = pid;
+		add_job_to_queue(j);
+		return (0);
+	}
 }
 
 int	execute_and(t_ast *node, int foreground)
