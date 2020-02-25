@@ -63,7 +63,6 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-		do_job_notification();
 		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
@@ -90,6 +89,7 @@ int			main(int argc, char **argv)
 		astdel(&ast);
 		ft_strdel(&input);
 		g_retval = status;
+		do_job_notification();
 	}
 	ft_tabdel(&environ);
 	return (EXIT_SUCCESS);
