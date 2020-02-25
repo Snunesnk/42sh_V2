@@ -35,30 +35,40 @@ static void	display_signo(int i, char c, int status, t_job *j)
 		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?) %s\n", i, c, j->command);
 }
 
+static char	set_current(int job_number)
+{
+	if (job_number == 0)
+		return ('+');
+	else if (job_number == 1)
+		return ('-');
+	return (' ');
+}
+
 int	cmd_jobs(int argc, char **argv)
 {
-	int	i;
-	char	tip;
+	int	job_number;
+	char	current;
 	int	status;
 	t_job	*j;
 
 	(void)argc;
 	(void)argv;
-	i = 1;
+	job_number = 0;
 	j = first_job;
-	tip = '+';
 	update_status();
 	while (j->next)
 	{ /* "[%d] %c %s %s\n", <job-number>, <current>, <state>, <command> */
+		current = set_current(job_number);
 		if (job_is_stopped(j))
 		{
 			status = get_job_status(j, 1);
 			if (WIFSTOPPED(status))
-				display_signo(i, tip, status, j);
+				display_signo(job_number, current, status, j);
 		}
 		else
-			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", i, tip, "Running", j->command);
+			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", job_number, current, "Running", j->command);
 		j = j->next;
+		++job_number;
 	}
 	return (0);
 }
