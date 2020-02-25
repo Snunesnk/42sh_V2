@@ -17,10 +17,29 @@
 
 #include "shell.h"
 
+#define SRUN "Running"
+#define SDONE "Done"
+#define SSTOP "Stopped"
+
+static void	display_signo(int i, char c, int status, t_job *j)
+{
+	if (WSTOPSIG(status) == SIGTSTP)
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTSTP) %s\n", i, c, j->command);
+	else if (WSTOPSIG(status) == SIGSTOP)
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGSTOP) %s\n", i, c, j->command);
+	else if (WSTOPSIG(status) == SIGTTIN)
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTIN) %s\n", i, c, j->command);
+	else if (WSTOPSIG(status) == SIGTTOU)
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU) %s\n", i, c, j->command);
+	else
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?) %s\n", i, c, j->command);
+}
+
 int	cmd_jobs(int argc, char **argv)
 {
 	int	i;
 	char	tip;
+	int	status;
 	t_job	*j;
 
 	(void)argc;
@@ -30,10 +49,13 @@ int	cmd_jobs(int argc, char **argv)
 	tip = '+';
 	update_status();
 	while (j->next)
-	{
-	//	ft_dprintf("[%d] %c %s %s\n", i, <current>, j->state, j->command);
+	{ /* "[%d] %c %s %s\n", <job-number>, <current>, <state>, <command> */
 		if (job_is_stopped(j))
-			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", i, tip, "Stopped", j->command);
+		{
+			status = get_job_status(j, 1);
+			if (WIFSTOPPED(status))
+				display_signo(i, tip, status, j);
+		}
 		else
 			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", i, tip, "Running", j->command);
 		j = j->next;
