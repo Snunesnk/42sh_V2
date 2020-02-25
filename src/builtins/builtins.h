@@ -33,7 +33,9 @@ int				cmd_false(int argc, char **argv);
 int				cmd_pwd(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
 int				cmd_set(int argc, char **argv);
-int	cmd_fg(int argc, char **argv);
+int				cmd_fg(int argc, char **argv);
+int				cmd_bg(int argc, char **argv);
+int				cmd_jobs(int argc, char **argv);
 
 /*
 ** Functions in builtins_dispatcher.c
