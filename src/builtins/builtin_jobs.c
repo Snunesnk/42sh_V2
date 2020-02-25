@@ -14,12 +14,7 @@
 **	https://pubs.opengroup.org/onlinepubs/9699919799/utilities/jobs.html
 */
 
-
 #include "shell.h"
-
-#define SRUN "Running"
-#define SDONE "Done"
-#define SSTOP "Stopped"
 
 static void	display_signo(int i, char c, int status, t_job *j)
 {
@@ -33,6 +28,17 @@ static void	display_signo(int i, char c, int status, t_job *j)
 		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU) %s\n", i, c, j->command);
 	else
 		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?) %s\n", i, c, j->command);
+}
+
+static void	display_exit_no(int i, char c, int status, t_job *j)
+{
+	int	ret;
+
+	ret = WEXITSTATUS(status);
+	if (ret)
+		ft_dprintf(STDERR_FILENO, "[%d] %c Done(%d) %s\n", i, c, ret, j->command);
+	else
+		ft_dprintf(STDERR_FILENO, "[%d] %c Done %s\n", i, c, j->command);
 }
 
 static char	set_current(int job_number)
@@ -65,8 +71,14 @@ int	cmd_jobs(int argc, char **argv)
 			if (WIFSTOPPED(status))
 				display_signo(job_number, current, status, j);
 		}
+		else if (job_is_completed(j))
+		{
+			status = get_job_status(j, 1);
+			if (WIFEXITED(status))
+				display_exit_no(job_number, current, status, j);
+		}
 		else
-			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", job_number, current, "Running", j->command);
+			ft_dprintf(STDERR_FILENO, "[%d] %c %s %s\n", job_number, current, "Running", j->command);
 		j = j->next;
 		++job_number;
 	}
