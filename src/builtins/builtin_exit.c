@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
-#include "error.h"
 #include "shell.h"
 
 static int	part_sep(int argc, char **argv)

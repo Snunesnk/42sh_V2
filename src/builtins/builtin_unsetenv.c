@@ -10,12 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-
-#include "ft_errno.h"
-#include "error.h"
-#include "libft.h"
 #include "shell.h"
 
 static char	**getenvvar(const char *name)

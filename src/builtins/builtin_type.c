@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <unistd.h>
-
-#include "libft.h"
 #include "shell.h"
-#include "error.h"
 #include "builtins.h"
 
 static const struct s_keywords	g_keywords[] =
