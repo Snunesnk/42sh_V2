@@ -188,9 +188,11 @@ void	do_job_notification(void)
 }
 
 
-/*
-** Shell internal jobs bookkeeping
-*/
+/* ******************************** *
+**                                  *
+** Shell internal jobs bookkeeping  *
+**                                  *
+** *********************************/
 
 /* Mark a stopped job J as being running again. */
 void	mark_job_as_running(t_job *j)

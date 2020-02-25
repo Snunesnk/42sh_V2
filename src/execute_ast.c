@@ -21,23 +21,31 @@ int	execute_subshell(t_ast *node, int foreground)
 	pid_t	pid;
 	int	status;
 
-	if ((pid = fork()) == 0)
+	if ((pid = fork()) == 0) /* If background, pid should be added to the job list
+					Get the PID and add it to the list in case fg and ctrl + c */
 		exit(execute_node(node, foreground));
 	else if (pid < 0)
 	{
 		ft_printf("Fork subshell failed\n");
 		exit(0);
 	}
-	waitpid(pid, &status, WUNTRACED);
-	return (get_exit_value(status));
+	if (foreground)
+	{
+		waitpid(pid, &status, WUNTRACED);
+		return (get_exit_value(status));
+	}
+	return (0);
 }
 
 int	execute_and(t_ast *node, int foreground)
 {
-	/* Fork, get the pid to put it in job list and then pursue execute_node in the fork itself */
-	/* Launch a subshell with node->left */
-	if (node->left)
-		execute_node(node->left, 0); /*  Get the PID and add it to the list in case fg and ctrl + c */
+	t_ast *lnode;
+
+	lnode = node->left;
+	if (lnode->type != NONE) /* Launch a subshell with node->left */
+		execute_subshell(node->left, 0);
+	else if (lnode->type == NONE)
+		execute_node(node->left, 0);
 	if (node->right)
 		return (execute_node(node->right, foreground));
 	return (ASTERROR);
