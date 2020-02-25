@@ -139,6 +139,8 @@ void    init_shell_sset(void);
 void    restore_procmask(void);
 int	job_is_stopped(t_job *j);
 int     job_is_completed(t_job *j);
+void    put_job_in_foreground(t_job *j, int cont);
+t_job   *find_job(pid_t pgid);
 
 extern sigset_t			g_save_procmask;
 
