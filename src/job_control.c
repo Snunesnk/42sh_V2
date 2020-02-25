@@ -2,8 +2,6 @@
 #include "shell.h"
 #include "builtins.h"
 
-#include <errno.h>
-
 t_job			*first_job = NULL;
 
 /* MEMO: A subshell that runs non-interactively cannot and should not support job control. It
@@ -110,7 +108,7 @@ int	mark_process_status(pid_t pid, int status)
 		fprintf (stderr, "No child process %d.\n", pid);
 		return (-1);
 	}
-	else if (pid == 0 || errno == ECHILD) /* No processes ready to report. */
+	else if (pid == 0) /* No processes ready to report. */
 		return (-1);
 	else
 	{	/* Other weird errors. */

@@ -10,15 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-#include "libft.h"
-#include "error.h"
+#include "shell.h"
 
 static int	replace_tilde(char **str, char *start, char *env)
 {
 	char	*cpy;
-	
+
 	if (!env)
 	{
 		if (!(cpy = ft_strjoin("", start)))
