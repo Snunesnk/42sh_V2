@@ -164,9 +164,12 @@ int	execute_job(t_list *lst, int foreground)
 	if (j == NULL)
 		return (FAILURE);
 	add_job_to_queue(j);
+	g_retval = -1;
 	launch_job(j, foreground);
-	ret = get_exit_value(get_job_status(j, foreground));
-
+	if (g_retval == -1)
+		ret = get_exit_value(get_job_status(j, foreground));
+	else
+		ret = g_retval;
 	if (foreground)
 		free_job(j);
 	return (ret);

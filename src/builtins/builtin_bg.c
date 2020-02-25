@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_fg.c                                       :+:      :+:    :+:   */
+/*   builtin_bg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-int	cmd_fg(int argc, char **argv)
+int	cmd_bg(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
