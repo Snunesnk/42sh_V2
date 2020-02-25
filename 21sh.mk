@@ -45,6 +45,8 @@ SOURCES :=	main.c \
 		parameter_expansions.c \
 		tilde_expansion.c \
 		builtins/builtin_fg.c \
+		builtins/builtin_bg.c \
+		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
