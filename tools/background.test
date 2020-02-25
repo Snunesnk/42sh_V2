@@ -1,4 +1,5 @@
 ls --color=auto -lR / 2>/dev/null >/dev/null | cat -e && ls >/dev/null 2>/dev/null --color=auto &
+ls -lR | cat && hostname | cat & ls -lR | cat && hostname | cat &
 ls & ls & ls &
 ls
 vim & vim &
