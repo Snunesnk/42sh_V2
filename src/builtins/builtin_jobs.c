@@ -10,6 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+**	https://pubs.opengroup.org/onlinepubs/9699919799/utilities/jobs.html
+*/
+
+
 #include "shell.h"
 
 int	cmd_jobs(int argc, char **argv)
@@ -23,8 +28,10 @@ int	cmd_jobs(int argc, char **argv)
 	i = 1;
 	j = first_job;
 	tip = '+';
-	if (j)
+	update_status();
+	while (j->next)
 	{
+	//	ft_dprintf("[%d] %c %s %s\n", i, <current>, j->state, j->command);
 		if (job_is_stopped(j))
 			ft_dprintf(STDERR_FILENO, "[%d]%c\t%s\t%s\n", i, tip, "Stopped", j->command);
 		else
