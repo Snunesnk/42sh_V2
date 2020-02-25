@@ -44,12 +44,6 @@ typedef struct	s_builtins
 	int		(*const f)(int, char**);
 }				t_builtins;
 
-_Bool				prior_builtin(char *str);
-struct	s_prior_builtin
-{
-	const char *const	pbuiltin;
-};
-
 extern const t_builtins	g_builtins[];
 
 struct	s_keywords
