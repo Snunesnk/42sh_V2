@@ -2,7 +2,7 @@
 A tiny shell. [42 project]
 
 ToDo:
-- Job control: fg, bg, jobs,...
+- Done but need to make it perfect for 42sh: Job control: fg, bg, jobs,...
 - Shell variables
 - Arithmetic Expansions
 - Inhibitors
