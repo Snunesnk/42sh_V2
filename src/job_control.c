@@ -111,8 +111,7 @@ int	mark_process_status(pid_t pid, int status)
 	else if (pid == 0) /* No processes ready to report. */
 		return (-1);
 	else
-	{	/* Other weird errors. */
-		ft_perror("waitpid failed");
+	{ /* Other weird errors. */
 		return (-1);
 	}
 }
