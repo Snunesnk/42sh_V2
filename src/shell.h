@@ -139,7 +139,6 @@ void    init_shell_sset(void);
 void    restore_procmask(void);
 
 extern sigset_t			g_save_procmask;
-extern struct sigaction		g_shell_sset;
 
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
