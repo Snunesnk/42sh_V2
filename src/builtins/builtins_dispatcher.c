@@ -31,22 +31,6 @@ const t_builtins	g_builtins[] =
 	{ "\0", NULL}
 };
 
-_Bool	prior_builtin(char *str)
-{
-	const struct s_prior_builtin	pbuiltin_list[] =
-	{ {"echo"}, {"exit"}, {"setenv"}, {"unsetenv"}, {"pwd"}, {"cd"}, {"type"}, {"\0"} };
-	int	i;
-
-	i = 0;
-	while (*(pbuiltin_list[i].pbuiltin))
-	{
-		if (!ft_strcmp(str, pbuiltin_list[i].pbuiltin))
-			return (1);
-		++i;
-	}
-	return (0);
-}
-
 static void	*dispatcher(char *cmd)
 {
 	int	i;
