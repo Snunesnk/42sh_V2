@@ -10,11 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-#include "libft.h"
 #include "shell.h"
-#include "error.h"
 #include "builtins.h"
 
 const t_builtins	g_builtins[] =
@@ -25,6 +21,7 @@ const t_builtins	g_builtins[] =
 	{ "unsetenv", &cmd_unsetenv},
 	{ "pwd", &cmd_pwd},
 	{ "cd", &cmd_cd},
+	{ "fg", &cmd_fg},
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},

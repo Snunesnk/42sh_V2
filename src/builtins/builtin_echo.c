@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "shell.h"
 
 int	cmd_echo(int argc, char **argv)

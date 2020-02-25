@@ -10,11 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "ft_getopt.h"
-#include "libft.h"
-#include "error.h"
 #include "shell.h"
 
 static void	display_shvar(void)

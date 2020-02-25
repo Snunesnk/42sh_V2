@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-#include "libft.h"
-#include "error.h"
 #include "shell.h"
 
 static void	print_setenv_syntax_error(char *cmd_name, char *str)
