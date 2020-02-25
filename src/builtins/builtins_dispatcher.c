@@ -22,6 +22,8 @@ const t_builtins	g_builtins[] =
 	{ "pwd", &cmd_pwd},
 	{ "cd", &cmd_cd},
 	{ "fg", &cmd_fg},
+	{ "bg", &cmd_bg},
+	{ "jobs", &cmd_jobs},
 	{ "true", &cmd_true},
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
