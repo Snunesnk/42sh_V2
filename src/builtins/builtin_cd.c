@@ -14,12 +14,6 @@
 ** https://www.unix.com/man-page/posix/1posix/cd/
 */
 
-#include <unistd.h>
-#include <sys/stat.h>
-
-#include "ft_getopt.h"
-#include "libft.h"
-#include "error.h"
 #include "shell.h"
 
 extern char	g_pwd[];
