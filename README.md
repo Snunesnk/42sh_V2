@@ -21,6 +21,9 @@ Sabri:
 	- 42sh Inhibitors
 
 
-Optinnal:
+Optionnal:
 	- Subshells $(), (), ``
 	- Group { ;}
+	- Hash
+	- Aliases
+	- Builtin `test`
