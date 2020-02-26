@@ -1,0 +1,5 @@
+set
+set --
+set -o
+set +o
+set ok=yyyyyyy

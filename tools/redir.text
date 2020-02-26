@@ -1,0 +1,6 @@
+echo a >&2 | echo b >&2 | echo c >&2 | echo d >&2
+ls >/dev/null 2>/dev/null | setenv TOTO ok | env
+ls >/dev/null 2>/dev/null | setenv TOTO PASOK | echo $TOTO
+ls | echo ok
+cat -e 0<&2 okok
+emacs | emacs | emacs
