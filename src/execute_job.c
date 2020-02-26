@@ -11,6 +11,16 @@ void	print_p(t_process *p)
 	}
 }
 
+static int	is_redir_type(int type)
+{
+	return (type == GREATAND
+		|| type == LESSAND
+		|| type == DGREAT
+		|| type == DLESS
+		|| type == GREAT
+		|| type == LESS);
+}
+
 static int	get_argc(t_list *lst)
 {
 	t_token	*t;
@@ -22,6 +32,30 @@ static int	get_argc(t_list *lst)
 		t = lst->content;
 		if (t->type == WORD)
 			++argc;
+		else if (t->type == IO_NB)
+		{
+			lst = lst->next->next->next;
+			if (lst)
+			{
+				t = lst->content;
+				if (t->type == WORD)
+					++argc;
+				else
+					continue;
+			}
+		}
+		else if (is_redir_type(t->type))
+		{
+			lst = lst->next->next;
+			if (lst)
+			{
+				t = lst->content;
+				if (t->type == WORD)
+					++argc;
+				else
+					continue;
+			}
+		}
 		else
 			break;
 		lst = lst->next;
