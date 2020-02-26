@@ -6,3 +6,5 @@ cat -e 0<&2 okok
 emacs | emacs | emacs
 ls ok 2> ok -l > toto -R ok not exit
 2>/dev/null | >/dev/null
+>/dev/null ls
+2>/dev/null -r ls
