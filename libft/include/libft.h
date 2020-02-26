@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/06 13:17:32 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:29:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int				ft_tolower(int c);
 
 int				ft_atoi(const char *str) __attribute__((nonnull(1)));
 
-int				ft_strcmp(const char *s1, const char *s2) __attribute__
-				((nonnull(1,2)));
+int				ft_strcmp(const char *s1, const char *s2);
 
 int				ft_strcasecmp(const char *s1, const char *s2) __attribute__
 				((nonnull(1,2)));
@@ -52,7 +51,7 @@ int				ft_strncmp(const char *s1, const char *s2,
 int				ft_memcmp(const void *s1, const void *s2,
 				size_t n) __attribute__((nonnull(1,2)));
 
-size_t			ft_strlen(const char *s) __attribute__((nonnull(1)));
+size_t			ft_strlen(const char *s);
 
 int				ft_numlen(unsigned int nb);
 
@@ -152,8 +151,7 @@ void			ft_putendl_fd(char const *s, int fd);
 
 void			ft_putnbr_fd(int n, int fd);
 
-int				ft_strequ(char const *s1, char const *s2) __attribute__
-				((nonnull(1)));
+int				ft_strequ(char const *s1, char const *s2);
 
 int				ft_strnequ(char const *s1, char const *s2, size_t n);
 
