@@ -248,7 +248,6 @@ void	astdel(t_ast **ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t *type);
 int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
-int		ft_is_space_tab(int c);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
 int		expansions(t_ast *ast);

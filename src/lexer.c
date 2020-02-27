@@ -74,7 +74,7 @@ static void	get_input(char *str)
 		get_stdin(&tmp);
 		if (tmp != NULL)
 		{
-			while (tmp[i] != '\0' && ft_is_space_tab(tmp[i]) == TRUE)
+			while (tmp[i] != '\0' && ft_isblank(tmp[i]) == TRUE)
 				i++;
 			if (tmp[i] != '\0')
 			{
@@ -118,7 +118,7 @@ static int	get_token_list(char *str, size_t *pos, t_list **lst,
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
 	{
-		while (ft_is_space_tab(str[*pos]) == TRUE)
+		while (ft_isblank(str[*pos]) == TRUE)
 			(*pos)++;
 		if (str[*pos] == '\0')
 			break ;
@@ -156,7 +156,7 @@ int			lexer(char *str, t_ast **ast)
 	{
 		type = NONE;
 		lst = NULL;
-		while (ft_is_space_tab(str[pos]) == TRUE)
+		while (ft_isblank(str[pos]) == TRUE)
 			pos++;
 		if (str[pos] != '\0')
 		{
