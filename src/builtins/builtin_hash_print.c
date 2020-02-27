@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 19:56:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 21:14:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,6 @@ int		print_hashed_targets(int options_list, char **argv)
 
 int		change_hash_entry(char *pathname, char *name)
 {
-	t_hash_table	*tmp;
-	int				hash;
 	struct stat		path_stat;
 
 	stat(pathname, &path_stat);
@@ -124,16 +122,8 @@ int		change_hash_entry(char *pathname, char *name)
 		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: Is a directory\n", pathname);
 		return (e_invalid_input);
 	}
-	hash = ft_hash(name);
-	tmp = find_occurence(name);
-	if (!tmp)
-	{
-		if (add_to_hash_table(pathname, name, 0) == e_cannot_allocate_memory)
-			return (e_cannot_allocate_memory);
-		return (e_success);
-	}
-	free(tmp->command_path);
-	if (!(tmp->command_path = ft_strdup(pathname)))
+	remove_hash_entry(name);
+	if (!(add_to_hash_table(pathname, name, 0)))
 		return (e_cannot_allocate_memory);
 	return (e_success);
 }
