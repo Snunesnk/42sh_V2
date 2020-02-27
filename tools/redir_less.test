@@ -1,0 +1,101 @@
+plop=Jean-Michel
+cat -e<
+cat -e<0
+cat -e<$toto
+cat -e</dev/null
+head</dev/urandom
+cat -e  <
+cat -e  <  0
+cat -e  <  $toto
+cat -e  <  /dev/null
+head  <  /dev/urandom
+ls <  /dev/urandom
+ls < plop
+head < /dev/urandom >> toto
+ls < toto
+echo ok -e<
+type ok -e<0
+setenv ok -e<$toto
+unsetenv ok -e</dev/null
+cd ok ok</dev/urandom
+echo -e  <
+echo ok -e  <  0
+echo ok -e  <  $toto
+echo ok -e  <  /dev/null
+doesno  <  /dev/urandom
+echo ok <  /dev/urandom
+echo ok < plop
+echo ok < /dev/urandom >> toto
+set < toto
+ls -<toto
+ls < .
+ls < ./21sh
+ls < 21sh
+cat -e -< auteur
+ello=auteur
+cat -e <ello
+cat -e <$ello
+
+ls -l<1
+
+
+
+plop=Jean-Michel
+echo ok toto<1
+ls -l<1
+echo ok toto<plop
+ls -l<plop
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+
+ls -l
+toto=1
+echo ok <$toto
+toto=file
+echo ok <$toto
+toto=42
+echo ok <$toto
+ls 2</root
+echo a <2 | echo b <2 | echo c <2 | echo d <2
+ls </dev/null 2</dev/null | setenv TOTO ok | env
+ls </dev/null 2</dev/null | setenv TOTO PASOK | echo $TOTO
+ls | echo ok
+cat -e 0<2 okok
+ls ok 2< ok -l < toto -R ok not exit
+2</dev/null | </dev/null
+</dev/null ls
+2</dev/null -r ls
+echo <2 ok | ls <2 | <2 ls <2 | ls <2 | echo ok <2 | ls < 2
+ls| </dev/null
+ls|</dev/null
+ls |</dev/null
+ls | <ok
+ls |< ok
+ls| <ok

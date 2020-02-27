@@ -1,0 +1,2 @@
+echo ok && exit | cat -e
+echo ok && exit ||| cat -e

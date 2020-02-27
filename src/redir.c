@@ -2,6 +2,12 @@
 #include "error.h"
 #include "shell.h"
 
+/* ************************************************* **
+**                                                   **
+**             SET REDIRECTIONS                      **
+**                                                   **
+** ************************************************* */
+
 int	has_redirections(int type)
 {
 	return (type == IO_NB
@@ -164,6 +170,12 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 	return (NULL);
 }
 
+/* ************************************************* **
+**                                                   **
+**             PARSE/BUILD REDIRECTIONS              **
+**                                                   **
+** ************************************************* */
+
 static t_redirection	*parse_redirection(t_list **lst)
 {
 	int		io_nb;
@@ -205,6 +217,12 @@ t_redirection	*build_redirections(t_list **lst)
 	}
 	return (r);
 }
+
+/* ************************************************* **
+**                                                   **
+**               DO REDIRECTIONS                     **
+**                                                   **
+** ************************************************* */
 
 static int	do_iowrite(t_redirection *r)
 {
