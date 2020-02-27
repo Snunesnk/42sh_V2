@@ -47,12 +47,24 @@ t_redirection	*build_redirections(t_list **lst)
 	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END
 		&& get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
 		(*lst) = (*lst)->next;
+//	ft_printf("\n");
+//	debug(*lst);
+//	ft_printf("\n");
 	r = parse_redirection(lst);
 	if (r)
 		n = &(r->next);
+//	debug_r(r);
+//	ft_printf("\n");
+//	debug(*lst);
+//	ft_printf("loop follow\n");
 	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END)
 	{
-		(*lst) = (*lst)->next;
+//		ft_printf("\n");
+//		debug(*lst);
+//		ft_printf("\n");
+		while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END
+			&& get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
+			(*lst) = (*lst)->next;
  		if (get_tokentype(*lst) == IO_NB || is_redir_type(get_tokentype(*lst)))
 		{
 			while (has_redirections(get_tokentype(*lst)))
@@ -63,6 +75,6 @@ t_redirection	*build_redirections(t_list **lst)
 			}
 		}
 	}
-	debug_r(r);
+	debug_r(r); /* Debugging */
 	return (r);
 }
