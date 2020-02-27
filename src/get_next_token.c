@@ -65,7 +65,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 	char	*tmp;
 
 	tmp = NULL;
-	while (str[*len] != '\0' && ft_is_space_tab(str[*len]) == FALSE
+	while (str[*len] != '\0' && ft_isblank(str[*len]) == FALSE
 		&& ft_ismeta(str[*len]) == FALSE)
 	{
 		if (str[*len] == '"')
