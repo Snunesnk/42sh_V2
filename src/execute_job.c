@@ -1,6 +1,12 @@
 #include "libft.h"
 #include "shell.h"
 
+/******************************************************
+**                                                   **
+**                 BUILD JOBS/PROCESS UTILS          **
+**                                                   **
+******************************************************/
+
 /* Debugg function */
 void	print_p(t_process *p)
 {
@@ -20,6 +26,28 @@ int	is_redir_type(int type)
 		|| type == GREAT
 		|| type == LESS);
 }
+
+char	*get_tokvalue(t_list *lst)
+{
+	t_token	*t;
+
+	t = lst->content;
+	return (t->value);
+}
+
+int	get_tokentype(t_list *lst)
+{
+	t_token	*t;
+
+	t = lst->content;
+	return (t->type);
+}
+
+/******************************************************
+**                                                   **
+**                 BUILD PROCESSES                   **
+**                                                   **
+******************************************************/
 
 static int	get_argc(t_list *lst)
 {
@@ -61,22 +89,6 @@ static int	get_argc(t_list *lst)
 		lst = lst->next;
 	}
 	return (argc);
-}
-
-char	*get_tokvalue(t_list *lst)
-{
-	t_token	*t;
-
-	t = lst->content;
-	return (t->value);
-}
-
-int	get_tokentype(t_list *lst)
-{
-	t_token	*t;
-
-	t = lst->content;
-	return (t->type);
 }
 
 char	**build_argv(t_list *lst)
@@ -130,9 +142,6 @@ t_process	*build_a_process(t_list **lst)
 		}
 		/* Add redirection instruction calling parse_redirection */
 		p->redir = build_redirections(lst);
-//		ft_printf("LIST\n\n");
-//		debug(*lst);
-//		ft_printf("\n\n");
 		return (p);
 	}
 	free(p);
@@ -172,6 +181,12 @@ t_process	*build_processes(t_list **lst)
 */	return (first_p);
 }
 
+/******************************************************
+**                                                   **
+**                 BUILD JOBS                        **
+**                                                   **
+******************************************************/
+
 t_job	*build_job(t_list **lst)
 {
 	t_job	*j;
@@ -195,6 +210,12 @@ t_job	*build_job(t_list **lst)
 	return (j);
 
 }
+
+/******************************************************
+**                                                   **
+**                 EXECUTE JOBS                      **
+**                                                   **
+******************************************************/
 
 int	execute_job(t_list *lst, int foreground)
 {
