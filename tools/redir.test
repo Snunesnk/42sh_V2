@@ -1,3 +1,58 @@
+cat -e << eof
+Hello World from Here-Doc
+eof
+cat -e << eof && cat -e << fin
+Hello World from the first Here-Doc
+eof
+Hello World from the SEcond here-Doc
+fin
+
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+ls -l
+echo ok toto
+
+ls -l
+toto=1
+echo ok >&$toto
+toto=file
+echo ok >&$toto
+toto=42
+echo ok >&$toto
+mkdir pop
+chmod 0000 pop
+ls 2>/pop/plop
+chmod 0766 pop
+rm -rf pop
 echo a >&2 | echo b >&2 | echo c >&2 | echo d >&2
 ls >/dev/null 2>/dev/null | setenv TOTO ok | env
 ls >/dev/null 2>/dev/null | setenv TOTO PASOK | echo $TOTO
