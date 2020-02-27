@@ -154,6 +154,8 @@ char	*get_tokvalue(t_list *lst);
 int	do_redirection(t_redirection *r);
 int	undo_redirection(t_redirection *r);
 
+extern char	*g_filename_redir_error;
+
 # define TRUE		1
 # define FALSE		0
 

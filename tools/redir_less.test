@@ -1,3 +1,7 @@
+touch toutou
+chmod 0000 toutou
+ls < toutou
+cat -e < toutou
 plop=Jean-Michel
 cat -e<
 cat -e<0
