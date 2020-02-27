@@ -211,6 +211,12 @@ t_job	*build_job(t_list **lst)
 
 }
 
+/******************************************************
+**                                                   **
+**                 EXECUTE JOBS                      **
+**                                                   **
+******************************************************/
+
 int	execute_job(t_list *lst, int foreground)
 {
 	int		ret;

@@ -172,7 +172,7 @@ static t_redirection	*set_redirection(t_list **lst, int io_nb)
 
 /* ************************************************* **
 **                                                   **
-**             PARSE REDIRECTIONS                    **
+**             PARSE/BUILD REDIRECTIONS              **
 **                                                   **
 ** ************************************************* */
 
@@ -201,7 +201,6 @@ t_redirection	*build_redirections(t_list **lst)
 		(*lst) = (*lst)->next;
 	r = parse_redirection(lst);
 	if (r)
-
 		n = &(r->next);
 	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END)
 	{
