@@ -68,7 +68,7 @@ void	launch_job(t_job *j, int foreground)
 			outfile = j->stdout;
 
 		/* 1. Check if process is a shell builtin, NOFORK */
-		if (outfile == j->stdout && is_a_builtin(p->argv[0]))
+		if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
 			g_retval = launch_builtin(p);
 		/* 2. Fork the child processes.  */
 		else
