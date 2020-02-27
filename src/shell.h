@@ -54,7 +54,8 @@
 # define DEST      0x2
 # define HEREWORD  0x4
 # define FDCLOSE   0x8
-# define NOFORK    0x10
+# define NOFORK    0x16
+# define REDSUC    0x32
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);

@@ -333,20 +333,33 @@ static int	do_iodread(t_redirection *r)
 
 int	do_redirection(t_redirection *r)
 {
+	/* Used for error type and displaying the correct error message in process.c */
+	int		error;
+	t_redirection	*beg;
+
+	beg = r;
+	error = 0;
 	while (r)
 	{
 		if (r->instruction == IOWRITE)
-			do_iowrite(r);
+			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
-			do_iocat(r);
+			error = do_iocat(r);
 		else if (r->instruction == IOREAD)
-			do_ioread(r);
+			error = do_ioread(r);
 		else if (r->instruction == IOHERE)
-			do_iohere(r);
+			error = do_iohere(r);
 		else if (r->instruction == IODUP)
-			do_iodup(r);
+			error = do_iodup(r);
 		else if (r->instruction == (IODUP | IOREAD))
-			do_iodread(r);
+			error = do_iodread(r);
+		if (error)
+		{
+			if (r->flags & NOFORK)
+				undo_redirection(beg);
+			return (error);
+		}
+		r->flags |= REDSUC;
 		r = r->next;
 	}
 	return (0);
@@ -393,7 +406,7 @@ int	undo_redirection_internal(t_redirection *r)
 
 int	undo_redirection(t_redirection *r)
 {
-	while (r)
+	while (r && r->flags & REDSUC)
 	{
 		undo_redirection_internal(r);
 		/* should we free at that point ? */
