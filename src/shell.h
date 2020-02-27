@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/26 22:44:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 18:41:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # endif
 
 # ifndef HASH_SIZE
-#  define HASH_SIZE 1024
+#  define HASH_SIZE 64
 # endif
 
 /* Flags of instruction type of redirection */
@@ -127,11 +127,14 @@ typedef struct s_job		t_job;
 typedef struct s_redirection	t_redirection;
 typedef struct s_hash_table	t_hash_table;
 
-int				add_to_hash_table(char *pathname, char *command_name);
-int				add_name_hash_table(char *command_name);
+int				add_to_hash_table(char *pathname, char *command_name, int nb);
+int				add_name_hash_table(char *command_name, int nb);
 int				check_hash_table(char *command_name);
 int				ft_hash(char *to_hash);
-t_hash_table	*new_hash_entry(char *pathname, char *command_name);
+t_hash_table	*new_hash_entry(char *pathname, char *command_name, int nb);
+t_hash_table	*find_occurence(char *name);
+t_hash_table	*find_prev_occurence(char *name);
+void			free_hash_table(void);
 
 extern t_hash_table	**g_hash_table;
 

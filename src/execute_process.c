@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/25 22:46:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 15:26:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,9 @@ static int	process_execve(char **argv, char **envp, char *pathname)
 
 int	execute_process(char **argv, char **envp)
 {
-	int	ret;
-	char	*pathname;
+	t_hash_table	*tmp;
+	int				ret;
+	char			*pathname;
 
 	if (!ft_strcmp(argv[0], "builtin"))
 		return (builtin_keyword_exec(argv));
@@ -95,11 +96,8 @@ int	execute_process(char **argv, char **envp)
 		psherror(ret, argv[0], e_cmd_type);
 		return (g_errordesc[ret].code);
 	}
-	if (check_hash_table(pathname) == e_success)
-	{
-		return(process_execve(argv, envp, \
-					g_hash_table[ft_hash(pathname)]->command_path));
-	}
+	if ((tmp = find_occurence(pathname)))
+		return (process_execve(argv, envp, tmp->command_path));
 	if (path_concat(&pathname) == e_command_not_found)
 	{
 	/*	ft_memdel((void**)&pathname);

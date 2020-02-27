@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/26 21:41:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 15:25:55 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int			main(int argc, char **argv)
 		g_retval = status;
 		do_job_notification();
 	}
+	free_hash_table();
 	ft_tabdel(&environ);
 	return (EXIT_SUCCESS);
 }

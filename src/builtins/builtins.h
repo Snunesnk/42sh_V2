@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/26 22:00:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 18:24:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # define HASH_P_OPTION 4
 # define HASH_R_OPTION 8
 # define HASH_T_OPTION 16
+
+/*
+** Values used to hash strings
+*/
+#define FNV_OFFSET 2166136261
+#define FNV_PRIME 16777619
 
 /*
 ** Utils for builtins
@@ -51,13 +57,15 @@ int				cmd_hash(int argc, char **argv);
 ** Hash Functions
 */
 char			get_next_opt(char **argv);
-int				check_for_needed_arguments(int options_list, int argc);
-int				exec_hash_builtin(int options_list, int argc, char **argv);
+int				check_for_needed_arguments(int options_list, int argc, \
+		char **argv);
+int				exec_hash_builtin(int options_list, char **argv);
 int				print_hashed_commands(int options_list);
 void			del_hashed_commands(void);
 int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
+int				contains_arg(char **argv);
 
 /*
 ** Functions in builtins_dispatcher.c

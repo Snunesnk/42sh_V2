@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/26 22:02:07 by snunes           ###   ########.fr        #
+#    Updated: 2020/02/27 14:41:01 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,8 @@ SOURCES :=	main.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_hash.c \
 		builtins/builtin_hash_print.c \
-		hash_table.c
+		hash_table.c \
+		hash_table_utils.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

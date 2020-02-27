@@ -100,7 +100,7 @@ void	launch_job(t_job *j, int foreground)
 						j->pgid = pid;
 					setpgid(pid, j->pgid);
 				}
-				add_name_hash_table(p->argv[0]);
+				add_name_hash_table(p->argv[0], 1);
 			}
 		}
 
