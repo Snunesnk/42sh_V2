@@ -17,8 +17,8 @@ int	launch_builtin(t_process *p)
 	if (p->redir != NULL)
 		p->redir->flags |= NOFORK;
 	/* 1. Set redirections */
-	do_redirection(p->redir);
-
+	if ((ret = do_redirection(p->redir)))
+		return (g_errordesc[ret].code);
 	/* Execute the builtin. Retreive return value */
 	ret = builtins_dispatcher(p->argv);
 
