@@ -1,3 +1,6 @@
+echo ok < toto < auteur < plop
+echo ok < auteur
+echo < auteur
 touch toutou
 chmod 0000 toutou
 ls < toutou
