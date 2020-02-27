@@ -35,6 +35,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
 	token_tab[IO_NB] = NULL;
+	token_tab[SHELL_VAR] = NULL;
 	token_tab[END_OF_FILE] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
@@ -80,9 +81,11 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 		if (str[*len] != '\0')
 			(*len)++;
 	}
-	token->type = WORD;
 	tmp = ft_strndup(str, *len);
 	token->value = ft_strdup(tmp);
+	token->type = WORD;
+	if (ft_strchr(tmp, '=') != NULL)
+		token->type = SHELL_VAR;
 	ft_strdel(&tmp);
 	if (token->value == NULL)
 		*len = 0;
