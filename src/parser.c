@@ -15,20 +15,22 @@
 
 static void	init_token_tab(int **token_tab)
 {
-	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
-	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
-	int		token_redir[NB_TOKEN] = { WORD, TAB_END };
+	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, SHELL_VAR, COMMENT, TAB_END };
+	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, SHELL_VAR, GREATAND, LESSAND, DGREAT,
+					DLESS, COMMENT, END, TAB_END };
+	int		token_redir[NB_TOKEN] = { WORD, GREATAND, LESSAND, DGREAT, DLESS,
+					TAB_END };
 	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND,
 					ANDGREAT, ANDLESS, AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS,
 					WHILE_WORD, DONE, DGREAT, DLESS, GREAT, LESS, WORD, IO_NB,
 					COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, GREATAND,
 					TAB_END };
-	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
+	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, SHELL_VAR, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
 	int		token_op_parenthesis[NB_TOKEN] = { OP_PARENTHESIS, CL_PARENTHESIS,
-					WHILE_LOOP, WORD, COMMENT, TAB_END};
-	int		token_while[NB_TOKEN] = { DONE, OP_PARENTHESIS, WORD, COMMENT,
+					WHILE_LOOP, COMMENT, SHELL_VAR, TAB_END};
+	int		token_while[NB_TOKEN] = { DONE, OP_PARENTHESIS, WORD, COMMENT, SHELL_VAR,
 					TAB_END};
 
 	token_tab[OR_IF] = NULL;
@@ -51,6 +53,7 @@ static void	init_token_tab(int **token_tab)
 	token_tab[LESS] = token_redir;
 	token_tab[WORD] = token_word;
 	token_tab[IO_NB] = token_io_nb;
+	token_tab[SHELL_VAR] = token_start;
 	token_tab[COMMENT] = token_word;
 	token_tab[START] = token_start;
 	token_tab[END] = NULL;
