@@ -33,10 +33,21 @@ echo 32; make
 echo 33; rm
 echo 34; hash -r
 echo 35; make
-echo 36ls
+echo 36; ls
 echo 37; hash -t
 echo 38; hash -t ls
-echo 39hash -t ls make cat
+echo 39; hash -t ls make cat
 echo 40; hash -r la make cat w sl ls whoami op touch mv mv mv mv mv
 echo 41; hash
-echo 42; exit
+echo 42; hash -dp make
+echo 43; hash -dt make
+echo 44; hash -dl make
+echo 45; hash
+mkdir /tmp/bin; touch /tmp/bin/.keepme; echo 46; hash .keepme; rm -rf /tmp/bin
+echo 47; hash I_do_not_exist_but_if_I_do_it_would_be_quite_infortunate
+echo 48; hash -l -l -l
+echo 49; hash -l -l -l -l -l -l -l -l -l -l -l -l -l -l -l
+echo 50; hash -l ls
+echo 51; hash -p -d ls
+echo 52; hash -l
+exit

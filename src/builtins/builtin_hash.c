@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 20:31:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 21:11:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,22 @@ int		contains_arg(char **argv)
 	return (0);
 }
 
+int		next_p_arg(char **argv)
+{
+	int	i;
+	int	x;
+
+	x = 0;
+	i = 1;
+	while (argv[i] && argv[i][0] == '-')
+	{
+		if (ft_strchr(argv[i], 'p'))
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
+
 int		exec_hash_builtin(int options_list, int argc, char **argv)
 {
 	int	i;
@@ -129,14 +145,16 @@ int		exec_hash_builtin(int options_list, int argc, char **argv)
 		return (print_hashed_targets(options_list, argv));
 	while (status != e_cannot_allocate_memory && argv[i])
 	{
-		if (options_list & HASH_P_OPTION && i > contains_arg(argv))
-			status = change_hash_entry(argv[contains_arg(argv)], argv[i]);
+		if (options_list & HASH_P_OPTION && i > next_p_arg(argv))
+			status = change_hash_entry(argv[next_p_arg(argv)], argv[i]);
 		else if (options_list & HASH_D_OPTION && !(options_list & HASH_P_OPTION)\
 				&& i >= contains_arg(argv))
 			remove_hash_entry(argv[i]);
-		else if (!(options_list & HASH_P_OPTION) && !(options_list & HASH_D_OPTION))
+		else if (!(options_list & HASH_P_OPTION) \
+				&& !(options_list & HASH_D_OPTION) \
+				&& argv[i][0] != '.')
 			status = add_name_hash_table(argv[i], 0);
-		if (status == e_command_not_found)
+		if (status == e_command_not_found || argv[i][0] == '.')
 			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", argv[i]);
 		i++;
 	}
