@@ -60,6 +60,21 @@ static int	is_io_number(const char *str)
 	return (FALSE);
 }
 
+static void	is_shell_var(char *str, t_token *token)
+{
+	char	*tmp;
+	size_t	len;
+
+	tmp = ft_strchr(str, '=');
+	if (tmp != NULL)
+	{
+		len = tmp - str;
+		tmp = ft_strndup(str, len);
+		if (ft_isalnum(tmp[len - 1]) == TRUE)
+			token->type = SHELL_VAR;
+	}
+}
+
 static void	get_token_word(const char *str, t_token *token, size_t *len)
 {
 	char	*tmp;
@@ -84,8 +99,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 	tmp = ft_strndup(str, *len);
 	token->value = ft_strdup(tmp);
 	token->type = WORD;
-	if (ft_strchr(tmp, '=') != NULL)
-		token->type = SHELL_VAR;
+	is_shell_var(tmp, token);
 	ft_strdel(&tmp);
 	if (token->value == NULL)
 		*len = 0;
