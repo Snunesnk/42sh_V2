@@ -21,6 +21,9 @@ SOURCES :=	main.c \
 		job_control.c \
 		signals.c \
 		redir.c \
+		build_redir.c \
+		do_redir.c \
+		undo_redir.c \
 		process.c \
 		execute_process.c \
 		launch_builtin.c \
