@@ -79,22 +79,29 @@ int	get_tokentype(t_list *lst)
 	return (t->type);
 }
 
-char	**build_argv(t_list **lst)
+char	**build_argv(t_list *lst)
 {
 	char	**argv;
 	int	argc;
 	int	i;
 
 	i = 0;
-	argc = get_argc(*lst);
+	argc = get_argc(lst);
 	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
 	if (argv != NULL)
 	{
-		while (*lst && i < argc)
+		while (lst && i < argc)
 		{
-			argv[i] = get_tokvalue(*lst);
-			++i;
-			(*lst) = (*lst)->next;
+			if (get_tokentype(lst) == IO_NB)
+				lst = lst->next->next->next;
+			if (is_redir_type(get_tokentype(lst)))
+				lst = lst->next->next;
+			if (get_tokentype(lst) == WORD)
+			{
+				argv[i] = get_tokvalue(lst);
+				++i;
+			}
+			lst = lst->next;
 		}
 		return (argv);
 	}
@@ -111,17 +118,17 @@ t_process	*build_a_process(t_list **lst)
 	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
 	if (*lst)
 	{
-		p->argv = build_argv(lst);
+		p->argv = build_argv(*lst);
 		if (p->argv == NULL)
 		{
 			free(p);
 			return (NULL);
 		}
-		if (has_redirections(get_tokentype(*lst)))
-		{
+//		if (has_redirections(get_tokentype(*lst)))
+//		{
 			/* Add redirection instruction calling parse_redirection */
-			p->redir = build_redirections(lst);
-		}
+//			p->redir = build_redirections(lst);
+//		}
 		return (p);
 	}
 	free(p);
