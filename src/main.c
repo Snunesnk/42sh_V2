@@ -70,8 +70,7 @@ int			main(int argc, char **argv)
 		}
 		ast = NULL;
 		lexer(input, &ast);
-/*		debug(lst);*/
-//		debug_ast(ast);
+		debug_ast(ast);
 		if (ast != NULL)
 		{
 			expansions(ast);
