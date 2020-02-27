@@ -16,8 +16,10 @@
 static void	init_token_tab(int **token_tab)
 {
 	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
-	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, END, TAB_END };
-	int		token_redir[NB_TOKEN] = { WORD, TAB_END };
+	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, GREATAND, LESSAND, DGREAT,
+					DLESS, COMMENT, END, TAB_END };
+	int		token_redir[NB_TOKEN] = { WORD, GREATAND, LESSAND, DGREAT, DLESS,
+					TAB_END };
 	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND,
 					ANDGREAT, ANDLESS, AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS,
 					WHILE_WORD, DONE, DGREAT, DLESS, GREAT, LESS, WORD, IO_NB,
