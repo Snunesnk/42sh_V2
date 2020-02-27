@@ -1,0 +1,42 @@
+echo 1; hash
+echo 2; hash -r
+echo 3; hash
+echo 4; ls
+echo 5; hash
+echo 6; hash -r
+echo 7; hash ls
+echo 8; hash
+echo 9; hash ls make cat w
+echo 10; hash
+echo 11; hash ls make cat w
+echo 12; hash
+echo 13; hash -d ls
+echo 14; hash
+echo 15; hash -d make cat w
+echo 16; hash
+echo 17; hash -t
+echo 18; hash -p
+echo 19; hash --
+echo 20; hash -- -p
+echo 21; hash --p
+echo 22; hash -tp
+echo 23; hash -p -r -t -l -d
+echo 24; hash -r -p /bin/ls ls
+echo 25; hash -l
+echo 26; hash -r -p /bin ls
+echo 27; hash -r -p /bin/ls ls make rm
+echo 28; ls
+echo 29; make
+echo 30; rm
+echo 31; hash -d make
+echo 32; make
+echo 33; rm
+echo 34; hash -r
+echo 35; make
+echo 36ls
+echo 37; hash -t
+echo 38; hash -t ls
+echo 39hash -t ls make cat
+echo 40; hash -r la make cat w sl ls whoami op touch mv mv mv mv mv
+echo 41; hash
+echo 42; exit
