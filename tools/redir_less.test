@@ -1,4 +1,44 @@
 plop=Jean-Michel
+cat -e<
+cat -e<0
+cat -e<$toto
+cat -e</dev/null
+head</dev/urandom
+cat -e  <
+cat -e  <  0
+cat -e  <  $toto
+cat -e  <  /dev/null
+head  <  /dev/urandom
+ls <  /dev/urandom
+ls < plop
+head < /dev/urandom >> toto
+ls < toto
+echo ok -e<
+type ok -e<0
+setenv ok -e<$toto
+unsetenv ok -e</dev/null
+cd ok ok</dev/urandom
+echo -e  <
+echo ok -e  <  0
+echo ok -e  <  $toto
+echo ok -e  <  /dev/null
+doesno  <  /dev/urandom
+echo ok <  /dev/urandom
+echo ok < plop
+echo ok < /dev/urandom >> toto
+set < toto
+mkdir okay
+ls -<toto
+ls < ./okay
+ls < ./21sh
+ls < 21sh
+
+
+ls -l>1
+
+
+
+plop=Jean-Michel
 echo ok toto>1
 ls -l>1
 echo ok toto>plop
