@@ -256,11 +256,21 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
+	if (access(r->redirector.filename, F_OK))
+	{
+		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
+		return (e_no_such_file_or_directory);
+	}
+	if (access(r->redirector.filename, R_OK))
+	{
+		psherror(e_permission_denied, r->redirector.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
 	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 	{
-		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-		return (1);
+		psherror(e_system_call_error, r->redirector.filename, e_cmd_type);
+		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirectee.dest);
