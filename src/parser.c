@@ -53,6 +53,7 @@ static void	init_token_tab(int **token_tab)
 	token_tab[LESS] = token_redir;
 	token_tab[WORD] = token_word;
 	token_tab[IO_NB] = token_io_nb;
+	token_tab[SHELL_VAR] = token_start;
 	token_tab[COMMENT] = token_word;
 	token_tab[START] = token_start;
 	token_tab[END] = NULL;
