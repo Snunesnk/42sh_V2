@@ -105,6 +105,8 @@ char	**build_argv(t_list *lst)
 				break;
 			lst = lst->next;
 		}
+		ft_printf("i:%d argc:%d\n", i, argc);
+		ft_print_tables(argv);
 		return (argv);
 	}
 	return (NULL);
@@ -128,6 +130,9 @@ t_process	*build_a_process(t_list **lst)
 		}
 		/* Add redirection instruction calling parse_redirection */
 		p->redir = build_redirections(lst);
+		ft_printf("LIST\n\n");
+		debug(*lst);
+		ft_printf("\n\n");
 		return (p);
 	}
 	free(p);
