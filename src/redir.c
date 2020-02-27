@@ -256,11 +256,21 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
+	if (access(r->redirector.filename, F_OK))
+	{
+		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
+		return (e_no_such_file_or_directory);
+	}
+	if (access(r->redirector.filename, R_OK))
+	{
+		psherror(e_permission_denied, r->redirector.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
 	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 	{
-		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-		return (1);
+		psherror(e_system_call_error, r->redirector.filename, e_cmd_type);
+		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirectee.dest);
@@ -333,20 +343,33 @@ static int	do_iodread(t_redirection *r)
 
 int	do_redirection(t_redirection *r)
 {
+	/* Used for error type and displaying the correct error message in process.c */
+	int		error;
+	t_redirection	*beg;
+
+	beg = r;
+	error = 0;
 	while (r)
 	{
 		if (r->instruction == IOWRITE)
-			do_iowrite(r);
+			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
-			do_iocat(r);
+			error = do_iocat(r);
 		else if (r->instruction == IOREAD)
-			do_ioread(r);
+			error = do_ioread(r);
 		else if (r->instruction == IOHERE)
-			do_iohere(r);
+			error = do_iohere(r);
 		else if (r->instruction == IODUP)
-			do_iodup(r);
+			error = do_iodup(r);
 		else if (r->instruction == (IODUP | IOREAD))
-			do_iodread(r);
+			error = do_iodread(r);
+		if (error)
+		{
+			if (r->flags & NOFORK)
+				undo_redirection(beg);
+			return (error);
+		}
+		r->flags |= REDSUC;
 		r = r->next;
 	}
 	return (0);
@@ -393,7 +416,7 @@ int	undo_redirection_internal(t_redirection *r)
 
 int	undo_redirection(t_redirection *r)
 {
-	while (r)
+	while (r && r->flags & REDSUC)
 	{
 		undo_redirection_internal(r);
 		/* should we free at that point ? */

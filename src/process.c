@@ -57,8 +57,9 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	}
 
 	/* Sepcial redirections */
-	if (do_redirection(p->redir))
-		exit(EXIT_FAILURE); /* redirection failure, error msg have to be implemented */
+	if ((ret = do_redirection(p->redir)))
+		exit(g_errordesc[ret].code); /* redirection failure, error msg have to be implemented */
+		/* Free or not to free ? Lazy so I leave it to exit handlers */
 
 	/* Exec the new process. Make sure we exit */
 	/* Check access, etc... and send value to exit if error launching of if builtin */
