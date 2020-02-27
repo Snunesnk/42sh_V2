@@ -27,12 +27,14 @@ echo ok <  /dev/urandom
 echo ok < plop
 echo ok < /dev/urandom >> toto
 set < toto
-mkdir okay
 ls -<toto
-ls < ./okay
+ls < .
 ls < ./21sh
 ls < 21sh
-
+cat -e -< auteur
+ello=auteur
+cat -e <ello
+cat -e <$ello
 
 ls -l>1
 
@@ -80,10 +82,7 @@ toto=file
 echo ok >&$toto
 toto=42
 echo ok >&$toto
-mkdir pop
-chmod 0000 pop
-ls 2>/pop/plop
-chmod 0766 pop
+ls 2>/root
 rm -rf pop
 echo a >&2 | echo b >&2 | echo c >&2 | echo d >&2
 ls >/dev/null 2>/dev/null | setenv TOTO ok | env
