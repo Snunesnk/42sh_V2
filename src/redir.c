@@ -184,12 +184,22 @@ t_redirection	*build_redirections(t_list **lst)
 	t_redirection	*r;
 	t_redirection	**n;
 
+	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END && get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
+		(*lst) = (*lst)->next;
 	r = parse_redirection(lst);
 	n = &(r->next);
-	while (has_redirections(get_tokentype(*lst)))
+	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END)
 	{
-		*n = parse_redirection(lst);
-		n = &((*n)->next);
+		(*lst) = (*lst)->next;
+ 		if (get_tokentype(*lst) == IO_NB || is_redir_type(get_tokentype(*lst)))
+		{
+			while (has_redirections(get_tokentype(*lst)))
+			{
+				*n = parse_redirection(lst);
+				n = &((*n)->next);
+			}
+			return (r);
+		}
 	}
 	return (r);
 }

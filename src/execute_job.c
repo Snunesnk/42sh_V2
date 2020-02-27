@@ -11,7 +11,7 @@ void	print_p(t_process *p)
 	}
 }
 
-static int	is_redir_type(int type)
+int	is_redir_type(int type)
 {
 	return (type == GREATAND
 		|| type == LESSAND
@@ -101,6 +101,8 @@ char	**build_argv(t_list *lst)
 				argv[i] = get_tokvalue(lst);
 				++i;
 			}
+			if (get_tokentype(lst) == PIPE || get_tokentype(lst) == END)
+				break;
 			lst = lst->next;
 		}
 		return (argv);
@@ -124,11 +126,8 @@ t_process	*build_a_process(t_list **lst)
 			free(p);
 			return (NULL);
 		}
-//		if (has_redirections(get_tokentype(*lst)))
-//		{
-			/* Add redirection instruction calling parse_redirection */
-//			p->redir = build_redirections(lst);
-//		}
+		/* Add redirection instruction calling parse_redirection */
+		p->redir = build_redirections(lst);
 		return (p);
 	}
 	free(p);
