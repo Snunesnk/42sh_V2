@@ -157,7 +157,7 @@ int	undo_redirection(t_redirection *r);
 # define FALSE		0
 
 # define BUF_SIZE	32
-# define NB_TOKEN	25
+# define NB_TOKEN	26
 # define NB_BRACKET	3
 # define TAB_END	-1
 
@@ -196,6 +196,7 @@ enum	e_token
 	LESS,
 	WORD,
 	IO_NB,
+	SHELL_VAR,
 	END_OF_FILE,
 	COMMENT,
 	START,
@@ -216,6 +217,13 @@ typedef struct	s_ast
 	void		*left;
 	void		*right;
 }				t_ast;
+
+typedef struct	s_shell_var
+{
+	char		*name;
+	char		*value;
+	uint64_t	flag;
+}				t_shell_var;
 
 int		lexer(char* str, t_ast **ast);
 int		parser(t_ast *ast);
