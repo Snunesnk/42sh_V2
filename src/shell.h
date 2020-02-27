@@ -146,6 +146,7 @@ extern sigset_t			g_save_procmask;
 
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
+int     is_redir_type(int type);
 t_redirection	*build_redirections(t_list **lst);
 int	get_tokentype(t_list *lst);
 char	*get_tokvalue(t_list *lst);
