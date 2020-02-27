@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/26 22:44:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 18:30:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 int		print_hashed_commands(int options_list)
 {
-	int	i;
-	int	nb;
+	t_hash_table	*tmp;
+	unsigned int	i;
+	int				nb;
 
 	nb = 0;
 	i = 0;
@@ -24,18 +25,27 @@ int		print_hashed_commands(int options_list)
 	{
 		if (g_hash_table[i])
 		{
+			tmp = g_hash_table[i];
 			nb++;
 			if (!(options_list & HASH_L_OPTION))
 			{
 				if (nb == 1)
 					ft_printf("hits\tcommand\n");
-				ft_printf("%4d\t%s\n", g_hash_table[i]->nb_called, \
-						g_hash_table[i]->command_path);
+				while (tmp)
+				{
+					ft_printf("%4d\t%s\n", tmp->nb_called, tmp->command_path);
+					tmp = tmp->next;
+				}
 			}
 			else
-				ft_printf("builtin hash -p %s %s\n", \
-						g_hash_table[i]->command_path, \
-						g_hash_table[i]->command_name);
+			{
+				while (tmp)
+				{
+					ft_printf("builtin hash -p %s %s\n", tmp->command_path, \
+						tmp->command_name);
+					tmp = tmp->next;
+				}
+			}
 		}
 		i++;
 	}
@@ -46,7 +56,7 @@ int		print_hashed_commands(int options_list)
 
 void	del_hashed_commands(void)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
 	while (i < HASH_SIZE)
@@ -64,9 +74,10 @@ void	del_hashed_commands(void)
 }
 int		print_hashed_targets(int options_list, char **argv)
 {
-	int	i;
-	int	status;
-	int	multiple;
+	t_hash_table	*tmp;
+	int				i;
+	int				status;
+	int				multiple;
 
 	multiple = 0;
 	i = 1;
@@ -79,7 +90,8 @@ int		print_hashed_targets(int options_list, char **argv)
 		multiple = 1;
 	while (argv[i])
 	{
-		if (!g_hash_table[ft_hash(argv[i])])
+		tmp = find_occurence(argv[i]);
+		if (!tmp)
 		{
 			status = e_invalid_input;
 			ft_printf("./21sh: hash: %s: not found\n", argv[i]);
@@ -87,13 +99,12 @@ int		print_hashed_targets(int options_list, char **argv)
 		else
 		{
 			if (options_list & HASH_L_OPTION)
-				ft_printf("builtin hash -p %s %s\n", \
-						g_hash_table[ft_hash(argv[i])]->command_path, argv[i]);
+				ft_printf("builtin hash -p %s %s\n", tmp->command_path, argv[i]);
 			else
 			{
 				if (multiple)
 					ft_printf("%s\t", argv[i]);
-				ft_printf("%s\n", g_hash_table[ft_hash(argv[i])]->command_path);
+				ft_printf("%s\n", tmp->command_path);
 			}
 		}
 		i++;
@@ -103,40 +114,49 @@ int		print_hashed_targets(int options_list, char **argv)
 
 int		change_hash_entry(char *pathname, char *name)
 {
-	int			hash;
-	struct stat	path_stat;
+	t_hash_table	*tmp;
+	int				hash;
+	struct stat		path_stat;
 
 	stat(pathname, &path_stat);
-	if (!S_ISREG(path_stat.st_mode))
+	if (S_ISDIR(path_stat.st_mode))
 	{
 		ft_printf("./21sh: hash: %s: Is a directory\n", pathname);
 		return (e_invalid_input);
 	}
 	hash = ft_hash(name);
-	if (!g_hash_table[hash])
+	tmp = find_occurence(name);
+	if (!tmp)
 	{
-		if (add_to_hash_table(pathname, name) == e_cannot_allocate_memory)
+		if (add_to_hash_table(pathname, name, 0) == e_cannot_allocate_memory)
 			return (e_cannot_allocate_memory);
 		return (e_success);
 	}
-	free(g_hash_table[hash]->command_path);
-	if (!(g_hash_table[hash]->command_path = ft_strdup(pathname)))
+	free(tmp->command_path);
+	if (!(tmp->command_path = ft_strdup(pathname)))
 		return (e_cannot_allocate_memory);
 	return (e_success);
 }
 
 void	remove_hash_entry(char *name)
 {
-	int	hash;
+	t_hash_table	*tmp;
+	t_hash_table	*prev;
+	int				hash;
 
 	hash = ft_hash(name);
-	if (!g_hash_table[hash])
+	tmp = find_occurence(name);
+	if (!tmp)
 	{
 		ft_printf("./21sh: hash: %s: not found\n", name);
 		return ;
 	}
-	free(g_hash_table[hash]->command_path);
-	free(g_hash_table[hash]->command_name);
-	free(g_hash_table[hash]);
-	g_hash_table[hash] = NULL;
+	prev = find_prev_occurence(name);
+	free(tmp->command_path);
+	free(tmp->command_name);
+	if (prev)
+		prev->next = tmp->next;
+	else
+		g_hash_table[hash] = tmp->next;
+	free(tmp);
 }
