@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/27 18:24:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:46:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int				cmd_hash(int argc, char **argv);
 char			get_next_opt(char **argv);
 int				check_for_needed_arguments(int options_list, int argc, \
 		char **argv);
-int				exec_hash_builtin(int options_list, char **argv);
+int				exec_hash_builtin(int options_list, int argc, char **argv);
 int				print_hashed_commands(int options_list);
 void			del_hashed_commands(void);
 int				print_hashed_targets(int options_list, char **argv);
