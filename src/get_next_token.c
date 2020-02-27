@@ -135,6 +135,10 @@ int			get_next_token(const char *str, t_token *token)
 				ft_strlen(token_tab[token_index])) == TRUE)
 		{
 			token->type = token_index;
+			if (token->type == GREATAND)
+				token->type = ANDGREAT;
+			else if (token->type == LESSAND)
+				token->type = ANDLESS;
 			pos = ft_strlen(token_tab[token_index]);
 			break ;
 		}
