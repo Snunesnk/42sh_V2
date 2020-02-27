@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 18:30:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/27 19:56:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int		print_hashed_targets(int options_list, char **argv)
 		if (!tmp)
 		{
 			status = e_invalid_input;
-			ft_printf("./21sh: hash: %s: not found\n", argv[i]);
+			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", argv[i]);
 		}
 		else
 		{
@@ -121,7 +121,7 @@ int		change_hash_entry(char *pathname, char *name)
 	stat(pathname, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 	{
-		ft_printf("./21sh: hash: %s: Is a directory\n", pathname);
+		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: Is a directory\n", pathname);
 		return (e_invalid_input);
 	}
 	hash = ft_hash(name);
@@ -148,7 +148,7 @@ void	remove_hash_entry(char *name)
 	tmp = find_occurence(name);
 	if (!tmp)
 	{
-		ft_printf("./21sh: hash: %s: not found\n", name);
+		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", name);
 		return ;
 	}
 	prev = find_prev_occurence(name);
