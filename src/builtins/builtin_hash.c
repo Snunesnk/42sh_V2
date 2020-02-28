@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 21:11:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/28 15:30:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 
 int		cmd_hash(int argc, char **argv)
 {
+	char	**args;
 	int		options_list;
 	int		status;
 
+	if (argv)
+		args = argv + 1;
+	else
+		args = argv;
+	ft_printf("args pointe sur: %s\n", *args);
 	options_list = 0;
-	while (argv && argc > 1 && (status = get_next_opt(argv)) != -1)
+	while (args && argc > 1 && (status = get_next_opt(&args)) != -1)
 	{
 		if (status == 'd')
 			options_list |= HASH_D_OPTION;
@@ -34,42 +40,61 @@ int		cmd_hash(int argc, char **argv)
 		else if (status == e_invalid_input)
 			return (status);
 	}
+	ft_printf("et maintenant args pointe sur: %s\n", *args);
 	if (check_for_needed_arguments(options_list, argc, argv))
 		return (e_filename_arg_required);
 	status = exec_hash_builtin(options_list, argc, argv);
 	return (status > 0);
 }
 
-char	get_next_opt(char **argv)
+char	get_next_opt(char ***args)
 {
 	static int	x = 0;
-	static int	y = 1;
 	static char	options_list[] = "dlprt";
 
 	x++;
-	if (!argv)
+	if (!args || !*args)
 	{
 		x = 0;
-		y = 1;
 		return (-1);
 	}
-	if (!argv[y][x])
+	if (!(**args)[x] && x > 0 && (**args)[x - 1] != 'p')
 	{
 		x = 1;
-		y += 1;
+		*args += 1;
 	}
-	if (!argv[y])
+	if (!(**args))
 		return (get_next_opt(NULL));
-	if (argv[y][0] == '-')
+	if ((**args)[0] == '-')
 	{
-		if (x == 1 && argv[y][x] == '-' && !argv[y][x + 1])
+		if ((**args)[x - 1] == 'p')
+		{
+			if (!(**args)[x] && !contains_arg(*args))
+			{
+				ft_dprintf(STDERR_FILENO, \
+					"./21sh: hash: -p: option requires an argument\n");
+				ft_dprintf(STDERR_FILENO, \
+					"hash: usage: hash [-lr] [-p pathname] [-dt] [name ...]\n");
+				get_next_opt(NULL);
+				return (e_invalid_input);
+			}
+			else
+			{
+				ft_printf("passage de %s a , x: %d", **args, x);
+				ft_memmove(**args, **args + x, ft_strlen(**args - x));
+				ft_printf("%s\n", **args);
+			}
 			return (get_next_opt(NULL));
-		if (ft_strchr(options_list, argv[y][x]))
-			return (argv[y][x]);
+		}
+		if (x == 1 && (**args)[x] == '-' && !(**args)[x + 1])
+			return (get_next_opt(NULL));
+		if (ft_strchr(options_list, (**args)[x]))
+			return ((**args)[x]);
 		ft_dprintf(STDERR_FILENO, \
-				"./21sh: hash: -%c: invalid option\n", argv[y][x]);
+				"./21sh: hash: -%c: invalid option\n", (**args)[x]);
 		ft_dprintf(STDERR_FILENO, \
 				"hash: usage: hash [-lr] [-p pathname] [-dt] [name ...]\n");
+		get_next_opt(NULL);
 		return (e_invalid_input);
 	}
 	return (get_next_opt(NULL));
@@ -77,15 +102,8 @@ char	get_next_opt(char **argv)
 
 int		check_for_needed_arguments(int options_list, int argc, char **argv)
 {
-	if (options_list & HASH_P_OPTION && argc < 3)
-	{
-		ft_dprintf(STDERR_FILENO, \
-				"./21sh: hash: -p: option requires an argument\n");
-		ft_dprintf(STDERR_FILENO, \
-				"hash: usage: hash [-lr] [-p pathname] [-dt] [name ...]\n");
-		return (e_invalid_input);
-	}
-	else if ((options_list & HASH_T_OPTION && contains_arg(argv) < 1))
+	(void)argc;
+	if (contains_arg(argv) < 1 && options_list & HASH_T_OPTION)
 	{
 		ft_dprintf(STDERR_FILENO, \
 				"./21sh: hash: -t: option requires an argument\n");
@@ -113,22 +131,6 @@ int		contains_arg(char **argv)
 	return (0);
 }
 
-int		next_p_arg(char **argv)
-{
-	int	i;
-	int	x;
-
-	x = 0;
-	i = 1;
-	while (argv[i] && argv[i][0] == '-')
-	{
-		if (ft_strchr(argv[i], 'p'))
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
 int		exec_hash_builtin(int options_list, int argc, char **argv)
 {
 	int	i;
@@ -137,7 +139,7 @@ int		exec_hash_builtin(int options_list, int argc, char **argv)
 	i = (argv[1] && argv[1][0] == '-') ? 2 : 1;
 	status = e_success;
 	if ((!contains_arg(argv) && !(options_list & HASH_R_OPTION)) \
-			|| (argc < 4 && options_list & HASH_P_OPTION))
+			|| (argc - contains_arg(argv) == 1 && options_list & HASH_P_OPTION))
 		return (print_hashed_commands(options_list));
 	if (options_list & HASH_R_OPTION)
 		del_hashed_commands();
@@ -145,8 +147,8 @@ int		exec_hash_builtin(int options_list, int argc, char **argv)
 		return (print_hashed_targets(options_list, argv));
 	while (status != e_cannot_allocate_memory && argv[i])
 	{
-		if (options_list & HASH_P_OPTION && i > next_p_arg(argv))
-			status = change_hash_entry(argv[next_p_arg(argv)], argv[i]);
+		if (options_list & HASH_P_OPTION && i > contains_arg(argv))
+			status = change_hash_entry(argv[contains_arg(argv)], argv[i]);
 		else if (options_list & HASH_D_OPTION && !(options_list & HASH_P_OPTION)\
 				&& i >= contains_arg(argv))
 			remove_hash_entry(argv[i]);

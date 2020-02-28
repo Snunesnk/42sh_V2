@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 21:14:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/28 15:30:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int		print_hashed_commands(int options_list)
 					tmp = tmp->next;
 				}
 			}
-			else
+			else if (options_list == HASH_L_OPTION)
 			{
 				while (tmp)
 				{
@@ -112,20 +112,22 @@ int		print_hashed_targets(int options_list, char **argv)
 	return (status);
 }
 
-int		change_hash_entry(char *pathname, char *name)
+int		change_hash_entry(char *path, char *name)
 {
 	struct stat		path_stat;
+	int				status;
 
-	stat(pathname, &path_stat);
+	status = e_success;
+	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: Is a directory\n", pathname);
+		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: Is a directory\n", path);
 		return (e_invalid_input);
 	}
-	remove_hash_entry(name);
-	if (!(add_to_hash_table(pathname, name, 0)))
-		return (e_cannot_allocate_memory);
-	return (e_success);
+	if (find_occurence(name))
+		remove_hash_entry(name);
+	status = add_to_hash_table(path, name, 0);
+	return (status);
 }
 
 void	remove_hash_entry(char *name)
