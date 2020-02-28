@@ -30,7 +30,7 @@ int	launch_builtin(t_process *p)
 		return (g_errordesc[ret].code);
 	/* Execute the builtin. Retreive return value */
 	ret = builtins_dispatcher(p->argv);
-
+	ft_printf("NORMAL\n");
 	/* 2. Undo redirections */
 	undo_redirection(p->redir);
 
