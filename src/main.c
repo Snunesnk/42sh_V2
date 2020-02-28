@@ -23,6 +23,7 @@
 #include "error.h"
 
 extern char	**environ;
+t_list		*g_env;
 
 void	astdel(t_ast **ast)
 {
@@ -44,10 +45,6 @@ int			main(int argc, char **argv)
 	char			*input;
 	volatile int	status;
 
-	t_list			*env;
-
-	env = NULL;
-
 	(void)argc;
 	(void)argv;
 	status = 0;
@@ -60,8 +57,8 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 
-	get_env_list(&env, environ);
-	ft_lstprint(env, &print_env);
+	get_env_list(environ);
+	ft_lstprint(g_env, &print_env);
 
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
@@ -99,6 +96,8 @@ int			main(int argc, char **argv)
 		g_retval = status;
 		do_job_notification();
 	}
+/* Useless free functions, shell quits before in exit builtin */
 	ft_tabdel(&environ);
+	ft_lstdel(&g_env, &del_env);
 	return (EXIT_SUCCESS);
 }
