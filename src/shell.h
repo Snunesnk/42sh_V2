@@ -63,6 +63,11 @@ char	*short_physical_path(char **cwd);
 extern char		g_pwd[PATH_MAX];
 extern t_list	*g_env;
 
+struct	s_shell_fds
+{
+	int			fd;
+	struct s_shell_fds	*next;
+};
 
 /* Union containing Descriptor or filename */
 typedef union {
@@ -111,6 +116,7 @@ struct s_job
 	int			stderr;         /* standard i/o channels */
 };
 
+typedef struct s_shell_fds	t_shell_fds;
 typedef struct s_process	t_process;
 typedef struct s_job		t_job;
 typedef struct s_redirection	t_redirection;

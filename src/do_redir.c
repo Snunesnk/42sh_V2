@@ -120,21 +120,21 @@ static int	do_iodread(t_redirection *r)
 }
 
 /* Debugg */
-static void	debug_r(t_redirection *r)
-{
-	static int	i;
-
-	i = 0;
-	ft_printf("\n");
-	while (r)
-	{
-		ft_printf("\nDone redir:%d\n", i++);
-		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
-		ft_printf("\tr->save: %d\n", r->save);
-		r = r->next;
-	}
-	ft_printf("\n");
-}
+//static void	debug_r(t_redirection *r)
+//{
+//	static int	i;
+//
+//	i = 0;
+//	ft_printf("\n");
+//	while (r)
+//	{
+//		ft_printf("\nDone redir:%d\n", i++);
+//		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
+//		ft_printf("\tr->save: %d\n", r->save);
+//		r = r->next;
+//	}
+//	ft_printf("\n");
+//}
 
 int	do_redirection(t_redirection *r)
 {
@@ -146,7 +146,7 @@ int	do_redirection(t_redirection *r)
 	error = 0;
 	while (r)
 	{
-		ft_printf("DO:%s\n", r->redirector.filename);
+	//	ft_printf("DO:%s\n", r->redirector.filename);
 		if (r->instruction == IOWRITE)
 			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
@@ -161,11 +161,11 @@ int	do_redirection(t_redirection *r)
 			error = do_iodread(r);
 		if (error)
 		{
-			ft_printf("\nEEEEEOOOORRRRR:%d\n", (r->flags & REDSUC));
+	//		ft_printf("\nEEEEEOOOORRRRR:%d\n", (r->flags & REDSUC));
 			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
 			{
-				ft_printf("EEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOORRRRRRRRRRR DDDDDDOOOOOO: %s\n", r->redirector.filename);
-				debug_r(beg);
+	//			ft_printf("EEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOORRRRRRRRRRR DDDDDDOOOOOO: %s\n", r->redirector.filename);
+	//			debug_r(beg);
 				undo_redirection(beg);
 			}
 			return (error);
@@ -173,7 +173,7 @@ int	do_redirection(t_redirection *r)
 		r->flags |= REDSUC;
 		r = r->next;
 	}
-	ft_printf("No Bug\n");
-	debug_r(beg);
+	//ft_printf("No Bug\n");
+	//debug_r(beg);
 	return (0);
 }
