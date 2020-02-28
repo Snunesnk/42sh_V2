@@ -60,7 +60,9 @@
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
 
-extern char	g_pwd[PATH_MAX];
+extern char		g_pwd[PATH_MAX];
+extern t_list	*g_env;
+
 
 /* Union containing Descriptor or filename */
 typedef union {
@@ -258,10 +260,11 @@ int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
 int		expansions(t_ast *ast);
-int		get_env_list(t_list **env, char **environ);
+int		get_env_list(char **environ);
 void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
+void	del_env(void *content, size_t content_size);
 
 extern int	g_retval;
 
