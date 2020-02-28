@@ -161,7 +161,7 @@ int	do_redirection(t_redirection *r)
 			error = do_iodread(r);
 		if (error)
 		{
-			ft_printf("\nEEEEEOOOORRRRR\n");
+			ft_printf("\nEEEEEOOOORRRRR:%d\n", (r->flags & REDSUC));
 			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
 			{
 				ft_printf("EEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOORRRRRRRRRRR DDDDDDOOOOOO: %s\n", r->redirector.filename);
@@ -170,7 +170,7 @@ int	do_redirection(t_redirection *r)
 			}
 			return (error);
 		}
-		r->done = 1;
+		r->flags |= REDSUC;
 		r = r->next;
 	}
 	ft_printf("No Bug\n");
