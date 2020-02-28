@@ -54,8 +54,8 @@
 # define DEST      0x2
 # define HEREWORD  0x4
 # define FDCLOSE   0x8
-# define NOFORK    0x16
-# define REDSUC    0x32
+# define NOFORK    0x10
+# define REDSUC    0x20
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
@@ -79,7 +79,6 @@ struct	s_redirection
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
 	int			flags;         /* additional information for complex redirections */
-	int			done;
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 	int			save;          /* saved fd for redir undo */
