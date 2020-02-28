@@ -2,12 +2,6 @@
 #include "error.h"
 #include "shell.h"
 
-/* ************************************************* **
-**                                                   **
-**             PARSE/BUILD REDIRECTIONS              **
-**                                                   **
-** ************************************************* */
-
 static t_redirection	*parse_redirection(t_list **lst)
 {
 	int		io_nb;
@@ -23,7 +17,8 @@ static t_redirection	*parse_redirection(t_list **lst)
 	return (set_redirection(lst, io_nb));
 }
 
-void	debug_r(t_redirection *r)
+/* Debugg */
+static void	debug_r(t_redirection *r)
 {
 	int	i;
 
@@ -31,13 +26,16 @@ void	debug_r(t_redirection *r)
 	ft_printf("\n");
 	while (r)
 	{
-		ft_printf("redir:%d\n", i++);
+		ft_printf("\nBUILD redir:%d\n", i++);
 		if (r->redirector.filename)
-			ft_printf(">%s\n", r->redirector.filename);
+			ft_printf("\tr->redirector.filename: %s\n", r->redirector.filename);
+		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
+		ft_printf("\tr->save: %d\n", r->save);
 		r = r->next;
 	}
 	ft_printf("\n");
 }
+
 
 t_redirection	*build_redirections(t_list **lst)
 {
