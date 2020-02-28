@@ -70,12 +70,41 @@ rslt_bash
 src
 tools
 29
-make: Nothing to be done for `all'.
+21sh
+21sh.mk
+Makefile
+README.md
+auteur
+libft
+rslt_21
+rslt_bash
+src
+tools
 30
+21sh
+21sh.mk
+Makefile
+README.md
+auteur
+libft
+rslt_21
+rslt_bash
+src
+tools
 31
 32
 make: Nothing to be done for `all'.
 33
+21sh
+21sh.mk
+Makefile
+README.md
+auteur
+libft
+rslt_21
+rslt_bash
+src
+tools
 34
 35
 make: Nothing to be done for `all'.
@@ -148,12 +177,39 @@ builtin hash -p /bin/ls ls
 builtin hash -p /bin/cat cat
 50
 51
+hits	command
+   0	/bin/mv
+   1	/bin/mkdir
+   0	/usr/bin/whoami
+   0	/usr/bin/w
+   1	/usr/bin/touch
+   1	/bin/rm
+   0	/bin/ls
+   0	/bin/cat
 52
 builtin hash -p /bin/mv mv
 builtin hash -p /bin/mkdir mkdir
 builtin hash -p /usr/bin/whoami whoami
 builtin hash -p /usr/bin/w w
 builtin hash -p /usr/bin/touch touch
-builtin hash -p -d ls
 builtin hash -p /bin/rm rm
+builtin hash -p /bin/ls ls
 builtin hash -p /bin/cat cat
+53
+54
+builtin hash -p /bin/mv mv
+builtin hash -p /bin/mkdir mkdir
+builtin hash -p /usr/bin/whoami whoami
+builtin hash -p /usr/bin/w w
+builtin hash -p /usr/bin/touch touch
+builtin hash -p /bin/rm rm
+builtin hash -p /bin/ls ls
+builtin hash -p /bin/cat cat
+55
+56
+57
+58
+59
+60
+hash: hash table empty
+61
