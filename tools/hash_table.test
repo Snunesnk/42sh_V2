@@ -50,4 +50,13 @@ echo 49; hash -l -l -l -l -l -l -l -l -l -l -l -l -l -l -l
 echo 50; hash -l ls
 echo 51; hash -p -d ls
 echo 52; hash -l
+echo 53; hash ig kht oiy i  of cj -t ch c g-c h cigh cr-t erhc ort c
+echo 54; hash -l
+echo 55; hash -l-
+echo 56; hash -- -l
+echo 57; hash -lr
+echo 58; hash -lp
+echo 59; hash -dtlp
+echo 60; hash -ptlr
+echo 61; hash -tlr
 exit

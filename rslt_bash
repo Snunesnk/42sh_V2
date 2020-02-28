@@ -186,3 +186,21 @@ builtin hash -p /usr/bin/touch touch
 builtin hash -p -d ls
 builtin hash -p /bin/rm rm
 builtin hash -p /bin/cat cat
+53
+54
+builtin hash -p /bin/mv mv
+builtin hash -p /bin/mkdir mkdir
+builtin hash -p /usr/bin/whoami whoami
+builtin hash -p /usr/bin/w w
+builtin hash -p /usr/bin/touch touch
+builtin hash -p -d ls
+builtin hash -p /bin/rm rm
+builtin hash -p /bin/cat cat
+55
+56
+57
+58
+59
+60
+hash: hash table empty
+61
