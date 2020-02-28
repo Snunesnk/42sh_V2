@@ -39,9 +39,13 @@ void	astdel(t_ast **ast)
 
 int			main(int argc, char **argv)
 {
-	t_ast		*ast;
-	char		*input;
+	t_ast			*ast;
+	char			*input;
 	volatile int	status;
+
+	t_list			*env;
+
+	env = NULL;
 
 	(void)argc;
 	(void)argv;
@@ -54,6 +58,10 @@ int			main(int argc, char **argv)
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
+
+	get_env_list(&env, environ);
+	ft_lstprint(env, &print_env);
+
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
 	{

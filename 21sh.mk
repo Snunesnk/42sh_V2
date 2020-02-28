@@ -15,38 +15,40 @@ NAME = 21sh
 SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
-		debug.c \
-		execute_job.c \
-		job.c \
-		job_control.c \
-		signals.c \
-		redir.c \
-		build_redir.c \
-		do_redir.c \
-		undo_redir.c \
-		process.c \
-		execute_process.c \
-		launch_builtin.c \
-		path_concat.c \
-		utils_job.c \
-		lexer.c \
-		lexer_utils.c \
-		get_next_token.c \
 		ast.c \
 		ast_order.c \
+		build_redir.c \
+		debug.c \
 		debug_ast.c \
-		parser.c \
-		init_shell.c \
-		path.c \
-		input.c \
+		do_redir.c \
 		error.c \
-		ft_putenv_table.c \
 		execute_ast.c \
+		execute_job.c \
+		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
+		ft_merge_sort.c \
+		ft_putenv_table.c \
+		get_env_list.c \
+		get_next_token.c \
 		get_param.c \
+		init_shell.c \
+		input.c \
+		job.c \
+		job_control.c \
+		launch_builtin.c \
+		lexer.c \
+		lexer_utils.c \
 		parameter_expansions.c \
+		parser.c \
+		path.c \
+		path_concat.c \
+		process.c \
+		redir.c \
+		signals.c \
 		tilde_expansion.c \
+		undo_redir.c \
+		utils_job.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \

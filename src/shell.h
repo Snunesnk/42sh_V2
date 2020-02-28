@@ -165,6 +165,11 @@ extern char	*g_filename_redir_error;
 # define NB_BRACKET	3
 # define TAB_END	-1
 
+# define SET		0x01
+# define EXPORT		0x02
+# define RDONLY		0x04
+# define ARRAY		0x08
+
 typedef struct		s_token
 {
 	uint64_t		type;
@@ -245,12 +250,17 @@ int     ft_atoifd(const char *str);
 void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t *type);
+int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
+				uint64_t *type);
 int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
 int		expansions(t_ast *ast);
+int		get_env_list(t_list **env, char **environ);
+void	print_env(t_list *env, t_list **elem);
+void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
+void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
 
 extern int	g_retval;
 
