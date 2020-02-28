@@ -18,23 +18,23 @@ static t_redirection	*parse_redirection(t_list **lst)
 }
 
 /* Debugg */
-static void	debug_r(t_redirection *r)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("\n");
-	while (r)
-	{
-		ft_printf("\nBUILD redir:%d\n", i++);
-		if (r->redirector.filename)
-			ft_printf("\tr->redirector.filename: %s\n", r->redirector.filename);
-		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
-		ft_printf("\tr->save: %d\n", r->save);
-		r = r->next;
-	}
-	ft_printf("\n");
-}
+//void	debug_r(t_redirection *r)
+//{
+//	int	i;
+//
+//	i = 0;
+//	ft_printf("\n");
+//	while (r)
+//	{
+//		ft_printf("\nBUILD redir:%d\n", i++);
+//		if (r->redirector.filename)
+//			ft_printf("\tr->redirector.filename: %s\n", r->redirector.filename);
+//		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
+//		ft_printf("\tr->save: %d\n", r->save);
+//		r = r->next;
+//	}
+//	ft_printf("\n");
+//}
 
 
 t_redirection	*build_redirections(t_list **lst)
@@ -73,6 +73,6 @@ t_redirection	*build_redirections(t_list **lst)
 			}
 		}
 	}
-	debug_r(r); /* Debugging */
+//	debug_r(r); /* Debugging */
 	return (r);
 }
