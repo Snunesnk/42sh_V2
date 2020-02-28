@@ -1,6 +1,16 @@
 #include "libft.h"
 #include "shell.h"
 
+extern t_list	*g_env;
+
+void	del_env(void *content, size_t content_size)
+{
+	(void)content_size;
+	ft_strdel(&((t_shell_var*)(content))->name);
+	ft_strdel(&((t_shell_var*)(content))->value);
+	free(content);
+}
+
 void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head)
 {
 	if (ft_strcmp(((t_shell_var*)((*lst1)->content))->name,
@@ -26,7 +36,7 @@ void	print_env(t_list *env, t_list **elem)
 	*elem = ft_lstnew(tmp, ft_strlen(tmp));
 }
 
-int		get_env_list(t_list **env, char **environ)
+int		get_env_list(char **environ)
 {
 	t_shell_var	shell_var;
 	t_list		*lst_new;
@@ -47,9 +57,9 @@ int		get_env_list(t_list **env, char **environ)
 		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
 		if (lst_new == NULL)
 			return (FAILURE);
-		ft_lstadd(env, lst_new);
+		ft_lstadd(&g_env, lst_new);
 		i++;
 	}
-	ft_merge_sort(env, &alpha_sort);
+	ft_merge_sort(&g_env, &alpha_sort);
 	return (SUCCESS);
 }
