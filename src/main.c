@@ -56,10 +56,8 @@ int			main(int argc, char **argv)
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
-
 	get_env_list(environ);
-	ft_lstprint(g_env, &print_env);
-
+//	ft_lstprint(g_env, &print_env);
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
 	{
