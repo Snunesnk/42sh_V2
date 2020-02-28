@@ -41,7 +41,7 @@ int	undo_redirection_internal(t_redirection *r)
 {
 	while (r)
 	{
-		if (r->done == 1)
+		if (r->flags & REDSUC)
 		{
 			if (r->instruction == IOWRITE)
 				undo_iowrite(r);
