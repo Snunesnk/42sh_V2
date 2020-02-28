@@ -2,12 +2,6 @@
 #include "error.h"
 #include "shell.h"
 
-/* ************************************************* **
-**                                                   **
-**             SET REDIRECTIONS                      **
-**                                                   **
-** ************************************************* */
-
 int	has_redirections(int type)
 {
 	return (type == IO_NB

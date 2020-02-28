@@ -10,12 +10,21 @@
 #include "shell.h"
 #include "builtins.h"
 
+static void	tag_all_redirections(t_redirection *r)
+{
+	while (r)
+	{
+		r->flags |= NOFORK;
+		r = r->next;
+	}
+}
+
 int	launch_builtin(t_process *p)
 {
 	int ret;
 
 	if (p->redir != NULL)
-		p->redir->flags |= NOFORK;
+		tag_all_redirections(p->redir);
 	/* 1. Set redirections */
 	if ((ret = do_redirection(p->redir)))
 		return (g_errordesc[ret].code);
