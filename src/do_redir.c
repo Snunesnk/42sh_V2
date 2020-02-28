@@ -2,12 +2,6 @@
 #include "error.h"
 #include "shell.h"
 
-/* ************************************************* **
-**                                                   **
-**               DO REDIRECTIONS                     **
-**                                                   **
-** ************************************************* */
-
 static int	do_iowrite(t_redirection *r)
 {
 	r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -125,6 +119,23 @@ static int	do_iodread(t_redirection *r)
 	return (0);
 }
 
+/* Debugg */
+static void	debug_r(t_redirection *r)
+{
+	static int	i;
+
+	i = 0;
+	ft_printf("\n");
+	while (r)
+	{
+		ft_printf("\nDone redir:%d\n", i++);
+		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
+		ft_printf("\tr->save: %d\n", r->save);
+		r = r->next;
+	}
+	ft_printf("\n");
+}
+
 int	do_redirection(t_redirection *r)
 {
 	/* Used for error type and displaying the correct error message in process.c */
@@ -135,7 +146,7 @@ int	do_redirection(t_redirection *r)
 	error = 0;
 	while (r)
 	{
-		ft_printf("REDIREC\n");
+		ft_printf("DO:%s\n", r->redirector.filename);
 		if (r->instruction == IOWRITE)
 			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
@@ -150,13 +161,19 @@ int	do_redirection(t_redirection *r)
 			error = do_iodread(r);
 		if (error)
 		{
-			if (r->flags & NOFORK)
+			ft_printf("\nEEEEEOOOORRRRR\n");
+			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
+			{
+				ft_printf("EEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOORRRRRRRRRRR DDDDDDOOOOOO: %s\n", r->redirector.filename);
+				debug_r(beg);
 				undo_redirection(beg);
-			ft_printf("ERROR\n");
+			}
 			return (error);
 		}
-		r->flags |= REDSUC;
+		r->done = 1;
 		r = r->next;
 	}
+	ft_printf("No Bug\n");
+	debug_r(beg);
 	return (0);
 }
