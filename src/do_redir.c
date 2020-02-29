@@ -2,6 +2,16 @@
 #include "error.h"
 #include "shell.h"
 
+static int	valid_fd(int fd)
+{
+	if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+	{
+		ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
+		return (1);
+	}
+	return (0);
+}
+
 static int	do_iowrite(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
@@ -19,6 +29,11 @@ static int	do_iowrite(t_redirection *r)
 	{ /* Open error */
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
+	}
+	if (valid_fd(r->redirector.dest))
+	{
+		close(r->redirectee.dest);
+		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
@@ -45,6 +60,11 @@ static int	do_iocat(t_redirection *r)
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
+	if (valid_fd(r->redirector.dest))
+	{
+		close(r->redirectee.dest);
+		return (e_bad_file_descriptor);
+	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
@@ -54,6 +74,8 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
+	if (valid_fd(r->redirectee.dest))
+		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
 	{
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
@@ -79,7 +101,9 @@ static int	do_ioread(t_redirection *r)
 
 static int	do_iohere(t_redirection *r)
 {
-	/* Could segv if hereword is empty string */
+	if (valid_fd(r->redirectee.dest))
+		return (e_bad_file_descriptor);
+	/* Could segv if hereword is empty string, should free heredoc string */
 	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
 	{
 		psherror(e_system_call_error, "write(2)", e_cmd_type);
@@ -133,6 +157,7 @@ static int	do_iodread(t_redirection *r)
 	}
 */	else if (r->flags & DEST)
 	{
+
 		if (r->flags & NOFORK)
 			r->save = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
