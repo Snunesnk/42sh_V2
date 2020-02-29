@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 14:48:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 15:19:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		print_hashed_targets(int options_list, char **args)
 				if (multiple)
 					ft_printf("%s\t", *args);
 				ft_printf("%s\n", tmp->command_path);
+				tmp->nb_called +=  1;
 			}
 		}
 		args++;
