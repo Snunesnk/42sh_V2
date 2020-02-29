@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/27 18:41:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 19:15:09 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,19 @@
 # define HEREWORD  0x4
 # define FDCLOSE   0x8
 # define NOFORK    0x10
+# define REDSUC    0x20
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
 
-extern char	g_pwd[PATH_MAX];
+extern char		g_pwd[PATH_MAX];
+extern t_list	*g_env;
+
+struct	s_shell_fds
+{
+	int			fd;
+	struct s_shell_fds	*next;
+};
 
 /* Union containing Descriptor or filename */
 typedef union {
@@ -172,19 +180,29 @@ extern sigset_t			g_save_procmask;
 
 int     launch_builtin(t_process *p);
 int	has_redirections(int type);
+int     is_redir_type(int type);
 t_redirection	*build_redirections(t_list **lst);
 int	get_tokentype(t_list *lst);
 char	*get_tokvalue(t_list *lst);
 int	do_redirection(t_redirection *r);
 int	undo_redirection(t_redirection *r);
+t_redirection   *set_redirection(t_list **lst, int io_nb);
+
+extern char	*g_filename_redir_error;
 
 # define TRUE		1
 # define FALSE		0
 
 # define BUF_SIZE	32
-# define NB_TOKEN	25
+
+# define NB_TOKEN	26
 # define NB_BRACKET	3
 # define TAB_END	-1
+
+# define SET		0x01
+# define EXPORT		0x02
+# define RDONLY		0x04
+# define ARRAY		0x08
 
 typedef struct		s_token
 {
@@ -221,6 +239,7 @@ enum	e_token
 	LESS,
 	WORD,
 	IO_NB,
+	SHELL_VAR,
 	END_OF_FILE,
 	COMMENT,
 	START,
@@ -242,6 +261,13 @@ typedef struct	s_ast
 	void		*right;
 }				t_ast;
 
+typedef struct	s_shell_var
+{
+	char		*name;
+	char		*value;
+	uint64_t	flag;
+}				t_shell_var;
+
 int		lexer(char* str, t_ast **ast);
 int		parser(t_ast *ast);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
@@ -258,13 +284,18 @@ int     ft_atoifd(const char *str);
 void	debug_ast(t_ast *ast);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index, uint64_t *type);
+int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
+				uint64_t *type);
 int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
-int		ft_is_space_tab(int c);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
 int		expansions(t_ast *ast);
+int		get_env_list(char **environ);
+void	print_env(t_list *env, t_list **elem);
+void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
+void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
+void	del_env(void *content, size_t content_size);
 
 extern int	g_retval;
 

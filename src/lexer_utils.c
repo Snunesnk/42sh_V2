@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:51:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 11:00:09 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:28:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,4 @@ char	*ft_join_free(char *s1, char *s2, int op)
 		ft_strdel(&s2);
 	}
 	return (str);
-}
-
-int		ft_is_space_tab(int c)
-{
-	int		ret;
-
-	ret = FALSE;
-	if (c == ' ' || c == '\t')
-		ret = TRUE;
-	return (ret);
 }

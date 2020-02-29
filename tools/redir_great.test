@@ -1,0 +1,9 @@
+echo ok 1>toto
+echo ok 1023>toto
+echo ok 512>toto
+echo ok 102465465465464>toto
+echo ok -546>toto
+echo ok 0>toto
+echo ok 1024>toto
+echo ok -1>toto
+echo ok -0>toto

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 14:25:15 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/29 19:22:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[LESS] = "LESS";
 	token_tab[WORD] = "WORD";
 	token_tab[END_OF_FILE] = "EOF";
+	token_tab[SHELL_VAR] = "SHELL_VAR";
 	token_tab[IO_NB] = "IO_NB";
 	token_tab[COMMENT] = "COMMENT";
 	token_tab[START] = "START";
@@ -56,7 +57,7 @@ static void	print(t_list *lst, t_list **elem)
 		tmp = NULL;
 		if (((t_token*)(lst->content))->type == i)
 		{
-			if (i == WORD || i == IO_NB || i == END_OF_FILE)
+			if (i == WORD || i == IO_NB || i == SHELL_VAR || i == END_OF_FILE)
 				tmp = ((t_token*)(lst->content))->value;
 			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
 			break ;
