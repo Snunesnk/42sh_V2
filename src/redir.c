@@ -64,7 +64,6 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	int		fd;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
 	if (io_nb == -1)
@@ -78,14 +77,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
 	{
-		fd = ft_atoifd(r->redirectee.filename);
-		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
-		{
-			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
-			free(r);
-			return (NULL);
-		}
-		r->redirectee.dest = fd;
+		r->redirectee.dest = ft_atoifd(r->redirectee.filename);
 		r->flags |= DEST;
 	}
 	else

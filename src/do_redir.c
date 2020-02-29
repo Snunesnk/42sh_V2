@@ -14,7 +14,6 @@ static int	valid_fd(int fd)
 
 static int	do_iowrite(t_redirection *r)
 {
-	ft_printf("HERE IS IOWRITE");
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -45,7 +44,6 @@ static int	do_iowrite(t_redirection *r)
 
 static int	do_iocat(t_redirection *r)
 {
-	ft_printf("HERE IS IOCAT");
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -76,7 +74,6 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
-	ft_printf("HERE IS IOREAD");
 	if (valid_fd(r->redirectee.dest))
 		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
@@ -118,24 +115,31 @@ static int	do_iohere(t_redirection *r)
 
 static int	do_iodup(t_redirection *r)
 {
-	ft_printf("HERE IS IODUP");
 	if (r->flags & FDCLOSE)
 		close(r->redirector.dest);
 	else if (r->flags & FILENAME)
 	{
-		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (r->redirectee.dest < 0)
-		{
-			psherror(e_system_call_error, "open(2)", e_cmd_type);
-			return (e_system_call_error);
-		}
-		if (r->flags & NOFORK)
-			r->save = dup(r->redirector.dest);
-		dup2(r->redirectee.dest, r->redirector.dest);
-		close(r->redirectee.dest);
+		if (r->redirector.dest == STDOUT_FILENO)
+			return (do_iowrite(r));
+		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
+		return (e_ambiguous_redirect);
+//		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+//		if (r->redirectee.dest < 0)
+//		{
+//			psherror(e_system_call_error, "open(2)", e_cmd_type);
+//			return (e_system_call_error);
+//		}
+//		if (r->flags & NOFORK)
+//			r->save = dup(r->redirector.dest);
+//		dup2(r->redirectee.dest, r->redirector.dest);
+//		close(r->redirectee.dest);
 	}
 	else if (r->flags & DEST)
 	{
+		if (valid_fd(r->redirectee.dest))
+			return (e_bad_file_descriptor);
+		if (valid_fd(r->redirector.dest))
+			return (e_bad_file_descriptor);
 		if (r->flags & NOFORK)
 			r->save = dup(r->redirector.dest);
 		dup2(r->redirectee.dest, r->redirector.dest);
@@ -147,7 +151,6 @@ static int	do_iodup(t_redirection *r)
 /* CANNOT PROPERLY TEST */
 static int	do_iodread(t_redirection *r)
 {
-	ft_printf("HERE IS IODREAD");
 	if (r->flags & FDCLOSE)
 		close(r->redirectee.dest);
 	else if (r->flags & FILENAME)
