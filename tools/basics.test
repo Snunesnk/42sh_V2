@@ -1,5 +1,5 @@
 env
-./minishell
+./21
 echo ok too
 builtin ls
 builtin

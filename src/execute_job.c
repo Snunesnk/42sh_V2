@@ -1,6 +1,12 @@
 #include "libft.h"
 #include "shell.h"
 
+/******************************************************
+**                                                   **
+**                 BUILD JOBS/PROCESS UTILS          **
+**                                                   **
+******************************************************/
+
 /* Debugg function */
 void	print_p(t_process *p)
 {
@@ -11,22 +17,14 @@ void	print_p(t_process *p)
 	}
 }
 
-static int	get_argc(t_list *lst)
+int	is_redir_type(int type)
 {
-	t_token	*t;
-	int	argc;
-
-	argc = 0;
-	while (lst)
-	{
-		t = lst->content;
-		if (t->type == WORD)
-			++argc;
-		else
-			break;
-		lst = lst->next;
-	}
-	return (argc);
+	return (type == GREATAND
+		|| type == LESSAND
+		|| type == DGREAT
+		|| type == DLESS
+		|| type == GREAT
+		|| type == LESS);
 }
 
 char	*get_tokvalue(t_list *lst)
@@ -45,23 +43,82 @@ int	get_tokentype(t_list *lst)
 	return (t->type);
 }
 
-char	**build_argv(t_list **lst)
+/******************************************************
+**                                                   **
+**                 BUILD PROCESSES                   **
+**                                                   **
+******************************************************/
+
+static int	get_argc(t_list *lst)
+{
+	t_token	*t;
+	int	argc;
+
+	argc = 0;
+	while (lst)
+	{
+		t = lst->content;
+		if (t->type == WORD)
+			++argc;
+		else if (t->type == IO_NB)
+		{
+			lst = lst->next->next->next;
+			if (lst)
+			{
+				t = lst->content;
+				if (t->type == WORD)
+					++argc;
+				else
+					continue;
+			}
+		}
+		else if (is_redir_type(t->type))
+		{
+			lst = lst->next->next;
+			if (lst)
+			{
+				t = lst->content;
+				if (t->type == WORD)
+					++argc;
+				else
+					continue;
+			}
+		}
+		else
+			break;
+		lst = lst->next;
+	}
+	return (argc);
+}
+
+char	**build_argv(t_list *lst)
 {
 	char	**argv;
 	int	argc;
 	int	i;
 
 	i = 0;
-	argc = get_argc(*lst);
+	argc = get_argc(lst);
 	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
 	if (argv != NULL)
 	{
-		while (*lst && i < argc)
+		while (lst && i < argc)
 		{
-			argv[i] = get_tokvalue(*lst);
-			++i;
-			(*lst) = (*lst)->next;
+			if (get_tokentype(lst) == IO_NB)
+				lst = lst->next->next->next;
+			if (is_redir_type(get_tokentype(lst)))
+				lst = lst->next->next;
+			if (get_tokentype(lst) == WORD)
+			{
+				argv[i] = get_tokvalue(lst);
+				++i;
+			}
+			if (get_tokentype(lst) == PIPE || get_tokentype(lst) == END)
+				break;
+			lst = lst->next;
 		}
+	//	ft_printf("i:%d argc:%d\n", i, argc);
+	//	ft_print_tables(argv);
 		return (argv);
 	}
 	return (NULL);
@@ -77,17 +134,14 @@ t_process	*build_a_process(t_list **lst)
 	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
 	if (*lst)
 	{
-		p->argv = build_argv(lst);
+		p->argv = build_argv(*lst);
 		if (p->argv == NULL)
 		{
 			free(p);
 			return (NULL);
 		}
-		if (has_redirections(get_tokentype(*lst)))
-		{
-			/* Add redirection instruction calling parse_redirection */
-			p->redir = build_redirections(lst);
-		}
+		/* Add redirection instruction calling parse_redirection */
+		p->redir = build_redirections(lst);
 		return (p);
 	}
 	free(p);
@@ -127,6 +181,12 @@ t_process	*build_processes(t_list **lst)
 */	return (first_p);
 }
 
+/******************************************************
+**                                                   **
+**                 BUILD JOBS                        **
+**                                                   **
+******************************************************/
+
 t_job	*build_job(t_list **lst)
 {
 	t_job	*j;
@@ -150,6 +210,12 @@ t_job	*build_job(t_list **lst)
 	return (j);
 
 }
+
+/******************************************************
+**                                                   **
+**                 EXECUTE JOBS                      **
+**                                                   **
+******************************************************/
 
 int	execute_job(t_list *lst, int foreground)
 {
