@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/27 15:25:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 19:29:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 #include <stdlib.h>
 
 #include <readline/readline.h>
+#include <readline/history.h>
 
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
 
 extern char	**environ;
+t_list		*g_env;
 
 void	astdel(t_ast **ast)
 {
@@ -39,8 +41,8 @@ void	astdel(t_ast **ast)
 
 int			main(int argc, char **argv)
 {
-	t_ast		*ast;
-	char		*input;
+	t_ast			*ast;
+	char			*input;
 	volatile int	status;
 
 	(void)argc;
@@ -56,6 +58,8 @@ int			main(int argc, char **argv)
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
+	get_env_list(environ);
+//	ft_lstprint(g_env, &print_env);
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
 	{
@@ -72,8 +76,7 @@ int			main(int argc, char **argv)
 		}
 		ast = NULL;
 		lexer(input, &ast);
-/*		debug(lst);*/
-//		debug_ast(ast);
+		debug_ast(ast);
 		if (ast != NULL)
 		{
 			expansions(ast);
@@ -95,5 +98,7 @@ int			main(int argc, char **argv)
 	}
 	free_hash_table();
 	ft_tabdel(&environ);
+/* Useless free functions, shell quits before in exit builtin */
+	ft_lstdel(&g_env, &del_env);
 	return (EXIT_SUCCESS);
 }

@@ -1,0 +1,19 @@
+plop=Jean-Michel
+
+cat -e << eof
+Hello World from Here-Doc
+eof
+
+cat -e << eof && cat -e << fin
+Hello World from the first Here-Doc
+eof
+Hello World from the SEcond here-Doc
+fin
+
+cat   -e     <<                 eof
+
+Hello eof World from Here-Doc
+
+eof
+
+cat   -e     <<                 'eof' 'Hello eof World from Here-Doc' 'eof'
