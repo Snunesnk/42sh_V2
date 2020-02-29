@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 14:31:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 18:19:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
+
+#include "shell.h"
 
 /*
 ** Flags for hash options
@@ -64,7 +66,17 @@ void			del_hashed_commands(void);
 int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
-int				contains_arg(char **argv);
+int				print_error(int error_no, char *message, int ret);
+void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
+		char *arg, int multiple);
+void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
+char			deal_with_p_opt(char ***args, int *x);
+char			return_next_opt(char ***args, int *x);
+
+/*
+** Global var util for -p opt of hash builtin
+*/
+extern char	*g_pathname;
 
 /*
 ** Functions in builtins_dispatcher.c

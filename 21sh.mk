@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/27 14:41:01 by snunes           ###   ########.fr        #
+#    Updated: 2020/02/29 18:39:13 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SOURCES :=	main.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_hash.c \
 		builtins/builtin_hash_print.c \
+		builtins/builtin_hash_utils.c \
 		hash_table.c \
 		hash_table_utils.c
 
@@ -82,7 +83,7 @@ LDLIBS += $(PATH_LIB)libft.a -lreadline
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L  $(DEBUG)
+CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
-DEBUG += -g3 -fsanitize=address,undefined
+DEBUG += -g3 #-fsanitize=address,undefined
