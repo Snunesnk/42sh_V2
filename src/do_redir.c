@@ -123,27 +123,18 @@ static int	do_iodup(t_redirection *r)
 			return (do_iowrite(r));
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
-//		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-//		if (r->redirectee.dest < 0)
-//		{
-//			psherror(e_system_call_error, "open(2)", e_cmd_type);
-//			return (e_system_call_error);
-//		}
-//		if (r->flags & NOFORK)
-//			r->save = dup(r->redirector.dest);
-//		dup2(r->redirectee.dest, r->redirector.dest);
-//		close(r->redirectee.dest);
 	}
 	else if (r->flags & DEST)
 	{
+		ft_printf("PRRRINTF\n");
 		if (valid_fd(r->redirectee.dest))
 			return (e_bad_file_descriptor);
 		if (valid_fd(r->redirector.dest))
 			return (e_bad_file_descriptor);
-		if (r->flags & NOFORK)
-			r->save = dup(r->redirector.dest);
-		dup2(r->redirectee.dest, r->redirector.dest);
-		close(r->redirectee.dest);
+	//	if (r->flags & NOFORK)
+	//		r->save = dup(r->redirector.dest);
+	//	dup2(r->redirectee.dest, r->redirector.dest);
+	//	close(r->redirectee.dest);
 	}
 	return (0);
 }
