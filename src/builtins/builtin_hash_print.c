@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/28 15:30:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 14:48:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,42 +72,38 @@ void	del_hashed_commands(void)
 		i++;
 	}
 }
-int		print_hashed_targets(int options_list, char **argv)
+int		print_hashed_targets(int options_list, char **args)
 {
 	t_hash_table	*tmp;
-	int				i;
 	int				status;
 	int				multiple;
 
 	multiple = 0;
-	i = 1;
 	status = e_success;
-	while (argv[i] && argv[i][0] == '-')
-		i++;
-	if (!(options_list & HASH_T_OPTION) && argv[i])
+	if (!(options_list & HASH_T_OPTION) && *args)
 		return (print_hashed_commands(options_list));
-	if (argv[i] && argv[i + 1] && !(options_list & HASH_L_OPTION))
+	if (*args && args[1] && !(options_list & HASH_L_OPTION))
 		multiple = 1;
-	while (argv[i])
+	while (*args)
 	{
-		tmp = find_occurence(argv[i]);
+		tmp = find_occurence(*args);
 		if (!tmp)
 		{
 			status = e_invalid_input;
-			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", argv[i]);
+			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", *args);
 		}
 		else
 		{
 			if (options_list & HASH_L_OPTION)
-				ft_printf("builtin hash -p %s %s\n", tmp->command_path, argv[i]);
+				ft_printf("builtin hash -p %s %s\n", tmp->command_path, *args);
 			else
 			{
 				if (multiple)
-					ft_printf("%s\t", argv[i]);
+					ft_printf("%s\t", *args);
 				ft_printf("%s\n", tmp->command_path);
 			}
 		}
-		i++;
+		args++;
 	}
 	return (status);
 }

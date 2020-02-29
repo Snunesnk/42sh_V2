@@ -177,23 +177,14 @@ builtin hash -p /bin/ls ls
 builtin hash -p /bin/cat cat
 50
 51
-hits	command
-   0	/bin/mv
-   1	/bin/mkdir
-   0	/usr/bin/whoami
-   0	/usr/bin/w
-   1	/usr/bin/touch
-   1	/bin/rm
-   0	/bin/ls
-   0	/bin/cat
 52
 builtin hash -p /bin/mv mv
 builtin hash -p /bin/mkdir mkdir
 builtin hash -p /usr/bin/whoami whoami
 builtin hash -p /usr/bin/w w
 builtin hash -p /usr/bin/touch touch
+builtin hash -p -d ls
 builtin hash -p /bin/rm rm
-builtin hash -p /bin/ls ls
 builtin hash -p /bin/cat cat
 53
 54
@@ -202,8 +193,8 @@ builtin hash -p /bin/mkdir mkdir
 builtin hash -p /usr/bin/whoami whoami
 builtin hash -p /usr/bin/w w
 builtin hash -p /usr/bin/touch touch
+builtin hash -p -d ls
 builtin hash -p /bin/rm rm
-builtin hash -p /bin/ls ls
 builtin hash -p /bin/cat cat
 55
 56
