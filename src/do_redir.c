@@ -2,6 +2,16 @@
 #include "error.h"
 #include "shell.h"
 
+static int	valid_fd(int fd)
+{
+	if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+	{
+		ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
+		return (1);
+	}
+	return (0);
+}
+
 static int	do_iowrite(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
@@ -54,6 +64,8 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
+	if (valid_fd(r->redirectee.dest))
+		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
 	{
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
@@ -133,6 +145,7 @@ static int	do_iodread(t_redirection *r)
 	}
 */	else if (r->flags & DEST)
 	{
+
 		if (r->flags & NOFORK)
 			r->save = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
