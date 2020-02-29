@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/29 19:27:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 19:34:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,7 @@ static int	get_token_list(char *str, size_t *pos, t_list **lst,
 	ret = SUCCESS;
 	while (str[*pos] != '\0')
 	{
-<<<<<<< HEAD
-		while (ft_is_space_tab(str[*pos]) == TRUE)
-=======
 		while (ft_isblank(str[*pos]) == TRUE)
->>>>>>> 1d58bd23a931ce8dd295cf0d237d296db92138e6
 			(*pos)++;
 		if (str[*pos] == '\0')
 			break ;
@@ -160,11 +156,7 @@ int			lexer(char *str, t_ast **ast)
 	{
 		type = NONE;
 		lst = NULL;
-<<<<<<< HEAD
-		while (ft_is_space_tab(str[pos]) == TRUE)
-=======
 		while (ft_isblank(str[pos]) == TRUE)
->>>>>>> 1d58bd23a931ce8dd295cf0d237d296db92138e6
 			pos++;
 		if (str[pos] != '\0')
 		{
