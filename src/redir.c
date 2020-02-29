@@ -157,9 +157,9 @@ t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_less_redirection(lst, io_nb));
 	else if (type == DLESS)
 		return (type_dless_redirection(lst, io_nb));
-	else if (type == GREATAND)
+	else if (type == GREATAND || type == ANDGREAT)
 		return (type_greatand_redirection(lst, io_nb));
-	else if (type == LESSAND)
+	else if (type == LESSAND || type == ANDLESS)
 		return (type_lessand_redirection(lst, io_nb));
 	return (NULL);
 }

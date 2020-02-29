@@ -14,6 +14,7 @@ static int	valid_fd(int fd)
 
 static int	do_iowrite(t_redirection *r)
 {
+	ft_printf("HERE IS IOWRITE");
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -44,6 +45,7 @@ static int	do_iowrite(t_redirection *r)
 
 static int	do_iocat(t_redirection *r)
 {
+	ft_printf("HERE IS IOCAT");
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -74,6 +76,7 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
+	ft_printf("HERE IS IOREAD");
 	if (valid_fd(r->redirectee.dest))
 		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
@@ -115,6 +118,7 @@ static int	do_iohere(t_redirection *r)
 
 static int	do_iodup(t_redirection *r)
 {
+	ft_printf("HERE IS IODUP");
 	if (r->flags & FDCLOSE)
 		close(r->redirector.dest);
 	else if (r->flags & FILENAME)
@@ -122,8 +126,8 @@ static int	do_iodup(t_redirection *r)
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 		if (r->redirectee.dest < 0)
 		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-			return (1);
+			psherror(e_system_call_error, "open(2)", e_cmd_type);
+			return (e_system_call_error);
 		}
 		if (r->flags & NOFORK)
 			r->save = dup(r->redirector.dest);
@@ -140,22 +144,18 @@ static int	do_iodup(t_redirection *r)
 	return (0);
 }
 
+/* CANNOT PROPERLY TEST */
 static int	do_iodread(t_redirection *r)
 {
+	ft_printf("HERE IS IODREAD");
 	if (r->flags & FDCLOSE)
 		close(r->redirectee.dest);
-/*	else if (r->flags & FILENAME)
-	{ // Ambiguous redirection
-		r->redirector.dest = open(r->redirector.filename, O_RDONLY);
-		if (r->redirector.dest < 0)
-		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n");
-			return (1);
-		}
-		dup2(r->redirector.dest, r->redirectee.dest);
-		close(r->redirector.dest);
+	else if (r->flags & FILENAME)
+	{
+		psherror(e_ambiguous_redirect, r->redirector.filename, e_cmd_type);
+		return (e_ambiguous_redirect);
 	}
-*/	else if (r->flags & DEST)
+	else if (r->flags & DEST)
 	{
 
 		if (r->flags & NOFORK)
