@@ -101,7 +101,9 @@ static int	do_ioread(t_redirection *r)
 
 static int	do_iohere(t_redirection *r)
 {
-	/* Could segv if hereword is empty string */
+	if (valid_fd(r->redirectee.dest))
+		return (e_bad_file_descriptor);
+	/* Could segv if hereword is empty string, should free heredoc string */
 	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
 	{
 		psherror(e_system_call_error, "write(2)", e_cmd_type);
