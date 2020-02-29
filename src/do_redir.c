@@ -4,11 +4,21 @@
 
 static int	do_iowrite(t_redirection *r)
 {
-	r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (access(r->redirectee.filename, F_OK))
+	{ /* File does not exists so attempt to create it */
+		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	else if (access(r->redirectee.filename, R_OK))
+	{ /* File exists but no rights to write */
+		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
+	else /* File exists and rights to write */
+		r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
-	{
-		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-		return (1);
+	{ /* Open error */
+		psherror(e_system_call_error, "open(2)", e_cmd_type);
+		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
