@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 16:54:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 18:36:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,7 @@ int		cmd_hash(int argc, char **argv)
 	int		options_list;
 	int		status;
 
-	if (argv)
-		args = argv + 1;
-	else
-		args = argv;
-//ft_printf("args pointe sur: %s\n", *args);
+	args = (argv) ? argv + 1 : argv;
 	options_list = 0;
 	while (args && argc > 1 && (status = get_next_opt(&args)) != -1)
 	{
@@ -44,17 +40,13 @@ int		cmd_hash(int argc, char **argv)
 	}
 	if (!args)
 		return (e_invalid_input);
-//	ft_printf("args pointe ssur %s\n", *args);
-	if (check_for_needed_arguments(options_list, args))
-		return (e_filename_arg_required);
-	status = exec_hash_builtin(options_list, args);
+	status = check_for_needed_arguments(options_list, args);
 	return (status > 0);
 }
 
 char	get_next_opt(char ***args)
 {
 	static int	x = 0;
-	static char	options_list[] = "dlprt";
 
 	x++;
 	if (!args || !*args || !**args)
@@ -70,49 +62,28 @@ char	get_next_opt(char ***args)
 	if (!(**args))
 		return (get_next_opt(NULL));
 	if ((**args)[0] == '-')
-	{
-		if ((**args)[1] == '-' && !(**args)[2])
-		{
-			(*args)++;
-			return (get_next_opt(NULL));
-		}
-		if (ft_strchr(options_list, (**args)[x]))
-		{
-			if ((**args)[x] == 'p')
-			{
-				if (!(**args)[x + 1] && !(*args)[1])
-				{
-					ft_dprintf(STDERR_FILENO, \
-							"./21sh: hash: -p: option requires an argument\n");
-					ft_dprintf(STDERR_FILENO, "hash: usage: " \
-							"hash [-lr] [-p pathname] [-dt] [name ...]\n");
-					get_next_opt(NULL);
-					return (e_invalid_input);
-				}
-				else if (!(**args)[x + 1])
-				{
-					g_pathname = *(*args + 1);
-					*args += 2;
-					x = 0;
-				}
-				else
-				{
-					g_pathname = **args + x + 1;
-					*args += 1;
-					x = 0;
-				}
-				return ('p');
-			}
-			return ((**args)[x]);
-		}
-		ft_dprintf(STDERR_FILENO, \
-				"./21sh: hash: -%c: invalid option\n", (**args)[x]);
-		ft_dprintf(STDERR_FILENO, \
-				"hash: usage: hash [-lr] [-p pathname] [-dt] [name ...]\n");
-		get_next_opt(NULL);
-		return (e_invalid_input);
-	}
+		return (return_next_opt(args, &x));
 	return (get_next_opt(NULL));
+}
+
+int		print_error(int error_no, char *message, int ret)
+{
+	if (error_no == 0)
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: hash: -p: option" \
+				"requires an argument\nhash: usage: " \
+				"hash [-lr] [-p pathname] [-dt] [name ...]\n");
+	}
+	if (error_no == 1)
+	{
+		ft_dprintf(STDERR_FILENO, \
+				"./21sh: hash: -%s: invalid option\n", message);
+		ft_dprintf(STDERR_FILENO, "hash: usage: " \
+				"hash [-lr] [-p pathname] [-dt] [name ...]\n");
+	}
+	if (error_no == 2)
+		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", message);
+	return (ret);
 }
 
 int		check_for_needed_arguments(int options_list, char **args)
@@ -123,26 +94,7 @@ int		check_for_needed_arguments(int options_list, char **args)
 				"./21sh: hash: -t: option requires an argument\n");
 		return (e_invalid_input);
 	}
-	return (e_success);
-}
-
-int		contains_arg(char **argv)
-{
-	int	i;
-
-	i = 1;
-	while (argv[i] && argv[i][0] == '-')
-	{
-		if (argv[i][1] == '-' && !argv[i][2])
-		{
-			i += 1;
-			break ;
-		}
-		i++;
-	}
-	if (argv[i])
-		return (i);
-	return (0);
+	return (exec_hash_builtin(options_list, args));
 }
 
 int		exec_hash_builtin(int options_list, char **args)
