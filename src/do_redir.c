@@ -19,11 +19,21 @@ static int	do_iowrite(t_redirection *r)
 
 static int	do_iocat(t_redirection *r)
 {
-	r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (access(r->redirectee.filename, F_OK))
+	{ /* File does not exists so attempt to create it */
+		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	else if (access(r->redirectee.filename, R_OK))
+	{ /* File exists but no rights to write */
+		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
+	else /* File exists and rights to write */
+		r->redirectee.dest = open(r->redirectee.filename, O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
-	{
-		ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-		return (1);
+	{ /* Open error */
+		psherror(e_system_call_error, "open(2)", e_cmd_type);
+		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
@@ -39,7 +49,7 @@ static int	do_ioread(t_redirection *r)
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
 		return (e_no_such_file_or_directory);
 	}
-	if (access(r->redirector.filename, R_OK))
+	else if (access(r->redirector.filename, R_OK))
 	{
 		psherror(e_permission_denied, r->redirector.filename, e_cmd_type);
 		return (e_permission_denied);
@@ -47,7 +57,7 @@ static int	do_ioread(t_redirection *r)
 	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 	{
-		psherror(e_system_call_error, r->redirector.filename, e_cmd_type);
+		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
@@ -59,10 +69,12 @@ static int	do_ioread(t_redirection *r)
 
 static int	do_iohere(t_redirection *r)
 {
+	/* Could segv if hereword is empty string */
 	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
 	{
-		ft_printf("\nWRITE ERRRROOOORRR\n\n"); /* should be in error mgt */
-		return (1);
+		psherror(e_system_call_error, "write(2)", e_cmd_type);
+		/* Free heredoc string ? */
+		return (e_system_call_error);
 	}
 	return (0);
 }
