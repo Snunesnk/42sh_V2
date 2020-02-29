@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 15:19:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 17:54:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,9 @@ int		print_hashed_commands(int options_list)
 		{
 			tmp = g_hash_table[i];
 			nb++;
-			if (!(options_list & HASH_L_OPTION))
-			{
-				if (nb == 1)
-					ft_printf("hits\tcommand\n");
-				while (tmp)
-				{
-					ft_printf("%4d\t%s\n", tmp->nb_called, tmp->command_path);
-					tmp = tmp->next;
-				}
-			}
-			else if (options_list == HASH_L_OPTION)
-			{
-				while (tmp)
-				{
-					ft_printf("builtin hash -p %s %s\n", tmp->command_path, \
-						tmp->command_name);
-					tmp = tmp->next;
-				}
-			}
+			if (nb == 1 && !(options_list & HASH_L_OPTION))
+				ft_printf("hits\tcommand\n");
+			print_hashed_commands_util(tmp, options_list & HASH_L_OPTION);
 		}
 		i++;
 	}
@@ -63,7 +47,6 @@ void	del_hashed_commands(void)
 	{
 		if (g_hash_table[i])
 		{
-			/* Iterer sur l'entry pour voir si il n'y a pas plusieurs choses stockees*/
 			free(g_hash_table[i]->command_path);
 			free(g_hash_table[i]->command_name);
 			free(g_hash_table[i]);
@@ -72,6 +55,7 @@ void	del_hashed_commands(void)
 		i++;
 	}
 }
+
 int		print_hashed_targets(int options_list, char **args)
 {
 	t_hash_table	*tmp;
@@ -82,27 +66,16 @@ int		print_hashed_targets(int options_list, char **args)
 	status = e_success;
 	if (!(options_list & HASH_T_OPTION) && *args)
 		return (print_hashed_commands(options_list));
-	if (*args && args[1] && !(options_list & HASH_L_OPTION))
+	if (*args && args[1])
 		multiple = 1;
 	while (*args)
 	{
-		tmp = find_occurence(*args);
-		if (!tmp)
-		{
-			status = e_invalid_input;
-			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", *args);
-		}
+		if (!(tmp = find_occurence(*args)))
+			status = print_error(2, *args, e_command_not_found);
 		else
 		{
-			if (options_list & HASH_L_OPTION)
-				ft_printf("builtin hash -p %s %s\n", tmp->command_path, *args);
-			else
-			{
-				if (multiple)
-					ft_printf("%s\t", *args);
-				ft_printf("%s\n", tmp->command_path);
-				tmp->nb_called +=  1;
-			}
+			print_hashed_targets_util(tmp, (options_list & HASH_L_OPTION), \
+					*args, multiple);
 		}
 		args++;
 	}
