@@ -14,8 +14,6 @@ static int	valid_fd(int fd)
 
 static int	do_iowrite(t_redirection *r)
 {
-	if (valid_fd(r->redirector.dest))
-		return (e_bad_file_descriptor);
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -31,6 +29,11 @@ static int	do_iowrite(t_redirection *r)
 	{ /* Open error */
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
+	}
+	if (valid_fd(r->redirector.dest))
+	{
+		close(r->redirectee.dest);
+		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
@@ -56,6 +59,11 @@ static int	do_iocat(t_redirection *r)
 	{ /* Open error */
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
+	}
+	if (valid_fd(r->redirector.dest))
+	{
+		close(r->redirectee.dest);
+		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
 		r->save = dup(r->redirector.dest);
