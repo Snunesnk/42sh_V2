@@ -204,3 +204,51 @@ builtin hash -p /bin/cat cat
 60
 hash: hash table empty
 61
+62
+/bin/ls
+hits	command
+   1	/bin/ls
+63
+hits	command
+   0	-t
+hits	command
+   0	/bin/ls
+64
+65
+-e
+66
+hits	command
+   0	/bin/ls
+67
+hits	command
+   0	/bin/ls
+68
+builtin hash -p - ls
+69
+70
+builtin hash -p ls make
+71
+builtin hash -p /usr/bin/make make
+builtin hash -p /usr/bin/w w
+builtin hash -p /bin/rm rm
+builtin hash -p /bin/ls ls
+builtin hash -p /bin/cat cat
+72
+hits	command
+   0	/usr/bin/make
+   0	/usr/bin/w
+   0	/bin/rm
+   0	/bin/ls
+   0	/bin/cat
+73
+hits	command
+   0	/usr/bin/make
+   0	/usr/bin/w
+   0	/bin/rm
+   0	/bin/ls
+   0	/bin/cat
+74
+75
+76
+77
+78

@@ -59,4 +59,22 @@ echo 58; hash -lp
 echo 59; hash -dtlp
 echo 60; hash -ptlr
 echo 61; hash -tlr
+echo 62; hash -r; hash ls; hash -t ls; hash
+echo 63; hash -p -t ls; hash; hash ls; hash
+echo 64; hash -l -p -e -r -d ls
+echo 65; hash -t -p The_path_will_not_change ls
+echo 66; hash ls; hash
+echo 67; hash -p-;
+echo 68; hash -p- ls; hash -l
+echo 69; hash -t -t -r -t ls;
+echo 70; hash -p ls make ls; hash -d ls; hash -l
+echo 71; hash -r; hash -l ls make cat rm w; hash -l
+echo 72; hash -ptlr
+echo 73; hash -ptlrprltdjjf
+echo 74; hash -tplelffhh
+echo 75; hash -tdpltrd
+echo 76; hash -tdlrp
+echo 77; hash -tdlrpd
+echo 78; hash -leoopwoep
+echo 79; hash l
 exit
