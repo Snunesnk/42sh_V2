@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/29 19:15:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/02/29 19:45:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ struct s_hash_table
 };
 
 
+typedef struct s_shell_fds	t_shell_fds;
 typedef struct s_process	t_process;
 typedef struct s_job		t_job;
 typedef struct s_redirection	t_redirection;
