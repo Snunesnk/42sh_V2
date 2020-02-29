@@ -4,10 +4,10 @@ A tiny shell. [42 project]
 ToDo:
 
 Antoine:
-- Redirections perfect, including "ls 2> ok -l > toto -R ok"
+- 21sh Redirections
 - 21sh Readline SIGWINCH
 - 42sh Done but need to make it perfect for 42sh: Job control: fg, bg, jobs,...
-- 42sh History, autocompletion, Vim binding.
+- 42sh Autocompletion, Vim binding.
 
 Etienne:
 - 21sh Shell variables, export, set, unset and var assignements.
@@ -21,7 +21,8 @@ Sabri:
 - 42sh Inhibitors
 
 Simon:
-- 42sh table de hash
+- 42sh Hash table
+- 42sh History
 
 Optionnal:
 	- Subshells $(), (), ``
