@@ -1,13 +1,13 @@
 plop=Jean-Michel
 
 cat -e << eof
-Hello World from Here-Doc
+Hello World from ~ Here-Doc $SHLVL
 eof
 
 cat -e << eof && cat -e << fin
 Hello World from the first Here-Doc
 eof
-Hello World from the SEcond here-Doc
+Hello World from the SEcond ${SHLVL} here-Doc
 fin
 
 cat   -e     <<                 eof
