@@ -84,6 +84,8 @@ static int	undo_ioread(t_redirection *r, t_shell_fds **shell_fd)
 
 static int	undo_iodup(t_redirection *r, t_shell_fds **shell_fd)
 {
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
 	if (!restored_fd(*shell_fd, r->redirectee.dest))
 	{
 		add_restored_fd(shell_fd, r->redirectee.dest);
