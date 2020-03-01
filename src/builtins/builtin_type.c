@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 21:25:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/01 19:57:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ static char		*getbinpath(char *bin)
 
 int				cmd_type(int argc, char **argv)
 {
-	_Bool	error;
-	int		i;
-	char	*str;
+	_Bool			error;
+	int				i;
+	t_hash_table	*path;
+	char			*str;
 
 	error = 0;
 	i = 1;
@@ -78,8 +79,8 @@ int				cmd_type(int argc, char **argv)
 			ft_printf("%s is a shell builtin\n", argv[i]);
 		else if (is_a_keyword(argv[i]))
 			ft_printf("%s is a shell keyword\n", argv[i]);
-/*		else if ((str = gethash(argv[i])))
-			ft_printf("%s is hashed (%s)\n", argv[i], str);*/
+		else if ((path = find_occurence(argv[i])))
+			ft_printf("%s is hashed (%s)\n", argv[i], path->command_path);
 /*		else if ((str = getalias(argv[i])))
 			ft_printf("%s is aliased to `%s'\n", argv[i], str);*/
 		else if ((str = getbinpath(argv[i])))
