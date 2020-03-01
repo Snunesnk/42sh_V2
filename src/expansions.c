@@ -22,7 +22,7 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static int	expansion_dispatcher(char *str)
+static int	expansion_dispatcher(char *str, int tilde)
 {
 	int	i;
 	int	ref;
@@ -34,6 +34,8 @@ static int	expansion_dispatcher(char *str)
 	ref = -1;
 	while (*(g_tags[i].opentag))
 	{
+		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
+			break; /* Stop expansions on tilde if tilde not required */
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
@@ -45,7 +47,7 @@ static int	expansion_dispatcher(char *str)
 	return (ref);
 }
 
-static char	*get_closest_exp(char *str)
+static char	*get_closest_exp(char *str, int tilde)
 {
 	int		i;
 	char	*ptr;
@@ -55,6 +57,8 @@ static char	*get_closest_exp(char *str)
 	closest = NULL;
 	while (*(g_tags[i].opentag))
 	{
+		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
+			break; /* Stop expansions on tilde if tilde not required */
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 			closest = ptr;
@@ -90,54 +94,94 @@ static int		replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-int			treat_expansions(t_list *lst)
+int			treat_single_exp(char **str, int tilde)
 {
-	int		ref;
-	int		ret;
+	int	ref;
+	int	ret;
 	char	*next;
 
-	if (((t_token*)(lst->content))->type != START)
-		return (e_invalid_input);
-	lst = lst->next;
-	/* Tokens might be wrong, strsplit is not ok fpor instance "echo ${LOGNAME }KO" does not work*/
-	/*ft_print_tables(tokens);
-	exit(1);
-*/	/* END debugg */
-	while (((t_token*)(lst->content))->type != END)
+	next = *str;
+	while ((next = get_closest_exp(next, tilde)))
 	{
-		next = ((t_token*)(lst->content))->value;
-		if (next != NULL)
+		ref = expansion_dispatcher(next, tilde);
+		if ((ret = replace_expansion(str, &next, ref)))
 		{
-			while ((next = get_closest_exp(next)))
-			{
-				ref = expansion_dispatcher(next);
-				if ((ret = replace_expansion(&((t_token*)(lst->content))->value,
-						&next, ref)))
-				{
-					psherror(ret, ((t_token*)(lst->content))->value, e_cmd_type);
-					return (ret);
-				}
-			}
+			psherror(ret, *str, e_cmd_type);
+			return (ret);
 		}
-		lst = lst->next;
 	}
 	return (e_success);
 }
 
-int			expansions(t_ast *ast)
+/*
+int			treat_expansions(char **tokens)
 {
-	int		ret;
+	int	i;
+	int	ret;
 
-	ret = SUCCESS;
-	while (ast != NULL)
+	i = 0;
+	if (!tokens)
+		return (e_invalid_input);
+	while (tokens[i])
 	{
-		if (ast->content != NULL)
-			ret = treat_expansions(ast->content);
-		else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
-			ret = treat_expansions(((t_ast*)(ast->left))->content);
-		if (ret != e_success)
-			break ;
-		ast = ast->right;
+		ret = treat_single_exp(&tokens[i]);
+		if (ret)
+			return (ret);
+		++i;
 	}
-	return (ret);
+	return (e_success);
 }
+*/
+
+
+//int			treat_expansions(t_list *lst)
+//{
+//	int		ref;
+//	int		ret;
+//	char	*next;
+//
+//	if (((t_token*)(lst->content))->type != START)
+//		return (e_invalid_input);
+//	lst = lst->next;
+//	/* Tokens might be wrong, strsplit is not ok fpor instance "echo ${LOGNAME }KO" does not work*/
+//	/*ft_print_tables(tokens);
+//	exit(1);
+//*/	/* END debugg */
+//	while (((t_token*)(lst->content))->type != END)
+//	{
+//		next = ((t_token*)(lst->content))->value;
+//		if (next != NULL)
+//		{
+//			while ((next = get_closest_exp(next)))
+//			{
+//				ref = expansion_dispatcher(next);
+//				if ((ret = replace_expansion(&((t_token*)(lst->content))->value,
+//						&next, ref)))
+//				{
+//					psherror(ret, ((t_token*)(lst->content))->value, e_cmd_type);
+//					return (ret);
+//				}
+//			}
+//		}
+//		lst = lst->next;
+//	}
+//	return (e_success);
+//}
+//
+//int			expansions(t_ast *ast)
+//{
+//	int		ret;
+//
+//	ret = SUCCESS;
+//	while (ast != NULL)
+//	{
+//		if (ast->content != NULL)
+//			ret = treat_expansions(ast->content);
+//		else if (ast->left != NULL && ((t_ast*)(ast->left))->content != NULL)
+//			ret = treat_expansions(((t_ast*)(ast->left))->content);
+//		if (ret != e_success)
+//			break ;
+//		ast = ast->right;
+//	}
+//	return (ret);
+//}
