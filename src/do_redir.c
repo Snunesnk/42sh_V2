@@ -147,9 +147,10 @@ static int	do_iodup(t_redirection *r)
 			r->save[0] = dup(r->redirectee.dest);
 		if (r->flags & NOFORK)
 			r->save[1] = dup(r->redirector.dest);
-		/* Bug is below */
-		dup2(r->redirectee.dest, r->redirector.dest);
-		close(r->redirectee.dest);
+		/* Bug is bellow */
+//		dup2(r->redirectee.dest, r->redirector.dest);
+//		perror("DUP2: ");
+//		close(r->redirectee.dest);
 	}
 	return (0);
 }
