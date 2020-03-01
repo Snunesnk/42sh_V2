@@ -131,26 +131,18 @@ static int	do_iodup(t_redirection *r)
 	else if (r->flags & FILENAME)
 	{
 		if (r->redirector.dest == STDOUT_FILENO)
+			/* redirect stdout in stding and then */
 			return (do_iowrite(r));
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
 	}
 	else if (r->flags & DEST)
 	{
-//		if (valid_fd(r->redirectee.dest, 0))
-//			return (e_bad_file_descriptor);
-//		if (valid_fd(r->redirector.dest, 1))
-//			return (e_bad_file_descriptor);
 		if (r->redirectee.dest == r->redirector.dest)
 			return (0);
-		if (r->flags & NOFORK)
+		if ( r->flags & NOFORK)
 			r->save[0] = dup(r->redirectee.dest);
-		if (r->flags & NOFORK)
-			r->save[1] = dup(r->redirector.dest);
-		/* Bug is bellow */
-//		dup2(r->redirectee.dest, r->redirector.dest);
-//		perror("DUP2: ");
-//		close(r->redirectee.dest);
+		dup2(r->redirectee.dest, r->redirector.dest);
 	}
 	return (0);
 }
