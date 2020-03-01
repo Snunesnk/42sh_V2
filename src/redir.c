@@ -71,7 +71,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
 	if (io_nb == -1)
-		r->redirector.dest = STDOUT_FILENO;
+		r->redirector.dest = STDERR_FILENO;
 	else
 		r->redirector.dest = io_nb;
 	r->instruction = IODUP;
@@ -156,9 +156,9 @@ t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_less_redirection(lst, io_nb));
 	else if (type == DLESS)
 		return (type_dless_redirection(lst, io_nb));
-	else if (type == GREATAND || type == ANDGREAT)
+	else if (type == GREATAND)
 		return (type_greatand_redirection(lst, io_nb));
-	else if (type == LESSAND || type == ANDLESS)
+	else if (type == LESSAND)
 		return (type_lessand_redirection(lst, io_nb));
 	return (NULL);
 }
