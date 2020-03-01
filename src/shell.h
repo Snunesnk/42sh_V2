@@ -90,7 +90,7 @@ struct	s_redirection
 	int			flags;         /* additional information for complex redirections */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
-	int			save;          /* saved fd for redir undo */
+	int			save[2];       /* saved fd for redir undo */
 };
 
 /* A process is a single process.  */
@@ -291,7 +291,8 @@ int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
-int		expansions(t_ast *ast);
+//int		expansions(t_ast *ast);
+int	treat_single_exp(char **str, int tilde);
 int		get_env_list(char **environ);
 void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
