@@ -137,10 +137,12 @@ static int	do_iodup(t_redirection *r)
 	}
 	else if (r->flags & DEST)
 	{
-		if (valid_fd(r->redirectee.dest, 0))
-			return (e_bad_file_descriptor);
-		if (valid_fd(r->redirector.dest, 1))
-			return (e_bad_file_descriptor);
+//		if (valid_fd(r->redirectee.dest, 0))
+//			return (e_bad_file_descriptor);
+//		if (valid_fd(r->redirector.dest, 1))
+//			return (e_bad_file_descriptor);
+		if (r->redirectee.dest == r->redirector.dest)
+			return (0);
 		if (r->flags & NOFORK)
 			r->save[0] = dup(r->redirectee.dest);
 		if (r->flags & NOFORK)
