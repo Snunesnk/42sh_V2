@@ -152,9 +152,12 @@ static int	do_iodup(t_redirection *r)
 			}
 			if (r->flags & NOFORK)
 				r->save[0] = dup(r->redirector.dest);
-			dup2(r->redirectee.dest, r->redirector.dest);
+			if (r->flags & NOFORK)
+				r->save[1] = dup(STDERR_FILENO);
+			dup2(r->redirectee.dest, STDOUT_FILENO); /* Need some fixing here */
+			dup2(r->redirectee.dest, STDERR_FILENO);
 			close(r->redirectee.dest);
-			
+			return (0);
 		}
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
