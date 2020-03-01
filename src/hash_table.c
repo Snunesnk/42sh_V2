@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 21:01:22 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 18:48:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/01 19:48:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int				ft_hash(char *to_hash)
 		key ^= to_hash[x];
 		x++;
 	}
-	key = key & HASH_SIZE - 1;
+	key = key & (HASH_SIZE - 1);
 	return (key);
 }
 
