@@ -45,7 +45,7 @@ static int	do_iowrite(t_redirection *r)
 		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirector.dest);
+		r->save[0] = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
@@ -76,7 +76,7 @@ static int	do_iocat(t_redirection *r)
 		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirector.dest);
+		r->save[0] = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
@@ -104,7 +104,7 @@ static int	do_ioread(t_redirection *r)
 		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirectee.dest);
+		r->save[0] = dup(r->redirectee.dest);
 	dup2(r->redirector.dest, r->redirectee.dest);
 	close(r->redirector.dest);
 	return (0);
@@ -137,15 +137,17 @@ static int	do_iodup(t_redirection *r)
 	}
 	else if (r->flags & DEST)
 	{
-		ft_printf("PRRRINTF\n");
 		if (valid_fd(r->redirectee.dest, 0))
 			return (e_bad_file_descriptor);
 		if (valid_fd(r->redirector.dest, 1))
 			return (e_bad_file_descriptor);
-	//	if (r->flags & NOFORK)
-	//		r->save = dup(r->redirector.dest);
-	//	dup2(r->redirectee.dest, r->redirector.dest);
-	//	close(r->redirectee.dest);
+		if (r->flags & NOFORK)
+			r->save[0] = dup(r->redirectee.dest);
+		if (r->flags & NOFORK)
+			r->save[1] = dup(r->redirector.dest);
+		/* Bug is below */
+		dup2(r->redirectee.dest, r->redirector.dest);
+		close(r->redirectee.dest);
 	}
 	return (0);
 }
@@ -164,7 +166,7 @@ static int	do_iodread(t_redirection *r)
 	{
 
 		if (r->flags & NOFORK)
-			r->save = dup(r->redirectee.dest);
+			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
 		close(r->redirector.dest);
 	}
