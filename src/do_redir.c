@@ -131,8 +131,26 @@ static int	do_iodup(t_redirection *r)
 	else if (r->flags & FILENAME)
 	{
 		if (r->redirector.dest == STDOUT_FILENO)
+		{
 			/* redirect stdout in stding and then */
-			return (do_iowrite(r));
+			/* equivelent to return (do_iowrite(r)); */
+			if (access(r->redirectee.filename, F_OK))
+			{ /* File does not exists so attempt to create it */
+				r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			}
+			else if (access(r->redirectee.filename, R_OK))
+			{ /* File exists but no rights to write */
+				psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
+				return (e_permission_denied);
+			}
+			else /* File exists and rights to write */
+				r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+			if (r->redirectee.dest < 0)
+			{ /* Open error */
+				psherror(e_system_call_error, "open(2)", e_cmd_type);
+				return (e_system_call_error);
+			}
+		}
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
 	}
