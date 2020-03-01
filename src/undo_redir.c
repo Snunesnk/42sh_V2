@@ -63,9 +63,9 @@ static int	undo_iowrite(t_redirection *r, t_shell_fds **shell_fd)
 	if (!restored_fd(*shell_fd, r->redirector.dest))
 	{
 		add_restored_fd(shell_fd, r->redirector.dest);
-		dup2(r->save, r->redirector.dest);
+		dup2(r->save[0], r->redirector.dest);
 	}
-	close(r->save);
+	close(r->save[0]);
 	return (0);
 }
 
@@ -76,9 +76,22 @@ static int	undo_ioread(t_redirection *r, t_shell_fds **shell_fd)
 	if (!restored_fd(*shell_fd, r->redirectee.dest))
 	{
 		add_restored_fd(shell_fd, r->redirectee.dest);
-		dup2(r->save, r->redirectee.dest);
+		dup2(r->save[0], r->redirectee.dest);
 	}
-	close(r->save);
+	close(r->save[0]);
+	return (0);
+}
+
+static int	undo_iodup(t_redirection *r, t_shell_fds **shell_fd)
+{
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
+	if (!restored_fd(*shell_fd, r->redirectee.dest))
+	{
+		add_restored_fd(shell_fd, r->redirectee.dest);
+		dup2(r->save[0], r->redirectee.dest);
+	}
+	close(r->save[0]);
 	return (0);
 }
 
@@ -98,7 +111,7 @@ int	undo_redirection_internal(t_redirection *r)
 			else if (r->instruction == IOREAD)
 				undo_ioread(r, &shell_fd);
 			else if (r->instruction == IODUP && !(r->flags & FDCLOSE))
-				undo_iowrite(r, &shell_fd);
+				undo_iodup(r, &shell_fd);
 			else if (r->instruction == (IODUP | IOREAD) && !(r->flags & FDCLOSE))
 				undo_ioread(r, &shell_fd);
 		}

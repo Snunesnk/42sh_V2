@@ -2,9 +2,17 @@
 #include "error.h"
 #include "shell.h"
 
-static int	valid_fd(int fd)
+static int	valid_fd(int fd, int open)
 {
-	if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+	if (open)
+	{
+		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+		{
+			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
+			return (1);
+		}
+	}
+	else if (fd >= sysconf(_SC_OPEN_MAX))
 	{
 		ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
 		return (1);
@@ -12,6 +20,7 @@ static int	valid_fd(int fd)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iowrite(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
@@ -30,18 +39,19 @@ static int	do_iowrite(t_redirection *r)
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
-	if (valid_fd(r->redirector.dest))
+	if (valid_fd(r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
 		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirector.dest);
+		r->save[0] = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iocat(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
@@ -60,21 +70,22 @@ static int	do_iocat(t_redirection *r)
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
-	if (valid_fd(r->redirector.dest))
+	if (valid_fd(r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
 		return (e_bad_file_descriptor);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirector.dest);
+		r->save[0] = dup(r->redirector.dest);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
 }
 
+/* Seems ok */
 static int	do_ioread(t_redirection *r)
 {
-	if (valid_fd(r->redirectee.dest))
+	if (valid_fd(r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
 	{
@@ -93,7 +104,7 @@ static int	do_ioread(t_redirection *r)
 		return (e_system_call_error);
 	}
 	if (r->flags & NOFORK)
-		r->save = dup(r->redirectee.dest);
+		r->save[0] = dup(r->redirectee.dest);
 	dup2(r->redirector.dest, r->redirectee.dest);
 	close(r->redirector.dest);
 	return (0);
@@ -101,7 +112,7 @@ static int	do_ioread(t_redirection *r)
 
 static int	do_iohere(t_redirection *r)
 {
-	if (valid_fd(r->redirectee.dest))
+	if (valid_fd(r->redirectee.dest, 1))
 		return (e_bad_file_descriptor);
 	/* Could segv if hereword is empty string, should free heredoc string */
 	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
@@ -119,47 +130,38 @@ static int	do_iodup(t_redirection *r)
 		close(r->redirector.dest);
 	else if (r->flags & FILENAME)
 	{
-		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-		if (r->redirectee.dest < 0)
-		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n"); /* should be in error mgt */
-			return (1);
-		}
-		if (r->flags & NOFORK)
-			r->save = dup(r->redirector.dest);
-		dup2(r->redirectee.dest, r->redirector.dest);
-		close(r->redirectee.dest);
+		if (r->redirector.dest == STDOUT_FILENO)
+			/* redirect stdout in stding and then */
+			return (do_iowrite(r));
+		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
+		return (e_ambiguous_redirect);
 	}
 	else if (r->flags & DEST)
 	{
-		if (r->flags & NOFORK)
-			r->save = dup(r->redirector.dest);
+		if (r->redirectee.dest == r->redirector.dest)
+			return (0);
+		if ( r->flags & NOFORK)
+			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirectee.dest, r->redirector.dest);
-		close(r->redirectee.dest);
 	}
 	return (0);
 }
 
+/* CANNOT PROPERLY TEST */
 static int	do_iodread(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
 		close(r->redirectee.dest);
-/*	else if (r->flags & FILENAME)
-	{ // Ambiguous redirection
-		r->redirector.dest = open(r->redirector.filename, O_RDONLY);
-		if (r->redirector.dest < 0)
-		{
-			ft_printf("\nOPEN ERRRROOOORRR\n\n");
-			return (1);
-		}
-		dup2(r->redirector.dest, r->redirectee.dest);
-		close(r->redirector.dest);
+	else if (r->flags & FILENAME)
+	{
+		psherror(e_ambiguous_redirect, r->redirector.filename, e_cmd_type);
+		return (e_ambiguous_redirect);
 	}
-*/	else if (r->flags & DEST)
+	else if (r->flags & DEST)
 	{
 
 		if (r->flags & NOFORK)
-			r->save = dup(r->redirectee.dest);
+			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
 		close(r->redirector.dest);
 	}
