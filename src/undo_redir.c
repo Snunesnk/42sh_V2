@@ -92,12 +92,6 @@ static int	undo_iodup(t_redirection *r, t_shell_fds **shell_fd)
 		dup2(r->save[0], r->redirectee.dest);
 	}
 	close(r->save[0]);
-	if (!restored_fd(*shell_fd, r->redirector.dest))
-	{
-		add_restored_fd(shell_fd, r->redirector.dest);
-		dup2(r->save[1], r->redirector.dest);
-	}
-	close(r->save[1]);
 	return (0);
 }
 
