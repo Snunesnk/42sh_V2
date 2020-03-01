@@ -1,3 +1,57 @@
+echo ok -1<2
+echo ok auteur<auteur
+echo ok --1<2
+echo ok -0<auteur
+echo ok -1<auteur
+echo ok -4294967294<auteur
+echo ok -4294967295<auteur
+echo ok -4294967296<auteur
+echo ok -4294967297<auteur
+echo ok 4294967294<auteur
+echo ok 4294967295<auteur
+echo ok 4294967296<auteur
+echo ok 4294967297<auteur
+echo ok 4294967299<auteur
+echo ok 0<2
+echo ok 0<auteur
+echo ok 1<auteur
+echo ok 2<auteur
+echo ok 4<auteur
+echo ok 3<auteur
+echo ok 5<auteur
+echo ok 129<auteur
+echo ok 1023<auteur
+echo ok 1024<auteur
+echo ok toto<2
+echo ok toto1<2
+echo ok -1<2
+echo ok toto<toto
+echo ok --1<2
+echo ok -0<toto
+echo ok -1<toto
+echo ok -4294967294<toto
+echo ok -4294967295<toto
+echo ok -4294967296<toto
+echo ok -4294967297<toto
+echo ok 4294967294<toto
+echo ok 4294967295<toto
+echo ok 4294967296<toto
+echo ok 4294967297<toto
+echo ok 4294967299<toto
+echo ok 0<2
+echo ok 0<toto
+echo ok 1<toto
+echo ok 2<toto
+echo ok 4<toto
+echo ok 3<toto
+echo ok 5<toto
+echo ok 129<toto
+echo ok 1023<toto
+echo ok 1024<toto
+echo ok toto<2
+echo ok toto1<2
+
+
 plop=Jean-Michel
 echo ok toto>1
 ls -l>1

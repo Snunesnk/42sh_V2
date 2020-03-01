@@ -21,6 +21,7 @@ enum	e_minishell_error
 	e_no_builtin,
 	e_bad_substitution,
 	e_cannot_assign_list_to_array_member,
+	e_ambiguous_redirect,
 	e_bad_file_descriptor,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
