@@ -20,6 +20,7 @@ static int	valid_fd(int fd, int open)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iowrite(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
@@ -80,6 +81,7 @@ static int	do_iocat(t_redirection *r)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_ioread(t_redirection *r)
 {
 	if (valid_fd(r->redirectee.dest, 0))
