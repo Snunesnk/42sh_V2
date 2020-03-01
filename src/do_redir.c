@@ -2,9 +2,17 @@
 #include "error.h"
 #include "shell.h"
 
-static int	valid_fd(int fd)
+static int	valid_fd(int fd, int open)
 {
-	if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+	if (open)
+	{
+		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
+		{
+			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
+			return (1);
+		}
+	}
+	else if (fd >= sysconf(_SC_OPEN_MAX))
 	{
 		ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
 		return (1);
@@ -30,7 +38,7 @@ static int	do_iowrite(t_redirection *r)
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
-	if (valid_fd(r->redirector.dest))
+	if (valid_fd(r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
 		return (e_bad_file_descriptor);
@@ -60,7 +68,7 @@ static int	do_iocat(t_redirection *r)
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
 		return (e_system_call_error);
 	}
-	if (valid_fd(r->redirector.dest))
+	if (valid_fd(r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
 		return (e_bad_file_descriptor);
@@ -74,7 +82,7 @@ static int	do_iocat(t_redirection *r)
 
 static int	do_ioread(t_redirection *r)
 {
-	if (valid_fd(r->redirectee.dest))
+	if (valid_fd(r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
 	if (access(r->redirector.filename, F_OK))
 	{
@@ -101,7 +109,7 @@ static int	do_ioread(t_redirection *r)
 
 static int	do_iohere(t_redirection *r)
 {
-	if (valid_fd(r->redirectee.dest))
+	if (valid_fd(r->redirectee.dest, 1))
 		return (e_bad_file_descriptor);
 	/* Could segv if hereword is empty string, should free heredoc string */
 	if (write(r->redirectee.dest, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
@@ -127,9 +135,9 @@ static int	do_iodup(t_redirection *r)
 	else if (r->flags & DEST)
 	{
 		ft_printf("PRRRINTF\n");
-		if (valid_fd(r->redirectee.dest))
+		if (valid_fd(r->redirectee.dest, 0))
 			return (e_bad_file_descriptor);
-		if (valid_fd(r->redirector.dest))
+		if (valid_fd(r->redirector.dest, 1))
 			return (e_bad_file_descriptor);
 	//	if (r->flags & NOFORK)
 	//		r->save = dup(r->redirector.dest);
