@@ -1,0 +1,250 @@
+echo ok 1>>toto
+echo ok 1023>>toto
+echo ok 512>>toto
+echo ok 102465465465464>>toto
+echo ok -546>>toto
+echo ok 0>>toto
+echo ok 1024>>toto
+echo ok -1>>toto
+echo ok -0>>toto
+echo ok -1>>2
+echo ok poutou>>poutou
+echo ok --1>>2
+echo ok -0>>poutou
+echo ok -1>>poutou
+echo ok -4294967294>>poutou
+echo ok -4294967295>>poutou
+echo ok -4294967296>>poutou
+echo ok -4294967297>>poutou
+echo ok 4294967294>>poutou
+echo ok 4294967295>>poutou
+echo ok 4294967296>>poutou
+echo ok 4294967297>>poutou
+echo ok 4294967299>>poutou
+echo ok 0>>2
+echo ok 0>>poutou
+echo ok 1>>poutou
+echo ok 2>>poutou
+echo ok 4>>poutou
+echo ok 3>>poutou
+echo ok 5>>poutou
+echo ok 129>>poutou
+echo ok 1023>>poutou
+echo ok 1024>>poutou
+echo ok toto>>2
+echo ok toto1>>2
+echo ok -1>>2
+toto=1024
+echo ok $toto>>toto
+echo ok --1>>2
+echo ok -0>>toto
+echo ok -1>>toto
+echo ok -4294967294>>toto
+echo ok -4294967295>>toto
+echo ok -4294967296>>toto
+echo ok -4294967297>>toto
+echo ok 4294967294>>toto
+echo ok 4294967295>>toto
+echo ok 4294967296>>toto
+echo ok 4294967297>>toto
+echo ok 4294967299>>toto
+echo ok $0>>2
+echo ok 0>>toto
+echo ok 1>>$toto
+echo ok 2>>toto
+echo ok $4>>toto
+echo ok $3>>$toto
+echo ok $5>>$toto
+echo ok 129>>toto
+echo ok 1023>>toto
+echo ok 1024>>toto
+echo ok toto>>2
+echo ok toto1>>2
+echo ok >> toto >> poutou >> plop
+echo ok >> poutou
+echo >> poutou
+touch toutou
+chmod 0000 toutou
+ls >> toutou
+cat -e >> toutou
+plop=Jean-Michel
+cat -e>>
+cat -e>>0
+cat -e>>$toto
+cat -e>>/dev/null
+head>>/dev/urandom
+cat -e  >>
+cat -e  >>  0
+cat -e  >>  $toto
+cat -e  >>  /dev/null
+head  >>  /dev/urandom
+ls >>  /dev/urandom
+ls >> plop
+head >> /dev/urandom < toto
+ls >> toto
+echo ok -e>>
+type ok -e>>0
+setenv ok -e>>$toto
+unsetenv ok -e>>/dev/null
+cd ok ok>>/dev/urandom
+echo -e  >>
+echo ok -e  >>  0
+echo ok -e  >>  $toto
+echo ok -e  >>  /dev/null
+doesno  >>  /dev/urandom
+echo ok >>  /dev/urandom
+echo ok >> plop
+echo ok >> /dev/urandom < toto
+set >> toto
+ls ->>toto
+ls >> .
+ls >> ./21sh
+ls >> 21sh
+cat -e ->> poutou
+ello=poutou
+cat -e >>ello
+cat -e >>$ello
+ls -l>>1
+poutou=Jean-Michel
+echo ok -1>>2
+echo ok $poutou>>$poutou
+echo ok --1>>2
+echo ok -0>>$poutou
+echo ok -1>>$poutou
+echo ok -4294967294>>$poutou
+echo ok -4294967295>>$poutou
+echo ok -4294967296>>$poutou
+echo ok -4294967297>>$poutou
+echo ok 4294967294>>$poutou
+echo ok 4294967295>>$poutou
+echo ok 4294967296>>$poutou
+echo ok 4294967297>>$poutou
+echo ok 4294967299>>$poutou
+echo ok 0>>$poutou
+echo ok 1>>$poutou
+echo ok 2>>$poutou
+echo ok 4>>$poutou
+echo ok 3>>$poutou
+echo ok 5>>$poutou
+echo ok 129>>$poutou
+echo ok 1023>>$poutou
+echo ok 1024>>$poutou
+poutou=poutou
+echo ok -1>>2
+echo ok $poutou>>$poutou
+echo ok --1>>2
+echo ok -0>>$poutou
+echo ok -1>>$poutou
+echo ok -4294967294>>$poutou
+echo ok -4294967295>>$poutou
+echo ok -4294967296>>$poutou
+echo ok -4294967297>>$poutou
+echo ok 4294967294>>$poutou
+echo ok 4294967295>>$poutou
+echo ok 4294967296>>$poutou
+echo ok 4294967297>>$poutou
+echo ok 4294967299>>$poutou
+echo ok 0>>$poutou
+echo ok 1>>$poutou
+echo ok 2>>$poutou
+echo ok 4>>$poutou
+echo ok 3>>$poutou
+echo ok 5>>$poutou
+echo ok 129>>$poutou
+echo ok 1023>>$poutou
+echo ok 1024>>$poutou
+poutou=0
+echo ok -1>>2
+echo ok $poutou>>$poutou
+echo ok --1>>2
+echo ok -0>>$poutou
+echo ok -1>>$poutou
+echo ok -4294967294>>$poutou
+echo ok -4294967295>>$poutou
+echo ok -4294967296>>$poutou
+echo ok -4294967297>>$poutou
+echo ok 4294967294>>$poutou
+echo ok 4294967295>>$poutou
+echo ok 4294967296>>$poutou
+echo ok 4294967297>>$poutou
+echo ok 4294967299>>$poutou
+echo ok 0>>$poutou
+echo ok 1>>$poutou
+echo ok 2>>$poutou
+echo ok 4>>$poutou
+echo ok 3>>$poutou
+echo ok 5>>$poutou
+echo ok 129>>$poutou
+echo ok 1023>>$poutou
+echo ok 1024>>$poutou
+poutou=1024
+echo ok -1>>2
+echo ok $poutou>>$poutou
+echo ok --1>>2
+echo ok -0>>$poutou
+echo ok -1>>$poutou
+echo ok -4294967294>>$poutou
+echo ok -4294967295>>$poutou
+echo ok -4294967296>>$poutou
+echo ok -4294967297>>$poutou
+echo ok 4294967294>>$poutou
+echo ok 4294967295>>$poutou
+echo ok 4294967296>>$poutou
+echo ok 4294967297>>$poutou
+echo ok 4294967299>>$poutou
+echo ok 0>>$poutou
+echo ok 1>>$poutou
+echo ok 2>>$poutou
+echo ok 4>>$poutou
+echo ok 3>>$poutou
+echo ok 5>>$poutou
+echo ok 129>>$poutou
+echo ok 1023>>$poutou
+echo ok 1024>>$poutou
+toto=1
+echo ok >>$toto
+toto=file
+echo ok >>$toto
+toto=42
+echo ok >>$toto
+ls 2>>/root
+echo a >>2 | echo b >>2 | echo c >>2 | echo d >>2
+ls >>/dev/null 2>>/dev/null | setenv TOTO ok | env
+ls >>/dev/null 2>>/dev/null | setenv TOTO PASOK | echo $TOTO
+ls | echo ok
+cat -e 0>>2 okok
+ls ok 2>> ok -l >> toto -R ok not exit
+2>>/dev/null | >>/dev/null
+>>/dev/null ls
+2>>/dev/null -r ls
+echo >>2 ok | ls >>2 | >>2 ls >>2 | ls >>2 | echo ok >>2 | ls >> 2
+ls| >>/dev/null
+ls|>>/dev/null
+ls |>>/dev/null
+ls | >>ok
+ls |>> ok
+ls| >>ok
+echo ok -1>>2 -1>>poutou
+echo ok poutou>>poutou poutou>>poutou
+echo ok --1>>2 >>poutou
+echo ok -0>>poutou >>toto
+echo ok -1>>poutou >>toto
+echo ok -4294967294>>poutou >>plop
+echo ok -4294967295>>poutou >>poutou
+echo ok -4294967296>>poutou >> poutou
+echo ok -4294967297>>poutou >>  plop
+echo ok 4294967294>>poutou >> poutou
+echo ok 4294967295>>poutou >> plpo
+echo ok 4294967296>>poutou >> toto
+echo ok 4294967297>>poutou >> $SHLVL
+echo ok 4294967299>>poutou >> env
+echo ok 0>>2 >> echo ok
+echo ok 0>>poutou >> echo ok
+echo ok 1>>poutou >> echo ok
+echo ok 2>>poutou >> ls
+echo ok 4>>poutou >> $env
+echo ok 3>>poutou >> coucou
+echo ok 5>>poutou >>$42
+echo ok 129>>poutou >>ok
+echo ok 1023>>poutou >> poutou
+echo ok 1024>>poutou >> toto
