@@ -29,7 +29,7 @@ int				ft_hash(char *to_hash)
 		key ^= to_hash[x];
 		x++;
 	}
-	key = key & HASH_SIZE - 1;
+	key = key & (HASH_SIZE - 1);
 	return (key);
 }
 
@@ -48,9 +48,7 @@ int				add_to_hash_table(char *pathname, char *command_name, int nb)
 {
 	t_hash_table	*hash_ptr;
 	t_hash_table	*prev;
-	int				hash;
 
-	hash = ft_hash(command_name);
 	hash_ptr = find_occurence(command_name);
 	if (!hash_ptr)
 	{
