@@ -51,6 +51,7 @@ static int	do_iowrite(t_redirection *r)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iocat(t_redirection *r)
 {
 	if (access(r->redirectee.filename, F_OK))
