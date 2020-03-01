@@ -77,7 +77,7 @@ int			main(int argc, char **argv)
 		debug_ast(ast);
 		if (ast != NULL)
 		{
-			expansions(ast);
+		//	expansions(ast);
 			if (parser(ast) == FAILURE)
 				ft_putendl_fd("\nParse error", 2);
 			else

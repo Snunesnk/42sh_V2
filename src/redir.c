@@ -24,7 +24,9 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 		r->redirectee.dest = io_nb;
 	r->instruction = IOREAD;
 	(*lst) = (*lst)->next;
-	r->redirector.filename = get_tokvalue(*lst);
+	/* make a copy */
+	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirector.filename), 1);
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -40,7 +42,8 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	r->instruction = IOWRITE;
 	(*lst) = (*lst)->next;
-	r->redirectee.filename = get_tokvalue(*lst);
+	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirectee.filename), 1);
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -56,7 +59,8 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	r->instruction = IOCAT;
 	(*lst) = (*lst)->next;
-	r->redirectee.filename = get_tokvalue(*lst);
+	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirectee.filename), 1);
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -72,7 +76,8 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
-	r->redirectee.filename = get_tokvalue(*lst);
+	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirectee.filename), 1);
 	if (r->redirectee.filename[0] == '-')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
@@ -98,7 +103,8 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 		r->redirectee.dest = io_nb;
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
-	r->redirector.hereword = get_tokvalue(*lst);
+	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirector.filename), 0); /* Tilde expansions should not be taken into account */
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -115,7 +121,8 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 		r->redirectee.dest = io_nb;
 	r->instruction = IODUP | IOREAD;
 	(*lst) = (*lst)->next;
-	r->redirector.filename = get_tokvalue(*lst);
+	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
+	treat_single_exp(&(r->redirector.filename), 1);
 	if (r->redirector.filename[0] == '-')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
