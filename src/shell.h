@@ -86,7 +86,7 @@ struct	s_redirection
 	int			flags;         /* additional information for complex redirections */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
-	int			save;          /* saved fd for redir undo */
+	int			save[2];       /* saved fd for redir undo */
 };
 
 /* A process is a single process.  */
