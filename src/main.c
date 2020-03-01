@@ -84,7 +84,7 @@ int			main(int argc, char **argv)
 			{
 /*				ft_putendl("\nOK"); 
 */				ast_order(&ast);
-		//		debug_ast(ast);
+				debug_ast(ast);
 				status = execute_node(ast, 1); /* to capture */
 			}
 		}
