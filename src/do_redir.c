@@ -150,6 +150,11 @@ static int	do_iodup(t_redirection *r)
 				psherror(e_system_call_error, "open(2)", e_cmd_type);
 				return (e_system_call_error);
 			}
+			if (r->flags & NOFORK)
+				r->save[0] = dup(r->redirector.dest);
+			dup2(r->redirectee.dest, r->redirector.dest);
+			close(r->redirectee.dest);
+			
 		}
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
