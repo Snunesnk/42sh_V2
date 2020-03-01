@@ -1,3 +1,55 @@
+echo ok -1<2
+echo ok auteur<auteur
+echo ok --1<2
+echo ok -0<auteur
+echo ok -1<auteur
+echo ok -4294967294<auteur
+echo ok -4294967295<auteur
+echo ok -4294967296<auteur
+echo ok -4294967297<auteur
+echo ok 4294967294<auteur
+echo ok 4294967295<auteur
+echo ok 4294967296<auteur
+echo ok 4294967297<auteur
+echo ok 4294967299<auteur
+echo ok 0<2
+echo ok 0<auteur
+echo ok 1<auteur
+echo ok 2<auteur
+echo ok 4<auteur
+echo ok 3<auteur
+echo ok 5<auteur
+echo ok 129<auteur
+echo ok 1023<auteur
+echo ok 1024<auteur
+echo ok toto<2
+echo ok toto1<2
+echo ok -1<2
+echo ok toto<toto
+echo ok --1<2
+echo ok -0<toto
+echo ok -1<toto
+echo ok -4294967294<toto
+echo ok -4294967295<toto
+echo ok -4294967296<toto
+echo ok -4294967297<toto
+echo ok 4294967294<toto
+echo ok 4294967295<toto
+echo ok 4294967296<toto
+echo ok 4294967297<toto
+echo ok 4294967299<toto
+echo ok 0<2
+echo ok 0<toto
+echo ok 1<toto
+echo ok 2<toto
+echo ok 4<toto
+echo ok 3<toto
+echo ok 5<toto
+echo ok 129<toto
+echo ok 1023<toto
+echo ok 1024<toto
+echo ok toto<2
+echo ok toto1<2
 echo ok < toto < auteur < plop
 echo ok < auteur
 echo < auteur
@@ -42,47 +94,103 @@ cat -e -< auteur
 ello=auteur
 cat -e <ello
 cat -e <$ello
-
 ls -l<1
-
-
-
-plop=Jean-Michel
-echo ok toto<1
-ls -l<1
-echo ok toto<plop
-ls -l<plop
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-ls -l
-echo ok toto
-
-ls -l
+auteur=Jean-Michel
+echo ok -1<2
+echo ok $auteur<$auteur
+echo ok --1<2
+echo ok -0<$auteur
+echo ok -1<$auteur
+echo ok -4294967294<$auteur
+echo ok -4294967295<$auteur
+echo ok -4294967296<$auteur
+echo ok -4294967297<$auteur
+echo ok 4294967294<$auteur
+echo ok 4294967295<$auteur
+echo ok 4294967296<$auteur
+echo ok 4294967297<$auteur
+echo ok 4294967299<$auteur
+echo ok 0<$auteur
+echo ok 1<$auteur
+echo ok 2<$auteur
+echo ok 4<$auteur
+echo ok 3<$auteur
+echo ok 5<$auteur
+echo ok 129<$auteur
+echo ok 1023<$auteur
+echo ok 1024<$auteur
+auteur=auteur
+echo ok -1<2
+echo ok $auteur<$auteur
+echo ok --1<2
+echo ok -0<$auteur
+echo ok -1<$auteur
+echo ok -4294967294<$auteur
+echo ok -4294967295<$auteur
+echo ok -4294967296<$auteur
+echo ok -4294967297<$auteur
+echo ok 4294967294<$auteur
+echo ok 4294967295<$auteur
+echo ok 4294967296<$auteur
+echo ok 4294967297<$auteur
+echo ok 4294967299<$auteur
+echo ok 0<$auteur
+echo ok 1<$auteur
+echo ok 2<$auteur
+echo ok 4<$auteur
+echo ok 3<$auteur
+echo ok 5<$auteur
+echo ok 129<$auteur
+echo ok 1023<$auteur
+echo ok 1024<$auteur
+auteur=0
+echo ok -1<2
+echo ok $auteur<$auteur
+echo ok --1<2
+echo ok -0<$auteur
+echo ok -1<$auteur
+echo ok -4294967294<$auteur
+echo ok -4294967295<$auteur
+echo ok -4294967296<$auteur
+echo ok -4294967297<$auteur
+echo ok 4294967294<$auteur
+echo ok 4294967295<$auteur
+echo ok 4294967296<$auteur
+echo ok 4294967297<$auteur
+echo ok 4294967299<$auteur
+echo ok 0<$auteur
+echo ok 1<$auteur
+echo ok 2<$auteur
+echo ok 4<$auteur
+echo ok 3<$auteur
+echo ok 5<$auteur
+echo ok 129<$auteur
+echo ok 1023<$auteur
+echo ok 1024<$auteur
+auteur=1024
+echo ok -1<2
+echo ok $auteur<$auteur
+echo ok --1<2
+echo ok -0<$auteur
+echo ok -1<$auteur
+echo ok -4294967294<$auteur
+echo ok -4294967295<$auteur
+echo ok -4294967296<$auteur
+echo ok -4294967297<$auteur
+echo ok 4294967294<$auteur
+echo ok 4294967295<$auteur
+echo ok 4294967296<$auteur
+echo ok 4294967297<$auteur
+echo ok 4294967299<$auteur
+echo ok 0<$auteur
+echo ok 1<$auteur
+echo ok 2<$auteur
+echo ok 4<$auteur
+echo ok 3<$auteur
+echo ok 5<$auteur
+echo ok 129<$auteur
+echo ok 1023<$auteur
+echo ok 1024<$auteur
 toto=1
 echo ok <$toto
 toto=file
@@ -106,3 +214,27 @@ ls |</dev/null
 ls | <ok
 ls |< ok
 ls| <ok
+echo ok -1<2 -1<auteur
+echo ok auteur<auteur auteur<auteur
+echo ok --1<2 <auteur
+echo ok -0<auteur <toto
+echo ok -1<auteur <toto
+echo ok -4294967294<auteur <plop
+echo ok -4294967295<auteur <auteur
+echo ok -4294967296<auteur < auteur
+echo ok -4294967297<auteur <  plop
+echo ok 4294967294<auteur < auteur
+echo ok 4294967295<auteur < plpo
+echo ok 4294967296<auteur < toto
+echo ok 4294967297<auteur < $SHLVL
+echo ok 4294967299<auteur < env
+echo ok 0<2 < echo ok
+echo ok 0<auteur < echo ok
+echo ok 1<auteur < echo ok
+echo ok 2<auteur < ls
+echo ok 4<auteur < $env
+echo ok 3<auteur < coucou
+echo ok 5<auteur <$42
+echo ok 129<auteur <ok
+echo ok 1023<auteur < auteur
+echo ok 1024<auteur < toto
