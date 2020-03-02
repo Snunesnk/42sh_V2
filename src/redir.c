@@ -184,6 +184,7 @@ static t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 
 	(void)io_nb;
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
+	r->redirectee.dest = STDOUT_FILENO;
 	r->instruction = IODUP | IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
