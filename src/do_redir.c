@@ -151,14 +151,6 @@ static int	do_iodup(t_redirection *r)
 			r->save[0] = dup(r->redirector.dest);
 		close(r->redirector.dest);
 	}
-
-//	{
-//		if (r->redirectee.dest == r->redirector.dest)
-//			return (0);
-//		if ( r->flags & NOFORK)
-//			r->save[0] = dup(r->redirectee.dest);
-//		dup2(r->redirectee.dest, r->redirector.dest);
-//	}
 	return (0);
 }
 
