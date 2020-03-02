@@ -125,16 +125,6 @@ static int	do_iohere(t_redirection *r)
 	return (0);
 }
 
-static int	do_ioerr(t_redirection *r)
-{
-	if (r->flags & NOFORK)
-		r->save[0] = dup(STDOUT_FILENO);
-	if (r->flags & NOFORK)
-		r->save[1] = dup(STDERR_FILENO);
-	dup2(STDOUT_FILENO, STDERR_FILENO);
-	return (0);
-}
-
 static int	do_iodfile(t_redirection *r)
 {
 	/* Open file */
@@ -155,8 +145,12 @@ static int	do_iodfile(t_redirection *r)
 		return (e_system_call_error);
 	}
 	/* Dup err and out */
+	if (r->flags & NOFORK)
+		r->save[0] = dup(STDOUT_FILENO);
+	if (r->flags & NOFORK)
+		r->save[1] = dup(STDERR_FILENO);
 	dup2(r->redirectee.dest, STDOUT_FILENO);
-	do_ioerr(r);
+	dup2(r->redirectee.dest, STDERR_FILENO);
 	close(r->redirectee.dest);
 	return (0);
 }
