@@ -22,7 +22,6 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREATAND] = ">&";
 	token_tab[LESSAND] = "<&";
 	token_tab[ANDGREAT] = "&>";
-	token_tab[ANDLESS] = "&<";
 	token_tab[AND] = "&";
 	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";
@@ -150,10 +149,6 @@ int			get_next_token(const char *str, t_token *token)
 				ft_strlen(token_tab[token_index])) == TRUE)
 		{
 			token->type = token_index;
-	//		if (token->type == ANDGREAT)
-	//			token->type = GREATAND;
-	//		else if (token->type == ANDLESS)
-	//			token->type = LESSAND;
 			pos = ft_strlen(token_tab[token_index]);
 			break ;
 		}
