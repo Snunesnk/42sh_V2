@@ -21,7 +21,7 @@ static void	init_token_tab(int **token_tab)
 	int		token_redir[NB_TOKEN] = { WORD, GREATAND, LESSAND, DGREAT, DLESS,
 					TAB_END };
 	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND,
-					ANDGREAT, ANDLESS, AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS,
+					ANDGREAT, AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS,
 					WHILE_WORD, DONE, DGREAT, DLESS, GREAT, LESS, WORD, IO_NB,
 					COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, GREATAND,
@@ -39,7 +39,6 @@ static void	init_token_tab(int **token_tab)
 	token_tab[GREATAND] = token_redir;
 	token_tab[LESSAND] = token_redir;
 	token_tab[ANDGREAT] = token_redir;
-	token_tab[ANDLESS] = token_redir;
 	token_tab[AND] = token_start;
 	token_tab[DSEMI] = NULL;
 	token_tab[SEMI] = token_semicolon;

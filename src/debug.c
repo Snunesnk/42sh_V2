@@ -22,7 +22,6 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREATAND] = "GREATAND";
 	token_tab[LESSAND] = "LESSAND";
 	token_tab[ANDGREAT] = "ANDGREAT";
-	token_tab[ANDLESS] = "ANDLESS";
 	token_tab[DSEMI] = "DSEMI";
 	token_tab[SEMI] = "SEMI";
 	token_tab[OP_PARENTHESIS] = "OP_PARENTHESIS";
