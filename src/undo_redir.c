@@ -2,23 +2,6 @@
 #include "error.h"
 #include "shell.h"
 
-/* Debugg */
-//static void	debug_r(t_redirection *r)
-//{
-//	static int	i;
-
-//	i = 0;
-//	ft_printf("\n");
-//	while (r)
-//	{
-//		ft_printf("\nUNDO redir:%d\n", i++);
-//		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
-//		ft_printf("\tr->save: %d\n", r->save);
-//		r = r->next;
-//	}
-//	ft_printf("\n");
-//}
-
 static int	restored_fd(t_shell_fds *shell_fd, int fd)
 {
 	while (shell_fd)
@@ -71,7 +54,6 @@ static int	undo_iowrite(t_redirection *r, t_shell_fds **shell_fd)
 
 static int	undo_ioread(t_redirection *r, t_shell_fds **shell_fd)
 {
-//	debug_r(r); /* Debug */
 	/* Multiple close of a given fd is prohibited */
 	if (!restored_fd(*shell_fd, r->redirectee.dest))
 	{
@@ -91,12 +73,13 @@ static int	undo_iodup(t_redirection *r, t_shell_fds **shell_fd)
 		add_restored_fd(shell_fd, r->redirectee.dest);
 		dup2(r->save[0], r->redirectee.dest);
 	}
-//	if (!restored_fd(*shell_fd, r->redirectee.dest))
-//	{
-//		add_restored_fd(shell_fd, r->redirectee.dest);
-//		dup2(r->save[0], r->redirectee.dest);
-//	}
 	close(r->save[0]);
+	if (!restored_fd(*shell_fd, r->redirectee.dest))
+	{
+		add_restored_fd(shell_fd, r->redirectee.dest);
+		dup2(r->save[0], r->redirectee.dest);
+	}
+	close(r->save[1]);
 	return (0);
 }
 
