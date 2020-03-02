@@ -89,6 +89,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	}
 	else
 		r->flags |= FILENAME;
+	}
 	(*lst) = (*lst)->next;
 	return (r);
 }
