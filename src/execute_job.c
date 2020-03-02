@@ -21,7 +21,6 @@ int	is_redir_type(int type)
 {
 	return (type == GREATAND
 		|| type == LESSAND
-		|| type == ANDLESS
 		|| type == ANDGREAT
 		|| type == DGREAT
 		|| type == DLESS

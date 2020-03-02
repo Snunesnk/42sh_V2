@@ -9,7 +9,6 @@ int	has_redirections(int type)
 		|| type == GREAT
 		|| type == DLESS
 		|| type == DGREAT
-		|| type == ANDLESS
 		|| type == ANDGREAT
 		|| type == LESSAND
 		|| type == GREATAND);
@@ -144,40 +143,6 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-static t_redirection	*type_andless_redirection(t_list **lst, int io_nb)
-{
-	t_redirection	*r;
-	int		fd;
-
-	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	if (io_nb == -1)
-		r->redirectee.dest = STDOUT_FILENO;
-	else
-		r->redirectee.dest = io_nb;
-	r->instruction = IODUP | IOREAD;
-	(*lst) = (*lst)->next;
-	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
-	if (r->redirector.filename[0] == '-')
-		r->flags |= FDCLOSE;
-	else if (ft_str_is_numeric(r->redirector.filename))
-	{
-		fd = ft_atoifd(r->redirector.filename);
-		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
-		{
-			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
-			free(r);
-			return (NULL);
-		}
-		r->redirector.dest = fd;
-		r->flags |= DEST;
-	}
-	else
-		r->flags |= FILENAME;
-	(*lst) = (*lst)->next;
-	return (r);
-}
-
 static t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -212,7 +177,5 @@ t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_lessand_redirection(lst, io_nb));
 	else if (type == ANDGREAT)
 		return (type_andgreat_redirection(lst, io_nb));
-	else if (type == ANDLESS)
-		return (type_andless_redirection(lst, io_nb));
 	return (NULL);
 }
