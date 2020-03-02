@@ -178,28 +178,17 @@ static t_redirection	*type_andless_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-/* Redirecting Standard Output and Standard Error */
-/* >word + 2>&1 */
 static t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
 	(void)io_nb;
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->redirector.dest = STDOUT_FILENO;
-//	r->instruction = IOERR;
+	r->instruction = IODUP | IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
 	treat_single_exp(&(r->redirectee.filename), 1);
-	if (r->redirectee.filename[0] == '-')
-		r->flags |= FDCLOSE;
-	else if (ft_str_is_numeric(r->redirectee.filename))
-	{
-		r->redirectee.dest = ft_atoifd(r->redirectee.filename);
-		r->flags |= DEST;
-	}
-	else
-		r->flags |= FILENAME;
+	r->flags |= FILENAME;
 	(*lst) = (*lst)->next;
 	return (r);
 }
