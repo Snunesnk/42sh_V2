@@ -48,10 +48,10 @@
 # define IOTYPE  0xF		/* type: bits 0:3 */
 # define IOREAD  0x1		/* < */
 # define IOWRITE 0x2		/* > */
-# define IORDWR  0x3		/* <>: todo */
-# define IOHERE  0x4		/* << (here file) */
-# define IOCAT   0x5		/* >> */
-# define IODUP   0x6		/* <&/>& */
+# define IORDWR  0x4		/* <>: todo */
+# define IOHERE  0x8		/* << (here file) */
+# define IOCAT   0x10		/* >> */
+# define IODUP   0x20		/* <&/>& */
 
 /* Flags for complex redirection */
 # define FILENAME  0x1
