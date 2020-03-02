@@ -110,6 +110,7 @@ static int	do_ioread(t_redirection *r)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iohere(t_redirection *r)
 {
 	if (valid_fd(r->redirectee.dest, 1))
@@ -124,6 +125,42 @@ static int	do_iohere(t_redirection *r)
 	return (0);
 }
 
+static int	io_eodup(t_redirection *r)
+{
+	if (r->flags & NOFORK)
+		r->save[0] = dup(STDOUT_FILENO);
+	if (r->flags & NOFORK)
+		r->save[1] = dup(STDERR_FILENO);
+	dup2(STDOUT_FILENO, STDERR_FILENO);
+	return (0);
+}
+
+static int	io_iodfile(t_redirection *r)
+{
+	/* Open file */
+	if (access(r->redirectee.filename, F_OK))
+	{ /* File does not exists so attempt to create it */
+		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
+	else if (access(r->redirectee.filename, R_OK))
+	{ /* File exists but no rights to write */
+		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
+	else /* File exists and rights to write */
+		r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (r->redirectee.dest < 0)
+	{ /* Open error */
+		psherror(e_system_call_error, "open(2)", e_cmd_type);
+		return (e_system_call_error);
+	}
+	/* Dup err and out */
+	dup2(r->redirectee.dest, STDOUT_FILENO);
+	io_eodup(r);
+	close(r->redirectee.dest);
+	return (0);
+}
+
 static int	do_iodup(t_redirection *r)
 {
 	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
@@ -132,8 +169,8 @@ static int	do_iodup(t_redirection *r)
 		return (e_ambiguous_redirect);
 	}
 	else if (r->flags & FILENAME)
-	{ /* >&filename: equivalent to >filename 2>&1 */
-		return (0); /* Debug */
+	{ /* >&filename: equivalent to >filename 2>&1 or to &>filename*/
+		return (io_iodfile(r));
 	}
 	else if (r->flags & DEST)
 	{ /* [n]>&n: ok*/
