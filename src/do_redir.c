@@ -178,7 +178,7 @@ static int	do_iodread(t_redirection *r)
 
 static int	do_iodup(t_redirection *r)
 {
-	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
+	if (r->flags & FILENAME && (r->redirector.dest != STDOUT_FILENO || r->flags & AMBIGU))
 	{ /* n>&filename: ok */
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);

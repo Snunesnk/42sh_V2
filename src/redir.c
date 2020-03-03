@@ -14,6 +14,21 @@ int	has_redirections(int type)
 		|| type == GREATAND);
 }
 
+static int	has_close_at_end(char *str)
+{
+	int	i;
+
+	if ((i = ft_strlen(str)) > 0)
+		--i;
+	if (str[i] == '-')
+	{
+		str[i] = '\0';
+		return (1);
+	}
+	else
+		return (0);
+}
+
 static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
@@ -78,8 +93,11 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	if (r->redirectee.filename[0] == '-')
+	if (has_close_at_end(r->redirectee.filename))
+		r->flags |= AMBIGU;
+	else
+		treat_single_exp(&(r->redirectee.filename), 1);
+	if (r->redirectee.filename[0] == '-' && r->redirectee.filename[2] == '\0')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
 	{
@@ -128,12 +146,6 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	else if (ft_str_is_numeric(r->redirector.filename))
 	{
 		fd = ft_atoifd(r->redirector.filename);
-		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
-		{
-			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
-			free(r);
-			return (NULL);
-		}
 		r->redirector.dest = fd;
 		r->flags |= DEST;
 	}
