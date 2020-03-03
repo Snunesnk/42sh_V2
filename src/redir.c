@@ -32,7 +32,7 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
+static t_redirection	*subtype_great_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
@@ -41,7 +41,6 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = STDOUT_FILENO;
 	else
 		r->redirector.dest = io_nb;
-	r->instruction = IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
 	treat_single_exp(&(r->redirectee.filename), 1);
@@ -49,20 +48,21 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
+static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
+{
+	t_redirection	*r;
+
+	r = subtype_great_redirection(lst, io_nb);
+	r->instruction = IOWRITE;
+	return (r);
+}
+
 static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
-	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	if (io_nb == -1)
-		r->redirector.dest = STDOUT_FILENO;
-	else
-		r->redirector.dest = io_nb;
+	r = subtype_great_redirection(lst, io_nb);
 	r->instruction = IOCAT;
-	(*lst) = (*lst)->next;
-	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	(*lst) = (*lst)->next;
 	return (r);
 }
 
