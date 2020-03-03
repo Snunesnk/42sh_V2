@@ -130,7 +130,6 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	int		fd;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
 	if (io_nb == -1)
@@ -145,8 +144,7 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
 	{
-		fd = ft_atoifd(r->redirector.filename);
-		r->redirector.dest = fd;
+		r->redirector.dest = ft_atoifd(r->redirector.filename);
 		r->flags |= DEST;
 	}
 	else
