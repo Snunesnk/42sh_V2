@@ -53,3 +53,4 @@ $?
 $~
 echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsadf$LOGNAME
 exit
+while (ls >/dev/null 2>/dev/null); do ((++i)) ; name\=\$i echo $i; done
