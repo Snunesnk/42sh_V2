@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 10:46:59 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:05:46 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	ft_bzero(&token, sizeof(token));
 	last_pos = *pos;
 	*pos += get_next_token(str + *pos, &token, type);
+	if (token.type == DLESSDASH)
+		token.type = DLESS;
 	if (str[*pos] == '\0' && token.type == PIPE && *type != NONE)
 		get_input(str);
 	else if (*type == DLESS && token.type == WORD)
