@@ -4,7 +4,7 @@ A tiny shell. [42 project]
 ToDo:
 
 Antoine:
-- 21sh Redirections: segv 2<< eof, &< parse error (should background), 7<&8 parse error.
+- 21sh Redirections: segv 2<< eof. test all redir
 - 21sh Readline SIGWINCH
 - 42sh Done but need to make it perfect for 42sh: Job control: fg, bg, jobs,...
 - 42sh Autocompletion, Vim binding.
