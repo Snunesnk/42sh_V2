@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 11:00:25 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:09:47 by efischer         ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -119,7 +119,7 @@ static int	get_word(const char *str, t_token *token, uint64_t *last_token_type)
 		if (token->value != NULL)
 			len = ft_strlen(token->value);
 	}
-	if (str[len] == '-' && *last_token_type == GREATAND)
+	if (str[len] == '-' && (*last_token_type == GREATAND || *last_token_type == LESSAND))
 	{
 		token->value = ft_strdup("-");
 		token->type = WORD;
