@@ -20,12 +20,10 @@ Sabri:
 - 42sh Inhibitors
 
 Simon:
-- 42sh Hash table
 - 42sh History
 
 Optionnal:
 	- Subshells $(), (), ``
 	- Group { ;}
-	- Hash
 	- Aliases
 	- Builtin `test`
