@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/29 19:17:52 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/03 19:04:49 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ LDLIBS += $(PATH_LIB)libft.a -lreadline
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L  $(DEBUG)
+override CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L  $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
 DEBUG += -g3 -fsanitize=address,undefined
