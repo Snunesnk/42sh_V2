@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 10:46:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:00:25 by efischer         ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[DONE] = "done";
 	token_tab[DGREAT] = ">>";
 	token_tab[DLESS] = "<<";
+	token_tab[DLESSDASH] = "<<-";
 	token_tab[GREAT] = ">";
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
