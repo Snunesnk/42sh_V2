@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 10:46:53 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/03 11:06:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ extern char	*g_filename_redir_error;
 
 # define BUF_SIZE	32
 
-# define NB_TOKEN	25
+# define NB_TOKEN	26
 # define NB_BRACKET	3
 # define TAB_END	-1
 
@@ -234,6 +234,7 @@ enum	e_token
 	WHILE_WORD,
 	DONE,
 	DGREAT,
+	DLESSDASH,
 	DLESS,
 	GREAT,
 	LESS,
