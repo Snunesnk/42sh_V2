@@ -18,7 +18,8 @@ static int	has_close_at_end(char *str)
 {
 	int	i;
 
-	i = ft_strlen(str);
+	if ((i = ft_strlen(str)) > 0)
+		--i;
 	if (str[i] == '-')
 	{
 		str[i] = '\0';
@@ -92,8 +93,7 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	/* Check end of filename with - */
-	if (has_close_at_end())
+	if (has_close_at_end(r->redirectee.filename))
 		r->flags |= AMBIGU;
 	else
 		treat_single_exp(&(r->redirectee.filename), 1);
