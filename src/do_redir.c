@@ -159,19 +159,25 @@ static int	do_iodfile(t_redirection *r)
 static int	do_iodread(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
+	{ /* [n]<&- */
+		if (r->flags & NOFORK)
+			r->save[0] = dup(r->redirector.dest);
 		close(r->redirectee.dest);
+	}
 	else if (r->flags & FILENAME)
-	{
+	{ /* [n]<&filename */
 		psherror(e_ambiguous_redirect, r->redirector.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
 	}
 	else if (r->flags & DEST)
-	{
-
+	{ /* [n]<&n */
+		if (valid_fd(r->redirector.dest, 1))
+			return (e_bad_file_descriptor);
+		if (r->redirectee.dest == r->redirector.dest)
+			return (0);
 		if (r->flags & NOFORK)
 			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
-		close(r->redirector.dest);
 	}
 	return (0);
 }
