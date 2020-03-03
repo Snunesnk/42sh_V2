@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/29 19:26:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/03 10:46:56 by efischer         ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -105,7 +105,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 		*len = 0;
 }
 
-static int	get_word(const char *str, t_token *token)
+static int	get_word(const char *str, t_token *token, uint64_t *last_token_type)
 {
 	size_t	len;
 	char	*tmp;
@@ -117,6 +117,12 @@ static int	get_word(const char *str, t_token *token)
 		token->value = ft_strdup(str);
 		if (token->value != NULL)
 			len = ft_strlen(token->value);
+	}
+	if (str[len] == '-' && *last_token_type == GREATAND)
+	{
+		token->value = ft_strdup("-");
+		token->type = WORD;
+		len = 1;
 	}
 	else if (ft_isdigit(str[len]) == TRUE && is_io_number(str) == TRUE)
 	{
@@ -134,7 +140,7 @@ static int	get_word(const char *str, t_token *token)
 	return (len);
 }
 
-int			get_next_token(const char *str, t_token *token)
+int			get_next_token(const char *str, t_token *token, uint64_t *last_token_type)
 {
 	char	*token_tab[NB_TOKEN];
 	size_t	token_index;
@@ -155,6 +161,6 @@ int			get_next_token(const char *str, t_token *token)
 		token_index++;
 	}
 	if (token_index == NB_TOKEN)
-		pos = get_word(str, token);
+		pos = get_word(str, token, last_token_type);
 	return (pos);
 }
