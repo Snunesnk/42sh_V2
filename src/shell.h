@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 10:15:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/03 10:46:53 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,7 +277,7 @@ int		initialize_prompt_fd(void);
 int		execute_job(t_list *lst, int foreground);
 _Bool   prompt_display(int status);
 int		path_concat(char **bin);
-int		get_next_token(const char *str, t_token *token);
+int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
 int    	set_minimal_env(void);
 void    del(void *content, size_t content_size);
 int     ft_atoifd(const char *str);
