@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 12:45:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/03 15:46:03 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,7 @@ void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
 void	del_env(void *content, size_t content_size);
+void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
 
 extern int	g_retval;
 
