@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/03 15:31:05 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
@@ -130,7 +142,6 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	int		fd;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
 	if (io_nb == -1)
@@ -145,8 +156,7 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
 	{
-		fd = ft_atoifd(r->redirector.filename);
-		r->redirector.dest = fd;
+		r->redirector.dest = ft_atoifd(r->redirector.filename);
 		r->flags |= DEST;
 	}
 	else

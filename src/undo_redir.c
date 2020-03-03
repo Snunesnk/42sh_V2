@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   undo_redir.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/03 15:33:30 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
@@ -55,6 +67,8 @@ static int	undo_iowrite(t_redirection *r, t_shell_fds **shell_fd)
 static int	undo_ioread(t_redirection *r, t_shell_fds **shell_fd)
 {
 	/* Multiple close of a given fd is prohibited */
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
 	if (!restored_fd(*shell_fd, r->redirectee.dest))
 	{
 		add_restored_fd(shell_fd, r->redirectee.dest);
