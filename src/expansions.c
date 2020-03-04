@@ -84,7 +84,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 		lnew = lprefix + ft_strlen(*next);
 		new = (char*)ft_memalloc(sizeof(char) * (lnew + 1));
 		ft_strncat(new, *token, lprefix);
-		ft_memdel((void**)token);
+//		ft_memdel((void**)token);
 		ft_strcat(new, *next);
 		ft_memdel((void**)next);
 		*next = &(new)[index + lprefix];
@@ -119,7 +119,7 @@ int			treat_expansions(int argc, char **argv)
 	int	ret;
 
 	i = 0;
-	if (!argv || *argv)
+	if (!argv || !*argv)
 		return (e_invalid_input);
 	while (i < argc)
 	{ /* memmove, if expansion is null */
