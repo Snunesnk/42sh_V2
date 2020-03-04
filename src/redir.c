@@ -54,7 +54,8 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	/* make a copy */
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1); /* Should capture return when bad subsitution or other error */
+	if (treat_single_exp(&(r->redirector.filename), 1)) /* Should capture return when bad subsitution or other error */
+		r->error = e_bad_substitution;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -70,7 +71,8 @@ static t_redirection	*subtype_great_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -106,9 +108,21 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
 	if (has_close_at_end(r->redirectee.filename))
-		r->flags |= AMBIGU;
+	{
+		r->error = e_ambiguous_redirect;
+		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
+//		(*lst) = (*lst)->next;
+		return (r);
+	}
 	else
-		treat_single_exp(&(r->redirectee.filename), 1);
+	{
+		if (treat_single_exp(&(r->redirectee.filename), 1))
+		{
+			r->error = e_bad_substitution;
+//			(*lst) = (*lst)->next;
+			return (r);
+		}
+	}
 	if (r->redirectee.filename[0] == '-' && r->redirectee.filename[2] == '\0')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
@@ -134,7 +148,8 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
 	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 0); /* Tilde expansions should not be taken into account */
+	if (treat_single_exp(&(r->redirector.filename), 0)) /* Tilde expansions should not be taken into account */
+		r->error = e_bad_substitution;;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -151,7 +166,8 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP | IOREAD;
 	(*lst) = (*lst)->next;
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
+	if (treat_single_exp(&(r->redirector.filename), 1))
+		r->error = e_bad_substitution;;
 	if (r->redirector.filename[0] == '-')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
@@ -174,7 +190,8 @@ static t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP | IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;;
 	(*lst) = (*lst)->next;
 	return (r);
 }
