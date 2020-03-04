@@ -1,3 +1,7 @@
+echo Hello | ${${dfdf}} | cat -e
+echo Hello | ${${dfdf}} | cat -e | echo ok
+echo Hello 1>&2 | ${${dfdf}} | cat -e | echo ok
+
 echo ok -1<2
 echo ok auteur<auteur
 echo ok --1<2
