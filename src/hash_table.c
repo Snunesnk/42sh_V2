@@ -78,6 +78,8 @@ int				add_name_hash_table(char *name, int nb)
 
 	if (!name)
 		return (e_command_not_found);
+	if (is_a_builtin(name))
+		return (e_command_not_found);
 	status = e_success;
 	pathname = ft_strdup(name);
 	status = path_concat(&pathname);
