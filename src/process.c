@@ -30,10 +30,12 @@ void	free_process(t_process *p) /* temporary for tests purposes ? */
 
 int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
 {
-	extern char	**environ;
+//	extern char	**environ;
+	char		**envp;
 	pid_t		pid;
-	int		ret;
+	int			ret;
 
+	envp = get_env_tab();
 	if (shell_is_interactive)
 	{ /* Put the process into the process group and give the process group
 	  the terminal, if appropriate. This has to be done both by the shell
@@ -75,6 +77,6 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 
 	/* Exec the new process. Make sure we exit */
 	/* Check access, etc... and send value to exit if error launching of if builtin */
-	ret = execute_process(p->argv, environ);
+	ret = execute_process(p->argv, envp);
 	exit(ret);
 }

@@ -30,6 +30,7 @@ SOURCES :=	main.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
+		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
 		hash_table.c \
