@@ -82,6 +82,8 @@ int	execute_process(char **argv, char **envp)
 	int				ret;
 	char			*pathname;
 
+	if (!*argv)
+		return (0);
 	if (!ft_strcmp(argv[0], "builtin"))
 		return (builtin_keyword_exec(argv));
 	else if (is_a_builtin(argv[0]))
