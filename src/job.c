@@ -66,7 +66,16 @@ void	launch_job(t_job *j, int foreground)
 	mypipe[1] = -1;
 	while (p)
 	{
-		/* Set up pipes, if necessary.  */
+//		if (treat_expansions(p->argc, p->argv)) /* If expansion fails, the process execution is skipped */
+//		{ /* test pipe: echo Hello | ${${dfdf}} | cat -e */
+//			p = p->next;
+//			if (infile != j->stdin)
+//				close (infile);
+//			if (outfile != j->stdout)
+//				close(outfile);
+//			infile = mypipe[0];
+//			continue;
+//		}
 		if (p->next)
 		{
 			if (pipe(mypipe) < 0)

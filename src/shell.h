@@ -294,7 +294,7 @@ int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
 int	treat_single_exp(char **str, int tilde);
-int	treat_expansions(char **tokens);
+int	treat_expansions(int argc, char **argv);
 int		get_env_list(char **environ);
 void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
