@@ -71,7 +71,7 @@ static int	get_argc(t_list *lst)
 	while (lst)
 	{
 		t = lst->content;
-		if (t->type == WORD)
+		if (t->type == WORD || t->type == SHELL_VAR)
 			++argc;
 		else if (t->type == IO_NB)
 		{
@@ -79,7 +79,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD)
+				if (t->type == WORD || t->type == SHELL_VAR)
 					++argc;
 				else
 					continue;
@@ -91,7 +91,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD)
+				if (t->type == WORD || t->type == SHELL_VAR)
 					++argc;
 				else
 					continue;
@@ -119,7 +119,7 @@ char	**build_argv(t_list *lst, int argc)
 				lst = lst->next->next->next;
 			if (is_redir_type(get_tokentype(lst)))
 				lst = lst->next->next;
-			if (get_tokentype(lst) == WORD)
+			if (get_tokentype(lst) == WORD || get_tokentype(lst) == SHELL_VAR)
 			{
 				argv[i] = get_tokvalue(lst);
 				++i;

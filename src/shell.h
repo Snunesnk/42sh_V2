@@ -302,6 +302,7 @@ void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
 void	del_env(void *content, size_t content_size);
 void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
+char	**get_env_tab(void);
 
 extern int	g_retval;
 
