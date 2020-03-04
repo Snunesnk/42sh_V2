@@ -6,14 +6,14 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 18:36:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/04 22:41:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
 
-char	*g_pathname = NULL;
+char	*g_needed_arg = NULL;
 
 int		cmd_hash(int argc, char **argv)
 {
@@ -23,7 +23,8 @@ int		cmd_hash(int argc, char **argv)
 
 	args = (argv) ? argv + 1 : argv;
 	options_list = 0;
-	while (args && argc > 1 && (status = get_next_opt(&args)) != -1)
+	g_builtin_name = (argv) ? argv[0] : NULL;
+	while (args && argc > 1 && (status = get_next_opt(&args, "dlp:rt")) != -1)
 	{
 		if (status == 'd')
 			options_list |= HASH_D_OPTION;
@@ -36,15 +37,14 @@ int		cmd_hash(int argc, char **argv)
 		else if (status == 't')
 			options_list |= HASH_T_OPTION;
 		else if (status == e_invalid_input)
-			return (status);
+			return (print_usage(e_invalid_input));
 	}
 	if (!args)
 		return (e_invalid_input);
-	status = check_for_needed_arguments(options_list, args);
-	return (status > 0);
+	return (check_for_needed_arguments(options_list, args) > 0);
 }
 
-char	get_next_opt(char ***args)
+char	get_next_opt(char ***args, const char *options_list)
 {
 	static int	x = 0;
 
@@ -60,41 +60,31 @@ char	get_next_opt(char ***args)
 		*args += 1;
 	}
 	if (!(**args))
-		return (get_next_opt(NULL));
+		return (get_next_opt(NULL, NULL));
 	if ((**args)[0] == '-')
-		return (return_next_opt(args, &x));
-	return (get_next_opt(NULL));
+		return (return_next_opt(args, &x, options_list));
+	return (get_next_opt(NULL, NULL));
 }
 
-int		print_error(int error_no, char *message, int ret)
+int		print_usage(int ret)
 {
-	if (error_no == 0)
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: hash: -p: option" \
-				"requires an argument\nhash: usage: " \
-				"hash [-lr] [-p pathname] [-dt] [name ...]\n");
-	}
-	if (error_no == 1)
-	{
-		ft_dprintf(STDERR_FILENO, \
-				"./21sh: hash: -%s: invalid option\n", message);
-		ft_dprintf(STDERR_FILENO, "hash: usage: " \
-				"hash [-lr] [-p pathname] [-dt] [name ...]\n");
-	}
-	if (error_no == 2)
-		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", message);
+	ft_dprintf(STDERR_FILENO, "hash: usage: "\
+			"hash [-lr] [-p pathname] [-dt] [name ...]\n");
 	return (ret);
 }
 
 int		check_for_needed_arguments(int options_list, char **args)
 {
+	int	status;
+
 	if (!*args && options_list & HASH_T_OPTION)
 	{
 		ft_dprintf(STDERR_FILENO, \
 				"./21sh: hash: -t: option requires an argument\n");
 		return (e_invalid_input);
 	}
-	return (exec_hash_builtin(options_list, args));
+	status = exec_hash_builtin(options_list, args);
+	return (status);
 }
 
 int		exec_hash_builtin(int options_list, char **args)
@@ -112,7 +102,7 @@ int		exec_hash_builtin(int options_list, char **args)
 	while (status != e_cannot_allocate_memory && *args)
 	{
 		if (options_list & HASH_P_OPTION)
-			status = change_hash_entry(g_pathname, *args);
+			status = change_hash_entry(g_needed_arg, *args);
 		else if (options_list & HASH_D_OPTION || find_occurence(*args))
 			remove_hash_entry(*args);
 		if ((*args)[0] != '.' && !(options_list & HASH_P_OPTION) \

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:22:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/04 20:59:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ const t_builtins	g_builtins[] =
 	{ "false", &cmd_false},
 	{ "type", &cmd_type},
 	{ "hash", &cmd_hash},
+	{ "fc", &cmd_fc},
 	{ "\0", NULL}
 };
 
