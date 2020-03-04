@@ -242,7 +242,7 @@ int	execute_job(t_list *lst, int foreground)
 	if (j == NULL)
 		return (FAILURE);
 	add_job_to_queue(j);
-	g_retval = -1;
+	g_retval = -1; /* Bad way of returning exit value */
 	launch_job(j, foreground);
 	if (g_retval == -1)
 		ret = get_exit_value(get_job_status(j, foreground));
