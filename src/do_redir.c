@@ -196,7 +196,7 @@ static int	do_iodread(t_redirection *r)
 
 static int	do_iodup(t_redirection *r)
 {
-	if (r->flags & FILENAME && (r->redirector.dest != STDOUT_FILENO || r->flags & AMBIGU))
+	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
 	{ /* n>&filename: ok */
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
@@ -234,6 +234,12 @@ int	do_redirection(t_redirection *r)
 	error = 0;
 	while (r)
 	{
+		if (r->error)
+		{
+			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
+				undo_redirection(beg);
+			return (g_errordesc[r->error].code);
+		}
 		if (r->instruction == IOWRITE)
 			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
