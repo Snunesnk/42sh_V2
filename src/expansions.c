@@ -113,17 +113,17 @@ int			treat_single_exp(char **str, int tilde)
 	return (e_success);
 }
 
-int			treat_expansions(char **tokens)
+int			treat_expansions(int argc, char **argv)
 {
 	int	i;
 	int	ret;
 
 	i = 0;
-	if (!tokens)
+	if (!argv || *argv)
 		return (e_invalid_input);
-	while (tokens[i])
+	while (i < argc)
 	{ /* memmove, if expansion is null */
-		ret = treat_single_exp(&tokens[i], 1);
+		ret = treat_single_exp(&argv[i], 1);
 		if (ret)
 			return (ret);
 		++i;
