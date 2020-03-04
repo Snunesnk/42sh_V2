@@ -6,11 +6,13 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 18:37:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/04 22:32:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+char	*g_builtin_name = NULL;
 
 void	print_hashed_targets_util(t_hash_table *tmp, int l_option, \
 		char *arg, int multiple)
@@ -47,45 +49,50 @@ void	print_hashed_commands_util(t_hash_table *tmp, int l_option)
 	}
 }
 
-char	deal_with_p_opt(char ***args, int *x)
+char	deal_with_spe_opt(char ***args, int *x)
 {
+	int	spe;
+
+	spe = (**args)[*x];
 	if (!(**args)[*x + 1] && !(*args)[1])
 	{
-		print_error(0, "", 0);
-		get_next_opt(NULL);
+		ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: option requires an"\
+				" argument\n", g_builtin_name, spe);
+		get_next_opt(NULL, NULL);
 		return (e_invalid_input);
 	}
 	else if (!(**args)[*x + 1])
 	{
-		g_pathname = *(*args + 1);
+		g_needed_arg = *(*args + 1);
 		*args += 2;
 		*x = 0;
 	}
 	else
 	{
-		g_pathname = **args + *x + 1;
+		g_needed_arg = **args + *x + 1;
 		*args += 1;
 		*x = 0;
 	}
-	return ('p');
+	return (spe);
 }
 
-char	return_next_opt(char ***args, int *x)
+char	return_next_opt(char ***args, int *x, const char *options_list)
 {
-	static char	options_list[] = "dlprt";
+	char	*tmp;
 
 	if ((**args)[1] == '-' && !(**args)[2])
 	{
 		(*args)++;
-		return (get_next_opt(NULL));
+		return (get_next_opt(NULL, NULL));
 	}
-	if (ft_strchr(options_list, (**args)[*x]))
+	if ((tmp = ft_strchr(options_list, (**args)[*x])))
 	{
-		if ((**args)[*x] == 'p')
-			return (deal_with_p_opt(args, x));
+		if (*(tmp + 1) == ':')
+			return (deal_with_spe_opt(args, x));
 		return ((**args)[*x]);
 	}
-	print_error(1, &((**args)[*x]), 0);
-	get_next_opt(NULL);
-	return (e_invalid_input);
+	ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: invalid option\n",\
+			g_builtin_name, (**args)[*x]);
+	get_next_opt(NULL, NULL);
+	return ('?');
 }

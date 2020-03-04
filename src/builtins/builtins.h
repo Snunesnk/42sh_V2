@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:21:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/04 22:30:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,15 @@
 # define HASH_P_OPTION 4
 # define HASH_R_OPTION 8
 # define HASH_T_OPTION 16
+
+/*
+** Flags for fc options, 2 is used to check if an error occured
+*/
+# define FC_N_OPTION 1
+# define FC_L_OPTION 4
+# define FC_R_OPTION 8
+# define FC_S_OPTION 16
+# define FC_E_OPTION 32
 
 /*
 ** Values used to hash strings
@@ -54,11 +63,12 @@ int				cmd_fg(int argc, char **argv);
 int				cmd_bg(int argc, char **argv);
 int				cmd_jobs(int argc, char **argv);
 int				cmd_hash(int argc, char **argv);
+int				cmd_fc(int argc, char **argv);
 
 /*
 ** Hash Functions
 */
-char			get_next_opt(char ***argv);
+char			get_next_opt(char ***argv, const char *options_list);
 int				check_for_needed_arguments(int options_list, char **argv);
 int				exec_hash_builtin(int options_list, char **argv);
 int				print_hashed_commands(int options_list);
@@ -66,17 +76,18 @@ void			del_hashed_commands(void);
 int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
-int				print_error(int error_no, char *message, int ret);
+int				print_usage(int ret);
 void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
 		char *arg, int multiple);
 void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
-char			deal_with_p_opt(char ***args, int *x);
-char			return_next_opt(char ***args, int *x);
+char			deal_with_spe_opt(char ***args, int *x);
+char			return_next_opt(char ***args, int *x, const char *options_list);
 
 /*
-** Global var util for -p opt of hash builtin
+** Global var util for get_next_opt
 */
-extern char	*g_pathname;
+extern char	*g_needed_arg;
+extern char	*g_builtin_name;
 
 /*
 ** Functions in builtins_dispatcher.c
