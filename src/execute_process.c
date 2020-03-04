@@ -84,6 +84,7 @@ int	execute_process(char **argv, char **envp)
 
 	if (!*argv)
 		return (0);
+	treat_expansions(argv); /* Should pass argc and memmove when an expansion returns NULL */
 	if (!ft_strcmp(argv[0], "builtin"))
 		return (builtin_keyword_exec(argv));
 	else if (is_a_builtin(argv[0]))
