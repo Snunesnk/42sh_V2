@@ -158,7 +158,7 @@ extern int		shell_terminal;
 extern int		shell_is_interactive;
 
 int	init_shell(void);
-void	launch_job(t_job *j, int foreground);
+int	launch_job(t_job *j, int foreground);
 void	format_job_info (t_job *j, const char *status);
 void	wait_for_job(t_job *j);
 void    continue_job(t_job *j, int foreground);
