@@ -35,6 +35,16 @@ static int	valid_fd(int fd, int open)
 /* Seems ok */
 static int	do_iowrite(t_redirection *r)
 {
+	struct stat     buf;
+
+	buf = (struct stat){.st_mode = 0};
+	if (stat(r->redirectee.filename, &buf))
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
+	{
+		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+		return (e_is_a_directory);
+	}
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
