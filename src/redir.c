@@ -54,7 +54,7 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	/* make a copy */
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
+	treat_single_exp(&(r->redirector.filename), 1); /* Should capture return when bad subsitution or other error */
 	(*lst) = (*lst)->next;
 	return (r);
 }
