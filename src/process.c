@@ -34,6 +34,8 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 	pid_t		pid;
 	int		ret;
 
+	if (!p->argv[0]) /* Carefull and free what is needed ? */
+		exit(1);
 	if (shell_is_interactive)
 	{ /* Put the process into the process group and give the process group
 	  the terminal, if appropriate. This has to be done both by the shell
