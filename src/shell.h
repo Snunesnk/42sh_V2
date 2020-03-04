@@ -89,6 +89,7 @@ struct	s_redirection
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
 	int			flags;         /* additional information for complex redirections */
+	int			error;         /* error type during redirection, error.c */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 	int			save[2];       /* saved fd for redir undo */
