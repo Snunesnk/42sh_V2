@@ -99,6 +99,7 @@ struct s_process
 {
 	struct s_process	*next;       /* next process in pipeline */
 	char			**argv;      /* for exec */
+	int			argc;        /* for expansions substitution */
 	pid_t			pid;         /* process ID, given at fork time in job.c,
 	      					uses waitpid (waitpid is not called when & at end of job) */
 	char			completed;   /* true if process has completed */
@@ -292,8 +293,8 @@ int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
-//int		expansions(t_ast *ast);
 int	treat_single_exp(char **str, int tilde);
+int	treat_expansions(char **tokens);
 int		get_env_list(char **environ);
 void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
@@ -316,7 +317,6 @@ struct	s_param
 	char	*(*g)(const char*);
 };
 
-int		treat_expansions(t_list *lst);
 int		getenv_content(char **content, char *str, const char *closetag);
 size_t		ft_varlen(const char *s, const char *closetag);
 int		is_a_valid_chr(const char c);

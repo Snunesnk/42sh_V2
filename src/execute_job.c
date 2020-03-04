@@ -104,14 +104,12 @@ static int	get_argc(t_list *lst)
 	return (argc);
 }
 
-char	**build_argv(t_list *lst)
+char	**build_argv(t_list *lst, int argc)
 {
 	char	**argv;
-	int	argc;
 	int	i;
 
 	i = 0;
-	argc = get_argc(lst);
 	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
 	if (argv != NULL)
 	{
@@ -147,7 +145,8 @@ t_process	*build_a_process(t_list **lst)
 	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
 	if (*lst)
 	{
-		p->argv = build_argv(*lst);
+		p->argc = get_argc(*lst);
+		p->argv = build_argv(*lst, p->argc);
 		if (p->argv == NULL)
 		{
 			free(p);
