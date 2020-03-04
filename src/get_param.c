@@ -36,12 +36,20 @@ static char	*get_content(const char *str)
 	return (cpy);
 }
 
+static char	*get_shellpid(const char *str)
+{
+	char	*value;
+
+	(void)str;
+	value = ft_itoa(getpid());
+	return (value);
+}
+
 const struct s_param	g_param[] =
 {
 	{"?", &get_retval},
-/*	{"$", NULL},
-	{"@", NULL},
-*/	{"", &get_content}
+	{"$", &get_shellpid}, /* Still there is bug to get into this */
+	{"", &get_content}
 };
 
 static int	parameter_dispacther(char **content, const char *str)
