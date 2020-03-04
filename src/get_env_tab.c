@@ -1,0 +1,53 @@
+#include "libft.h"
+#include "shell.h"
+
+char	*get_env_elem(t_list *lst)
+{
+	char	*elem;
+
+	elem = NULL;
+	if ((((t_shell_var*)(lst->content))->flag & EXPORT) == EXPORT
+			&& (((t_shell_var*)(lst->content))->flag & SET) == SET)
+	{
+		ft_asprintf(&elem, "%s=%s", ((t_shell_var*)(lst->content))->name,
+				((t_shell_var*)(lst->content))->value);
+	}
+	return (elem);
+}
+
+char	**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *))
+{
+	char	**tab;
+	char	*tmp;
+	size_t	lst_len;
+	size_t	i;
+
+	if (lst == NULL || f == NULL)
+		return (NULL);
+	i = 0;
+	lst_len = ft_lstlen(lst);
+	tab = (char**)malloc(sizeof(char*) * (lst_len + 1));
+	if (tab == NULL)
+		return (NULL);
+	while (lst != NULL)
+	{
+		tmp = f(lst);
+		if (tmp != NULL)
+		{
+			tab[i] = ft_strdup(tmp);
+			i++;
+		}
+		lst = lst->next;
+	}
+	tab[i] = NULL;
+	return (tab);
+}
+
+char	**get_env_tab(void)
+{
+	extern t_list	*g_env;
+	char			**tab;
+
+	tab = ft_lst_to_char_tab(g_env, &get_env_elem);
+	return (tab);
+}

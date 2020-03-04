@@ -99,7 +99,8 @@ static int		add_var(char **av)
 		elem = get_shell_var(name);
 		if (elem != NULL)
 		{
-			((t_shell_var*)(elem->content))->value = value;
+			if (value != NULL)
+				((t_shell_var*)(elem->content))->value = value;
 			((t_shell_var*)(elem->content))->flag |= SET;
 			((t_shell_var*)(elem->content))->flag |= EXPORT;
 		}
