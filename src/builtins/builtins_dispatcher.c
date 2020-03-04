@@ -47,6 +47,8 @@ static void	*dispatcher(char *cmd)
 
 int		is_a_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (dispatcher(cmd))
 		return (1);
 	else
