@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/02/29 19:17:52 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/04 20:58:57 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SOURCES :=	main.c \
 		undo_redir.c \
 		utils_job.c \
 		builtins/builtin_fg.c \
+		builtins/builtin_fc.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \

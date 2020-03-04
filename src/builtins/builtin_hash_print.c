@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/29 17:54:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/04 22:27:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ int		print_hashed_targets(int options_list, char **args)
 	while (*args)
 	{
 		if (!(tmp = find_occurence(*args)))
-			status = print_error(2, *args, e_command_not_found);
+		{
+			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", *args);
+			status = e_command_not_found;
+		}
 		else
 		{
 			print_hashed_targets_util(tmp, (options_list & HASH_L_OPTION), \
