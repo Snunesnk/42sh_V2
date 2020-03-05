@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/03 19:05:53 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/05 08:38:26 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SOURCES :=	main.c \
 		builtins/builtin_hash_utils.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_export.c \
+		builtins/builtin_set.c \
 		builtins/builtin_unset.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
