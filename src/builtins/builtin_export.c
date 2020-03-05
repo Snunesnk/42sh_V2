@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 08:43:31 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:38:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		get_flags(char **av, char *n_flag, char *p_flag)
 	return (tab_i);
 }
 
-static t_list	*get_shell_var(char *name)
+t_list			*get_shell_var(char *name)
 {
 	t_list	*head;
 	t_list	*elem;
