@@ -1,20 +1,20 @@
 #include "libft.h"
 #include "shell.h"
 
-static void	ft_free_tab(char **tmp)
+static void	ft_free_tab(char ***tmp)
 {
 	int		i;
 
 	i = 0;
-	if (!tmp)
+	if (*tmp == NULL)
 		return ;
-	while (tmp[i])
+	while ((*tmp)[i])
 	{
-		free(tmp[i]);
-		tmp[i++] = NULL;
+		free((*tmp)[i]);
+		(*tmp)[i++] = NULL;
 	}
-	free(tmp);
-	tmp = NULL;
+	free(*tmp);
+	*tmp = NULL;
 }
 
 static void	del_elem(void *content, size_t content_size)
@@ -26,8 +26,8 @@ static void	del_elem(void *content, size_t content_size)
 
 static char	**get_name_tab(int ac, char **av)
 {
+	char	*error;
 	char	**tab;
-	char	*tmp;
 	size_t	i;
 
 	i = 0;
@@ -36,15 +36,20 @@ static char	**get_name_tab(int ac, char **av)
 	{
 		while (av[i] != NULL)
 		{
-			tmp = ft_strchr(av[i], '=');
-			if (tmp != NULL)
-				tab[i] = ft_strndup(av[i], tmp - av[i]);
+			if (ft_strchr(av[i], '=') != NULL)
+			{
+				ft_asprintf(&error, "unset: `%s': not a valid identifier", av[i]);
+				ft_putendl_fd(error, 2);
+				break ;
+			}
 			else
 				tab[i] = ft_strdup(av[i]);
 			i++;
 		}
 	}
 	tab[i] = NULL;
+	if (av[i] != NULL)
+		ft_free_tab(&tab);
 	return (tab);
 }
 
@@ -113,6 +118,6 @@ int			cmd_unset(int ac, char **av)
 	name = get_name_tab(ac - 1, av + 1);
 	if (name != NULL)
 		unset_var(name);
-	ft_free_tab(name);
+	ft_free_tab(&name);
 	return (ret);
 }
