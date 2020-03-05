@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 13:09:47 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 10:24:20 by efischer         ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -36,7 +36,6 @@ static void	init_token_tab(char **token_tab)
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
 	token_tab[IO_NB] = NULL;
-	token_tab[SHELL_VAR] = NULL;
 	token_tab[END_OF_FILE] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
@@ -59,21 +58,6 @@ static int	is_io_number(const char *str)
 			return (TRUE);
 	}
 	return (FALSE);
-}
-
-static void	is_shell_var(char *str, t_token *token)
-{
-	char	*tmp;
-	size_t	len;
-
-	tmp = ft_strchr(str, '=');
-	if (tmp != NULL)
-	{
-		len = tmp - str;
-		tmp = ft_strndup(str, len);
-		if (ft_isalnum(tmp[len - 1]) == TRUE)
-			token->type = SHELL_VAR;
-	}
 }
 
 static void	get_token_word(const char *str, t_token *token, size_t *len)
@@ -100,7 +84,6 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 	tmp = ft_strndup(str, *len);
 	token->value = ft_strdup(tmp);
 	token->type = WORD;
-	is_shell_var(tmp, token);
 	ft_strdel(&tmp);
 	if (token->value == NULL)
 		*len = 0;

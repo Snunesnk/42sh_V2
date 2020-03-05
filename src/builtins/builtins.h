@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 14:40:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 08:59:03 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
 int				print_error(int error_no, char *message, int ret);
-void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
-		char *arg, int multiple);
+void			print_hashed_targets_util(t_hash_table *tmp, int l_option,
+					char *arg, int multiple);
 void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
 char			deal_with_p_opt(char ***args, int *x);
 char			return_next_opt(char ***args, int *x);
@@ -87,7 +87,7 @@ int				builtins_dispatcher(char **argv);
 typedef struct	s_builtins
 {
 	const char *const	key;
-	int		(*const f)(int, char**);
+	int			(*const f)(int, char**);
 }				t_builtins;
 
 extern const t_builtins	g_builtins[];
