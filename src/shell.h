@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 11:37:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:38:38 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,9 +290,11 @@ void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 int		get_env_list(char **environ);
 char	**get_env_tab(void);
 int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
+t_list	*get_shell_var(char *name);
 int		get_stdin(char **line);
 int		initialize_prompt_fd(void);
 int		lexer(char* str, t_ast **ast);
+int		only_assignments(t_process *p);
 int		parser(t_ast *ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
 				uint64_t *type);
