@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:20:52 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 10:33:43 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	manage_heredoc(t_token *token)
 static char	*get_input(char *str)
 {
 	char	*tmp;
-	char	*ret;
 	size_t	i;
 
 	tmp = NULL;
@@ -79,12 +78,12 @@ static char	*get_input(char *str)
 				i++;
 			if (tmp[i] != '\0')
 			{
-				ret = ft_join_free(str, tmp, 3);
+			//	str = ft_join_free(str, tmp, 3);
 				break ;
 			}
 		}
 	}
-	return (ret);
+	return (str);
 }
 
 static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
