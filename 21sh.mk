@@ -67,7 +67,8 @@ SOURCES :=	main.c \
 		builtins/builtin_hash_print.c \
 		builtins/builtin_hash_utils.c \
 		builtins/builtin_unsetenv.c \
-		builtins/builtin_export.c
+		builtins/builtin_export.c \
+		builtins/builtin_unset.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
