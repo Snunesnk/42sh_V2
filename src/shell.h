@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:24:25 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:37:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@
 # define FDCLOSE   0x8
 # define NOFORK    0x10
 # define REDSUC    0x20
-# define AMBIGU    0x40
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
