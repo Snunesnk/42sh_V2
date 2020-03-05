@@ -166,7 +166,7 @@ int				cmd_export(int ac, char **av)
 		av += get_flags(av, &n_flag, &p_flag);
 		if (n_flag == 1)
 			remove_flag(av);
-		else
+		else if (ac != 1)
 			ret = add_var(av);
 		if (ac == 1 || p_flag == 1)
 			ft_lstprint(g_env, &print_export);
