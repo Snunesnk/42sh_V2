@@ -6,37 +6,38 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 08:32:52 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:40:13 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static void	ft_free_tab(char ***tmp)
+void			ft_free_tab(int ac, char **av)
 {
 	int		i;
 
 	i = 0;
-	if (*tmp == NULL)
+	if (av == NULL)
 		return ;
-	while ((*tmp)[i])
+	while (i < ac)
 	{
-		free((*tmp)[i]);
-		(*tmp)[i++] = NULL;
+		free(av[i]);
+		av[i] = NULL;
+		i++;
 	}
-	free(*tmp);
-	*tmp = NULL;
+	free(av);
+	av = NULL;
 }
 
-static void	del_elem(void *content, size_t content_size)
+static void		del_elem(void *content, size_t content_size)
 {
 	(void)content_size;
 	ft_strdel(&((t_shell_var*)(content))->name);
 	ft_strdel(&((t_shell_var*)(content))->value);
 }
 
-static char	**get_name_tab(int ac, char **av)
+static char		**get_name_tab(int ac, char **av)
 {
 	char	*error;
 	char	**tab;
@@ -61,11 +62,11 @@ static char	**get_name_tab(int ac, char **av)
 	}
 	tab[i] = NULL;
 	if (av[i] != NULL)
-		ft_free_tab(&tab);
+		ft_free_tab(ft_tablen(tab), tab);
 	return (tab);
 }
 
-static int	match_name(char *var_name, char **name)
+static int		match_name(char *var_name, char **name)
 {
 	int		ret;
 	size_t	i;
@@ -84,7 +85,7 @@ static int	match_name(char *var_name, char **name)
 	return (ret);
 }
 
-static void	unset_var(char **name)
+static void		unset_var(char **name)
 {
 	extern t_list	*g_env;
 	t_list			*head;
@@ -116,7 +117,7 @@ static void	unset_var(char **name)
 	g_env = head;
 }
 
-int			cmd_unset(int ac, char **av)
+int				cmd_unset(int ac, char **av)
 {
 	int		ret;
 	char	**name;
@@ -130,6 +131,6 @@ int			cmd_unset(int ac, char **av)
 	name = get_name_tab(ac - 1, av + 1);
 	if (name != NULL)
 		unset_var(name);
-	ft_free_tab(&name);
+	ft_free_tab(ft_tablen(name), name);
 	return (ret);
 }

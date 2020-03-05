@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/05 12:39:11 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/05 14:21:08 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SOURCES :=	main.c \
 		redir.c \
 		signals.c \
 		tilde_expansion.c \
+		treat_shell_variables.c \
 		undo_redir.c \
 		utils_job.c \
 		builtins/builtin_fg.c \

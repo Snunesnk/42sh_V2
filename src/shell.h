@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 12:38:38 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:40:13 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,7 @@ void	del_env(void *content, size_t content_size);
 int		execute_job(t_list *lst, int foreground);
 int		execute_node(t_ast *node, int foreground);
 int     ft_atoifd(const char *str);
+void	ft_free_tab(int ac, char **av);
 int		ft_ismeta(int c);
 char	*ft_join_free(char *s1, char *s2, int op);
 void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
@@ -302,6 +303,7 @@ int		path_concat(char **bin);
 void	print_env(t_list *env, t_list **elem);
 _Bool   prompt_display(int status);
 int    	set_minimal_env(void);
+int		treat_shell_variables(t_process *p, int	opt);
 int		treat_single_exp(char **str, int tilde);
 int		treat_expansions(int argc, char **argv);
 
