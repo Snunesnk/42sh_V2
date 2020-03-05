@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 15:32:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:03:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,13 @@ int	launch_job(t_job *j, int foreground)
 			outfile = j->stdout;
 
 		/* 1. Check if process is a shell builtin, NOFORK */
+//		if (!j->first_process->next && only_assignments(p))
+//		{
+//			treat_shell_variables(p, 1);
+//		}
 		if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
 		{
+//			treat_shell_variables(p, 0);
 			return (launch_builtin(p));
 		}
 		/* 2. Fork the child processes.  */
@@ -98,6 +103,7 @@ int	launch_job(t_job *j, int foreground)
 				/* This is the child process.  */
 				if (infile != mypipe[0] && mypipe[0] != -1)
 					close(mypipe[0]);
+//				treat_shell_variables(p, 1);
 				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
 			}
 			else if (pid < 0)
