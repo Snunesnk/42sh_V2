@@ -29,6 +29,7 @@ const t_builtins	g_builtins[] =
 	{ "type", &cmd_type},
 	{ "hash", &cmd_hash},
 	{ "export", &cmd_export},
+	{ "unset", &cmd_unset},
 	{ "\0", NULL}
 };
 
