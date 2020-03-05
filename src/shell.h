@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 15:46:03 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 10:24:25 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,42 +70,43 @@ extern t_list	*g_env;
 
 struct	s_shell_fds
 {
-	int			fd;
+	int					fd;
 	struct s_shell_fds	*next;
 };
 
 /* Union containing Descriptor or filename */
-typedef union {
-	int	dest;         /* Place to redirect to or .... */
+typedef union
+{
+	int		dest;         /* Place to redirect to or .... */
 	char	*filename;    /* filename to redirect to or ... */
 	char	*hereword;    /* here-doc content used as input. */
-}	t_redirectee;
+}			t_redirectee;
 
 /* A redirection structure for process redirections */
 /* Structure describing a redirection */
 struct	s_redirection
 {
 	struct s_redirection	*next;         /* next redirection or NULL */
-	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
-	int			instruction;   /* what to do with the information, i.e. redirection type */
-	int			flags;         /* additional information for complex redirections */
-	int			error;         /* error type during redirection, error.c */
-	t_redirectee		redirectee;    /* file descriptor or filename */
-	char			*here_doc_eof; /* the word that appeared in <<eof */
-	int			save[2];       /* saved fd for redir undo */
+	t_redirectee			redirector;    /* descriptor or varname to be redirected cf man dup2() */
+	int						instruction;   /* what to do with the information, i.e. redirection type */
+	int						flags;         /* additional information for complex redirections */
+	int						error;         /* error type during redirection, error.c */
+	t_redirectee			redirectee;    /* file descriptor or filename */
+	char					*here_doc_eof; /* the word that appeared in <<eof */
+	int						save[2];       /* saved fd for redir undo */
 };
 
 /* A process is a single process.  */
 struct s_process
 {
-	struct s_process	*next;       /* next process in pipeline */
-	char			**argv;      /* for exec */
-	int			argc;        /* for expansions substitution */
-	pid_t			pid;         /* process ID, given at fork time in job.c,
+	struct s_process		*next;       /* next process in pipeline */
+	char					**argv;      /* for exec */
+	int						argc;        /* for expansions substitution */
+	pid_t					pid;         /* process ID, given at fork time in job.c,
 	      					uses waitpid (waitpid is not called when & at end of job) */
-	char			completed;   /* true if process has completed */
-	char			stopped;     /* true if process has stopped */
-	int			status;      /* reported status value */
+	char					completed;   /* true if process has completed */
+	char					stopped;     /* true if process has stopped */
+	int						status;      /* reported status value */
 	struct s_redirection	*redir;      /* all recirections to be applied */
 };
 
@@ -113,14 +114,14 @@ struct s_process
 struct s_job
 {
 	struct s_job		*next;          /* next active job */
-	char			*command;       /* command line, used for messages */
+	char				*command;       /* command line, used for messages */
 	struct s_process	*first_process; /* list of processes in this job */
-	pid_t			pgid;           /* process group ID */
-	char			notified;       /* true if user told about stopped job */
-	struct termios	tmodes;         /* saved terminal modes */
-	int			stdin;          /* standard i/o channels */
-	int			stdout;         /* standard i/o channels */
-	int			stderr;         /* standard i/o channels */
+	pid_t				pgid;           /* process group ID */
+	char				notified;       /* true if user told about stopped job */
+	struct termios		tmodes;         /* saved terminal modes */
+	int					stdin;          /* standard i/o channels */
+	int					stdout;         /* standard i/o channels */
+	int					stderr;         /* standard i/o channels */
 };
 
 /* Hash table structure*/
@@ -133,11 +134,11 @@ struct s_hash_table
 };
 
 
-typedef struct s_shell_fds	t_shell_fds;
-typedef struct s_process	t_process;
-typedef struct s_job		t_job;
+typedef struct s_shell_fds		t_shell_fds;
+typedef struct s_process		t_process;
+typedef struct s_job			t_job;
 typedef struct s_redirection	t_redirection;
-typedef struct s_hash_table	t_hash_table;
+typedef struct s_hash_table		t_hash_table;
 
 int				add_to_hash_table(char *pathname, char *command_name, int nb);
 int				add_name_hash_table(char *command_name, int nb);
@@ -151,19 +152,19 @@ void			free_hash_table(void);
 extern t_hash_table	**g_hash_table;
 
 /* The active jobs are linked into a list. This is its head. */
-extern t_job		*first_job;
-extern pid_t		shell_pgid;
+extern t_job			*first_job;
+extern pid_t			shell_pgid;
 extern struct termios	shell_tmodes;
-extern int		shell_terminal;
-extern int		shell_is_interactive;
+extern int				shell_terminal;
+extern int				shell_is_interactive;
 
-int	init_shell(void);
-int	launch_job(t_job *j, int foreground);
+int		init_shell(void);
+int		launch_job(t_job *j, int foreground);
 void	format_job_info (t_job *j, const char *status);
 void	wait_for_job(t_job *j);
 void    continue_job(t_job *j, int foreground);
 void    free_job(t_job *j);
-int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
+int		launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
 int     execute_process(char **argv, char **envp);
 void	put_job_in_foreground(t_job *j, int cont);
@@ -175,21 +176,21 @@ int     get_job_status(t_job *j, int foreground);
 void    add_job_to_queue(t_job *j);
 void    init_shell_sset(void);
 void    restore_procmask(void);
-int	job_is_stopped(t_job *j);
+int		job_is_stopped(t_job *j);
 int     job_is_completed(t_job *j);
 void    put_job_in_foreground(t_job *j, int cont);
 t_job   *find_job(pid_t pgid);
 
 extern sigset_t			g_save_procmask;
 
-int     launch_builtin(t_process *p);
-int	has_redirections(int type);
-int     is_redir_type(int type);
+int				launch_builtin(t_process *p);
+int				has_redirections(int type);
+int				is_redir_type(int type);
 t_redirection	*build_redirections(t_list **lst);
-int	get_tokentype(t_list *lst);
-char	*get_tokvalue(t_list *lst);
-int	do_redirection(t_redirection *r);
-int	undo_redirection(t_redirection *r);
+int				get_tokentype(t_list *lst);
+char			*get_tokvalue(t_list *lst);
+int				do_redirection(t_redirection *r);
+int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
 
 extern char	*g_filename_redir_error;
@@ -199,7 +200,7 @@ extern char	*g_filename_redir_error;
 
 # define BUF_SIZE	32
 
-# define NB_TOKEN	26
+# define NB_TOKEN	25
 # define NB_BRACKET	3
 # define TAB_END	-1
 
@@ -207,12 +208,6 @@ extern char	*g_filename_redir_error;
 # define EXPORT		0x02
 # define RDONLY		0x04
 # define ARRAY		0x08
-
-typedef struct		s_token
-{
-	uint64_t		type;
-	char			*value;
-}					t_token;
 
 enum	e_bracket
 {
@@ -243,13 +238,18 @@ enum	e_token
 	LESS,
 	WORD,
 	IO_NB,
-	SHELL_VAR,
 	END_OF_FILE,
 	COMMENT,
 	START,
 	END,
 	NONE
 };
+
+typedef struct		s_token
+{
+	uint64_t		type;
+	char			*value;
+}					t_token;
 
 typedef struct	s_bracket
 {
@@ -272,44 +272,44 @@ typedef struct	s_shell_var
 	uint64_t	flag;
 }				t_shell_var;
 
-int		lexer(char* str, t_ast **ast);
-int		parser(t_ast *ast);
-int		bracket(t_list *lst, uint64_t *buffer, size_t index);
-void	debug(t_list *lst);
-int		get_stdin(char **line);
-int		initialize_prompt_fd(void);
-int		execute_job(t_list *lst, int foreground);
-_Bool   prompt_display(int status);
-int		path_concat(char **bin);
-int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
-int    	set_minimal_env(void);
-void    del(void *content, size_t content_size);
-int     ft_atoifd(const char *str);
-void	debug_ast(t_ast *ast);
+void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
+int		bracket(t_list *lst, uint64_t *buffer, size_t index);
+int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
+void	debug(t_list *lst);
+void	debug_ast(t_ast *ast);
+void    del(void *content, size_t content_size);
+void	del_env(void *content, size_t content_size);
+int		execute_job(t_list *lst, int foreground);
+int		execute_node(t_ast *node, int foreground);
+int     ft_atoifd(const char *str);
+int		ft_ismeta(int c);
+char	*ft_join_free(char *s1, char *s2, int op);
+void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
+void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
+int		get_env_list(char **environ);
+char	**get_env_tab(void);
+int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
+int		get_stdin(char **line);
+int		initialize_prompt_fd(void);
+int		lexer(char* str, t_ast **ast);
+int		parser(t_ast *ast);
 int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
 				uint64_t *type);
-int		execute_node(t_ast *node, int foreground);
-int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
-char	*ft_join_free(char *s1, char *s2, int op);
-int		ft_ismeta(int c);
-int	treat_single_exp(char **str, int tilde);
-int	treat_expansions(int argc, char **argv);
-int		get_env_list(char **environ);
+int		path_concat(char **bin);
 void	print_env(t_list *env, t_list **elem);
-void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
-void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
-void	del_env(void *content, size_t content_size);
-void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
-char	**get_env_tab(void);
+_Bool   prompt_display(int status);
+int    	set_minimal_env(void);
+int		treat_single_exp(char **str, int tilde);
+int		treat_expansions(int argc, char **argv);
 
 extern int	g_retval;
 
 struct	s_tags
 {
 	char	*opentag;
-	int	(*f)(size_t*, char**, const char*, const char*);
+	int		(*f)(size_t*, char**, const char*, const char*);
 	char	*closetag;
 };
 
@@ -320,12 +320,12 @@ struct	s_param
 };
 
 int		getenv_content(char **content, char *str, const char *closetag);
-size_t		ft_varlen(const char *s, const char *closetag);
+size_t	ft_varlen(const char *s, const char *closetag);
 int		is_a_valid_chr(const char c);
 int		is_valid_param(const char *str);
 int		parameter_expansions(size_t *index, char **str,
-		const char *opentag, const char *closetag);
+			const char *opentag, const char *closetag);
 int		tilde_expansion(size_t *index, char **str,
-		const char *opentag, const char *closetag);
+			const char *opentag, const char *closetag);
 
 #endif
