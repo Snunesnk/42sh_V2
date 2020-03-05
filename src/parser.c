@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:27:06 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 11:28:09 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 
 static void	init_token_tab(int **token_tab)
 {
-	int		token_meta[NB_TOKEN] = { WHILE_WORD, WORD, COMMENT, TAB_END };
+	int		token_pipe[NB_TOKEN] = { GREATAND, LESSAND, ANDGREAT, LESS, GREAT,
+					WHILE_WORD, WORD, COMMENT, TAB_END };
 	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, GREATAND, LESSAND,
 					LESS, GREAT, DGREAT, DLESS, IO_NB, COMMENT, END, TAB_END };
 	int		token_redir[NB_TOKEN] = { WORD, GREATAND, LESSAND, DGREAT, DLESS,
@@ -34,7 +35,7 @@ static void	init_token_tab(int **token_tab)
 					TAB_END};
 
 	token_tab[OR_IF] = NULL;
-	token_tab[PIPE] = token_meta;
+	token_tab[PIPE] = token_pipe;
 	token_tab[AND_IF] = NULL;
 	token_tab[GREATAND] = token_redir;
 	token_tab[LESSAND] = token_redir;
