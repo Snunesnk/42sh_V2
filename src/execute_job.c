@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 15:31:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/05 10:22:49 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	get_argc(t_list *lst)
 	while (lst)
 	{
 		t = lst->content;
-		if (t->type == WORD || t->type == SHELL_VAR)
+		if (t->type == WORD)
 			++argc;
 		else if (t->type == IO_NB)
 		{
@@ -79,7 +79,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD || t->type == SHELL_VAR)
+				if (t->type == WORD)
 					++argc;
 				else
 					continue;
@@ -91,7 +91,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD || t->type == SHELL_VAR)
+				if (t->type == WORD)
 					++argc;
 				else
 					continue;
@@ -119,7 +119,7 @@ char	**build_argv(t_list *lst, int argc)
 				lst = lst->next->next->next;
 			if (is_redir_type(get_tokentype(lst)))
 				lst = lst->next->next;
-			if (get_tokentype(lst) == WORD || get_tokentype(lst) == SHELL_VAR)
+			if (get_tokentype(lst) == WORD)
 			{
 				argv[i] = get_tokvalue(lst);
 				++i;
