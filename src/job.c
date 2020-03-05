@@ -53,7 +53,7 @@ void	free_job(t_job *j) /* Free a given job in the job queue */
 	}
 }
 
-void	launch_job(t_job *j, int foreground)
+int	launch_job(t_job *j, int foreground)
 {
 	t_process *p;
 	pid_t pid;
@@ -66,16 +66,12 @@ void	launch_job(t_job *j, int foreground)
 	mypipe[1] = -1;
 	while (p)
 	{
-//		if (treat_expansions(p->argc, p->argv)) /* If expansion fails, the process execution is skipped */
-//		{ /* test pipe: echo Hello | ${${dfdf}} | cat -e */
-//			p = p->next;
-//			if (infile != j->stdin)
-//				close (infile);
-//			if (outfile != j->stdout)
-//				close(outfile);
-//			infile = mypipe[0];
-//			continue;
-//		}
+//		treat_expansions(p->argc, p->argv);
+//		ft_printf("\n>%s\n", p->argv[1]);
+		if (treat_expansions(p->argc, p->argv)) /* If expansion fails, the process execution is skipped */
+		{ /* test pipe: echo Hello | ${${dfdf}} | cat -e */
+			p->argv[0] = NULL; /* Should be free instead */
+		}
 		if (p->next)
 		{
 			if (pipe(mypipe) < 0)
@@ -91,8 +87,7 @@ void	launch_job(t_job *j, int foreground)
 		/* 1. Check if process is a shell builtin, NOFORK */
 		if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
 		{
-			g_retval = launch_builtin(p);
-			return ;
+			return (launch_builtin(p));
 		}
 		/* 2. Fork the child processes.  */
 		else
@@ -144,4 +139,5 @@ void	launch_job(t_job *j, int foreground)
 		put_job_in_background(j, 0);
 		format_job_info(j, "launched");
 	}
+	return (-1);
 }
