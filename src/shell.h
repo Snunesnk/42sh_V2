@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/29 19:45:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:26:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@
 # define IOTYPE  0xF		/* type: bits 0:3 */
 # define IOREAD  0x1		/* < */
 # define IOWRITE 0x2		/* > */
-# define IORDWR  0x3		/* <>: todo */
-# define IOHERE  0x4		/* << (here file) */
-# define IOCAT   0x5		/* >> */
-# define IODUP   0x6		/* <&/>& */
+# define IORDWR  0x4		/* <>: todo */
+# define IOHERE  0x8		/* << (here file) */
+# define IOCAT   0x10		/* >> */
+# define IODUP   0x20		/* <&/>& */
 
 /* Flags for complex redirection */
 # define FILENAME  0x1
@@ -60,6 +60,7 @@
 # define FDCLOSE   0x8
 # define NOFORK    0x10
 # define REDSUC    0x20
+# define AMBIGU    0x40
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
@@ -88,6 +89,7 @@ struct	s_redirection
 	t_redirectee		redirector;    /* descriptor or varname to be redirected cf man dup2() */
 	int			instruction;   /* what to do with the information, i.e. redirection type */
 	int			flags;         /* additional information for complex redirections */
+	int			error;         /* error type during redirection, error.c */
 	t_redirectee		redirectee;    /* file descriptor or filename */
 	char			*here_doc_eof; /* the word that appeared in <<eof */
 	int			save[2];       /* saved fd for redir undo */
@@ -98,6 +100,7 @@ struct s_process
 {
 	struct s_process	*next;       /* next process in pipeline */
 	char			**argv;      /* for exec */
+	int			argc;        /* for expansions substitution */
 	pid_t			pid;         /* process ID, given at fork time in job.c,
 	      					uses waitpid (waitpid is not called when & at end of job) */
 	char			completed;   /* true if process has completed */
@@ -155,7 +158,7 @@ extern int		shell_terminal;
 extern int		shell_is_interactive;
 
 int	init_shell(void);
-void	launch_job(t_job *j, int foreground);
+int	launch_job(t_job *j, int foreground);
 void	format_job_info (t_job *j, const char *status);
 void	wait_for_job(t_job *j);
 void    continue_job(t_job *j, int foreground);
@@ -227,7 +230,6 @@ enum	e_token
 	GREATAND,
 	LESSAND,
 	ANDGREAT,
-	ANDLESS,
 	AND,
 	DSEMI,
 	OP_PARENTHESIS,
@@ -235,6 +237,7 @@ enum	e_token
 	WHILE_WORD,
 	DONE,
 	DGREAT,
+	DLESSDASH,
 	DLESS,
 	GREAT,
 	LESS,
@@ -278,7 +281,7 @@ int		initialize_prompt_fd(void);
 int		execute_job(t_list *lst, int foreground);
 _Bool   prompt_display(int status);
 int		path_concat(char **bin);
-int		get_next_token(const char *str, t_token *token);
+int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
 int    	set_minimal_env(void);
 void    del(void *content, size_t content_size);
 int     ft_atoifd(const char *str);
@@ -291,13 +294,15 @@ int		execute_node(t_ast *node, int foreground);
 int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
 char	*ft_join_free(char *s1, char *s2, int op);
 int		ft_ismeta(int c);
-//int		expansions(t_ast *ast);
 int	treat_single_exp(char **str, int tilde);
+int	treat_expansions(int argc, char **argv);
 int		get_env_list(char **environ);
 void	print_env(t_list *env, t_list **elem);
 void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
 void	del_env(void *content, size_t content_size);
+void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
+char	**get_env_tab(void);
 
 extern int	g_retval;
 
@@ -314,7 +319,6 @@ struct	s_param
 	char	*(*g)(const char*);
 };
 
-int		treat_expansions(t_list *lst);
 int		getenv_content(char **content, char *str, const char *closetag);
 size_t		ft_varlen(const char *s, const char *closetag);
 int		is_a_valid_chr(const char c);

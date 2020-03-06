@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_env_list.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 16:03:26 by efischer          #+#    #+#             */
+/*   Updated: 2020/03/06 21:01:40 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 
@@ -31,8 +43,13 @@ void	print_env(t_list *env, t_list **elem)
 	char	*tmp;
 
 	tmp = NULL;
-	ft_asprintf(&tmp, "%s=%s\n", ((t_shell_var*)(env->content))->name,
-			((t_shell_var*)(env->content))->value);
+	if (((t_shell_var*)(env->content))->value == NULL)
+		ft_asprintf(&tmp, "%s\n", ((t_shell_var*)(env->content))->name);
+	else
+	{
+		ft_asprintf(&tmp, "%s=%s\n", ((t_shell_var*)(env->content))->name,
+				((t_shell_var*)(env->content))->value);
+	}
 	*elem = ft_lstnew(tmp, ft_strlen(tmp));
 }
 
@@ -52,8 +69,8 @@ int		get_env_list(char **environ)
 		name = ft_strndup(environ[i], value - environ[i]);
 		shell_var.name = name;
 		shell_var.value = ft_strdup(value + 1);
-		shell_var.flag &= SET;
-		shell_var.flag &= EXPORT;
+		shell_var.flag |= SET;
+		shell_var.flag |= EXPORT;
 		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
 		if (lst_new == NULL)
 			return (FAILURE);

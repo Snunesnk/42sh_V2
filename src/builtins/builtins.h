@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/04 22:30:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:12:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,11 @@ int				cmd_pwd(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
 int				cmd_set(int argc, char **argv);
 int				cmd_fg(int argc, char **argv);
+int				cmd_fc(int argc, char **argv);
 int				cmd_bg(int argc, char **argv);
 int				cmd_jobs(int argc, char **argv);
 int				cmd_hash(int argc, char **argv);
-int				cmd_fc(int argc, char **argv);
+int				cmd_export(int ac, char **av);
 
 /*
 ** Hash Functions

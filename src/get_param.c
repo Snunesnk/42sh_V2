@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:48:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/06 21:05:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,20 @@ static char	*get_content(const char *str)
 	return (cpy);
 }
 
+static char	*get_shellpid(const char *str)
+{
+	char	*value;
+
+	(void)str;
+	value = ft_itoa(getpid());
+	return (value);
+}
+
 const struct s_param	g_param[] =
 {
 	{"?", &get_retval},
-/*	{"$", NULL},
-	{"@", NULL},
-*/	{"", &get_content}
+	{"$", &get_shellpid}, /* Still there is bug to get into this */
+	{"", &get_content}
 };
 
 static int	parameter_dispacther(char **content, const char *str)
