@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/06 21:25:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:29:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			main(int argc, char **argv)
 		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
-			break;
+			break ;
 		}
 		ast = NULL;
 		lexer(input, &ast);
