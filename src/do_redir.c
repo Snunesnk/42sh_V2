@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   do_redir.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/06 20:56:21 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
@@ -23,6 +35,16 @@ static int	valid_fd(int fd, int open)
 /* Seems ok */
 static int	do_iowrite(t_redirection *r)
 {
+	struct stat     buf;
+
+	buf = (struct stat){.st_mode = 0};
+	if (stat(r->redirectee.filename, &buf))
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
+	{
+		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+		return (e_is_a_directory);
+	}
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -54,6 +76,16 @@ static int	do_iowrite(t_redirection *r)
 /* Seems ok */
 static int	do_iocat(t_redirection *r)
 {
+	struct stat     buf;
+
+	buf = (struct stat){.st_mode = 0};
+	if (stat(r->redirectee.filename, &buf))
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
+	{
+		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+		return (e_is_a_directory);
+	}
 	if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -85,8 +117,18 @@ static int	do_iocat(t_redirection *r)
 /* Seems ok */
 static int	do_ioread(t_redirection *r)
 {
+	struct stat     buf;
+
+	buf = (struct stat){.st_mode = 0};
 	if (valid_fd(r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
+	if (stat(r->redirector.filename, &buf)) /* Optional for read, not default behavior */
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
+	{
+		psherror(e_is_a_directory, r->redirector.filename, e_cmd_type);
+		return (e_is_a_directory);
+	}
 	if (access(r->redirector.filename, F_OK))
 	{
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
@@ -110,6 +152,7 @@ static int	do_ioread(t_redirection *r)
 	return (0);
 }
 
+/* Seems ok */
 static int	do_iohere(t_redirection *r)
 {
 	if (valid_fd(r->redirectee.dest, 1))
@@ -124,44 +167,43 @@ static int	do_iohere(t_redirection *r)
 	return (0);
 }
 
-static int	do_iodup(t_redirection *r)
+static int	do_iodfile(t_redirection *r)
 {
-	if (r->flags & FDCLOSE)
-		close(r->redirector.dest);
-	else if (r->flags & FILENAME)
+	struct stat     buf;
+
+	buf = (struct stat){.st_mode = 0};
+	if (stat(r->redirectee.filename, &buf))
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
 	{
-		if (r->redirector.dest == STDOUT_FILENO)
-		{
-			/* redirect stdout in stding and then */
-			/* equivelent to return (do_iowrite(r)); */
-			if (access(r->redirectee.filename, F_OK))
-			{ /* File does not exists so attempt to create it */
-				r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			}
-			else if (access(r->redirectee.filename, R_OK))
-			{ /* File exists but no rights to write */
-				psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
-				return (e_permission_denied);
-			}
-			else /* File exists and rights to write */
-				r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (r->redirectee.dest < 0)
-			{ /* Open error */
-				psherror(e_system_call_error, "open(2)", e_cmd_type);
-				return (e_system_call_error);
-			}
-		}
-		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
-		return (e_ambiguous_redirect);
+		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+		return (e_is_a_directory);
 	}
-	else if (r->flags & DEST)
-	{
-		if (r->redirectee.dest == r->redirector.dest)
-			return (0);
-		if ( r->flags & NOFORK)
-			r->save[0] = dup(r->redirectee.dest);
-		dup2(r->redirectee.dest, r->redirector.dest);
+	/* Open file */
+	if (access(r->redirectee.filename, F_OK))
+	{ /* File does not exists so attempt to create it */
+		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
+	else if (access(r->redirectee.filename, R_OK))
+	{ /* File exists but no rights to write */
+		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
+		return (e_permission_denied);
+	}
+	else /* File exists and rights to write */
+		r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (r->redirectee.dest < 0)
+	{ /* Open error */
+		psherror(e_system_call_error, "open(2)", e_cmd_type);
+		return (e_system_call_error);
+	}
+	/* Dup err and out */
+	if (r->flags & NOFORK)
+		r->save[0] = dup(STDOUT_FILENO);
+	if (r->flags & NOFORK)
+		r->save[1] = dup(STDERR_FILENO);
+	dup2(r->redirectee.dest, STDOUT_FILENO);
+	dup2(r->redirectee.dest, STDERR_FILENO);
+	close(r->redirectee.dest);
 	return (0);
 }
 
@@ -169,39 +211,58 @@ static int	do_iodup(t_redirection *r)
 static int	do_iodread(t_redirection *r)
 {
 	if (r->flags & FDCLOSE)
+	{ /* [n]<&- */
+		if (r->flags & NOFORK)
+			r->save[0] = dup(r->redirector.dest);
 		close(r->redirectee.dest);
+	}
 	else if (r->flags & FILENAME)
-	{
+	{ /* [n]<&filename */
 		psherror(e_ambiguous_redirect, r->redirector.filename, e_cmd_type);
 		return (e_ambiguous_redirect);
 	}
 	else if (r->flags & DEST)
-	{
-
+	{ /* [n]<&n */
+		if (valid_fd(r->redirector.dest, 1))
+			return (e_bad_file_descriptor);
+		if (r->redirectee.dest == r->redirector.dest)
+			return (0);
 		if (r->flags & NOFORK)
 			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
-		close(r->redirector.dest);
 	}
 	return (0);
 }
 
-/* Debugg */
-//static void	debug_r(t_redirection *r)
-//{
-//	static int	i;
-//
-//	i = 0;
-//	ft_printf("\n");
-//	while (r)
-//	{
-//		ft_printf("\nDone redir:%d\n", i++);
-//		ft_printf("\tr->redirectee.dest: %d\n", r->redirectee.dest);
-//		ft_printf("\tr->save: %d\n", r->save);
-//		r = r->next;
-//	}
-//	ft_printf("\n");
-//}
+static int	do_iodup(t_redirection *r)
+{
+	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
+	{ /* n>&filename: ok */
+		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
+		return (e_ambiguous_redirect);
+	}
+	else if (r->flags & FILENAME)
+	{ /* >&filename: equivalent to >filename 2>&1 or to &>filename*/
+		return (do_iodfile(r));
+	}
+	else if (r->flags & DEST)
+	{ /* [n]>&n: ok*/
+		if (valid_fd(r->redirectee.dest, 1))
+			return (e_bad_file_descriptor);
+		if (r->redirectee.dest == r->redirector.dest)
+			return (0);
+		if (r->flags & NOFORK)
+			r->save[0] = dup(r->redirector.dest);
+		dup2(r->redirectee.dest, r->redirector.dest);
+	}
+	else if (r->flags & FDCLOSE)
+	{ /* [n]>&-: ok */
+		if (r->flags & NOFORK)
+			r->save[0] = dup(r->redirector.dest);
+		close(r->redirector.dest);
+	}
+	return (0);
+}
 
 int	do_redirection(t_redirection *r)
 {
@@ -213,7 +274,12 @@ int	do_redirection(t_redirection *r)
 	error = 0;
 	while (r)
 	{
-	//	ft_printf("DO:%s\n", r->redirector.filename);
+		if (r->error)
+		{
+			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
+				undo_redirection(beg);
+			return (g_errordesc[r->error].code);
+		}
 		if (r->instruction == IOWRITE)
 			error = do_iowrite(r);
 		else if (r->instruction == IOCAT)
@@ -226,21 +292,16 @@ int	do_redirection(t_redirection *r)
 			error = do_iodup(r);
 		else if (r->instruction == (IODUP | IOREAD))
 			error = do_iodread(r);
+		else if (r->instruction == (IODUP | IOWRITE))
+			error = do_iodfile(r);
 		if (error)
 		{
-	//		ft_printf("\nEEEEEOOOORRRRR:%d\n", (r->flags & REDSUC));
 			if (r->flags & NOFORK) /* NO FORK should be set to all redir */
-			{
-	//			ft_printf("EEEEEEEEEEERRRRRRRRRRRRRRROOOOOOOORRRRRRRRRRR DDDDDDOOOOOO: %s\n", r->redirector.filename);
-	//			debug_r(beg);
 				undo_redirection(beg);
-			}
 			return (error);
 		}
 		r->flags |= REDSUC;
 		r = r->next;
 	}
-	//ft_printf("No Bug\n");
-	//debug_r(beg);
 	return (0);
 }

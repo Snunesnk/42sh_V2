@@ -4,7 +4,10 @@ A tiny shell. [42 project]
 ToDo:
 
 Antoine:
+<<<<<<< HEAD
 - 21sh Redirections
+=======
+>>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 - 21sh Readline SIGWINCH
 - 42sh Done but need to make it perfect for 42sh: Job control: fg, bg, jobs,...
 - 42sh Autocompletion, Vim binding.
@@ -21,12 +24,18 @@ Sabri:
 - 42sh Inhibitors
 
 Simon:
+<<<<<<< HEAD
 - 42sh Hash table
+=======
+>>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 - 42sh History
 
 Optionnal:
 	- Subshells $(), (), ``
 	- Group { ;}
+<<<<<<< HEAD
 	- Hash
+=======
+>>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 	- Aliases
 	- Builtin `test`
