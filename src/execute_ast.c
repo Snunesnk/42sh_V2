@@ -36,7 +36,10 @@ int	execute_subshell(t_ast *node, int foreground)
 
 	if ((pid = fork()) == 0) /* If background, pid should be added to the job list
 					Get the PID and add it to the list in case fg and ctrl + c */
+	{
+		restore_procmask();
 		exit(execute_node(node, foreground));
+	}
 	else if (pid < 0)
 	{
 		ft_printf("Fork subshell failed\n");
