@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_job.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/06 20:57:39 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 
@@ -21,6 +33,7 @@ int	is_redir_type(int type)
 {
 	return (type == GREATAND
 		|| type == LESSAND
+		|| type == ANDGREAT
 		|| type == DGREAT
 		|| type == DLESS
 		|| type == GREAT
@@ -58,7 +71,7 @@ static int	get_argc(t_list *lst)
 	while (lst)
 	{
 		t = lst->content;
-		if (t->type == WORD)
+		if (t->type == WORD || t->type == SHELL_VAR)
 			++argc;
 		else if (t->type == IO_NB)
 		{
@@ -66,7 +79,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD)
+				if (t->type == WORD || t->type == SHELL_VAR)
 					++argc;
 				else
 					continue;
@@ -78,7 +91,7 @@ static int	get_argc(t_list *lst)
 			if (lst)
 			{
 				t = lst->content;
-				if (t->type == WORD)
+				if (t->type == WORD || t->type == SHELL_VAR)
 					++argc;
 				else
 					continue;
@@ -91,14 +104,12 @@ static int	get_argc(t_list *lst)
 	return (argc);
 }
 
-char	**build_argv(t_list *lst)
+char	**build_argv(t_list *lst, int argc)
 {
 	char	**argv;
-	int	argc;
 	int	i;
 
 	i = 0;
-	argc = get_argc(lst);
 	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
 	if (argv != NULL)
 	{
@@ -108,7 +119,7 @@ char	**build_argv(t_list *lst)
 				lst = lst->next->next->next;
 			if (is_redir_type(get_tokentype(lst)))
 				lst = lst->next->next;
-			if (get_tokentype(lst) == WORD)
+			if (get_tokentype(lst) == WORD || get_tokentype(lst) == SHELL_VAR)
 			{
 				argv[i] = get_tokvalue(lst);
 				++i;
@@ -134,7 +145,8 @@ t_process	*build_a_process(t_list **lst)
 	/* Set redirections of the process if encounter >> > < << + IO_NB or WORD i.e. FILENAME */
 	if (*lst)
 	{
-		p->argv = build_argv(*lst);
+		p->argc = get_argc(*lst);
+		p->argv = build_argv(*lst, p->argc);
 		if (p->argv == NULL)
 		{
 			free(p);
@@ -230,13 +242,11 @@ int	execute_job(t_list *lst, int foreground)
 	if (j == NULL)
 		return (FAILURE);
 	add_job_to_queue(j);
-	g_retval = -1;
-	launch_job(j, foreground);
-	if (g_retval == -1)
+	ret = launch_job(j, foreground);
+	if (ret == -1)
 		ret = get_exit_value(get_job_status(j, foreground));
-	else
-		ret = g_retval;
 	if (foreground)
 		free_job(j);
+	g_retval = ret;
 	return (ret);
 }

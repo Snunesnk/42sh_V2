@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redir.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/06 21:10:45 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
@@ -9,10 +21,24 @@ int	has_redirections(int type)
 		|| type == GREAT
 		|| type == DLESS
 		|| type == DGREAT
-		|| type == ANDLESS
 		|| type == ANDGREAT
 		|| type == LESSAND
 		|| type == GREATAND);
+}
+
+static int	has_close_at_end(char *str)
+{
+	int	i;
+
+	if ((i = ft_strlen(str)) > 0)
+		--i;
+	if (str[i] == '-')
+	{
+		str[i] = '\0';
+		return (1);
+	}
+	else
+		return (0);
 }
 
 static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
@@ -28,7 +54,25 @@ static t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	(*lst) = (*lst)->next;
 	/* make a copy */
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
+	if (treat_single_exp(&(r->redirector.filename), 1)) /* Should capture return when bad subsitution or other error */
+		r->error = e_bad_substitution;
+	(*lst) = (*lst)->next;
+	return (r);
+}
+
+static t_redirection	*subtype_great_redirection(t_list **lst, int io_nb)
+{
+	t_redirection	*r;
+
+	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
+	if (io_nb == -1)
+		r->redirector.dest = STDOUT_FILENO;
+	else
+		r->redirector.dest = io_nb;
+	(*lst) = (*lst)->next;
+	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -37,16 +81,8 @@ static t_redirection	*type_great_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
-	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	if (io_nb == -1)
-		r->redirector.dest = STDOUT_FILENO;
-	else
-		r->redirector.dest = io_nb;
+	r = subtype_great_redirection(lst, io_nb);
 	r->instruction = IOWRITE;
-	(*lst) = (*lst)->next;
-	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	(*lst) = (*lst)->next;
 	return (r);
 }
 
@@ -54,16 +90,8 @@ static t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
-	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	if (io_nb == -1)
-		r->redirector.dest = STDOUT_FILENO;
-	else
-		r->redirector.dest = io_nb;
+	r = subtype_great_redirection(lst, io_nb);
 	r->instruction = IOCAT;
-	(*lst) = (*lst)->next;
-	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	(*lst) = (*lst)->next;
 	return (r);
 }
 
@@ -79,8 +107,23 @@ static t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	if (r->redirectee.filename[0] == '-')
+	if (has_close_at_end(r->redirectee.filename))
+	{
+		r->error = e_ambiguous_redirect;
+		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
+//		(*lst) = (*lst)->next;
+		return (r);
+	}
+	else
+	{
+		if (treat_single_exp(&(r->redirectee.filename), 1))
+		{
+			r->error = e_bad_substitution;
+//			(*lst) = (*lst)->next;
+			return (r);
+		}
+	}
+	if (r->redirectee.filename[0] == '-' && r->redirectee.filename[2] == '\0')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirectee.filename))
 	{
@@ -105,7 +148,8 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
 	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 0); /* Tilde expansions should not be taken into account */
+	if (treat_single_exp(&(r->redirector.filename), 0)) /* Tilde expansions should not be taken into account */
+		r->error = e_bad_substitution;;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -113,7 +157,6 @@ static t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
-	int		fd;
 
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
 	if (io_nb == -1)
@@ -123,19 +166,13 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP | IOREAD;
 	(*lst) = (*lst)->next;
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
+	if (treat_single_exp(&(r->redirector.filename), 1))
+		r->error = e_bad_substitution;;
 	if (r->redirector.filename[0] == '-')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))
 	{
-		fd = ft_atoifd(r->redirector.filename);
-		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
-		{
-			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
-			free(r);
-			return (NULL);
-		}
-		r->redirector.dest = fd;
+		r->redirector.dest = ft_atoifd(r->redirector.filename);
 		r->flags |= DEST;
 	}
 	else
@@ -144,62 +181,17 @@ static t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	return (r);
 }
 
-static t_redirection	*type_andless_redirection(t_list **lst, int io_nb)
-{
-	t_redirection	*r;
-	int		fd;
-
-	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	if (io_nb == -1)
-		r->redirectee.dest = STDOUT_FILENO;
-	else
-		r->redirectee.dest = io_nb;
-	r->instruction = IODUP | IOREAD;
-	(*lst) = (*lst)->next;
-	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirector.filename), 1);
-	if (r->redirector.filename[0] == '-')
-		r->flags |= FDCLOSE;
-	else if (ft_str_is_numeric(r->redirector.filename))
-	{
-		fd = ft_atoifd(r->redirector.filename);
-		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
-		{
-			ft_printf("%s: %d: Bad file descriptor\n", g_progname, fd);
-			free(r);
-			return (NULL);
-		}
-		r->redirector.dest = fd;
-		r->flags |= DEST;
-	}
-	else
-		r->flags |= FILENAME;
-	(*lst) = (*lst)->next;
-	return (r);
-}
-
-/* Redirecting Standard Output and Standard Error */
-/* >word + 2>&1 */
 static t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 {
 	t_redirection	*r;
 
 	(void)io_nb;
 	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
-	r->redirector.dest = STDOUT_FILENO;
-//	r->instruction = IOERR;
+	r->instruction = IODUP | IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	treat_single_exp(&(r->redirectee.filename), 1);
-	if (r->redirectee.filename[0] == '-')
-		r->flags |= FDCLOSE;
-	else if (ft_str_is_numeric(r->redirectee.filename))
-	{
-		r->redirectee.dest = ft_atoifd(r->redirectee.filename);
-		r->flags |= DEST;
-	}
-	else
-		r->flags |= FILENAME;
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;;
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -224,7 +216,5 @@ t_redirection	*set_redirection(t_list **lst, int io_nb)
 		return (type_lessand_redirection(lst, io_nb));
 	else if (type == ANDGREAT)
 		return (type_andgreat_redirection(lst, io_nb));
-	else if (type == ANDLESS)
-		return (type_andless_redirection(lst, io_nb));
 	return (NULL);
 }

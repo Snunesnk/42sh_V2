@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/04 20:58:57 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/06 21:25:22 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SOURCES :=	main.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
+		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
 		hash_table.c \
@@ -66,13 +67,14 @@ SOURCES :=	main.c \
 		builtins/builtin_hash.c \
 		builtins/builtin_hash_print.c \
 		builtins/builtin_hash_utils.c \
-		builtins/builtin_unsetenv.c
+		builtins/builtin_unsetenv.c \
+		builtins/builtin_export.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/
+INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./42Readline/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
@@ -89,7 +91,7 @@ LDLIBS += $(PATH_LIB)libft.a -lreadline
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L  $(DEBUG)
+CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
 DEBUG += -g3 -fsanitize=address,undefined

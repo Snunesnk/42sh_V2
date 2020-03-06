@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/29 19:26:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:05:05 by snunes           ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -22,7 +22,6 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREATAND] = ">&";
 	token_tab[LESSAND] = "<&";
 	token_tab[ANDGREAT] = "&>";
-	token_tab[ANDLESS] = "&<";
 	token_tab[AND] = "&";
 	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";
@@ -32,6 +31,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[DONE] = "done";
 	token_tab[DGREAT] = ">>";
 	token_tab[DLESS] = "<<";
+	token_tab[DLESSDASH] = "<<-";
 	token_tab[GREAT] = ">";
 	token_tab[LESS] = "<";
 	token_tab[COMMENT] = NULL;
@@ -106,7 +106,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 		*len = 0;
 }
 
-static int	get_word(const char *str, t_token *token)
+static int	get_word(const char *str, t_token *token, uint64_t *last_token_type)
 {
 	size_t	len;
 	char	*tmp;
@@ -118,6 +118,12 @@ static int	get_word(const char *str, t_token *token)
 		token->value = ft_strdup(str);
 		if (token->value != NULL)
 			len = ft_strlen(token->value);
+	}
+	if (str[len] == '-' && (*last_token_type == GREATAND || *last_token_type == LESSAND))
+	{
+		token->value = ft_strdup("-");
+		token->type = WORD;
+		len = 1;
 	}
 	else if (ft_isdigit(str[len]) == TRUE && is_io_number(str) == TRUE)
 	{
@@ -135,7 +141,7 @@ static int	get_word(const char *str, t_token *token)
 	return (len);
 }
 
-int			get_next_token(const char *str, t_token *token)
+int			get_next_token(const char *str, t_token *token, uint64_t *last_token_type)
 {
 	char	*token_tab[NB_TOKEN];
 	size_t	token_index;
@@ -150,16 +156,12 @@ int			get_next_token(const char *str, t_token *token)
 				ft_strlen(token_tab[token_index])) == TRUE)
 		{
 			token->type = token_index;
-	//		if (token->type == ANDGREAT)
-	//			token->type = GREATAND;
-	//		else if (token->type == ANDLESS)
-	//			token->type = LESSAND;
 			pos = ft_strlen(token_tab[token_index]);
 			break ;
 		}
 		token_index++;
 	}
 	if (token_index == NB_TOKEN)
-		pos = get_word(str, token);
+		pos = get_word(str, token, last_token_type);
 	return (pos);
 }

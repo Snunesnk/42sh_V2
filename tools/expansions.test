@@ -53,3 +53,7 @@ $?
 $~
 echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsadf$LOGNAME
 exit
+<<<<<<< HEAD
+=======
+while (ls >/dev/null 2>/dev/null); do ((++i)) ; name\=\$i echo $i; done
+>>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
