@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/06 21:12:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:30:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int				cmd_fc(int argc, char **argv);
 int				cmd_bg(int argc, char **argv);
 int				cmd_jobs(int argc, char **argv);
 int				cmd_hash(int argc, char **argv);
-int				cmd_export(int ac, char **av);
+int				cmd_export(int argc, char **argv);
+int				cmd_unset(int argc, char **argv);
 
 /*
 ** Hash Functions
@@ -97,7 +98,7 @@ int				builtins_dispatcher(char **argv);
 typedef struct	s_builtins
 {
 	const char *const	key;
-	int		(*const f)(int, char**);
+	int			(*const f)(int, char**);
 }				t_builtins;
 
 extern const t_builtins	g_builtins[];

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/06 21:12:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:31:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ const t_builtins	g_builtins[] =
 	{ "hash", &cmd_hash},
 	{ "fc", &cmd_fc},
 	{ "export", &cmd_export},
+	{ "unset", &cmd_unset},
+	{ "set", &cmd_set},
 	{ "\0", NULL}
 };
 

@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/06 21:08:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:31:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	manage_heredoc(t_token *token)
 	}
 }
 
-static void	get_input(char *str)
+static char	*get_input(char *str)
 {
 	char	*tmp;
 	size_t	i;
@@ -78,11 +78,12 @@ static void	get_input(char *str)
 				i++;
 			if (tmp[i] != '\0')
 			{
-				ft_strcat(str, tmp);
+			//	str = ft_join_free(str, tmp, 3);
 				break ;
 			}
 		}
 	}
+	return (str);
 }
 
 static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
@@ -98,7 +99,7 @@ static int	new_token(char *str, uint64_t *type, size_t *pos, t_list **lst)
 	if (token.type == DLESSDASH)
 		token.type = DLESS;
 	if (str[*pos] == '\0' && token.type == PIPE && *type != NONE)
-		get_input(str);
+		str = get_input(str);
 	else if (*type == DLESS && token.type == WORD)
 		manage_heredoc(&token);
 	*type = token.type;
@@ -141,37 +142,47 @@ static int	get_pipeline(char *str, size_t *pos, t_list **lst,
 	ret = get_token_list(str, pos, lst, type);
 	if (ret == SUCCESS)
 		ret = border_token_list(lst, END);
-	else
-		ret = FAILURE;
+	return (ret);
+}
+
+static int	tokenizer(char *str, size_t *pos, t_list **lst, t_ast **ast)
+{
+	int			ret;
+	uint64_t	type;
+
+	type = NONE;
+	ret = border_token_list(lst, START);
+	if (ret == SUCCESS)
+		ret = get_pipeline(str, pos, lst, &type);
+	if (str[*pos] == '\0' && (type == OR_IF || type == AND_IF)
+		&& ((t_token*)((*lst)->next->content))->type != END)
+	{
+		str = get_input(str);
+	}
+	ret = build_ast(type, ast, *lst);
 	return (ret);
 }
 
 int			lexer(char *str, t_ast **ast)
 {
 	int			ret;
-	uint64_t	type;
 	size_t		pos;
 	t_list		*lst;
 
 	pos = 0;
+	str = ft_strdup(str);
 	while (str[pos] != '\0')
 	{
-		type = NONE;
 		lst = NULL;
 		while (ft_isblank(str[pos]) == TRUE)
 			pos++;
 		if (str[pos] != '\0')
 		{
-			ret = border_token_list(&lst, START);
-			if (ret == SUCCESS)
-				ret = get_pipeline(str, &pos, &lst, &type);
-			if (str[pos] == '\0' && (type == OR_IF || type == AND_IF)
-				&& ((t_token*)(lst->next->content))->type != END)
-				get_input(str);
-			ret = build_ast(type, ast, lst);
+			ret = tokenizer(str, &pos, &lst, ast);
 			if (ret == FAILURE)
 				break ;
 		}
 	}
+	ft_strdel(&str);
 	return (ret);
 }
