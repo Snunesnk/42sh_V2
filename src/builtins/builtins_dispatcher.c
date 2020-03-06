@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/04 20:59:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/06 21:12:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ const t_builtins	g_builtins[] =
 	{ "type", &cmd_type},
 	{ "hash", &cmd_hash},
 	{ "fc", &cmd_fc},
+	{ "export", &cmd_export},
 	{ "\0", NULL}
 };
 
@@ -47,6 +48,8 @@ static void	*dispatcher(char *cmd)
 
 int		is_a_builtin(char *cmd)
 {
+	if (!cmd)
+		return (0);
 	if (dispatcher(cmd))
 		return (1);
 	else

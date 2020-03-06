@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:25:11 by snunes           ###   ########.fr       */
+/*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/06 20:58:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	execute_process(char **argv, char **envp)
 	int				ret;
 	char			*pathname;
 
+	if (!*argv)
+		return (0);
 	if (!ft_strcmp(argv[0], "builtin"))
 		return (builtin_keyword_exec(argv));
 	else if (is_a_builtin(argv[0]))
