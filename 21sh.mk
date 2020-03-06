@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/06 21:25:22 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/06 21:28:52 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SOURCES :=	main.c \
 		launch_builtin.c \
 		lexer.c \
 		lexer_utils.c \
+		only_assignments.c \
 		parameter_expansions.c \
 		parser.c \
 		path.c \
@@ -50,6 +51,7 @@ SOURCES :=	main.c \
 		redir.c \
 		signals.c \
 		tilde_expansion.c \
+		treat_shell_variables.c \
 		undo_redir.c \
 		utils_job.c \
 		builtins/builtin_fg.c \
@@ -68,7 +70,9 @@ SOURCES :=	main.c \
 		builtins/builtin_hash_print.c \
 		builtins/builtin_hash_utils.c \
 		builtins/builtin_unsetenv.c \
-		builtins/builtin_export.c
+		builtins/builtin_export.c \
+		builtins/builtin_set.c \
+		builtins/builtin_unset.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 

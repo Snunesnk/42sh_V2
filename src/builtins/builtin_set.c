@@ -3,53 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_set.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/14 15:22:09 by abarthel         ###   ########.fr       */
+/*   Created: 2020/03/05 08:43:11 by efischer          #+#    #+#             */
+/*   Updated: 2020/03/05 08:43:28 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	display_shvar(void)
+static void	print_set(t_list *env, t_list **elem)
 {
-	extern struct s_shvar	*g_shellvar;
-	struct s_shvar		*ptr;
-	struct s_shvar		*inside;
+	char	*tmp;
 
-	ptr = g_shellvar;
-	while (ptr)
+	tmp = NULL;
+	if ((((t_shell_var*)(env->content))->flag & SET) == SET)
 	{
-		ft_printf("%s=", ptr->value);
-		if (ptr->index == 0 && ptr->next_content && ptr->next_content->value)
-		{
-			/* display litteral value */
-			ft_printf("%s\n", ptr->next_content->value);
-		}
-		else if (ptr->index)
-		{
-			/* display array */
-			ft_printf("(");
-			inside = ptr->next_content;
-			while (inside)
-			{
-				ft_printf("[%llu]=\"%s\" ", (long long unsigned)inside->index, inside->value);
-				inside = inside->next_content;
-			}
-			ft_printf(")\n");
-		}
-		ptr = ptr->next_var;
+		ft_asprintf(&tmp, "%s=\"%s\"\n", ((t_shell_var*)(env->content))->name,
+				((t_shell_var*)(env->content))->value);
 	}
+	*elem = ft_lstnew(tmp, ft_strlen(tmp));
 }
 
-int		cmd_set(int argc, char **argv)
+int		cmd_set(int ac, char **av)
 {
-	(void)argc;
-	(void)argv;
-	if (argc == 1)
-	{
-		display_shvar();
-	}
+	extern t_list	*g_env;
+
+	(void)ac;
+	(void)av;
+	if (ac == 1)
+		ft_lstprint(g_env, &print_set);
 	return (e_success);
 }

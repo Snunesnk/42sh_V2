@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 18:49:45 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/05 12:38:20 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		get_flags(char **av, char *n_flag, char *p_flag)
 	return (tab_i);
 }
 
-static t_list	*get_shell_var(char *name)
+t_list			*get_shell_var(char *name)
 {
 	t_list	*head;
 	t_list	*elem;
@@ -166,7 +166,7 @@ int				cmd_export(int ac, char **av)
 		av += get_flags(av, &n_flag, &p_flag);
 		if (n_flag == 1)
 			remove_flag(av);
-		else
+		else if (ac != 1)
 			ret = add_var(av);
 		if (ac == 1 || p_flag == 1)
 			ft_lstprint(g_env, &print_export);
