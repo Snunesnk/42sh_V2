@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/06 21:28:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:03:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # include "ft_getopt.h"
 # include "error.h"
 # include "ft_errno.h"
+# include "ft_readline.h"
 
 # ifndef WAIT_ANY
 #  define WAIT_ANY -1
@@ -157,6 +158,7 @@ extern struct termios	shell_tmodes;
 extern int				shell_terminal;
 extern int				shell_is_interactive;
 
+int		exec_input(char *input);
 int		init_shell(void);
 int		launch_job(t_job *j, int foreground);
 void	format_job_info (t_job *j, const char *status);

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/06 21:28:52 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/07 16:24:24 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a -lreadline
+LDLIBS += $(PATH_LIB)libft.a ./42Readline/readline.a -ltermcap
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
