@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/06 21:29:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 17:12:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	print(t_list *lst, t_list **elem)
 	while (i < NB_TOKEN)
 	{
 		tmp = NULL;
+		ft_printf("type debug: %llu\n", ((t_token*)(lst->content))->type);
 		if (((t_token*)(lst->content))->type == i)
 		{
 			if (i == WORD || i == IO_NB || i == END_OF_FILE)

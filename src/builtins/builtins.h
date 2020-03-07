@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/06 21:30:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 15:23:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,16 @@ char			return_next_opt(char ***args, int *x, const char *options_list);
 */
 extern char	*g_needed_arg;
 extern char	*g_builtin_name;
+
+/*
+** Substitution struc for fc
+*/
+typedef struct	s_sub
+{
+	struct s_sub	*next;
+	char			*pat;
+	char			*rep;
+}				t_sub;
 
 /*
 ** Functions in builtins_dispatcher.c
