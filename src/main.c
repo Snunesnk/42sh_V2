@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/06 21:29:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 17:02:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,42 @@ void	astdel(t_ast **ast)
 	}
 }
 
-int			main(int argc, char **argv)
+int	exec_input(char *input)
 {
 	t_ast			*ast;
-	char			*input;
 	volatile int	status;
+
+	status = 0;
+	ast = NULL;
+	lexer(input, &ast);
+	debug_ast(ast);
+	if (ast != NULL)
+	{
+	//	expansions(ast);
+		if (parser(ast) == EXIT_FAILURE)
+			ft_putendl_fd("\nParse error", 2);
+		else
+		{
+/*			ft_putendl("\nOK");
+*/			ast_order(&ast);
+			debug_ast(ast);
+			status = execute_node(ast, 1); /* to capture */
+		}
+	}
+/*	ft_lstdel(&lst, del);*/
+	astdel(&ast);
+	ft_strdel(&input);
+	g_retval = status;
+	do_job_notification();
+	return (status);
+}
+
+int			main(int argc, char **argv)
+{
+	char			*input;
 
 	(void)argc;
 	(void)argv;
-	status = 0;
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
@@ -69,32 +96,13 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
+		//if (!(input = ft_readline("\e[38;5;44m21sh$ \e[0m")))
+		if (!(input = ft_readline("$> ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
 		}
-		ast = NULL;
-		lexer(input, &ast);
-		debug_ast(ast);
-		if (ast != NULL)
-		{
-		//	expansions(ast);
-			if (parser(ast) == FAILURE)
-				ft_putendl_fd("\nParse error", 2);
-			else
-			{
-/*				ft_putendl("\nOK"); 
-*/				ast_order(&ast);
-				debug_ast(ast);
-				status = execute_node(ast, 1); /* to capture */
-			}
-		}
-/*		ft_lstdel(&lst, del);*/
-		astdel(&ast);
-		ft_strdel(&input);
-		g_retval = status;
-		do_job_notification();
+		exec_input(input);
 	}
 	free_hash_table();
 	ft_tabdel(&environ);

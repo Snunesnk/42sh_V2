@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 15:40:13 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/07 15:47:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ static void		del_elem(void *content, size_t content_size)
 static char		**get_name_tab(int ac, char **av)
 {
 	char	*error;
-	char	**tab;
+	char	**buf;
 	size_t	i;
 
 	i = 0;
-	tab = (char**)malloc(sizeof(char*) * (ac + 1));
-	if (tab != NULL)
+	buf = (char**)malloc(sizeof(char*) * (ac + 1));
+	if (buf != NULL)
 	{
 		while (av[i] != NULL)
 		{
@@ -56,14 +56,14 @@ static char		**get_name_tab(int ac, char **av)
 				break ;
 			}
 			else
-				tab[i] = ft_strdup(av[i]);
+				buf[i] = ft_strdup(av[i]);
 			i++;
 		}
 	}
-	tab[i] = NULL;
+	buf[i] = NULL;
 	if (av[i] != NULL)
-		ft_free_tab(ft_tablen(tab), tab);
-	return (tab);
+		ft_free_tab(ft_tablen(buf), buf);
+	return (buf);
 }
 
 static int		match_name(char *var_name, char **name)
