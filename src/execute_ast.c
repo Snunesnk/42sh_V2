@@ -37,7 +37,9 @@ int	execute_subshell(t_ast *node, int foreground)
 	if ((pid = fork()) == 0) /* If background, pid should be added to the job list
 					Get the PID and add it to the list in case fg and ctrl + c */
 	{
+		pid = getpid();
 		restore_procmask();
+		setpgid(pid, pid);
 		exit(execute_node(node, foreground));
 	}
 	else if (pid < 0)
