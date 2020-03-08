@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/06 15:21:48 by efischer          #+#    #+#             */
-/*   Updated: 2019/06/06 15:21:49 by efischer         ###   ########.fr       */
+/*   Created: 2018/11/13 14:56:43 by abarthel          #+#    #+#             */
+/*   Updated: 2019/01/29 12:24:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem))
+#include <stdlib.h>
+
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	if (!lst || !f)
-		return ;
-	while (lst)
+	t_list	*new;
+
+	new = NULL;
+	if (f && lst)
 	{
-		f(lst);
-		lst = lst->next;
+		new = (t_list*)malloc(sizeof(t_list));
+		if (!new)
+			return (NULL);
+		new = f(lst);
+		new->next = ft_lstmap(lst->next, f);
 	}
+	return (new);
 }
