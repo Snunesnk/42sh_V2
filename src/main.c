@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/07 17:02:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 18:02:21 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	astdel(t_ast **ast)
 	}
 }
 
-int	exec_input(char *input)
+int			exec_input(char *input)
 {
-	t_ast			*ast;
-	volatile int	status;
+	t_ast	*ast;
+	int		status;
 
 	status = 0;
 	ast = NULL;
@@ -51,11 +51,11 @@ int	exec_input(char *input)
 	if (ast != NULL)
 	{
 	//	expansions(ast);
-		if (parser(ast) == EXIT_FAILURE)
+		if (parser(ast) == FAILURE)
 			ft_putendl_fd("\nParse error", 2);
 		else
 		{
-/*			ft_putendl("\nOK");
+/*			ft_putendl("\nOK"); 
 */			ast_order(&ast);
 			debug_ast(ast);
 			status = execute_node(ast, 1); /* to capture */
@@ -72,9 +72,11 @@ int	exec_input(char *input)
 int			main(int argc, char **argv)
 {
 	char			*input;
+	volatile int	status;
 
 	(void)argc;
 	(void)argv;
+	status = 0;
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
@@ -96,13 +98,13 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-		//if (!(input = ft_readline("\e[38;5;44m21sh$ \e[0m")))
+//		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
 		if (!(input = ft_readline("$> ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
 		}
-		exec_input(input);
+		status = exec_input(input);
 	}
 	free_hash_table();
 	ft_tabdel(&environ);

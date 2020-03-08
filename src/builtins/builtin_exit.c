@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/07 15:03:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/08 15:21:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	part_sep(int argc, char **argv)
 			free_hash_table();
 			ft_tabdel(&argv);
 			ft_tabdel(&environ);
+			free_hist();
 		/*	free_all_shvar(); */
 			ft_dprintf(STDERR_FILENO, "exit\n");
 			exit(status);
@@ -51,6 +52,7 @@ static int	numarg_exit(int argc, char **argv, int i)
 	free_hash_table();
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_hist();
 /*	free_all_shvar();*/
 	exit(status);
 }
@@ -66,6 +68,7 @@ static void	nomatter_exit(char **argv, int i)
 	free_hash_table();
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_hist();
 /*	free_all_shvar();*/
 	exit(2);
 }
@@ -90,6 +93,7 @@ int		cmd_exit(int argc, char **argv)
 	free_hash_table();
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
+	free_hist();
 /*	free_all_shvar();*/
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(status);
