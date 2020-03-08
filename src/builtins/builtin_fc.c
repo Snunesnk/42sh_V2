@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/08 17:47:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/08 18:16:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ char		*fc_do_substitute(char *str, t_sub *sub_list)
 	}
 	while (sub_list && sub_list->pat && sub_list->rep)
 	{
-		ft_printf("substitute to perform: %s by %s on %s\n", sub_list->rep, \
-				sub_list->pat, str);
 		if (!(new_cmd = ft_strreplace(&new_cmd, sub_list->pat, sub_list->rep)))
 		{
 			ft_printf("./21sh: cannot allocate memory\n");
@@ -139,28 +137,18 @@ char		*fc_do_substitute(char *str, t_sub *sub_list)
 
 void		fc_replace_last_hist(char *tmp)
 {
-	(void)tmp;
-//	unsigned int	i;
-//	unsigned int	save;
-//
-//	i = g_hist->used - 2;
-//	save = i;
-//	if (i <= 0)
-//		return ;
-//	while (i > 0 && g_hist->history_content[i])
-//	{
-//		ft_printf("hist: %s\n", g_hist->history_content + i);
-//		i--;
-//	}
-//	g_hist->used = i;
-//	while (i < save)
-//	{
-//		g_hist->history_content[i] = '\0';
-//		i++;
-//	}
-//	g_hist->total_lines -= 1;
-//	add_hentry(tmp, 1);
-//	g_hist->used += 1;
+	unsigned int	i;
+
+	g_hist->offset = g_hist->used - 1;
+	prev_hist();
+	i = g_hist->offset;
+	while (i < g_hist->used - 1)
+	{
+		g_hist->history_content[i] = '\0';
+		i++;
+	}
+	g_hist->used = g_hist->offset + 1;
+	add_hentry(tmp, 1);
 }
 
 int			exec_fc_s_opt(char **args)
@@ -190,20 +178,17 @@ int			exec_fc_s_opt(char **args)
 		sub_list = sub_list->prev;
 	if (!(get_beg_matching_hist(&tmp, *args)))
 	{
-		ft_printf("tmp; %s\n", tmp);
 		ft_printf("./21sh: fc: no command found\n");
 		if (sub_list->pat)
 			free_subsitute(sub_list);
 		return (e_command_not_found);
 	};
-	ft_printf("matching hist: %s\n", tmp);
 	if (!(tmp = fc_do_substitute(tmp, sub_list)))
 		return (e_cannot_allocate_memory);
 	free_subsitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
-	/*
 	fc_replace_last_hist(tmp);
-	return (exec_input(tmp));*/
+	return (exec_input(tmp));
 	return (1);
 }
 
