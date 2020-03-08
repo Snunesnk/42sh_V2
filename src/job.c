@@ -138,6 +138,8 @@ int	launch_job(t_job *j, int foreground)
 
 	if (!shell_is_interactive)
 		wait_for_job(j);
+	else if (g_subshell)
+		wait_for_job(j);
 	else if (foreground)
 		put_job_in_foreground(j, 0);
 	else

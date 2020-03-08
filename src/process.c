@@ -48,7 +48,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 			pgid = pid;
 		}
 		setpgid(pid, pgid);
-		if (foreground)
+		if (!g_subshell && foreground)
 			tcsetpgrp(shell_terminal, pgid);
 		/* Set the handling for job control signals back to the default. */
 		restore_procmask();
