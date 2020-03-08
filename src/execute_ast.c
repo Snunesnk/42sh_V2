@@ -38,6 +38,7 @@ int	execute_subshell(t_ast *node, int foreground)
 					Get the PID and add it to the list in case fg and ctrl + c */
 	{
 		pid = getpid();
+		g_subshell = 1;
 		restore_procmask();
 		setpgid(pid, pid);
 		exit(execute_node(node, foreground));

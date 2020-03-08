@@ -148,6 +148,8 @@ t_hash_table	*find_occurence(char *name);
 t_hash_table	*find_prev_occurence(char *name);
 void			free_hash_table(void);
 
+extern int		g_subshell;
+
 extern t_hash_table	**g_hash_table;
 
 /* The active jobs are linked into a list. This is its head. */
