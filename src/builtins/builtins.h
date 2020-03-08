@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/07 15:23:58 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/08 14:56:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ extern char	*g_builtin_name;
 typedef struct	s_sub
 {
 	struct s_sub	*next;
+	struct s_sub	*prev;
 	char			*pat;
 	char			*rep;
 }				t_sub;

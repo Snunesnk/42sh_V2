@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 16:03:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/07 16:09:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/03 17:56:04 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ int		get_env_list(char **environ)
 		shell_var.flag |= EXPORT;
 		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
 		if (lst_new == NULL)
-			return (EXIT_FAILURE);
+			return (FAILURE);
 		ft_lstadd(&g_env, lst_new);
 		i++;
 	}
 	ft_merge_sort(&g_env, &alpha_sort);
-	return (EXIT_SUCCESS);
+	return (SUCCESS);
 }

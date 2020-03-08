@@ -6,7 +6,8 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/07 17:28:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/05 10:24:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +142,6 @@ int			get_next_token(const char *str, t_token *token, uint64_t *last_token_type)
 			pos = ft_strlen(token_tab[token_index]);
 			break ;
 		}
-		ft_printf("tokentype: %llu\n", token->type);
 		token_index++;
 	}
 	if (token_index == NB_TOKEN)

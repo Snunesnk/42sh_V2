@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/07 16:20:11 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/07 17:59:46 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,23 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_btree/btree_search_data.c \
 		ds_btree/btree_delete.c \
 		ds_bstree/bstree_remove_data.c \
+		ds_vct/vct_addchar.c \
+		ds_vct/vct_addstr.c \
+		ds_vct/vct_clear.c \
+		ds_vct/vct_del.c \
+		ds_vct/vct_delchar.c \
+		ds_vct/vct_delfirstchar.c \
+		ds_vct/vct_dellastchar.c \
+		ds_vct/vct_delnchar.c \
+		ds_vct/vct_insertchar.c \
+		ds_vct/vct_insertstr.c \
+		ds_vct/vct_new.c \
+		ds_vct/vct_newstr.c \
+		ds_vct/vct_pushchar.c \
+		ds_vct/vct_pushstr.c \
+		ds_vct/vct_replace.c \
+		ds_vct/vct_reset.c \
+		ds_vct/vct_resize.c \
 		ds_queue/queue_create_node.c \
 		ds_queue/queue_enqueue.c \
 		ds_queue/queue_dequeue.c \
@@ -36,15 +53,18 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_queue/queue_size.c \
 		ds_queue/queue_apply_to_each.c \
 		ds_singly_linked_list/ft_lstadd.c \
+		ds_singly_linked_list/ft_lstquicksort.c \
 		ds_singly_linked_list/ft_lstaddend.c \
-		ds_singly_linked_list/ft_lstlen.c \
-		ds_singly_linked_list/ft_lstprint.c \
+		ds_singly_linked_list/ft_lstcpy.c \
 		ds_singly_linked_list/ft_lstdel.c \
 		ds_singly_linked_list/ft_lstdelone.c \
 		ds_singly_linked_list/ft_lstiter.c \
+		ds_singly_linked_list/ft_lstlen.c \
 		ds_singly_linked_list/ft_lstmap.c \
 		ds_singly_linked_list/ft_lstnew.c \
-		ds_singly_linked_list/ft_lstquicksort.c \
+		ds_singly_linked_list/ft_lstnew_str.c \
+		ds_singly_linked_list/ft_lstprint.c \
+		ds_singly_linked_list/ft_lst_to_char_tab.c \
 		ds_stack/stack_apply_to_each.c \
 		ds_stack/stack_create_element.c \
 		ds_stack/stack_delete.c \
@@ -63,7 +83,6 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		f_ctype/ft_isblank.c \
 		f_ctype/ft_isalpha.c \
 		f_ctype/ft_isascii.c \
-		f_ctype/ft_isspace.c \
 		f_ctype/ft_isdigit.c \
 		f_ctype/ft_tolower.c \
 		f_ctype/ft_toupper.c \
@@ -209,4 +228,4 @@ DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 ARFLAGS := rc
 
-CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -D_POSIX_C_SOURCE -fno-builtin -O2
+override CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -D_POSIX_C_SOURCE -fno-builtin -O2

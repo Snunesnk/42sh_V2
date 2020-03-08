@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:18:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:20:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,17 @@
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
 
-int				ft_isblank(int c);
-
 int				ft_isalpha(int c);
+
+int				ft_isblank(int c);
 
 int				ft_isdigit(int c);
 
 int				ft_isalnum(int c);
 
 int				ft_isascii(int c);
+
+int				ft_isspace(int c);
 
 int				ft_isprint(int c);
 
@@ -40,7 +42,8 @@ int				ft_tolower(int c);
 
 int				ft_atoi(const char *str) __attribute__((nonnull(1)));
 
-int				ft_strcmp(const char *s1, const char *s2);
+int				ft_strcmp(const char *s1, const char *s2) __attribute__
+				((nonnull(1,2)));
 
 int				ft_strcasecmp(const char *s1, const char *s2) __attribute__
 				((nonnull(1,2)));
@@ -51,7 +54,7 @@ int				ft_strncmp(const char *s1, const char *s2,
 int				ft_memcmp(const void *s1, const void *s2,
 				size_t n) __attribute__((nonnull(1,2)));
 
-size_t			ft_strlen(const char *s);
+size_t			ft_strlen(const char *s) __attribute__((nonnull(1)));
 
 int				ft_numlen(unsigned int nb);
 
@@ -151,7 +154,8 @@ void			ft_putendl_fd(char const *s, int fd);
 
 void			ft_putnbr_fd(int n, int fd);
 
-int				ft_strequ(char const *s1, char const *s2);
+int				ft_strequ(char const *s1, char const *s2) __attribute__
+				((nonnull(1)));
 
 int				ft_strnequ(char const *s1, char const *s2, size_t n);
 
@@ -189,6 +193,26 @@ typedef struct	s_list
 	size_t			content_size;
 	struct s_list	*next;
 }				t_list;
+
+void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+
+void			ft_lstaddend(t_list **alst, t_list *new);
+
+size_t			ft_lstlen(t_list *lst);
+
+int				ft_lstprint(t_list *list, void (*del)(t_list *, t_list**));
+
+void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+
+void			ft_lstadd(t_list **alst, t_list *new);
+
+void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+
+t_list			*ft_lstnew(void const *content, size_t content_size);
+
+t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
+
+void			ft_lstquicksort(t_list **alst, int (*cmp)(void *, void *));
 
 void			ft_print_tables(char **tables);
 
@@ -257,21 +281,5 @@ char			*ft_resolvepath(char *str);
 char			*ft_realpath(const char *path, char *resolved_path);
 
 void			ft_nmemdel(size_t n, void **ptr, ...);
-
-
-char	**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
-int			ft_lstprint(t_list *lst, void (*f)(t_list*, t_list**));
-t_list	*ft_lstnew_str(char const *content, size_t content_size);
-t_list	*ft_lstnew(void const *content, size_t content_size);
-t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-size_t	ft_lstlen(t_list *lst);
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-t_list	*ft_lstcpy(t_list *lst, t_list *(*f)(t_list*));
-void	ft_lstaddend(t_list **alst, t_list *new);
-void	ft_lstadd(t_list **alst, t_list *new);
-
-
 
 #endif
