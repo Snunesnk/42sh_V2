@@ -72,7 +72,7 @@ int	execute_and(t_ast *node, int foreground)
 		execute_node(node->left, 0);
 	if (node->right)
 		return (execute_node(node->right, foreground));
-	return (ASTERROR);
+	return (0);
 }
 
 int	execute_andand(t_ast *node, int foreground)
