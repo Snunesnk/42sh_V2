@@ -1,5 +1,6 @@
 *.o
 *.d
 21sh
-libft.a
+*.a
 *.sw*
+42Readline
