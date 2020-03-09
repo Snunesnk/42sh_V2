@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/08 14:56:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/09 19:46:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int				cmd_export(int argc, char **argv);
 int				cmd_unset(int argc, char **argv);
 
 /*
-** Hash Functions
+** Hash functions
 */
 char			get_next_opt(char ***argv, const char *options_list);
 int				check_for_needed_arguments(int options_list, char **argv);
@@ -86,12 +86,6 @@ char			deal_with_spe_opt(char ***args, int *x);
 char			return_next_opt(char ***args, int *x, const char *options_list);
 
 /*
-** Global var util for get_next_opt
-*/
-extern char	*g_needed_arg;
-extern char	*g_builtin_name;
-
-/*
 ** Substitution struc for fc
 */
 typedef struct	s_sub
@@ -101,6 +95,20 @@ typedef struct	s_sub
 	char			*pat;
 	char			*rep;
 }				t_sub;
+
+/*
+** Fc functions
+*/
+int				exec_fc_other_opt(int opt_list, char **args);
+char			*ft_strreplace(char **str, char *pattern, char *replacement);
+void			fc_replace_last_hist(char *tmp);
+void			free_substitute(t_sub *substitute);
+
+/*
+** Global var util for get_next_opt
+*/
+extern char	*g_needed_arg;
+extern char	*g_builtin_name;
 
 /*
 ** Functions in builtins_dispatcher.c
