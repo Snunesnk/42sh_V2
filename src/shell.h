@@ -26,9 +26,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
-# include <readline/readline.h>
-# include <readline/history.h>
-
 # include "libft.h"
 # include "vctlib.h"
 # include "ft_getopt.h"
