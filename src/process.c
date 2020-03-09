@@ -24,7 +24,7 @@
 
 void	free_process(t_process *p) /* temporary for tests purposes ? */
 {
-	ft_printf("\nFREE PROCESS\n"); /* Free a process */
+//	ft_printf("\nFREE PROCESS\n"); /* Free a process */
 	free_redirections(p->redir);
 	free(p->argv);
 	free(p);
