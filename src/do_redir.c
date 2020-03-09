@@ -32,25 +32,32 @@ static int	valid_fd(int fd, int open)
 	return (0);
 }
 
+static int	check_if_directory(char *filename)
+{
+	struct stat     buf;
+	
+	buf = (struct stat){.st_mode = 0};
+	if (stat(filename, &buf))
+		return (e_system_call_error);
+	if (S_ISDIR(buf.st_mode))
+	{
+		psherror(e_is_a_directory, filename, e_cmd_type);
+		return (e_is_a_directory);
+	}
+	return (0);
+}
+
 /* Seems ok */
 static int	do_iowrite(t_redirection *r)
 {
-	struct stat     buf;
-
-	if (access(r->redirectee.filename, F_OK))
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
+		return (e_is_a_directory);
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
 	else if (access(r->redirectee.filename, R_OK))
 	{ /* File exists but no rights to write */
-		buf = (struct stat){.st_mode = 0};
-		if (stat(r->redirectee.filename, &buf))
-			return (e_system_call_error);
-		if (S_ISDIR(buf.st_mode))
-		{
-			psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
-			return (e_is_a_directory);
-		}
 		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
 		return (e_permission_denied);
 	}
@@ -78,22 +85,14 @@ static int	do_iowrite(t_redirection *r)
 /* Seems ok */
 static int	do_iocat(t_redirection *r)
 {
-	struct stat     buf;
-
-	if (access(r->redirectee.filename, F_OK))
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
+		return (e_is_a_directory);
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
 	else if (access(r->redirectee.filename, R_OK))
 	{ /* File exists but no rights to write */
-		buf = (struct stat){.st_mode = 0};
-		if (stat(r->redirectee.filename, &buf))
-			return (e_system_call_error);
-		if (S_ISDIR(buf.st_mode))
-		{
-			psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
-			return (e_is_a_directory);
-		}
 		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
 		return (e_permission_denied);
 	}
@@ -119,25 +118,17 @@ static int	do_iocat(t_redirection *r)
 /* Seems ok */
 static int	do_ioread(t_redirection *r)
 {
-	struct stat     buf;
-
-	if (valid_fd(r->redirectee.dest, 0))
+	if (check_if_directory(r->redirector.filename) == e_is_a_directory)
+		return (e_is_a_directory);
+	else if (valid_fd(r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
-	if (access(r->redirector.filename, F_OK))
+	else if (access(r->redirector.filename, F_OK))
 	{
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
 		return (e_no_such_file_or_directory);
 	}
 	else if (access(r->redirector.filename, R_OK))
 	{
-		buf = (struct stat){.st_mode = 0};
-		if (stat(r->redirector.filename, &buf)) /* Optional for read, not default behavior */
-			return (e_system_call_error);
-		if (S_ISDIR(buf.st_mode))
-		{
-			psherror(e_is_a_directory, r->redirector.filename, e_cmd_type);
-			return (e_is_a_directory);
-		}
 		psherror(e_permission_denied, r->redirector.filename, e_cmd_type);
 		return (e_permission_denied);
 	}
@@ -171,23 +162,14 @@ static int	do_iohere(t_redirection *r)
 
 static int	do_iodfile(t_redirection *r)
 {
-	struct stat     buf;
-
-	/* Open file */
-	if (access(r->redirectee.filename, F_OK))
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
+		return (e_is_a_directory);
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
 	else if (access(r->redirectee.filename, R_OK))
 	{ /* File exists but no rights to write */
-		buf = (struct stat){.st_mode = 0};
-		if (stat(r->redirectee.filename, &buf))
-			return (e_system_call_error);
-		if (S_ISDIR(buf.st_mode))
-		{
-			psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
-			return (e_is_a_directory);
-		}
 		psherror(e_permission_denied, r->redirectee.filename, e_cmd_type);
 		return (e_permission_denied);
 	}
