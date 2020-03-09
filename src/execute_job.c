@@ -99,7 +99,10 @@ static int	get_argc(t_list *lst)
 		}
 		else
 			break;
-		lst = lst->next;
+		if (lst)
+			lst = lst->next;
+		else
+			break;
 	}
 	return (argc);
 }
@@ -153,7 +156,8 @@ t_process	*build_a_process(t_list **lst)
 			return (NULL);
 		}
 		/* Add redirection instruction calling parse_redirection */
-		p->redir = build_redirections(lst);
+		if (*lst)
+			p->redir = build_redirections(lst);
 		return (p);
 	}
 	free(p);
@@ -175,7 +179,7 @@ t_process	*build_processes(t_list **lst)
 		type = get_tokentype(*lst);
 		if (type == PIPE)
 			(*lst) = (*lst)->next;
-		else if (type == END)
+		else if (!*lst)
 			break;
 		else
 		{
@@ -236,7 +240,6 @@ int	execute_job(t_list *lst, int foreground)
 
 	if (lst == NULL)
 		return (EXIT_FAILURE);
-	lst = lst->next;
 	j = NULL;
 	j = build_job(&lst);
 	if (j == NULL)
