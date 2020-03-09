@@ -15,12 +15,10 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <readline/readline.h>
-#include <readline/history.h>
-
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
+#include "ft_readline.h"
 
 extern char	**environ;
 t_list		*g_env;
@@ -70,7 +68,7 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
+		if (!(input = ft_readline("21sh$ ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
