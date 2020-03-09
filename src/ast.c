@@ -6,14 +6,14 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/02/12 13:12:01 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 10:59:44 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-/*static void		astadd_left(t_ast **ast, t_ast *new_ast)
+static void		astadd_left(t_ast **ast, t_ast *new_ast)
 {
 	t_ast	*head;
 
@@ -27,7 +27,7 @@
 		(*ast)->left = new_ast;
 		*ast = head;
 	}
-}*/
+}
 
 static void		astadd_right(t_ast **ast, t_ast *new_ast)
 {
@@ -59,76 +59,75 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 	return (ast);
 }
 
-static void		remove_border(t_list **head, t_list **lst)
+static t_list	*remove_border(t_list **lst)
 {
-	*head = (*lst)->next;
+	t_list	*next;
+	t_list	*prout;
+
+	next = (*lst)->next;
 	ft_lstdelone(lst, &del);
-	*lst = *head;
+	*lst = next;
+	prout = next;
+	while (prout != NULL && prout->next != NULL && prout->next->next != NULL)
+		prout = prout->next;
+	ft_lstdelone(&(prout->next), &del);
+	prout->next = NULL;
+	return (next);
 }
 
-/*static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
+static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
 {
 	t_ast	*new_ast;
 	t_list	*tmp;
+	t_list	*process;
 
-	tmp = (*lst)->next;
-	new_ast = astnew(NULL, ((t_token*)((*lst)->content))->type);
+	if (*lst == NULL)
+	{
+		new_ast = astnew(head, NONE);
+		astadd_right(ast, new_ast);
+		return (SUCCESS);
+	}
+	process = (*lst)->next;
+	if (process != NULL)
+		tmp = process->next;
+	new_ast = astnew(NULL, ((t_token*)(process->content))->type);
 	if (new_ast == NULL)
 		return (FAILURE);
+	(*lst)->next = NULL;
 	astadd_right(ast, new_ast);
-	ft_lstdelone(lst, &del);
+	*lst = tmp;
+	ft_lstdelone(&process, &del);
 	new_ast = astnew(head, NONE);
 	if (new_ast == NULL)
 		return (FAILURE);
 	astadd_left(ast, new_ast);
-	*lst = tmp;
 	return (SUCCESS);
-}*/
+}
 
 int				build_ast(t_ast **ast, t_list *lst)
 {
-	t_ast		*new_ast;
 	t_list		*head;
 	t_list		*tmp;
 	uint64_t	type;
-	int			ret;
 
-	ret = SUCCESS;
-	head = lst;
+	head = remove_border(&lst);
 	tmp = lst;
-	while (lst != NULL)
+	while (head != NULL)
 	{
-		ft_putendl("Im here");
-		type = ((t_token*)(lst->content))->type;
-		if (type == START)
-			remove_border(&head, &lst);
-		if (type == END)
+		type = (lst == NULL) ? END : ((t_token*)(lst->content))->type;
+		if (type == END || type == AND || type == AND_IF || type == OR_IF || type == SEMI)
 		{
-			tmp->next = NULL;
-			ft_lstdelone(&lst, &del);
+			if (lst == NULL)
+				tmp = NULL;
+			if (new_node_ast(ast, head, &tmp) == FAILURE)
+				return (FAILURE);
+			head = tmp;
+			lst = head;
+			tmp = lst;
+			continue ;
 		}
-		else	
-		{
-			/*if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
-			{
-				ret = new_node_ast(ast, head, &lst);
-				if (ret == FAILURE)
-					return (ret);
-				head = lst;
-			}*/
-			if (lst != NULL)
-			{
-				tmp = lst;
-				lst = lst->next;
-			}
-		}
-		ft_printf("head: %p\n", head);
-	}
-	if (head != NULL)
-	{
-		new_ast = astnew(head, NONE);
-		astadd_right(ast, new_ast);
+		lst = lst->next;
 	}
 	ast_order(ast);
-	return (ret);
+	return (SUCCESS);
 }

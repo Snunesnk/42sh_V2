@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 09:24:53 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 13:21:47 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,9 @@ int			main(int argc, char **argv)
 		if (lst != NULL)
 		{
 		//	expansions(ast);
-			if (parser(lst) == FAILURE)
+			debug(lst);
+			if (parser(lst) != FAILURE)
 			{
-				debug(lst);
-				ft_putendl_fd("\nParse error", 2);
-			}
-			else
-			{
-				debug(lst);
 				build_ast(&ast, lst);
 				debug_ast(ast);
 			//	status = execute_node(ast, 1); /* to capture */
