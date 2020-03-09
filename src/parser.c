@@ -19,30 +19,31 @@ static void	init_token_tab(int **token_tab)
 					WHILE_WORD, WORD, COMMENT, TAB_END };
 	int		token_start[NB_TOKEN] = { WHILE_WORD, WORD, GREATAND, LESSAND,
 					LESS, GREAT, DGREAT, DLESS, IO_NB, COMMENT, END, TAB_END };
-	int		token_redir[NB_TOKEN] = { WORD, GREATAND, LESSAND, DGREAT, DLESS,
-					TAB_END };
+	int		token_if[NB_TOKEN] = { WHILE_WORD, WORD, GREATAND, LESSAND,
+					LESS, GREAT, DGREAT, DLESS, IO_NB, COMMENT, TAB_END };
+	int		token_redir[NB_TOKEN] = { WORD, TAB_END };
 	int		token_word[NB_TOKEN] = { AND_IF, OR_IF, PIPE, GREATAND, LESSAND,
 					ANDGREAT, AND, SEMI, OP_PARENTHESIS, CL_PARENTHESIS,
 					WHILE_WORD, DONE, DGREAT, DLESS, GREAT, LESS, WORD, IO_NB,
 					COMMENT, END, TAB_END };
 	int		token_io_nb[NB_TOKEN] = { GREAT, LESS, DGREAT, DLESS, GREATAND, LESSAND,
 					TAB_END };
-	int		token_semicolon[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
+	int		token_semi[NB_TOKEN] = { WORD, COMMENT, CL_PARENTHESIS,
 					WHILE_WORD, DONE, END, TAB_END };
 	int		token_op_parenthesis[NB_TOKEN] = { OP_PARENTHESIS, CL_PARENTHESIS,
-					WHILE_LOOP, COMMENT, TAB_END};
+					WHILE_LOOP, WORD, COMMENT, TAB_END};
 	int		token_while[NB_TOKEN] = { DONE, OP_PARENTHESIS, WORD, COMMENT,
 					TAB_END};
 
-	token_tab[OR_IF] = NULL;
+	token_tab[OR_IF] = token_if;
 	token_tab[PIPE] = token_pipe;
-	token_tab[AND_IF] = NULL;
+	token_tab[AND_IF] = token_if;
 	token_tab[GREATAND] = token_redir;
 	token_tab[LESSAND] = token_redir;
 	token_tab[ANDGREAT] = token_redir;
 	token_tab[AND] = token_start;
 	token_tab[DSEMI] = NULL;
-	token_tab[SEMI] = token_semicolon;
+	token_tab[SEMI] = token_semi;
 	token_tab[OP_PARENTHESIS] = token_op_parenthesis;
 	token_tab[CL_PARENTHESIS] = token_word;
 	token_tab[WHILE_WORD] = token_while;
@@ -96,9 +97,6 @@ static int	check_next_token(uint64_t type, int *token_tab)
 static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			t_bracket bracket)
 {
-	uint64_t	type;
-
-	type = NONE;
 	if (((t_token*)(lst->content))->type == bracket.close)
 	{
 		if (buffer[index] == bracket.open)
@@ -106,14 +104,14 @@ static int	check_bracket(t_list *lst, uint64_t *buffer, size_t index,
 			buffer[index] = 0;
 			if (index > 0)
 				index--;
-			return (parser_pipeline(lst, buffer, index, &type));
+			return (do_parsing(lst, buffer, index));
 		}
 		return (FAILURE);
 	}
 	if (buffer[index] != 0)
 		index++;
 	buffer[index] = bracket.open;
-	return (parser_pipeline(lst, buffer, index, &type));
+	return (do_parsing(lst, buffer, index));
 }
 
 int			bracket(t_list *lst, uint64_t *buffer, size_t index)
@@ -127,8 +125,39 @@ int			bracket(t_list *lst, uint64_t *buffer, size_t index)
 	return (check_bracket(lst, buffer, index, bracket_tab[WHILE_LOOP]));
 }
 
-int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
-				uint64_t *type)
+static void	merge_list(t_list *lst1, t_list *lst2)
+{
+	t_list	*tmp;
+
+	tmp = lst2->next;
+	ft_lstdelone(&lst1->next, &del);
+	ft_lstdelone(&lst2, &del);
+	lst1->next = tmp;
+}
+
+static int	subprompt(t_list *lst, int *token_tab)
+{
+	t_list	*new_lst;
+	char	*tmp;
+	int		ret;
+
+	ret = FAILURE;
+	if (((t_token*)(lst->content))->type == PIPE
+		|| ((t_token*)(lst->content))->type == AND_IF
+		|| ((t_token*)(lst->content))->type == OR_IF)
+	{
+		tmp = readline("> ");
+		ret = lexer(tmp, &new_lst);
+		if (ret == SUCCESS)
+		{
+			merge_list(lst, new_lst);
+			ret = check_next_token(((t_token*)(lst->next->content))->type, token_tab);
+		}
+	}
+	return (ret);
+}
+
+int			do_parsing(t_list *lst, uint64_t *buffer, size_t index)
 {
 	static int	*token_tab[NB_TOKEN];
 	uint64_t	token_type;
@@ -140,50 +169,33 @@ int			parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
 	if (lst->next != NULL)
 	{
 		token_index = ((t_token*)(lst->content))->type;
-		lst = lst->next;
-		token_type = ((t_token*)(lst->content))->type;
-		if (token_type != START && token_type != END)
-			*type = token_type;
+		token_type = ((t_token*)(lst->next->content))->type;
 		ret = check_next_token(token_type, token_tab[token_index]);
+		if (ret == FAILURE && token_type == END)
+			ret = subprompt(lst, token_tab[token_index]);
+		lst = lst->next;
 		if (ret == SUCCESS)
 		{
 			if (token_type == OP_PARENTHESIS || token_type == CL_PARENTHESIS
 				|| token_type == WHILE_WORD || token_type == DONE)
 				ret = bracket(lst, buffer, index);
 			else
-				ret = parser_pipeline(lst, buffer, index, type);
+				ret = do_parsing(lst, buffer, index);
 		}
 	}
 	return (ret);
 }
 
-int			parser(t_ast *ast)
+int			parser(t_list *lst)
 {
 	int			ret;
 	size_t		index;
 	uint64_t	buffer[BUF_SIZE];
-	uint64_t	type;
 
 	ret = SUCCESS;
 	index = 0;
 	ft_bzero(buffer, sizeof(buffer));
-	while (ast != NULL)
-	{
-		type = NONE;
-		if (ast->content != NULL)
-			ret = parser_pipeline(ast->content, buffer, index, &type);
-		else if (ast->left != NULL
-				&& ((t_ast*)(ast->left))->content != NULL)
-		{
-			ret = parser_pipeline(((t_ast*)(ast->left))->content, buffer,
-			index, &type);
-		}
-		if (type == NONE)
-			ret = FAILURE;
-		if (ret == FAILURE)
-			break ;
-		ast = ast->right;
-	}
+	ret = do_parsing(lst, buffer, index);
 	if (buffer[0] != 0)
 		ret = FAILURE;
 	return (ret);

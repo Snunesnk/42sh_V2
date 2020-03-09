@@ -42,6 +42,7 @@ void	astdel(t_ast **ast)
 int			main(int argc, char **argv)
 {
 	t_ast			*ast;
+	t_list			*lst;
 	char			*input;
 	volatile int	status;
 
@@ -75,19 +76,22 @@ int			main(int argc, char **argv)
 			break ;
 		}
 		ast = NULL;
-		lexer(input, &ast);
-		debug_ast(ast);
-		if (ast != NULL)
+		lst = NULL;
+		lexer(input, &lst);
+		if (lst != NULL)
 		{
 		//	expansions(ast);
-			if (parser(ast) == FAILURE)
+			if (parser(lst) == FAILURE)
+			{
+				debug(lst);
 				ft_putendl_fd("\nParse error", 2);
+			}
 			else
 			{
-/*				ft_putendl("\nOK"); 
-*/				ast_order(&ast);
+				debug(lst);
+				build_ast(&ast, lst);
 				debug_ast(ast);
-				status = execute_node(ast, 1); /* to capture */
+			//	status = execute_node(ast, 1); /* to capture */
 			}
 		}
 /*		ft_lstdel(&lst, del);*/
