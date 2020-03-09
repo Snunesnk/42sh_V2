@@ -1,0 +1,3 @@
+[submodule "42Libc"]
+	path = 42Libc
+	url = https://github.com/Ant0wan/42Libc

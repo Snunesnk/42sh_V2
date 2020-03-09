@@ -71,13 +71,29 @@ SOURCES :=	main.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
-		builtins/builtin_unset.c
+		builtins/builtin_unset.c \
+		../readline/bind.c \
+		../readline/display.c \
+		../readline/emacs_keymap.c \
+		../readline/history.c \
+		../readline/history_expand.c \
+		../readline/init.c \
+		../readline/input.c \
+		../readline/quotes.c \
+		../readline/readline.c \
+		../readline/signals.c \
+		../readline/terminal.c \
+		../readline/text.c \
+		../readline/tty.c \
+		../readline/utils.c \
+		../readline/utils_suite2.c \
+		../readline/utils_suite.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/
+INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
@@ -89,7 +105,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a -lreadline
+LDLIBS += $(PATH_LIB)libft.a -ltermcap
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
