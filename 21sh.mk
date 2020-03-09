@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/07 17:55:23 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/09 17:55:53 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,8 @@ SOURCES :=	main.c \
 		utils_job.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
+		builtins/builtin_fc_list_edit.c \
+		builtins/builtin_fc_utils.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \
