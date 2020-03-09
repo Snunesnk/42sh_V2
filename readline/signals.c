@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/09 14:28:03 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:28:53 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-struct sigaction	g_sigact_winch;
-struct sigaction	g_dummy_winch;
+struct sigaction	g_sigact_winch = {0};
+struct sigaction	g_dummy_winch = {0};
 
 void	rl_set_signals(void)
 {
