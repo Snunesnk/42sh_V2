@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 10:59:44 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:59:12 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,17 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 static t_list	*remove_border(t_list **lst)
 {
 	t_list	*next;
-	t_list	*prout;
+	t_list	*tmp;
 
 	next = (*lst)->next;
 	ft_lstdelone(lst, &del);
 	*lst = next;
-	prout = next;
-	while (prout != NULL && prout->next != NULL && prout->next->next != NULL)
-		prout = prout->next;
-	ft_lstdelone(&(prout->next), &del);
-	prout->next = NULL;
+	tmp = next;
+	while (tmp != NULL && tmp->next != NULL && tmp->next->next != NULL && tmp->next->next->next != NULL)
+		tmp = tmp->next;
+	ft_lstdelone(&(tmp->next->next), &del);
+	ft_lstdelone(&(tmp->next), &del);
+	tmp->next = NULL;
 	return (next);
 }
 
@@ -106,9 +107,9 @@ static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
 
 int				build_ast(t_ast **ast, t_list *lst)
 {
-	t_list		*head;
-	t_list		*tmp;
-	uint64_t	type;
+	t_list			*head;
+	t_list			*tmp;
+	enum e_token	type;
 
 	head = remove_border(&lst);
 	tmp = lst;

@@ -6,18 +6,11 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 13:21:47 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:59:34 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <limits.h>
-#include <unistd.h>
-#include <stdlib.h>
-
-#include "libft.h"
 #include "shell.h"
-#include "error.h"
 #include "ft_readline.h"
 
 extern char	**environ;
@@ -84,10 +77,9 @@ int			main(int argc, char **argv)
 			{
 				build_ast(&ast, lst);
 				debug_ast(ast);
-			//	status = execute_node(ast, 1); /* to capture */
+				status = execute_node(ast, 1); /* to capture */
 			}
 		}
-/*		ft_lstdel(&lst, del);*/
 		astdel(&ast);
 		ft_strdel(&input);
 		g_retval = status;
