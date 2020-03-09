@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 15:31:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/09 11:17:21 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	execute_or(t_ast *node, int foreground)
 	return (ASTERROR);
 }
 
-int	execute_while(t_ast *node, int foreground)
+/*int	execute_while(t_ast *node, int foreground)
 {
 	int	ret;
 
@@ -100,7 +100,7 @@ int	execute_while(t_ast *node, int foreground)
 	while (!execute_node(node->left, foreground))
 		ret = execute_node(node->right, foreground);
 	return (ret);
-}
+}*/
 
 /*
 int	execute_if(t_ast *node)
@@ -122,8 +122,8 @@ int	execute_node(t_ast *node, int foreground)
 		return (execute_andand(node, foreground));
 	else if (node->type == OR_IF)
 		return (execute_or(node, foreground));
-	else if (node->type == WHILE_WORD)
-		return (execute_while(node, foreground));
+/*	else if (node->type == WHILE_WORD)
+		return (execute_while(node, foreground));*/
 /*	else if (node->type == IF)
 		return (execute_if(node));
 */
