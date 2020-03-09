@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:21:57 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 13:44:50 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,15 @@ static void	init_token_tab(char **token_tab)
 	token_tab[GREATAND] = "GREATAND";
 	token_tab[LESSAND] = "LESSAND";
 	token_tab[ANDGREAT] = "ANDGREAT";
-	token_tab[DSEMI] = "DSEMI";
 	token_tab[SEMI] = "SEMI";
-	token_tab[OP_PARENTHESIS] = "OP_PARENTHESIS";
-	token_tab[CL_PARENTHESIS] = "CL_PARENTHESIS";
-	token_tab[WHILE_WORD] = "WHILE_LOOP";
-	token_tab[DONE] = "DONE";
 	token_tab[DGREAT] = "DGREAT";
 	token_tab[DLESS] = "DLESS";
 	token_tab[DLESSDASH] = "DLESSDASH";
 	token_tab[GREAT] = "GREAT";
 	token_tab[LESS] = "LESS";
 	token_tab[WORD] = "WORD";
-	token_tab[END_OF_FILE] = "EOF";
 	token_tab[IO_NB] = "IO_NB";
+	token_tab[NEWLINE] = "NEWLINE";
 	token_tab[COMMENT] = "COMMENT";
 	token_tab[START] = "START";
 	token_tab[END] = "END";
@@ -56,7 +51,7 @@ static void	print(t_list *lst, t_list **elem)
 		tmp = NULL;
 		if (((t_token*)(lst->content))->type == i)
 		{
-			if (i == WORD || i == IO_NB || i == END_OF_FILE)
+			if (i == WORD || i == IO_NB)
 				tmp = ((t_token*)(lst->content))->value;
 			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
 			break ;

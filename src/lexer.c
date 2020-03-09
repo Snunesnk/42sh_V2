@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:33:43 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 14:23:54 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	add_token_to_list(t_token *token, t_list **lst)
 	return (ret);
 }
 
-static int	border_token_list(t_list **lst, uint64_t token_type)
+static int	border_token_list(t_list **lst, enum e_token token_type)
 {
 	t_token	token;
 	int		ret;
@@ -37,19 +37,21 @@ static int	border_token_list(t_list **lst, uint64_t token_type)
 	return (ret);
 }
 
-int		lexer(char *str, t_list **lst)
+int		lexer(char *input, t_list **lst)
 {
-	int			ret;
-	size_t		pos;
-	t_token		token;
-	uint64_t	type;
+	char			*str;
+	int				ret;
+	size_t			pos;
+	t_token			token;
+	enum e_token	type;
 
 	pos = 0;
 	ret = SUCCESS;
-	if (str == NULL)
+	if (input == NULL)
 		return (FAILURE);
-	while (ft_isblank(str[pos]) == TRUE)
-		pos++;
+	while (ft_isblank(*input) == TRUE)
+		input++;
+	str = ft_strjoin(input, "\n");
 	if (str[pos] != '\0')
 	{
 		ret = border_token_list(lst, START);
@@ -67,5 +69,6 @@ int		lexer(char *str, t_list **lst)
 		}
 		ret = border_token_list(lst, END);
 	}
+	ft_strdel(&str);
 	return (ret);
 }
