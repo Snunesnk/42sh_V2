@@ -72,11 +72,11 @@ int			main(int argc, char **argv)
 		if (lst != NULL)
 		{
 		//	expansions(ast);
-			debug(lst);
+	//		debug(lst);
 			if (parser(lst) != FAILURE)
 			{
 				build_ast(&ast, lst);
-				debug_ast(ast);
+	//			debug_ast(ast);
 				status = execute_node(ast, 1); /* to capture */
 			}
 		}
