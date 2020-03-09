@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 14:37:36 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 15:29:59 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,10 @@ int			parser(t_list *lst)
 		curr_type = ((t_token*)(lst->next->content))->type;
 		ret = check_next_token(curr_type, token_tab[prev_type]);
 		if (ret == FAILURE && curr_type == NEWLINE)
+		{
 			ret = subprompt(lst, token_tab[prev_type]);
+			curr_type = ((t_token*)(lst->next->content))->type;
+		}
 		if (ret == FAILURE)
 			break ;
 		lst = lst->next;
