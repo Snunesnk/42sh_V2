@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 10:24:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/09 13:52:38 by efischer         ###   ########.fr       */
 /*   Updated: 2020/02/12 16:19:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -23,20 +23,15 @@ static void	init_token_tab(char **token_tab)
 	token_tab[LESSAND] = "<&";
 	token_tab[ANDGREAT] = "&>";
 	token_tab[AND] = "&";
-	token_tab[DSEMI] = ";;";
 	token_tab[SEMI] = ";";
-	token_tab[OP_PARENTHESIS] = "(";
-	token_tab[CL_PARENTHESIS] = ")";
-	token_tab[WHILE_WORD] = "while";
-	token_tab[DONE] = "done";
 	token_tab[DGREAT] = ">>";
 	token_tab[DLESS] = "<<";
 	token_tab[DLESSDASH] = "<<-";
 	token_tab[GREAT] = ">";
 	token_tab[LESS] = "<";
-	token_tab[COMMENT] = NULL;
+	token_tab[NEWLINE] = "\n";
 	token_tab[IO_NB] = NULL;
-	token_tab[END_OF_FILE] = NULL;
+	token_tab[COMMENT] = NULL;
 	token_tab[WORD] = NULL;
 	token_tab[START] = NULL;
 	token_tab[END] = NULL;
@@ -66,7 +61,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 
 	tmp = NULL;
 	while (str[*len] != '\0' && ft_isblank(str[*len]) == FALSE
-		&& ft_ismeta(str[*len]) == FALSE)
+		&& ft_ismeta(str[*len]) == FALSE && str[*len] != '\n')
 	{
 		if (str[*len] == '"')
 		{
@@ -89,7 +84,7 @@ static void	get_token_word(const char *str, t_token *token, size_t *len)
 		*len = 0;
 }
 
-static int	get_word(const char *str, t_token *token, uint64_t *last_token_type)
+static int	get_word(const char *str, t_token *token, enum e_token *last_token_type)
 {
 	size_t	len;
 	char	*tmp;
@@ -124,7 +119,7 @@ static int	get_word(const char *str, t_token *token, uint64_t *last_token_type)
 	return (len);
 }
 
-int			get_next_token(const char *str, t_token *token, uint64_t *last_token_type)
+int			get_next_token(const char *str, t_token *token, enum e_token *last_token_type)
 {
 	char	*token_tab[NB_TOKEN];
 	size_t	token_index;
