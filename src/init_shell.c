@@ -26,6 +26,7 @@ pid_t		shell_pgid;
 struct termios	shell_tmodes;
 int		shell_terminal;
 int		shell_is_interactive;
+int		g_subshell = 0;
 
 /* Return value of last program and path tracking for cd builtin */
 int             g_retval;
