@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include "shell.h"
+#include "ft_readline.h"
 
 static void	init_token_tab(int **token_tab)
 {
@@ -146,7 +147,7 @@ static int	subprompt(t_list *lst, int *token_tab)
 		|| ((t_token*)(lst->content))->type == AND_IF
 		|| ((t_token*)(lst->content))->type == OR_IF)
 	{
-		tmp = readline("> ");
+		tmp = ft_readline("> ");
 		ret = lexer(tmp, &new_lst);
 		if (ret == SUCCESS)
 		{
