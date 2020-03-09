@@ -26,6 +26,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 
+# include <readline/readline.h>
+# include <readline/history.h>
+
 # include "libft.h"
 # include "vctlib.h"
 # include "ft_getopt.h"
@@ -275,11 +278,12 @@ void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
 void	ast_order(t_ast **ast);
 void	astdel(t_ast **ast);
 int		bracket(t_list *lst, uint64_t *buffer, size_t index);
-int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
+int		build_ast(t_ast **ast, t_list *lst);
 void	debug(t_list *lst);
 void	debug_ast(t_ast *ast);
 void    del(void *content, size_t content_size);
 void	del_env(void *content, size_t content_size);
+int		do_parsing(t_list *lst, uint64_t *buffer, size_t index);
 int		execute_job(t_list *lst, int foreground);
 int		execute_node(t_ast *node, int foreground);
 int     ft_atoifd(const char *str);
@@ -294,11 +298,9 @@ int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
 t_list	*get_shell_var(char *name);
 int		get_stdin(char **line);
 int		initialize_prompt_fd(void);
-int		lexer(char* str, t_ast **ast);
+int		lexer(char* str, t_list **lst);
 int		only_assignments(t_process *p);
-int		parser(t_ast *ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
-				uint64_t *type);
+int		parser(t_list *lst);
 int		path_concat(char **bin);
 void	print_env(t_list *env, t_list **elem);
 _Bool   prompt_display(int status);

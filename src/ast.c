@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "shell.h"
 
-static void		astadd_left(t_ast **ast, t_ast *new_ast)
+/*static void		astadd_left(t_ast **ast, t_ast *new_ast)
 {
 	t_ast	*head;
 
@@ -27,7 +27,7 @@ static void		astadd_left(t_ast **ast, t_ast *new_ast)
 		(*ast)->left = new_ast;
 		*ast = head;
 	}
-}
+}*/
 
 static void		astadd_right(t_ast **ast, t_ast *new_ast)
 {
@@ -59,25 +59,76 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 	return (ast);
 }
 
-int				build_ast(uint64_t type, t_ast **ast, t_list *lst)
+static void		remove_border(t_list **head, t_list **lst)
+{
+	*head = (*lst)->next;
+	ft_lstdelone(lst, &del);
+	*lst = *head;
+}
+
+/*static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
 {
 	t_ast	*new_ast;
-	int		ret;
+	t_list	*tmp;
+
+	tmp = (*lst)->next;
+	new_ast = astnew(NULL, ((t_token*)((*lst)->content))->type);
+	if (new_ast == NULL)
+		return (FAILURE);
+	astadd_right(ast, new_ast);
+	ft_lstdelone(lst, &del);
+	new_ast = astnew(head, NONE);
+	if (new_ast == NULL)
+		return (FAILURE);
+	astadd_left(ast, new_ast);
+	*lst = tmp;
+	return (SUCCESS);
+}*/
+
+int				build_ast(t_ast **ast, t_list *lst)
+{
+	t_ast		*new_ast;
+	t_list		*head;
+	t_list		*tmp;
+	uint64_t	type;
+	int			ret;
 
 	ret = SUCCESS;
-	if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
+	head = lst;
+	tmp = lst;
+	while (lst != NULL)
 	{
-		new_ast = astnew(NULL, type);
-		astadd_right(ast, new_ast);
-		new_ast = astnew(lst, NONE);
-		astadd_left(ast, new_ast);
+		ft_putendl("Im here");
+		type = ((t_token*)(lst->content))->type;
+		if (type == START)
+			remove_border(&head, &lst);
+		if (type == END)
+		{
+			tmp->next = NULL;
+			ft_lstdelone(&lst, &del);
+		}
+		else	
+		{
+			/*if (type == AND || type == AND_IF || type == OR_IF || type == SEMI)
+			{
+				ret = new_node_ast(ast, head, &lst);
+				if (ret == FAILURE)
+					return (ret);
+				head = lst;
+			}*/
+			if (lst != NULL)
+			{
+				tmp = lst;
+				lst = lst->next;
+			}
+		}
+		ft_printf("head: %p\n", head);
 	}
-	else
+	if (head != NULL)
 	{
-		new_ast = astnew(lst, NONE);
+		new_ast = astnew(head, NONE);
 		astadd_right(ast, new_ast);
 	}
-	if (new_ast == NULL)
-		ret = FAILURE;
+	ast_order(ast);
 	return (ret);
 }

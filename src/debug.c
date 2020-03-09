@@ -30,6 +30,7 @@ static void	init_token_tab(char **token_tab)
 	token_tab[DONE] = "DONE";
 	token_tab[DGREAT] = "DGREAT";
 	token_tab[DLESS] = "DLESS";
+	token_tab[DLESSDASH] = "DLESSDASH";
 	token_tab[GREAT] = "GREAT";
 	token_tab[LESS] = "LESS";
 	token_tab[WORD] = "WORD";
