@@ -1,53 +1,41 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text_hist.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/10 16:21:11 by snunes            #+#    #+#             */
+/*   Updated: 2020/03/10 16:21:12 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
-void hist_lookup(void)
+char	*get_beg_matching_hist(char **line, char *patern)
 {
-	char buf[10000];
-	char *tmp;
-	char *prompt;
-	union u_buffer c;
-	int i;
+	char	*tmp;
+	int		pat_len;
 
-	tmp = g_line.line;
-	i = 0;
-	c.value = 1;
-	ft_bzero(buf, 10000);
-	prompt = ft_strdup(g_dis.prompt);
-	set_prompt("(reverse-i-search)");
-	while (ft_isprint(buf[i]) || !buf[i])
+	tmp = *line;
+	if (!tmp)
+		return (tmp);
+	if (!patern)
+		return (prev_hist());
+	pat_len = ft_strlen(patern);
+	while (!ft_strnequ(tmp, patern, pat_len) && g_hist->nb_line > 0)
+		tmp = prev_hist();
+	if (ft_strnequ(tmp, patern, pat_len))
+		*line = tmp;
+	else
 	{
-		ft_putstr(tgoto(g_termcaps.ch, 0, 0));
-		ft_putstr(g_dis.prompt);
-		ft_putstr(tgoto(g_termcaps.clreol, 0, 0));
-		ft_printf("`%s': %s", buf, tmp);
-		c = read_key();
-		if (c.value == 127 && i > 0)
-			i--;
-		if (test_c_value(c))
-			break ;
-		if (i >= 0)
-			buf[i] = (c.value == 127) ? '\0' : c.value;
-		if (c.value != 127)
-			i++;
-		if (c.value != 127 && !(get_matching_hist(&tmp, buf)))
-			set_prompt("(failed reverse-i-search)");
-		else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)"))
-			set_prompt("(reverse-i-search)");
+		while (!ft_strnequ(tmp, *line, pat_len) && g_hist->nb_line < \
+				g_hist->total_lines)
+			tmp = next_hist();
+		*line = tmp;
+		tmp = NULL;
 	}
-	g_hist_lookup_value = c.value;
-	set_prompt(prompt);
-	free(prompt);
-	if (i != 0 || tmp[0])
-	{
-		free(g_line.line);
-		if (!(g_line.line = (char *)ft_memalloc(sizeof(char) * g_line.size_buf)))
-			ft_printf("./21sh: cannot allocate memory\n");
-		g_line.line = ft_memcpy(g_line.line, tmp, ft_strlen(tmp));
-		g_line.len = ft_strlen(tmp);
-		g_dis.cbpos = g_line.len;
-	}
-	update_line();
-	return ;
+	return (tmp);
 }
 
 char *get_matching_hist(char **line, char *patern)
