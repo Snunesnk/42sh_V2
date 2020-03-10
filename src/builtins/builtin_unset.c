@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 15:40:13 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:38:31 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void		del_elem(void *content, size_t content_size)
 
 static char		**get_name_tab(int ac, char **av)
 {
-	char	*error;
+	char	*err;
 	char	**tab;
 	size_t	i;
 
@@ -51,8 +51,8 @@ static char		**get_name_tab(int ac, char **av)
 		{
 			if (ft_strchr(av[i], '=') != NULL)
 			{
-				ft_asprintf(&error, "unset: `%s': not a valid identifier", av[i]);
-				ft_putendl_fd(error, 2);
+				ft_asprintf(&err, "unset: `%s': not a valid identifier", av[i]);
+				ft_putendl_fd(err, 2);
 				break ;
 			}
 			else
@@ -85,19 +85,29 @@ static int		match_name(char *var_name, char **name)
 	return (ret);
 }
 
+static void		remove_first_var(char **name)
+{
+	extern t_list	*g_env;
+	t_list			*head;
+
+	head = g_env;
+	while (g_env != NULL && match_name(((t_shell_var*)(g_env->content))->name,
+		name) == TRUE)
+	{
+		head = g_env->next;
+		ft_lstdelone(&g_env, &del_elem);
+		g_env = head;
+	}
+}
+
 static void		unset_var(char **name)
 {
 	extern t_list	*g_env;
 	t_list			*head;
 	t_list			*tmp;
 
+	remove_first_var(name);
 	head = g_env;
-	while (g_env != NULL && match_name(((t_shell_var*)(g_env->content))->name, name) == TRUE)
-	{
-		head = g_env->next;
-		ft_lstdelone(&g_env, &del_elem);
-		g_env = head;
-	}
 	tmp = g_env;
 	g_env = g_env->next;
 	while (g_env != NULL)
