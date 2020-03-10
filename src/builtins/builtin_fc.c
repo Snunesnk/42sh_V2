@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/09 19:46:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 15:46:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static int	parse_fc_option(char ***args)
 	int	opt_list;
 
 	opt_list = 0;
-	opt_list |= FC_N_OPTION;
 	while ((opt = get_next_opt(args, "e:lnrs")) != -1)
 	{
 		if (opt == 'n')
@@ -145,7 +144,8 @@ int			cmd_fc(int argc, char **argv)
 		return (e_invalid_input);
 	args = argv + 1;
 	g_builtin_name = argv[0];
-	opt_list = parse_fc_option(&args);
+	if ((opt_list = parse_fc_option(&args)) == 2)
+		return (e_invalid_input);
 	if (g_needed_arg && g_needed_arg[0] == '-' && g_needed_arg[1] == '\0')
 		opt_list |= FC_S_OPTION;
 	if (opt_list & FC_S_OPTION)

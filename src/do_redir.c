@@ -32,20 +32,27 @@ static int	valid_fd(int fd, int open)
 	return (0);
 }
 
-/* Seems ok */
-static int	do_iowrite(t_redirection *r)
+static int	check_if_directory(char *filename)
 {
 	struct stat     buf;
-
+	
 	buf = (struct stat){.st_mode = 0};
-	if (stat(r->redirectee.filename, &buf))
+	if (stat(filename, &buf))
 		return (e_system_call_error);
 	if (S_ISDIR(buf.st_mode))
 	{
-		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+		psherror(e_is_a_directory, filename, e_cmd_type);
 		return (e_is_a_directory);
 	}
-	if (access(r->redirectee.filename, F_OK))
+	return (0);
+}
+
+/* Seems ok */
+static int	do_iowrite(t_redirection *r)
+{
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
+		return (e_is_a_directory);
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
@@ -55,7 +62,9 @@ static int	do_iowrite(t_redirection *r)
 		return (e_permission_denied);
 	}
 	else /* File exists and rights to write */
+	{
 		r->redirectee.dest = open(r->redirectee.filename, O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	}
 	if (r->redirectee.dest < 0)
 	{ /* Open error */
 		psherror(e_system_call_error, "open(2)", e_cmd_type);
@@ -76,17 +85,9 @@ static int	do_iowrite(t_redirection *r)
 /* Seems ok */
 static int	do_iocat(t_redirection *r)
 {
-	struct stat     buf;
-
-	buf = (struct stat){.st_mode = 0};
-	if (stat(r->redirectee.filename, &buf))
-		return (e_system_call_error);
-	if (S_ISDIR(buf.st_mode))
-	{
-		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
 		return (e_is_a_directory);
-	}
-	if (access(r->redirectee.filename, F_OK))
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}
@@ -117,19 +118,11 @@ static int	do_iocat(t_redirection *r)
 /* Seems ok */
 static int	do_ioread(t_redirection *r)
 {
-	struct stat     buf;
-
-	buf = (struct stat){.st_mode = 0};
-	if (valid_fd(r->redirectee.dest, 0))
-		return (e_bad_file_descriptor);
-	if (stat(r->redirector.filename, &buf)) /* Optional for read, not default behavior */
-		return (e_system_call_error);
-	if (S_ISDIR(buf.st_mode))
-	{
-		psherror(e_is_a_directory, r->redirector.filename, e_cmd_type);
+	if (check_if_directory(r->redirector.filename) == e_is_a_directory)
 		return (e_is_a_directory);
-	}
-	if (access(r->redirector.filename, F_OK))
+	else if (valid_fd(r->redirectee.dest, 0))
+		return (e_bad_file_descriptor);
+	else if (access(r->redirector.filename, F_OK))
 	{
 		psherror(e_no_such_file_or_directory, r->redirector.filename, e_cmd_type);
 		return (e_no_such_file_or_directory);
@@ -169,18 +162,9 @@ static int	do_iohere(t_redirection *r)
 
 static int	do_iodfile(t_redirection *r)
 {
-	struct stat     buf;
-
-	buf = (struct stat){.st_mode = 0};
-	if (stat(r->redirectee.filename, &buf))
-		return (e_system_call_error);
-	if (S_ISDIR(buf.st_mode))
-	{
-		psherror(e_is_a_directory, r->redirectee.filename, e_cmd_type);
+	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
 		return (e_is_a_directory);
-	}
-	/* Open file */
-	if (access(r->redirectee.filename, F_OK))
+	else if (access(r->redirectee.filename, F_OK))
 	{ /* File does not exists so attempt to create it */
 		r->redirectee.dest = open(r->redirectee.filename, O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	}

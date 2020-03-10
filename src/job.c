@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/05 15:40:14 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:54:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 void	free_all_processes(t_process *p)
 {
 	t_process	*next_p;
+
 	while (p)
 	{
 		next_p = p->next;
@@ -32,6 +33,7 @@ void	free_job(t_job *j) /* Free a given job in the job queue */
 
 	if (j == first_job)
 	{
+		free_all_processes(j->first_process);
 		free(j);
 		first_job = NULL;
 	}
@@ -137,6 +139,8 @@ int	launch_job(t_job *j, int foreground)
 
 
 	if (!shell_is_interactive)
+		wait_for_job(j);
+	else if (g_subshell)
 		wait_for_job(j);
 	else if (foreground)
 		put_job_in_foreground(j, 0);

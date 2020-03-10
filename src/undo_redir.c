@@ -53,6 +53,25 @@ static void	free_restored_fd(t_shell_fds *l)
 	}
 }
 
+void	free_redirections(t_redirection *r)
+{
+	if (r)
+	{
+		free_redirections(r->next);
+		if (r->here_doc_eof)
+			free(r->here_doc_eof);
+		if (r->redirector.filename)
+			free(r->redirector.filename);
+		if (r->redirector.hereword)
+			free(r->redirector.hereword);
+		if (r->redirectee.filename)
+			free(r->redirectee.filename);
+		if (r->redirectee.hereword)
+			free(r->redirectee.hereword);
+		free(r);
+	}
+}
+
 static int	undo_iowrite(t_redirection *r, t_shell_fds **shell_fd)
 {
 	if (!restored_fd(*shell_fd, r->redirector.dest))
@@ -146,6 +165,7 @@ int	undo_redirection(t_redirection *r)
 	if (r)
 	{
 		undo_redirection_internal(r);
+	//	free_redirections(r);
 	//	free_restored_fd((t_shell_fds*)r);
 		/* should we free at that point ? think so */
 	}
