@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:14:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:36:33 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void kill_line(void)
+void	kill_line(void)
 {
 	write(STDOUT_FILENO, "^C", 2);
 	ft_bzero(g_line.line, g_line.size_buf);
@@ -26,7 +26,7 @@ void kill_line(void)
 	update_line();
 }
 
-void rl_insert(int c)
+void	rl_insert(int c)
 {
 	char s[1];
 
@@ -34,7 +34,7 @@ void rl_insert(int c)
 	insert_text(s, 1);
 }
 
-void cursor_l(void)
+void	cursor_l(void)
 {
 	if (g_dis.cbpos > 0)
 	{
@@ -55,7 +55,7 @@ void cursor_l(void)
 	}
 }
 
-void cursor_r(void)
+void	cursor_r(void)
 {
 	if (g_dis.cbpos < g_line.len)
 	{
@@ -76,7 +76,7 @@ void cursor_r(void)
 	}
 }
 
-void cursor_d(void)
+void	cursor_d(void)
 {
 	int len_last_line;
 
