@@ -6,25 +6,21 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:44:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:07:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-int	g_hist_lookup_value = 1;
+int	g_hist_lookup = 0;
 
 static void	readline_internal_keys(union u_buffer c, char **value)
 {
 	while (c.value)
 	{
-		if (g_hist_lookup_value == 1)
-			c = read_key();
-		else
-		{
-			c.value = g_hist_lookup_value;
-			g_hist_lookup_value = 1;
-		}
+		c = read_key();
+		if (g_hist_lookup)
+			hist_lookup(c);
 		if (enter_rc(c))
 			return ;
 		if (isstdkey(c.value))
