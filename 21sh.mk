@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 19:00:20 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 19:06:55 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SOURCES :=	main.c \
 		init_enum_tab.c \
 		job.c \
 		job_control.c \
+		job_control2.c \
 		job_bookeeping.c \
 		launch_builtin.c \
 		launch_lexer_parser.c \
