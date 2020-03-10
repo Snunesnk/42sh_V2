@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/05 14:21:08 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/10 11:39:49 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SOURCES :=	main.c \
 		job.c \
 		job_control.c \
 		launch_builtin.c \
+		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
 		only_assignments.c \
@@ -93,7 +94,7 @@ OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/
+INCLUDES := -I./includes/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
