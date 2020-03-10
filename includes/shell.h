@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 16:59:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:36:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,11 @@ int execute_and(t_ast *node, int foreground);
 int execute_andand(t_ast *node, int foreground);
 int execute_or(t_ast *node, int foreground);
 int execute_node(t_ast *node, int foreground);
+int     get_argc(t_list *lst, int argc, t_token *t);
+int     is_redir_type(int type);
+char    *get_tokvalue(t_list *lst);
+int     get_tokentype(t_list *lst);
+
 
 extern int	g_retval;
 
