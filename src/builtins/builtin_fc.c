@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 19:19:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 20:43:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	parse_fc_option(char ***args)
 			opt_list |= FC_E_OPTION;
 		else
 		{
-			ft_dprintf(STDERR_FILENO, "%1$s: usage: %1$s [-e ename] [-lnr] " \
-				"[first] [last] or fc -s [pat=rep] [command]\n", g_builtin_name);
-			return (2);
+			if (fc_invalid_input(**args))
+				return (2);
+			break ;
 		}
 	}
 	return (opt_list);

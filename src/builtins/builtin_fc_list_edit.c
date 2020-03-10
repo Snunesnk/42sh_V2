@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 19:25:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 21:01:12 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,6 @@ char		*get_editor(int opt_list, char **args)
 		return (NULL);
 	}
 	return (editor);
-}
-
-void		get_hist_num(char **args, int opt_list, int *hist_end, int *hist_beg)
-{
-	char	*tmp;
-	int		sign;
-
-	sign = (**args == '-') ? -1 : 1;
-	if (sign < 0)
-		*args += 1;
-	tmp = prev_hist();
-	tmp = prev_hist();
-	if (!(get_beg_matching_hist(&tmp, *args)))
-		*hist_beg = -1;
-	else
-		*hist_beg = g_hist->nb_line;
-	while (g_hist->nb_line < g_hist->total_lines)
-		next_hist();
-	args += 1;
-	if (*args)
-	{
-		if (!(get_beg_matching_hist(&tmp, *args)))
-			*hist_end = -1;
-		else
-			*hist_end = g_hist->nb_line;
-		while (g_hist->nb_line < g_hist->total_lines)
-			next_hist();
-	}
-	else
-		*hist_end = (opt_list & FC_L_OPTION) ? g_hist->total_lines - 1 : *hist_beg;
 }
 
 void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
@@ -106,6 +76,8 @@ int			exec_fc_other_opt(int opt_list, char **args)
 	int		status;
 
 	status = 0;
+	hist_end = -1;
+	hist_beg = -1;
 	if (g_hist->used == 0)
 		return (0);
 	if (!(editor = get_editor(opt_list, args)))
