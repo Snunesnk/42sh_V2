@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/12 13:12:01 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:19:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 128, "resource temporarily unavailable" }
 };
 
-void	psherror(int e_error, char *str, int e_message_type)
+int	psherror(int e_error, char *str, int e_message_type)
 {
 	if (e_message_type == e_parsing_type)
 	{
@@ -54,4 +54,5 @@ void	psherror(int e_error, char *str, int e_message_type)
 		ft_dprintf(STDERR_FILENO, "%s: %s\n", \
 				g_progname, g_errordesc[e_error].message);
 	}
+	return (e_error);
 }
