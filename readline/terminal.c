@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 13:27:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:01:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ struct s_term g_term =
 
 const struct s_termcaps_string g_tc_strings[] =
 {
-	{"DO", &g_termcaps.DO},
-	{"UP", &g_termcaps.UP},
+	{"DO", &g_termcaps.gdo},
+	{"UP", &g_termcaps.gup},
 	{"bl", &g_termcaps.bl},
 	{"cd", &g_termcaps.cd},
 	{"ce", &g_termcaps.clreol},
