@@ -6,13 +6,13 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 20:48:47 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 21:47:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void		free_substitute(t_sub *substitute)
+void	free_substitute(t_sub *substitute)
 {
 	t_sub	*tmp;
 
@@ -26,7 +26,7 @@ void		free_substitute(t_sub *substitute)
 	}
 }
 
-void		fc_replace_last_hist(char *tmp)
+void	fc_replace_last_hist(char *tmp)
 {
 	unsigned int	i;
 
@@ -44,26 +44,24 @@ void		fc_replace_last_hist(char *tmp)
 		add_hentry(tmp, 1);
 }
 
-char		*ft_strreplace(char **str, char *pattern, char *replacement)
+char	*ft_strreplace(char **str, char *pattern, char *replacement)
 {
 	char	*tmp;
-	int		nb_occur;
+	int		found;
 	int		pat_len;
 	int		rep_len;
-	int		str_len;
 
 	tmp = *str;
-	nb_occur = 0;
+	found = 0;
 	pat_len = (int)ft_strlen(pattern);
 	rep_len = (int)ft_strlen(replacement);
-	str_len = (int)ft_strlen(*str);
 	while ((tmp = ft_strstr(tmp, pattern)))
 	{
-		nb_occur++;
+		found++;
 		tmp += pat_len;
 	}
-	if (pat_len < rep_len && !(*str = ft_memrealloc((void **)str, str_len, \
-					str_len + ((rep_len - pat_len) * nb_occur) + 1)))
+	if (pat_len < rep_len && !(*str = ft_memrealloc((void **)str, \
+		ft_strlen(*str), ft_strlen(*str) + ((rep_len - pat_len) * found) + 1)))
 		return (NULL);
 	tmp = *str;
 	while ((tmp = ft_strstr(tmp, pattern)))
