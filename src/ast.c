@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 14:59:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:20:33 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static t_list	*remove_border(t_list **lst)
 	return (next);
 }
 
-static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
+static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst, enum e_token type)
 {
 	t_ast	*new_ast;
 	t_list	*tmp;
@@ -91,7 +91,7 @@ static int		new_node_ast(t_ast **ast, t_list *head, t_list **lst)
 	process = (*lst)->next;
 	if (process != NULL)
 		tmp = process->next;
-	new_ast = astnew(NULL, ((t_token*)(process->content))->type);
+	new_ast = astnew(NULL, type);
 	if (new_ast == NULL)
 		return (FAILURE);
 	(*lst)->next = NULL;
@@ -120,7 +120,7 @@ int				build_ast(t_ast **ast, t_list *lst)
 		{
 			if (lst == NULL)
 				tmp = NULL;
-			if (new_node_ast(ast, head, &tmp) == FAILURE)
+			if (new_node_ast(ast, head, &tmp, type) == FAILURE)
 				return (FAILURE);
 			head = tmp;
 			lst = head;

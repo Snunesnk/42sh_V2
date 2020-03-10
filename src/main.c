@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 15:23:06 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:20:32 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,10 @@ void	astdel(t_ast **ast)
 int			main(int argc, char **argv)
 {
 	t_ast			*ast;
-	t_list			*lst;
 	char			*input;
 	volatile int	status;
 
 	(void)argc;
-	(void)argv;
 	status = 0;
 	g_progname = argv[0];
 	if (init_shell())
@@ -67,18 +65,10 @@ int			main(int argc, char **argv)
 			break ;
 		}
 		ast = NULL;
-		lst = NULL;
-		lexer(input, &lst);
-		if (lst != NULL)
+		if (launch_lexer_parser(input, &ast) == SUCCESS)
 		{
 		//	expansions(ast);
-	//		debug(lst);
-			if (parser(lst) != FAILURE)
-			{
-				build_ast(&ast, lst);
-	//			debug_ast(ast);
-				status = execute_node(ast, 1); /* to capture */
-			}
+			status = execute_node(ast, 1); /* to capture */
 		}
 		astdel(&ast);
 		ft_strdel(&input);
