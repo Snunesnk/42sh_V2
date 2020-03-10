@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 20:49:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 21:38:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void			get_hist_num(char **args, int options_list, int *hist_end, \
 				int *hist_beg);
 int				fc_invalid_input(char *args);
 void			print_error(char *usage, char option, int mode);
+int				exec_fc_s_opt(char **args);
 
 /*
 ** Global var util for get_next_opt
