@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 14:44:26 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/10 16:26:29 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SOURCES :=	main.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
+		export_utils.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
@@ -45,6 +46,7 @@ SOURCES :=	main.c \
 		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
+		manage_shell_var.c \
 		new_node_ast.c \
 		only_assignments.c \
 		parameter_expansions.c \
