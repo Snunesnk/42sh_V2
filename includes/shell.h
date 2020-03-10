@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 15:54:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 16:37:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,7 @@ void			del(void *content, size_t content_size);
 void			del_env(void *content, size_t content_size);
 int				execute_job(t_list *lst, int foreground);
 int				execute_node(t_ast *node, int foreground);
+int				add_var(char **av);
 int				ft_atoifd(const char *str);
 void			ft_free_tab(int ac, char **av);
 int				ft_ismeta(int c);
@@ -281,6 +282,7 @@ int				get_next_token(const char *str, t_token *token,
 					enum e_token *last_token_type);
 t_list			*get_shell_var(char *name);
 int				get_stdin(char **line);
+t_list			*get_shell_var(char *name);
 size_t			get_word(const char *str, t_token *token,
 					enum e_token *last_token_type);
 enum e_token	**init_enum_tab(void);
