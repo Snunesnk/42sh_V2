@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 16:22:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:29:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static int	do_iowrite(t_redirection *r)
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied, r->redirectee.filename, e_cmd_type));
+		return (psherror(e_permission_denied,
+					r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -78,7 +79,8 @@ static int	do_iocat(t_redirection *r)
 		r->redirectee.dest = open(r->redirectee.filename,
 		O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied, r->redirectee.filename, e_cmd_type));
+		return (psherror(e_permission_denied,
+						r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -106,8 +108,11 @@ static int	do_ioread(t_redirection *r)
 		return (psherror(e_no_such_file_or_directory,
 				r->redirector.filename, e_cmd_type));
 	else if (access(r->redirector.filename, R_OK))
-		return (psherror(e_permission_denied, r->redirector.filename, e_cmd_type));
-	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
+	{
+		return (psherror(e_permission_denied,
+					r->redirector.filename, e_cmd_type));
+	}
+	r->redirector.des = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
@@ -135,7 +140,8 @@ static int	do_iodfile(t_redirection *r)
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied, r->redirectee.filename, e_cmd_type));
+		return (psherror(e_permission_denied,
+					r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -160,7 +166,8 @@ static int	do_iodread(t_redirection *r)
 		close(r->redirectee.dest);
 	}
 	else if (r->flags & FILENAME)
-		return (psherror(e_ambiguous_redirect, r->redirector.filename, e_cmd_type));
+		return (psherror(e_ambiguous_redirect,
+					r->redirector.filename, e_cmd_type));
 	else if (r->flags & DEST)
 	{
 		if (valid_fd(r->redirector.dest, 1))
@@ -177,7 +184,8 @@ static int	do_iodread(t_redirection *r)
 static int	do_iodup(t_redirection *r)
 {
 	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
-		return (psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type));
+		return (psherror(e_ambiguous_redirect,
+					r->redirectee.filename, e_cmd_type));
 	else if (r->flags & FILENAME)
 		return (do_iodfile(r));
 	else if (r->flags & DEST)
