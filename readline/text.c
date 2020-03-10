@@ -90,7 +90,7 @@ void kill_line(void)
 	g_line.len = 0;
 	g_cursor.c_pos = 0;
 	if (g_cursor.v_pos != g_dis.botl)
-		ft_putstr(tgoto(g_termcaps.DO, 0, g_dis.botl - g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gdo, 0, g_dis.botl - g_cursor.v_pos));
 	g_cursor.v_pos = 0;
 	write(STDOUT_FILENO, "\n", 1);
 	update_line();
@@ -318,7 +318,7 @@ void rl_home(void)
 		ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
 	if (g_cursor.v_pos > 0)
 	{
-		ft_putstr(tgoto(g_termcaps.UP, 0, g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
 		g_cursor.v_pos = 0;
 	}
 	g_dis.cbpos = 0;
@@ -336,7 +336,7 @@ void rl_end(void)
 	}
 	if (g_cursor.v_pos != g_dis.botl)
 	{
-		ft_putstr(tgoto(g_termcaps.DO, 0, g_dis.botl - g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gdo, 0, g_dis.botl - g_cursor.v_pos));
 		g_dis.cbpos = g_line.len;
 		g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;
 	}

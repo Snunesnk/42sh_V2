@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:11:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:00:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void		update_line(void)
 {
 	ft_putstr(tgoto(g_termcaps.ch, 0, 0));
 	if (g_cursor.v_pos > 0)
-		ft_putstr(tgoto(g_termcaps.UP, 0, g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
 	ft_putstr(g_termcaps.cd);
 	g_dis.botl = (g_dis.prompt_l + g_line.len) / g_sc.w;
 	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
@@ -91,7 +91,7 @@ void		update_line(void)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
 	if (g_dis.botl - g_cursor.v_pos)
-		ft_putstr(tgoto(g_termcaps.UP, 0, g_dis.botl - g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gup, 0, g_dis.botl - g_cursor.v_pos));
 }
 
 void		redisplay_after_sigwinch(void)
@@ -106,7 +106,7 @@ void		redisplay_after_sigwinch(void)
 	if ((g_dis.prompt_l + g_line.len) % g_sc.w == 0)
 		--g_cursor.v_pos;
 	if (g_cursor.v_pos > 0)
-		ft_putstr(tgoto(g_termcaps.UP, 0, g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
 	ft_putstr(g_termcaps.cd);
 	if (g_cursor.v_pos < 0)
 		g_cursor.v_pos = 0;
@@ -115,7 +115,7 @@ void		redisplay_after_sigwinch(void)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
 	if (g_dis.botl - g_cursor.v_pos)
-		ft_putstr(tgoto(g_termcaps.UP, 0, g_dis.botl - g_cursor.v_pos));
+		ft_putstr(tgoto(g_termcaps.gup, 0, g_dis.botl - g_cursor.v_pos));
 	if (g_cursor.c_pos == g_sc.w)
 	{
 		g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
