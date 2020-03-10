@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 16:37:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:59:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,14 @@ int				set_minimal_env(void);
 int				treat_shell_variables(t_process *p, int	opt);
 int				treat_single_exp(char **str, int tilde);
 int				treat_expansions(int argc, char **argv);
+
+int execute_pipeline(t_ast *node, int foreground);
+int execute_semi(t_ast *node, int foreground);
+int execute_subshell(t_ast *node, int foreground);
+int execute_and(t_ast *node, int foreground);
+int execute_andand(t_ast *node, int foreground);
+int execute_or(t_ast *node, int foreground);
+int execute_node(t_ast *node, int foreground);
 
 extern int	g_retval;
 
