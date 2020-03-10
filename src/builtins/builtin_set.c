@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 08:43:28 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:31:40 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	print_set(t_list *env, t_list **elem)
 	*elem = ft_lstnew(tmp, ft_strlen(tmp));
 }
 
-int		cmd_set(int ac, char **av)
+int			cmd_set(int ac, char **av)
 {
 	extern t_list	*g_env;
 

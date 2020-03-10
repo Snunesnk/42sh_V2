@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 15:31:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:48:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,11 @@ static int	check_access(char *arg)
 
 	ret = e_success;
 	if ((ret = access(arg, X_OK)))
-	{
-		psherror(e_permission_denied, arg, e_cmd_type);
-		return (e_permission_denied);
-	}
+		return (psherror(e_permission_denied, arg, e_cmd_type));
 	return (e_success);
 }
 
-static int 	check_type(char *pathname)
+static int	check_type(char *pathname)
 {
 	struct stat	buf;
 
@@ -54,14 +51,9 @@ static int	builtin_keyword_exec(char **argv)
 
 	ret = e_success;
 	if (argv[1] && (ret = builtins_dispatcher(&argv[1])) != e_command_not_found)
-	{
 		return (ret);
-	}
 	else
-	{
-		psherror(e_no_builtin, argv[1], e_cmd_type);
-		return (g_errordesc[e_no_builtin].code);
-	}
+		return (g_errordesc[psherror(e_no_builtin, argv[1], e_cmd_type)].code);
 }
 
 static int	process_execve(char **argv, char **envp, char *pathname)
@@ -76,11 +68,10 @@ static int	process_execve(char **argv, char **envp, char *pathname)
 	exit(ret);
 }
 
-int	execute_process(char **argv, char **envp)
+int			execute_process(char **argv, char **envp,
+		t_hash_table *tmp, char *pathname)
 {
-	t_hash_table	*tmp;
 	int				ret;
-	char			*pathname;
 
 	if (!*argv)
 		return (0);
@@ -95,20 +86,14 @@ int	execute_process(char **argv, char **envp)
 	else if (ret != e_command_not_found)
 	{
 		ft_memdel((void**)&pathname);
-		psherror(ret, argv[0], e_cmd_type);
-		return (g_errordesc[ret].code);
+		return (g_errordesc[psherror(ret, argv[0], e_cmd_type)].code);
 	}
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (path_concat(&pathname) == e_command_not_found)
-	{
-	/*	ft_memdel((void**)&pathname);
-	*/	psherror(e_command_not_found, argv[0], e_cmd_type);
-		return (g_errordesc[ret].code);
-	}
+		return (g_errordesc[psherror(e_command_not_found, argv[0], e_cmd_type)].code);
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
-	psherror(e_command_not_found, argv[0], e_cmd_type);
-	return (e_command_not_found);
+	return (psherror(e_command_not_found, argv[0], e_cmd_type));
 }

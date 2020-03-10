@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 17:31:27 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 19:00:20 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,9 +21,13 @@ SOURCES :=	main.c \
 		debug.c \
 		debug_ast.c \
 		do_redir.c \
+		do_redir2.c \
+		do_redir3.c \
 		error.c \
 		execute_ast.c \
+		execute_ast2.c \
 		execute_job.c \
+		execute_job2.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
@@ -39,9 +43,9 @@ SOURCES :=	main.c \
 		hash_table_utils.c \
 		init_shell.c \
 		init_enum_tab.c \
-		input.c \
 		job.c \
 		job_control.c \
+		job_bookeeping.c \
 		launch_builtin.c \
 		launch_lexer_parser.c \
 		lexer.c \

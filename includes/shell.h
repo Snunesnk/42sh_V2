@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 16:37:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 19:01:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void    continue_job(t_job *j, int foreground);
 void    free_job(t_job *j);
 int		launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
 void	free_process(t_process *p);
-int     execute_process(char **argv, char **envp);
+int     execute_process(char **argv, char **envp, t_hash_table *tmp, char *pathname);
 void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
@@ -196,6 +196,17 @@ int				do_redirection(t_redirection *r);
 int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
 void    free_redirections(t_redirection *r);
+
+int valid_fd(int fd, int open);
+int check_if_directory(char *filename);
+int do_iowrite(t_redirection *r);
+int do_iocat(t_redirection *r);
+int do_ioread(t_redirection *r);
+int do_iohere(t_redirection *r);
+int do_iodfile(t_redirection *r);
+int do_iodread(t_redirection *r);
+int do_iodup(t_redirection *r);
+int do_redirection(t_redirection *r);
 
 extern char	*g_filename_redir_error;
 
@@ -300,6 +311,19 @@ int				set_minimal_env(void);
 int				treat_shell_variables(t_process *p, int	opt);
 int				treat_single_exp(char **str, int tilde);
 int				treat_expansions(int argc, char **argv);
+
+int execute_pipeline(t_ast *node, int foreground);
+int execute_semi(t_ast *node, int foreground);
+int execute_subshell(t_ast *node, int foreground);
+int execute_and(t_ast *node, int foreground);
+int execute_andand(t_ast *node, int foreground);
+int execute_or(t_ast *node, int foreground);
+int execute_node(t_ast *node, int foreground);
+int     get_argc(t_list *lst, int argc, t_token *t);
+int     is_redir_type(int type);
+char    *get_tokvalue(t_list *lst);
+int     get_tokentype(t_list *lst);
+
 
 extern int	g_retval;
 
