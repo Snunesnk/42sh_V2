@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 17:20:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 11:57:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,18 @@
 extern struct s_keymap_entry	*g_keymap;
 
 void	bind_keys(struct s_keymap_entry *keymap);
-
 void	cut_prev_wd(void);
 void	clear_befline(void);
-void    paste_via_input(unsigned long v);
+void	paste_via_input(unsigned long v);
 void	clip_paste(void);
 void	wd_right(void);
 void	wd_left(void);
 void	clear_scr(void);
 void	clear_eol(void);
 void	autocomplete(void);
-void    rl_home(void);
-void    rl_void(void);
-void    rl_end(void);
+void	rl_home(void);
+void	rl_void(void);
+void	rl_end(void);
 void	rl_delete(void);
 void	rl_backspace(void);
 void	rl_insert(int c);
