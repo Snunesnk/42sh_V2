@@ -74,7 +74,7 @@ struct	s_shell_fds
 };
 
 /* Union containing Descriptor or filename */
-typedef union
+typedef struct s_redirectee
 {
 	int		dest;         /* Place to redirect to or .... */
 	char	*filename;    /* filename to redirect to or ... */
@@ -193,6 +193,7 @@ char			*get_tokvalue(t_list *lst);
 int				do_redirection(t_redirection *r);
 int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
+void    free_redirections(t_redirection *r);
 
 extern char	*g_filename_redir_error;
 

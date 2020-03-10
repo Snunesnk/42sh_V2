@@ -29,25 +29,27 @@ static t_redirection	*parse_redirection(t_list **lst)
 	return (set_redirection(lst, io_nb));
 }
 
+/* Super bad algo... a do {} while() would have been way better */
 t_redirection	*build_redirections(t_list **lst)
 {
 	t_redirection	*r;
 	t_redirection	**n;
 
-	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END
-		&& get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
+	while (*lst && get_tokentype(*lst) != PIPE && get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
 		(*lst) = (*lst)->next;
-	r = parse_redirection(lst);
+	if (*lst)
+		r = parse_redirection(lst);
+	else
+		return (NULL);
 	if (r)
 		n = &(r->next);
-	while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END)
+	while (*lst && get_tokentype(*lst) != PIPE)
 	{
-		while (get_tokentype(*lst) != PIPE && get_tokentype(*lst) != END
-			&& get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
+		while (*lst && get_tokentype(*lst) != PIPE && get_tokentype(*lst) != IO_NB && !is_redir_type(get_tokentype(*lst)))
 			(*lst) = (*lst)->next;
- 		if (get_tokentype(*lst) == IO_NB || is_redir_type(get_tokentype(*lst)))
+ 		if (*lst && (get_tokentype(*lst) == IO_NB || is_redir_type(get_tokentype(*lst))))
 		{
-			while (has_redirections(get_tokentype(*lst)))
+			while (*lst && has_redirections(get_tokentype(*lst)))
 			{
 				*n = parse_redirection(lst);
 				if (*n)
