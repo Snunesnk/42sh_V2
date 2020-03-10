@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 15:32:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:44:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 
 	/* Exec the new process. Make sure we exit */
 	/* Check access, etc... and send value to exit if error launching of if builtin */
-	ret = execute_process(p->argv, envp);
+	ret = execute_process(p->argv, envp, NULL, NULL);
 	free_process(p);
 	exit(ret);
 }
