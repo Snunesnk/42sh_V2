@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 17:06:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 17:37:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	parent_shell(int foreground, pid_t pid)
 	}
 	else
 	{
-		ft_printf("HEELLLOOO\n");
 		j = (t_job*)ft_memalloc(sizeof(t_job));
 		j->pgid = pid;
 		j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
