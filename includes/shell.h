@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 11:15:16 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 12:18:49 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ char	**get_env_tab(void);
 int		get_next_token(const char *str, t_token *token, enum e_token *last_token_type);
 t_list	*get_shell_var(char *name);
 int		get_stdin(char **line);
+size_t	get_word(const char *str, t_token *token, enum e_token *last_token_type);
 int		initialize_prompt_fd(void);
 int		launch_lexer_parser(char *input, t_ast **ast);
 int		lexer(char* str, t_list **lst);
