@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 13:27:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:01:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 struct	s_termcaps
 {
-	char	*DO;
-	char	*UP;
+	char	*gdo;
+	char	*gup;
 	char	*bl;
 	char	*cd;
 	char	*clreol;
