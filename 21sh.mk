@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 19:44:43 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 21:39:21 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ SOURCES :=	main.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
+		builtins/builtin_fc_s_opt.c \
 		builtins/builtin_fc_utils.c \
 		builtins/builtin_fc_hist_num.c \
 		builtins/builtin_bg.c \
