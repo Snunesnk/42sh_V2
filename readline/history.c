@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   history.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
+/*   Updated: 2020/03/10 19:36:51 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
 struct s_hist	*g_hist = NULL;
 char		*g_vline = NULL;
 char		*g_hist_loc = NULL;
 
-void		init_history(void)
+void	init_history(void)
 {
 	char	buf[10000];
 	int		fd;
@@ -33,7 +45,7 @@ void		init_history(void)
 	close(fd);
 }
 
-void		remove_nl(void)
+void	remove_nl(void)
 {
 	unsigned int	i;
 
@@ -49,10 +61,10 @@ void		remove_nl(void)
 		}
 		i++;
 	}
-	g_hist->total_lines -= 1; /*remove 1 because of increased in add_hentry */
+	g_hist->total_lines -= 1;
 }
 
-void		get_history_loc(void)
+void	get_history_loc(void)
 {
 	char	*user_home;
 
@@ -74,7 +86,7 @@ void		get_history_loc(void)
 	}
 }
 
-void		add_hentry(const char *buf, int mode)
+void	add_hentry(const char *buf, int mode)
 {
 	int	size;
 
@@ -83,7 +95,7 @@ void		add_hentry(const char *buf, int mode)
 	{
 		if (!g_hist->capacity)
 			g_hist->capacity = 1;
-		if (!(g_hist->history_content = (char *)ft_memrealloc( \
+		if (!(g_hist->history_content = (char *)ft_memrealloc(\
 						(void **)&(g_hist->history_content), g_hist->used, \
 						sizeof(char) * (g_hist->capacity + size) * 3)))
 		{
@@ -97,61 +109,6 @@ void		add_hentry(const char *buf, int mode)
 	g_hist->offset = g_hist->used - 1;
 	g_hist->total_lines += 1;
 	g_hist->nb_line = g_hist->total_lines;
-}
-
-char	*prev_hist(void)
-{
-	int	align;
-
-	align = 1;
-	if (!g_hist || !g_hist->history_content)
-		return (NULL);
-	if (g_hist->offset > 0 && !g_hist->history_content[g_hist->offset])
-		g_hist->offset -= 1;
-	while (g_hist->offset > 0 && g_hist->history_content[g_hist->offset])
-		g_hist->offset -= 1;
-	if (g_hist->offset == 0)
-		align = 0;
-	if (g_hist->nb_line > 0)
-		g_hist->nb_line -= 1;
-	return (g_hist->history_content + g_hist->offset + align);
-}
-
-char	*next_hist(void)
-{
-	if (!g_hist->history_content[g_hist->offset] \
-			&& g_hist->offset + 1 < g_hist->used)
-		g_hist->offset++;
-	while (g_hist->history_content[g_hist->offset])
-		g_hist->offset++;
-	if (g_hist->history_content[g_hist->offset + 1])
-		g_hist->nb_line += 1;
-	return (g_hist->history_content + g_hist->offset + 1);
-
-}
-
-void	free_hist(void)
-{
-	int	fd;
-	unsigned int	i;
-
-	if ((fd = open(g_hist_loc, (O_WRONLY | O_CREAT | O_TRUNC), 0644)) < 0)
-		ft_printf("./21sh: cannot open %s\n", g_hist_loc);
-	else
-	{
-		i = 0;
-		while (i <= g_hist->used)
-		{
-			if (!g_hist->history_content[i])
-				g_hist->history_content[i] = '\n';
-			i++;
-		}
-		write(fd, g_hist->history_content, g_hist->used);
-		close(fd);
-	}
-	free(g_hist->history_content);
-	free(g_hist);
-	free(g_hist_loc);
 }
 
 void	*ft_memrealloc(void **content, size_t old_size, size_t new_size)

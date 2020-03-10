@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 19:06:55 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 19:34:38 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,7 @@ SOURCES :=	main.c \
 		../readline/history.c \
 		../readline/history_expand.c \
 		../readline/history_lookup.c \
+		../readline/history_utils.c \
 		../readline/init.c \
 		../readline/input.c \
 		../readline/quotes.c \

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 15:46:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 19:19:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ static int	parse_fc_option(char ***args)
 	}
 	return (opt_list);
 }
-
-
 
 t_sub		*init_sub(t_sub *prev_sub)
 {
