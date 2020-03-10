@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 17:18:42 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/10 18:48:36 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,9 +43,9 @@ SOURCES :=	main.c \
 		hash_table_utils.c \
 		init_shell.c \
 		init_enum_tab.c \
-		input.c \
 		job.c \
 		job_control.c \
+		job_bookeeping.c \
 		launch_builtin.c \
 		launch_lexer_parser.c \
 		lexer.c \
