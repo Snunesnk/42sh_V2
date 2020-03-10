@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:13:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:39:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void wd_left(void)
+void	wd_left(void)
 {
 	while (g_dis.cbpos > 0 && g_line.line[g_dis.cbpos - 1] == ' ')
 		cursor_l();
@@ -20,23 +20,21 @@ void wd_left(void)
 		cursor_l();
 }
 
-void clear_scr(void)
+void	clear_scr(void)
 {
 	ft_putstr(g_termcaps.clrpag);
 	update_line();
 }
 
-
-void rl_void(void)
+void	rl_void(void)
 {
 	ft_putstr(g_termcaps.bl);
-	return;
 }
 
-void paste_via_input(unsigned long v)
+void	paste_via_input(unsigned long v)
 {
-	union u_buffer u;
-	int len;
+	union u_buffer	u;
+	int				len;
 
 	len = 0;
 	u.value = v;
@@ -45,8 +43,7 @@ void paste_via_input(unsigned long v)
 	insert_text(&(u.buf[0]), len);
 }
 
-
-void clear_eol(void)
+void	clear_eol(void)
 {
 	if (g_dis.cbpos != g_line.len)
 	{

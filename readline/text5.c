@@ -6,18 +6,18 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:39:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void clip_paste(void)
+void	clip_paste(void)
 {
 	insert_text(g_clip.str, g_clip.l);
 }
 
-void clear_befline(void)
+void	clear_befline(void)
 {
 	if (g_dis.cbpos != 0)
 	{
@@ -34,7 +34,7 @@ void clear_befline(void)
 	}
 }
 
-void cut_prev_wd(void)
+void	cut_prev_wd(void)
 {
 	int start;
 

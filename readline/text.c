@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/10 14:16:27 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/10 14:35:45 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
-struct s_clipboard g_clip = { .str = NULL, .l = 0 };
-char *g_original_cmd;
-int g_full_completion = 1;
+struct s_clipboard	g_clip = { .str = NULL, .l = 0 };
+char				*g_original_cmd;
+int					g_full_completion = 1;
 
-void init_line_buffer(void)
+void		init_line_buffer(void)
 {
 	g_line.size_buf = 512;
 	g_line.line = (char*)malloc(sizeof(char) * g_line.size_buf);
@@ -13,10 +25,10 @@ void init_line_buffer(void)
 	g_line.len = 0;
 }
 
-static void l_expand(void)
+static void	l_expand(void)
 {
-	char *new;
-	size_t lold;
+	char	*new;
+	size_t	lold;
 
 	lold = g_line.size_buf;
 	g_line.size_buf = lold * 2;
@@ -27,7 +39,7 @@ static void l_expand(void)
 	g_line.line = new;
 }
 
-void insert_text(const char *string, int len)
+void		insert_text(const char *string, int len)
 {
 	while (len + g_line.len >= g_line.size_buf)
 		l_expand();
@@ -43,14 +55,14 @@ void insert_text(const char *string, int len)
 	update_line();
 }
 
-void rl_delete(void)
+void		rl_delete(void)
 {
 	if (g_dis.cbpos < g_line.len && g_line.len > 0)
 	{
 		if (g_line.line[g_dis.cbpos] && g_dis.cbpos <= g_line.len)
 		{
 			ft_memmove(&(g_line.line[g_dis.cbpos]),
-					&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
+				&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
 			g_line.line[g_line.len + 1] = '\0';
 			update_line();
 			--g_line.len;
@@ -64,7 +76,7 @@ void rl_delete(void)
 	}
 }
 
-void rl_backspace(void)
+void		rl_backspace(void)
 {
 	if (g_dis.cbpos > 0)
 	{
@@ -72,7 +84,7 @@ void rl_backspace(void)
 		if (g_line.line[g_dis.cbpos])
 		{
 			ft_memmove(&(g_line.line[g_dis.cbpos]),
-					&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
+				&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
 			g_line.line[g_line.len + 1] = '\0';
 		}
 		else
