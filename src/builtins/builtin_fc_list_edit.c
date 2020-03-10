@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 22:21:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 22:42:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,15 @@ void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 		prev_hist();
 	while ((opt_list & FC_R_OPTION) && hist_end < g_hist->nb_line)
 		prev_hist();
-	while ((g_hist->nb_line <= hist_end && !(opt_list & FC_R_OPTION)) \
-			|| (g_hist->nb_line >= hist_beg && (opt_list & FC_R_OPTION)))
+	while ((g_hist->nb_line < hist_end && !(opt_list & FC_R_OPTION)) \
+			|| (g_hist->nb_line > hist_beg && (opt_list & FC_R_OPTION)))
 	{
 		if (!(opt_list & FC_N_OPTION))
-			ft_dprintf(fd, "%d", g_hist->nb_line);
+			ft_dprintf(fd, "%d", g_hist->nb_line + !(opt_list & FC_R_OPTION));
 		if (opt_list & FC_L_OPTION)
 			ft_dprintf(fd, "\t");
-		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset + 1);
+		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset \
+				+ ((g_hist->offset == 0) ? 0 : 1));
 		if (!(opt_list & FC_R_OPTION))
 			next_hist();
 		else

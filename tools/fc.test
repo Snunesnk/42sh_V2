@@ -1,0 +1,6 @@
+echo "DO NOT FORGET TO ERASE BOTH ~/.bash_history AND ~/.21sh_history OR IT WILL MOST LIKELY FAIL DUE TO DIFFERENT HISTORIES"
+fc -l;
+ls; fc -l;
+fc -lr;
+fc -lrn;
+fc -ln;

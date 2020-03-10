@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 19:37:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 22:28:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*prev_hist(void)
 	align = 1;
 	if (!g_hist || !g_hist->history_content)
 		return (NULL);
+	if (g_hist->nb_line == 0)
+		return (g_hist->history_content);
 	if (g_hist->offset > 0 && !g_hist->history_content[g_hist->offset])
 		g_hist->offset -= 1;
 	while (g_hist->offset > 0 && g_hist->history_content[g_hist->offset])
@@ -32,6 +34,10 @@ char	*prev_hist(void)
 
 char	*next_hist(void)
 {
+	if (!g_hist->history_content || !g_hist)
+		return (NULL);
+	if (g_hist->nb_line == g_hist->total_lines)
+		return (g_hist->history_content + g_hist->offset + 1);
 	if (!g_hist->history_content[g_hist->offset] \
 			&& g_hist->offset + 1 < g_hist->used)
 		g_hist->offset++;

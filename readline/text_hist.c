@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:21:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 18:44:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 22:33:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ void history_up(void)
 	}
 	s = prev_hist();
 	clear_line();
-	insert_text(s, ft_strlen(s));
+	if (s)
+		insert_text(s, ft_strlen(s));
+	else if (g_original_cmd)
+		insert_text(g_original_cmd, ft_strlen(s));
 }
 
 void history_down(void)
@@ -99,8 +102,8 @@ void history_down(void)
 
 	s = next_hist();
 	clear_line();
-	if (*s)
+	if (s && *s)
 		insert_text(s, ft_strlen(s));
-	else
+	else if (g_original_cmd)
 		insert_text(g_original_cmd, ft_strlen(g_original_cmd));
 }
