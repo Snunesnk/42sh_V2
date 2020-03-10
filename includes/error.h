@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/29 19:22:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 16:17:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ struct	s_error_desc
 };
 
 extern const struct s_error_desc	g_errordesc[];
-extern char	*g_progname;
+extern char							*g_progname;
 
-void	psherror(int e_error, char *str, int e_message_type);
+int	psherror(int e_error, char *str, int e_message_type);
 
 #endif
