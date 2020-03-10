@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/06 21:14:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 20:51:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int		cmd_hash(int argc, char **argv)
 			options_list |= HASH_R_OPTION;
 		else if (status == 't')
 			options_list |= HASH_T_OPTION;
-		else if (status == e_invalid_input)
-			return (print_usage(e_invalid_input));
+		else
+			return (print_usage(*args));
 	}
 	if (!args)
 		return (e_invalid_input);
@@ -66,11 +66,15 @@ char	get_next_opt(char ***args, const char *options_list)
 	return (get_next_opt(NULL, NULL));
 }
 
-int		print_usage(int ret)
+int		print_usage(char *args)
 {
-	ft_dprintf(STDERR_FILENO, "hash: usage: "\
-			"hash [-lr] [-p pathname] [-dt] [name ...]\n");
-	return (ret);
+	int	x;
+
+	x = 0;
+	while (args[x] && ft_strchr("-dlprt", args[x]))
+		x += 1;
+	print_error("[-lr] [-p pathname] [-dt] [name ...]", args[x], 3);
+	return (e_invalid_input);
 }
 
 int		check_for_needed_arguments(int options_list, char **args)

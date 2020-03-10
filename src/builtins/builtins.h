@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/09 19:46:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 20:49:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void			del_hashed_commands(void);
 int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
-int				print_usage(int ret);
+int				print_usage(char *args);
 void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
 		char *arg, int multiple);
 void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
@@ -103,6 +103,10 @@ int				exec_fc_other_opt(int opt_list, char **args);
 char			*ft_strreplace(char **str, char *pattern, char *replacement);
 void			fc_replace_last_hist(char *tmp);
 void			free_substitute(t_sub *substitute);
+void			get_hist_num(char **args, int options_list, int *hist_end, \
+				int *hist_beg);
+int				fc_invalid_input(char *args);
+void			print_error(char *usage, char option, int mode);
 
 /*
 ** Global var util for get_next_opt

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/06 21:15:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 20:39:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,17 @@ char	return_next_opt(char ***args, int *x, const char *options_list)
 			return (deal_with_spe_opt(args, x));
 		return ((**args)[*x]);
 	}
-	ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: invalid option\n",\
-			g_builtin_name, (**args)[*x]);
 	get_next_opt(NULL, NULL);
-	return ('?');
+	return ((**args)[*x]);
+}
+
+void	print_error(char *usage, char option, int mode)
+{
+	if (mode & 1)
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: invalid option\n",\
+			g_builtin_name, option);
+	}
+	if (mode & 2)
+		ft_printf("%1$s: usage: %1$s %2$s\n", g_builtin_name, usage);
 }
