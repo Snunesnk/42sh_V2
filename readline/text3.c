@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:05 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:14:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:38:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void cursor_u(void)
+void	cursor_u(void)
 {
 	if (g_cursor.v_pos != 0)
 	{
@@ -37,7 +37,7 @@ void	clear_line(void)
 	ft_bzero(g_line.line, g_line.size_buf);
 }
 
-void rl_home(void)
+void	rl_home(void)
 {
 	g_cursor.c_pos = g_dis.prompt_l;
 	if (g_cursor.c_pos > 0)
@@ -51,8 +51,7 @@ void rl_home(void)
 	update_line();
 }
 
-
-void rl_end(void)
+void	rl_end(void)
 {
 	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
 	if (g_cursor.c_pos > 0)
@@ -69,7 +68,7 @@ void rl_end(void)
 	update_line();
 }
 
-void wd_right(void)
+void	wd_right(void)
 {
 	while (g_line.line[g_dis.cbpos] == ' ' && g_dis.cbpos < g_line.len)
 		cursor_r();
