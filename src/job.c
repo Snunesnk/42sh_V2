@@ -17,6 +17,7 @@
 void	free_all_processes(t_process *p)
 {
 	t_process	*next_p;
+
 	while (p)
 	{
 		next_p = p->next;
@@ -32,6 +33,7 @@ void	free_job(t_job *j) /* Free a given job in the job queue */
 
 	if (j == first_job)
 	{
+		free_all_processes(j->first_process);
 		free(j);
 		first_job = NULL;
 	}
