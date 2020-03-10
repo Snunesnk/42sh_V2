@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 16:14:16 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:37:23 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,17 @@ int				do_redirection(t_redirection *r);
 int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
 void    free_redirections(t_redirection *r);
+
+int valid_fd(int fd, int open);
+int check_if_directory(char *filename);
+int do_iowrite(t_redirection *r);
+int do_iocat(t_redirection *r);
+int do_ioread(t_redirection *r);
+int do_iohere(t_redirection *r);
+int do_iodfile(t_redirection *r);
+int do_iodread(t_redirection *r);
+int do_iodup(t_redirection *r);
+int do_redirection(t_redirection *r);
 
 extern char	*g_filename_redir_error;
 
