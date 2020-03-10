@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/07 16:03:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 15:54:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ struct	s_shell_fds
 };
 
 /* Union containing Descriptor or filename */
-typedef union
+typedef struct s_redirectee
 {
 	int		dest;         /* Place to redirect to or .... */
 	char	*filename;    /* filename to redirect to or ... */
@@ -149,6 +149,8 @@ t_hash_table	*find_occurence(char *name);
 t_hash_table	*find_prev_occurence(char *name);
 void			free_hash_table(void);
 
+extern int		g_subshell;
+
 extern t_hash_table	**g_hash_table;
 
 /* The active jobs are linked into a list. This is its head. */
@@ -193,6 +195,7 @@ char			*get_tokvalue(t_list *lst);
 int				do_redirection(t_redirection *r);
 int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
+void    free_redirections(t_redirection *r);
 
 extern char	*g_filename_redir_error;
 
@@ -201,21 +204,14 @@ extern char	*g_filename_redir_error;
 
 # define BUF_SIZE	32
 
-# define NB_TOKEN	25
-# define NB_BRACKET	3
-# define TAB_END	-1
+# define NB_TOKEN	20
 
 # define SET		0x01
 # define EXPORT		0x02
 # define RDONLY		0x04
 # define ARRAY		0x08
 
-enum	e_bracket
-{
-	PARENTHESIS,
-	WHILE_LOOP,
-	EARDOCS
-};
+extern char	*g_grammar[NB_TOKEN];
 
 enum	e_token
 {
@@ -227,20 +223,15 @@ enum	e_token
 	LESSAND,
 	ANDGREAT,
 	AND,
-	DSEMI,
-	OP_PARENTHESIS,
-	CL_PARENTHESIS,
-	WHILE_WORD,
-	DONE,
 	DGREAT,
 	DLESSDASH,
 	DLESS,
 	GREAT,
 	LESS,
-	WORD,
+	NEWLINE,
 	IO_NB,
-	END_OF_FILE,
 	COMMENT,
+	WORD,
 	START,
 	END,
 	NONE
@@ -248,22 +239,16 @@ enum	e_token
 
 typedef struct		s_token
 {
-	uint64_t		type;
+	enum e_token	type;
 	char			*value;
 }					t_token;
 
-typedef struct	s_bracket
-{
-	uint64_t	open;
-	uint64_t	close;
-}				t_bracket;
-
 typedef struct	s_ast
 {
-	uint64_t	type;
-	t_list		*content;
-	void		*left;
-	void		*right;
+	enum e_token	type;
+	t_list			*content;
+	void			*left;
+	void			*right;
 }				t_ast;
 
 typedef struct	s_shell_var
@@ -273,41 +258,46 @@ typedef struct	s_shell_var
 	uint64_t	flag;
 }				t_shell_var;
 
-void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
-void	ast_order(t_ast **ast);
-void	astdel(t_ast **ast);
-int		bracket(t_list *lst, uint64_t *buffer, size_t index);
-int		build_ast(uint64_t type, t_ast **ast, t_list *lst);
-void	debug(t_list *lst);
-void	debug_ast(t_ast *ast);
-void    del(void *content, size_t content_size);
-void	del_env(void *content, size_t content_size);
-int		execute_job(t_list *lst, int foreground);
-int		execute_node(t_ast *node, int foreground);
-int     ft_atoifd(const char *str);
-void	ft_free_tab(int ac, char **av);
-int		ft_ismeta(int c);
-char	*ft_join_free(char *s1, char *s2, int op);
-void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
-void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
-int		get_env_list(char **environ);
-char	**get_env_tab(void);
-int		get_next_token(const char *str, t_token *token, uint64_t *last_token_type);
-t_list	*get_shell_var(char *name);
-int		get_stdin(char **line);
-int		initialize_prompt_fd(void);
-int		lexer(char* str, t_ast **ast);
-int		only_assignments(t_process *p);
-int		parser(t_ast *ast);
-int		parser_pipeline(t_list *lst, uint64_t *buffer, size_t index,
-				uint64_t *type);
-int		path_concat(char **bin);
-void	print_env(t_list *env, t_list **elem);
-_Bool   prompt_display(int status);
-int    	set_minimal_env(void);
-int		treat_shell_variables(t_process *p, int	opt);
-int		treat_single_exp(char **str, int tilde);
-int		treat_expansions(int argc, char **argv);
+void			alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
+void			ast_order(t_ast **ast);
+void			astdel(t_ast **ast);
+int				build_ast(t_ast **ast, t_list *lst);
+void			debug(t_list *lst);
+void			debug_ast(t_ast *ast);
+void			del(void *content, size_t content_size);
+void			del_env(void *content, size_t content_size);
+int				execute_job(t_list *lst, int foreground);
+int				execute_node(t_ast *node, int foreground);
+int				ft_atoifd(const char *str);
+void			ft_free_tab(int ac, char **av);
+int				ft_ismeta(int c);
+char			*ft_join_free(char *s1, char *s2, int op);
+void			ft_merge_sort(t_list **lst, void sort(t_list**, t_list**,
+					t_list**));
+void			ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
+int				get_env_list(char **environ);
+char			**get_env_tab(void);
+int				get_next_token(const char *str, t_token *token,
+					enum e_token *last_token_type);
+t_list			*get_shell_var(char *name);
+int				get_stdin(char **line);
+size_t			get_word(const char *str, t_token *token,
+					enum e_token *last_token_type);
+enum e_token	**init_enum_tab(void);
+int				initialize_prompt_fd(void);
+int				launch_lexer_parser(char *input, t_ast **ast);
+int				lexer(char* str, t_list **lst);
+int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
+					enum e_token type);
+int				only_assignments(t_process *p);
+int				parser(t_list *lst);
+int				path_concat(char **bin);
+void			print_env(t_list *env, t_list **elem);
+_Bool			prompt_display(int status);
+int				set_minimal_env(void);
+int				treat_shell_variables(t_process *p, int	opt);
+int				treat_single_exp(char **str, int tilde);
+int				treat_expansions(int argc, char **argv);
 
 extern int	g_retval;
 

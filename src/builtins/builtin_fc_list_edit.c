@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/09 20:28:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 15:42:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void		get_hist_num(char **args, int opt_list, int *hist_end, int *hist_beg)
 	char	*tmp;
 	int		sign;
 
-	sign = (*args == '-') ? -1 : 1;
+	sign = (**args == '-') ? -1 : 1;
 	if (sign < 0)
 		*args += 1;
 	tmp = prev_hist();
@@ -64,6 +64,36 @@ void		get_hist_num(char **args, int opt_list, int *hist_end, int *hist_beg)
 	}
 	else
 		*hist_end = (opt_list & FC_L_OPTION) ? g_hist->total_lines - 1 : *hist_beg;
+}
+
+void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
+{
+	prev_hist();
+	prev_hist();
+	while (!(opt_list & FC_R_OPTION) && hist_beg < g_hist->nb_line)
+		prev_hist();
+	while (hist_end >= g_hist->nb_line \
+			&& g_hist->nb_line < g_hist->total_lines - 1\
+			&& !(opt_list & FC_R_OPTION))
+	{
+		if (!(opt_list & FC_N_OPTION))
+			ft_dprintf(fd, "%d", g_hist->nb_line);
+		if (opt_list & FC_L_OPTION)
+			ft_dprintf(fd, "\t");
+		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset + 1);
+		next_hist();
+	}
+	while (hist_beg <= g_hist->nb_line && (opt_list & FC_R_OPTION))
+	{
+		if (!(opt_list & FC_N_OPTION))
+			ft_dprintf(fd, "%d", g_hist->nb_line);
+		if (opt_list & FC_L_OPTION)
+			ft_dprintf(fd, "\t");
+		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset + 1);
+		prev_hist();
+	}
+	while (g_hist->nb_line < g_hist->total_lines)
+		next_hist();
 }
 
 int			exec_fc_other_opt(int opt_list, char **args)
@@ -107,25 +137,16 @@ int			exec_fc_other_opt(int opt_list, char **args)
 		fd = STDOUT_FILENO;
 	else
 	{
-		opt_list ^= FC_N_OPTION;
-		if (!(fd = open(".21sh_tmp_file", O_RDWR | O_CREAT | O_TRUNC, 0644)))
+		opt_list |= FC_N_OPTION;
+		if ((fd = open(".21sh_tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		{
 			ft_printf("./21sh: cannot open temporary file\n");
 			return (1);
 		}
 	}
-	while (hist_beg < g_hist->nb_line)
-		prev_hist();
-	while (hist_end >= g_hist->nb_line && g_hist->nb_line != g_hist->total_lines)
-	{
-		if (opt_list & FC_N_OPTION)
-			ft_dprintf(fd, "%d", g_hist->nb_line);
-		if (opt_list & FC_L_OPTION)
-			ft_dprintf(fd, "\t");
-		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset + 1);
-		next_hist();
-	}
-	close(fd);
+	print_req_hist(fd, opt_list, hist_beg, hist_end);
+	if (fd != STDOUT_FILENO)
+		close(fd);
 	if (opt_list & FC_L_OPTION)
 		return (e_success);
 	char	*command;
@@ -136,7 +157,19 @@ int			exec_fc_other_opt(int opt_list, char **args)
 	}
 	free(editor);
 	status = exec_input(command);
-	ft_printf("Okay, so now I have to get those modif, and insert them into history, and then exec each one of them I guess\n");
-	/* need to midify hist, and then exec all the commands modified */
+	command = NULL;
+	if ((fd = open(".21sh_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0)
+	{
+		ft_printf("./21sh: cannot open temporary file\n");
+		return (1);
+	}
+	while ((status = get_next_line(fd, &command)) > 0)
+	{
+		ft_dprintf(STDERR_FILENO, "%s", command);
+		add_hentry(command, 1);
+		exec_input(command);
+		command = NULL;
+	}
+	close(fd);
 	return (status);
 }
