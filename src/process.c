@@ -24,6 +24,8 @@
 
 void	free_process(t_process *p) /* temporary for tests purposes ? */
 {
+//	ft_printf("\nFREE PROCESS\n"); /* Free a process */
+	free_redirections(p->redir);
 	free(p->argv);
 	free(p);
 }
@@ -74,11 +76,14 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 
 	/* Sepcial redirections */
 	if ((ret = do_redirection(p->redir)))
+	{
+		free_process(p);
 		exit(g_errordesc[ret].code); /* redirection failure, error msg have to be implemented */
-		/* Free or not to free ? Lazy so I leave it to exit handlers */
+	}	/* Free or not to free ? Lazy so I leave it to exit handlers */
 
 	/* Exec the new process. Make sure we exit */
 	/* Check access, etc... and send value to exit if error launching of if builtin */
 	ret = execute_process(p->argv, envp);
+	free_process(p);
 	exit(ret);
 }
