@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 14:09:29 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:43:24 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,6 +285,8 @@ enum e_token	**init_enum_tab(void);
 int				initialize_prompt_fd(void);
 int				launch_lexer_parser(char *input, t_ast **ast);
 int				lexer(char* str, t_list **lst);
+int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
+					enum e_token type);
 int				only_assignments(t_process *p);
 int				parser(t_list *lst);
 int				path_concat(char **bin);
