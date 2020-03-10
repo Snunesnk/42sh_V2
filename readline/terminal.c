@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   terminal.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/10 14:01:07 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
 struct s_screen g_sc;
@@ -14,46 +26,21 @@ struct s_term g_term =
 
 const struct s_termcaps_string g_tc_strings[] =
 {
-	{"@7", &g_termcaps.at7},
-	{"DC", &g_termcaps.DC},
-	{"DO", &g_termcaps.DO},
-	{"E3", &g_termcaps.clrscroll},
-	{"IC", &g_termcaps.IC},
-	{"UP", &g_termcaps.UP},
+	{"DO", &g_termcaps.gdo},
+	{"UP", &g_termcaps.gup},
 	{"bl", &g_termcaps.bl},
 	{"cd", &g_termcaps.cd},
 	{"ce", &g_termcaps.clreol},
 	{"ch", &g_termcaps.ch},
 	{"cl", &g_termcaps.clrpag},
 	{"cr", &g_termcaps.cr},
-	{"dc", &g_termcaps.dc},
 	{"do", &g_termcaps.do1},
-	{"ei", &g_termcaps.ei},
-	{"ic", &g_termcaps.ic},
-	{"im", &g_termcaps.im},
-	{"kD", &g_termcaps.kD},
-	{"kH", &g_termcaps.kH},
-	{"kI", &g_termcaps.kI},
-	{"kd", &g_termcaps.kd},
-	{"ke", &g_termcaps.ke},
-	{"kh", &g_termcaps.kh},
-	{"kl", &g_termcaps.kl},
-	{"kr", &g_termcaps.kr},
-	{"ks", &g_termcaps.ks},
-	{"ku", &g_termcaps.ku},
 	{"le", &g_termcaps.backspace},
-	{"mm", &g_termcaps.mm},
-	{"mo", &g_termcaps.mo},
 	{"nd", &g_termcaps.forward_char},
-	{"pc", &g_termcaps.pc},
-	{"up", &g_termcaps.up},
-	{"vb", &g_termcaps.visible_bell},
-	{"vs", &g_termcaps.vs},
-	{"ve", &g_termcaps.ve}
+	{"up", &g_termcaps.up}
 };
 
-
-void get_term_capabilities(char **bp)
+void	get_term_capabilities(char **bp)
 {
 	register int i;
 
@@ -61,18 +48,18 @@ void get_term_capabilities(char **bp)
 	while (i < (int)NUM_TC_STRINGS)
 	{
 		*(g_tc_strings[i].value) = tgetstr((char *)g_tc_strings[i].var,
-									bp);
+				bp);
 		++i;
 	}
 }
 
-int get_screensize(int tty)
+int		get_screensize(int tty)
 {
-	struct winsize window_size;
+	struct winsize	window_size;
 
 	if (ioctl(tty, TIOCGWINSZ, &window_size) == -1)
 	{
-		window_size.ws_col = tgetnum ("co");
+		window_size.ws_col = tgetnum("co");
 		window_size.ws_row = tgetnum("li");
 	}
 	g_sc.w = window_size.ws_col;
@@ -81,15 +68,14 @@ int get_screensize(int tty)
 	return (0);
 }
 
-
-void resize_terminal(int signo)
+void	resize_terminal(int signo)
 {
 	(void)signo;
 	get_screensize(STDIN_FILENO);
 	redisplay_after_sigwinch();
 }
 
-int init_terminal(void)
+int		init_terminal(void)
 {
 	char *buffer;
 
