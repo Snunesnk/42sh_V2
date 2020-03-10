@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 14:33:56 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/10 14:44:26 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SOURCES :=	main.c \
 		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
+		new_node_ast.c \
 		only_assignments.c \
 		parameter_expansions.c \
 		parser.c \
