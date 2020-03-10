@@ -20,7 +20,7 @@ int		only_assignments(t_process *p)
 
 	i = 0;
 	ret = FALSE;
-	ft_print_tables(p->argv);
+//	ft_print_tables(p->argv);
 	while (i < p->argc)
 	{
 		if (ft_strchr(p->argv[i], '=') == NULL)
