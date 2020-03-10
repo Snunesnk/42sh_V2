@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 16:34:28 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/10 17:03:59 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SOURCES :=	main.c \
 		do_redir3.c \
 		error.c \
 		execute_ast.c \
+		execute_ast2.c \
 		execute_job.c \
 		execute_process.c \
 		expansions.c \
