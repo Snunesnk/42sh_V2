@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 14:08:59 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/10 14:33:56 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,6 +87,11 @@ SOURCES :=	main.c \
 		../readline/signals.c \
 		../readline/terminal.c \
 		../readline/text.c \
+		../readline/text2.c \
+		../readline/text3.c \
+		../readline/text4.c \
+		../readline/text5.c \
+		../readline/text_hist.c \
 		../readline/tty.c \
 		../readline/utils.c \
 		../readline/utils_suite2.c \

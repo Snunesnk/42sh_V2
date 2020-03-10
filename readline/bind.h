@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 11:57:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:13:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "keymaps.h"
 
 extern struct s_keymap_entry	*g_keymap;
+
+void	insert_text(const char *string, int len);
+void	clear_line(void);
 
 void	bind_keys(struct s_keymap_entry *keymap);
 void	cut_prev_wd(void);
