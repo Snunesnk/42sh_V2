@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 12:18:49 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 14:09:29 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ extern char	*g_filename_redir_error;
 # define RDONLY		0x04
 # define ARRAY		0x08
 
+extern char	*g_grammar[NB_TOKEN];
+
 enum	e_token
 {
 	SEMI,
@@ -254,40 +256,44 @@ typedef struct	s_shell_var
 	uint64_t	flag;
 }				t_shell_var;
 
-void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
-void	ast_order(t_ast **ast);
-void	astdel(t_ast **ast);
-int		build_ast(t_ast **ast, t_list *lst);
-void	debug(t_list *lst);
-void	debug_ast(t_ast *ast);
-void    del(void *content, size_t content_size);
-void	del_env(void *content, size_t content_size);
-int		execute_job(t_list *lst, int foreground);
-int		execute_node(t_ast *node, int foreground);
-int     ft_atoifd(const char *str);
-void	ft_free_tab(int ac, char **av);
-int		ft_ismeta(int c);
-char	*ft_join_free(char *s1, char *s2, int op);
-void	ft_merge_sort(t_list **lst, void sort(t_list**, t_list**, t_list**));
-void	ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
-int		get_env_list(char **environ);
-char	**get_env_tab(void);
-int		get_next_token(const char *str, t_token *token, enum e_token *last_token_type);
-t_list	*get_shell_var(char *name);
-int		get_stdin(char **line);
-size_t	get_word(const char *str, t_token *token, enum e_token *last_token_type);
-int		initialize_prompt_fd(void);
-int		launch_lexer_parser(char *input, t_ast **ast);
-int		lexer(char* str, t_list **lst);
-int		only_assignments(t_process *p);
-int		parser(t_list *lst);
-int		path_concat(char **bin);
-void	print_env(t_list *env, t_list **elem);
-_Bool   prompt_display(int status);
-int    	set_minimal_env(void);
-int		treat_shell_variables(t_process *p, int	opt);
-int		treat_single_exp(char **str, int tilde);
-int		treat_expansions(int argc, char **argv);
+void			alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
+void			ast_order(t_ast **ast);
+void			astdel(t_ast **ast);
+int				build_ast(t_ast **ast, t_list *lst);
+void			debug(t_list *lst);
+void			debug_ast(t_ast *ast);
+void			del(void *content, size_t content_size);
+void			del_env(void *content, size_t content_size);
+int				execute_job(t_list *lst, int foreground);
+int				execute_node(t_ast *node, int foreground);
+int				ft_atoifd(const char *str);
+void			ft_free_tab(int ac, char **av);
+int				ft_ismeta(int c);
+char			*ft_join_free(char *s1, char *s2, int op);
+void			ft_merge_sort(t_list **lst, void sort(t_list**, t_list**,
+					t_list**));
+void			ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
+int				get_env_list(char **environ);
+char			**get_env_tab(void);
+int				get_next_token(const char *str, t_token *token,
+					enum e_token *last_token_type);
+t_list			*get_shell_var(char *name);
+int				get_stdin(char **line);
+size_t			get_word(const char *str, t_token *token,
+					enum e_token *last_token_type);
+enum e_token	**init_enum_tab(void);
+int				initialize_prompt_fd(void);
+int				launch_lexer_parser(char *input, t_ast **ast);
+int				lexer(char* str, t_list **lst);
+int				only_assignments(t_process *p);
+int				parser(t_list *lst);
+int				path_concat(char **bin);
+void			print_env(t_list *env, t_list **elem);
+_Bool			prompt_display(int status);
+int				set_minimal_env(void);
+int				treat_shell_variables(t_process *p, int	opt);
+int				treat_single_exp(char **str, int tilde);
+int				treat_expansions(int argc, char **argv);
 
 extern int	g_retval;
 

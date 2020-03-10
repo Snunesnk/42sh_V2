@@ -6,14 +6,14 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 13:44:50 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 13:52:24 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static void	init_token_tab(char **token_tab)
+static void	init_tab(char **token_tab)
 {
 	token_tab[OR_IF] = "OR_IF";
 	token_tab[PIPE] = "PIPE";
@@ -45,7 +45,7 @@ static void	print(t_list *lst, t_list **elem)
 
 	i = 0;
 	print_content = NULL;
-	init_token_tab(token_tab);
+	init_tab(token_tab);
 	while (i < NB_TOKEN)
 	{
 		tmp = NULL;
