@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:23:19 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 21:11:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 16:19:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,5 @@ int		isctrlkey(union u_buffer c);
 int		mvctrlkey(union u_buffer c);
 int		enter_rc(union u_buffer c);
 int		test_c_value(union u_buffer c);
-char	*get_matching_hist(char **line, char *patern);
 
 #endif

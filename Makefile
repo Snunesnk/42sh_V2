@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 15:54:57 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 16:16:15 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,16 +16,13 @@
 
 all: $(NAME)
 
-$(NAME): libft/libft.a 42Readline/readline.a $(OBJECTS)
+$(NAME): libft/libft.a $(OBJECTS)
 	@$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
 
 libft/libft.a: FORCE
 	@$(MAKE) lib -j -C $(PATH_LIB)
 	
-42Readline/readline.a: FORCE
-	@$(MAKE) -j -C 42Readline/
-
 FORCE:
 
 clean:
