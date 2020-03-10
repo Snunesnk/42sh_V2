@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 16:29:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:30:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static int	do_ioread(t_redirection *r)
 		return (psherror(e_permission_denied,
 					r->redirector.filename, e_cmd_type));
 	}
-	r->redirector.des = open(r->redirector.filename, O_RDONLY);
+	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
