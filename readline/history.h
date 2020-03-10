@@ -33,5 +33,7 @@ char	*get_hist_entry(char *tmp);
 char	*expand_num(char *value, int start, int sign);
 char	*expand_word(char *value, int start, int sign);
 char	*replace_hist_exp(char *value, char *hist_entry);
+char	*get_matching_hist(char **line, char *patern);
+char	*get_beg_matching_hist(char **line, char *patern);
 
 #endif
