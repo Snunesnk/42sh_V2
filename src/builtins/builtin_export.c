@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 12:38:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/10 16:26:27 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,22 @@
 
 extern t_list	*g_env;
 
-static void	print_export(t_list *env, t_list **elem)
+static void		print_export(t_list *env, t_list **elem)
 {
 	char	*tmp;
+	char	*name;
+	char	*value;
 
 	tmp = NULL;
+	name = ((t_shell_var*)(env->content))->name;
+	value = ((t_shell_var*)(env->content))->value;
 	if ((((t_shell_var*)(env->content))->flag & EXPORT) == EXPORT)
 	{
 		if (((t_shell_var*)(env->content))->value == NULL)
-			ft_asprintf(&tmp, "declare -x %s\n", ((t_shell_var*)(env->content))->name);
+			ft_asprintf(&tmp, "declare -x %s\n", name);
 		else
 		{
-			ft_asprintf(&tmp, "declare -x %s=\"%s\"\n", ((t_shell_var*)(env->content))->name,
-					((t_shell_var*)(env->content))->value);
+			ft_asprintf(&tmp, "declare -x %s=\"%s\"\n", name, value);
 		}
 	}
 	*elem = ft_lstnew(tmp, ft_strlen(tmp));
@@ -53,75 +56,6 @@ static int		get_flags(char **av, char *n_flag, char *p_flag)
 		tab_i++;
 	}
 	return (tab_i);
-}
-
-t_list			*get_shell_var(char *name)
-{
-	t_list	*head;
-	t_list	*elem;
-
-	head = g_env;
-	elem = NULL;
-	while (g_env != NULL)
-	{
-		if (ft_strequ(name, ((t_shell_var*)(g_env->content))->name))
-		{
-			elem = g_env;
-			break ;
-		}
-		g_env = g_env->next;
-	}
-	g_env = head;
-	return (elem);
-}
-
-static int		add_var(char **av)
-{
-	t_shell_var	shell_var;
-	t_list		*lst_new;
-	t_list		*elem;
-	char		*name;
-	char		*value;
-	size_t		i;
-
-	i= 0;
-	ft_bzero(&shell_var, sizeof(shell_var));
-	while (av[i] != NULL)
-	{
-		value = ft_strchr(av[i], '=');
-		if (value != NULL)
-		{
-			name = ft_strndup(av[i], value - av[i]);
-			value = ft_strdup(value + 1);
-		}
-		else
-			name = ft_strdup(av[i]);
-		elem = get_shell_var(name);
-		if (elem != NULL)
-		{
-			if (value != NULL)
-				((t_shell_var*)(elem->content))->value = value;
-			((t_shell_var*)(elem->content))->flag |= SET;
-			((t_shell_var*)(elem->content))->flag |= EXPORT;
-		}
-		else
-		{
-			shell_var.name = name;
-			if (value != NULL)
-			{
-				shell_var.value = value;
-				shell_var.flag |= SET;
-			}
-			shell_var.flag |= EXPORT;
-			lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-			if (lst_new == NULL)
-				return (FAILURE);
-			ft_lstadd(&g_env, lst_new);
-		}
-		i++;
-	}
-	ft_merge_sort(&g_env, &alpha_sort);
-	return (SUCCESS);
 }
 
 static void		remove_flag(char **av)
@@ -156,9 +90,10 @@ int				cmd_export(int ac, char **av)
 	n_flag = 0;
 	p_flag = 0;
 	av++;
-	if (ft_getopt(ac - 1, av, "np") == FALSE)
+	if (ft_getopt(ac - 1, av, "np") == '?')
 	{
-		ft_putendl_fd("export: usage: export [-n] [name[=value ...]] or export -p", 2);
+		ft_putendl_fd("export: usage: export [-n] [name[=value ...]] \
+or export -p", 2);
 		ret = FAILURE;
 	}
 	else
