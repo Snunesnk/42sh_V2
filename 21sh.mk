@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/09 17:55:53 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/10 15:55:32 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,19 @@ SOURCES :=	main.c \
 		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
+		get_token_word.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
+		init_enum_tab.c \
 		input.c \
 		job.c \
 		job_control.c \
 		launch_builtin.c \
+		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
+		new_node_ast.c \
 		only_assignments.c \
 		parameter_expansions.c \
 		parser.c \
@@ -74,13 +78,34 @@ SOURCES :=	main.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
-		builtins/builtin_unset.c
+		builtins/builtin_unset.c \
+		../readline/bind.c \
+		../readline/display.c \
+		../readline/emacs_keymap.c \
+		../readline/history.c \
+		../readline/history_expand.c \
+		../readline/init.c \
+		../readline/input.c \
+		../readline/quotes.c \
+		../readline/readline.c \
+		../readline/signals.c \
+		../readline/terminal.c \
+		../readline/text.c \
+		../readline/text2.c \
+		../readline/text3.c \
+		../readline/text4.c \
+		../readline/text5.c \
+		../readline/text_hist.c \
+		../readline/tty.c \
+		../readline/utils.c \
+		../readline/utils_suite2.c \
+		../readline/utils_suite.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I./src/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./42Readline/
+INCLUDES := -I./includes/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
@@ -92,7 +117,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a ./42Readline/readline.a -ltermcap
+LDLIBS += $(PATH_LIB)libft.a -ltermcap
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full

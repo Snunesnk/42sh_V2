@@ -6,21 +6,12 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/07 18:02:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 15:53:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <limits.h>
-#include <unistd.h>
-#include <stdlib.h>
-
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#include "libft.h"
 #include "shell.h"
-#include "error.h"
+#include "ft_readline.h"
 
 extern char	**environ;
 t_list		*g_env;
@@ -46,22 +37,11 @@ int			exec_input(char *input)
 
 	status = 0;
 	ast = NULL;
-	lexer(input, &ast);
-	debug_ast(ast);
-	if (ast != NULL)
+	if (launch_lexer_parser(input, &ast) == SUCCESS)
 	{
 	//	expansions(ast);
-		if (parser(ast) == FAILURE)
-			ft_putendl_fd("\nParse error", 2);
-		else
-		{
-/*			ft_putendl("\nOK"); 
-*/			ast_order(&ast);
-			debug_ast(ast);
-			status = execute_node(ast, 1); /* to capture */
-		}
+		status = execute_node(ast, 1); /* to capture */
 	}
-/*	ft_lstdel(&lst, del);*/
 	astdel(&ast);
 	ft_strdel(&input);
 	g_retval = status;
@@ -75,7 +55,6 @@ int			main(int argc, char **argv)
 	volatile int	status;
 
 	(void)argc;
-	(void)argv;
 	status = 0;
 	g_progname = argv[0];
 	if (init_shell())
@@ -98,8 +77,7 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-//		if (!(input = readline("\e[38;5;44m21sh$ \e[0m")))
-		if (!(input = ft_readline("$> ")))
+		if (!(input = ft_readline("21sh$ ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
