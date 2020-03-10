@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 16:08:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 19:25:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int			exec_fc_other_opt(int opt_list, char **args)
 	}
 	while ((status = get_next_line(fd, &command)) > 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%s", command);
+		ft_dprintf(STDERR_FILENO, "%s\n", command);
 		add_hentry(command, 1);
 		exec_input(command);
 		command = NULL;
