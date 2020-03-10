@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/09 20:15:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 20:48:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,18 @@ char		*ft_strreplace(char **str, char *pattern, char *replacement)
 		tmp += rep_len;
 	}
 	return (*str);
+}
+
+int		fc_invalid_input(char *args)
+{
+	int	x;
+
+	x = 0;
+	if (ft_str_is_numeric(args + 1))
+		return (0);
+	while (args[x] && ft_strchr("-elnrs", args[x]))
+		x += 1;
+	print_error("[-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]"\
+			, args[x], 3);
+	return (e_invalid_input);
 }
