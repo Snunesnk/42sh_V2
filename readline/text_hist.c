@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:21:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 16:21:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 18:44:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ char	*get_beg_matching_hist(char **line, char *patern)
 		*line = tmp;
 	else
 	{
-		while (!ft_strnequ(tmp, *line, pat_len) && g_hist->nb_line < \
-				g_hist->total_lines)
+		while (!ft_strnequ(tmp, *line, pat_len) \
+				&& g_hist->nb_line < g_hist->total_lines)
 			tmp = next_hist();
 		*line = tmp;
 		tmp = NULL;
@@ -42,7 +42,6 @@ char *get_matching_hist(char **line, char *patern)
 {
 	char *tmp;
 
-
 	tmp = *line;
 	if (!tmp)
 		return (tmp);
@@ -52,8 +51,7 @@ char *get_matching_hist(char **line, char *patern)
 		*line = tmp;
 	else
 	{
-		while (!ft_strstr(tmp, *line)
-	&& g_hist->nb_line < g_hist->total_lines)
+		while (!ft_strstr(tmp, *line) && g_hist->nb_line < g_hist->total_lines)
 			tmp = next_hist();
 		*line = tmp;
 		tmp = NULL;

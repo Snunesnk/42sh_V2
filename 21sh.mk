@@ -6,11 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2020/03/10 15:55:32 by snunes           ###   ########.fr        #
-=======
-#    Updated: 2020/03/10 16:26:29 by efischer         ###   ########.fr        #
->>>>>>> d7ac62d8574acb5724350530fcc33a963f806115
+#    Updated: 2020/03/10 17:31:27 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +86,7 @@ SOURCES :=	main.c \
 		../readline/emacs_keymap.c \
 		../readline/history.c \
 		../readline/history_expand.c \
+		../readline/history_lookup.c \
 		../readline/init.c \
 		../readline/input.c \
 		../readline/quotes.c \
