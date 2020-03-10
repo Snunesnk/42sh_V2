@@ -6,11 +6,12 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 15:42:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 16:08:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "ft_readline.h"
 
 char		*get_editor(int opt_list, char **args)
 {
@@ -109,8 +110,6 @@ int			exec_fc_other_opt(int opt_list, char **args)
 		return (0);
 	if (!(editor = get_editor(opt_list, args)))
 		return (e_cannot_allocate_memory);
-	if (!(opt_list & FC_L_OPTION))
-		fc_replace_last_hist(NULL);
 	if (*args)
 		get_hist_num(args, opt_list, &hist_end, &hist_beg);
 	else
@@ -149,6 +148,7 @@ int			exec_fc_other_opt(int opt_list, char **args)
 		close(fd);
 	if (opt_list & FC_L_OPTION)
 		return (e_success);
+	fc_replace_last_hist(NULL);
 	char	*command;
 	if (!(command = ft_strjoin(editor, " .21sh_tmp_file")))
 	{
