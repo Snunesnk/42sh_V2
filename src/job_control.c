@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:48:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 18:57:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "builtins.h"
 
-t_job			*first_job = NULL;
+t_job	*first_job = NULL;
 
 void	put_job_in_foreground(t_job *j, int cont)
 {
@@ -22,7 +22,7 @@ void	put_job_in_foreground(t_job *j, int cont)
 	if (cont)
 	{
 		tcsetattr(shell_terminal, TCSADRAIN, &j->tmodes);
-		if(kill(-j->pgid, SIGCONT) < 0)
+		if (kill(-j->pgid, SIGCONT) < 0)
 			ft_perror("kill failed sending (SIGCONT)");
 	}
 	wait_for_job(j);
@@ -54,7 +54,7 @@ t_job	*find_job(pid_t pgid)
 	return (NULL);
 }
 
-int	job_is_stopped(t_job *j)
+int		job_is_stopped(t_job *j)
 {
 	t_process	*p;
 
@@ -68,7 +68,7 @@ int	job_is_stopped(t_job *j)
 	return (1);
 }
 
-int	job_is_completed(t_job *j)
+int		job_is_completed(t_job *j)
 {
 	t_process	*p;
 
@@ -80,100 +80,4 @@ int	job_is_completed(t_job *j)
 		p = p->next;
 	}
 	return (1);
-}
-
-int	mark_process_status(pid_t pid, int status)
-{
-	t_job		*j;
-	t_process	*p;
-
-	if (pid > 0)
-	{
-		j = first_job;
-		while (j)
-		{
-			p = j->first_process;
-			while (p)
-			{
-				if (p->pid == pid)
-				{
-					p->status = status;
-					if (WIFSTOPPED(status))
-						p->stopped = 1;
-					else
-					{
-						p->completed = 1;
-						if (WIFSIGNALED(status))
-							ft_dprintf(STDERR_FILENO,
-			"\n%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
-					}
-					return (0);
-				}
-				p = p->next;
-			}
-			j = j->next;
-		}
-		ft_dprintf (STDERR_FILENO, "No child process %d.\n", pid);
-	}
-	return (-1);
-}
-
-void	update_status(void)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-	while (!mark_process_status(pid, status))
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED | WNOHANG);
-}
-
-void	wait_for_job(t_job *j)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-	while (!mark_process_status(pid, status) && !job_is_stopped(j)
-			&& !job_is_completed(j))
-		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-}
-
-void	format_job_info (t_job *j, const char *status)
-{
-	ft_dprintf(STDERR_FILENO,
-			"%ld (%s): %s\n", (long)j->pgid, status, j->command);
-}
-
-void	do_job_notification(void)
-{
-	t_job		*j;
-	t_job		*jlast;
-	t_job		*jnext;
-
-	update_status();
-	jlast = NULL;
-	j = first_job;
-	while (j)
-	{
-		jnext = j->next;
-		if (job_is_completed(j))
-		{
-			format_job_info(j, "completed");
-			if (jlast)
-				jlast->next = jnext;
-			else
-				first_job = jnext;
-			free_job(j);
-		}
-		else if (job_is_stopped(j) && !j->notified)
-		{
-			format_job_info(j, "stopped");
-			j->notified = 1;
-			jlast = j;
-		}
-		else
-			jlast = j;
-		j = jnext;
-	}
 }
