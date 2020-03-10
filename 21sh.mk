@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 11:39:49 by efischer         ###   ########.fr        #
+#    Updated: 2020/03/10 12:19:54 by efischer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SOURCES :=	main.c \
 		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
+		get_token_word.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
