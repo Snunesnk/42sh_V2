@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 18:57:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/10 19:15:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,31 +61,59 @@ char	*get_input_proposal(char value, char **user_input, char **hist_proposal)
 	return (tmp);
 }
 
+void	prepare_hist_lookup(char **original_prompt)
+{
+	char	*hist_proposal;
+
+	hist_proposal = NULL;
+	if (!(*original_prompt = ft_strdup(g_dis.prompt)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
+	g_hist_lookup = 1;
+	set_prompt("(reverse-i-search)`");
+	if (!(hist_proposal = ft_strdup(g_line.line)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
+	fill_line(127, NULL, hist_proposal, 1);
+}
+
+void	add_new_proposal(char value, char *user_input, char *hist_proposal)
+{
+	char		*tmp;
+
+	tmp = hist_proposal;
+	if (value == 127 && ft_strlen(user_input) > 0)
+		user_input[ft_strlen(user_input) - 1] = '\0';
+	if (!(get_matching_hist(&tmp, user_input)))
+		set_prompt("(failed reverse-i-search)`");
+	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
+		set_prompt("(reverse-i-search)`");
+	if (value == 127)
+		user_input[ft_strlen(user_input)] = 'p';
+	if (!(tmp = ft_strdup(tmp)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
+	free(hist_proposal);
+	fill_line(value, user_input, tmp, 1);
+}
+
 void	hist_lookup(union u_buffer c)
 {
 	static char	*original_prompt = NULL;
 	char		*user_input;
 	char		*hist_proposal;
-	char		*tmp;
 
 	user_input = NULL;
 	hist_proposal = NULL;
 	if (!g_hist_lookup)
 	{
-		if (!(original_prompt = ft_strdup(g_dis.prompt)))
-		{
-			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-			return ;
-		};
-		g_hist_lookup = 1;
-		set_prompt("(reverse-i-search)`");
-		if (!(hist_proposal = ft_strdup(g_line.line)))
-		{
-			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-			return ;
-		};
-		user_input = NULL;
-		fill_line(127, user_input, hist_proposal, 1);
+		prepare_hist_lookup(&original_prompt);
 		return ;
 	}
 	if (!(get_input_proposal(c.value, &user_input, &hist_proposal)))
@@ -99,22 +127,5 @@ void	hist_lookup(union u_buffer c)
 		fill_line(c.value, user_input, hist_proposal, 0);
 		return ;
 	}
-	tmp = hist_proposal;
-	if (c.value == 127 && ft_strlen(user_input) > 0)
-		user_input[ft_strlen(user_input) - 1] = '\0';
-	if (!(get_matching_hist(&tmp, user_input)))
-		set_prompt("(failed reverse-i-search)`");
-	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
-		set_prompt("(reverse-i-search)`");
-	if (c.value == 127)
-		user_input[ft_strlen(user_input)] = 'p';
-	if (!(tmp = ft_strdup(tmp)))
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return ;
-	}
-	free(hist_proposal);
-	fill_line(c.value, user_input, tmp, 1);
+	add_new_proposal(c.value, user_input, hist_proposal);
 }
-
-
