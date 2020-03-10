@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:18 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 17:22:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/10 12:27:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ struct s_quote	g_quote =
 	.handle = 1,
 };
 
-int	is_quote_open(const char *s)
+int		is_quote_open(const char *s)
 {
 	if (g_quote.handle != 1)
 		return (0);
@@ -32,7 +32,7 @@ int	is_quote_open(const char *s)
 			if (*s == '\0')
 			{
 				g_quote.c = 1;
-				break;
+				break ;
 			}
 		}
 		else if (g_quote.c == 0 && (*s == '\"' || *s == '\'' || *s == '`'))
@@ -42,10 +42,7 @@ int	is_quote_open(const char *s)
 		++s;
 	}
 	if (g_quote.c)
-	{
-		g_quote.c = 0;
-		return (1);
-	}
+		return ((g_quote.c = 0) || 1);
 	else
 		return (0);
 }
