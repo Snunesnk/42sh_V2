@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_builtin.c                                   :+:      :+:    :+:   */
+/*   redir_great2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 15:32:49 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 11:43:52 by abarthel         ###   ########.fr       */
+/*   Created: 2020/03/11 13:03:00 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/11 15:14:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "ft_errno.h"
+#include "error.h"
 #include "shell.h"
-#include "builtins.h"
 
-static void	tag_all_redirections(t_redirection *r)
+t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 {
-	while (r)
-	{
-		r->flags |= NOFORK;
-		r = r->next;
-	}
-}
+	t_redirection	*r;
 
-int			launch_builtin(t_process *p)
-{
-	int ret;
-
-	if (p->redir != NULL)
-		tag_all_redirections(p->redir);
-	if ((ret = do_redirection(p->redir)))
-		return (g_errordesc[ret].code);
-	ret = builtins_dispatcher(p->argv);
-	undo_redirection(p->redir);
-	return (ret);
+	(void)io_nb;
+	r = (t_redirection*)ft_memalloc(sizeof(t_redirection));
+	r->instruction = IODUP | IOWRITE;
+	(*lst) = (*lst)->next;
+	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;
+	(*lst) = (*lst)->next;
+	return (r);
 }

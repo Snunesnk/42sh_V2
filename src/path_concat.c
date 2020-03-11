@@ -6,20 +6,16 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/25 21:48:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:49:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
 #include "libft.h"
+#include "shell.h"
 #include "error.h"
 
-int	path_concat(char **bin)
+int	path_concat(char **bin, char *beg, char *env, char *dir)
 {
-	char	*beg;
-	char	*env;
-	char	*dir;
 	char	*pathname;
 
 	if (!(beg = ft_getenv("PATH")))
@@ -33,7 +29,7 @@ int	path_concat(char **bin)
 	{
 		pathname = ft_strnjoin(3, dir, "/", *bin);
 		if (!access(pathname, F_OK))
-			break;
+			break ;
 		ft_memdel((void**)&pathname);
 	}
 	ft_memdel((void**)&beg);
