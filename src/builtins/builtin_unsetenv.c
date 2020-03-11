@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:50:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static char	**getenvvar(const char *name)
+static char		**getenvvar(const char *name)
 {
 	extern char **environ;
 	int			i;
@@ -43,7 +43,7 @@ static int		ft_unset_alloc_env(const char *name)
 	extern char	**environ;
 	char		**dst;
 	char		**src;
-	int		tlen;
+	int			tlen;
 
 	if (!name || !*name || ft_strstr(name, "="))
 	{
@@ -63,7 +63,7 @@ static int		ft_unset_alloc_env(const char *name)
 	}
 }
 
-int		cmd_unsetenv(int argc, char **argv)
+int				cmd_unsetenv(int argc, char **argv)
 {
 	if (argc != 2)
 	{
