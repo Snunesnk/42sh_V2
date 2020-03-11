@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 17:44:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:16:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,6 +276,7 @@ void			debug_ast(t_ast *ast);
 void			del(void *content, size_t content_size);
 void			del_env(void *content, size_t content_size);
 int				execute_job(t_list *lst, int foreground);
+int         mark_process_status(pid_t pid, int status);
 int				execute_node(t_ast *node, int foreground);
 int				add_var(char **av);
 int				ft_atoifd(const char *str);
