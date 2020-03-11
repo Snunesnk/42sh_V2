@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/10 21:39:21 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/11 16:07:59 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SOURCES :=	main.c \
 		job.c \
 		job_control.c \
 		job_control2.c \
+		job_control3.c \
 		job_bookeeping.c \
 		launch_builtin.c \
 		launch_lexer_parser.c \
@@ -60,6 +61,9 @@ SOURCES :=	main.c \
 		path_concat.c \
 		process.c \
 		redir.c \
+		redir_less.c \
+		redir_great.c \
+		redir_great2.c \
 		signals.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \
