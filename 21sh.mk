@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/11 15:15:22 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/11 16:17:54 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,8 @@ SOURCES :=	main.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \
 		undo_redir.c \
+		undo_redir2.c \
+		undo_redir3.c \
 		utils_job.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_bg.c \
