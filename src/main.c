@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 11:20:32 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:22:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			main(int argc, char **argv)
 		astdel(&ast);
 		ft_strdel(&input);
 		g_retval = status;
-		do_job_notification();
+		do_job_notification(first_job, NULL, NULL);
 	}
 	free_hash_table();
 	ft_tabdel(&environ);
