@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 21:41:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 19:13:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,10 @@ int			cmd_fc(int argc, char **argv)
 		status = exec_fc_s_opt(args);
 	else
 		status = exec_fc_other_opt(opt_list, args);
+	if (g_needed_arg)
+	{
+		free(g_needed_arg);
+		g_needed_arg = NULL;
+	}
 	return (status);
 }

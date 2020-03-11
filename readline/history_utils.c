@@ -6,11 +6,12 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 22:28:47 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 19:12:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 char	*prev_hist(void)
 {

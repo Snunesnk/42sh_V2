@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 22:20:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:39:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			get_alpha_value(char *args)
 		hist_num = -1;
 	else
 		hist_num = g_hist->nb_line;
-	while (g_hist->nb_line != g_hist->total_lines)
+	while (g_hist->nb_line < g_hist->total_lines - 1)
 		next_hist();
 	return (hist_num);
 }
@@ -31,6 +31,8 @@ int			get_numeric_value(char *args)
 {
 	int hist_num;
 
+	if (*args == '-' && !args[1])
+		return (get_alpha_value(args));
 	hist_num = ft_atoi(args);
 	if (hist_num < 0)
 	{
@@ -49,7 +51,7 @@ void		swap_entries(int *hist_end, int *hist_beg)
 	*hist_beg = tmp;
 }
 
-void		get_hist_num(char **args, int opt_list, int *hist_end, \
+void		get_hist_num(char **args, int *opt_list, int *hist_end, \
 		int *hist_beg)
 {
 	if (ft_str_is_numeric(*args) || (**args == '-' \
@@ -60,15 +62,17 @@ void		get_hist_num(char **args, int opt_list, int *hist_end, \
 	args += 1;
 	if (!*args)
 	{
-		*hist_end = (opt_list & FC_L_OPTION) ? g_hist->total_lines - 1 \
+		*hist_end = (*opt_list & FC_L_OPTION) ? g_hist->total_lines - 2 \
 					: *hist_beg;
-		return ;
 	}
-	if (ft_str_is_numeric(*args) || (**args == '-' \
+	else if (ft_str_is_numeric(*args) || (**args == '-' \
 				&& ft_str_is_numeric(*args + 1)))
 		*hist_end = get_numeric_value(*args);
 	else
 		*hist_end = get_alpha_value(*args);
 	if (*hist_end < *hist_beg)
+	{
+		*opt_list ^= FC_R_OPTION;
 		swap_entries(hist_end, hist_beg);
+	}
 }
