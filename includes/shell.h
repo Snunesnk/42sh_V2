@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 11:16:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:23:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int     execute_process(char **argv, char **envp, t_hash_table *tmp, char *pathn
 void	put_job_in_foreground(t_job *j, int cont);
 void    put_job_in_background(t_job *j, int cont);
 void    update_status(void);
-void    do_job_notification(void);
+void    do_job_notification(t_job *j, t_job *jlast, t_job *jnext);
 int     get_exit_value(int status);
 int     get_job_status(t_job *j, int foreground);
 void    add_job_to_queue(t_job *j);
