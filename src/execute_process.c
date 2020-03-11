@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 17:48:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:45:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int			execute_process(char **argv, char **envp,
 	}
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
-	if (path_concat(&pathname) == e_command_not_found)
+	if (path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (g_errordesc[psherror(e_command_not_found, argv[0], e_cmd_type)].code);
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
