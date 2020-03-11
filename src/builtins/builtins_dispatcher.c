@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 16:33:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:45:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ const t_builtins	g_builtins[] =
 	{ "\0", NULL}
 };
 
-static void	*dispatcher(char *cmd)
+static void		*dispatcher(char *cmd)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static void	*dispatcher(char *cmd)
 		return ((void*)g_builtins[i].f);
 }
 
-int		is_a_builtin(char *cmd)
+int				is_a_builtin(char *cmd)
 {
 	if (!cmd)
 		return (0);
@@ -56,7 +56,7 @@ int		is_a_builtin(char *cmd)
 		return (0);
 }
 
-int			builtins_dispatcher(char **argv)
+int				builtins_dispatcher(char **argv)
 {
 	int			(*f)(int, char**);
 	int			ret;
