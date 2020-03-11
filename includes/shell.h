@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 12:05:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 14:44:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,17 @@ int				do_redirection(t_redirection *r);
 int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
 void    free_redirections(t_redirection *r);
+int             has_redirections(int type);
+int             has_close_at_end(char *str);
+t_redirection   *set_redirection(t_list **lst, int io_nb);
+t_redirection   *type_less_redirection(t_list **lst, int io_nb);
+t_redirection   *type_dless_redirection(t_list **lst, int io_nb);
+t_redirection   *type_lessand_redirection(t_list **lst, int io_nb);
+t_redirection   *subtype_great_redirection(t_list **lst, int io_nb);
+t_redirection   *type_great_redirection(t_list **lst, int io_nb);
+t_redirection   *type_dgreat_redirection(t_list **lst, int io_nb);
+t_redirection   *type_greatand_redirection(t_list **lst, int io_nb);
+t_redirection   *type_andgreat_redirection(t_list **lst, int io_nb);
 
 int valid_fd(int fd, int open);
 int check_if_directory(char *filename);
