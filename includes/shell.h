@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 11:23:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:46:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,7 @@ int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
 					enum e_token type);
 int				only_assignments(t_process *p);
 int				parser(t_list *lst);
-int				path_concat(char **bin);
+int				path_concat(char **bin, char *beg, char *env, char *dir);
 void			print_env(t_list *env, t_list **elem);
 _Bool			prompt_display(int status);
 int				set_minimal_env(void);

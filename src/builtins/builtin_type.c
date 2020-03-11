@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/01 19:57:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 11:48:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char		*getbinpath(char *bin)
 
 	if (!(cpy = ft_strdup(bin)))
 		return (NULL);
-	if (path_concat(&cpy) == e_success)
+	if (path_concat(&cpy, NULL, NULL, NULL) == e_success)
 		return (cpy);
 	else
 	{
