@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/11 11:15:28 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/11 14:57:31 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,8 @@ SOURCES :=	main.c \
 		path_concat.c \
 		process.c \
 		redir.c \
+		redir_less.c \
+		redir_great.c \
 		signals.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \
