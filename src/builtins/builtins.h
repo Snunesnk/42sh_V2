@@ -6,23 +6,22 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 20:38:47 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 21:18:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "shell.h"
+# include "shell.h"
 
-/*
-** Flags for hash options
-*/
 # define HASH_D_OPTION 1
 # define HASH_L_OPTION 2
 # define HASH_P_OPTION 4
 # define HASH_R_OPTION 8
 # define HASH_T_OPTION 16
+# define FNV_OFFSET 2166136261
+# define FNV_PRIME 16777619
 
 /*
 ** Flags for fc options, 2 is used to check if an error occured
@@ -39,16 +38,32 @@
 #define FNV_OFFSET 2166136261
 #define FNV_PRIME 16777619
 
-/*
-** Utils for builtins
-*/
-int				ft_putenv_table(char ***env, const char *name,
-				const char *value, int overwrite);
-int				is_a_builtin(char *cmd);
+struct	s_cd
+{
+	struct stat		buf;
+	char			*path;
+	char			*oldpwd;
+	char			*tmp;
+	int				ret;
+	_Bool			p;
+};
 
-/*
-** Functions in builtins.c
-*/
+typedef struct	s_builtins
+{
+	const char *const	key;
+	int					(*const f)(int, char**);
+}				t_builtins;
+
+extern const t_builtins	g_builtins[];
+
+struct			s_keywords
+{
+	const char *const	keyword;
+};
+
+int				ft_putenv_table(char ***env, const char *name,
+		const char *value, int overwrite);
+int				is_a_builtin(char *cmd);
 int				cmd_unsetenv(int argc, char **argv);
 int				cmd_setenv(int argc, char **argv);
 int				cmd_echo(int agrc, char **argv);
@@ -56,7 +71,6 @@ int				cmd_type(int agrc, char **argv);
 int				cmd_exit(int argc, char **argv);
 int				cmd_true(int argc, char **argv);
 int				cmd_false(int argc, char **argv);
-int				cmd_pwd(int argc, char **argv);
 int				cmd_cd(int argc, char **argv);
 int				cmd_set(int argc, char **argv);
 int				cmd_fg(int argc, char **argv);
@@ -120,17 +134,17 @@ extern char	*g_builtin_name;
 ** Functions in builtins_dispatcher.c
 */
 int				builtins_dispatcher(char **argv);
-typedef struct	s_builtins
-{
-	const char *const	key;
-	int			(*const f)(int, char**);
-}				t_builtins;
+int				concatenable_operand_while(const char *str);
+int				concatenable_operand(const char *str);
+int				gfp_env(struct s_cd *cd);
+int				gfp_previous(char **argv, struct s_cd *cd);
+int				gfp_concatenable(char **argv, struct s_cd *cd);
+int				set_oldpwd(void);
+int				refresh_pwd(const char *path, _Bool p);
+int				cdpath_concat(char **path, char *env);
+int				getfullpath(char **argv, struct s_cd *cd);
+int				stat_failure(char **argv, struct s_cd *cd);
 
-extern const t_builtins	g_builtins[];
-
-struct	s_keywords
-{
-	const char *const	keyword;
-};
+extern char	*g_pathname;
 
 #endif

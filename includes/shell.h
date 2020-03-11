@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 16:08:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 21:19:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ extern int		g_subshell;
 
 extern t_hash_table	**g_hash_table;
 
-/* The active jobs are linked into a list. This is its head. */
 extern t_job			*first_job;
 extern pid_t			shell_pgid;
 extern struct termios	shell_tmodes;
@@ -197,9 +196,21 @@ t_redirection	*build_redirections(t_list **lst);
 int				get_tokentype(t_list *lst);
 char			*get_tokvalue(t_list *lst);
 int				do_redirection(t_redirection *r);
-int				undo_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
+
 void    free_redirections(t_redirection *r);
+int		undo_redirection(t_redirection *r);
+int     restored_fd(t_shell_fds *shell_fd, int fd);
+void    add_restored_fd(t_shell_fds **shell_fd, int add);
+void    free_restored_fd(t_shell_fds *l);
+void    free_redirections(t_redirection *r);
+int     undo_iowrite(t_redirection *r, t_shell_fds **shell_fd);
+int     undo_ioread(t_redirection *r, t_shell_fds **shell_fd);
+int     undo_iodup(t_redirection *r, t_shell_fds **shell_fd);
+int     undo_iodfile(t_redirection *r, t_shell_fds **shell_fd);
+int     undo_redirection_internal(t_redirection *r);
+int     undo_redirection(t_redirection *r);
+	
 int             has_redirections(int type);
 int             has_close_at_end(char *str);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
