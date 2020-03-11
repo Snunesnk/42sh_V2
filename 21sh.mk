@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/11 16:07:59 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/11 21:20:22 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,8 @@ SOURCES :=	main.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \
 		undo_redir.c \
+		undo_redir2.c \
+		undo_redir3.c \
 		utils_job.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
@@ -78,9 +80,10 @@ SOURCES :=	main.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \
+		builtins/builtin_cd_path.c \
+		builtins/builtin_cd_operand.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
-		builtins/builtin_pwd.c \
 		builtins/builtins_dispatcher.c \
 		builtins/builtin_setenv.c \
 		builtins/builtin_truefalse.c \
