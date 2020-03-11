@@ -6,13 +6,9 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/09/25 16:32:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:20:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-** https://www.unix.com/man-page/posix/1posix/cd/
-*/
 
 #include "shell.h"
 
@@ -131,7 +127,7 @@ static int	cdpath_concat(char **path)
 		if (!(pathname = ft_strnjoin(3, dir, "/", *path)))
 			return (e_cannot_allocate_memory);
 		if (!access(pathname, F_OK))
-			break;
+			break ;
 		ft_memdel((void**)&pathname);
 	}
 	ft_memdel((void**)&beg);
@@ -166,12 +162,12 @@ static int	parse_opt(int argc, char **argv, _Bool *p)
 
 int		cmd_cd(int argc, char **argv)
 {
-	struct stat buf;
-	char	*path;
-	char	*oldpwd;
-	char	*tmp;
-	int	ret;
-	_Bool	p;
+	struct stat	buf;
+	char		*path;
+	char		*oldpwd;
+	char		*tmp;
+	int			ret;
+	_Bool		p;
 
 	path = NULL;
 	
