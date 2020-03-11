@@ -1,6 +1,40 @@
-echo "DO NOT FORGET TO ERASE BOTH ~/.bash_history AND ~/.21sh_history OR IT WILL MOST LIKELY FAIL DUE TO DIFFERENT HISTORIES"
+DO NOT FORGET TO ERASE BOTH ~/.bash_history AND ~/.21sh_history OR IT WILL MOST LIKELY FAIL DUE TO DIFFERENT HISTORIES
 fc -l;
 ls; fc -l;
 fc -lr;
 fc -lrn;
 fc -ln;
+fc -evim ls;
+fc -e vim ls;
+fc -els ls;
+fc -;
+fc ls;
+fc ls make;
+fc -r make ls;
+fc -lr make ls;
+ls;
+make;
+make;
+make;
+make;
+make;
+make;
+make;
+make;
+w;
+fc ls w;
+fc w ls;
+fc -r w ls;
+fc ls;
+fc -l ls;
+fc -l;
+fc -1;
+fc -1 w;
+fc 1 -1;
+fc w -1;
+make; w; w; w; w; w; w; w; w; w; w; w; w; w; w; w; ls; fc make ls
+fc -- ls w;
+fc -- -l ls w
+fc ls w make
+fc ls w amke
+fc --l

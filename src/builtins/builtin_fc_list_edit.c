@@ -6,23 +6,20 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 22:42:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 21:10:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "ft_readline.h"
 
-char		*get_editor(int opt_list, char **args)
+char		*get_editor(int opt_list)
 {
 	char	*editor;
 
 	editor = NULL;
 	if (opt_list & FC_E_OPTION)
-	{
-		editor = ft_strdup(*args);
-		(*args)++;
-	}
+		editor = ft_strdup(g_needed_arg);
 	else if ((editor = getenv("FCEDIT")))
 		editor = ft_strdup(editor);
 	else if ((editor = getenv("EDITOR")))
@@ -39,19 +36,20 @@ char		*get_editor(int opt_list, char **args)
 
 void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 {
-	while (!(opt_list & FC_R_OPTION) && hist_beg < g_hist->nb_line)
+	if (opt_list & FC_R_OPTION)
+		swap_entries(&hist_end, &hist_beg);
+	while (hist_beg < g_hist->nb_line)
 		prev_hist();
-	while ((opt_list & FC_R_OPTION) && hist_end < g_hist->nb_line)
-		prev_hist();
-	while ((g_hist->nb_line < hist_end && !(opt_list & FC_R_OPTION)) \
-			|| (g_hist->nb_line > hist_beg && (opt_list & FC_R_OPTION)))
+	while (1)
 	{
 		if (!(opt_list & FC_N_OPTION))
-			ft_dprintf(fd, "%d", g_hist->nb_line + !(opt_list & FC_R_OPTION));
+			ft_dprintf(fd, "%d", g_hist->nb_line + 1);
 		if (opt_list & FC_L_OPTION)
 			ft_dprintf(fd, "\t");
 		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset \
 				+ ((g_hist->offset == 0) ? 0 : 1));
+		if (g_hist->nb_line == hist_end)
+			break ;
 		if (!(opt_list & FC_R_OPTION))
 			next_hist();
 		else
@@ -61,14 +59,33 @@ void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 		next_hist();
 }
 
-int			re_execute_cmd(int opt_list, char **args)
+void		launch_fc_command(char *command)
+{
+	int	status;
+
+	status = fork();
+	if (status < 0)
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: fork failed\n");
+		return ;
+	}
+	else if (status == 0)
+	{
+		ft_dprintf(STDERR_FILENO, "%s\n", command);
+		add_hentry(command, 1);
+		exec_input(command);
+	}
+	else
+		wait(&status);
+}
+
+int			re_execute_cmd(int opt_list)
 {
 	int		fd;
 	char	*command;
 	char	*editor;
 
-	command = NULL;
-	if (!(editor = get_editor(opt_list, args)))
+	if (!(editor = get_editor(opt_list)))
 		return (e_cannot_allocate_memory);
 	if (!(command = ft_strjoin(editor, " .21sh_tmp_file")) \
 			&& ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n"))
@@ -80,9 +97,10 @@ int			re_execute_cmd(int opt_list, char **args)
 		return (1);
 	while (get_next_line(fd, &command) > 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%s\n", command);
-		add_hentry(command, 1);
-		exec_input(command);
+		if (command[0])
+			launch_fc_command(command);
+		else
+			free(command);
 		command = NULL;
 	}
 	close(fd);
@@ -120,24 +138,25 @@ int			exec_fc_other_opt(int opt_list, char **args)
 
 	hist_end = -1;
 	hist_beg = -1;
-	if (g_hist->used == 0)
-		return (0);
-	if (*args)
-		get_hist_num(args, opt_list, &hist_end, &hist_beg);
+	prev_hist();
+	if (*args && g_hist->used != 0)
+		get_hist_num(args, &opt_list, &hist_end, &hist_beg);
 	else
 	{
-		hist_end = g_hist->total_lines - 2;
-		hist_beg = (opt_list & FC_L_OPTION) ? hist_end - 16 : hist_end;
+		hist_end = g_hist->nb_line - 1;
+		hist_beg = (opt_list & FC_L_OPTION) ? hist_end - 15 : hist_end;
 		if (hist_beg < 0)
 			hist_beg = 0;
 	}
-	if (hist_end < 0 || hist_beg < 0)
+	if (hist_end < 0 || hist_beg < 0 || g_hist->total_lines == 1)
 	{
 		ft_printf("./21sh: fc: history specification out of range\n");
+		if (g_hist->total_lines != 1)
+			fc_replace_last_hist(NULL);
 		return (e_invalid_input);
 	}
 	if (get_fd_and_print(opt_list, hist_beg, hist_end))
 		return ((opt_list & FC_L_OPTION) ? e_success : 1);
 	fc_replace_last_hist(NULL);
-	return (re_execute_cmd(opt_list, args));
+	return (re_execute_cmd(opt_list));
 }
