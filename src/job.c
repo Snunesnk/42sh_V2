@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 12:05:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:23:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_all_processes(t_process *p)
 	}
 }
 
-void	free_job(t_job *j) /* Free a given job in the job queue */
+void	free_job(t_job *j)
 {
 	t_job	*j_next;
 	t_job	*tmp;
@@ -63,11 +63,11 @@ int	launch_job(t_job *j, int foreground)
 	int			infile;
 	int			outfile;
 
+	mypipe[0] = -1;
+	mypipe[1] = -1;
 	outfile = -1;
 	infile = j->stdin;
 	p = j->first_process;
-	mypipe[0] = -1;
-	mypipe[1] = -1;
 	while (p)
 	{
 		if (treat_expansions(p->argc, p->argv))
@@ -85,7 +85,7 @@ int	launch_job(t_job *j, int foreground)
 			outfile = j->stdout;
 		if (!j->first_process->next && only_assignments(p))
 			treat_shell_variables(p, 1);
-		if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
+		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
 		{
 			treat_shell_variables(p, 0);
 			return (launch_builtin(p));
