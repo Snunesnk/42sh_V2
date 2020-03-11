@@ -1,31 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_pop_get_data.c                               :+:      :+:    :+:   */
+/*   undo_redir3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/23 15:09:11 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/31 09:37:19 by abarthel         ###   ########.fr       */
+/*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
+/*   Updated: 2020/03/11 16:17:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "libft.h"
+#include "error.h"
+#include "shell.h"
 
-#include "ft_stack.h"
-
-extern __inline__ void	*stack_pop_get_data(struct s_stack **top)
+int		undo_redirection(t_redirection *r)
 {
-	struct s_stack	*previous;
-	void		*__restrict__ data;
-
-	data = NULL;
-	if (*top)
-	{
-		previous = (*top)->previous;
-		data = (*top)->data;
-		free(*top);
-		*top = previous;
-	}
-	return (data);
+	if (r)
+		undo_redirection_internal(r);
+	return (0);
 }
