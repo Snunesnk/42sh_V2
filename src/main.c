@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 15:53:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 16:09:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			exec_input(char *input)
 	astdel(&ast);
 	ft_strdel(&input);
 	g_retval = status;
-	do_job_notification();
+	do_job_notification(first_job, NULL, NULL);
 	return (status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:54:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:23:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	free_all_processes(t_process *p)
 	}
 }
 
-void	free_job(t_job *j) /* Free a given job in the job queue */
+void	free_job(t_job *j)
 {
 	t_job	*j_next;
 	t_job	*tmp;
@@ -57,23 +57,21 @@ void	free_job(t_job *j) /* Free a given job in the job queue */
 
 int	launch_job(t_job *j, int foreground)
 {
-	t_process *p;
-	pid_t pid;
-	int mypipe[2], infile, outfile;
+	t_process	*p;
+	pid_t		pid;
+	int			mypipe[2];
+	int			infile;
+	int			outfile;
 
+	mypipe[0] = -1;
+	mypipe[1] = -1;
 	outfile = -1;
 	infile = j->stdin;
 	p = j->first_process;
-	mypipe[0] = -1;
-	mypipe[1] = -1;
 	while (p)
 	{
-//		treat_expansions(p->argc, p->argv);
-//		ft_printf("\n>%s\n", p->argv[1]);
-		if (treat_expansions(p->argc, p->argv)) /* If expansion fails, the process execution is skipped */
-		{ /* test pipe: echo Hello | ${${dfdf}} | cat -e */
-			p->argv[0] = NULL; /* Should be free instead */
-		}
+		if (treat_expansions(p->argc, p->argv))
+			p->argv[0] = NULL;
 		if (p->next)
 		{
 			if (pipe(mypipe) < 0)
@@ -85,38 +83,30 @@ int	launch_job(t_job *j, int foreground)
 		}
 		else
 			outfile = j->stdout;
-
-		/* 1. Check if process is a shell builtin, NOFORK */
 		if (!j->first_process->next && only_assignments(p))
-		{
 			treat_shell_variables(p, 1);
-		}
-		if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
+		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
 		{
 			treat_shell_variables(p, 0);
 			return (launch_builtin(p));
 		}
-		/* 2. Fork the child processes.  */
 		else
 		{
 			pid = fork ();
 			if (pid == 0)
 			{
-				/* This is the child process.  */
 				if (infile != mypipe[0] && mypipe[0] != -1)
 					close(mypipe[0]);
-//				treat_shell_variables(p, 1);
+				treat_shell_variables(p, 1);
 				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
 			}
 			else if (pid < 0)
 			{
-				/* The fork failed.  */
 				perror ("fork");
 				exit (1);
 			}
 			else
 			{
-				/* This is the parent process.  */
 				p->pid = pid;
 				if (shell_is_interactive)
 				{
@@ -127,8 +117,6 @@ int	launch_job(t_job *j, int foreground)
 				add_name_hash_table(p->argv[0], 1);
 			}
 		}
-
-		/* Clean up after pipes.  */
 		if (infile != j->stdin)
 			close (infile);
 		if (outfile != j->stdout)
@@ -136,8 +124,6 @@ int	launch_job(t_job *j, int foreground)
 		infile = mypipe[0];
 		p = p->next;
 	}
-
-
 	if (!shell_is_interactive)
 		wait_for_job(j);
 	else if (g_subshell)
