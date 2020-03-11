@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 12:27:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 19:43:12 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void		free_process(t_process *p)
 	free_redirections(p->redir);
 	free(p->argv);
 	free(p);
+	p = NULL;
 }
 
 static void	perf_redir(t_process *p)

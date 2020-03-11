@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 20:39:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 19:06:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ char	deal_with_spe_opt(char ***args, int *x)
 	}
 	else if (!(**args)[*x + 1])
 	{
-		g_needed_arg = *(*args + 1);
+		g_needed_arg = ft_strdup(*(*args + 1));
 		*args += 2;
 		*x = 0;
 	}
 	else
 	{
-		g_needed_arg = **args + *x + 1;
+		g_needed_arg = ft_strdup(**args + *x + 1);
 		*args += 1;
 		*x = 0;
 	}

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 21:38:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:38:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,11 +103,12 @@ int				exec_fc_other_opt(int opt_list, char **args);
 char			*ft_strreplace(char **str, char *pattern, char *replacement);
 void			fc_replace_last_hist(char *tmp);
 void			free_substitute(t_sub *substitute);
-void			get_hist_num(char **args, int options_list, int *hist_end, \
-				int *hist_beg);
+void			get_hist_num(char **args, int *opt_list, int *hist_end, \
+		int *hist_beg);
 int				fc_invalid_input(char *args);
 void			print_error(char *usage, char option, int mode);
 int				exec_fc_s_opt(char **args);
+void			swap_entries(int *hist_end, int *hist_beg);
 
 /*
 ** Global var util for get_next_opt

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 19:36:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 19:21:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	init_history(void)
 	g_hist->offset = 0;
 	g_hist->used = 0;
 	g_hist->capacity = 0;
-	g_hist->total_lines = 1;
+	g_hist->total_lines = 0;
 	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: error: can't open %s\n", g_hist_loc);
@@ -61,7 +61,8 @@ void	remove_nl(void)
 		}
 		i++;
 	}
-	g_hist->total_lines -= 1;
+	if (g_hist->total_lines > 0)
+		g_hist->total_lines -= 1;
 }
 
 void	get_history_loc(void)
@@ -81,7 +82,7 @@ void	get_history_loc(void)
 	}
 	if (!(g_hist_loc = ft_strjoin(user_home, "/.21sh_history")))
 	{
-		ft_printf("./12sh: cannot allocate memory\n");
+		ft_dprintf(STDERR_FILENO, "./12sh: cannot allocate memory\n");
 		return ;
 	}
 }

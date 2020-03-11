@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:49 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 11:43:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 19:57:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			launch_builtin(t_process *p)
 	if ((ret = do_redirection(p->redir)))
 		return (g_errordesc[ret].code);
 	ret = builtins_dispatcher(p->argv);
-	undo_redirection(p->redir);
+	if (p && p->redir)
+		undo_redirection(p->redir);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 20:51:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/11 19:12:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,11 @@ char	get_next_opt(char ***args, const char *options_list)
 		x = 0;
 		return (-1);
 	}
+	if ((**args)[0] == '-' && !(**args)[1])
+	{
+		x = 0;
+		return (-1);
+	}
 	if (!(**args)[x] && (**args)[0] == '-')
 	{
 		x = 1;
@@ -88,6 +93,11 @@ int		check_for_needed_arguments(int options_list, char **args)
 		return (e_invalid_input);
 	}
 	status = exec_hash_builtin(options_list, args);
+	if (g_needed_arg)
+	{
+		free(g_needed_arg);
+		g_needed_arg = NULL;
+	}
 	return (status);
 }
 
