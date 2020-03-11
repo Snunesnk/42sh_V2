@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:58:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 11:23:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,21 +25,15 @@ void	wait_for_job(t_job *j)
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 }
 
-void	format_job_info (t_job *j, const char *status)
+void	format_job_info(t_job *j, const char *status)
 {
 	ft_dprintf(STDERR_FILENO, "%ld (%s): %s\n",
 			(long)j->pgid, status, j->command);
 }
 
-void	do_job_notification(void)
+void	do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 {
-	t_job	*j;
-	t_job	*jlast;
-	t_job	*jnext;
-
 	update_status();
-	jlast = NULL;
-	j = first_job;
 	while (j)
 	{
 		jnext = j->next;
