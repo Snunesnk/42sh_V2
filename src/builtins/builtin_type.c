@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 16:44:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:49:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ static char		*getbinpath(char *bin)
 	}
 }
 
-static void		display_err_msg(int i, char **argv)
+static void		display_err_msg(_Bool *error, int i, char **argv)
 {
-	error |= 1;
+	*error |= 1;
 	ft_dprintf(STDERR_FILENO, "%s: %s: %s: not found\n",
 				g_progname, *argv, argv[i]);
 }
@@ -94,7 +94,7 @@ int				cmd_type(int argc, char **argv)
 			ft_memdel((void**)&str);
 		}
 		else
-			display_err_msg(i, argv);
+			display_err_msg(&error, i, argv);
 		++i;
 	}
 	return (error);
