@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 16:22:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:30:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,6 @@ extern int		g_subshell;
 
 extern t_hash_table	**g_hash_table;
 
-/* The active jobs are linked into a list. This is its head. */
 extern t_job			*first_job;
 extern pid_t			shell_pgid;
 extern struct termios	shell_tmodes;
