@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 11:58:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 12:27:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,41 @@
 #include "shell.h"
 #include "builtins.h"
 
-void	free_process(t_process *p)
+void		free_process(t_process *p)
 {
 	free_redirections(p->redir);
 	free(p->argv);
 	free(p);
 }
 
-int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground)
+static void	perf_redir(t_process *p)
+{
+	int ret;
+
+	if (p->infile != STDIN_FILENO)
+	{
+		dup2(p->infile, STDIN_FILENO);
+		close(p->infile);
+	}
+	if (p->outfile != STDOUT_FILENO)
+	{
+		dup2(p->outfile, STDOUT_FILENO);
+		close(p->outfile);
+	}
+	if (p->errfile != STDERR_FILENO)
+	{
+		dup2(p->errfile, STDERR_FILENO);
+		close(p->errfile);
+	}
+	if ((ret = do_redirection(p->redir)))
+	{
+		free_process(p);
+		exit(g_errordesc[ret].code);
+	}
+}
+
+int			launch_process(t_process *p, pid_t pgid, int infile,
+		int outfile, int errfile, int foreground)
 {
 	char		**envp;
 	pid_t		pid;
@@ -41,26 +68,10 @@ int	launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfil
 			tcsetpgrp(shell_terminal, pgid);
 		restore_procmask();
 	}
-	if (infile != STDIN_FILENO)
-	{
-		dup2(infile, STDIN_FILENO);
-		close(infile);
-	}
-	if (outfile != STDOUT_FILENO)
-	{
-		dup2(outfile, STDOUT_FILENO);
-		close(outfile);
-	}
-	if (errfile != STDERR_FILENO)
-	{
-		dup2(errfile, STDERR_FILENO);
-		close(errfile);
-	}
-	if ((ret = do_redirection(p->redir)))
-	{
-		free_process(p);
-		exit(g_errordesc[ret].code);
-	}
+	p->infile = infile;
+	p->errfile = errfile;
+	p->outfile = outfile;
+	perf_redir(p);
 	ret = execute_process(p->argv, envp, NULL, NULL);
 	free_process(p);
 	exit(ret);
