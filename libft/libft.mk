@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/07 17:59:46 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/11 21:19:29 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,7 @@ NAME = libft.a
 
 SOURCES_PATH :=	./src/
 
-SOURCES	:=	ds_btree/btree_apply_infix.c \
-		ds_btree/btree_apply_postfix.c \
-		ds_btree/btree_apply_prefix.c \
-		ds_btree/btree_apply_by_level.c \
-		ds_btree/btree_create_node.c \
-		ds_btree/btree_insert_data.c \
-		ds_btree/btree_level_count.c \
-		ds_btree/btree_search_data.c \
-		ds_btree/btree_delete.c \
-		ds_bstree/bstree_remove_data.c \
+SOURCES	:= \
 		ds_vct/vct_addchar.c \
 		ds_vct/vct_addstr.c \
 		ds_vct/vct_clear.c \
@@ -41,17 +32,6 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_vct/vct_replace.c \
 		ds_vct/vct_reset.c \
 		ds_vct/vct_resize.c \
-		ds_queue/queue_create_node.c \
-		ds_queue/queue_enqueue.c \
-		ds_queue/queue_dequeue.c \
-		ds_queue/queue_front.c \
-		ds_queue/queue_reverse.c \
-		ds_queue/queue_reverse_recursion.c \
-		ds_queue/queue_delete.c \
-		ds_queue/queue_sort.c \
-		ds_queue/queue_isempty.c \
-		ds_queue/queue_size.c \
-		ds_queue/queue_apply_to_each.c \
 		ds_singly_linked_list/ft_lstadd.c \
 		ds_singly_linked_list/ft_lstquicksort.c \
 		ds_singly_linked_list/ft_lstaddend.c \
@@ -65,20 +45,6 @@ SOURCES	:=	ds_btree/btree_apply_infix.c \
 		ds_singly_linked_list/ft_lstnew_str.c \
 		ds_singly_linked_list/ft_lstprint.c \
 		ds_singly_linked_list/ft_lst_to_char_tab.c \
-		ds_stack/stack_apply_to_each.c \
-		ds_stack/stack_create_element.c \
-		ds_stack/stack_delete.c \
-		ds_stack/stack_duplicate.c \
-		ds_stack/stack_initialize.c \
-		ds_stack/stack_isempty.c \
-		ds_stack/stack_peek.c \
-		ds_stack/stack_pop.c \
-		ds_stack/stack_pop_get_data.c \
-		ds_stack/stack_push.c \
-		ds_stack/stack_reverse.c \
-		ds_stack/stack_reverse_recursion.c \
-		ds_stack/stack_sort.c \
-		ds_stack/stack_swap.c \
 		f_ctype/ft_isalnum.c \
 		f_ctype/ft_isblank.c \
 		f_ctype/ft_isalpha.c \
