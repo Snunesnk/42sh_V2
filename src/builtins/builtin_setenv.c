@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/11 17:01:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	print_setenv_syntax_error(char *cmd_name, char *str)
 static int	is_valid_chr(const char c)
 {
 	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		 || (c >= '0' && c <= '9') || c == '_' || c == '/'))
+		|| (c >= '0' && c <= '9') || c == '_' || c == '/'))
 		return (1);
 	else
 		return (0);
@@ -41,7 +41,7 @@ static int	has_invalid_syntax(const char *str)
 	return (e_success);
 }
 
-int		cmd_setenv(int argc, char **argv)
+int			cmd_setenv(int argc, char **argv)
 {
 	if (argc != 3)
 	{
