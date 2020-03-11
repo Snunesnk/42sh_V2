@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/11 16:17:54 by abarthel         ###   ########.fr        #
+#    Updated: 2020/03/11 16:32:34 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,7 +77,6 @@ SOURCES :=	main.c \
 		builtins/builtin_cd.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
-		builtins/builtin_pwd.c \
 		builtins/builtins_dispatcher.c \
 		builtins/builtin_setenv.c \
 		builtins/builtin_truefalse.c \

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/05 08:43:30 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/11 16:33:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ const t_builtins	g_builtins[] =
 	{ "exit", &cmd_exit},
 	{ "setenv", &cmd_setenv},
 	{ "unsetenv", &cmd_unsetenv},
-	{ "pwd", &cmd_pwd},
 	{ "cd", &cmd_cd},
 	{ "fg", &cmd_fg},
 	{ "bg", &cmd_bg},
