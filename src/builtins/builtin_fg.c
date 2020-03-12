@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 19:37:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 09:39:35 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_job	*find_lastbackgrounded(void)
 	return (NULL);
 }
 
-int	cmd_fg(int argc, char **argv)
+int		cmd_fg(int argc, char **argv)
 {
 	t_job	*j;
 

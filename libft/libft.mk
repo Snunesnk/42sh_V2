@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/11 21:19:29 by snunes           ###   ########.fr        #
+#    Updated: 2020/03/12 15:46:17 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ SOURCES	:= \
 		f_misc/ft_fprintbits.c \
 		f_misc/ft_fputwcbits.c \
 		f_misc/ft_fputwsbits.c \
+		f_misc/ft_free_tab.c \
 		f_misc/ft_isempty.c \
 		f_misc/ft_isprime.c \
 		f_misc/ft_isprint.c \

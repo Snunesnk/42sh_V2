@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 09:40:04 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	set_current(int job_number)
 	return (' ');
 }
 
-int	cmd_jobs(int argc, char **argv)
+int			cmd_jobs(int argc, char **argv)
 {
 	int	job_number;
 	char	current;

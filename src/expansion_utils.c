@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:48:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:02:51 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #include "libft.h"
 #include "error.h"
 
-int	is_a_valid_chr(const char c)
+int		is_a_valid_chr(const char c)
 {
 	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		 || (c >= '0' && c <= '9') || c == '_'))
+		|| (c >= '0' && c <= '9') || c == '_'))
 		return (1);
 	else
 		return (0);
 }
 
-int	is_valid_param(const char *str)
+int		is_valid_param(const char *str)
 {
 	size_t	i;
 
