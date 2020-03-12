@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 17:44:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:01:07 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-int		is_redir_type(int type)
+int			is_redir_type(int type)
 {
 	return (type == GREATAND
 		|| type == LESSAND
@@ -24,7 +24,7 @@ int		is_redir_type(int type)
 		|| type == LESS);
 }
 
-char	*get_tokvalue(t_list *lst)
+char		*get_tokvalue(t_list *lst)
 {
 	t_token	*t;
 
@@ -32,7 +32,7 @@ char	*get_tokvalue(t_list *lst)
 	return (t->value);
 }
 
-int		get_tokentype(t_list *lst)
+int			get_tokentype(t_list *lst)
 {
 	t_token	*t;
 
@@ -56,7 +56,7 @@ static int	test_lst(t_token **t, t_list **lst, int *argc)
 	return (0);
 }
 
-int		get_argc(t_list *lst, int argc, t_token *t)
+int			get_argc(t_list *lst, int argc, t_token *t)
 {
 	while (lst)
 	{

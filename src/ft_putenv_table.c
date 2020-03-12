@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/04 15:49:03 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/06 15:56:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:04:23 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	append_environ(char ***env, const char *name, const char *value)
 	*env = new_env;
 }
 
-int			ft_putenv_table(char ***env, const char *name, const char *value, int overwrite)
+int			ft_putenv_table(char ***env, const char *name, const char *value,
+					int overwrite)
 {
 	char		**env_var;
 	char		*tmp;

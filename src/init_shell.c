@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:28:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 09:52:00 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,4 @@ int		set_minimal_env(void)
 	}
 	set_minimal_env2(&tmp);
 	return (e_success);
-}
-
-void	del(void *content, size_t content_size)
-{
-	(void)content_size;
-	ft_strdel(&((t_token*)(content))->value);
-	free(content);
 }
