@@ -6,12 +6,13 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 15:49:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 17:52:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ft_readline.h"
+#include "builtins.h"
 
 extern char	**environ;
 t_list		*g_env;
@@ -45,13 +46,12 @@ int			main(int argc, char **argv)
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
-	if (!(g_hash_table = ft_memalloc(sizeof(*g_hash_table) * HASH_SIZE)))
-		return (EXIT_FAILURE);
 	if (!(environ = ft_tabcpy(environ)))
 	{
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
+	init_hash_table();
 	get_env_list(environ);
 //	ft_lstprint(g_env, &print_env);
 	g_retval = e_success;
@@ -69,6 +69,7 @@ int			main(int argc, char **argv)
 			break ;
 		}
 		status = exec_input(input);
+		test_hash_path();
 	}
 	free_hash_table();
 	ft_tabdel(&environ);

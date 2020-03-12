@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 15:45:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 17:52:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@
 # define FC_R_OPTION 8
 # define FC_S_OPTION 16
 # define FC_E_OPTION 32
-
-/*
-** Values used to hash strings
-*/
-#define FNV_OFFSET 2166136261
-#define FNV_PRIME 16777619
 
 struct			s_cd
 {
@@ -98,6 +92,8 @@ void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
 void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
 char			deal_with_spe_opt(char ***args, int *x);
 char			return_next_opt(char ***args, int *x, const char *options_list);
+void			test_hash_path(void);
+void			init_hash_table(void);
 
 /*
 ** Substitution struc for fc
@@ -123,6 +119,7 @@ int				fc_invalid_input(char *args);
 void			print_error(char *usage, char option, int mode);
 int				exec_fc_s_opt(char **args);
 void			swap_entries(int *hist_end, int *hist_beg);
+void			launch_fc_command(char *command);
 
 /*
 ** Global var util for get_next_opt

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 21:10:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 15:59:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,24 @@ int		fc_invalid_input(char *args)
 	print_error("[-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]"\
 			, args[x], 3);
 	return (e_invalid_input);
+}
+
+void		launch_fc_command(char *command)
+{
+	int	status;
+
+	status = fork();
+	if (status < 0)
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: fork failed\n");
+		return ;
+	}
+	else if (status == 0)
+	{
+		ft_dprintf(STDERR_FILENO, "%s\n", command);
+		add_hentry(command, 1);
+		exec_input(command);
+	}
+	else
+		wait(&status);
 }
