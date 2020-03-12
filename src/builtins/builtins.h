@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 21:18:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 15:45:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #define FNV_OFFSET 2166136261
 #define FNV_PRIME 16777619
 
-struct	s_cd
+struct			s_cd
 {
 	struct stat		buf;
 	char			*path;

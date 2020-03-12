@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/05 15:40:12 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:29:08 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**tab_remove_first_elem(int *ac, char **av)
 			new_tab[i] = ft_strdup(av[i + 1]);
 			i++;
 		}
-		ft_free_tab((*ac) + 1, av);
+		ft_free_tab((*ac) + 1, &av);
 	}
 	if (i == *ac)
 		new_tab = NULL;

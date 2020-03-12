@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   only_assignments.c                                 :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/05 11:52:47 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 09:41:20 by efischer         ###   ########.fr       */
+/*   Created: 2020/03/12 09:56:01 by efischer          #+#    #+#             */
+/*   Updated: 2020/03/12 10:28:34 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "shell.h"
 
-int		only_assignments(t_process *p)
+void		ft_free_tab(int ac, char ***av)
 {
-	int				ret;
-	int				i;
+	int		i;
 
 	i = 0;
-	ret = FALSE;
-	while (i < p->argc)
+	if (*av == NULL)
+		return ;
+	while (i < ac)
 	{
-		if (ft_strchr(p->argv[i], '=') == NULL)
-			break ;
+		free(*av[i]);
+		*av[i] = NULL;
 		i++;
 	}
-	if (i == p->argc)
-		ret = TRUE;
-	return (ret);
+	free(*av);
+	*av = NULL;
 }
