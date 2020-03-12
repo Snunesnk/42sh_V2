@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 17:52:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 18:19:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "builtins.h"
 
 extern char	**environ;
+char		**pending_cmd = NULL
 t_list		*g_env;
 
 int			exec_input(char *input)
