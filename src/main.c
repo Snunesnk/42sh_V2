@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 16:09:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 15:49:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 
 extern char	**environ;
 t_list		*g_env;
-
-void	astdel(t_ast **ast)
-{
-	if (*ast != NULL)
-	{
-		ft_lstdel(&(*ast)->content, del);
-		if ((*ast)->left != NULL)
-			astdel((t_ast**)&(*ast)->left);
-		if ((*ast)->right != NULL)
-			astdel((t_ast**)&(*ast)->right);
-		free(*ast);
-		*ast = NULL;
-	}
-}
 
 int			exec_input(char *input)
 {

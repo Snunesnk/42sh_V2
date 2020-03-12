@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 16:03:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/03 17:56:04 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/12 09:50:46 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,6 @@
 #include "shell.h"
 
 extern t_list	*g_env;
-
-void	del_env(void *content, size_t content_size)
-{
-	(void)content_size;
-	ft_strdel(&((t_shell_var*)(content))->name);
-	ft_strdel(&((t_shell_var*)(content))->value);
-	free(content);
-}
 
 void	alpha_sort(t_list **lst1, t_list **lst2, t_list **head)
 {
@@ -61,7 +53,7 @@ int		get_env_list(char **environ)
 	char		*value;
 	size_t		i;
 
-	i= 0;
+	i = 0;
 	ft_bzero(&shell_var, sizeof(shell_var));
 	while (environ[i] != NULL)
 	{
