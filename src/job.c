@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 12:23:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:05:02 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	free_job(t_job *j)
 	}
 }
 
-int	launch_job(t_job *j, int foreground)
+int		launch_job(t_job *j, int foreground)
 {
 	t_process	*p;
 	pid_t		pid;

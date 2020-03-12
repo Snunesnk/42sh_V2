@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/11 16:30:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 10:18:43 by efischer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@
 # define RDONLY		0x04
 # define ARRAY		0x08
 
-# define IOTYPE  0xF
-# define IOREAD  0x1
-# define IOWRITE 0x2
-# define IORDWR  0x4
-# define IOHERE  0x8
-# define IOCAT   0x10
-# define IODUP   0x20
+# define IOTYPE		0xF
+# define IOREAD		0x1
+# define IOWRITE	0x2
+# define IORDWR		0x4
+# define IOHERE		0x8
+# define IOCAT		0x10
+# define IODUP		0x20
 
-# define FILENAME  0x1
-# define DEST      0x2
-# define HEREWORD  0x4
-# define FDCLOSE   0x8
-# define NOFORK    0x10
-# define REDSUC    0x20
+# define FILENAME	0x1
+# define DEST		0x2
+# define HEREWORD	0x4
+# define FDCLOSE	0x8
+# define NOFORK		0x10
+# define REDSUC		0x20
 
 char	*short_logical_path(char **cwd);
 char	*short_physical_path(char **cwd);
@@ -287,33 +287,33 @@ int				build_ast(t_ast **ast, t_list *lst);
 void			debug(t_list *lst);
 void			debug_ast(t_ast *ast);
 void			del(void *content, size_t content_size);
+void			del_elem(void *content, size_t content_size);
 void			del_env(void *content, size_t content_size);
 int				execute_job(t_list *lst, int foreground);
-int         mark_process_status(pid_t pid, int status);
+int				mark_process_status(pid_t pid, int status);
 int				execute_node(t_ast *node, int foreground);
 int				add_var(char **av);
 int				ft_atoifd(const char *str);
-void			ft_free_tab(int ac, char **av);
 int				ft_ismeta(int c);
 char			*ft_join_free(char *s1, char *s2, int op);
 void			ft_merge_sort(t_list **lst, void sort(t_list**, t_list**,
-			t_list**));
+					t_list**));
 void			ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
 int				get_env_list(char **environ);
 char			**get_env_tab(void);
 int				get_next_token(const char *str, t_token *token,
-		enum e_token *last_token_type);
+					enum e_token *last_token_type);
 t_list			*get_shell_var(char *name);
 int				get_stdin(char **line);
 t_list			*get_shell_var(char *name);
 size_t			get_word(const char *str, t_token *token,
-		enum e_token *last_token_type);
+					enum e_token *last_token_type);
 enum e_token	**init_enum_tab(void);
 int				initialize_prompt_fd(void);
 int				launch_lexer_parser(char *input, t_ast **ast);
 int				lexer(char* str, t_list **lst);
 int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
-		enum e_token type);
+					enum e_token type);
 int				only_assignments(t_process *p);
 int				parser(t_list *lst);
 int				path_concat(char **bin, char *beg, char *env, char *dir);
