@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 21:01:22 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 11:46:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/03/12 17:48:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "builtins.h"
 
-t_hash_table	**g_hash_table;
+t_hash_table	*(g_hash_table[64]);
 
 int				ft_hash(char *to_hash)
 {

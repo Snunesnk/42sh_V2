@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/02/27 18:54:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 18:04:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,36 @@ void			free_hash_table(void)
 		if (tmp)
 			remove_hash_entry(tmp->command_name);
 		i++;
+	}
+}
+
+void			init_hash_table(void)
+{
+	int	i;
+
+	i = 0;
+	while (i < HASH_SIZE)
+	{
+		g_hash_table[i] = NULL;
+		i++;
+	}
+}
+
+void			test_hash_path(void)
+{
+	static char	*path_remember = NULL;
+	int	i;
+
+	i = 0;
+	if (!(getenv("PATH")))
+	{
+		ft_printf("./21sh: PATH not set\n");
+	}
+	if (!path_remember)
+		path_remember = getenv("PATH");
+	else if (path_remember != getenv("PATH"))
+	{
+		free_hash_table();
+		path_remember = getenv("PATH");
 	}
 }
