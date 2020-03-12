@@ -4,7 +4,7 @@
 
 /* Here will be stored the procedure to safe quit the shell */
 
-void	free_at_exit(void);
+void	free_at_exit(void)
 {
 	if (first_job)
 	{
