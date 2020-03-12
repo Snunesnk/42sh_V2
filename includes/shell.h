@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 15:47:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 17:47:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void			free_hash_table(void);
 
 extern int		g_subshell;
 
-extern t_hash_table	**g_hash_table;
+extern t_hash_table	*(g_hash_table[HASH_SIZE]);
 
 extern t_job			*first_job;
 extern pid_t			shell_pgid;
