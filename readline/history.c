@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 19:21:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 16:46:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_history(void)
 	g_hist->total_lines = 0;
 	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: error: can't open %s\n", g_hist_loc);
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
 	}
 	while (read(fd, buf, 10000) > 0)
@@ -77,12 +77,12 @@ void	get_history_loc(void)
 	}
 	if (!(user_home = getenv("HOME")))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		ft_printf("./21sh: HOME not set\n");
 		return ;
 	}
 	if (!(g_hist_loc = ft_strjoin(user_home, "/.21sh_history")))
 	{
-		ft_dprintf(STDERR_FILENO, "./12sh: cannot allocate memory\n");
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
 }

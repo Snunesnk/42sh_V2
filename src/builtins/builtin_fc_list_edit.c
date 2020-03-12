@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 21:10:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/12 16:02:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,6 @@ void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 	}
 	while (g_hist->nb_line < g_hist->total_lines)
 		next_hist();
-}
-
-void		launch_fc_command(char *command)
-{
-	int	status;
-
-	status = fork();
-	if (status < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: fork failed\n");
-		return ;
-	}
-	else if (status == 0)
-	{
-		ft_dprintf(STDERR_FILENO, "%s\n", command);
-		add_hentry(command, 1);
-		exec_input(command);
-	}
-	else
-		wait(&status);
 }
 
 int			re_execute_cmd(int opt_list)
@@ -133,29 +113,28 @@ int			get_fd_and_print(int opt_list, int hist_beg, int hist_end)
 
 int			exec_fc_other_opt(int opt_list, char **args)
 {
-	int		hist_end;
-	int		hist_beg;
+	int		h_end;
+	int		h_beg;
 
-	hist_end = -1;
-	hist_beg = -1;
+	h_end = -1;
+	h_beg = -1;
 	prev_hist();
 	if (*args && g_hist->used != 0)
-		get_hist_num(args, &opt_list, &hist_end, &hist_beg);
+		get_hist_num(args, &opt_list, &h_end, &h_beg);
 	else
 	{
-		hist_end = g_hist->nb_line - 1;
-		hist_beg = (opt_list & FC_L_OPTION) ? hist_end - 15 : hist_end;
-		if (hist_beg < 0)
-			hist_beg = 0;
+		h_end = g_hist->nb_line - 1;
+		if ((h_beg = (opt_list & FC_L_OPTION) ? h_end - 15 : h_end) < 0)
+			h_beg = 0;
 	}
-	if (hist_end < 0 || hist_beg < 0 || g_hist->total_lines == 1)
+	if (h_end < 0 || h_beg < 0 || g_hist->total_lines == 1)
 	{
 		ft_printf("./21sh: fc: history specification out of range\n");
 		if (g_hist->total_lines != 1)
 			fc_replace_last_hist(NULL);
 		return (e_invalid_input);
 	}
-	if (get_fd_and_print(opt_list, hist_beg, hist_end))
+	if (get_fd_and_print(opt_list, h_beg, h_end))
 		return ((opt_list & FC_L_OPTION) ? e_success : 1);
 	fc_replace_last_hist(NULL);
 	return (re_execute_cmd(opt_list));
