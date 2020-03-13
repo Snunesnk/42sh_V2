@@ -49,7 +49,7 @@ static int	expansion_dispatcher(char *str, int tilde)
 
 static char	*get_closest_exp(char *str, int tilde)
 {
-	int		i;
+	int	i;
 	char	*ptr;
 	char	*closest;
 
@@ -103,6 +103,11 @@ int			treat_single_exp(char **str, int tilde)
 	next = *str;
 	while ((next = get_closest_exp(next, tilde)))
 	{
+		if (next > *str || (next == *str && (next[1] != '/' && next[1] != '\0')))
+		{
+			tilde = 0;
+			continue ;
+		}
 		ref = expansion_dispatcher(next, tilde);
 		if ((ret = replace_expansion(str, &next, ref)))
 		{
