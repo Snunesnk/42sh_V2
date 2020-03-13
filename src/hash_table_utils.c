@@ -81,9 +81,7 @@ void			init_hash_table(void)
 void			test_hash_path(void)
 {
 	static char	*path_remember = NULL;
-	int	i;
 
-	i = 0;
 	if (!(getenv("PATH")))
 	{
 		ft_printf("./21sh: PATH not set\n");
