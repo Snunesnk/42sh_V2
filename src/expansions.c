@@ -16,8 +16,8 @@
 
 const struct s_tags	g_tags[] =
 {
-	{"${", &parameter_expansions, "}"},
-	{"$", &parameter_expansions, ""},
+	{"${", &dollar_expansions, "}"},
+	{"$", &dollar_expansions, ""},
 	{"~", &tilde_expansion, ""},
 	{"\0", NULL, NULL}
 };
