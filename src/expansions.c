@@ -69,16 +69,16 @@ static char	*get_closest_exp(char *str, int tilde)
 
 static int		replace_expansion(char **token, char **next, int ref)
 {
-	size_t	index;
+	size_t	lcontent;
 	char	*new;
 	size_t	lnew;
 	size_t	lprefix;
 	int	ret;
 
-	index = 0;
+	lcontent = 0;
 	ret = e_success;
 	lprefix = (size_t)((*next) - (*token));
-	if (!(ret = g_tags[ref].f(&index, next, g_tags[ref].opentag, g_tags[ref].closetag)))
+	if (!(ret = g_tags[ref].f(&lcontent, next, g_tags[ref].opentag, g_tags[ref].closetag)))
 	{
 		lnew = lprefix + ft_strlen(*next);
 		new = (char*)ft_memalloc(sizeof(char) * (lnew + 1));
@@ -86,7 +86,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 //		ft_memdel((void**)token);
 		ft_strcat(new, *next);
 		ft_memdel((void**)next);
-		*next = &(new)[index + lprefix];
+		*next = &(new)[lcontent + lprefix];
 		*token = new;
 		return (e_success);
 	}
