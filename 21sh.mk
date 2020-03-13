@@ -56,6 +56,7 @@ SOURCES :=	main.c \
 		manage_shell_var.c \
 		new_node_ast.c \
 		only_assignments.c \
+		dollar_expansions.c \
 		parameter_expansions.c \
 		parser.c \
 		path.c \

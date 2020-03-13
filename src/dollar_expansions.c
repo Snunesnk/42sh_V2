@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parameter_expansions.c                             :+:      :+:    :+:   */
+/*   dollar_expansions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 #include "error.h"
 #include "shell.h"
 
-int	parameter_expansions(size_t *lcontent, char **str, const char *opentag, const char *closetag)
+int	dollar_expansions(size_t *lcontent, char **str, const char *opentag, const char *closetag)
 {
 	int	ret;
 
