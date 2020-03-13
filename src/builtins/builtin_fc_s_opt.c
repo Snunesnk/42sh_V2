@@ -85,12 +85,10 @@ int		get_subs(t_sub **sub_list, char **args)
 int		exec_fc_s_opt(char **args)
 {
 	char	*tmp;
-	int		status;
 	t_sub	*sub_list;
 
 	if (!(sub_list = init_sub(NULL)))
 		return (e_cannot_allocate_memory);
-	status = e_success;
 	tmp = prev_hist();
 	tmp = prev_hist();
 	if (get_subs(&sub_list, args) == e_cannot_allocate_memory)

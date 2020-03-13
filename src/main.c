@@ -15,7 +15,7 @@
 #include "builtins.h"
 
 extern char	**environ;
-char		**pending_cmd = NULL
+char		**pending_cmd = NULL;
 t_list		*g_env;
 
 int			exec_input(char *input)
@@ -76,5 +76,5 @@ int			main(int argc, char **argv)
 	ft_tabdel(&environ);
 /* Useless free functions, shell quits before in exit builtin */
 	ft_lstdel(&g_env, &del_env);
-	return (EXIT_SUCCESS);
+	return (status);
 }
