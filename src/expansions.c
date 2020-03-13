@@ -69,15 +69,14 @@ static char	*get_closest_exp(char *str, int tilde)
 
 static int		replace_expansion(char **token, char **next, int ref)
 {
-	static size_t	index;
-	char			*new;
-	size_t			lnew;
-	size_t			lprefix;
-	int				ret;
+	size_t	index;
+	char	*new;
+	size_t	lnew;
+	size_t	lprefix;
+	int	ret;
 
+	index = 0;
 	ret = e_success;
-	if (*token == *next)
-		index = 0;
 	lprefix = (size_t)((*next) - (*token));
 	if (!(ret = g_tags[ref].f(&index, next, g_tags[ref].opentag, g_tags[ref].closetag)))
 	{
@@ -103,7 +102,7 @@ int			treat_single_exp(char **str, int tilde)
 	next = *str;
 	while ((next = get_closest_exp(next, tilde)))
 	{
-		if (next > *str || (next == *str && (next[1] != '/' && next[1] != '\0')))
+		if (tilde && (next > *str || (next == *str && (next[1] != '/' && next[1] != '\0'))))
 		{
 			tilde = 0;
 			continue ;
