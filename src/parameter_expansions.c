@@ -14,7 +14,7 @@
 #include "error.h"
 #include "shell.h"
 
-int	parameter_expansions(size_t *index, char **str, const char *opentag, const char *closetag)
+int	parameter_expansions(size_t *lcontent, char **str, const char *opentag, const char *closetag)
 {
 	int	ret;
 
@@ -26,7 +26,6 @@ int	parameter_expansions(size_t *index, char **str, const char *opentag, const c
 	size_t	lrest;
 
 	char	*content;
-	size_t	lcontent;
 
 	char	*new;
 
@@ -40,21 +39,20 @@ int	parameter_expansions(size_t *index, char **str, const char *opentag, const c
 
 	if ((ret = getenv_content(&content, &(*str)[lopen], closetag)))
 		return (ret);
-	lcontent = ft_strlen(content);
+	*lcontent = ft_strlen(content);
 
 
-	if (!(new = (char*)ft_memalloc(sizeof(char) * (lrest + lcontent + 1))))
+	if (!(new = (char*)ft_memalloc(sizeof(char) * (lrest + *lcontent + 1))))
 	{
 		ft_memdel((void**)&content);
 		return (e_cannot_allocate_memory);
 	}
 	if (content)
-		ft_strncat(new, content, lcontent);
+		ft_strncat(new, content, *lcontent);
 	ft_memdel((void**)&content);
 	ft_strncat(new, rest, lrest);
 
 
 	*str = new;
-	*index = lcontent;
 	return (e_success);
 }
