@@ -75,6 +75,7 @@ char	*short_physical_path(char **cwd);
 
 extern char		g_pwd[PATH_MAX];
 extern t_list	*g_env;
+extern t_list	*g_pending_cmd;
 
 struct	s_shell_fds
 {

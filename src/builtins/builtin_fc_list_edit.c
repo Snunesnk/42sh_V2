@@ -12,6 +12,7 @@
 
 #include "builtins.h"
 #include "ft_readline.h"
+#include "shell.h"
 
 char		*get_editor(int opt_list)
 {
@@ -77,11 +78,9 @@ int			re_execute_cmd(int opt_list)
 		return (1);
 	while (get_next_line(fd, &command) > 0)
 	{
-		if (command[0])
-			launch_fc_command(command);
-		else
-			free(command);
-		command = NULL;
+		if (!add_pending_cmd(command))
+			break ;
+		free(command);
 	}
 	close(fd);
 	return (e_success);

@@ -87,22 +87,15 @@ int		fc_invalid_input(char *args)
 	return (e_invalid_input);
 }
 
-void		launch_fc_command(char *command)
+int		add_pending_cmd(char *command)
 {
-	int	status;
+	t_list	*new_lst;
 
-	status = fork();
-	if (status < 0)
+	if (!(new_lst = ft_lstnew(command, ft_strlen(command))))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: fork failed\n");
-		return ;
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return (0);
 	}
-	else if (status == 0)
-	{
-		ft_dprintf(STDERR_FILENO, "%s\n", command);
-		add_hentry(command, 1);
-		exec_input(command);
-	}
-	else
-		wait(&status);
+	ft_lstaddend(&g_pending_cmd, new_lst);
+	return (1);
 }

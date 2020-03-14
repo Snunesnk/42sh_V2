@@ -119,7 +119,7 @@ int				fc_invalid_input(char *args);
 void			print_error(char *usage, char option, int mode);
 int				exec_fc_s_opt(char **args);
 void			swap_entries(int *hist_end, int *hist_beg);
-void			launch_fc_command(char *command);
+int				add_pending_cmd(char *command);
 
 /*
 ** Global var util for get_next_opt
