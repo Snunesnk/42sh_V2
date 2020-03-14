@@ -32,6 +32,11 @@ char		*get_next_pending_cmd(void)
 	free(g_pending_cmd->content);
 	free(g_pending_cmd);
 	g_pending_cmd = tmp;
+	if (input[0] > 0)
+	{
+		ft_dprintf(STDERR_FILENO, "%s\n", input);
+		add_hentry(input, 1);
+	}
 	return (input);
 }
 
@@ -40,6 +45,11 @@ int			exec_input(char *input)
 	t_ast	*ast;
 	int		status;
 
+	if (input[0] <= 0)
+	{
+		free(input);
+		return (0);
+	}
 	status = 0;
 	ast = NULL;
 	if (launch_lexer_parser(input, &ast) == SUCCESS)
