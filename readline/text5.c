@@ -57,3 +57,26 @@ void	cut_prev_wd(void)
 		update_line();
 	}
 }
+
+void    rl_reversel(void)
+{
+	char c;
+
+	if (g_line.len > 1)
+	{
+		if (g_line.len > 1 && g_dis.cbpos == g_line.len)
+		{
+			c = g_line.line[g_dis.cbpos - 1];
+			g_line.line[g_dis.cbpos - 1] = g_line.line[g_dis.cbpos - 2];
+			g_line.line[g_dis.cbpos - 2] = c;
+			update_line();
+		}
+		else if (g_dis.cbpos > 0)
+		{
+			c = g_line.line[g_dis.cbpos];
+				g_line.line[g_dis.cbpos] = g_line.line[g_dis.cbpos - 1];
+			g_line.line[g_dis.cbpos - 1] = c;
+			cursor_r();
+		}
+	}
+}
