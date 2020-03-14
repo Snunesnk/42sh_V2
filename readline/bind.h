@@ -43,5 +43,6 @@ void	cursor_d(void);
 void	history_up(void);
 void	history_down(void);
 void	kill_line(void);
+void    rl_reversel(void);
 
 #endif
