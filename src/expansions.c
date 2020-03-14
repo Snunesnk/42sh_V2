@@ -17,7 +17,7 @@
 const struct s_tags	g_tags[] =
 {
 	{"${", &parameter_expansions, "}"},
-	{"$", &parameter_expansions, ""},
+	{"$", &dollar_expansions, ""},
 	{"~", &tilde_expansion, ""},
 	{"\0", NULL, NULL}
 };
@@ -49,7 +49,7 @@ static int	expansion_dispatcher(char *str, int tilde)
 
 static char	*get_closest_exp(char *str, int tilde)
 {
-	int		i;
+	int	i;
 	char	*ptr;
 	char	*closest;
 
@@ -69,17 +69,16 @@ static char	*get_closest_exp(char *str, int tilde)
 
 static int		replace_expansion(char **token, char **next, int ref)
 {
-	static size_t	index;
-	char			*new;
-	size_t			lnew;
-	size_t			lprefix;
-	int				ret;
+	size_t	lcontent;
+	char	*new;
+	size_t	lnew;
+	size_t	lprefix;
+	int	ret;
 
+	lcontent = 0;
 	ret = e_success;
-	if (*token == *next)
-		index = 0;
 	lprefix = (size_t)((*next) - (*token));
-	if (!(ret = g_tags[ref].f(&index, next, g_tags[ref].opentag, g_tags[ref].closetag)))
+	if (!(ret = g_tags[ref].f(&lcontent, next, g_tags[ref].opentag, g_tags[ref].closetag)))
 	{
 		lnew = lprefix + ft_strlen(*next);
 		new = (char*)ft_memalloc(sizeof(char) * (lnew + 1));
@@ -87,7 +86,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 //		ft_memdel((void**)token);
 		ft_strcat(new, *next);
 		ft_memdel((void**)next);
-		*next = &(new)[index + lprefix];
+		*next = &(new)[lcontent + lprefix];
 		*token = new;
 		return (e_success);
 	}
@@ -103,6 +102,11 @@ int			treat_single_exp(char **str, int tilde)
 	next = *str;
 	while ((next = get_closest_exp(next, tilde)))
 	{
+		if (tilde && (next > *str || (next == *str && (next[1] != '/' && next[1] != '\0'))))
+		{
+			tilde = 0;
+			continue ;
+		}
 		ref = expansion_dispatcher(next, tilde);
 		if ((ret = replace_expansion(str, &next, ref)))
 		{
