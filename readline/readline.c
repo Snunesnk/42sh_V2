@@ -51,7 +51,7 @@ static char	*readline_internal(void)
 	return (value);
 }
 
-char		*ft_readline(const char *prompt)
+char		*readline_loop(const char *prompt)
 {
 	char	*value;
 
@@ -76,4 +76,22 @@ char		*ft_readline(const char *prompt)
 	if (value != NULL)
 		ft_putchar_fd('\n', 2);
 	return (value);
+}
+
+char		*ft_readline(const char *prompt)
+{
+	char	*input;
+	char	*compl;
+	char	*new;
+
+	input = readline_loop(prompt);
+	while (is_quote_open(input))
+	{
+		compl = readline_loop("> ");
+		new = ft_strjoin(input, compl);
+		free(input);
+		free(compl);
+		input = new;
+	}
+	return (input);
 }
