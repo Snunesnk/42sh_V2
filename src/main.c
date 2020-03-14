@@ -15,8 +15,25 @@
 #include "builtins.h"
 
 extern char	**environ;
-char		**pending_cmd = NULL;
+t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
+
+char		*get_next_pending_cmd(void)
+{
+	char	*input;
+	t_list	*tmp;
+
+	if (!(input = ft_strdup((char *)g_pending_cmd->content)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return (NULL);
+	}
+	tmp = g_pending_cmd->next;
+	free(g_pending_cmd->content);
+	free(g_pending_cmd);
+	g_pending_cmd = tmp;
+	return (input);
+}
 
 int			exec_input(char *input)
 {
@@ -64,12 +81,17 @@ int			main(int argc, char **argv)
 	}
 	while (21)
 	{
-		if (!(input = ft_readline("21sh$ ")))
+		if (!g_pending_cmd && !(input = ft_readline("21sh$ ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
 		}
-		status = exec_input(input);
+		else if (g_pending_cmd)
+		{
+			if (!(input = get_next_pending_cmd()))
+				break ;
+		}
+		exec_input(input);
 		test_hash_path();
 	}
 	free_hash_table();
