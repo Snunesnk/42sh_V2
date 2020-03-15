@@ -104,6 +104,7 @@ SOURCES :=	main.c \
 		../readline/history_expand.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
+		../readline/autocomplete.c \
 		../readline/init.c \
 		../readline/input.c \
 		../readline/quotes.c \
