@@ -13,9 +13,11 @@
 #ifndef BIND_H
 # define BIND_H
 
+# include "input.h"
 # include "keymaps.h"
 
 extern struct s_keymap_entry	*g_keymap;
+extern _Bool			g_ctrl_mode;
 
 void	insert_text(const char *string, int len);
 void	clear_line(void);
@@ -45,5 +47,6 @@ void	history_up(void);
 void	history_down(void);
 void	kill_line(void);
 void    rl_reversel(void);
+void	rl_ctrl_mode(union u_buffer u);
 
 #endif
