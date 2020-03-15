@@ -58,3 +58,12 @@ struct s_keymap_entry g_emacs_ctlx_keymap[] =
 	{ ISFUNC, wd_left },
 	[ 89 ... 127 ] = { ISFUNC, rl_void },
 };
+
+struct s_keymap_entry g_emacs_meta_keymap[] =
+{
+	[ 0 ... 97 ] = { ISFUNC, rl_void },
+	{ ISFUNC, wd_left },
+	[ 99 ... 101 ] = { ISFUNC, rl_void },
+	{ ISFUNC, wd_right },
+	[ 103 ... 127 ] = { ISFUNC, rl_void },
+};
