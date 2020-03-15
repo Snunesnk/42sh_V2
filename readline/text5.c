@@ -80,3 +80,22 @@ void    rl_reversel(void)
 		}
 	}
 }
+
+void	cut_next_wd(void)
+{
+	int start;
+
+	if (g_clip.str != NULL)
+		free(g_clip.str);
+	start = g_dis.cbpos;
+	while (start < g_line.len && g_line.line[start] == ' ')
+		++start;
+	while (start < g_line.len && g_line.line[start] != ' ')
+		++start;
+	g_clip.l = start - g_dis.cbpos;
+	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
+	ft_memmove(&(g_line.line[g_dis.cbpos]), &(g_line.line[start]), g_line.len - start);
+	g_line.len -= g_clip.l;
+	ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
+	update_line();
+}
