@@ -80,7 +80,7 @@ int		init_terminal(void)
 	char *buffer;
 
 	if (g_term.terminal_name == NULL)
-		g_term.terminal_name = "dumb";
+		g_term.terminal_name = "xterm-256color";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
 	if (g_term.term_string_buffer == NULL)
