@@ -22,6 +22,7 @@ void	clear_line(void);
 
 void	bind_keys(struct s_keymap_entry *keymap);
 void	cut_prev_wd(void);
+void	cut_next_wd(void);
 void	clear_befline(void);
 void	paste_via_input(unsigned long v);
 void	clip_paste(void);
