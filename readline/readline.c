@@ -19,11 +19,14 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 	while (c.value)
 	{
 		c = read_key();
+	//	ft_printf("\n%d %d %d %d %d %d %d\n", (int)c.buf[0], (int)c.buf[1], (int)c.buf[2], (int)c.buf[3], (int)c.buf[4], (int)c.buf[5], (int)c.buf[6]);
 		if (g_hist_lookup)
 			hist_lookup(c);
-		if (enter_rc(c))
+		if (g_ctrl_mode)
+			rl_ctrl_mode(c);
+		else if (enter_rc(c))
 			return ;
-		if (isstdkey(c.value))
+		else if (isstdkey(c.value))
 			(g_emacs_standard_keymap[c.value].func)(c.value);
 		else if (isctrlkey(c))
 		{
@@ -32,10 +35,7 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 			(g_emacs_ctlx_keymap[(int)c.buf[2]].func)();
 		}
 		else if (ismetachar(c))
-		{
-		//	ft_printf("\n%d %d %d %d %d %d %d\n", (int)c.buf[0], (int)c.buf[1], (int)c.buf[2], (int)c.buf[3], (int)c.buf[4], (int)c.buf[5], (int)c.buf[6]);
 			(g_emacs_meta_keymap[(int)c.buf[1]].func)();
-		}
 		else
 			paste_via_input(c.value);
 		*value = g_line.line;

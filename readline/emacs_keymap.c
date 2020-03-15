@@ -26,7 +26,7 @@ struct s_keymap_entry g_emacs_standard_keymap[] =
 	{ ISFUNC, clear_befline },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, cut_prev_wd },
-	{ ISKMAP, rl_void },
+	{ ISFUNC, rl_ctrl_mode },
 	{ ISFUNC, clip_paste },
 	{ ISFUNC, rl_void },
 	{ ISKMAP, rl_void },
