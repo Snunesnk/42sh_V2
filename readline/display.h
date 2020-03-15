@@ -20,6 +20,7 @@ struct	s_display
 	int		prompt_l;
 	int		botl;
 	int		cbpos;
+	int		cbpos_prev;
 	int		line_size;
 	int		fst_line_l;
 };

@@ -22,6 +22,7 @@ void		init_line_buffer(void)
 	g_line.line = (char*)malloc(sizeof(char) * g_line.size_buf);
 	ft_bzero(g_line.line, g_line.size_buf);
 	g_dis.cbpos = 0;
+	g_dis.cbpos_prev = 0;
 	g_line.len = 0;
 }
 
