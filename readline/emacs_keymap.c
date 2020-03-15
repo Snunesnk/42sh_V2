@@ -63,7 +63,9 @@ struct s_keymap_entry g_emacs_meta_keymap[] =
 {
 	[ 0 ... 97 ] = { ISFUNC, rl_void },
 	{ ISFUNC, wd_left },
-	[ 99 ... 101 ] = { ISFUNC, rl_void },
+	{ ISFUNC, rl_void },
+	{ ISFUNC, rl_void }, /* Meta + d, cut the next word */
+	{ ISFUNC, rl_void },
 	{ ISFUNC, wd_right },
 	[ 103 ... 127 ] = { ISFUNC, rl_void },
 };
