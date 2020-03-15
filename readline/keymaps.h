@@ -25,5 +25,6 @@ struct	s_keymap_entry
 
 extern struct s_keymap_entry	g_emacs_standard_keymap[];
 extern struct s_keymap_entry	g_emacs_ctlx_keymap[];
+extern struct s_keymap_entry	g_emacs_meta_keymap[];
 
 #endif
