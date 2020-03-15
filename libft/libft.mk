@@ -65,6 +65,7 @@ SOURCES	:= \
 		f_misc/ft_isempty.c \
 		f_misc/ft_isprime.c \
 		f_misc/ft_isprint.c \
+		f_misc/ft_isspace.c \
 		f_misc/ft_itoa.c \
 		f_misc/ft_memalloc.c \
 		f_misc/ft_memdel.c \
