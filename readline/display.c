@@ -30,7 +30,7 @@ struct s_line_state	g_line = {0};
 
 void		display_prompt(void)
 {
-	write(STDOUT_FILENO, g_dis.display_prompt, g_dis.prompt_l);
+	write(STDERR_FILENO, g_dis.display_prompt, g_dis.prompt_l);
 }
 
 void		set_prompt(const char *prompt)
