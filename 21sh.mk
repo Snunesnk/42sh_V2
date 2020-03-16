@@ -105,6 +105,9 @@ SOURCES :=	main.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
 		../readline/autocomplete.c \
+		../readline/avl_fill.c \
+		../readline/avl_utils.c \
+		../readline/avl_sort.c \
 		../readline/init.c \
 		../readline/input.c \
 		../readline/quotes.c \
