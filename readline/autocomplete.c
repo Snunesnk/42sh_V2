@@ -2,7 +2,16 @@
 
 void	command_complete(char *to_complete)
 {
-	ft_printf("\nI should complete %s with a cmd\n", to_complete);
+	char	*path;
+
+
+	(void)to_complete;
+	if (!(path = getenv("PATH")))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
+		return ;
+	}
+	ft_printf("path: %s\n", path);
 }
 
 void	path_complete(char *to_complete)
