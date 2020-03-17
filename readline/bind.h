@@ -36,6 +36,7 @@ void	autocomplete(void);
 void	rl_home(void);
 void	rl_void(void);
 void	rl_end(void);
+void	rl_eot(void);
 void	rl_delete(void);
 void	rl_backspace(void);
 void	rl_insert(int c);
@@ -48,5 +49,6 @@ void	history_down(void);
 void	kill_line(void);
 void    rl_reversel(void);
 void	rl_ctrl_mode(union u_buffer u);
+void	swap_words(void);
 
 #endif

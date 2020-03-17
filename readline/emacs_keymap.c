@@ -6,7 +6,7 @@ struct s_keymap_entry g_emacs_standard_keymap[] =
 	{ ISFUNC, rl_home },
 	{ ISFUNC, cursor_l },
 	{ ISFUNC, kill_line },
-	{ ISFUNC, rl_delete },
+	{ ISFUNC, rl_eot },
 	{ ISFUNC, rl_end },
 	{ ISFUNC, cursor_r },
 	{ ISFUNC, rl_void },
@@ -67,5 +67,7 @@ struct s_keymap_entry g_emacs_meta_keymap[] =
 	{ ISFUNC, cut_next_wd },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, wd_right },
-	[ 103 ... 127 ] = { ISFUNC, rl_void },
+	[ 103 ... 115 ] = { ISFUNC, rl_void },
+	{ ISFUNC, swap_words },
+	[ 117 ... 127 ] = { ISFUNC, rl_void },
 };
