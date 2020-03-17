@@ -16,13 +16,17 @@
 # include "input.h"
 # include "keymaps.h"
 
-extern struct s_keymap_entry	*g_keymap;
+extern struct s_keymap_entry   *g_standard_keymap;
+extern struct s_keymap_entry   *g_ctlx_keymap;
+extern struct s_keymap_entry   *g_meta_keymap;
+
 extern _Bool			g_ctrl_mode;
+extern _Bool			g_vim_mode;
 
 void	insert_text(const char *string, int len);
 void	clear_line(void);
 
-void	bind_keys(struct s_keymap_entry *keymap);
+void	bind_keys(void);
 void	cut_prev_wd(void);
 void	cut_next_wd(void);
 void	clear_befline(void);

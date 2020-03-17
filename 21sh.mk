@@ -100,6 +100,7 @@ SOURCES :=	main.c \
 		../readline/bind.c \
 		../readline/display.c \
 		../readline/emacs_keymap.c \
+		../readline/vim_keymap.c \
 		../readline/history.c \
 		../readline/history_expand.c \
 		../readline/history_lookup.c \
