@@ -45,7 +45,9 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, cursor_r },
 	[ 33 ... 34 ] = { ISFUNC, rl_void },
 	{ ISFUNC, vim_hash },
-	[ 36 ... 103 ] = { ISFUNC, rl_void },
+	[ 36 ... 86 ] = { ISFUNC, rl_void },
+	{ ISFUNC, wd_right }, /* NOT CORRECT */
+	[ 88 ... 103 ] = { ISFUNC, rl_void },
 	{ ISFUNC, cursor_l },
 	{ ISFUNC, vim_insert },
 	{ ISFUNC, history_down },
