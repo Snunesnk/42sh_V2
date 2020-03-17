@@ -1,9 +1,9 @@
-#include <glob.h> //TEMP
+#include "ft_glob.h"
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
 
-static int	replace_pattern(t_process *p, int i, glob_t *gl)
+static int	replace_pattern(t_process *p, int i, t_glob *gl)
 {
 	int	new_argc;
 	char	**new_argv;
@@ -23,24 +23,24 @@ static int	replace_pattern(t_process *p, int i, glob_t *gl)
 	}
 	ft_memcpy(p->argv + i, gl->gl_pathv, gl->gl_pathc * sizeof(char *));
 	ft_bzero(gl->gl_pathv, gl->gl_pathc * sizeof(char *));
-	globfree(gl);
+	ft_globfree(gl);
 	return (e_success);
 }
 
 int		pathname_expansion(t_process *p, int i)
 {
-	glob_t	gl;
+	t_glob	gl;
 	int	ret;
 
-	ft_bzero(&gl, sizeof(glob_t));
-	ret = glob(p->argv[i], GLOB_NOCHECK, NULL, &gl); //TODO: ADD FT_GLOB_BRACE to flags
+	ft_bzero(&gl, sizeof(t_glob));
+	ret = ft_glob(p->argv[i], FT_GLOB_BRACE, NULL, &gl);
 	//TODO: find a way not to copy the string each time and to use GLOB_APPEND
 	//instead of copying the entire argv each time
 	if (!ret)
 		return (replace_pattern(p, i, &gl));
-	else if (ret == GLOB_NOSPACE)
+	else if (ret == FT_GLOB_NOSPACE)
 		return (e_cannot_allocate_memory);
-	else if (ret == GLOB_ABORTED)
+	else if (ret == FT_GLOB_ABORTED)
 		return (e_system_call_error);
 	return (e_success);
 }
