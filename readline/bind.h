@@ -58,5 +58,6 @@ void	swap_words(void);
 void	vim_insert(void);
 void	vim_escape(void);
 void	vim_hash(void);
+void	call_fc(void);
 
 #endif
