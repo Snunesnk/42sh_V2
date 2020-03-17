@@ -39,6 +39,9 @@ void	bind_keys(void)
 void	vim_escape(void)
 {
 	g_vim_cmd = 1;
+	if (g_dis.cbpos > 0)
+		--g_dis.cbpos;
+	update_line();
 	g_standard_keymap = g_vim_standard_cmd_keymap;
 	g_ctlx_keymap = g_vim_ctlx_cmd_keymap;
 	g_meta_keymap = g_vim_meta_cmd_keymap;
