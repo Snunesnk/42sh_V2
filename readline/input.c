@@ -12,6 +12,8 @@
 
 #include "ft_readline.h"
 
+_Bool	g_input_break = 0;
+
 union u_buffer	read_key(void)
 {
 	union u_buffer	buffer_u;
