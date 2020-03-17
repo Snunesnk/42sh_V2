@@ -14,12 +14,6 @@
 
 int	g_hist_lookup = 0;
 
-//void	readline_keymap_disp(union u_buffer c)
-//{
-//	(void)c;
-// 	return;	
-//}
-
 static void	readline_internal_keys(union u_buffer c, char **value)
 {
 	while (c.value)

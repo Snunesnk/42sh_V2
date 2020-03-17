@@ -16,7 +16,7 @@ struct s_keymap_entry	*g_standard_keymap;
 struct s_keymap_entry	*g_ctlx_keymap;
 struct s_keymap_entry	*g_meta_keymap;
 
-_Bool			g_vim_mode = 0;
+_Bool			g_vim_mode = 1;
 _Bool			g_vim_cmd = 0;
 
 void	bind_keys(void)
@@ -24,7 +24,7 @@ void	bind_keys(void)
 	if (g_vim_mode)
 	{
 		g_standard_keymap = g_vim_standard_keymap;
-		g_ctlx_keymap = g_vim_ctlx_keymap;
+		g_ctlx_keymap = g_vim_meta_keymap;
 		g_meta_keymap = g_vim_meta_keymap;
 	}
 	else
@@ -39,10 +39,12 @@ void	vim_escape(void)
 {
 	g_vim_cmd = 1;
 	g_standard_keymap = g_vim_ctlx_keymap;
+	g_ctlx_keymap = g_vim_meta_keymap;
 }
 
 void	vim_insert(void)
 {
 	g_vim_cmd = 0;
 	g_standard_keymap = g_vim_standard_keymap;
+	g_ctlx_keymap = g_vim_meta_keymap;
 }
