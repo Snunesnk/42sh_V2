@@ -22,6 +22,7 @@ extern struct s_keymap_entry   *g_meta_keymap;
 
 extern _Bool			g_ctrl_mode;
 extern _Bool			g_vim_mode;
+extern _Bool			g_vim_cmd;
 
 void	insert_text(const char *string, int len);
 void	clear_line(void);
@@ -54,5 +55,7 @@ void	kill_line(void);
 void    rl_reversel(void);
 void	rl_ctrl_mode(union u_buffer u);
 void	swap_words(void);
+void	vim_insert(void);
+void	vim_escape(void);
 
 #endif
