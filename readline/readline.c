@@ -18,6 +18,12 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 {
 	while (c.value)
 	{
+		if (g_input_break)
+		{
+			g_input_break = 0;
+			vim_insert();
+			return ;
+		}
 		c = read_key();
 //		ft_printf("\n%d %d %d %d %d %d %d\n", (int)c.buf[0], (int)c.buf[1], (int)c.buf[2], (int)c.buf[3], (int)c.buf[4], (int)c.buf[5], (int)c.buf[6]);
 		if (!g_ctrl_mode && g_hist_lookup)
