@@ -23,9 +23,10 @@ void	bind_keys(void)
 {
 	if (g_vim_mode)
 	{
-		g_standard_keymap = g_vim_standard_keymap;
-		g_ctlx_keymap = g_vim_meta_keymap;
-		g_meta_keymap = g_vim_meta_keymap;
+		g_vim_cmd = 0;
+		g_standard_keymap = g_vim_standard_insert_keymap;
+		g_ctlx_keymap = g_vim_ctlx_insert_keymap;
+		g_meta_keymap = g_vim_meta_insert_keymap;
 	}
 	else
 	{
@@ -38,13 +39,15 @@ void	bind_keys(void)
 void	vim_escape(void)
 {
 	g_vim_cmd = 1;
-	g_standard_keymap = g_vim_ctlx_keymap;
-	g_ctlx_keymap = g_vim_meta_keymap;
+	g_standard_keymap = g_vim_standard_cmd_keymap;
+	g_ctlx_keymap = g_vim_ctlx_cmd_keymap;
+	g_meta_keymap = g_vim_meta_cmd_keymap;
 }
 
 void	vim_insert(void)
 {
 	g_vim_cmd = 0;
-	g_standard_keymap = g_vim_standard_keymap;
-	g_ctlx_keymap = g_vim_meta_keymap;
+	g_standard_keymap = g_vim_standard_insert_keymap;
+	g_ctlx_keymap = g_vim_ctlx_insert_keymap;
+	g_meta_keymap = g_vim_meta_insert_keymap;
 }
