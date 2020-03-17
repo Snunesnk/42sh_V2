@@ -101,6 +101,7 @@ SOURCES :=	main.c \
 		../readline/display.c \
 		../readline/emacs_keymap.c \
 		../readline/vim_keymap.c \
+		../readline/vim.c \
 		../readline/history.c \
 		../readline/history_expand.c \
 		../readline/history_lookup.c \

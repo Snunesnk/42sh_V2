@@ -57,5 +57,6 @@ void	rl_ctrl_mode(union u_buffer u);
 void	swap_words(void);
 void	vim_insert(void);
 void	vim_escape(void);
+void	vim_hash(void);
 
 #endif

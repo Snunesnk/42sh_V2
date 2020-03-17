@@ -28,6 +28,7 @@ struct	s_quote
 };
 
 extern struct s_quote	g_quote;
+extern _Bool		g_input_break;
 
 union u_buffer	read_key(void);
 int				is_quote_open(const char *s);

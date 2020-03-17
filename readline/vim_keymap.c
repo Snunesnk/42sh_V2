@@ -41,7 +41,9 @@ struct s_keymap_entry g_vim_meta_insert_keymap[] =
 /* Command mode */
 struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 {
-	[ 0 ... 104 ] = { ISFUNC, rl_void },
+	[ 0 ... 34 ] = { ISFUNC, rl_void },
+	{ ISFUNC, vim_hash },
+	[ 36 ... 104 ] = { ISFUNC, rl_void },
 	{ ISFUNC, vim_insert },
 	[ 106 ... 127 ] = { ISFUNC, rl_void }
 };
