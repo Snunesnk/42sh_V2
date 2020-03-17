@@ -12,9 +12,24 @@
 
 #include "ft_readline.h"
 
-struct s_keymap_entry	*g_keymap;
+struct s_keymap_entry	*g_standard_keymap;
+struct s_keymap_entry	*g_ctlx_keymap;
+struct s_keymap_entry	*g_meta_keymap;
 
-void	bind_keys(struct s_keymap_entry *keymap)
+_Bool			g_vim_mode = 0;
+
+void	bind_keys(void)
 {
-	g_keymap = keymap;
+	if (g_vim_mode)
+	{
+		g_standard_keymap = g_vim_standard_keymap;
+		g_ctlx_keymap = g_vim_ctlx_keymap;
+		g_meta_keymap = g_vim_meta_keymap;
+	}
+	else
+	{
+		g_standard_keymap = g_emacs_standard_keymap;
+		g_ctlx_keymap = g_emacs_ctlx_keymap;
+		g_meta_keymap = g_emacs_meta_keymap;
+	}
 }

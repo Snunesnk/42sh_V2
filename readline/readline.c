@@ -27,15 +27,15 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		else if (enter_rc(c))
 			return ;
 		else if (isstdkey(c.value))
-			(g_emacs_standard_keymap[c.value].func)(c.value);
+			(g_standard_keymap[c.value].func)(c.value);
 		else if (isctrlkey(c))
 		{
 			if (mvctrlkey(c))
 				c.buf[2] = c.buf[5] + 20;
-			(g_emacs_ctlx_keymap[(int)c.buf[2]].func)();
+			(g_ctlx_keymap[(int)c.buf[2]].func)();
 		}
 		else if (ismetachar(c))
-			(g_emacs_meta_keymap[(int)c.buf[1]].func)();
+			(g_meta_keymap[(int)c.buf[1]].func)();
 		else
 			paste_via_input(c.value);
 		*value = g_line.line;
