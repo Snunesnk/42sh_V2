@@ -99,6 +99,6 @@ int		init_terminal(void)
 	}
 	buffer = g_term.term_string_buffer;
 	get_term_capabilities(&buffer);
-	bind_keys(g_emacs_standard_keymap);
+	bind_keys();
 	return (0);
 }
