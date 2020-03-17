@@ -61,6 +61,7 @@ SOURCES :=	main.c \
 		parser.c \
 		path.c \
 		path_concat.c \
+		pathname_expansion.c \
 		process.c \
 		redir.c \
 		redir_less.c \
@@ -139,7 +140,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a -ltermcap
+LDLIBS += $(PATH_LIB)libft.a -lncurses
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
