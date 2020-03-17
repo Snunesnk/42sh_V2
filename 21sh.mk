@@ -120,6 +120,7 @@ SOURCES :=	main.c \
 		../readline/text4.c \
 		../readline/text5.c \
 		../readline/text6.c \
+		../readline/text7.c \
 		../readline/text_hist.c \
 		../readline/tty.c \
 		../readline/utils.c \
