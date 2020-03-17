@@ -70,7 +70,7 @@ int		launch_job(t_job *j, int foreground)
 	p = j->first_process;
 	while (p)
 	{
-		if (treat_expansions(p->argc, p->argv))
+		if (treat_expansions(p))
 			p->argv[0] = NULL;
 		if (p->next)
 		{
