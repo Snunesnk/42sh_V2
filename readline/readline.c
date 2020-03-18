@@ -67,15 +67,7 @@ char		*readline_loop(const char *prompt)
 	initialize();
 	set_prompt(prompt);
 	rl_set_signals();
-	while (!value)
-	{
-		value = readline_internal();
-		if (value && value[0] && (value = hist_expanse(value)))
-		{
-			add_hentry(value, 1);
-			break ;
-		}
-	}
+	value = readline_internal();
 	deprep_terminal();
 	rl_clear_signals();
 	if (value != NULL)
@@ -89,14 +81,20 @@ char		*ft_readline(const char *prompt)
 	char	*compl;
 	char	*new;
 
-	input = readline_loop(prompt);
-	while (is_quote_open(input))
+	input = NULL;
+	while (!input)
 	{
-		compl = readline_loop("> ");
-		new = ft_strjoin(input, compl);
-		free(input);
-		free(compl);
-		input = new;
+		input = readline_loop(prompt);
+		while (is_quote_open(input))
+		{
+			compl = readline_loop("> ");
+			new = ft_strjoin(input, compl);
+			free(input);
+			free(compl);
+			input = new;
+		}
+		if (input && input[0] && (input = hist_expanse(input)))
+			add_hentry(input, 1);
 	}
 	return (input);
 }
