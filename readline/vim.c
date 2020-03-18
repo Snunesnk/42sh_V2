@@ -39,3 +39,17 @@ void	beg_next_alnum(void)
 		while (!ft_isalnum(g_line.line[g_dis.cbpos])&& g_dis.cbpos < g_line.len)
 			cursor_r();
 }
+
+void	end_next_alnum(void)
+{
+	if (ft_isalnum(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	{
+		while (g_line.line[g_dis.cbpos + 1] == ' ' && g_dis.cbpos + 1 < g_line.len)
+			cursor_r();
+		while (ft_isalnum(g_line.line[g_dis.cbpos + 1]) && g_dis.cbpos + 1 < g_line.len)
+			cursor_r();
+	}
+	else if (!ft_isalnum(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+		while (!ft_isalnum(g_line.line[g_dis.cbpos + 1])&& g_dis.cbpos + 1 < g_line.len)
+			cursor_r();
+}
