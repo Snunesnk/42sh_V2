@@ -25,3 +25,17 @@ void	beg_next_wd(void)
 	while (g_line.line[g_dis.cbpos] == ' ' && g_dis.cbpos < g_line.len)
 		cursor_r();
 }
+
+void	beg_next_alnum(void)
+{
+	if (ft_isalnum(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	{
+		while (ft_isalnum(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+			cursor_r();
+		while (g_line.line[g_dis.cbpos] == ' ' && g_dis.cbpos < g_line.len)
+			cursor_r();
+	}
+	else if (!ft_isalnum(g_line.line[g_dis.cbpos])&& g_dis.cbpos < g_line.len)
+		while (!ft_isalnum(g_line.line[g_dis.cbpos])&& g_dis.cbpos < g_line.len)
+			cursor_r();
+}
