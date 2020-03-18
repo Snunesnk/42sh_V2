@@ -87,3 +87,49 @@ void	beg_last_alnum(void)
 			cursor_l();
 	}
 }
+
+void	goto_chr_right(void)
+{
+	int	p;
+	char	c;
+
+	c = 0;
+	p = g_dis.cbpos;
+	read(STDIN_FILENO, &c, 1);
+	if (ft_isalnum(c))
+	{
+		while (p < g_line.len)
+		{
+			if (g_line.line[p] == c)
+			{
+				g_dis.cbpos = p;
+				update_line();
+				return ;
+			}
+			++p;
+		}
+	}
+}
+
+void	goto_chr_left(void)
+{
+	int	p;
+	char	c;
+
+	c = 0;
+	p = g_dis.cbpos;
+	read(STDIN_FILENO, &c, 1);
+	if (ft_isalnum(c))
+	{
+		while (p >=  0)
+		{
+			if (g_line.line[p] == c)
+			{
+				g_dis.cbpos = p;
+				update_line();
+				return ;
+			}
+			--p;
+		}
+	}
+}
