@@ -325,7 +325,7 @@ _Bool			prompt_display(int status);
 int				set_minimal_env(void);
 int				treat_shell_variables(t_process *p, int	opt);
 int				treat_single_exp(char **str, int tilde);
-int				treat_expansions(int argc, char **argv);
+int				treat_expansions(t_process *p);
 
 int execute_pipeline(t_ast *node, int foreground);
 int execute_semi(t_ast *node, int foreground);
@@ -365,5 +365,6 @@ int		parameter_expansions(size_t *lcontent, char **str,
 		const char *opentag, const char *closetag);
 int		tilde_expansion(size_t *index, char **str,
 		const char *opentag, const char *closetag);
+int		pathname_expansion(t_process *p, int i);
 
 #endif
