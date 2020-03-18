@@ -17,7 +17,12 @@
 
 void		free_process(t_process *p)
 {
+	char	**wt;
+
 	free_redirections(p->redir);
+	if ((wt = p->argv))
+		while (*wt)
+			free(*wt++);
 	free(p->argv);
 	free(p);
 	p = NULL;
