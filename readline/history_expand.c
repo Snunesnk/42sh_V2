@@ -15,6 +15,20 @@
 static char	g_hist_word_delim[] = " \t\n;&()|<>";
 static int	g_pattern_length;
 
+int		check_end_bracket(char *tmp)
+{
+	int	i;
+
+	i = 0;
+	while (!ft_isspace(tmp[i]) && tmp[i])
+	{
+		if (tmp[i] == ']')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 char	*hist_expanse(char *value)
 {
 	char	*tmp;
@@ -22,8 +36,13 @@ char	*hist_expanse(char *value)
 
 	tmp = value;
 	hist_entry = value;
-	while (value && (tmp = ft_strchr(tmp, '!')))
+	while (*tmp && value && (tmp = ft_strchr(tmp, '!')))
 	{
+		if (check_end_bracket(tmp))
+		{
+			tmp = ft_strchr(tmp, ']');
+			continue ;
+		}
 		g_pattern_length = 0;
 		tmp++;
 		if (ft_strchr(g_hist_word_delim, *tmp))
@@ -125,7 +144,7 @@ char	*replace_hist_exp(char *value, char *hist_entry)
 				value[i + 1])))
 		i++;
 	size = ft_strlen(value) - g_pattern_length + ft_strlen(hist_entry);
-	if (!(new_value = (char *)ft_memalloc(sizeof(char) * (size + 1))))
+	if (!(new_value = (char *)ft_memalloc(sizeof(char) * (size + 2))))
 	{
 		ft_printf("\n./21sh: cannot allocate memory\n");
 		return (NULL);
