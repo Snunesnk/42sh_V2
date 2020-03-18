@@ -50,6 +50,7 @@ void	vim_escape(void)
 
 void	vim_insert(void)
 {
+	g_input_break = 0;
 	g_vim_cmd = 0;
 	g_standard_keymap = g_vim_standard_insert_keymap;
 	g_ctlx_keymap = g_vim_ctlx_insert_keymap;

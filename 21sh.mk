@@ -61,6 +61,7 @@ SOURCES :=	main.c \
 		parser.c \
 		path.c \
 		path_concat.c \
+		pathname_expansion.c \
 		process.c \
 		redir.c \
 		redir_less.c \
@@ -97,6 +98,27 @@ SOURCES :=	main.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
 		builtins/builtin_unset.c \
+		../globbings/ft_fnmatch/char_class_functions_1.c \
+		../globbings/ft_fnmatch/char_class_functions_2.c \
+		../globbings/ft_fnmatch/char_class_functions_3.c \
+		../globbings/ft_fnmatch/ft_fnmatch.c \
+		../globbings/ft_fnmatch/g_char_classes.c \
+		../globbings/ft_fnmatch/match_brack.c \
+		../globbings/ft_fnmatch/match.c \
+		../globbings/ft_glob/build_brace_patterns.c \
+		../globbings/ft_glob/build_patterns.c \
+		../globbings/ft_glob/file_utils.c \
+		../globbings/ft_glob/ft_glob.c \
+		../globbings/ft_glob/ft_glob_internal.c \
+		../globbings/ft_glob/match_patterns.c \
+		../globbings/ft_glob/slash_path.c \
+		../globbings/ft_glob/store_match_list.c \
+		../globbings/utils/ft_lst_at.c \
+		../globbings/utils/ft_lst_merge.c \
+		../globbings/utils/ft_lst_pop.c \
+		../globbings/utils/ft_lst_quicksort.c \
+		../globbings/utils/ft_lst_size.c \
+		../globbings/utils/ft_swap_p.c \
 		../readline/bind.c \
 		../readline/display.c \
 		../readline/emacs_keymap.c \
@@ -135,7 +157,7 @@ OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 PATH_LIB := ./libft/
 
-INCLUDES := -I./includes/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/
+INCLUDES := -I./includes/ -I./src/builtins/ -I$(PATH_LIB)include/ -I./readline/ -I./globbings/includes
 
 DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
@@ -147,7 +169,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-LDLIBS += $(PATH_LIB)libft.a -ltermcap
+LDLIBS += $(PATH_LIB)libft.a -lncurses
 
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
