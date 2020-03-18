@@ -33,6 +33,7 @@
 # include "line.h"
 # include "tty.h"
 # include "history.h"
+# include "avl.h"
 # include "autocomplete.h"
 
 # ifndef SIGWINCH
