@@ -59,5 +59,6 @@ void	vim_insert(void);
 void	vim_escape(void);
 void	vim_hash(void);
 void	call_fc(void);
+void    beg_next_wd(void);
 
 #endif
