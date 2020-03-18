@@ -1,16 +1,24 @@
-#include "autocomplete.h"
+#include "ft_readline.h"
 
 void	command_complete(char *to_complete)
 {
 	char	*path;
-
+	t_node	*compl_tree;
+	t_data	*data;
 
 	(void)to_complete;
+	if (!(data = init_data()))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
 	if (!(path = getenv("PATH")))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
 		return ;
 	}
+	if (!(compl_tree = get_cmd_compl(to_complete, path, data)))
+		return ;
 	ft_printf("path: %s\n", path);
 }
 
@@ -34,6 +42,7 @@ void	autocomplete(void)
 	char	*to_complete;
 	int		i;
 
+	ft_printf("entree dans l'autocomplete\n");
 	i = g_dis.cbpos - 1;
 	while (i >= 0 && !ft_isspace(g_line.line[i]))
 		i--;
