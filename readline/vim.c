@@ -10,9 +10,18 @@ void	vim_hash(void)
 
 void	call_fc(void)
 { /* Need some help from Simon to better implement this */
+//	return ; /* If no history */
 	char *argv[2];
 
 	argv[0] = "fc";
 	argv[1] = NULL;
 	cmd_fc(1, argv);
+}
+
+void	beg_next_wd(void)
+{
+	while (g_line.line[g_dis.cbpos] != ' ' && g_dis.cbpos < g_line.len)
+		cursor_r();
+	while (g_line.line[g_dis.cbpos] == ' ' && g_dis.cbpos < g_line.len)
+		cursor_r();
 }
