@@ -62,5 +62,6 @@ void	call_fc(void);
 void	beg_next_wd(void);
 void	beg_next_alnum(void);
 void	end_next_alnum(void);
+void	end_next_wd(void);
 
 #endif
