@@ -90,12 +90,16 @@ void	beg_last_alnum(void)
 
 void	goto_chr_right(void)
 {
-	int	p;
-	char	c;
+	int		p;
+	static char	c;
 
-	c = 0;
+	if (!g_got_input)
+	{
+		g_last_goto_f = goto_chr_right;
+		c = 0;
+		read(STDIN_FILENO, &c, 1);
+	}
 	p = g_dis.cbpos;
-	read(STDIN_FILENO, &c, 1);
 	if (ft_isprint(c))
 	{
 		while (p < g_line.len)
@@ -113,12 +117,16 @@ void	goto_chr_right(void)
 
 void	goto_chr_left(void)
 {
-	int	p;
-	char	c;
+	int		p;
+	static char	c;
 
-	c = 0;
+	if (!g_got_input)
+	{
+		g_last_goto_f = goto_chr_left;
+		c = 0;
+		read(STDIN_FILENO, &c, 1);
+	}
 	p = g_dis.cbpos;
-	read(STDIN_FILENO, &c, 1);
 	if (ft_isprint(c))
 	{
 		while (p >=  0)
@@ -136,12 +144,16 @@ void	goto_chr_left(void)
 
 void	goto_pchr_left(void)
 {
-	int	p;
-	char	c;
+	int		p;
+	static char	c;
 
-	c = 0;
+	if (!g_got_input)
+	{
+		g_last_goto_f = goto_pchr_left;
+		c = 0;
+		read(STDIN_FILENO, &c, 1);
+	}
 	p = g_dis.cbpos;
-	read(STDIN_FILENO, &c, 1);
 	if (ft_isprint(c))
 	{
 		while (p - 1 >=  0)
@@ -159,12 +171,16 @@ void	goto_pchr_left(void)
 
 void	goto_pchr_right(void)
 {
-	int	p;
-	char	c;
+	int		p;
+	static char	c;
 
-	c = 0;
+	if (!g_got_input)
+	{
+		g_last_goto_f = goto_pchr_right;
+		c = 0;
+		read(STDIN_FILENO, &c, 1);
+	}
 	p = g_dis.cbpos;
-	read(STDIN_FILENO, &c, 1);
 	if (ft_isprint(c))
 	{
 		while (p + 1 < g_line.len)
@@ -177,5 +193,15 @@ void	goto_pchr_right(void)
 			}
 			++p;
 		}
+	}
+}
+
+void	last_goto(void)
+{
+	if (g_last_goto_f)
+	{
+		g_got_input = 1;
+		((void (*)(void))g_last_goto_f)();
+		g_got_input = 0;
 	}
 }
