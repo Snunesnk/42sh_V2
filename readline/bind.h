@@ -66,5 +66,7 @@ void	end_next_wd(void);
 void	beg_last_alnum(void);
 void	goto_chr_right(void);
 void	goto_chr_left(void);
+void	goto_pchr_right(void);
+void	goto_pchr_left(void);
 
 #endif
