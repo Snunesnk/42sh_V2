@@ -72,5 +72,7 @@ void	goto_chr_left(void);
 void	goto_pchr_right(void);
 void	goto_pchr_left(void);
 void	last_goto(void);
+void	insert_mode_next(void);
+void	insert_mode_last(void);
 
 #endif
