@@ -52,6 +52,7 @@ SOURCES	:= \
 		f_ctype/ft_isdigit.c \
 		f_ctype/ft_tolower.c \
 		f_ctype/ft_toupper.c \
+		f_ctype/ft_ispunct.c \
 		f_errno/error_msg.c \
 		f_misc/ft_chrsearch.c \
 		f_misc/ft_ewcsnwidth.c \
