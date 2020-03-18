@@ -205,3 +205,16 @@ void	last_goto(void)
 		g_got_input = 0;
 	}
 }
+
+void	insert_mode_next(void)
+{
+	cursor_r();
+	vim_insert();
+}
+
+void	insert_mode_last(void)
+{
+	g_dis.cbpos = g_line.len;
+	vim_insert();
+	update_line();
+}
