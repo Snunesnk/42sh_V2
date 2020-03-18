@@ -64,5 +64,7 @@ void	beg_next_alnum(void);
 void	end_next_alnum(void);
 void	end_next_wd(void);
 void	beg_last_alnum(void);
+void	goto_chr_right(void);
+void	goto_chr_left(void);
 
 #endif
