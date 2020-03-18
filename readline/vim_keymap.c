@@ -55,7 +55,8 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, cursor_r },
 	[ 109 ... 117 ] = { ISFUNC, rl_void },
 	{ ISFUNC, call_fc },
-	[ 119 ... 127 ] = { ISFUNC, rl_void }
+	{ ISFUNC, beg_next_alnum },
+	[ 120 ... 127 ] = { ISFUNC, rl_void }
 };
 
 struct s_keymap_entry g_vim_ctlx_cmd_keymap[] =
