@@ -24,6 +24,9 @@ extern _Bool			g_ctrl_mode;
 extern _Bool			g_vim_mode;
 extern _Bool			g_vim_cmd;
 
+extern void			*g_last_goto_f;
+extern _Bool			g_got_input;
+
 void	insert_text(const char *string, int len);
 void	clear_line(void);
 
@@ -68,5 +71,6 @@ void	goto_chr_right(void);
 void	goto_chr_left(void);
 void	goto_pchr_right(void);
 void	goto_pchr_left(void);
+void	last_goto(void);
 
 #endif
