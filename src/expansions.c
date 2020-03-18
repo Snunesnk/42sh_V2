@@ -83,7 +83,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 		lnew = lprefix + ft_strlen(*next);
 		new = (char*)ft_memalloc(sizeof(char) * (lnew + 1));
 		ft_strncat(new, *token, lprefix);
-//		ft_memdel((void**)token);
+		ft_memdel((void**)token);
 		ft_strcat(new, *next);
 		ft_memdel((void**)next);
 		*next = &(new)[lcontent + lprefix];
@@ -117,17 +117,18 @@ int			treat_single_exp(char **str, int tilde)
 	return (e_success);
 }
 
-int			treat_expansions(int argc, char **argv)
+int			treat_expansions(t_process *p)
 {
 	int	i;
 	int	ret;
 
 	i = 0;
-	if (!argv || !*argv)
+	if (!p->argv || !*p->argv)
 		return (e_invalid_input);
-	while (i < argc)
+	while (i < p->argc)
 	{ /* memmove, if expansion is null */
-		ret = treat_single_exp(&argv[i], 1);
+		ret = treat_single_exp(p->argv + i, 1);
+		ret = !ret ? pathname_expansion(p, i) : ret;
 		if (ret)
 			return (ret);
 		++i;
