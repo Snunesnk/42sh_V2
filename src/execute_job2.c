@@ -13,14 +13,30 @@
 #include "libft.h"
 #include "shell.h"
 
+//TODO: normify the 6 functions
+
+static char	*dup_token_value(char **argv, int i, t_list *lst)
+{
+	char	**wt;
+
+	if (!(argv[i] = ft_strdup(get_tokvalue(lst))))
+	{
+		wt = argv;
+		while (*wt)
+			free(*wt++);
+		free(argv);
+		return (NULL);
+	}
+	return (argv[i]);
+}
+
 char		**build_argv(t_list *lst, int argc)
 {
 	char	**argv;
 	int		i;
 
 	i = 0;
-	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
-	if (argv != NULL)
+	if ((argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1))))
 	{
 		while (lst && i < argc)
 		{
@@ -30,7 +46,8 @@ char		**build_argv(t_list *lst, int argc)
 				lst = lst->next->next;
 			if (get_tokentype(lst) == WORD)
 			{
-				argv[i] = get_tokvalue(lst);
+				if (!dup_token_value(argv, i, lst))
+					return (NULL);
 				++i;
 			}
 			if (get_tokentype(lst) == PIPE || get_tokentype(lst) == END)
