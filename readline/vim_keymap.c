@@ -65,7 +65,8 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, goto_pchr_left },
 	[ 85 ... 86 ] = { ISFUNC, rl_void },
 	{ ISFUNC, beg_next_wd },
-	[ 88 ... 93 ] = { ISFUNC, rl_void },
+	{ ISFUNC, rl_backspace },
+	[ 89 ... 93 ] = { ISFUNC, rl_void },
 	{ ISFUNC, rl_home },
 	[ 95 ... 96 ] = { ISFUNC, rl_void },
 	{ ISFUNC, insert_mode_next },
@@ -87,7 +88,8 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, rl_void },
 	{ ISFUNC, call_fc },
 	{ ISFUNC, beg_next_alnum },
-	[ 120 ... 123 ] = { ISFUNC, rl_void },
+	{ ISFUNC, rl_delete },
+	[ 121 ... 123 ] = { ISFUNC, rl_void },
 	{ ISFUNC, rl_home },
 	[ 125 ... 127 ] = { ISFUNC, rl_void }
 };
