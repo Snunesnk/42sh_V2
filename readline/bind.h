@@ -80,5 +80,6 @@ void	replace_wd(void);
 void	replace_text(const char *string, int len);
 void	replace_mode(void);
 void	l_expand(void);
+void	c_motion(void);
 
 #endif
