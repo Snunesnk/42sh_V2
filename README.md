@@ -11,17 +11,15 @@ Etienne:
 - 42sh Arithmetic Expansions
 
 Yoann:
-- 42sh Globbing
+- 42sh Aliases
 
 Sabri:
 - 42sh Parameter expansions
 - 42sh Inhibitors
 
 Simon:
-- 42sh Autocompletion
 
 Optionnal:
 	- Subshells $(), (), ``
 	- Group { ;}
-	- Aliases
 	- Builtin `test`

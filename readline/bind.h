@@ -74,5 +74,7 @@ void	goto_pchr_left(void);
 void	last_goto(void);
 void	insert_mode_next(void);
 void	insert_mode_last(void);
+void	insert_mode_first(void);
+void	replace_wd(void);
 
 #endif
