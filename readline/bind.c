@@ -19,6 +19,7 @@ struct s_keymap_entry	*g_meta_keymap;
 _Bool			g_vim_mode = 1;
 //_Bool			g_vim_mode = 0;
 _Bool			g_vim_cmd = 0;
+_Bool			g_replace_mode = 0;
 _Bool			g_got_input = 0;
 void			*g_last_goto_f = NULL;
 
@@ -42,6 +43,7 @@ void	bind_keys(void)
 void	vim_escape(void)
 {
 	g_vim_cmd = 1;
+	g_replace_mode = 0;
 	if (g_dis.cbpos > 0)
 		--g_dis.cbpos;
 	update_line();
