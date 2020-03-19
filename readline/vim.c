@@ -293,6 +293,10 @@ void	d_motion(union u_buffer d)
 	read(STDIN_FILENO, c.buf, sizeof(int));
 	if (c.value == d.value)
 	{
+		g_clip.l = g_line.len;
+		if (g_clip.str != NULL)
+			free(g_clip.str);
+		g_clip.str = ft_strndup(g_line.line);
 		ft_bzero(g_line.line, g_line.len);
 		g_dis.cbpos = 0;
 		update_line();
