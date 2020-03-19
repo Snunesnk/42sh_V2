@@ -106,13 +106,13 @@ void	beg_last_alnum(void)
 void	goto_chr_right(void)
 {
 	int		p;
-	static char	c;
+	static int	c;
 
 	if (!g_got_input)
 	{
 		g_last_goto_f = goto_chr_right;
 		c = 0;
-		read(STDIN_FILENO, &c, 1);
+		read(STDIN_FILENO, &c, sizeof(int));
 	}
 	p = g_dis.cbpos;
 	if (ft_isprint(c))
@@ -133,13 +133,13 @@ void	goto_chr_right(void)
 void	goto_chr_left(void)
 {
 	int		p;
-	static char	c;
+	static int	c;
 
 	if (!g_got_input)
 	{
 		g_last_goto_f = goto_chr_left;
 		c = 0;
-		read(STDIN_FILENO, &c, 1);
+		read(STDIN_FILENO, &c, sizeof(int));
 	}
 	p = g_dis.cbpos;
 	if (ft_isprint(c))
@@ -160,13 +160,13 @@ void	goto_chr_left(void)
 void	goto_pchr_left(void)
 {
 	int		p;
-	static char	c;
+	static int	c;
 
 	if (!g_got_input)
 	{
 		g_last_goto_f = goto_pchr_left;
 		c = 0;
-		read(STDIN_FILENO, &c, 1);
+		read(STDIN_FILENO, &c, sizeof(int));
 	}
 	p = g_dis.cbpos;
 	if (ft_isprint(c))
@@ -187,13 +187,13 @@ void	goto_pchr_left(void)
 void	goto_pchr_right(void)
 {
 	int		p;
-	static char	c;
+	static int	c;
 
 	if (!g_got_input)
 	{
 		g_last_goto_f = goto_pchr_right;
 		c = 0;
-		read(STDIN_FILENO, &c, 1);
+		read(STDIN_FILENO, &c, sizeof(int));
 	}
 	p = g_dis.cbpos;
 	if (ft_isprint(c))
@@ -243,9 +243,10 @@ void	insert_mode_first(void)
 
 void	replace_wd(void)
 {
-	char	c;
+	int	c;
 
-	read(STDIN_FILENO, &c, 1);
+	c = 0;
+	read(STDIN_FILENO, &c, sizeof(int));
 	if (ft_isprint(c))
 	{
 		g_line.line[g_dis.cbpos] = c;
@@ -257,4 +258,19 @@ void	replace_mode(void)
 {
 	vim_insert();
 	g_replace_mode = 1;
+}
+
+void	c_motion(void)
+{
+	int	c;
+
+	c = 0;
+	read(STDIN_FILENO, &c, sizeof(int));
+	if (c == 'c')
+	{
+		ft_bzero(g_line.line, g_line.len);
+		g_dis.cbpos = 0;
+		update_line();
+		vim_insert();
+	}
 }
