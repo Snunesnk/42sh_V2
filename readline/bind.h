@@ -84,5 +84,6 @@ void	c_motion(union u_buffer d);
 void	d_motion(union u_buffer d);
 void	cmaj_motion(void);
 void	clear_all_l(void);
+void	dmaj_motion(void);
 
 #endif
