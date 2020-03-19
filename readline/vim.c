@@ -1,6 +1,21 @@
 #include "ft_readline.h"
 #include "../src/builtins/builtins.h"
 
+void	replace_text(const char *string, int len)
+{
+	int nlen;
+
+	nlen = g_dis.cbpos + len;
+	while (nlen >= g_line.size_buf)
+		l_expand();
+	ft_strncpy(&g_line.line[g_dis.cbpos], string, len);
+	if (nlen > g_line.len)
+		g_line.len = nlen;
+	g_dis.cbpos += len; /* Not sure wether this is correct */
+	update_line();	
+}
+
+
 void	vim_hash(void)
 {
 	g_input_break = 1;
@@ -236,4 +251,10 @@ void	replace_wd(void)
 		g_line.line[g_dis.cbpos] = c;
 		update_line();
 	}
+}
+
+void	replace_mode(void)
+{
+	vim_insert();
+	g_replace_mode = 1;
 }
