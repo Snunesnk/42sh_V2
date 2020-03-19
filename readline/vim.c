@@ -274,3 +274,10 @@ void	c_motion(void)
 		vim_insert();
 	}
 }
+
+void	cmaj_motion(void)
+{
+	ft_bzero(&g_line.line[g_dis.cbpos], g_line.len - g_dis.cbpos);
+	update_line();
+	vim_insert();
+}
