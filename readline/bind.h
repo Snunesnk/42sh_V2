@@ -81,5 +81,6 @@ void	replace_text(const char *string, int len);
 void	replace_mode(void);
 void	l_expand(void);
 void	c_motion(void);
+void	cmaj_motion(void);
 
 #endif
