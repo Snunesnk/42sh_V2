@@ -260,6 +260,14 @@ void	replace_mode(void)
 	g_replace_mode = 1;
 }
 
+void	clear_all_l(void)
+{
+	ft_bzero(g_line.line, g_line.len);
+	g_dis.cbpos = 0;
+	update_line();
+	vim_insert();
+}
+
 void	c_motion(void)
 {
 	int	c;
@@ -267,12 +275,7 @@ void	c_motion(void)
 	c = 0;
 	read(STDIN_FILENO, &c, sizeof(int));
 	if (c == 'c')
-	{
-		ft_bzero(g_line.line, g_line.len);
-		g_dis.cbpos = 0;
-		update_line();
-		vim_insert();
-	}
+		clear_all_l();
 }
 
 void	cmaj_motion(void)

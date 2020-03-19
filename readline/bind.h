@@ -82,5 +82,6 @@ void	replace_mode(void);
 void	l_expand(void);
 void	c_motion(void);
 void	cmaj_motion(void);
+void	clear_all_l(void);
 
 #endif
