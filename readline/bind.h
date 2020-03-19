@@ -22,6 +22,7 @@ extern struct s_keymap_entry   *g_meta_keymap;
 
 extern _Bool			g_ctrl_mode;
 extern _Bool			g_vim_mode;
+extern _Bool			g_replace_mode;
 extern _Bool			g_vim_cmd;
 
 extern void			*g_last_goto_f;
@@ -76,5 +77,8 @@ void	insert_mode_next(void);
 void	insert_mode_last(void);
 void	insert_mode_first(void);
 void	replace_wd(void);
+void	replace_text(const char *string, int len);
+void	replace_mode(void);
+void	l_expand(void);
 
 #endif
