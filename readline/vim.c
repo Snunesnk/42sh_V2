@@ -218,3 +218,22 @@ void	insert_mode_last(void)
 	vim_insert();
 	update_line();
 }
+
+void	insert_mode_first(void)
+{
+	g_dis.cbpos = 0;
+	vim_insert();
+	update_line();
+}
+
+void	replace_wd(void)
+{
+	char	c;
+
+	read(STDIN_FILENO, &c, 1);
+	if (ft_isprint(c))
+	{
+		g_line.line[g_dis.cbpos] = c;
+		update_line();
+	}
+}
