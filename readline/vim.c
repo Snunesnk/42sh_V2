@@ -268,13 +268,13 @@ void	clear_all_l(void)
 	vim_insert();
 }
 
-void	c_motion(void)
+void	c_motion(union u_buffer d)
 {
-	int	c;
+	union u_buffer c;
 
-	c = 0;
-	read(STDIN_FILENO, &c, sizeof(int));
-	if (c == 'c')
+	c.value = 0;
+	read(STDIN_FILENO, c.buf, sizeof(int));
+	if (c.value == d.value)
 		clear_all_l();
 }
 
@@ -283,4 +283,18 @@ void	cmaj_motion(void)
 	ft_bzero(&g_line.line[g_dis.cbpos], g_line.len - g_dis.cbpos);
 	update_line();
 	vim_insert();
+}
+
+void	d_motion(union u_buffer d)
+{
+	union u_buffer c;
+
+	c.value = 0;
+	read(STDIN_FILENO, c.buf, sizeof(int));
+	if (c.value == d.value)
+	{
+		ft_bzero(g_line.line, g_line.len);
+		g_dis.cbpos = 0;
+		update_line();
+	}
 }
