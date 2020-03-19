@@ -314,3 +314,32 @@ void	dmaj_motion(void)
 	cursor_l();
 	update_line();
 }
+
+void	yank_c(void)
+{
+	g_clip.l = 1;
+	if (g_clip.str != NULL)
+		free(g_clip.str);
+	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
+}
+
+void	yank_eol(void)
+{
+	g_clip.l = g_line.len - g_dis.cbpos;
+	if (g_clip.str != NULL)
+		free(g_clip.str);
+	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
+}
+
+void	paste_all_l(void)
+{
+	cursor_r();
+	insert_text(g_clip.str, g_clip.l);
+	cursor_l();
+}
+
+void	paste_all_r(void)
+{
+	insert_text(g_clip.str, g_clip.l);
+	cursor_l();
+}
