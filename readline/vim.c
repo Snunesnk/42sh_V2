@@ -296,9 +296,21 @@ void	d_motion(union u_buffer d)
 		g_clip.l = g_line.len;
 		if (g_clip.str != NULL)
 			free(g_clip.str);
-		g_clip.str = ft_strndup(g_line.line);
+		g_clip.str = ft_strdup(g_line.line);
 		ft_bzero(g_line.line, g_line.len);
 		g_dis.cbpos = 0;
 		update_line();
 	}
+}
+
+void	dmaj_motion(void)
+{
+	g_clip.l = g_line.len - g_dis.cbpos;
+	if (g_clip.str != NULL)
+		free(g_clip.str);
+	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
+	ft_bzero(&(g_line.line[g_dis.cbpos]), g_clip.l);
+	g_line.len -= g_clip.l;
+	cursor_l();
+	update_line();
 }
