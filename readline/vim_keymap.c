@@ -54,7 +54,7 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, insert_mode_last },
 	{ ISFUNC, wd_left },
 	{ ISFUNC, cmaj_motion },
-	{ ISFUNC, rl_void },
+	{ ISFUNC, dmaj_motion },
 	{ ISFUNC, end_next_wd },
 	{ ISFUNC, goto_chr_left },
 	[ 71 ... 72 ] = { ISFUNC, rl_void },
