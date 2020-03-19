@@ -26,7 +26,7 @@ void		init_line_buffer(void)
 	g_line.len = 0;
 }
 
-static void	l_expand(void)
+void		l_expand(void)
 {
 	char	*new;
 	size_t	lold;
@@ -42,6 +42,8 @@ static void	l_expand(void)
 
 void		insert_text(const char *string, int len)
 {
+	if (g_replace_mode)
+		return replace_text(string, len);
 	while (len + g_line.len >= g_line.size_buf)
 		l_expand();
 	if (g_dis.cbpos < g_line.len)
