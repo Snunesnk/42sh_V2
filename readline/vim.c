@@ -11,7 +11,7 @@ void	replace_text(const char *string, int len)
 	ft_strncpy(&g_line.line[g_dis.cbpos], string, len);
 	if (nlen > g_line.len)
 		g_line.len = nlen;
-	g_dis.cbpos += len; /* Not sure wether this is correct */
+	g_dis.cbpos += len;
 	update_line();	
 }
 
