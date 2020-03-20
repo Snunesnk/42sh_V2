@@ -13,6 +13,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
+int			g_add_back_buf;
 extern struct s_stack	*g_back;
 
 union	u_buffer
