@@ -24,6 +24,7 @@
 # include <fcntl.h>
 
 # include "libft.h"
+# include "ft_stack.h"
 # include "bind.h"
 # include "keymaps.h"
 # include "input.h"

@@ -54,6 +54,13 @@ void	vim_escape(void)
 
 void	vim_insert(void)
 {
+	struct s_line_state	*prev;
+
+	prev = ft_memalloc(sizeof(struct s_line_state));
+	prev->len = g_line.len;
+	prev->line = ft_strdup(g_line.line);
+	prev->size_buf = g_dis.cbpos;
+	stack_push(&g_back, prev);
 	g_input_break = 0;
 	g_vim_cmd = 0;
 	g_standard_keymap = g_vim_standard_insert_keymap;

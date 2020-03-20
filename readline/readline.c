@@ -70,6 +70,7 @@ char		*readline_loop(const char *prompt)
 	value = readline_internal();
 	deprep_terminal();
 	rl_clear_signals();
+	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
 		ft_putchar_fd('\n', 2);
 	return (value);

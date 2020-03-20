@@ -15,6 +15,20 @@ NAME = libft.a
 SOURCES_PATH :=	./src/
 
 SOURCES	:= \
+		ds_stack/stack_apply_to_each.c \
+		ds_stack/stack_create_element.c \
+		ds_stack/stack_delete.c \
+		ds_stack/stack_duplicate.c \
+		ds_stack/stack_initialize.c \
+		ds_stack/stack_isempty.c \
+		ds_stack/stack_peek.c \
+		ds_stack/stack_pop.c \
+		ds_stack/stack_pop_get_data.c \
+		ds_stack/stack_push.c \
+		ds_stack/stack_reverse.c \
+		ds_stack/stack_reverse_recursion.c \
+		ds_stack/stack_sort.c \
+		ds_stack/stack_swap.c \
 		ds_vct/vct_addchar.c \
 		ds_vct/vct_addstr.c \
 		ds_vct/vct_clear.c \
