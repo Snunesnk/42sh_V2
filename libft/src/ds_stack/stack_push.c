@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   stack_push.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:23:03 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/22 14:19:37 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:37:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#include <stdlib.h>
 
-extern struct s_stack	*g_back;
+#include "ft_stack.h"
 
-union	u_buffer
+void	stack_push(struct s_stack **top, void *data)
 {
-	unsigned long	value;
-	char			buf[sizeof(unsigned long)];
-};
+	struct s_stack	*push;
 
-struct	s_quote
-{
-	char	c;
-	char	*no_quote_prompt;
-	int		no_quote_prompt_len;
-	int		handle;
-};
-
-extern struct s_quote	g_quote;
-extern _Bool		g_input_break;
-
-union u_buffer	read_key(void);
-int				is_quote_open(const char *s);
-void    del_stat_line(void *ptr);
-
-#endif
+	if (*top)
+	{
+		push = stack_create_element(data);
+		if (push)
+		{
+			push->previous = *top;
+			*top = push;
+		}
+	}
+	else
+		*top = stack_initialize(data);
+}
