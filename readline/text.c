@@ -42,6 +42,16 @@ void		l_expand(void)
 
 void		insert_text(const char *string, int len)
 {
+	if (g_vim_mode == 0)
+	{
+		g_add_back_buf += len;
+		if (g_add_back_buf > 20)
+		{
+//			ft_printf("\n\nH\n\n");
+			g_add_back_buf = 0;
+			add_back();
+		}
+	}
 	if (g_replace_mode)
 		return replace_text(string, len);
 	while (len + g_line.len >= g_line.size_buf)
