@@ -91,5 +91,6 @@ void    paste_all_l(void);
 void	paste_all_r(void);
 void	undo_last(void);
 void	undo_lastB(void);
+void	add_back(void);
 
 #endif
