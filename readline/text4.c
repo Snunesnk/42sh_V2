@@ -36,6 +36,8 @@ void	paste_via_input(unsigned long v)
 	union u_buffer	u;
 	int				len;
 
+	if (g_back)
+		stack_delete(&g_back, del_stat_line);
 	len = 0;
 	u.value = v;
 	while (len < 8 && u.buf[len])

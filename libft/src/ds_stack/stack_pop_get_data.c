@@ -1,39 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   stack_pop_get_data.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:23:03 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/23 15:09:11 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:37:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#include <stdlib.h>
 
-extern struct s_stack	*g_back;
+#include "ft_stack.h"
 
-union	u_buffer
+extern __inline__ void	*stack_pop_get_data(struct s_stack **top)
 {
-	unsigned long	value;
-	char			buf[sizeof(unsigned long)];
-};
+	struct s_stack	*previous;
+	void		*__restrict__ data;
 
-struct	s_quote
-{
-	char	c;
-	char	*no_quote_prompt;
-	int		no_quote_prompt_len;
-	int		handle;
-};
-
-extern struct s_quote	g_quote;
-extern _Bool		g_input_break;
-
-union u_buffer	read_key(void);
-int				is_quote_open(const char *s);
-void    del_stat_line(void *ptr);
-
-#endif
+	data = NULL;
+	if (*top)
+	{
+		previous = (*top)->previous;
+		data = (*top)->data;
+		free(*top);
+		*top = previous;
+	}
+	return (data);
+}

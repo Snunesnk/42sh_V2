@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   stack_delete.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:23:03 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/22 16:55:25 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:34:33 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#include "ft_stack.h"
 
-extern struct s_stack	*g_back;
-
-union	u_buffer
+void	stack_delete(struct s_stack **top, void (*del_data)(void *))
 {
-	unsigned long	value;
-	char			buf[sizeof(unsigned long)];
-};
-
-struct	s_quote
-{
-	char	c;
-	char	*no_quote_prompt;
-	int		no_quote_prompt_len;
-	int		handle;
-};
-
-extern struct s_quote	g_quote;
-extern _Bool		g_input_break;
-
-union u_buffer	read_key(void);
-int				is_quote_open(const char *s);
-void    del_stat_line(void *ptr);
-
-#endif
+	while (*top)
+		stack_pop(top, del_data);
+}
