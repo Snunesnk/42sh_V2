@@ -12,7 +12,8 @@
 
 #include "ft_readline.h"
 
-_Bool	g_input_break = 0;
+_Bool		g_input_break = 0;
+struct s_stack	*g_back = NULL;
 
 union u_buffer	read_key(void)
 {
@@ -21,4 +22,13 @@ union u_buffer	read_key(void)
 	buffer_u.value = 0;
 	read(STDIN_FILENO, buffer_u.buf, sizeof(buffer_u.buf));
 	return (buffer_u);
+}
+
+void	del_stat_line(void *ptr)
+{
+	struct s_line_state	*prev;
+
+	prev = ptr;
+	free(prev->line);
+	free(prev);
 }

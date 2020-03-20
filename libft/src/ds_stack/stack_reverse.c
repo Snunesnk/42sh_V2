@@ -1,39 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input.h                                            :+:      :+:    :+:   */
+/*   stack_reverse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:23:03 by abarthel         ###   ########.fr       */
+/*   Created: 2019/10/23 11:56:15 by abarthel          #+#    #+#             */
+/*   Updated: 2019/10/31 09:38:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INPUT_H
-# define INPUT_H
+#include <stdlib.h>
 
-extern struct s_stack	*g_back;
+#include "ft_stack.h"
 
-union	u_buffer
+void	stack_reverse(struct s_stack **top)
 {
-	unsigned long	value;
-	char			buf[sizeof(unsigned long)];
-};
+	struct s_stack	*tmp;
+	struct s_stack	*real_prev;
 
-struct	s_quote
-{
-	char	c;
-	char	*no_quote_prompt;
-	int		no_quote_prompt_len;
-	int		handle;
-};
-
-extern struct s_quote	g_quote;
-extern _Bool		g_input_break;
-
-union u_buffer	read_key(void);
-int				is_quote_open(const char *s);
-void    del_stat_line(void *ptr);
-
-#endif
+	if (*top)
+	{
+		real_prev = *top;
+		tmp = (*top)->previous;
+		(*top)->previous = NULL;
+		*top = tmp;
+		while (*top)
+		{
+			tmp = (*top)->previous;
+			(*top)->previous = real_prev;
+			real_prev = *top;
+			*top = tmp;
+		}
+		*top = real_prev;
+	}
+}
