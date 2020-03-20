@@ -33,7 +33,7 @@ struct s_keymap_entry g_emacs_standard_keymap[] =
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
-	{ ISFUNC, rl_void },
+	{ ISFUNC, undo_last },
 	[ ' ' ... '~' ] = { ISFUNC, rl_insert },
 	{ ISFUNC, rl_backspace }
 };

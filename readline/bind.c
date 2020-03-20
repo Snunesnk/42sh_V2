@@ -16,8 +16,8 @@ struct s_keymap_entry	*g_standard_keymap;
 struct s_keymap_entry	*g_ctlx_keymap;
 struct s_keymap_entry	*g_meta_keymap;
 
-_Bool			g_vim_mode = 1;
-//_Bool			g_vim_mode = 0;
+//_Bool			g_vim_mode = 1;
+_Bool			g_vim_mode = 0;
 _Bool			g_vim_cmd = 0;
 _Bool			g_replace_mode = 0;
 _Bool			g_got_input = 0;

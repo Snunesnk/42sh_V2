@@ -350,6 +350,7 @@ void	undo_last(void)
 
 	if (g_back)
 	{
+//		ft_printf("\n\nN\n\n");
 		ft_bzero(g_line.line, g_line.len);
 		prev = stack_pop_get_data(&g_back);
 		ft_strcpy(g_line.line, prev->line);

@@ -52,6 +52,8 @@ static char	*readline_internal(void)
 	init_line_buffer();
 	value = g_line.line;
 	update_line();
+	if (g_vim_mode == 0)
+		add_back();
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
 	return (value);
 }

@@ -13,6 +13,7 @@
 #include "ft_readline.h"
 
 _Bool		g_input_break = 0;
+int		g_add_back_buf;
 struct s_stack	*g_back = NULL;
 
 union u_buffer	read_key(void)
