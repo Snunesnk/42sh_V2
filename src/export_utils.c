@@ -60,7 +60,7 @@ int				add_var(char **av)
 		}
 		else
 			name = ft_strdup(av[i]);
-		elem = get_shell_var(name);
+		elem = get_shell_var(name, g_env);
 		if (add_var_to_env(name, value, elem) == FAILURE)
 			return (FAILURE);
 		i++;
