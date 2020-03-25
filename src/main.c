@@ -17,6 +17,7 @@
 extern char	**environ;
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
+t_list		*g_alias;
 
 char		*get_next_pending_cmd(void)
 {
