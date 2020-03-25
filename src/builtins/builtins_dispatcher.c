@@ -31,6 +31,8 @@ const t_builtins	g_builtins[] =
 	{ "export", &cmd_export},
 	{ "unset", &cmd_unset},
 	{ "set", &cmd_set},
+	{ "alias", &cmd_alias},
+	{ "unalias", &cmd_unalias},
 	{ "\0", NULL}
 };
 

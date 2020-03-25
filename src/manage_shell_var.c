@@ -13,22 +13,13 @@
 #include "libft.h"
 #include "shell.h"
 
-t_list			*get_shell_var(char *name)
+t_list			*get_shell_var(char *name, t_list *svar_lst)
 {
-	t_list	*head;
-	t_list	*elem;
-
-	head = g_env;
-	elem = NULL;
-	while (g_env != NULL)
+	while (svar_lst)
 	{
-		if (ft_strequ(name, ((t_shell_var*)(g_env->content))->name))
-		{
-			elem = g_env;
+		if (ft_strequ(name, ((t_shell_var*)(svar_lst->content))->name))
 			break ;
-		}
-		g_env = g_env->next;
+		svar_lst = svar_lst->next;
 	}
-	g_env = head;
-	return (elem);
+	return (svar_lst);
 }
