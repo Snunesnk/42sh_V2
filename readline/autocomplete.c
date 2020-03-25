@@ -6,7 +6,6 @@ void	command_complete(char *to_complete)
 	t_node	*compl_tree;
 	t_data	*data;
 
-	(void)to_complete;
 	if (!(data = init_data()))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
@@ -17,9 +16,16 @@ void	command_complete(char *to_complete)
 		ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
 		return ;
 	}
+	if (!(path = ft_strdup(path)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
 	if (!(compl_tree = get_cmd_compl(to_complete, path, data)))
 		return ;
-	ft_printf("path: %s\n", path);
+	print_tree(compl_tree);
+	free(path);
+	free_node(compl_tree);
 }
 
 void	path_complete(char *to_complete)
