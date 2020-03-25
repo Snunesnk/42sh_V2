@@ -54,7 +54,7 @@ int		treat_shell_variables(t_process *p, int	opt)
 		{
 			name = ft_strndup(p->argv[0], value - p->argv[0]);
 			value = ft_strdup(value + 1);
-			elem = get_shell_var(name);
+			elem = get_shell_var(name, g_env);
 			if (elem != NULL)
 			{
 				((t_shell_var*)(elem->content))->value = value;
