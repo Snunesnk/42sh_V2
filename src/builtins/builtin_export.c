@@ -73,7 +73,7 @@ static void		remove_flag(char **av)
 			name = ft_strndup(av[i], tmp - av[i]);
 		else
 			name = ft_strdup(av[i]);
-		elem = get_shell_var(name);
+		elem = get_shell_var(name, g_env);
 		((t_shell_var*)(elem->content))->flag &= ~(EXPORT);
 		ft_strdel(&name);
 		i++;

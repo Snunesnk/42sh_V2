@@ -74,6 +74,8 @@ int				cmd_jobs(int argc, char **argv);
 int				cmd_hash(int argc, char **argv);
 int				cmd_export(int argc, char **argv);
 int				cmd_unset(int argc, char **argv);
+int				cmd_alias(int argc, char **argv);
+int				cmd_unalias(int argc, char **argv);
 
 /*
 ** Hash functions

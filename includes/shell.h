@@ -78,6 +78,8 @@ extern char		g_pwd[PATH_MAX];
 extern t_list	*g_env;
 extern t_list	*g_pending_cmd;
 
+extern t_list	*g_alias;
+
 struct	s_shell_fds
 {
 	int					fd;
@@ -307,9 +309,8 @@ int				get_env_list(char **environ);
 char			**get_env_tab(void);
 int				get_next_token(const char *str, t_token *token,
 					enum e_token *last_token_type);
-t_list			*get_shell_var(char *name);
+t_list			*get_shell_var(char *name, t_list *svar_lst);
 int				get_stdin(char **line);
-t_list			*get_shell_var(char *name);
 size_t			get_word(const char *str, t_token *token,
 					enum e_token *last_token_type);
 enum e_token	**init_enum_tab(void);
