@@ -98,6 +98,8 @@ SOURCES :=	main.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
 		builtins/builtin_unset.c \
+		builtins/builtin_alias.c \
+		builtins/builtin_unalias.c \
 		../globbings/ft_fnmatch/char_class_functions_1.c \
 		../globbings/ft_fnmatch/char_class_functions_2.c \
 		../globbings/ft_fnmatch/char_class_functions_3.c \
