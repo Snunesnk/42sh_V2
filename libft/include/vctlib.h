@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/26 12:13:44 by efischer          #+#    #+#             */
-/*   Updated: 2019/10/29 16:14:28 by efischer         ###   ########.fr       */
+/*   Updated: 2020/03/29 13:32:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 # include "libft.h"
 
-# define	DFL_SIZE 64
-# define	DFL_SCALE 16
+# define DFL_SIZE 64
+# define DFL_SCALE 16
 
 typedef struct	s_vector
 {
-	char	*str;
-	size_t	len;
-	size_t	size;
-	size_t	scale;
+	char		*str;
+	size_t		len;
+	size_t		size;
+	size_t		scale;
 }				t_vector;
 
 t_vector	*vct_newstr(const char *str);
