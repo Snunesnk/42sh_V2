@@ -222,16 +222,16 @@ int				ft_printbits(char c);
 
 size_t			ft_strclen(const char *s, char c) __attribute__((nonnull(1)));
 
-int				ft_printf(const char *__restrict__ format, ...) __attribute__
+int				ft_printf(const char *restrict format, ...) __attribute__
 				((format(printf,1,2)));
 
-int				ft_dprintf(int fd, const char *__restrict__ format, ...) __attribute__
+int				ft_dprintf(int fd, const char *restrict format, ...) __attribute__
 				((format(printf,2,3)));
 
 int				ft_asprintf(char **ret, const char *format, ...) __attribute__
 				((format(printf,2,3)));
 
-int				ft_vdprintf(int fd, const char *__restrict__ format,
+int				ft_vdprintf(int fd, const char *restrict format,
 				va_list ap);
 
 int				ft_vasprintf(char **ret, const char *format, va_list ap);

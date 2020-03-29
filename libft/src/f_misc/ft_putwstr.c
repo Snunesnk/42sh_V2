@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "ft_wchar.h"
 
-int	ft_putwstr(const wchar_t *__restrict__ ws)
+int	ft_putwstr(const wchar_t *restrict ws)
 {
 	int		ret;
 	size_t	i;

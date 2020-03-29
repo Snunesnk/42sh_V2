@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include "ft_wchar.h"
 
-int	ft_ewcsnwidth(const wchar_t *__restrict__ pwcs, size_t n)
+int	ft_ewcsnwidth(const wchar_t *restrict pwcs, size_t n)
 {
 	size_t	ret;
 	int		max_nb_unicode;

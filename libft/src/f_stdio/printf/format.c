@@ -56,7 +56,7 @@ unsigned short		ft_unbrlen(uintmax_t nb)
 	return (len > 0 ? len : 1);
 }
 
-static __inline__ void	ret_nbr(uintmax_t nb, short len)
+static inline void	ret_nbr(uintmax_t nb, short len)
 {
 	int	mod;
 
@@ -76,7 +76,7 @@ static __inline__ void	ret_nbr(uintmax_t nb, short len)
 	}
 }
 
-static __inline__ void	width_precision(void)
+static inline void	width_precision(void)
 {
 	while (!(g_flags.zero) && !(g_flags.minus) && g_options.width - g_prefix.len
 			- g_prefix.size > 0)
