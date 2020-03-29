@@ -24,7 +24,7 @@ extern t_modifier	g_modifier;
 extern t_options	g_options;
 extern t_prefix		g_prefix;
 
-static __inline__ size_t	ft_type_len(void)
+static inline size_t	ft_type_len(void)
 {
 	if (g_modifier.hh)
 		return (sizeof(char) * 8);

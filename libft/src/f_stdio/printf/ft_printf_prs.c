@@ -30,7 +30,7 @@ t_flags			g_flags =
 {.hash = 0, .zero = 0, .minus = 0, .space = 0, .plus = 0, .apost = 0};
 _Bool			g_error = 0;
 
-static __inline__ void	reset_globals(void)
+static inline void	reset_globals(void)
 {
 	g_options.width = -1;
 	g_options.precision = -1;
@@ -51,8 +51,8 @@ static __inline__ void	reset_globals(void)
 	g_modifier.upl = 0;
 }
 
-static __inline__ _Bool	get_fwpm(const char *__restrict__ format, va_list ap
-		, _Bool *__restrict__ specifier)
+static inline _Bool	get_fwpm(const char *restrict format, va_list ap
+		, _Bool *restrict specifier)
 {
 	if (format[g_ret.fmt_i] > '0' && format[g_ret.fmt_i] <= '9')
 	{
@@ -80,7 +80,7 @@ static __inline__ _Bool	get_fwpm(const char *__restrict__ format, va_list ap
 		return (0);
 }
 
-static __inline__ _Bool	prs_specifier(const char *__restrict__ format, va_list ap)
+static inline _Bool	prs_specifier(const char *restrict format, va_list ap)
 {
 	void	*(*f)();
 	_Bool	specifier;
@@ -108,7 +108,7 @@ static __inline__ _Bool	prs_specifier(const char *__restrict__ format, va_list a
 	return (0);
 }
 
-int					printf_prs(const char *__restrict__ format, va_list ap)
+int					printf_prs(const char *restrict format, va_list ap)
 {
 	g_ret.fmt_i = 0;
 	__va_copy(g_ap_origin, ap);

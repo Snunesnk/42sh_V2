@@ -15,7 +15,7 @@
 
 #include "ft_vdprintf.h"
 
-int		ft_printf(const char *__restrict__ format, ...)
+int		ft_printf(const char *restrict format, ...)
 {
 	va_list ap;
 	int		ret;

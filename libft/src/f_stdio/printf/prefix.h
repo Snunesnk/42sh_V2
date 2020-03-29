@@ -17,9 +17,9 @@
 
 typedef struct	s_prefi
 {
-	char *__restrict__			prefix;
-	char *__restrict__			ch_base;
-	struct lconv *__restrict__	lc;
+	char *restrict			prefix;
+	char *restrict			ch_base;
+	struct lconv *restrict	lc;
 	unsigned short			len;
 	unsigned short			base:5;
 	unsigned short			size:2;

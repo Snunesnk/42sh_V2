@@ -16,7 +16,7 @@
 
 static void	insert_element(struct s_stack **top, void *data)
 {
-	void	*__restrict__ element_data;
+	void	*restrict element_data;
 
 	if (stack_isempty(top))
 		stack_push(top, data);
@@ -30,7 +30,7 @@ static void	insert_element(struct s_stack **top, void *data)
 
 void		stack_reverse_recursion(struct s_stack **top)
 {
-	void	*__restrict__ element_data;
+	void	*restrict element_data;
 
 	element_data = stack_pop_get_data(top);
 	if (element_data)

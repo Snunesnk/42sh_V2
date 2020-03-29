@@ -14,10 +14,10 @@
 
 #include "ft_stack.h"
 
-extern __inline__ void	*stack_pop_get_data(struct s_stack **top)
+extern inline void	*stack_pop_get_data(struct s_stack **top)
 {
 	struct s_stack	*previous;
-	void		*__restrict__ data;
+	void		*restrict data;
 
 	data = NULL;
 	if (*top)
