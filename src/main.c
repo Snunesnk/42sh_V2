@@ -55,6 +55,7 @@ int			exec_input(char *input)
 	ast = NULL;
 	if (launch_lexer_parser(input, &ast) == SUCCESS)
 	{
+		debug_ast(ast);
 	//	expansions(ast);
 		status = execute_node(ast, 1); /* to capture */
 	}
