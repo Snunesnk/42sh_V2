@@ -21,7 +21,7 @@
 extern t_flags		g_flags;
 extern t_modifier	g_modifier;
 
-void	ft_p(void *__restrict__ ptr)
+void	ft_p(void *restrict ptr)
 {
 	uintmax_t p_ptr;
 

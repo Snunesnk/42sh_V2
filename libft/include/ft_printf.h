@@ -13,7 +13,7 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-int	ft_printf(const char *__restrict__ format, ...) __attribute__
+int	ft_printf(const char *restrict format, ...) __attribute__
 	((format(printf,1,2)));
 
 #endif
