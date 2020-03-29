@@ -17,7 +17,7 @@ void	debug_ast(t_ast *ast)
 {
 	if (ast == NULL)
 		return ;
-/*	if (ast->type == SEMI)
+	if (ast->type == SEMI)
 		ft_putendl("SEMI");
 	else if (ast->type == AND)
 		ft_putendl("AND");
@@ -38,5 +38,5 @@ void	debug_ast(t_ast *ast)
 	{
 		ft_putendl("RIGHT");
 		debug_ast(ast->right);
-	}*/
+	}
 }
