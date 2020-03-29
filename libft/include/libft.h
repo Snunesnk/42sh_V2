@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 15:46:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/03/29 13:41:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,8 @@ size_t			ft_strclen(const char *s, char c) __attribute__((nonnull(1)));
 int				ft_printf(const char *restrict format, ...) __attribute__
 				((format(printf,1,2)));
 
-int				ft_dprintf(int fd, const char *restrict format, ...) __attribute__
+int				ft_dprintf(int fd,
+				const char *restrict format, ...) __attribute__
 				((format(printf,2,3)));
 
 int				ft_asprintf(char **ret, const char *format, ...) __attribute__
@@ -264,21 +265,18 @@ void			ft_nmemdel(size_t n, void **ptr, ...);
 
 void			ft_free_tab(int ac, char ***av);
 
-
-char	**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
-void	ft_lstquicksort(t_list **alst, int (*cmp)(void *, void *));
-int			ft_lstprint(t_list *lst, void (*f)(t_list*, t_list**));
-t_list	*ft_lstnew_str(char const *content, size_t content_size);
-t_list	*ft_lstnew(void const *content, size_t content_size);
+char			**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
+void			ft_lstquicksort(t_list **alst, int (*cmp)(void *, void *));
+int				ft_lstprint(t_list *lst, void (*f)(t_list*, t_list**));
+t_list			*ft_lstnew_str(char const *content, size_t content_size);
+t_list			*ft_lstnew(void const *content, size_t content_size);
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-size_t	ft_lstlen(t_list *lst);
-void	ft_lstiter(t_list *lst, void (*f)(t_list *elem));
-void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
-void	ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-t_list	*ft_lstcpy(t_list *lst, t_list *(*f)(t_list*));
-void	ft_lstaddend(t_list **alst, t_list *new);
-void	ft_lstadd(t_list **alst, t_list *new);
-
-
+size_t			ft_lstlen(t_list *lst);
+void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
+void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+t_list			*ft_lstcpy(t_list *lst, t_list *(*f)(t_list*));
+void			ft_lstaddend(t_list **alst, t_list *new);
+void			ft_lstadd(t_list **alst, t_list *new);
 
 #endif
