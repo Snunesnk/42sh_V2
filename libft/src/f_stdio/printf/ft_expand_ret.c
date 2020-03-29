@@ -22,7 +22,7 @@ extern _Bool		g_error;
 
 void	ft_expand_ret(int size)
 {
-	void *__restrict__	new_ret;
+	void *restrict	new_ret;
 
 	g_ret.max += size < 1024 ? 1024 : size;
 	if (!(new_ret = (char*)ft_memalloc(sizeof(char) * g_ret.max + 1)))

@@ -14,7 +14,7 @@
 
 extern t_ret	g_ret;
 
-void	ft_n(int *__restrict__ ptr)
+void	ft_n(int *restrict ptr)
 {
 	if (ptr)
 		*ptr = g_ret.i + 1;

@@ -24,7 +24,7 @@ extern t_options	g_options;
 extern t_modifier	g_modifier;
 extern t_prefix		g_prefix;
 
-static __inline__ void			ret_str(char *__restrict__ str)
+static inline void			ret_str(char *restrict str)
 {
 	while (g_prefix.len)
 	{
@@ -34,7 +34,7 @@ static __inline__ void			ret_str(char *__restrict__ str)
 	}
 }
 
-static __inline__ void			ret_wcs(wchar_t *__restrict__ wcs)
+static inline void			ret_wcs(wchar_t *restrict wcs)
 {
 	wchar_t wc;
 
@@ -56,7 +56,7 @@ static __inline__ void			ret_wcs(wchar_t *__restrict__ wcs)
 	}
 }
 
-void						str_format(void *__restrict__ str)
+void						str_format(void *restrict str)
 {
 	int	size;
 

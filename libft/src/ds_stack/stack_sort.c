@@ -16,7 +16,7 @@
 
 static void	insert_sorted_element(struct s_stack **top, void *data, int (*cmp)())
 {
-	void	*__restrict__ element_data;
+	void	*restrict element_data;
 
 	if (stack_isempty(top) || cmp((*top)->data, data) > 0)
 		stack_push(top, data);
@@ -30,7 +30,7 @@ static void	insert_sorted_element(struct s_stack **top, void *data, int (*cmp)()
 
 void		stack_sort(struct s_stack **top, int (*cmp)())
 {
-	void	*__restrict__ element_data;
+	void	*restrict element_data;
 
 	element_data = stack_pop_get_data(top);
 	if (element_data)

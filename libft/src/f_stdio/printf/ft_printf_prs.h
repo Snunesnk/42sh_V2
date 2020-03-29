@@ -15,6 +15,6 @@
 
 # include <stdarg.h>
 
-int	printf_prs(const char *__restrict__ format, va_list ap);
+int	printf_prs(const char *restrict format, va_list ap);
 
 #endif

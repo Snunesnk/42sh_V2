@@ -17,7 +17,7 @@
 
 typedef struct	s_ret
 {
-	char *__restrict__	ret;
+	char *restrict	ret;
 	int				i;
 	int				fmt_i;
 	int				max;

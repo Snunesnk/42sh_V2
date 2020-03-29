@@ -19,8 +19,8 @@ extern t_ret		g_ret;
 extern t_modifier	g_modifier;
 extern t_options	g_options;
 
-void					get_flags(const char *__restrict__ format
-		, _Bool *__restrict__ specifier)
+void					get_flags(const char *restrict format
+		, _Bool *restrict specifier)
 {
 	if (!(format[g_ret.fmt_i] ^ '#'))
 		g_flags.hash = 1;
@@ -47,7 +47,7 @@ void					get_flags(const char *__restrict__ format
 	}
 }
 
-static __inline__ _Bool		get_additional_modifier(const char *__restrict__ format)
+static inline _Bool		get_additional_modifier(const char *restrict format)
 {
 	if (!(format[g_ret.fmt_i] ^ 'j'))
 	{
@@ -73,7 +73,7 @@ static __inline__ _Bool		get_additional_modifier(const char *__restrict__ format
 		return (1);
 }
 
-_Bool					get_modifier(const char *__restrict__ format)
+_Bool					get_modifier(const char *restrict format)
 {
 	if (!(format[g_ret.fmt_i] ^ 'l'))
 	{
@@ -102,7 +102,7 @@ _Bool					get_modifier(const char *__restrict__ format)
 	return (1);
 }
 
-void					ft_get_width_or_dollar(const char *__restrict__ str
+void					ft_get_width_or_dollar(const char *restrict str
 		, _Bool dot)
 {
 	int	nbr;
@@ -127,7 +127,7 @@ void					ft_get_width_or_dollar(const char *__restrict__ str
 	}
 }
 
-void					get_precision(const char *__restrict__ format, va_list ap)
+void					get_precision(const char *restrict format, va_list ap)
 {
 	while (!(format[g_ret.fmt_i] ^ '.'))
 		++g_ret.fmt_i;
