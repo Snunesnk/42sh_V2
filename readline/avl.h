@@ -27,6 +27,7 @@ typedef struct	s_data
 	int	start;
 	int	end;
 	int	type;
+	int	exec_lim;
 }				t_data;
 
 t_node	*add_node(t_node *tree, char *name, t_data *data, int color);
