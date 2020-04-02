@@ -11,19 +11,19 @@ void	command_complete(char *to_complete)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
-	if (!(path = getenv("PATH")))
+	if (!(path = ft_strdup(getenv("PATH"))))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
-		return ;
-	}
-	if (!(path = ft_strdup(path)))
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		if (!getenv("PATH"))
+			ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
+		else
+			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
 	if (!(compl_tree = get_cmd_compl(to_complete, path, data)))
 		return ;
-	print_tree(compl_tree);
+	fill_data(data, compl_tree);
+	print_compl(compl_tree, data);
+	free(data);
 	free(path);
 	free_node(compl_tree);
 }
@@ -48,7 +48,6 @@ void	autocomplete(void)
 	char	*to_complete;
 	int		i;
 
-	ft_printf("entree dans l'autocomplete\n");
 	i = g_dis.cbpos - 1;
 	while (i >= 0 && !ft_isspace(g_line.line[i]))
 		i--;

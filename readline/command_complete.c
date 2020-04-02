@@ -101,6 +101,5 @@ t_node	*get_cmd_compl(char *to_complete, char *path, t_data *data)
 					8);
 		i++;
 	}
-	print_tree(compl_tree);
 	return (compl_tree);
 }

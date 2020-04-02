@@ -1,5 +1,10 @@
 #include "ft_readline.h"
 
+void	print_compl(t_node *compl_tree, t_data *data)
+{
+	ft_printf("name_l: %d, nb_exec: %d\n", data->name_l, data->nb_exec);
+	print_tree(compl_tree);
+}
 void	print_tree(t_node *compl_tree)
 {
 	if (!compl_tree)
