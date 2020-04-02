@@ -11,6 +11,7 @@ typedef struct	s_node
 	int				length;
 	int				heigth;
 	int				color;
+	int				nb_node;
 }				t_node;
 
 typedef struct	s_data
