@@ -1,5 +1,7 @@
 #include "ft_readline.h"
 
+int		g_autocompl_on = 0;
+
 void	command_complete(char *to_complete)
 {
 	char	*path;
@@ -48,6 +50,7 @@ void	autocomplete(void)
 	char	*to_complete;
 	int		i;
 
+	g_autocompl_on = 1;
 	i = g_dis.cbpos - 1;
 	while (i >= 0 && !ft_isspace(g_line.line[i]))
 		i--;

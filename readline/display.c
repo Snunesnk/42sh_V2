@@ -82,7 +82,10 @@ void		update_line(void)
 	ft_putstr(tgoto(g_termcaps.ch, 0, 0));
 	if (g_cursor.v_pos > 0)
 		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
-	ft_putstr(g_termcaps.cd);
+	if (g_autocompl_on)
+		ft_putstr(g_termcaps.clreol);
+	else
+		ft_putstr(g_termcaps.cd);
 	g_dis.botl = (g_dis.prompt_l + g_line.len) / g_sc.w;
 	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
 	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;

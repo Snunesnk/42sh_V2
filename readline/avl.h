@@ -21,14 +21,11 @@ typedef struct	s_data
 	int	row;
 	int	nb_line;
 	int	name_p_line;
+	int	chosen_exec;
 	int	nb_exec;
-	int	nb_exec_sav;
-	int	curs_col;
-	int	curs_row;
-	int	start;
-	int	end;
 	int	type;
-	int	exec_lim;
+	int	first_print;
+	int	last_print;
 }				t_data;
 
 t_node	*add_node(t_node *tree, char *name, t_data *data, int color);
