@@ -4,6 +4,7 @@
 # include "ft_readline.h"
 
 int		g_autocompl_on;
+int		g_autocompl_query;
 
 void	autocomplete(void);
 t_node	*get_cmd_compl(char *to_complete, char *path, t_data *data);

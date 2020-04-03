@@ -8,36 +8,12 @@ t_data	*init_data(void)
 		return (NULL);
 	new_data->name_l = 0;
 	new_data->column = 0;
-	new_data->chosen_exec = 0;
+	new_data->chosen_exec = 1;
 	new_data->first_print = 0;
 	new_data->last_print = 0;
 	new_data->nb_exec = 0;
 	new_data->type = 0;
 	return (new_data);
-}
-
-void	get_cursor_position(int *column, int *row)
-{
-	int		a;
-	char	input;
-
-	*column = 0;
-	*row = 0;
-	a = 0;
-	write(STDIN_FILENO, "\033[6n", 4);
-	while (input != 'R')
-	{
-		read(STDIN_FILENO, &input, 1);
-		if (input >= '0' && input <= '9')
-		{
-			if (a == 0)
-				*row = *row * 10 + input - '0';
-			else
-				*column = *column * 10 + input - '0';
-		}
-		if (input == ';')
-			a++;
-	}
 }
 
 void		get_exec_lim(t_data *data)
