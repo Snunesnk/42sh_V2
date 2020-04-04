@@ -23,8 +23,7 @@ void	command_complete(char *to_complete)
 	}
 	if (!(compl_tree = get_cmd_compl(to_complete, path, data)))
 		return ;
-	fill_data(data, compl_tree);
-	print_compl(compl_tree, data);
+	display_compl(compl_tree, data);
 	free(data);
 	free(path);
 	free_node(compl_tree);

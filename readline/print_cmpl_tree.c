@@ -1,6 +1,7 @@
 #include "ft_readline.h"
 
-int		g_autocompl_query = -1;
+int				g_autocompl_query = -1;
+union u_buffer	g_autocompl_bad_seq;
 
 int		ask_confirmation(t_data *data)
 {
@@ -12,7 +13,10 @@ int		ask_confirmation(t_data *data)
 	{
 		read(STDIN_FILENO, &c, 1);
 		if (c == 'y' || c == 'Y' || c == ' ')
+		{
+			ft_putchar('\n');
 			return (1);
+		}
 		if (c == 'n' || c == 'N')
 		{
 			update_line();
@@ -32,8 +36,6 @@ void	print_compl(t_node *compl_tree, t_data *data)
 	ft_putstr(g_termcaps.cd);
 	line = 0;
 	to_print = data->first_print;
-	if (data->nb_exec >= 100 && !ask_confirmation(data))
-		return ;
 //	ft_printf("name_l: %d, chosen_exec: %d\n", data->name_l, data->chosen_exec);
 //	ft_printf("nb_line: %d, name_p_line: %d\n", data->nb_line, data->name_p_line);
 //	ft_printf("first print: %d, last_print: %d\n", data->first_print, data->last_print);
@@ -80,4 +82,46 @@ void	print_tree(t_node *compl_tree, t_data *data, int to_print)
 	}
 	if (compl_tree->right && to_print > compl_tree->nb_node)
 		print_tree(compl_tree->right, data, to_print);
+}
+
+int		is_compl_char(union u_buffer c)
+{
+	if (c.buf[0] == 27 && c.buf[1] == '[' && c.buf[2] && !c.buf[3])
+	{
+		if (c.buf[2] == 'A' || c.buf[2] == 'B' || c.buf[2] == 'C'\
+				|| c.buf[2] == 'D')
+			return (1);
+		return (0);
+	}
+	if (c.value == 9)
+		return (1);
+	return (0);
+}
+
+void	display_compl(t_node *compl_tree, t_data *data)
+{
+	union u_buffer	c;
+
+	g_autocompl_bad_seq.value = 0;
+	fill_data(data, compl_tree);
+	if (data->nb_exec >= 100 && !ask_confirmation(data))
+		return ;
+	print_compl(compl_tree, data);
+	c = read_key();
+	while (is_compl_char(c))
+	{
+		update_exec(c, data);
+		fill_data(data, compl_tree);
+		print_compl(compl_tree, data);
+		c = read_key();
+	}
+/*	if (c.value == '\n')
+		insert_compl();
+	else
+	{
+		g_autocompl_bad_seq = c;
+		insert_space();
+	}*/
+	ft_putstr(g_termcaps.cd);
+	update_line();
 }
