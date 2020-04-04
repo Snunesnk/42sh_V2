@@ -1,5 +1,34 @@
 #include "ft_readline.h"
 
+void	update_exec(union u_buffer c, t_data *data)
+{
+	if (c.value == 9 || c.value == ARROW_DOWN)
+	{
+		data->chosen_exec = (data->chosen_exec + 1 > data->nb_exec) ? 1 \
+							: data->chosen_exec + 1;
+	}
+	else if (c.value == ARROW_UP)
+	{
+		data->chosen_exec -= 1;
+		if (data->chosen_exec < 1)
+			data->chosen_exec = data->nb_exec;
+	}
+	else if (c.value == ARROW_LEFT)
+	{
+		data->chosen_exec -= data->nb_line;
+		if (data->chosen_exec < 1)
+			data->chosen_exec += data->nb_exec + 1;
+		if (data->chosen_exec > data->nb_exec)
+			data->chosen_exec -= data->nb_line;
+	}
+	else if (c.value == ARROW_RIGHT)
+	{
+		data->chosen_exec += data->nb_line;
+		if (data->chosen_exec > data->nb_exec)
+			data->chosen_exec = data->chosen_exec % data->nb_line + 1;
+	}
+}
+
 t_data	*init_data(void)
 {
 	t_data	*new_data;
@@ -76,6 +105,7 @@ t_data	*fill_data(t_data *data, t_node *compl_tree)
 			data->name_p_line = data->nb_exec / data->nb_line;
 	}
 	get_exec_lim(data);
-	ft_printf("nb_exec: %d\n", data->nb_exec);
+	data->column = g_sc.w;
+	data->row = g_sc.height;
 	return (data);
 }

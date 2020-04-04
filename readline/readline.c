@@ -25,6 +25,11 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 			c.value = g_autocompl_query;
 			g_autocompl_query = -1;
 		}
+		else if (g_autocompl_bad_seq.value)
+		{
+			c = g_autocompl_bad_seq;
+			g_autocompl_bad_seq.value = 0;
+		}
 		else
 			c = read_key();
 //		ft_printf("\n%d %d %d %d %d %d %d\n", (int)c.buf[0], (int)c.buf[1], (int)c.buf[2], (int)c.buf[3], (int)c.buf[4], (int)c.buf[5], (int)c.buf[6]);
