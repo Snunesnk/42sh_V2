@@ -25,7 +25,7 @@ union u_buffer	read_key(void)
 	return (buffer_u);
 }
 
-void	del_stat_line(void *ptr)
+void		del_stat_line(void *ptr)
 {
 	struct s_line_state	*prev;
 
