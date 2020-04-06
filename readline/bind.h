@@ -16,21 +16,17 @@
 # include "input.h"
 # include "keymaps.h"
 
-extern struct s_keymap_entry   *g_standard_keymap;
-extern struct s_keymap_entry   *g_ctlx_keymap;
-extern struct s_keymap_entry   *g_meta_keymap;
-
+extern struct s_keymap_entry	*g_standard_keymap;
+extern struct s_keymap_entry	*g_ctlx_keymap;
+extern struct s_keymap_entry	*g_meta_keymap;
 extern _Bool			g_ctrl_mode;
 extern _Bool			g_vim_mode;
 extern _Bool			g_replace_mode;
 extern _Bool			g_vim_cmd;
-
 extern void			*g_last_goto_f;
 extern _Bool			g_got_input;
-
 void	insert_text(const char *string, int len);
 void	clear_line(void);
-
 void	bind_keys(void);
 void	cut_prev_wd(void);
 void	cut_next_wd(void);
@@ -56,7 +52,7 @@ void	cursor_d(void);
 void	history_up(void);
 void	history_down(void);
 void	kill_line(void);
-void    rl_reversel(void);
+void	rl_reversel(void);
 void	rl_ctrl_mode(union u_buffer u);
 void	swap_words(void);
 void	vim_insert(void);
@@ -85,12 +81,12 @@ void	d_motion(union u_buffer d);
 void	cmaj_motion(void);
 void	clear_all_l(void);
 void	dmaj_motion(void);
-void    yank_c(void);
-void    yank_eol(void);
-void    paste_all_l(void);
+void	yank_c(void);
+void	yank_eol(void);
+void	paste_all_l(void);
 void	paste_all_r(void);
 void	undo_last(void);
-void	undo_lastB(void);
+void	undo_lastb(void);
 void	add_back(void);
 
 #endif

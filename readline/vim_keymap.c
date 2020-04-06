@@ -65,7 +65,7 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, replace_mode },
 	{ ISFUNC, clear_all_l },
 	{ ISFUNC, goto_pchr_left },
-	{ ISFUNC, undo_lastB },
+	{ ISFUNC, undo_lastb },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, beg_next_wd },
 	{ ISFUNC, rl_backspace },
