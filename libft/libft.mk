@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/12 15:46:17 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/06 17:07:51 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ SOURCES	:= \
 		ds_vct/vct_reset.c \
 		ds_vct/vct_resize.c \
 		ds_singly_linked_list/ft_lstadd.c \
-		ds_singly_linked_list/ft_lstquicksort.c \
 		ds_singly_linked_list/ft_lstaddend.c \
 		ds_singly_linked_list/ft_lstcpy.c \
 		ds_singly_linked_list/ft_lstdel.c \

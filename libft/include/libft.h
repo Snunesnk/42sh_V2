@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/29 13:41:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/06 17:08:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -266,7 +266,6 @@ void			ft_nmemdel(size_t n, void **ptr, ...);
 void			ft_free_tab(int ac, char ***av);
 
 char			**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
-void			ft_lstquicksort(t_list **alst, int (*cmp)(void *, void *));
 int				ft_lstprint(t_list *lst, void (*f)(t_list*, t_list**));
 t_list			*ft_lstnew_str(char const *content, size_t content_size);
 t_list			*ft_lstnew(void const *content, size_t content_size);
