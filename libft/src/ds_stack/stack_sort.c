@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 12:22:36 by abarthel          #+#    #+#             */
-/*   Updated: 2019/10/31 09:40:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/06 17:14:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include "ft_stack.h"
 
-static void	insert_sorted_element(struct s_stack **top, void *data, int (*cmp)())
+static void	insert_sorted_element(struct s_stack **top,
+		void *data, int (*cmp)())
 {
 	void	*restrict element_data;
 
