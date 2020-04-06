@@ -361,7 +361,7 @@ void	undo_last(void)
 	}
 }
 
-void	undo_lastB(void)
+void	undo_lastb(void)
 {
 	struct s_line_state	*prev;
 
