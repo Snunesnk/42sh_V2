@@ -47,30 +47,19 @@ t_data	*init_data(void)
 
 void		get_exec_lim(t_data *data)
 {
-	int				chosen_exec_line;
-	int				middle_line;
+	int	chosen_exec_line;
+	int	middle_line;
 
-	chosen_exec_line = data->chosen_exec % data->nb_line;
-	if (data->nb_line < data->row -1)
-	{
+	chosen_exec_line = data->chosen_exec % (data->nb_line + 1);
+	middle_line = data->row / 2;
+	data->first_print = chosen_exec_line - middle_line + 2;
+	if (data->first_print < 1)
 		data->first_print = 1;
-		data->last_print = data->nb_line;
-	}
-	else
+	data->last_print = data->first_print + data->row - 2;
+	if (data->last_print > data->nb_line)
 	{
-		middle_line = (data->row - 1) / 2;
-		data->first_print = chosen_exec_line - middle_line;
-		data->last_print = chosen_exec_line + middle_line;
-		if (data->first_print < 1)
-		{
-			data->last_print -= (data->first_print - 1);
-			data->first_print -= (data->first_print - 1);
-		}
-		if (data->last_print > data->nb_line)
-		{
-			data->first_print -= data->last_print - data->nb_line;
-			data->last_print -= data->last_print - data->nb_line;
-		}
+		data->last_print = data->nb_line;
+		data->first_print = data->last_print - data->row - 1;
 	}
 }
 
@@ -91,21 +80,15 @@ t_data	*fill_data(t_data *data, t_node *compl_tree)
 {
 	data->nb_line = 1;
 	data->name_p_line = 0;
+	data->column = g_sc.w;
+	data->row = g_sc.height;
 	data->nb_exec = get_nb_exec(compl_tree, 0);
 	if (data->name_l)
 		data->name_p_line = data->column / data->name_l;
 	if (data->name_p_line)
-		data->nb_line = data->nb_exec / data->name_p_line + 1;
-	if (data->name_p_line > data->nb_exec / data->nb_line)
-	{
-		if ((data->nb_exec / data->nb_line) * data->nb_line \
-				!= data->nb_exec)
-			data->name_p_line = data->nb_exec / data->nb_line + 1;
-		else
-			data->name_p_line = data->nb_exec / data->nb_line;
-	}
+		data->nb_line = data->nb_exec / data->name_p_line;
+	if (data->nb_line * data->name_p_line != data->nb_exec)
+		data->nb_line += 1;
 	get_exec_lim(data);
-	data->column = g_sc.w;
-	data->row = g_sc.height;
 	return (data);
 }
