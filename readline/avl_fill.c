@@ -1,5 +1,17 @@
 #include "ft_readline.h"
 
+char	*extract_file_name(char *name)
+{
+	int	i;
+
+	i = ft_str_wchar_len(name) - 2;
+	while (i >= 0 && name[i] != '/')
+		i--;
+	if (i >= 0)
+		return (ft_strdup(name + i + 1));
+	return (ft_strdup(name));
+}
+
 int		ft_node_cmp(t_node *tree, t_node *node)
 {
 	if (!tree)
@@ -16,7 +28,7 @@ void	update_l(t_node *node, t_data *data)
 	ioctl(0, TIOCGWINSZ, &size);
 	data->column = size.ws_col;
 	data->row = size.ws_row;
-	if (ft_strlen(node->name) + 1 > (size_t)data->name_l)
+	if (ft_strlen(node->name) + 2 > (size_t)data->name_l)
 		data->name_l = ft_strlen(node->name) + 2;
 }
 
@@ -48,12 +60,12 @@ t_node	*add_node(t_node *tree, char *name, t_data *data, int color)
 
 	if (!(node = (t_node *)ft_memalloc(sizeof(t_node))))
 		return (NULL);
-	if (!(node->name = ft_strdup(name)))
+	if (!(node->name = extract_file_name(name)))
 		return (NULL);
 	node->right = NULL;
 	node->left = NULL;
 	node->heigth = 1;
-	node->length = ft_strlen(node->name);
+	node->length = ft_str_wchar_len(node->name);
 	node->color = color;
 	update_l(node, data);
 	tree = place_node(tree, node, data);
