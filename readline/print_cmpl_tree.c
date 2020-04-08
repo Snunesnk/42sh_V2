@@ -37,13 +37,8 @@ void	print_compl(t_node *compl_tree, t_data *data)
 	line = 0;
 	to_print = data->first_print;
 	ft_putstr("\n");
-//	ft_printf("name_l: %d, chosen_exec: %d\n", data->name_l, data->chosen_exec);
-	ft_printf("chosen_exec: %d\n", data->chosen_exec);
-	ft_printf("nb_line: %d, name_p_line: %d, nb_exec: %d\n\n\n", data->nb_line, data->name_p_line, data->nb_exec);
-	ft_printf("first print: %d, last_print: %d\n\n\n", data->first_print, data->last_print);
 	while (data->first_print + line < data->last_print + 1)
 	{
-	//	ft_printf("to_print: %d\n", to_print);
 		if (to_print)
 			print_tree(compl_tree, data, to_print);
 		to_print += data->nb_line;
