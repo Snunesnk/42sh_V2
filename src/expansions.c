@@ -22,7 +22,7 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static int	expansion_dispatcher(char *str, int tilde)
+static int		expansion_dispatcher(char *str, int tilde)
 {
 	int	i;
 	int	ref;
@@ -35,7 +35,7 @@ static int	expansion_dispatcher(char *str, int tilde)
 	while (*(g_tags[i].opentag))
 	{
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break;
+			break ;
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
@@ -47,7 +47,7 @@ static int	expansion_dispatcher(char *str, int tilde)
 	return (ref);
 }
 
-static char	*get_closest_exp(char *str, int tilde)
+static char		*get_closest_exp(char *str, int tilde)
 {
 	int	i;
 	char	*ptr;
@@ -58,7 +58,7 @@ static char	*get_closest_exp(char *str, int tilde)
 	while (*(g_tags[i].opentag))
 	{
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break;
+			break ;
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 			closest = ptr;
@@ -78,7 +78,8 @@ static int		replace_expansion(char **token, char **next, int ref)
 	lcontent = 0;
 	ret = e_success;
 	lprefix = (size_t)((*next) - (*token));
-	if (!(ret = g_tags[ref].f(&lcontent, next, g_tags[ref].opentag, g_tags[ref].closetag)))
+	if (!(ret = g_tags[ref].f(&lcontent, next,
+	g_tags[ref].opentag, g_tags[ref].closetag)))
 	{
 		lnew = lprefix + ft_strlen(*next);
 		new = (char*)ft_memalloc(sizeof(char) * (lnew + 1));
@@ -102,7 +103,8 @@ int			treat_single_exp(char **str, int tilde)
 	next = *str;
 	while ((next = get_closest_exp(next, tilde)))
 	{
-		if (tilde && (next > *str || (next == *str && (next[1] != '/' && next[1] != '\0'))))
+		if (tilde && (next > *str
+		|| (next == *str && (next[1] != '/' && next[1] != '\0'))))
 		{
 			tilde = 0;
 			continue ;
