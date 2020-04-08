@@ -201,6 +201,7 @@ int				get_tokentype(t_list *lst);
 char			*get_tokvalue(t_list *lst);
 int				do_redirection(t_redirection *r);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
+char	*dup_token_value(char **argv, int i, t_list *lst);
 
 void    free_redirections(t_redirection *r);
 int		undo_redirection(t_redirection *r);

@@ -29,6 +29,7 @@ SOURCES :=	main.c \
 		execute_ast2.c \
 		execute_job.c \
 		execute_job2.c \
+		execute_job3.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \

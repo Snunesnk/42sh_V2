@@ -15,6 +15,8 @@
 #include "error.h"
 #include "builtins.h"
 
+#define ESH e_command_not_found
+
 static int	check_access(char *arg)
 {
 	int ret;
@@ -91,7 +93,7 @@ int			execute_process(char **argv, char **envp,
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
-		return (g_errordesc[psherror(e_command_not_found, argv[0], e_cmd_type)].code);
+		return (g_errordesc[psherror(ESH, argv[0], e_cmd_type)].code);
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
