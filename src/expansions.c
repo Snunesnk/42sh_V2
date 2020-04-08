@@ -35,7 +35,7 @@ static int	expansion_dispatcher(char *str, int tilde)
 	while (*(g_tags[i].opentag))
 	{
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break; /* Stop expansions on tilde if tilde not required */
+			break;
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 		{
@@ -58,7 +58,7 @@ static char	*get_closest_exp(char *str, int tilde)
 	while (*(g_tags[i].opentag))
 	{
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break; /* Stop expansions on tilde if tilde not required */
+			break;
 		ptr = ft_strstr(str, g_tags[i].opentag);
 		if (ptr && (!closest || (ptr < closest && closest)))
 			closest = ptr;
@@ -126,7 +126,7 @@ int			treat_expansions(t_process *p)
 	if (!p->argv || !*p->argv)
 		return (e_invalid_input);
 	while (i < p->argc)
-	{ /* memmove, if expansion is null */
+	{
 		ret = treat_single_exp(p->argv + i, 1);
 		ret = !ret ? pathname_expansion(p, i) : ret;
 		if (ret)

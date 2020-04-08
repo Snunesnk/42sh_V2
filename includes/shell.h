@@ -370,4 +370,18 @@ int		tilde_expansion(size_t *index, char **str,
 		const char *opentag, const char *closetag);
 int		pathname_expansion(t_process *p, int i);
 
+struct	s_param_exp
+{
+	int		ret;
+	size_t	lopen;
+	size_t	lvarname;
+	size_t	lclose;
+	char	*rest;
+	size_t	lrest;
+	char	*content;
+	size_t	lcontent;
+	char	*new;
+};
+
+
 #endif
