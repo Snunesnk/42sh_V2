@@ -52,7 +52,7 @@ t_redirection	*type_dgreat_redirection(t_list **lst, int io_nb)
 t_redirection	*suite_great_and(t_list **lst, t_redirection **r)
 {
 	if ((*r)->redirectee.filename[0] == '-'
-			&& (*r)->redirectee.filename[2] == '\0')
+			&& (*r)->redirectee.filename[1] == '\0')
 		(*r)->flags |= FDCLOSE;
 	else if (ft_str_is_numeric((*r)->redirectee.filename))
 	{
@@ -77,7 +77,7 @@ t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	if (has_close_at_end(r->redirectee.filename))
+	if (ft_strcmp("-", r->redirectee.filename) && has_close_at_end(r->redirectee.filename))
 	{
 		r->error = e_ambiguous_redirect;
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
