@@ -1,6 +1,6 @@
 #include "ft_readline.h"
 
-int		g_autocompl_on = 0;
+int	g_autocompl_on = 0;
 
 void	command_complete(char *to_complete)
 {
@@ -41,7 +41,19 @@ void	var_complete(char *to_complete)
 
 void	file_complete(char *to_complete)
 {
-	ft_printf("\nI should complete %s with a file\n", to_complete);
+	t_node	*compl_tree;
+	t_data	*data;
+
+	if (!(data = init_data()))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
+	}
+	if (!(compl_tree = get_file_compl(to_complete, data)))
+		return ;
+	display_compl(compl_tree, data);
+	free(data);
+	free_node(compl_tree);
 }
 
 void	autocomplete(void)
@@ -55,12 +67,13 @@ void	autocomplete(void)
 		i--;
 	to_complete = ft_strsub(g_line.line, i + 1, g_dis.cbpos - i + 1);
 	if (ft_strchr(to_complete, '/'))
-		path_complete(to_complete);
+		file_complete(to_complete);
 	else if (g_line.line[i + 1] == '$')
 		var_complete(to_complete);
 	else if (i <= 0)
 		command_complete(to_complete);
 	else
 		file_complete(to_complete);
+	g_autocompl_on = 0;
 	free(to_complete);
 }

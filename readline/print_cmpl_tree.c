@@ -33,7 +33,6 @@ void	print_compl(t_node *compl_tree, t_data *data)
 	int	to_print;
 	int	line;
 
-	ft_putstr(g_termcaps.cd);
 	line = 0;
 	to_print = data->first_print;
 	ft_putstr("\n");
@@ -50,31 +49,34 @@ void	print_compl(t_node *compl_tree, t_data *data)
 				ft_putstr("\n");
 		}
 	}
+	ft_putstr(g_termcaps.cd);
 	ft_putstr(tgoto(g_termcaps.gup, 0, line));
 	update_line();
 }
 
 void	print_tree(t_node *compl_tree, t_data *data, int to_print)
 {
+	int	len;
+
 	if (!compl_tree)
 		return ;
 	if (compl_tree->left && to_print < compl_tree->nb_node)
 		print_tree(compl_tree->left, data, to_print);
 	if (to_print == compl_tree->nb_node)
 	{
-		int	length;
-		length = data->name_l - compl_tree->length;
 		if (to_print == data->chosen_exec)
 			ft_printf("\033[47m\033[30m%s", compl_tree->name);
 		else
 			ft_printf("%s", compl_tree->name);
-		while (length)
+		len = data->name_l - compl_tree->length - 2;
+		while (len > 0)
 		{
-			if (length == 2 && to_print == data->chosen_exec)
-				ft_putstr("\033[0m");
-			ft_putchar(' ');
-			length--;
+			write(STDOUT_FILENO, SPACES, len);
+			len -= 60;
 		}
+		if (to_print == data->chosen_exec)
+			ft_putstr("\033[0m");
+		ft_putstr("  ");
 	}
 	if (compl_tree->right && to_print > compl_tree->nb_node)
 		print_tree(compl_tree->right, data, to_print);
@@ -82,6 +84,8 @@ void	print_tree(t_node *compl_tree, t_data *data, int to_print)
 
 int		is_compl_char(union u_buffer c)
 {
+	if (c.value == 10000)
+		return (-1);
 	if (c.buf[0] == 27 && c.buf[1] == '[' && c.buf[2] && !c.buf[3])
 	{
 		if (c.buf[2] == 'A' || c.buf[2] == 'B' || c.buf[2] == 'C'\
@@ -98,27 +102,25 @@ void	display_compl(t_node *compl_tree, t_data *data)
 {
 	union u_buffer	c;
 
+	c.value = 10000;
 	g_autocompl_bad_seq.value = 0;
 	fill_data(data, compl_tree);
 	if (data->nb_exec >= 100 && !ask_confirmation(data))
 		return ;
-	print_compl(compl_tree, data);
-	c = read_key();
-	while (is_compl_char(c))
+	while (is_compl_char(c) && data->nb_exec > 1)
 	{
+		print_compl(compl_tree, data);
+		insert_compl(compl_tree, data);
+		c = read_key();
 		update_exec(c, data);
 		fill_data(data, compl_tree);
-		print_compl(compl_tree, data);
-		c = read_key();
 	}
-/*	if (c.value == '\n')
-		insert_compl();
-	else
-	{
+	if (data->nb_exec == 1)
+		insert_compl(compl_tree, data);
+	else if (!enter_rc(c))
 		g_autocompl_bad_seq = c;
-		insert_space();
-	}*/
+	if (!enter_rc(c))
+		insert_text(" ", 1);
 	ft_putstr(g_termcaps.cd);
-	ft_printf("exit");
 	update_line();
 }

@@ -46,7 +46,10 @@ void		get_exec_lim(t_data *data)
 	int	chosen_exec_line;
 	int	middle_line;
 
-	chosen_exec_line = data->chosen_exec % (data->nb_line + 1);
+	chosen_exec_line = data->chosen_exec;
+	while (chosen_exec_line - data->nb_line > 0)
+		chosen_exec_line -= data->nb_line;
+	chosen_exec_line = chosen_exec_line % (data->nb_line + 1);
 	middle_line = data->row / 2;
 	data->first_print = chosen_exec_line - middle_line + 2;
 	if (data->first_print < 1)
