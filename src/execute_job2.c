@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execute_job.c                                      :+:      :+:    :+:   */
+/*   execute_job2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,23 +12,6 @@
 
 #include "libft.h"
 #include "shell.h"
-
-//TODO: normify the 6 functions
-
-static char	*dup_token_value(char **argv, int i, t_list *lst)
-{
-	char	**wt;
-
-	if (!(argv[i] = ft_strdup(get_tokvalue(lst))))
-	{
-		wt = argv;
-		while (*wt)
-			free(*wt++);
-		free(argv);
-		return (NULL);
-	}
-	return (argv[i]);
-}
 
 char		**build_argv(t_list *lst, int argc)
 {
