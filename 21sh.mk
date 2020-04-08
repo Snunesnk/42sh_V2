@@ -131,6 +131,7 @@ SOURCES :=	main.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
 		../readline/autocomplete.c \
+		../readline/fill_data_util.c \
 		../readline/command_complete.c \
 		../readline/print_cmpl_tree.c \
 		../readline/fill_data.c \

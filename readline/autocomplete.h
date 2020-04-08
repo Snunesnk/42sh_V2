@@ -20,5 +20,6 @@ void	print_tree(t_node *compl_tree, t_data *data, int to_print);
 void	print_compl(t_node *compl_tree, t_data *data);
 void	update_exec(union u_buffer c, t_data *data);
 void	display_compl(t_node *compl_tree, t_data *data);
+int		calc_left_arrow(t_data * data);
 
 #endif

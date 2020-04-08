@@ -4,8 +4,10 @@ void	update_exec(union u_buffer c, t_data *data)
 {
 	if (c.value == 9 || c.value == ARROW_DOWN)
 	{
-		data->chosen_exec = (data->chosen_exec + 1 > data->nb_exec) ? 1 \
-							: data->chosen_exec + 1;
+		if (data->chosen_exec + 1 > data->nb_exec)
+			data->chosen_exec = 1;
+		else
+			data->chosen_exec += 1;
 	}
 	else if (c.value == ARROW_UP)
 	{
@@ -14,13 +16,7 @@ void	update_exec(union u_buffer c, t_data *data)
 			data->chosen_exec = data->nb_exec;
 	}
 	else if (c.value == ARROW_LEFT)
-	{
-		data->chosen_exec -= data->nb_line;
-		if (data->chosen_exec < 1)
-			data->chosen_exec += data->nb_exec + 1;
-		if (data->chosen_exec > data->nb_exec)
-			data->chosen_exec -= data->nb_line;
-	}
+		data->chosen_exec = calc_left_arrow(data);
 	else if (c.value == ARROW_RIGHT)
 	{
 		data->chosen_exec += data->nb_line;
@@ -58,8 +54,10 @@ void		get_exec_lim(t_data *data)
 	data->last_print = data->first_print + data->row - 2;
 	if (data->last_print > data->nb_line)
 	{
+		data->first_print -= data->last_print - data->nb_line;
+		if (data->first_print < 1)
+			data->first_print = 1;
 		data->last_print = data->nb_line;
-		data->first_print = data->last_print - data->row - 1;
 	}
 }
 
