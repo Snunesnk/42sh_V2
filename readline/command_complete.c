@@ -66,7 +66,7 @@ t_node	*search_in_path(char *to_complete, char *path, t_node *compl_tree, \
 	ft_glob(tmp, FT_GLOB_MARK, NULL, &gl);
 	while (gl.gl_pathv && gl.gl_pathv[i])
 	{
-		if (is_exec(gl.gl_pathv[i]))
+		if (is_exec(gl.gl_pathv[i]) && gl.gl_pathv[i][0])
 			compl_tree = add_node(compl_tree, get_filename(gl.gl_pathv[i]), \
 					data, 1);
 		i++;
