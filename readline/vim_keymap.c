@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vim_keymap.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 13:35:56 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 13:36:17 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
-/* Insert mode */
 struct s_keymap_entry g_vim_standard_insert_keymap[] =
 {
 	[ 0 ... 22 ] = { ISFUNC, rl_void },
@@ -9,7 +20,7 @@ struct s_keymap_entry g_vim_standard_insert_keymap[] =
 	{ ISKMAP, vim_escape }, /* Escape */
 	[ 28 ... 31 ] = { ISFUNC, rl_void },
 	[ ' ' ... '~' ] = { ISFUNC, rl_insert },
-	{ ISFUNC, rl_backspace }	
+	{ ISFUNC, rl_backspace }
 };
 
 struct s_keymap_entry g_vim_ctlx_insert_keymap[] =
@@ -38,7 +49,6 @@ struct s_keymap_entry g_vim_meta_insert_keymap[] =
 	[ 0 ... 127 ] = { ISFUNC, rl_void }
 };
 
-/* Command mode */
 struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 {
 	[ 0 ... 31 ] = { ISFUNC, rl_void },

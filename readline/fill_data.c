@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fill_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 13:37:53 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 13:39:37 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
-void	update_exec(union u_buffer c, t_data *data)
+void		update_exec(union u_buffer c, t_data *data)
 {
 	if (c.value == 9 || c.value == ARROW_DOWN)
 	{
@@ -64,7 +76,7 @@ void		get_exec_lim(t_data *data)
 	}
 }
 
-int		get_nb_exec(t_node *compl_tree, int nb_exec)
+int	get_nb_exec(t_node *compl_tree, int nb_exec)
 {
 	if (!compl_tree)
 		return (0);

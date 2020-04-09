@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text7.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 13:37:18 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 13:37:43 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_readline.h"
 
 static int	check_two_words(int s)
 {
-	int	start;
+	int		start;
 	_Bool	a;
 	_Bool	b;
 
@@ -30,8 +42,8 @@ static int	check_two_words(int s)
 
 static char	*get_pword(void)
 {
-	int	start;
-	int	len;
+	int		start;
+	int		len;
 	char	*w;
 
 	start = g_dis.cbpos;
@@ -71,8 +83,8 @@ static int	get_ew2(void)
 
 void		swap_words(void)
 {
-	int	spaces;
-	int	ew2;
+	int		spaces;
+	int		ew2;
 	char	*w1;
 	char	*w2;
 
