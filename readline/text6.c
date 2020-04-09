@@ -1,6 +1,6 @@
-# include "ft_readline.h"
+#include "ft_readline.h"
 
-_Bool	g_ctrl_mode = 0;
+_Bool		g_ctrl_mode = 0;
 
 static void	switch_cbpos(void)
 {
@@ -12,7 +12,7 @@ static void	switch_cbpos(void)
 	update_line();
 }
 
-void	rl_ctrl_mode(union u_buffer u)
+void		rl_ctrl_mode(union u_buffer u)
 {
 	if (g_ctrl_mode)
 	{
@@ -22,7 +22,7 @@ void	rl_ctrl_mode(union u_buffer u)
 	g_ctrl_mode ^= 1;
 }
 
-void	rl_eot(void)
+void		rl_eot(void)
 {
 	if (g_line.len == 0)
 	{

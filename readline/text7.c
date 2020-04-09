@@ -1,10 +1,10 @@
-# include "ft_readline.h"
+#include "ft_readline.h"
 
 static int	check_two_words(int s)
 {
-	int start;
-	_Bool a;
-	_Bool b;
+	int	start;
+	_Bool	a;
+	_Bool	b;
 
 	a = 0;
 	b = 0;
@@ -37,7 +37,7 @@ static char	*get_pword(void)
 	start = g_dis.cbpos;
 	while (start && g_line.line[start - 1] == ' ')
 		--start;
-	while (start && g_line.line[start - 1] !=' ')
+	while (start && g_line.line[start - 1] != ' ')
 		--start;
 	len = g_dis.cbpos - start;
 	w = ft_strndup(&(g_line.line[start]), len);
@@ -69,7 +69,7 @@ static int	get_ew2(void)
 	return (0);
 }
 
-void	swap_words(void)
+void		swap_words(void)
 {
 	int	spaces;
 	int	ew2;
@@ -79,7 +79,7 @@ void	swap_words(void)
 	spaces = 0;
 	ew2 = get_ew2();
 	if (ew2 && check_two_words(ew2))
-	{ /* Two words before */
+	{
 		g_dis.cbpos = ew2;
 		w2 = get_pword();
 		while (g_line.line[g_dis.cbpos - 1] == ' ')
