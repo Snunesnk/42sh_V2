@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 17:47:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/09 17:33:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,9 +215,9 @@ int     undo_iodup(t_redirection *r, t_shell_fds **shell_fd);
 int     undo_iodfile(t_redirection *r, t_shell_fds **shell_fd);
 int     undo_redirection_internal(t_redirection *r);
 int     undo_redirection(t_redirection *r);
-	
+
 int             has_redirections(int type);
-int             has_close_at_end(char *str);
+int             ha(char *str);
 t_redirection   *set_redirection(t_list **lst, int io_nb);
 t_redirection   *type_less_redirection(t_list **lst, int io_nb);
 t_redirection   *type_dless_redirection(t_list **lst, int io_nb);
