@@ -23,9 +23,9 @@ char	**tab_remove_first_elem(int *ac, char **av)
 	new_tab = (char**)malloc(sizeof(char*) * *ac);
 	if (new_tab == NULL)
 		return (NULL);						
-	if (*ac >= 1)
+	if (*ac > 0)
 	{
-		while (i + 1 < *ac)
+		while (i < *ac)
 		{
 			new_tab[i] = ft_strdup(av[i + 1]);
 			i++;
@@ -34,14 +34,6 @@ char	**tab_remove_first_elem(int *ac, char **av)
 	}
 	else
 		new_tab = NULL;
-	ft_putendl("//////////////DEBUG NEW_TAB///////////////");	
-	i = 0;
-	while (i < *ac)
-	{
-		ft_putendl(new_tab[i]);
-		i++;
-	}
-	ft_putendl("//////////////////////////////////////////");	
 	return (new_tab);
 }
 
@@ -80,12 +72,6 @@ int		treat_shell_variables(t_process *p, int	opt)
 		}
 		if ((p->argv = tab_remove_first_elem(&p->argc, p->argv)) == NULL)
 			break ;
-	}
-	int		i = 0;
-	while (i < p->argc)
-	{
-		ft_putendl(p->argv[i]);
-		i++;
 	}
 	ft_merge_sort(&g_env, &alpha_sort);
 	return (SUCCESS);
