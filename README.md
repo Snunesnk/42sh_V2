@@ -3,7 +3,10 @@ A tiny shell. [42 project]
 
 ToDo:
 
-Etienne:
+Antoine:
 - 21sh Parser fixes
-- 21sh Shell variables, export, set, unset and var assignements.
 - 42sh Arithmetic Expansions
+
+Simon:
+- 21sh Shell variables, export, set, unset and var assignements.
+- 21sh Norme everything.
