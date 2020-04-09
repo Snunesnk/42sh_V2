@@ -3,59 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   history_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/02 16:26:29 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/03 19:00:01 by snunes           ###   ########.fr       */
+/*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/09 23:25:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-static char	g_hist_word_delim[] = " \t\n;&()|<>";
-static int	g_pattern_length;
-
-int		check_end_bracket(char *tmp)
-{
-	int	i;
-
-	i = 0;
-	while (!ft_isspace(tmp[i]) && tmp[i])
-	{
-		if (tmp[i] == ']')
-			return (1);
-		i++;
-	}
-	return (0);
-}
+char	g_hist_word_delim[] = " \t\n;&()|<>";
+int		g_pattern_length;
 
 char	*hist_expanse(char *value)
 {
-	char	*tmp;
 	char	*hist_entry;
 
-	tmp = value;
 	hist_entry = value;
-	while (*tmp && value && (tmp = ft_strchr(tmp, '!')))
-	{
-		if (check_end_bracket(tmp))
-		{
-			tmp = ft_strchr(tmp, ']');
-			continue ;
-		}
-		g_pattern_length = 0;
-		tmp++;
-		if (ft_strchr(g_hist_word_delim, *tmp))
-			continue ;
-		if (!(hist_entry = get_hist_entry(tmp)))
-			break ;
-		value = replace_hist_exp(value, hist_entry);
-		tmp = value;
-	}
+	hist_entry = do_hist_exp(&value, hist_entry);
 	if (!hist_entry || !value)
 	{
 		g_hist->nb_line = g_hist->total_lines;
-		g_hist->offset = g_hist->used -1;
+		g_hist->offset = g_hist->used - 1;
 		free(value);
 		return (NULL);
 	}
@@ -84,8 +53,8 @@ char	*get_hist_entry(char *tmp)
 		g_pattern_length++;
 	save = tmp[g_pattern_length];
 	tmp[g_pattern_length] = '\0';
-	hist_entry = (ft_isdigit(tmp[start])) ? expand_num(tmp, start, sign) : \
-				 expand_word(tmp, start, sign);
+	hist_entry = (ft_isdigit(tmp[start])) ? expand_num(tmp, start, sign) \
+				: expand_word(tmp, start, sign);
 	tmp[g_pattern_length] = save;
 	return (hist_entry);
 }

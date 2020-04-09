@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/09 15:29:54 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/09 23:05:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-_Bool		g_input_break = 0;
-int		g_add_back_buf;
+_Bool			g_input_break = 0;
+int				g_add_back_buf;
 struct s_stack	*g_back = NULL;
 
 union u_buffer	read_key(void)
@@ -25,7 +25,7 @@ union u_buffer	read_key(void)
 	return (buffer_u);
 }
 
-void		del_stat_line(void *ptr)
+void			del_stat_line(void *ptr)
 {
 	struct s_line_state	*prev;
 

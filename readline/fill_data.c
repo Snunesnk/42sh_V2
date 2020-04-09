@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:39:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 23:06:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		update_exec(union u_buffer c, t_data *data)
 	}
 }
 
-t_data	*init_data(void)
+t_data		*init_data(void)
 {
 	t_data	*new_data;
 
@@ -76,7 +76,7 @@ void		get_exec_lim(t_data *data)
 	}
 }
 
-int	get_nb_exec(t_node *compl_tree, int nb_exec)
+int			get_nb_exec(t_node *compl_tree, int nb_exec)
 {
 	if (!compl_tree)
 		return (0);
@@ -89,7 +89,7 @@ int	get_nb_exec(t_node *compl_tree, int nb_exec)
 	return (nb_exec);
 }
 
-t_data	*fill_data(t_data *data, t_node *compl_tree)
+t_data		*fill_data(t_data *data, t_node *compl_tree)
 {
 	data->nb_line = 1;
 	data->name_p_line = 0;

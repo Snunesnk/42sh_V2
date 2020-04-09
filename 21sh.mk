@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/03/12 17:52:05 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/09 23:00:40 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,6 +134,7 @@ SOURCES :=	main.c \
 		../readline/vim6.c \
 		../readline/history.c \
 		../readline/history_expand.c \
+		../readline/history_expand_utils.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
 		../readline/autocomplete.c \

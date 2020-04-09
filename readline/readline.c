@@ -6,13 +6,31 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:07:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/09 23:28:57 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
 int	g_hist_lookup = 0;
+
+static void	readline_internal_test_cvalue(union u_buffer c)
+{
+	if (!g_ctrl_mode && g_hist_lookup)
+		hist_lookup(c);
+	else if (isstdkey(c.value))
+		(g_standard_keymap[c.value].func)(c.value);
+	else if (isctrlkey(c))
+	{
+		if (mvctrlkey(c))
+			c.buf[2] = c.buf[5] + 20;
+		(g_ctlx_keymap[(int)c.buf[2]].func)();
+	}
+	else if (ismetachar(c))
+		(g_meta_keymap[(int)c.buf[1]].func)();
+	else
+		paste_via_input(c.value);
+}
 
 static void	readline_internal_keys(union u_buffer c, char **value)
 {
@@ -32,24 +50,12 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		}
 		else
 			c = read_key();
-		if (!g_ctrl_mode && g_hist_lookup)
-			hist_lookup(c);
 		if (g_ctrl_mode)
 			rl_ctrl_mode(c);
 		else if (enter_rc(c))
 			return (g_vim_mode ? vim_insert() : rl_void());
-		else if (isstdkey(c.value))
-			(g_standard_keymap[c.value].func)(c.value);
-		else if (isctrlkey(c))
-		{
-			if (mvctrlkey(c))
-				c.buf[2] = c.buf[5] + 20;
-			(g_ctlx_keymap[(int)c.buf[2]].func)();
-		}
-		else if (ismetachar(c))
-			(g_meta_keymap[(int)c.buf[1]].func)();
 		else
-			paste_via_input(c.value);
+			readline_internal_test_cvalue(c);
 		*value = g_line.line;
 	}
 }

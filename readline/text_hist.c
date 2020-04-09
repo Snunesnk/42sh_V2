@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   text_hist.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/10 16:21:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 22:33:24 by snunes           ###   ########.fr       */
+/*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/09 22:37:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char		*get_matching_hist(char **line, char *patern)
 	return (tmp);
 }
 
-int		test_c_value(union u_buffer c)
+int			test_c_value(union u_buffer c)
 {
 	if ((ft_isprint(c.value) && c.value != 9) || c.value == 127)
 		return (0);

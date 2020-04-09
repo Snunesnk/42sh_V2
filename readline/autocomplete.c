@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:36:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 22:50:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ void	command_complete(char *to_complete)
 	free(data);
 	free(path);
 	free_node(compl_tree);
-}
-
-void	path_complete(char *to_complete)
-{
-	ft_printf("\nI should complete %s with a path\n", to_complete);
 }
 
 void	var_complete(char *to_complete)

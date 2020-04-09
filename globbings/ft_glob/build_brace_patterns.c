@@ -1,11 +1,10 @@
 #include "ft_glob_internal.h"
 
-const char		*go_to_closing_curl(const char *pattern,	
-				t_glob_internal *gl)
+const char		*go_to_closing_curl(const char *pattern, t_glob_internal *gl)
 {
 	const char	*ptr;
-	int		skip;
-	int		bracket;
+	int			skip;
+	int			bracket;
 
 	bracket = 1;
 	ptr = pattern;
@@ -47,13 +46,13 @@ const char		*get_brace_expression(t_glob_internal *gl, const char *pattern,
 		*start + 1, *end - *start - 1)));
 }
 
-static const char	*get_cur_exp(const char *start, const char *end,
+static const char	*get_cur_exp(const char *start, const char *end, \
 		const char **exp, t_glob_internal *gl)
 {
 	const char	*cur_exp;
-	int		length;
-	int		skip;
-	
+	int			length;
+	int			skip;
+
 	length = 0;
 	skip = gl->flags & FT_GLOB_NOESCAPE ? -1 : 0;
 	while ((*exp)[length] && ((*exp)[length] != ',' || skip > 0))
@@ -105,4 +104,3 @@ t_list			*build_brace_patterns(const char *start, const char *end,
 	size = size > 0 ? size - 1 : size;
 	return (next);
 }
-
