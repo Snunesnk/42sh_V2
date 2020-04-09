@@ -20,21 +20,28 @@ char	**tab_remove_first_elem(int *ac, char **av)
 
 	i = 0;
 	(*ac)--;
-	new_tab = NULL;
 	new_tab = (char**)malloc(sizeof(char*) * *ac);
 	if (new_tab == NULL)
 		return (NULL);						
-	if (*ac > 1)
+	if (*ac >= 1)
 	{
-		while (i < *ac)
+		while (i + 1 < *ac)
 		{
 			new_tab[i] = ft_strdup(av[i + 1]);
 			i++;
 		}
 		ft_free_tab((*ac) + 1, &av);
 	}
-	if (i == *ac)
+	else
 		new_tab = NULL;
+	ft_putendl("//////////////DEBUG NEW_TAB///////////////");	
+	i = 0;
+	while (i < *ac)
+	{
+		ft_putendl(new_tab[i]);
+		i++;
+	}
+	ft_putendl("//////////////////////////////////////////");	
 	return (new_tab);
 }
 
@@ -48,7 +55,7 @@ int		treat_shell_variables(t_process *p, int	opt)
 	char			*value;
 
 	ft_bzero(&shell_var, sizeof(shell_var));
-	while ((value = ft_strchr(p->argv[0], '=')) != NULL)
+	while (p->argv != NULL && (value = ft_strchr(p->argv[0], '=')) != NULL)
 	{
 		if (value != NULL && opt == 1)
 		{
@@ -73,6 +80,12 @@ int		treat_shell_variables(t_process *p, int	opt)
 		}
 		if ((p->argv = tab_remove_first_elem(&p->argc, p->argv)) == NULL)
 			break ;
+	}
+	int		i = 0;
+	while (i < p->argc)
+	{
+		ft_putendl(p->argv[i]);
+		i++;
 	}
 	ft_merge_sort(&g_env, &alpha_sort);
 	return (SUCCESS);

@@ -46,9 +46,9 @@ static int	get_token_list(char *input, t_list **lst)
 
 	pos = 0;
 	ret = SUCCESS;
+	type = NONE;
 	while (input[pos] != '\0')
 	{
-		type = NONE;
 		while (ft_isblank(input[pos]) == TRUE)
 			pos++;
 		if (input[pos] == '\0')
