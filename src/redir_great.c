@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 13:03:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 15:15:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 17:32:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	if (ft_strcmp("-", r->redirectee.filename) && has_close_at_end(r->redirectee.filename))
+	if (ft_strcmp("-", r->redirectee.filename) && ha(r->redirectee.filename))
 	{
 		r->error = e_ambiguous_redirect;
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
