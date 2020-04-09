@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:36:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 22:11:57 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	display_compl(t_node *compl_tree, t_data *data)
 		insert_compl(compl_tree, data);
 	else if (!enter_rc(c))
 		g_autocompl_bad_seq = c;
-	if (!enter_rc(c))
+	if (!enter_rc(c) && c.value != ' ')
 		insert_text(" ", 1);
 	ft_putstr(g_termcaps.cd);
 	update_line();
