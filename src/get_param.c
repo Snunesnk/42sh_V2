@@ -48,7 +48,7 @@ static char	*get_shellpid(const char *str)
 const struct s_param	g_param[] =
 {
 	{"?", &get_retval},
-	{"$", &get_shellpid}, /* Still there is bug to get into this */
+	{"$", &get_shellpid},
 	{"", &get_content}
 };
 
@@ -60,7 +60,7 @@ static int	parameter_dispacther(char **content, const char *str)
 	while (*(g_param[i].pname))
 	{
 		if (!ft_strcmp(g_param[i].pname, str))
-			break;
+			break ;
 		++i;
 	}
 	if (!*(g_param[i].pname))

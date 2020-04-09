@@ -58,9 +58,9 @@ void	cut_prev_wd(void)
 	}
 }
 
-void    rl_reversel(void)
+void	rl_reversel(void)
 {
-	char c;
+	char	c;
 
 	if (g_line.len > 1)
 	{
@@ -74,7 +74,7 @@ void    rl_reversel(void)
 		else if (g_dis.cbpos > 0)
 		{
 			c = g_line.line[g_dis.cbpos];
-				g_line.line[g_dis.cbpos] = g_line.line[g_dis.cbpos - 1];
+			g_line.line[g_dis.cbpos] = g_line.line[g_dis.cbpos - 1];
 			g_line.line[g_dis.cbpos - 1] = c;
 			cursor_r();
 		}
@@ -83,7 +83,7 @@ void    rl_reversel(void)
 
 void	cut_next_wd(void)
 {
-	int start;
+	int	start;
 
 	if (g_clip.str != NULL)
 		free(g_clip.str);
@@ -94,7 +94,8 @@ void	cut_next_wd(void)
 		++start;
 	g_clip.l = start - g_dis.cbpos;
 	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
-	ft_memmove(&(g_line.line[g_dis.cbpos]), &(g_line.line[start]), g_line.len - start);
+	ft_memmove(&(g_line.line[g_dis.cbpos]),
+	&(g_line.line[start]), g_line.len - start);
 	g_line.len -= g_clip.l;
 	ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
 	update_line();

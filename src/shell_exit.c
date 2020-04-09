@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shell_exit.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 17:29:08 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 17:29:14 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
-
-/* Here will be stored the procedure to safe quit the shell */
 
 void	free_at_exit(void)
 {

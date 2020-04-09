@@ -1,10 +1,22 @@
-# include "ft_readline.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text7.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 13:37:18 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 13:37:43 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_readline.h"
 
 static int	check_two_words(int s)
 {
-	int start;
-	_Bool a;
-	_Bool b;
+	int		start;
+	_Bool	a;
+	_Bool	b;
 
 	a = 0;
 	b = 0;
@@ -30,14 +42,14 @@ static int	check_two_words(int s)
 
 static char	*get_pword(void)
 {
-	int	start;
-	int	len;
+	int		start;
+	int		len;
 	char	*w;
 
 	start = g_dis.cbpos;
 	while (start && g_line.line[start - 1] == ' ')
 		--start;
-	while (start && g_line.line[start - 1] !=' ')
+	while (start && g_line.line[start - 1] != ' ')
 		--start;
 	len = g_dis.cbpos - start;
 	w = ft_strndup(&(g_line.line[start]), len);
@@ -69,17 +81,17 @@ static int	get_ew2(void)
 	return (0);
 }
 
-void	swap_words(void)
+void		swap_words(void)
 {
-	int	spaces;
-	int	ew2;
+	int		spaces;
+	int		ew2;
 	char	*w1;
 	char	*w2;
 
 	spaces = 0;
 	ew2 = get_ew2();
 	if (ew2 && check_two_words(ew2))
-	{ /* Two words before */
+	{
 		g_dis.cbpos = ew2;
 		w2 = get_pword();
 		while (g_line.line[g_dis.cbpos - 1] == ' ')
