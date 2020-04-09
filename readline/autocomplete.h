@@ -27,5 +27,6 @@ int		calc_left_arrow(t_data * data);
 int		ft_str_isspace(char *str);
 void	insert_compl(t_node *compl_tree, t_data *data);
 size_t	ft_str_wchar_len(char *str);
+int		get_compl_start(void);
 
 #endif

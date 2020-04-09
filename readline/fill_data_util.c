@@ -37,3 +37,14 @@ int	ft_str_isspace(char *str)
 	}
 	return (1);
 }
+
+int	get_compl_start(void)
+{
+	int	start;
+
+	start = g_dis.cbpos;
+	while (start > 0 && !ft_isspace(g_line.line[start - 1]) \
+				&& g_line.line[start - 1] != '/')
+		start--;
+	return (start);
+}
