@@ -18,6 +18,7 @@ void	del_elem(void *content, size_t content_size)
 	(void)content_size;
 	ft_strdel(&((t_shell_var*)(content))->name);
 	ft_strdel(&((t_shell_var*)(content))->value);
+	free(content);
 }
 
 void	astdel(t_ast **ast)

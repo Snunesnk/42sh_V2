@@ -20,20 +20,19 @@ char	**tab_remove_first_elem(int *ac, char **av)
 
 	i = 0;
 	(*ac)--;
-	new_tab = (char**)malloc(sizeof(char*) * *ac);
-	if (new_tab == NULL)
-		return (NULL);						
+	new_tab = NULL;
 	if (*ac > 0)
 	{
+		new_tab = (char**)malloc(sizeof(char*) * *ac);
+		if (new_tab == NULL)
+			return (NULL);						
 		while (i < *ac)
 		{
 			new_tab[i] = ft_strdup(av[i + 1]);
 			i++;
 		}
-		ft_free_tab((*ac) + 1, &av);
 	}
-	else
-		new_tab = NULL;
+	ft_free_tab((*ac) + 1, &av);
 	return (new_tab);
 }
 
