@@ -12,7 +12,7 @@
 
 #include "ft_readline.h"
 
-char	*get_beg_matching_hist(char **line, char *patern)
+char		*get_beg_matching_hist(char **line, char *patern)
 {
 	char	*tmp;
 	int		pat_len;
@@ -38,7 +38,7 @@ char	*get_beg_matching_hist(char **line, char *patern)
 	return (tmp);
 }
 
-char *get_matching_hist(char **line, char *patern)
+char		*get_matching_hist(char **line, char *patern)
 {
 	char *tmp;
 
@@ -59,7 +59,7 @@ char *get_matching_hist(char **line, char *patern)
 	return (tmp);
 }
 
-int test_c_value(union u_buffer c)
+int		test_c_value(union u_buffer c)
 {
 	if ((ft_isprint(c.value) && c.value != 9) || c.value == 127)
 		return (0);
@@ -74,7 +74,7 @@ int test_c_value(union u_buffer c)
 	return (0);
 }
 
-void history_up(void)
+void		history_up(void)
 {
 	char *s;
 
@@ -96,7 +96,7 @@ void history_up(void)
 		insert_text(g_original_cmd, ft_strlen(s));
 }
 
-void history_down(void)
+void		history_down(void)
 {
 	char *s;
 
