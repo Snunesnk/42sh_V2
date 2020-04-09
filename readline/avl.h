@@ -23,9 +23,10 @@ typedef struct	s_data
 	int	name_p_line;
 	int	chosen_exec;
 	int	nb_exec;
-	int	type;
+	int	color;
 	int	first_print;
 	int	last_print;
+	int	compl_start;
 }				t_data;
 
 t_node	*add_node(t_node *tree, char *name, t_data *data, int color);

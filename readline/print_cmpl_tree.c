@@ -105,6 +105,7 @@ void	display_compl(t_node *compl_tree, t_data *data)
 	c.value = 10000;
 	g_autocompl_bad_seq.value = 0;
 	fill_data(data, compl_tree);
+	data->compl_start = get_compl_start();
 	if (data->nb_exec >= 100 && !ask_confirmation(data))
 		return ;
 	while (is_compl_char(c) && data->nb_exec > 1)

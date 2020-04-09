@@ -14,8 +14,7 @@ void	insert_compl(t_node *compl_tree, t_data *data)
 	}
 	compl = compl_tree->name;
 	len = ft_strlen(compl);
-	while (g_dis.cbpos > 0 && !ft_isspace(g_line.line[g_dis.cbpos - 1] \
-				&& g_line.line[g_dis.cbpos] != '/'))
+	while (g_dis.cbpos > data->compl_start)
 		rl_backspace();
 	insert_text(compl, len);
 }

@@ -37,7 +37,7 @@ t_data	*init_data(void)
 	new_data->first_print = 0;
 	new_data->last_print = 0;
 	new_data->nb_exec = 0;
-	new_data->type = 0;
+	new_data->compl_start = 0;
 	return (new_data);
 }
 
