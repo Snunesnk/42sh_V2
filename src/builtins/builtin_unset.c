@@ -17,13 +17,13 @@ static char		**get_name_tab(int ac, char **av)
 {
 	char	*err;
 	char	**buf;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	buf = (char**)malloc(sizeof(char*) * (ac + 1));
 	if (buf != NULL)
 	{
-		while (av[i] != NULL)
+		while (i < ac)
 		{
 			if (ft_strchr(av[i], '=') != NULL)
 			{
@@ -37,20 +37,19 @@ static char		**get_name_tab(int ac, char **av)
 			i++;
 		}
 	}
-	buf[i] = NULL;
-	if (av[i] != NULL)
-		ft_free_tab(ft_tablen(buf), &buf);
+	if (i < ac)
+		ft_free_tab(i, &buf);
 	return (buf);
 }
 
-static int		match_name(char *var_name, char **name)
+static int		match_name(char *var_name, char **name, int tab_len)
 {
 	int		ret;
-	size_t	i;
+	int		i;
 
 	i = 0;
 	ret = FALSE;
-	while (name[i] != NULL)
+	while (i < tab_len)
 	{
 		if (ft_strequ(var_name, name[i]) == TRUE)
 		{
@@ -62,14 +61,14 @@ static int		match_name(char *var_name, char **name)
 	return (ret);
 }
 
-static void		remove_first_var(char **name)
+static void		remove_first_var(char **name, int tab_len)
 {
 	extern t_list	*g_env;
 	t_list			*head;
 
 	head = g_env;
 	while (g_env != NULL && match_name(((t_shell_var*)(g_env->content))->name,
-		name) == TRUE)
+		name, tab_len) == TRUE)
 	{
 		head = g_env->next;
 		ft_lstdelone(&g_env, &del_elem);
@@ -77,19 +76,19 @@ static void		remove_first_var(char **name)
 	}
 }
 
-static void		unset_var(char **name)
+static void		unset_var(int tab_len, char **name)
 {
 	extern t_list	*g_env;
 	t_list			*head;
 	t_list			*tmp;
 
-	remove_first_var(name);
+	remove_first_var(name, tab_len);
 	head = g_env;
 	tmp = g_env;
 	g_env = g_env->next;
 	while (g_env != NULL)
 	{
-		if (match_name(((t_shell_var*)(g_env->content))->name, name) == TRUE)
+		if (match_name(((t_shell_var*)(g_env->content))->name, name, tab_len) == TRUE)
 		{
 			tmp->next = g_env->next;
 			ft_lstdelone(&g_env, &del_elem);
@@ -118,8 +117,8 @@ int				cmd_unset(int ac, char **av)
 	name = get_name_tab(ac - 1, av + 1);
 	if (name != NULL)
 	{
-		unset_var(name);
-		ft_free_tab(ft_tablen(name), &name);
+		unset_var(ac - 1, name);
+		ft_free_tab(ac - 1, &name);
 	}
 	return (ret);
 }
