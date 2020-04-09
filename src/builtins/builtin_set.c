@@ -23,6 +23,7 @@ static void	print_set(t_list *env, t_list **elem)
 				((t_shell_var*)(env->content))->value);
 	}
 	*elem = ft_lstnew(tmp, ft_strlen(tmp));
+	ft_strdel(&tmp);
 }
 
 int			cmd_set(int ac, char **av)

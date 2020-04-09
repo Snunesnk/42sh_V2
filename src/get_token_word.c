@@ -97,7 +97,7 @@ size_t			get_word(const char *str, t_token *token,
 	if (str[len] == '#')
 		len = get_token_comment(str, token);
 	else if (str[len] == '-' && (*last_token_type == GREATAND
-			|| *last_token_type == LESSAND))
+			|| *last_token_type == LESSAND || *last_token_type == ANDGREAT))
 	{
 		token->value = ft_strdup("-");
 		token->type = WORD;
