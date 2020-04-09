@@ -1,6 +1,18 @@
-# include "ft_readline.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   text6.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/09 13:37:02 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/09 13:37:04 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-_Bool	g_ctrl_mode = 0;
+#include "ft_readline.h"
+
+_Bool		g_ctrl_mode = 0;
 
 static void	switch_cbpos(void)
 {
@@ -12,7 +24,7 @@ static void	switch_cbpos(void)
 	update_line();
 }
 
-void	rl_ctrl_mode(union u_buffer u)
+void		rl_ctrl_mode(union u_buffer u)
 {
 	if (g_ctrl_mode)
 	{
@@ -22,7 +34,7 @@ void	rl_ctrl_mode(union u_buffer u)
 	g_ctrl_mode ^= 1;
 }
 
-void	rl_eot(void)
+void		rl_eot(void)
 {
 	if (g_line.len == 0)
 	{

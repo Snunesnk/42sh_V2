@@ -127,6 +127,11 @@ SOURCES :=	main.c \
 		../readline/emacs_keymap.c \
 		../readline/vim_keymap.c \
 		../readline/vim.c \
+		../readline/vim2.c \
+		../readline/vim3.c \
+		../readline/vim4.c \
+		../readline/vim5.c \
+		../readline/vim6.c \
 		../readline/history.c \
 		../readline/history_expand.c \
 		../readline/history_lookup.c \

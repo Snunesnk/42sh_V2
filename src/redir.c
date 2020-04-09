@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 13:15:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 17:33:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int				has_redirections(int type)
 		|| type == GREATAND);
 }
 
-int				has_close_at_end(char *str)
+int				ha(char *str)
 {
 	int	i;
 

@@ -47,13 +47,12 @@ void		insert_text(const char *string, int len)
 		g_add_back_buf += len;
 		if (g_add_back_buf > 20)
 		{
-//			ft_printf("\n\nH\n\n");
 			g_add_back_buf = 0;
 			add_back();
 		}
 	}
 	if (g_replace_mode)
-		return replace_text(string, len);
+		return (replace_text(string, len));
 	while (len + g_line.len >= g_line.size_buf)
 		l_expand();
 	if (g_dis.cbpos < g_line.len)
