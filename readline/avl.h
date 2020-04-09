@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   avl.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/09 13:40:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:40:31 by abarthel         ###   ########.fr       */
+/*   Created: 2020/04/09 22:27:51 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/09 22:27:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ typedef struct	s_data
 	int	compl_start;
 }				t_data;
 
-t_node	*add_node(t_node *tree, char *name, t_data *data, int color);
-void	free_node(t_node *node);
-int		check_balance(t_node *node);
-t_node	*balance(int balanced, t_node *node, t_node *new_node);
-int		max(int a, int b);
-int		heigth(t_node *node);
-int		ft_node_cmp(t_node *tree, t_node *node);
+t_node			*add_node(t_node *tree, char *name, t_data *data, int color);
+void			free_node(t_node *node);
+int				check_balance(t_node *node);
+t_node			*balance(int balanced, t_node *node, t_node *new_node);
+int				max(int a, int b);
+int				heigth(t_node *node);
+int				ft_node_cmp(t_node *tree, t_node *node);
 
 #endif

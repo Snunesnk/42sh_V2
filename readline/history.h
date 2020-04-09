@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:38:44 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/09 23:27:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define ADD_SEPARATOR 1
 
-struct s_hist
+struct	s_hist
 {
 	char				*history_content;
 	unsigned int		offset;
@@ -30,6 +30,8 @@ extern char				*g_vline;
 extern char				*g_hist_loc;
 extern char				*g_original_cmd;
 extern int				g_hist_lookup;
+extern int				g_pattern_length;
+extern char				g_hist_word_delim[];
 
 void	init_history(void);
 void	get_history_loc(void);
@@ -47,5 +49,7 @@ char	*expand_word(char *value, int start, int sign);
 char	*replace_hist_exp(char *value, char *hist_entry);
 char	*get_matching_hist(char **line, char *patern);
 char	*get_beg_matching_hist(char **line, char *patern);
+int		check_end_bracket(char *tmp);
+char	*do_hist_exp(char **value, char *hist_entry);
 
 #endif
