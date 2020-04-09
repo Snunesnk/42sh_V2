@@ -22,6 +22,7 @@ void		ft_free_tab(int ac, char ***av)
 	while (i < ac && (*av)[i] != NULL)
 	{
 		free((*av)[i]);
+		(*av)[i] = NULL;
 		i++;
 	}
 	free(*av);
