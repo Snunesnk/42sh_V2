@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 20:53:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 22:58:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,31 +42,32 @@ int		ask_confirmation(t_data *data)
 
 void	print_compl(t_node *compl_tree, t_data *data)
 {
-//	t_print_list	list_compl;
+	t_print_list	list_compl;
 	int				to_print;
 	int				line;
 
-	(void)compl_tree;
 	line = 0;
-//	if (!(list_compl = get_list_compl(data)))
-//		return ;
+	if (!(get_list_compl(&list_compl, data)))
+		return ;
 	to_print = data->first_print;
 	while (data->first_print + line < data->last_print + 1)
 	{
-//		if (to_print)
-//			list_compl = add_compl(list_compl, to_print);
+		if (to_print)
+			list_compl = add_compl(list_compl, to_print, data, compl_tree);
 		to_print += data->nb_line;
 		if (to_print > data->nb_exec)
 		{
 			line++;
 			to_print = data->first_print + line;
-//			if (data->first_print + line < data->last_print + 1)
-//				ft_strcat(list_compl, "\n");
+			if (data->first_print + line < data->last_print + 1)
+				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
-	ft_putstr(g_termcaps.cd);
-	ft_putstr(tgoto(g_termcaps.gup, 0, line));
-	update_line();
+//	ft_printf("%s", list_compl.content);
+	free(list_compl.content);
+//	ft_putstr(g_termcaps.cd);
+//	ft_putstr(tgoto(g_termcaps.gup, 0, line));
+//	update_line();
 }
 
 int		is_compl_char(union u_buffer c)

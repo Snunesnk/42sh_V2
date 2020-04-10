@@ -6,16 +6,41 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:33:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 20:56:33 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/10 23:30:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 char	*get_color(char *file)
 {
-	ft_printf("file: %s\n", file);
-	return (NULL);
+	static char	*(color[8]) = {"\033[37m", "\033[31m", "\033[1;36m", \
+		"\033[0;43m\033[34m", "\033[46m\033[34m", "\033[0;33m", "\033[35m" \
+		"\033[32m"};
+	struct stat	st;
+
+	stat(file, &st);
+	if (S_ISREG(st.st_mode))
+	{
+		if (is_exec(file))
+			return (color[1]);
+		return (color[0]);
+	}
+	if (S_ISDIR(st.st_mode))
+		return (color[2]);
+	if (S_ISCHR(st.st_mode))
+		return (color[3]);
+	if (S_ISBLK(st.st_mode))
+		return (color[4]);
+	if (S_ISFIFO(st.st_mode))
+		return (color[5]);
+	if (S_ISLNK(st.st_mode))
+		return (color[6]);
+	if (S_ISSOCK(st.st_mode))
+		return (color[7]);
+	return (color);
 }
 
 static t_node	*get_node(t_node *compl_tree, int nb_node)
@@ -27,7 +52,7 @@ static t_node	*get_node(t_node *compl_tree, int nb_node)
 	return (compl_tree);
 }
 
-static t_print_list	list_compl_add(t_print_list list_compl, char *to_add)
+t_print_list	list_compl_add(t_print_list list_compl, char *to_add)
 {
 	int	i;
 
@@ -41,47 +66,42 @@ static t_print_list	list_compl_add(t_print_list list_compl, char *to_add)
 	return (list_compl);
 }
 
-t_print_list	get_list_compl(t_data *data)
+t_print_list	*get_list_compl(t_print_list *list_compl, t_data *data)
 {
-	t_print_list	list_compl;
-
-	if (!(list_compl.content = (char *)ft_memalloc(sizeof(char) * \
+	if (!(list_compl->content = (char *)ft_memalloc(sizeof(char) * \
 					(data->row * data->column * 3))))
 	{
 		ft_printf("./21sh: cannot allocate memory\n");
-		return (list_compl);
+		return (NULL);
 	}
-	list_compl.used = 0;
-	list_compl.capacity = data->row * data->column * 3;
-	list_compl = list_compl_add(list_compl, "\n");
+	list_compl->used = 0;
+	list_compl->capacity = data->row * data->column * 3;
+	*list_compl = list_compl_add(*list_compl, "\n");
 	return (list_compl);
 }
 
-t_print_list	add_compl(t_print_list list_compl, int to_print, t_data *data, \
-		t_node *compl_tree)
+t_print_list	add_compl(t_print_list list_compl, int to_print, \
+		t_data *data, t_node *compl_tree)
 {
 	t_node	*node_to_print;
 	int		len;
 
 	len = 0;
-	(void)len;
 	node_to_print = get_node(compl_tree, to_print);
-//	if (to_print == data->chosen_exec)
-//		list_compl = add_chosen_exec(list_compl, to_print, data);
-//	else
-//	{
+	if (to_print == data->chosen_exec)
+		list_compl = list_compl_add(list_compl, "\033[47m\033[30m");
+	else
 		list_compl = list_compl_add(list_compl, node_to_print->color);
-		list_compl = list_compl_add(list_compl, node_to_print->name);
-		if (to_print != data->chosen_exec)
-			list_compl = list_compl_add(list_compl, "\033[0m");
-//		while (node_to_print + len < data->name_l - 2)
-//		{
-//			list_compl = list_compl_add(list_compl, " ");
-//			len++;
-//		}
-		if (to_print == data->chosen_exec)
-			list_compl = list_compl_add(list_compl, "\033[0m");
-		list_compl = list_compl_add(list_compl, "  ");
-//	}
+	list_compl = list_compl_add(list_compl, node_to_print->name);
+	if (to_print != data->chosen_exec)
+		list_compl = list_compl_add(list_compl, "\033[0m");
+	while (node_to_print->nb_node + len < data->name_l - 2)
+	{
+		list_compl = list_compl_add(list_compl, " ");
+		len++;
+	}
+	if (to_print == data->chosen_exec)
+		list_compl = list_compl_add(list_compl, "\033[0m");
+	list_compl = list_compl_add(list_compl, "  ");
 	return (list_compl);
 }

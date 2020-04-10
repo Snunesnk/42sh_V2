@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 20:49:55 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/10 22:53:00 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,9 @@ int				ft_str_isspace(char *str);
 void			insert_compl(t_node *compl_tree, t_data *data);
 size_t			ft_str_wchar_len(char *str);
 int				get_compl_start(void);
-t_print_list	get_list_compl(t_data *data);
+t_print_list	*get_list_compl(t_print_list *list_compl, t_data *data);
+t_print_list	add_compl(t_print_list list_compl, int to_print, \
+		t_data *data, t_node *compl_tree);
+t_print_list	list_compl_add(t_print_list list_compl, char *to_add);
 
 #endif
