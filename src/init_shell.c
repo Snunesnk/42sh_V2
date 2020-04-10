@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 09:52:00 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:09:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,31 @@
 #include "shell.h"
 #include "error.h"
 
-pid_t			shell_pgid;
+pid_t			g_shell_pgid;
 struct termios	shell_tmodes;
-int				shell_terminal;
-int				shell_is_interactive;
+int				g_shell_terminal;
+int				g_shell_is_interactive;
 int				g_subshell = 0;
 int				g_retval;
 char			g_pwd[] = {0};
 
 int		init_shell(void)
 {
-	shell_terminal = STDIN_FILENO;
-	shell_is_interactive = isatty(shell_terminal);
-	if (shell_is_interactive)
+	g_shell_terminal = STDIN_FILENO;
+	g_shell_is_interactive = isatty(g_shell_terminal);
+	if (g_shell_is_interactive)
 	{
-		while (tcgetpgrp(shell_terminal) != (shell_pgid = getpgrp()))
-			kill(-shell_pgid, SIGTTIN);
+		while (tcgetpgrp(g_shell_terminal) != (g_shell_pgid = getpgrp()))
+			kill(-g_shell_pgid, SIGTTIN);
 		init_shell_sset();
-		shell_pgid = getpid();
-		if (setpgid(shell_pgid, shell_pgid) < 0)
+		g_shell_pgid = getpid();
+		if (setpgid(g_shell_pgid, g_shell_pgid) < 0)
 		{
 			ft_perror("Couldn't put the shell in its own process group");
 			return (1);
 		}
-		tcsetpgrp(shell_terminal, shell_pgid);
-		tcgetattr(shell_terminal, &shell_tmodes);
+		tcsetpgrp(g_shell_terminal, g_shell_pgid);
+		tcgetattr(g_shell_terminal, &shell_tmodes);
 	}
 	return (0);
 }

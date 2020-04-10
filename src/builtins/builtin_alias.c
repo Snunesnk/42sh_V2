@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_alias.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 15:04:43 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 
@@ -79,7 +91,7 @@ static void	print_alias_list(t_list *lst)
 	}
 }
 
-int		cmd_alias(int argc, char **argv)
+int			cmd_alias(int argc, char **argv)
 {
 	if (argc == 1)
 		print_alias_list(g_alias);

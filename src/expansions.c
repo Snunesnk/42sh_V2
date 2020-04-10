@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/02/12 13:55:33 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:12:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ const struct s_tags	g_tags[] =
 
 static int		expansion_dispatcher(char *str, int tilde)
 {
-	int	i;
-	int	ref;
+	int		i;
+	int		ref;
 	char	*ptr;
 	char	*closest;
 
@@ -49,7 +49,7 @@ static int		expansion_dispatcher(char *str, int tilde)
 
 static char		*get_closest_exp(char *str, int tilde)
 {
-	int	i;
+	int		i;
 	char	*ptr;
 	char	*closest;
 
@@ -73,7 +73,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 	char	*new;
 	size_t	lnew;
 	size_t	lprefix;
-	int	ret;
+	int		ret;
 
 	lcontent = 0;
 	ret = e_success;
@@ -94,10 +94,10 @@ static int		replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-int			treat_single_exp(char **str, int tilde)
+int				treat_single_exp(char **str, int tilde)
 {
-	int	ref;
-	int	ret;
+	int		ref;
+	int		ret;
 	char	*next;
 
 	next = *str;
@@ -119,7 +119,7 @@ int			treat_single_exp(char **str, int tilde)
 	return (e_success);
 }
 
-int			treat_expansions(t_process *p)
+int				treat_expansions(t_process *p)
 {
 	int	i;
 	int	ret;

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 09:40:04 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 14:49:30 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,20 @@
 static void	display_signo(char c, int status, t_job *j)
 {
 	if (WSTOPSIG(status) == SIGTSTP)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTSTP) %s\n", j->pgid, c, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTSTP) %s\n", j->pgid, c, \
+				j->command);
 	else if (WSTOPSIG(status) == SIGSTOP)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGSTOP) %s\n", j->pgid, c, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGSTOP) %s\n", j->pgid, c, \
+				j->command);
 	else if (WSTOPSIG(status) == SIGTTIN)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTIN) %s\n", j->pgid, c, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTIN) %s\n", j->pgid, c, \
+				j->command);
 	else if (WSTOPSIG(status) == SIGTTOU)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU) %s\n", j->pgid, c, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU) %s\n", j->pgid, c, \
+				j->command);
 	else
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?) %s\n", j->pgid, c, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?) %s\n", j->pgid, c, \
+				j->command);
 }
 
 static void	display_exit_no(char c, int status, t_job *j)
@@ -36,7 +41,8 @@ static void	display_exit_no(char c, int status, t_job *j)
 
 	ret = WEXITSTATUS(status);
 	if (ret)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Done(%d) %s\n", j->pgid, c, ret, j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Done(%d) %s\n", j->pgid, c, ret, \
+				j->command);
 	else
 		ft_dprintf(STDERR_FILENO, "[%d] %c Done %s\n", j->pgid, c, j->command);
 }
@@ -50,11 +56,31 @@ static char	set_current(int job_number)
 	return (' ');
 }
 
+static	int	test_job_state(t_job *j, int status, char current)
+{
+	if (job_is_stopped(j))
+	{
+		status = get_job_status(j, 1);
+		if (WIFSTOPPED(status))
+			display_signo(current, status, j);
+	}
+	else if (job_is_completed(j))
+	{
+		status = get_job_status(j, 1);
+		if (WIFEXITED(status))
+			display_exit_no(current, status, j);
+	}
+	else
+		ft_dprintf(STDERR_FILENO, "[%d] %c %s %s\n", j->pgid, current, \
+				"Running", j->command);
+	return (status);
+}
+
 int			cmd_jobs(int argc, char **argv)
 {
-	int	job_number;
+	int		job_number;
 	char	current;
-	int	status;
+	int		status;
 	t_job	*j;
 
 	(void)argc;
@@ -63,22 +89,9 @@ int			cmd_jobs(int argc, char **argv)
 	j = first_job;
 	update_status();
 	while (j->next)
-	{ /* "[%d] %c %s %s\n", <job-number>, <current>, <state>, <command> */
+	{
 		current = set_current(job_number);
-		if (job_is_stopped(j))
-		{
-			status = get_job_status(j, 1);
-			if (WIFSTOPPED(status))
-				display_signo(current, status, j);
-		}
-		else if (job_is_completed(j))
-		{
-			status = get_job_status(j, 1);
-			if (WIFEXITED(status))
-				display_exit_no(current, status, j);
-		}
-		else
-			ft_dprintf(STDERR_FILENO, "[%d] %c %s %s\n", j->pgid, current, "Running", j->command);
+		status = test_job_state(j, status, current);
 		j = j->next;
 		++job_number;
 	}

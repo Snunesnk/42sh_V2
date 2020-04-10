@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 15:49:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 14:30:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void		unset_var(int tab_len, char **name)
 	g_env = g_env->next;
 	while (g_env != NULL)
 	{
-		if (match_name(((t_shell_var*)(g_env->content))->name, name, tab_len) == TRUE)
+		if (match_name(((t_shell_var*)(g_env->content))->name, name, tab_len) \
+				== TRUE)
 		{
 			tmp->next = g_env->next;
 			ft_lstdelone(&g_env, &del_elem);

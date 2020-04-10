@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 15:45:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 15:14:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,15 @@ int		launch_job(t_job *j, int foreground)
 			outfile = j->stdout;
 		if (!j->first_process->next && only_assignments(p))
 			treat_shell_variables(p, 1);
-		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) && !j->first_process->next)
+		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) \
+				&& !j->first_process->next)
 		{
 			treat_shell_variables(p, 0);
 			return (launch_builtin(p));
 		}
 		else
 		{
-			pid = fork ();
+			pid = fork();
 			if (pid == 0)
 			{
 				if (infile != mypipe[0] && mypipe[0] != -1)
@@ -102,8 +103,8 @@ int		launch_job(t_job *j, int foreground)
 			}
 			else if (pid < 0)
 			{
-				perror ("fork");
-				exit (1);
+				perror("fork");
+				exit(1);
 			}
 			else
 			{
@@ -118,7 +119,7 @@ int		launch_job(t_job *j, int foreground)
 			}
 		}
 		if (infile != j->stdin)
-			close (infile);
+			close(infile);
 		if (outfile != j->stdout)
 			close(outfile);
 		infile = mypipe[0];
