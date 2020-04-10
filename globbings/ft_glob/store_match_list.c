@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   store_match_list.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:34:11 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:34:12 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_utils.h"
 #include "ft_glob_internal.h"
 
-int		void_strcmp(void *s1, void *s2)
+int			void_strcmp(void *s1, void *s2)
 {
 	return (ft_strcmp((char *)s1, (char *)s2));
 }
 
-static void	build_pathv(t_glob *pglob, char **new_pathv,
+static void	build_pathv(t_glob *pglob, char **new_pathv, \
 			t_list *match, int append)
 {
 	size_t	i;
@@ -31,7 +43,7 @@ static void	build_pathv(t_glob *pglob, char **new_pathv,
 	pglob->gl_pathv = new_pathv;
 }
 
-int		store_match_list(t_glob *pglob, t_glob_internal *gl,
+int			store_match_list(t_glob *pglob, t_glob_internal *gl, \
 			t_list *match)
 {
 	char	**new_pathv;

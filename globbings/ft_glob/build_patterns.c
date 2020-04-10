@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_patterns.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:14 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:33:15 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_internal.h"
 #include "ft_glob_utils.h"
 
@@ -30,7 +42,7 @@ static t_list	*expand_braces(const char *pattern, t_glob_internal *gl)
 	return (pattern_list);
 }
 
-void		expand_pattern_list(t_list **pattern_list, t_glob_internal *gl)
+void			expand_pattern_list(t_list **pattern_list, t_glob_internal *gl)
 {
 	t_list	*cur;
 	t_list	*next;
@@ -56,7 +68,7 @@ void		expand_pattern_list(t_list **pattern_list, t_glob_internal *gl)
 		*pattern_list = result;
 }
 
-t_list		*build_patterns(const char *pattern, t_glob_internal *gl)
+t_list			*build_patterns(const char *pattern, t_glob_internal *gl)
 {
 	t_list	*pattern_list;
 
@@ -67,4 +79,3 @@ t_list		*build_patterns(const char *pattern, t_glob_internal *gl)
 		expand_pattern_list(&pattern_list, gl);
 	return (pattern_list);
 }
-

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   slash_path.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:34:01 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:34:02 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_internal.h"
 
-static const char	*go_to_end_of_pattern(const char *pattern,
+static const char	*go_to_end_of_pattern(const char *pattern, \
 				enum e_pathtype *type, t_glob_internal *gl)
 {
 	int	skip;
@@ -21,11 +33,11 @@ static const char	*go_to_end_of_pattern(const char *pattern,
 	return (pattern);
 }
 
-enum e_pathtype		slash_path(const char **pattern,
-				const char **cur_pattern, t_glob_internal *gl)
+enum e_pathtype		slash_path(const char **pattern, \
+		const char **cur_pattern, t_glob_internal *gl)
 {
 	enum e_pathtype	type;
-	const char	*end;
+	const char		*end;
 
 	if (!**pattern)
 		return (GL_NONE);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:33:27 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_internal.h"
 #include <sys/stat.h>
 #include <errno.h>
@@ -24,21 +36,20 @@ char		*add_to_path(const char *path, const char *to_add)
 	return (pathname);
 }
 
-int		is_dir(const char *pathname, t_glob_internal *gl)
+int			is_dir(const char *pathname, t_glob_internal *gl)
 {
 	struct stat	statbuf;
-	
+
 	ft_bzero((void *)&statbuf, sizeof(struct stat));
 	if (stat(pathname, &statbuf) == -1)
 	{
 		set_read_error(gl, pathname, errno);
 		return (-1);
 	}
-//	return ((statbuf.st_mode & S_IFMT) == S_IFDIR);
-	return (S_ISDIR(statbuf.st_mode)); //is this leeegul ?
+	return (S_ISDIR(statbuf.st_mode));
 }
 
-t_file_data	*init_file(t_file_data *dest, const char *path,
+t_file_data	*init_file(t_file_data *dest, const char *path, \
 			const char *name, t_glob_internal *gl)
 {
 	dest->name = name;
@@ -53,10 +64,10 @@ t_file_data	*init_file(t_file_data *dest, const char *path,
 	return (dest);
 }
 
-t_list		*add_file_lst(const char **file, int add_slash,
+t_list		*add_file_lst(const char **file, int add_slash, \
 			t_glob_internal *gl)
 {
-	const char 	*tmp;
+	const char	*tmp;
 	t_list		*lst;
 
 	if (add_slash)
@@ -76,4 +87,3 @@ t_list		*add_file_lst(const char **file, int add_slash,
 	lst->content = (void *)*file;
 	return (lst);
 }
-

@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_brace_patterns.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:02 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:33:05 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_internal.h"
 
-const char		*go_to_closing_curl(const char *pattern, t_glob_internal *gl)
+const char			*go_to_closing_curl(const char *pattern, \
+		t_glob_internal *gl)
 {
 	const char	*ptr;
 	int			skip;
@@ -26,8 +39,8 @@ const char		*go_to_closing_curl(const char *pattern, t_glob_internal *gl)
 	return (*ptr ? ptr : pattern);
 }
 
-const char		*get_brace_expression(t_glob_internal *gl, const char *pattern,
-				const char **start, const char **end)
+const char			*get_brace_expression(t_glob_internal *gl, \
+		const char *pattern, const char **start, const char **end)
 {
 	int	skip;
 
@@ -75,8 +88,8 @@ static const char	*get_cur_exp(const char *start, const char *end, \
 	return (cur_exp);
 }
 
-t_list			*build_brace_patterns(const char *start, const char *end,
-				const char *exp, t_glob_internal *gl)
+t_list				*build_brace_patterns(const char *start, \
+		const char *end, const char *exp, t_glob_internal *gl)
 {
 	static int	size = 0;
 	t_list		*next;
@@ -89,8 +102,8 @@ t_list			*build_brace_patterns(const char *start, const char *end,
 	if (*exp || size == 1)
 	{
 		exp = size > 1 && *exp == ',' ? exp + 1 : exp;
-		if ((p = get_cur_exp(start, end, &exp, gl)) && (cur =
-			(t_list *)check_mem(gl, (void *)ft_lstnew(NULL, 0))))
+		p = get_cur_exp(start, end, &exp, gl);
+		if (p && (cur = (t_list *)check_mem(gl, (void *)ft_lstnew(NULL, 0))))
 			cur->content = (void *)p;
 		size = cur ? size : -1;
 	}
