@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 19:10:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 19:43:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,24 @@ int		undo_iodfile(t_redirection *r, t_shell_fds **shell_fd)
 	return (0);
 }
 
-int		undo_redirection_internal(t_redirection *r)
+int		undo_redirection_internal(t_redirection *r, t_shell_fds *shell_fd)
 {
-	t_shell_fds	*shell_fd;
-
-	shell_fd = NULL;
-	while (r)
+	if (r && (r->flags & REDSUC))
 	{
-		if (r->flags & REDSUC)
-		{
-			if (r->instruction == IOWRITE)
-				undo_iowrite(r, &shell_fd);
-			else if (r->instruction == IOCAT)
-				undo_iowrite(r, &shell_fd);
-			else if (r->instruction == IOREAD)
-				undo_ioread(r, &shell_fd);
-			else if (r->instruction == (IODUP | IOWRITE))
-				undo_iodfile(r, &shell_fd);
-			else if (r->instruction == IODUP && !(r->flags & FDCLOSE))
-				undo_iodup(r, &shell_fd);
-			else if (r->instruction == (IODUP | IOREAD)
-					&& !(r->flags & FDCLOSE))
-				undo_ioread(r, &shell_fd);
-		}
-		r = r->next;
+		undo_redirection_internal(r->next, shell_fd);
+		if (r->instruction == IOWRITE)
+			undo_iowrite(r, &shell_fd);
+		else if (r->instruction == IOCAT)
+			undo_iowrite(r, &shell_fd);
+		else if (r->instruction == IOREAD)
+			undo_ioread(r, &shell_fd);
+		else if (r->instruction == (IODUP | IOWRITE))
+			undo_iodfile(r, &shell_fd);
+		else if (r->instruction == IODUP && !(r->flags & FDCLOSE))
+			undo_iodup(r, &shell_fd);
+		else if (r->instruction == (IODUP | IOREAD)
+				&& !(r->flags & FDCLOSE))
+			undo_ioread(r, &shell_fd);
 	}
-	free_restored_fd(shell_fd);
 	return (0);
 }
