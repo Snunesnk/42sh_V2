@@ -362,8 +362,8 @@ int		getenv_content(char **content, char *str, const char *closetag);
 size_t	ft_varlen(const char *s, const char *closetag);
 int		is_a_valid_chr(const char c);
 int		is_valid_param(const char *str);
-int		dollar_expansions(size_t *lcontent, char **str,
-		const char *opentag, const char *closetag);
+int		dollar_expansions(size_t *index, char **str, const char *opentag,
+		const char *closetag);
 int		parameter_expansions(size_t *lcontent, char **str,
 		const char *opentag, const char *closetag);
 int		tilde_expansion(size_t *index, char **str,
