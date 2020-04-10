@@ -6,12 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:14 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 12:33:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 18:37:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glob_internal.h"
 #include "ft_glob_utils.h"
+#include "shell.h"
 
 static t_list	*expand_braces(const char *pattern, t_glob_internal *gl)
 {
@@ -77,5 +78,7 @@ t_list			*build_patterns(const char *pattern, t_glob_internal *gl)
 		ft_strlen(pattern) + 1));
 	if (!gl->ret && (gl->flags & FT_GLOB_BRACE))
 		expand_pattern_list(&pattern_list, gl);
+	if (!gl->ret && (gl->flags & FT_GLOB_TILDE))
+		treat_single_exp((char **)&(pattern_list->content), 1);
 	return (pattern_list);
 }
