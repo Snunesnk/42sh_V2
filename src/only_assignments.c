@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 11:52:47 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 09:41:20 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 14:01:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 
 int		only_assignments(t_process *p)
 {
-	int				ret;
-	int				i;
+	int i;
 
 	i = 0;
-	ret = FALSE;
-	while (i < p->argc)
+	if (p->argc)
 	{
-		if (ft_strchr(p->argv[i], '=') == NULL)
-			break ;
-		i++;
+		while (i < p->argc)
+		{
+			if (ft_strchr(p->argv[i], '=') == NULL)
+				break ;
+			i++;
+		}
+		if (i == p->argc)
+			return (1);
 	}
-	if (i == p->argc)
-		ret = TRUE;
-	return (ret);
+	return (0);
 }
