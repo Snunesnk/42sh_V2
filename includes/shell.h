@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/09 17:33:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:58:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,29 @@
 # define NOFORK		0x10
 # define REDSUC		0x20
 
-char	*short_logical_path(char **cwd);
-char	*short_physical_path(char **cwd);
+char							*short_logical_path(char **cwd);
+char							*short_physical_path(char **cwd);
 
-extern char		g_pwd[PATH_MAX];
-extern t_list	*g_env;
-extern t_list	*g_pending_cmd;
+extern char						g_pwd[PATH_MAX];
+extern t_list					*g_env;
+extern t_list					*g_pending_cmd;
 
-extern t_list	*g_alias;
+extern t_list					*g_alias;
 
-struct	s_shell_fds
+struct							s_shell_fds
 {
 	int					fd;
 	struct s_shell_fds	*next;
 };
 
-typedef struct s_redirectee
+typedef struct					s_redirectee
 {
 	int		dest;
 	char	*filename;
 	char	*hereword;
-}			t_redirectee;
+}								t_redirectee;
 
-struct	s_redirection
+struct							s_redirection
 {
 	struct s_redirection	*next;
 	t_redirectee			redirector;
@@ -102,10 +102,10 @@ struct	s_redirection
 	int						error;
 	t_redirectee			redirectee;
 	char					*here_doc_eof;
-	int						save[2];      
+	int						save[2];
 };
 
-struct s_process
+struct							s_process
 {
 	struct s_process		*next;
 	char					**argv;
@@ -120,7 +120,7 @@ struct s_process
 	int						errfile;
 };
 
-struct s_job
+struct							s_job
 {
 	struct s_job		*next;
 	char				*command;
@@ -133,7 +133,7 @@ struct s_job
 	int					stderr;
 };
 
-struct s_hash_table
+struct							s_hash_table
 {
 	struct s_hash_table	*next;
 	char				*command_name;
@@ -141,108 +141,125 @@ struct s_hash_table
 	int					nb_called;
 };
 
-
 typedef struct s_shell_fds		t_shell_fds;
 typedef struct s_process		t_process;
 typedef struct s_job			t_job;
 typedef struct s_redirection	t_redirection;
 typedef struct s_hash_table		t_hash_table;
 
-int				add_to_hash_table(char *pathname, char *command_name, int nb);
-int				add_name_hash_table(char *command_name, int nb);
-int				check_hash_table(char *command_name);
-int				ft_hash(char *to_hash);
-t_hash_table	*new_hash_entry(char *pathname, char *command_name, int nb);
-t_hash_table	*find_occurence(char *name);
-t_hash_table	*find_prev_occurence(char *name);
-void			free_hash_table(void);
+int								add_to_hash_table(char *pathname, \
+		char *command_name, int nb);
+int								add_name_hash_table(char *command_name, int nb);
+int								check_hash_table(char *command_name);
+int								ft_hash(char *to_hash);
+t_hash_table					*new_hash_entry(char *pathname, \
+		char *command_name, int nb);
+t_hash_table					*find_occurence(char *name);
+t_hash_table					*find_prev_occurence(char *name);
+void							free_hash_table(void);
 
-extern int		g_subshell;
+extern int						g_subshell;
 
-extern t_hash_table	*(g_hash_table[HASH_SIZE]);
+extern t_hash_table				*(g_hash_table[HASH_SIZE]);
 
-extern t_job			*first_job;
-extern pid_t			shell_pgid;
-extern struct termios	shell_tmodes;
-extern int				shell_terminal;
-extern int				shell_is_interactive;
+extern t_job					*g_first_job;
+extern pid_t					g_shell_pgid;
+extern struct termios			shell_tmodes;
+extern int						g_shell_terminal;
+extern int						g_shell_is_interactive;
 
-int		exec_input(char *input);
-int		init_shell(void);
-int		launch_job(t_job *j, int foreground);
-void	format_job_info (t_job *j, const char *status);
-void	wait_for_job(t_job *j);
-void    continue_job(t_job *j, int foreground);
-void    free_job(t_job *j);
-int		launch_process(t_process *p, pid_t pgid, int infile, int outfile, int errfile, int foreground);
-void	free_process(t_process *p);
-int     execute_process(char **argv, char **envp, t_hash_table *tmp, char *pathname);
-void	put_job_in_foreground(t_job *j, int cont);
-void    put_job_in_background(t_job *j, int cont);
-void    update_status(void);
-void    do_job_notification(t_job *j, t_job *jlast, t_job *jnext);
-int     get_exit_value(int status);
-int     get_job_status(t_job *j, int foreground);
-void    add_job_to_queue(t_job *j);
-void    init_shell_sset(void);
-void    restore_procmask(void);
-int		job_is_stopped(t_job *j);
-int     job_is_completed(t_job *j);
-void    put_job_in_foreground(t_job *j, int cont);
-t_job   *find_job(pid_t pgid);
+int								exec_input(char *input);
+int								init_shell(void);
+int								launch_job(t_job *j, int foreground);
+void							format_job_info (t_job *j, const char *status);
+void							wait_for_job(t_job *j);
+void							continue_job(t_job *j, int foreground);
+void							free_job(t_job *j);
+int								launch_process(t_process *p, pid_t pgid, \
+		int infile, int outfile, int errfile, int foreground);
+void							free_process(t_process *p);
+int								execute_process(char **argv, char **envp, \
+		t_hash_table *tmp, char *pathname);
+void							put_job_in_foreground(t_job *j, int cont);
+void							put_job_in_background(t_job *j, int cont);
+void							update_status(void);
+void							do_job_notification(t_job *j, t_job *jlast, \
+		t_job *jnext);
+int								get_exit_value(int status);
+int								get_job_status(t_job *j, int foreground);
+void							add_job_to_queue(t_job *j);
+void							init_shell_sset(void);
+void							restore_procmask(void);
+int								job_is_stopped(t_job *j);
+int								job_is_completed(t_job *j);
+void							put_job_in_foreground(t_job *j, int cont);
+t_job							*find_job(pid_t pgid);
 
-extern sigset_t			g_save_procmask;
+extern sigset_t					g_save_procmask;
 
-int				launch_builtin(t_process *p);
-int				has_redirections(int type);
-int				is_redir_type(int type);
-t_redirection	*build_redirections(t_list **lst);
-int				get_tokentype(t_list *lst);
-char			*get_tokvalue(t_list *lst);
-int				do_redirection(t_redirection *r);
-t_redirection   *set_redirection(t_list **lst, int io_nb);
-char	*dup_token_value(char **argv, int i, t_list *lst);
+int								launch_builtin(t_process *p);
+int								has_redirections(int type);
+int								is_redir_type(int type);
+t_redirection					*build_redirections(t_list **lst);
+int								get_tokentype(t_list *lst);
+char							*get_tokvalue(t_list *lst);
+int								do_redirection(t_redirection *r);
+t_redirection					*set_redirection(t_list **lst, int io_nb);
+char							*dup_token_value(char **argv, int i, \
+		t_list *lst);
 
-void    free_redirections(t_redirection *r);
-int		undo_redirection(t_redirection *r);
-int     restored_fd(t_shell_fds *shell_fd, int fd);
-void    add_restored_fd(t_shell_fds **shell_fd, int add);
-void    free_restored_fd(t_shell_fds *l);
-void    free_redirections(t_redirection *r);
-int     undo_iowrite(t_redirection *r, t_shell_fds **shell_fd);
-int     undo_ioread(t_redirection *r, t_shell_fds **shell_fd);
-int     undo_iodup(t_redirection *r, t_shell_fds **shell_fd);
-int     undo_iodfile(t_redirection *r, t_shell_fds **shell_fd);
-int     undo_redirection_internal(t_redirection *r);
-int     undo_redirection(t_redirection *r);
+void							free_redirections(t_redirection *r);
+int								undo_redirection(t_redirection *r);
+int								restored_fd(t_shell_fds *shell_fd, int fd);
+void							add_restored_fd(t_shell_fds **shell_fd, \
+		int add);
+void							free_restored_fd(t_shell_fds *l);
+void							free_redirections(t_redirection *r);
+int								undo_iowrite(t_redirection *r, \
+		t_shell_fds **shell_fd);
+int								undo_ioread(t_redirection *r, \
+		t_shell_fds **shell_fd);
+int								undo_iodup(t_redirection *r, \
+		t_shell_fds **shell_fd);
+int								undo_iodfile(t_redirection *r, \
+		t_shell_fds **shell_fd);
+int								undo_redirection_internal(t_redirection *r);
+int								undo_redirection(t_redirection *r);
 
-int             has_redirections(int type);
-int             ha(char *str);
-t_redirection   *set_redirection(t_list **lst, int io_nb);
-t_redirection   *type_less_redirection(t_list **lst, int io_nb);
-t_redirection   *type_dless_redirection(t_list **lst, int io_nb);
-t_redirection   *type_lessand_redirection(t_list **lst, int io_nb);
-t_redirection   *subtype_great_redirection(t_list **lst, int io_nb);
-t_redirection   *type_great_redirection(t_list **lst, int io_nb);
-t_redirection   *type_dgreat_redirection(t_list **lst, int io_nb);
-t_redirection   *type_greatand_redirection(t_list **lst, int io_nb);
-t_redirection   *type_andgreat_redirection(t_list **lst, int io_nb);
+int								has_redirections(int type);
+int								ha(char *str);
+t_redirection					*set_redirection(t_list **lst, int io_nb);
+t_redirection					*type_less_redirection(t_list **lst, int io_nb);
+t_redirection					*type_dless_redirection(t_list **lst, \
+		int io_nb);
+t_redirection					*type_lessand_redirection(t_list **lst, \
+		int io_nb);
+t_redirection					*subtype_great_redirection(t_list **lst, \
+		int io_nb);
+t_redirection					*type_great_redirection(t_list **lst, \
+		int io_nb);
+t_redirection					*type_dgreat_redirection(t_list **lst,\
+		int io_nb);
+t_redirection					*type_greatand_redirection(t_list **lst, \
+		int io_nb);
+t_redirection					*type_andgreat_redirection(t_list **lst, \
+		int io_nb);
 
-int valid_fd(int fd, int open);
-int check_if_directory(char *filename);
-int do_iowrite(t_redirection *r);
-int do_iocat(t_redirection *r);
-int do_ioread(t_redirection *r);
-int do_iohere(t_redirection *r);
-int do_iodfile(t_redirection *r);
-int do_iodread(t_redirection *r);
-int do_iodup(t_redirection *r);
-int do_redirection(t_redirection *r);
+int								valid_fd(int fd, int open);
+int								check_if_directory(char *filename);
+int								do_iowrite(t_redirection *r);
+int								do_iocat(t_redirection *r);
+int								do_ioread(t_redirection *r);
+int								do_iohere(t_redirection *r);
+int								do_iodfile(t_redirection *r);
+int								do_iodread(t_redirection *r);
+int								do_iodup(t_redirection *r);
+int								do_redirection(t_redirection *r);
 
-extern char	*g_filename_redir_error;
-extern char	*g_grammar[NB_TOKEN];
+extern char						*g_filename_redir_error;
+extern char						*g_grammar[NB_TOKEN];
 
-enum	e_token
+enum							e_token
 {
 	SEMI,
 	OR_IF,
@@ -266,111 +283,114 @@ enum	e_token
 	NONE
 };
 
-typedef struct		s_token
+typedef struct					s_token
 {
 	enum e_token	type;
 	char			*value;
-}					t_token;
+}								t_token;
 
-typedef struct	s_ast
+typedef struct					s_ast
 {
 	enum e_token	type;
 	t_list			*content;
 	void			*left;
 	void			*right;
-}				t_ast;
+}								t_ast;
 
-typedef struct	s_shell_var
+typedef struct					s_shell_var
 {
 	char		*name;
 	char		*value;
 	uint64_t	flag;
-}				t_shell_var;
+}								t_shell_var;
 
-void			alpha_sort(t_list **lst1, t_list **lst2, t_list **head);
-void			ast_order(t_ast **ast);
-void			astdel(t_ast **ast);
-int				build_ast(t_ast **ast, t_list *lst);
-void			debug(t_list *lst);
-void			debug_ast(t_ast *ast);
-void			del(void *content, size_t content_size);
-void			del_elem(void *content, size_t content_size);
-void			del_env(void *content, size_t content_size);
-int				execute_job(t_list *lst, int foreground);
-int				mark_process_status(pid_t pid, int status);
-int				execute_node(t_ast *node, int foreground);
-int				add_var(char **av);
-int				ft_atoifd(const char *str);
-int				ft_ismeta(int c);
-char			*ft_join_free(char *s1, char *s2, int op);
-void			ft_merge_sort(t_list **lst, void sort(t_list**, t_list**,
-					t_list**));
-void			ft_sort_name(t_list **lst1, t_list **lst2, t_list **head);
-int				get_env_list(char **environ);
-char			**get_env_tab(void);
-int				get_next_token(const char *str, t_token *token,
+void							alpha_sort(t_list **lst1, t_list **lst2, \
+		t_list **head);
+void							ast_order(t_ast **ast);
+void							astdel(t_ast **ast);
+int								build_ast(t_ast **ast, t_list *lst);
+void							debug(t_list *lst);
+void							debug_ast(t_ast *ast);
+void							del(void *content, size_t content_size);
+void							del_elem(void *content, size_t content_size);
+void							del_env(void *content, size_t content_size);
+int								execute_job(t_list *lst, int foreground);
+int								mark_process_status(pid_t pid, int status);
+int								execute_node(t_ast *node, int foreground);
+int								add_var(char **av);
+int								ft_atoifd(const char *str);
+int								ft_ismeta(int c);
+char							*ft_join_free(char *s1, char *s2, int op);
+void							ft_merge_sort(t_list **lst, \
+		void sort(t_list**, t_list**, t_list**));
+void							ft_sort_name(t_list **lst1, t_list **lst2, \
+		t_list **head);
+int								get_env_list(char **environ);
+char							**get_env_tab(void);
+int								get_next_token(const char *str, \
+		t_token *token, enum e_token *last_token_type);
+t_list							*get_shell_var(char *name, t_list *svar_lst);
+int								get_stdin(char **line);
+size_t							get_word(const char *str, t_token *token, \
 					enum e_token *last_token_type);
-t_list			*get_shell_var(char *name, t_list *svar_lst);
-int				get_stdin(char **line);
-size_t			get_word(const char *str, t_token *token,
-					enum e_token *last_token_type);
-enum e_token	**init_enum_tab(void);
-int				initialize_prompt_fd(void);
-int				launch_lexer_parser(char *input, t_ast **ast);
-int				lexer(char* str, t_list **lst);
-int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
-					enum e_token type);
-int				only_assignments(t_process *p);
-int				parser(t_list *lst);
-int				path_concat(char **bin, char *beg, char *env, char *dir);
-void			print_env(t_list *env, t_list **elem);
-_Bool			prompt_display(int status);
-int				set_minimal_env(void);
-int				treat_shell_variables(t_process *p, int	opt);
-int				treat_single_exp(char **str, int tilde);
-int				treat_expansions(t_process *p);
+enum e_token					**init_enum_tab(void);
+int								initialize_prompt_fd(void);
+int								launch_lexer_parser(char *input, t_ast **ast);
+int								lexer(char *str, t_list **lst);
+int								new_node_ast(t_ast **ast, t_list *head, \
+		t_list **lst, enum e_token type);
+int								only_assignments(t_process *p);
+int								parser(t_list *lst);
+int								path_concat(char **bin, char *beg, char *env, \
+		char *dir);
+void							print_env(t_list *env, t_list **elem);
+_Bool							prompt_display(int status);
+int								set_minimal_env(void);
+int								treat_shell_variables(t_process *p, int	opt);
+int								treat_single_exp(char **str, int tilde);
+int								treat_expansions(t_process *p);
 
-int execute_pipeline(t_ast *node, int foreground);
-int execute_semi(t_ast *node, int foreground);
-int execute_subshell(t_ast *node, int foreground);
-int execute_and(t_ast *node, int foreground);
-int execute_andand(t_ast *node, int foreground);
-int execute_or(t_ast *node, int foreground);
-int execute_node(t_ast *node, int foreground);
-int     get_argc(t_list *lst, int argc, t_token *t);
-int     is_redir_type(int type);
-char    *get_tokvalue(t_list *lst);
-int     get_tokentype(t_list *lst);
+int								execute_pipeline(t_ast *node, int foreground);
+int								execute_semi(t_ast *node, int foreground);
+int								execute_subshell(t_ast *node, int foreground);
+int								execute_and(t_ast *node, int foreground);
+int								execute_andand(t_ast *node, int foreground);
+int								execute_or(t_ast *node, int foreground);
+int								execute_node(t_ast *node, int foreground);
+int								get_argc(t_list *lst, int argc, t_token *t);
+int								is_redir_type(int type);
+char							*get_tokvalue(t_list *lst);
+int								get_tokentype(t_list *lst);
 
+extern int						g_retval;
 
-extern int	g_retval;
-
-struct	s_tags
+struct							s_tags
 {
 	char	*opentag;
 	int		(*f)(size_t*, char**, const char*, const char*);
 	char	*closetag;
 };
 
-struct	s_param
+struct							s_param
 {
 	char	*pname;
 	char	*(*g)(const char*);
 };
 
-int		getenv_content(char **content, char *str, const char *closetag);
-size_t	ft_varlen(const char *s, const char *closetag);
-int		is_a_valid_chr(const char c);
-int		is_valid_param(const char *str);
-int		dollar_expansions(size_t *lcontent, char **str,
+int								getenv_content(char **content, char *str, \
+		const char *closetag);
+size_t							ft_varlen(const char *s, const char *closetag);
+int								is_a_valid_chr(const char c);
+int								is_valid_param(const char *str);
+int								dollar_expansions(size_t *lcontent, \
+		char **str, const char *opentag, const char *closetag);
+int								parameter_expansions(size_t *lcontent, \
+		char **str, const char *opentag, const char *closetag);
+int								tilde_expansion(size_t *index, char **str, \
 		const char *opentag, const char *closetag);
-int		parameter_expansions(size_t *lcontent, char **str,
-		const char *opentag, const char *closetag);
-int		tilde_expansion(size_t *index, char **str,
-		const char *opentag, const char *closetag);
-int		pathname_expansion(t_process *p, int i);
+int								pathname_expansion(t_process *p, int i);
 
-struct	s_param_exp
+struct							s_param_exp
 {
 	int		ret;
 	size_t	lopen;
@@ -382,6 +402,5 @@ struct	s_param_exp
 	size_t	lcontent;
 	char	*new;
 };
-
 
 #endif

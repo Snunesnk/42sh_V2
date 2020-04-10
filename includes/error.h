@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 16:17:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:40:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
 
-enum	e_minishell_error
+enum								e_minishell_error
 {
 	e_success,
 	e_invalid_input,
@@ -33,16 +33,16 @@ enum	e_minishell_error
 	e_resource_tmp_unavailable
 };
 
-enum	e_error_message_types
+enum								e_error_message_types
 {
 	e_invalid_type,
 	e_parsing_type,
 	e_cmd_type
 };
 
-typedef enum e_minishell_error	t_error;
+typedef enum e_minishell_error		t_error;
 
-struct	s_error_desc
+struct								s_error_desc
 {
 	int		code;
 	char	*message;
@@ -51,6 +51,7 @@ struct	s_error_desc
 extern const struct s_error_desc	g_errordesc[];
 extern char							*g_progname;
 
-int	psherror(int e_error, char *str, int e_message_type);
+int									psherror(int e_error, char *str, \
+		int e_message_type);
 
 #endif
