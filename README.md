@@ -10,3 +10,4 @@ Antoine:
 Simon:
 - 21sh Shell variables, export, set, unset and var assignements.
 - 21sh Norme everything.
+- 42sh Perform tilde expansion with globbings.
