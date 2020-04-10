@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:57:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:06:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "builtins.h"
 
-t_job	*first_job = NULL;
+t_job	*g_first_job = NULL;
 
 void	put_job_in_foreground(t_job *j, int cont)
 {
@@ -44,7 +44,7 @@ t_job	*find_job(pid_t pgid)
 {
 	t_job	*j;
 
-	j = first_job;
+	j = g_first_job;
 	while (j)
 	{
 		if (j->pgid == pgid)

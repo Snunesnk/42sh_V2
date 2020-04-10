@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pathname_expansion.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 15:13:01 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 15:14:09 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob.h"
 #include "libft.h"
 #include "error.h"
@@ -5,7 +17,7 @@
 
 static int	replace_pattern(t_process *p, int i, t_glob *gl)
 {
-	int	new_argc;
+	int		new_argc;
 	char	**new_argv;
 
 	ft_memdel((void **)p->argv + i);
@@ -27,15 +39,18 @@ static int	replace_pattern(t_process *p, int i, t_glob *gl)
 	return (e_success);
 }
 
-int		pathname_expansion(t_process *p, int i)
+/*
+** TODO: find a way not to copy the string each time and to use GLOB_APPEND
+** instead of copying the entire argv each time
+*/
+
+int			pathname_expansion(t_process *p, int i)
 {
 	t_glob	gl;
-	int	ret;
+	int		ret;
 
 	ft_bzero(&gl, sizeof(t_glob));
 	ret = ft_glob(p->argv[i], FT_GLOB_BRACE, NULL, &gl);
-	//TODO: find a way not to copy the string each time and to use GLOB_APPEND
-	//instead of copying the entire argv each time
 	if (!ret)
 		return (replace_pattern(p, i, &gl));
 	else if (ret == FT_GLOB_NOSPACE)

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 15:02:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,7 @@ int	cmd_bg(int argc, char **argv)
 		j = find_job(ft_atoi(argv[1]));
 		put_job_in_background(j, 1);
 	}
-//	else if (argc > 2)
-//	{
-//		if (argv[1][0] == '-')
-//			ft_dprintf(STDERR_FILENO, "fg: -l: invalid option\n");
 	else
 		ft_dprintf(STDERR_FILENO, "bg: usage: bg [job_spec]\n");
-//	}
-		
 	return (0);
 }

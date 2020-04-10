@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_unalias.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 15:03:52 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 
@@ -11,8 +23,8 @@ static int	name_shvar_cmp(void *str_ref, void *shvar_ptr)
 
 static char	**unalias_opt(int argc, char **argv)
 {
-	int			opt;
-	int			unset_all;
+	int	opt;
+	int	unset_all;
 
 	unset_all = 0;
 	g_opterr = 1;
@@ -28,7 +40,6 @@ static char	**unalias_opt(int argc, char **argv)
 		ft_lstdel(&g_alias, del_env);
 	return (argv + g_optind);
 }
-
 
 static int	remove_alias(t_list **lst, void *content_ref)
 {
@@ -59,7 +70,7 @@ static int	remove_alias(t_list **lst, void *content_ref)
 	return (FAILURE);
 }
 
-int		cmd_unalias(int argc, char **argv)
+int			cmd_unalias(int argc, char **argv)
 {
 	int			ret;
 

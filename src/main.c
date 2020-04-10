@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 18:19:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 15:10:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_readline.h"
 #include "builtins.h"
 
-extern char	**environ;
+extern char	**g_environ;
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
 t_list		*g_alias;
@@ -76,19 +76,18 @@ int			main(int argc, char **argv)
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
-	if (!(environ = ft_tabcpy(environ)))
+	if (!(g_environ = ft_tabcpy(g_environ)))
 	{
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
 	init_hash_table();
-	get_env_list(environ);
-//	ft_lstprint(g_env, &print_env);
+	get_env_list(g_environ);
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
 	{
 		psherror(g_retval, argv[0], e_cmd_type);
-		ft_tabdel(&environ);
+		ft_tabdel(&g_environ);
 		return (1);
 	}
 	while (21)
@@ -107,8 +106,7 @@ int			main(int argc, char **argv)
 		test_hash_path();
 	}
 	free_hash_table();
-	ft_tabdel(&environ);
-/* Useless free functions, shell quits before in exit builtin */
+	ft_tabdel(&g_environ);
 	ft_lstdel(&g_env, &del_env);
 	return (status);
 }
