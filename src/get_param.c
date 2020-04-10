@@ -72,10 +72,10 @@ static int	parameter_dispacther(char **content, const char *str)
 	return (e_success);
 }
 
-int	getenv_content(char **content, char *str, const char *closetag)
+int			getenv_content(char **content, char *str, const char *closetag)
 {
 	size_t	len;
-	int	ret;
+	int		ret;
 	char	c;
 
 	ret = e_success;

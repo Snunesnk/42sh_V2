@@ -22,10 +22,10 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static int		expansion_dispatcher(char *str, int tilde)
+static int	expansion_dispatcher(char *str, int tilde)
 {
-	int	i;
-	int	ref;
+	int		i;
+	int		ref;
 	char	*ptr;
 	char	*closest;
 
@@ -47,9 +47,9 @@ static int		expansion_dispatcher(char *str, int tilde)
 	return (ref);
 }
 
-static char		*get_closest_exp(char *str, int tilde)
+static char	*get_closest_exp(char *str, int tilde)
 {
-	int	i;
+	int		i;
 	char	*ptr;
 	char	*closest;
 
@@ -67,13 +67,13 @@ static char		*get_closest_exp(char *str, int tilde)
 	return (closest);
 }
 
-static int		replace_expansion(char **token, char **next, int ref)
+static int	replace_expansion(char **token, char **next, int ref)
 {
 	size_t	lcontent;
 	char	*new;
 	size_t	lnew;
 	size_t	lprefix;
-	int	ret;
+	int		ret;
 
 	lcontent = 0;
 	ret = e_success;
@@ -96,8 +96,8 @@ static int		replace_expansion(char **token, char **next, int ref)
 
 int			treat_single_exp(char **str, int tilde)
 {
-	int	ref;
-	int	ret;
+	int		ref;
+	int		ret;
 	char	*next;
 
 	next = *str;
