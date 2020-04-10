@@ -6,11 +6,11 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:07:48 by efischer          #+#    #+#             */
-/*   Updated: 2019/10/29 12:57:54 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 14:12:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"vctlib.h"
+#include "vctlib.h"
 
 t_vector	*vct_new(void)
 {

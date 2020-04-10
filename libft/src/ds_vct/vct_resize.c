@@ -6,11 +6,11 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 12:23:20 by efischer          #+#    #+#             */
-/*   Updated: 2019/10/29 15:05:56 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 14:14:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"vctlib.h"
+#include "vctlib.h"
 
 static char	*get_content(t_vector *vct)
 {
@@ -27,7 +27,7 @@ static char	*get_content(t_vector *vct)
 	return (content);
 }
 
-int			vct_resize(t_vector	*vct)
+int			vct_resize(t_vector *vct)
 {
 	char		*content;
 	size_t		len;
