@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/12 10:29:08 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 13:50:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**tab_remove_first_elem(int *ac, char **av)
 	{
 		new_tab = (char**)malloc(sizeof(char*) * *ac);
 		if (new_tab == NULL)
-			return (NULL);						
+			return (NULL);
 		while (i + 1 < *ac)
 		{
 			new_tab[i] = ft_strdup(av[i + 1]);
@@ -67,8 +67,11 @@ int			treat_shell_variables(t_process *p, int	opt)
 	t_list			*elem;
 	char			*name;
 	char			*value;
+	int				i;
 
-	int	i=0;
+	i = 0;
+	if (!p->argv[0])
+		return (0);
 	while (p->argv[i] != NULL)
 	{
 		ft_putendl(p->argv[i]);

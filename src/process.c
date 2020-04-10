@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:07:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:18:52 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int			launch_process(t_process *p, pid_t pgid, int infile,
 	pid_t		pid;
 	int			ret;
 
-	if (!p->argv[0])
-		exit(1);
 	envp = get_env_tab();
 	if (g_shell_is_interactive)
 	{

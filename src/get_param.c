@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:10:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:22:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ static int	parameter_dispacther(char **content, const char *str)
 	return (e_success);
 }
 
-int			getenv_content(char **content, char *str, \
-		const char *closetag)
+int			getenv_content(char **content, char *str, const char *closetag)
 {
 	size_t	len;
 	int		ret;
