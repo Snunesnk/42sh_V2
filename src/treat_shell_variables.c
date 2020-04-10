@@ -6,12 +6,12 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 13:50:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 16:20:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include  "shell.h"
+#include "shell.h"
 
 static char	**tab_remove_first_elem(int *ac, char **av)
 {
@@ -62,7 +62,7 @@ static int	set_shell_var(t_list *elem, char *name, char *value)
 	return (SUCCESS);
 }
 
-int			treat_shell_variables(t_process *p, int	opt)
+int			treat_shell_variables(t_process *p, int opt)
 {
 	t_list			*elem;
 	char			*name;
@@ -74,7 +74,7 @@ int			treat_shell_variables(t_process *p, int	opt)
 		return (0);
 	while (p->argv[i] != NULL)
 	{
-		ft_putendl(p->argv[i]);
+//		ft_putendl(p->argv[i]);
 		i++;
 	}
 	while (p->argv != NULL && (value = ft_strchr(p->argv[0], '=')) != NULL)
