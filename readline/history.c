@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/12 16:46:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 21:21:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	init_history(void)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
 	}
-	while (read(fd, buf, 10000) > 0)
+	int	ret;
+	while ((ret = read(fd, buf, 9999)) > 0)
 		add_hentry(buf, 0);
 	remove_nl();
 	g_hist->nb_line = g_hist->total_lines;
