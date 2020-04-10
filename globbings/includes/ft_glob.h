@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:45:02 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 13:16:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 18:37:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct	s_glob
 # define FT_GLOB_BRACE			0x100
 
 /*
-** TODO: not implemented yet
 ** Expand tilde
 */
 # define FT_GLOB_TILDE			0x200
