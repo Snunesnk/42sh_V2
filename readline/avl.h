@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:27:51 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/09 22:27:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 20:48:13 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ typedef struct	s_node
 	struct s_node	*right;
 	struct s_node	*left;
 	char			*name;
+	char			*color;
 	int				length;
 	int				heigth;
-	int				color;
 	int				nb_node;
 }				t_node;
 
@@ -41,12 +41,13 @@ typedef struct	s_data
 	int	compl_start;
 }				t_data;
 
-t_node			*add_node(t_node *tree, char *name, t_data *data, int color);
+t_node			*add_node(t_node *tree, char *name, t_data *data, char *color);
 void			free_node(t_node *node);
 int				check_balance(t_node *node);
 t_node			*balance(int balanced, t_node *node, t_node *new_node);
 int				max(int a, int b);
 int				heigth(t_node *node);
 int				ft_node_cmp(t_node *tree, t_node *node);
+char			*get_color(char *file);
 
 #endif

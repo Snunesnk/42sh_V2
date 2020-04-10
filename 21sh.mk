@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/09 23:00:40 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/10 20:47:48 by simon            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,6 +143,7 @@ SOURCES :=	main.c \
 		../readline/command_complete.c \
 		../readline/file_complete.c \
 		../readline/print_cmpl_tree.c \
+		../readline/prepare_printing.c \
 		../readline/fill_data.c \
 		../readline/avl_fill.c \
 		../readline/avl_utils.c \

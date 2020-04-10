@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 22:11:57 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/10 20:53:09 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,56 +42,31 @@ int		ask_confirmation(t_data *data)
 
 void	print_compl(t_node *compl_tree, t_data *data)
 {
-	int	to_print;
-	int	line;
+//	t_print_list	list_compl;
+	int				to_print;
+	int				line;
 
+	(void)compl_tree;
 	line = 0;
+//	if (!(list_compl = get_list_compl(data)))
+//		return ;
 	to_print = data->first_print;
-	ft_putstr("\n");
 	while (data->first_print + line < data->last_print + 1)
 	{
-		if (to_print)
-			print_tree(compl_tree, data, to_print);
+//		if (to_print)
+//			list_compl = add_compl(list_compl, to_print);
 		to_print += data->nb_line;
 		if (to_print > data->nb_exec)
 		{
 			line++;
 			to_print = data->first_print + line;
-			if (data->first_print + line < data->last_print + 1)
-				ft_putstr("\n");
+//			if (data->first_print + line < data->last_print + 1)
+//				ft_strcat(list_compl, "\n");
 		}
 	}
 	ft_putstr(g_termcaps.cd);
 	ft_putstr(tgoto(g_termcaps.gup, 0, line));
 	update_line();
-}
-
-void	print_tree(t_node *compl_tree, t_data *data, int to_print)
-{
-	int	len;
-
-	if (!compl_tree)
-		return ;
-	if (compl_tree->left && to_print < compl_tree->nb_node)
-		print_tree(compl_tree->left, data, to_print);
-	if (to_print == compl_tree->nb_node)
-	{
-		if (to_print == data->chosen_exec)
-			ft_printf("\033[47m\033[30m%s", compl_tree->name);
-		else
-			ft_printf("%s", compl_tree->name);
-		len = data->name_l - compl_tree->length - 2;
-		while (len > 0)
-		{
-			write(STDOUT_FILENO, SPACES, len);
-			len -= 60;
-		}
-		if (to_print == data->chosen_exec)
-			ft_putstr("\033[0m");
-		ft_putstr("  ");
-	}
-	if (compl_tree->right && to_print > compl_tree->nb_node)
-		print_tree(compl_tree->right, data, to_print);
 }
 
 int		is_compl_char(union u_buffer c)
