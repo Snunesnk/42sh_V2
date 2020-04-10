@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:40:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 20:30:10 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_node	*place_node(t_node *tree, t_node *new_node, t_data *data)
 	return (tree);
 }
 
-t_node	*add_node(t_node *tree, char *name, t_data *data, int color)
+t_node	*add_node(t_node *tree, char *name, t_data *data, char *color)
 {
 	t_node		*node;
 
@@ -78,7 +78,7 @@ t_node	*add_node(t_node *tree, char *name, t_data *data, int color)
 	node->left = NULL;
 	node->heigth = 1;
 	node->length = ft_str_wchar_len(node->name);
-	node->color = color;
+	node->color = ft_strdup(color);
 	update_l(node, data);
 	tree = place_node(tree, node, data);
 	return (tree);

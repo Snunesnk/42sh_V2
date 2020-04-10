@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 18:39:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 20:35:48 by simon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_node	*search_in_path(char *to_complete, char *path, t_node *compl_tree, \
 	{
 		if (is_exec(gl.gl_pathv[i]) && gl.gl_pathv[i][0])
 			compl_tree = add_node(compl_tree, get_filename(gl.gl_pathv[i]), \
-					data, 1);
+					data, "\033[37m");
 		i++;
 	}
 	ft_globfree(&gl);
@@ -110,7 +110,7 @@ t_node	*get_cmd_compl(char *to_complete, char *path, t_data *data)
 	{
 		if (ft_strnequ(to_complete, g_builtins[i].key, len))
 			compl_tree = add_node(compl_tree, (char *)g_builtins[i].key, data, \
-					8);
+					"\033[37m");
 		i++;
 	}
 	return (compl_tree);
