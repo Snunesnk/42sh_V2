@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 14:49:30 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/10 16:03:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int			cmd_jobs(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	job_number = 0;
-	j = first_job;
+	j = g_first_job;
 	update_status();
 	while (j->next)
 	{

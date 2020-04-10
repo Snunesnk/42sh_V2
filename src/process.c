@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 19:43:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:07:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,14 @@ int			launch_process(t_process *p, pid_t pgid, int infile,
 	if (!p->argv[0])
 		exit(1);
 	envp = get_env_tab();
-	if (shell_is_interactive)
+	if (g_shell_is_interactive)
 	{
 		pid = getpid();
 		if (pgid == 0)
 			pgid = pid;
 		setpgid(pid, pgid);
 		if (!g_subshell && foreground)
-			tcsetpgrp(shell_terminal, pgid);
+			tcsetpgrp(g_shell_terminal, pgid);
 		restore_procmask();
 	}
 	p->infile = infile;

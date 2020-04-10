@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 11:23:35 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 16:07:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 			if (jlast)
 				jlast->next = jnext;
 			else
-				first_job = jnext;
+				g_first_job = jnext;
 			free_job(j);
 		}
 		else if (job_is_stopped(j) && !j->notified)

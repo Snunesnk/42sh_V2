@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:36:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:00:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	get_new_str(char **str, char **content, char *rest)
 
 	lrest = ft_strlen(rest);
 	lcontent = ft_strlen(*content);
-	if (!(new = (char*)ft_memalloc(sizeof(char) * (lrest + *lcontent + 1))))
+	if (!(new = (char*)ft_memalloc(sizeof(char) * (lrest + lcontent + 1))))
 	{
 		ft_memdel((void**)&content);
 		return (e_cannot_allocate_memory);
