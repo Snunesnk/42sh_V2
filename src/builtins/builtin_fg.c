@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 09:39:35 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/10 16:04:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_job	*find_lastbackgrounded(void)
 {
 	t_job	*j;
 
-	j = first_job;
+	j = g_first_job;
 	while (j && j->next)
 	{
 		j = j->next;

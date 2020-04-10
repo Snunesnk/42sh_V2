@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:14:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:05:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ void	free_job(t_job *j)
 	t_job	*j_next;
 	t_job	*tmp;
 
-	if (j == first_job)
+	if (j == g_first_job)
 	{
 		free_all_processes(j->first_process);
 		free(j);
-		first_job = NULL;
+		g_first_job = NULL;
 	}
 	else
 	{
-		j_next = first_job;
+		j_next = g_first_job;
 		while (j_next && j_next->next)
 		{
 			if (j_next->next->pgid == j->pgid)
@@ -109,7 +109,7 @@ int		launch_job(t_job *j, int foreground)
 			else
 			{
 				p->pid = pid;
-				if (shell_is_interactive)
+				if (g_shell_is_interactive)
 				{
 					if (!j->pgid)
 						j->pgid = pid;
@@ -125,7 +125,7 @@ int		launch_job(t_job *j, int foreground)
 		infile = mypipe[0];
 		p = p->next;
 	}
-	if (!shell_is_interactive)
+	if (!g_shell_is_interactive)
 		wait_for_job(j);
 	else if (g_subshell)
 		wait_for_job(j);

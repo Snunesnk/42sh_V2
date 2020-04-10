@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   job_control.c                                      :+:      :+:    :+:   */
+/*   job_bookeeping.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 18:47:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 16:02:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ void	add_job_to_queue(t_job *j)
 {
 	t_job	*j_next;
 
-	if (first_job)
+	if (g_first_job)
 	{
-		j_next = first_job;
+		j_next = g_first_job;
 		while (j_next->next)
 			j_next = j_next->next;
 		j_next->next = j;
 	}
 	else
-		first_job = j;
+		g_first_job = j;
 }

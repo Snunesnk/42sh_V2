@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 11:16:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/10 16:06:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			mark_process_status(pid_t pid, int status)
 
 	if (pid > 0)
 	{
-		j = first_job;
+		j = g_first_job;
 		while (j)
 		{
 			p = j->first_process;

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:06:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:06:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ t_job	*g_first_job = NULL;
 
 void	put_job_in_foreground(t_job *j, int cont)
 {
-	tcsetpgrp(shell_terminal, j->pgid);
+	tcsetpgrp(g_shell_terminal, j->pgid);
 	if (cont)
 	{
-		tcsetattr(shell_terminal, TCSADRAIN, &j->tmodes);
+		tcsetattr(g_shell_terminal, TCSADRAIN, &j->tmodes);
 		if (kill(-j->pgid, SIGCONT) < 0)
 			ft_perror("kill failed sending (SIGCONT)");
 	}
 	wait_for_job(j);
-	tcsetpgrp(shell_terminal, shell_pgid);
-	tcgetattr(shell_terminal, &j->tmodes);
-	tcsetattr(shell_terminal, TCSADRAIN, &shell_tmodes);
+	tcsetpgrp(g_shell_terminal, g_shell_pgid);
+	tcgetattr(g_shell_terminal, &j->tmodes);
+	tcsetattr(g_shell_terminal, TCSADRAIN, &shell_tmodes);
 }
 
 void	put_job_in_background(t_job *j, int cont)

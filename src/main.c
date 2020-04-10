@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 15:10:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/10 16:09:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_readline.h"
 #include "builtins.h"
 
-extern char	**g_environ;
+extern char	**environ;
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
 t_list		*g_alias;
@@ -62,7 +62,7 @@ int			exec_input(char *input)
 	astdel(&ast);
 	ft_strdel(&input);
 	g_retval = status;
-	do_job_notification(first_job, NULL, NULL);
+	do_job_notification(g_first_job, NULL, NULL);
 	return (status);
 }
 
@@ -76,18 +76,18 @@ int			main(int argc, char **argv)
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
-	if (!(g_environ = ft_tabcpy(g_environ)))
+	if (!(environ = ft_tabcpy(environ)))
 	{
 		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
 		return (1);
 	}
 	init_hash_table();
-	get_env_list(g_environ);
+	get_env_list(environ);
 	g_retval = e_success;
 	if ((g_retval = set_minimal_env()))
 	{
 		psherror(g_retval, argv[0], e_cmd_type);
-		ft_tabdel(&g_environ);
+		ft_tabdel(&environ);
 		return (1);
 	}
 	while (21)
@@ -106,7 +106,7 @@ int			main(int argc, char **argv)
 		test_hash_path();
 	}
 	free_hash_table();
-	ft_tabdel(&g_environ);
+	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 	return (status);
 }
