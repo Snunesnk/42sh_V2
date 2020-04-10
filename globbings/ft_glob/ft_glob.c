@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_glob.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:33 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:36:27 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_utils.h"
 #include "ft_glob_internal.h"
 #include "ft_fnmatch.h"
 
-static int	set_fnmflags(int flags)
+static int		set_fnmflags(int flags)
 {
 	int	fnmflags;
 
@@ -38,7 +50,7 @@ static t_list	*exec_patterns(t_list **pattern_list, t_glob_internal *gl)
 	return (match);
 }
 
-void		ft_globfree(t_glob *pglob)
+void			ft_globfree(t_glob *pglob)
 {
 	size_t	i;
 
@@ -53,13 +65,12 @@ void		ft_globfree(t_glob *pglob)
 ** TODO: Think about a clean way to handle memory allocations
 */
 
-int		ft_glob(const char *pattern, int flags,
-			int (*errfunc)(const char *epath, int eerrno),
-			t_glob *pglob)
+int				ft_glob(const char *pattern, int flags,\
+		int (*errfunc)(const char *epath, int eerrno), t_glob *pglob)
 {
 	t_glob_internal	gl;
-	t_list		*match;
-	t_list		*pattern_list;
+	t_list			*match;
+	t_list			*pattern_list;
 
 	gl.errf = errfunc;
 	gl.flags = flags;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_glob_internal.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:46 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:34:36 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_internal.h"
 
 void		*check_mem(t_glob_internal *gl, void *mem)
@@ -11,8 +23,8 @@ t_list		*ft_glob_internal(t_glob_internal *gl, const char *pattern,
 				const char *path)
 {
 	enum e_pathtype	type;
-	t_list		*match;
-	const char	*cur_pattern;
+	t_list			*match;
+	const char		*cur_pattern;
 
 	match = NULL;
 	cur_pattern = NULL;

@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 12:43:57 by yforeau           #+#    #+#             */
-/*   Updated: 2020/02/23 15:35:27 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/10 13:26:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int		set_flags(char pattern, char string, t_flags *flags)
 	return (flags->cur);
 }
 
-int		ft_fnmatch_internal(const char *pattern, const char *string,
+int		ft_fnmatch_internal(const char *pattern, const char *string, \
 			t_flags flags)
 {
-	int					match;
+	int	match;
 
 	match = 1;
 	while (*pattern && match > 0)

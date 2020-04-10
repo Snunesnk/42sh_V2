@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_glob_utils.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 13:23:31 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 13:23:37 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FT_GLOB_UTILS_H
 # define FT_GLOB_UTILS_H
 
@@ -8,7 +20,7 @@ t_list	*ft_lst_at(t_list *lst, unsigned int nbr);
 void	ft_lst_merge(t_list **lst1, t_list *lst2);
 t_list	*ft_lst_pop(t_list **lst, unsigned int pop);
 void	ft_lst_quicksort(t_list *lst, int len, int (*cmp)(void *, void *));
-int	ft_lst_size(t_list *lst);
+int		ft_lst_size(t_list *lst);
 void	ft_swap_p(uintptr_t *p1, uintptr_t *p2);
 
 #endif

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   match.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 13:26:00 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 13:26:09 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_utils.h"
 #include "ft_fnmatch.h"
 #include "ft_fnmatch_internal.h"
@@ -6,7 +18,6 @@ int		explicit_match(char string, t_flags *flags)
 {
 	return ((string == '/' && (flags->cur & FT_FNM_PATHNAME))
 		|| (string == '.' && (flags->cur & FT_IFNM_LEADING_PERIOD)));
-
 }
 
 int		match_qmark(const char **pattern, const char **string,

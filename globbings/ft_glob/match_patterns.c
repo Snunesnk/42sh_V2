@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   match_patterns.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/10 12:33:53 by snunes            #+#    #+#             */
+/*   Updated: 2020/04/10 12:35:29 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_glob_utils.h"
 #include "ft_glob_internal.h"
 #include "ft_fnmatch.h"
@@ -49,9 +61,9 @@ t_list		*find_file(const char *path, const char *cur_pattern,
 t_list		*match_files(const char *path, const char *cur_pattern,
 			int last, t_glob_internal *gl)
 {
-	t_list		*match;
-	DIR		*dirp;
-	t_file_data	fid;
+	t_list			*match;
+	DIR				*dirp;
+	t_file_data		fid;
 	struct dirent	*fp;
 
 	match = NULL;
