@@ -5,9 +5,10 @@ ToDo:
 
 Antoine:
 - 21sh Parser fixes
-- 42sh Arithmetic Expansions
+- 21sh Shell variables and var assignements.
+- 42sh Arithmetic Expansions (optional).
 
 Simon:
-- 21sh Shell variables, export, set, unset and var assignements.
+- 21sh builtins export, set and unset.
 - 21sh Norme everything.
-- 42sh Perform tilde expansion with globbings.
+- 42sh Perform tilde expansion with globbings. => DONE
