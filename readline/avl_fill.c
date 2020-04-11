@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 20:30:10 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/11 21:37:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,18 @@ int		ft_node_cmp(t_node *tree, t_node *node)
 void	update_l(t_node *node, t_data *data)
 {
 	struct winsize	size;
+	size_t			len;
 
+	len = ft_strlen(node->name);
 	ioctl(0, TIOCGWINSZ, &size);
 	data->column = size.ws_col;
 	data->row = size.ws_row;
-	if (ft_strlen(node->name) + 2 > (size_t)data->name_l)
+	if (len > (size_t)data->column)
+	{
+		data->overflow += len / data->column;
+		return ;
+	}
+	if (len + 2 > (size_t)data->name_l)
 		data->name_l = ft_strlen(node->name) + 2;
 }
 

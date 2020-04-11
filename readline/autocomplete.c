@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 23:00:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 20:49:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	autocomplete(void)
 	char	*to_complete;
 	int		i;
 
+	if (g_line.len == 0 || ft_str_isspace(g_line.line))
+		return ;
 	g_autocompl_on = 1;
 	i = g_dis.cbpos - 1;
 	while (i >= 0 && !ft_isspace(g_line.line[i]))
