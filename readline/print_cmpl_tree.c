@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 22:58:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 15:58:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,10 @@ void	print_compl(t_node *compl_tree, t_data *data)
 				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
-//	ft_printf("%s", list_compl.content);
+	ft_printf("%s%s", list_compl.content, g_termcaps.cd);
 	free(list_compl.content);
-//	ft_putstr(g_termcaps.cd);
-//	ft_putstr(tgoto(g_termcaps.gup, 0, line));
-//	update_line();
+	ft_putstr(tgoto(g_termcaps.gup, 0, line));
+	update_line();
 }
 
 int		is_compl_char(union u_buffer c)
