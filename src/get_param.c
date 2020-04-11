@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:22:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 16:13:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,16 @@ static char	*get_retval(const char *str)
 static char	*get_content(const char *str)
 {
 	char	*content;
+	char	*name;
+	t_list	*elem;
 	char	*cpy;
 
-	content = ft_getenv(str);
+	content = NULL;
+	name = ft_strdup(str);
+	elem = get_shell_var(name, g_env);
+	free(name);
+	if (elem)
+		content = ((t_shell_var*)(elem->content))->value;
 	if (content)
 		cpy = ft_strdup(content);
 	else
