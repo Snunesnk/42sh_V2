@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/10 20:47:48 by simon            ###   ########.fr        #
+#    Updated: 2020/04/11 21:56:35 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -138,6 +138,7 @@ SOURCES :=	main.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
 		../readline/autocomplete.c \
+		../readline/autocompl_color.c \
 		../readline/insert_compl.c \
 		../readline/fill_data_util.c \
 		../readline/command_complete.c \

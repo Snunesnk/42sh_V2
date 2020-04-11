@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/11 16:10:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 21:51:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ t_node			*get_file_compl(char *to_complete, t_data *data);
 t_data			*init_data(void);
 t_data			*fill_data(t_data *data, t_node *compl_tree);
 void			print_tree(t_node *compl_tree, t_data *data, int to_print);
-void			print_compl(t_node *compl_tree, t_data *data);
 void			update_exec(union u_buffer c, t_data *data);
 void			display_compl(t_node *compl_tree, t_data *data);
 int				calc_left_arrow(t_data *data);

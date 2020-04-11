@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 15:58:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 21:51:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int				g_autocompl_query = -1;
 union u_buffer	g_autocompl_bad_seq;
 
-int		ask_confirmation(t_data *data)
+static int	ask_confirmation(t_data *data)
 {
 	char	c;
 
@@ -40,7 +40,13 @@ int		ask_confirmation(t_data *data)
 	return (0);
 }
 
-void	print_compl(t_node *compl_tree, t_data *data)
+static void	restore_line(t_data *data, int line)
+{
+	ft_putstr(tgoto(g_termcaps.gup, 0, line + data->overflow));
+	update_line();
+}
+
+static void	print_compl(t_node *compl_tree, t_data *data)
 {
 	t_print_list	list_compl;
 	int				to_print;
@@ -49,6 +55,7 @@ void	print_compl(t_node *compl_tree, t_data *data)
 	line = 0;
 	if (!(get_list_compl(&list_compl, data)))
 		return ;
+	ft_putstr(g_termcaps.cd);
 	to_print = data->first_print;
 	while (data->first_print + line < data->last_print + 1)
 	{
@@ -65,11 +72,10 @@ void	print_compl(t_node *compl_tree, t_data *data)
 	}
 	ft_printf("%s%s", list_compl.content, g_termcaps.cd);
 	free(list_compl.content);
-	ft_putstr(tgoto(g_termcaps.gup, 0, line));
-	update_line();
+	restore_line(data, line);
 }
 
-int		is_compl_char(union u_buffer c)
+static int	is_compl_char(union u_buffer c)
 {
 	if (c.value == 10000)
 		return (-1);
@@ -85,7 +91,7 @@ int		is_compl_char(union u_buffer c)
 	return (0);
 }
 
-void	display_compl(t_node *compl_tree, t_data *data)
+void		display_compl(t_node *compl_tree, t_data *data)
 {
 	union u_buffer	c;
 
@@ -97,8 +103,8 @@ void	display_compl(t_node *compl_tree, t_data *data)
 		return ;
 	while (is_compl_char(c) && data->nb_exec > 1)
 	{
-		print_compl(compl_tree, data);
 		insert_compl(compl_tree, data);
+		print_compl(compl_tree, data);
 		c = read_key();
 		update_exec(c, data);
 		fill_data(data, compl_tree);
@@ -107,7 +113,7 @@ void	display_compl(t_node *compl_tree, t_data *data)
 		insert_compl(compl_tree, data);
 	else if (!enter_rc(c))
 		g_autocompl_bad_seq = c;
-	if (!enter_rc(c) && c.value != ' ')
+	if (!enter_rc(c) && c.value != ' ' && g_line.line[g_dis.cbpos - 1] != '/')
 		insert_text(" ", 1);
 	ft_putstr(g_termcaps.cd);
 	update_line();

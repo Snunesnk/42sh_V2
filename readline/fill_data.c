@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 23:06:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 21:34:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ t_data		*init_data(void)
 	new_data->last_print = 0;
 	new_data->nb_exec = 0;
 	new_data->compl_start = 0;
+	new_data->overflow = 0;
 	return (new_data);
 }
 
@@ -102,6 +103,11 @@ t_data		*fill_data(t_data *data, t_node *compl_tree)
 		data->nb_line = data->nb_exec / data->name_p_line;
 	if (data->nb_line * data->name_p_line != data->nb_exec)
 		data->nb_line += 1;
+	if (data->name_l > data->column)
+	{
+		data->nb_line = data->nb_exec;
+		data->name_p_line = 1;
+	}
 	get_exec_lim(data);
 	return (data);
 }
