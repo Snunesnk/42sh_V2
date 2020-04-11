@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:40:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/11 16:10:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	insert_compl(t_node *compl_tree, t_data *data)
 			compl_tree = compl_tree->left;
 	}
 	compl = compl_tree->name;
-	len = ft_strlen(compl);
+	len = ft_str_wchar_len(compl);
 	while (g_dis.cbpos > data->compl_start)
 		rl_backspace();
 	insert_text(compl, len);

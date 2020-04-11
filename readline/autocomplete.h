@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 22:53:00 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/11 16:10:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ t_print_list	*get_list_compl(t_print_list *list_compl, t_data *data);
 t_print_list	add_compl(t_print_list list_compl, int to_print, \
 		t_data *data, t_node *compl_tree);
 t_print_list	list_compl_add(t_print_list list_compl, char *to_add);
+int				is_exec(char *file);
+size_t			ft_str_wchar_len(char *str);
 
 #endif
