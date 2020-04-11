@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 16:26:07 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/11 20:52:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int			exec_input(char *input)
 	if (launch_lexer_parser(input, &ast) == SUCCESS)
 	{
 	//	debug_ast(ast);
-	//	expansions(ast);
-		status = execute_node(ast, 1); /* to capture */
+		status = execute_node(ast, 1);
 	}
 	astdel(&ast);
 	ft_strdel(&input);
