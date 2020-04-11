@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 11:06:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 13:29:29 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/11 20:52:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int			launch_lexer_parser(char *input, t_ast **ast)
 	ret = lexer(input, &lst);
 	if (ret == SUCCESS)
 	{
-		ret = parser(lst);
+		debug(lst);
+		ret = parser(lst); /* Bug comes from parser */
 		if (ret == SUCCESS)
 			ret = build_ast(ast, lst);
 	}
