@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 21:37:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/11 23:26:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ t_node	*add_node(t_node *tree, char *name, t_data *data, char *color)
 		return (NULL);
 	if (!(node->name = extract_file_name(name)))
 		return (NULL);
+	if (!(node->color = ft_strdup(color)))
+		return (NULL);
 	node->right = NULL;
 	node->left = NULL;
 	node->heigth = 1;
 	node->length = ft_str_wchar_len(node->name);
-	node->color = ft_strdup(color);
 	update_l(node, data);
 	tree = place_node(tree, node, data);
 	return (tree);
