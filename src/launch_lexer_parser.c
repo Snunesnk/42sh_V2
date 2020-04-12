@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 11:06:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/11 20:52:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 15:01:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ static void	init_token_tab(char **token_tab)
 int			launch_lexer_parser(char *input, t_ast **ast)
 {
 	t_list	*lst;
-	int		ret;
 
 	lst = NULL;
 	init_token_tab(g_grammar);
-	ret = lexer(input, &lst);
-	if (ret == SUCCESS)
-	{
-		debug(lst);
-		ret = parser(lst); /* Bug comes from parser */
-		if (ret == SUCCESS)
-			ret = build_ast(ast, lst);
-	}
-	return (ret);
+	if (!lexer(input, &lst))
+		if (!parser(lst))
+			return (build_ast(ast, lst)); /* Here the bug comes from */
+	return (FAILURE);
 }
