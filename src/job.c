@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:22:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 23:42:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ int		launch_job(t_job *j, int foreground)
 						j->pgid = pid;
 					setpgid(pid, j->pgid);
 				}
-				add_name_hash_table(p->argv[0], 1);
+				if (g_hashall)
+					add_name_hash_table(p->argv[0], 1);
 			}
 		}
 		if (infile != j->stdin)
