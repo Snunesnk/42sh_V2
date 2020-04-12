@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 12:05:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 12:25:38 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/12 20:03:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,8 @@ static void		get_token_word(const char *str, t_token *token, size_t *len)
 	tmp = NULL;
 	while (str[*len] != '\0' && ft_isblank(str[*len]) == FALSE
 		&& ft_ismeta(str[*len]) == FALSE && str[*len] != '\n')
-	{
-		if (str[*len] == '"')
-		{
-			(*len)++;
-			while (str[*len] != '\0' && str[*len] != '"')
-			{
-				if (str[*len] == '\\' && str[(*len) + 1] == '"')
-					(*len)++;
-				(*len)++;
-			}
-		}
 		if (str[*len] != '\0')
 			(*len)++;
-	}
 	tmp = ft_strndup(str, *len);
 	token->value = ft_strdup(tmp);
 	token->type = WORD;
