@@ -6,11 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/09 23:25:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 23:39:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include "builtins.h"
 
 char	g_hist_word_delim[] = " \t\n;&()|<>";
 int		g_pattern_length;
@@ -19,6 +20,8 @@ char	*hist_expanse(char *value)
 {
 	char	*hist_entry;
 
+	if (!g_histexpand)
+		return (value);
 	hist_entry = value;
 	hist_entry = do_hist_exp(&value, hist_entry);
 	if (!hist_entry || !value)

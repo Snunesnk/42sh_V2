@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/11 20:52:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 23:48:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ int			main(int argc, char **argv)
 {
 	char			*input;
 	volatile int	status;
+	int				stop;
 
+	stop = 0;
 	(void)argc;
 	status = 0;
 	g_progname = argv[0];
@@ -89,8 +91,10 @@ int			main(int argc, char **argv)
 		ft_tabdel(&environ);
 		return (1);
 	}
-	while (21)
+	while (stop == 0)
 	{
+		if (g_onecmd)
+			stop = 1;
 		if (!g_pending_cmd && !(input = ft_readline("21sh$ ")))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");

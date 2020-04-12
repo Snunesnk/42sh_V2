@@ -6,11 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/12 12:06:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 23:40:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include "builtins.h"
 
 int	g_hist_lookup = 0;
 
@@ -107,8 +108,10 @@ char		*ft_readline(const char *prompt)
 			free(compl);
 			input = new;
 		}
-		if (input && input[0] && (input = hist_expanse(input)))
+		if (input && input[0] && g_history && (input = hist_expanse(input)))
 			add_hentry(input, 1);
 	}
+	if (g_verbose)
+		ft_printf("%s\n", input);
 	return (input);
 }
