@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 11:06:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 13:56:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 14:09:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int			launch_lexer_parser(char *input, t_ast **ast)
 
 	lst = NULL;
 	init_token_tab(g_grammar);
-	if (lexer(input, &lst) == SUCCESS)
-		if (parser(lst) == SUCCESS)
+	if (!lexer(input, &lst))
+		if (!parser(lst))
 			return (build_ast(ast, lst));
 	return (FAILURE);
 }
