@@ -6,36 +6,35 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 21:51:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 12:05:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-int				g_autocompl_query = -1;
 union u_buffer	g_autocompl_bad_seq;
 
 static int	ask_confirmation(t_data *data)
 {
-	char	c;
+	union u_buffer	c;
 
-	c = 'a';
+	c.value = 'a';
 	ft_printf("\nDisplay all %d possibilities ? (y or n)", data->nb_exec);
-	while (ft_isprint(c) || ft_isspace(c))
+	while (ft_isprint(c.value) || ft_isspace(c.value))
 	{
-		read(STDIN_FILENO, &c, 1);
-		if (c == 'y' || c == 'Y' || c == ' ')
+		c = read_key();
+		if (c.value == 'y' || c.value == 'Y' || c.value == ' ')
 		{
 			ft_putchar('\n');
 			return (1);
 		}
-		if (c == 'n' || c == 'N')
+		if (c.value == 'n' || c.value == 'N')
 		{
 			update_line();
 			return (0);
 		}
 	}
-	g_autocompl_query = c;
+	g_autocompl_bad_seq = c;
 	update_line();
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 23:28:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 12:06:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,7 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 	{
 		if (g_input_break)
 			return (g_vim_mode ? vim_insert() : rl_void());
-		if (g_autocompl_query != -1)
-		{
-			c.value = g_autocompl_query;
-			g_autocompl_query = -1;
-		}
-		else if (g_autocompl_bad_seq.value)
+		if (g_autocompl_bad_seq.value != 0)
 		{
 			c = g_autocompl_bad_seq;
 			g_autocompl_bad_seq.value = 0;

@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/11 22:00:52 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/12 22:43:52 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,6 +98,7 @@ SOURCES :=	main.c \
 		builtins/builtin_unsetenv.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
+		builtins/builtin_set_utils.c \
 		builtins/builtin_unset.c \
 		builtins/builtin_alias.c \
 		builtins/builtin_unalias.c \

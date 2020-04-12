@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/12 17:52:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/12 23:24:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,34 @@
 # define FC_R_OPTION 8
 # define FC_S_OPTION 16
 # define FC_E_OPTION 32
+
+/*
+** Set struct containing suported values
+*/
+typedef struct	s_o_options
+{
+	char	*name;
+	int		value;
+	_Bool	*variable;
+
+}				t_o_options;
+
+/*
+** Set variables
+*/
+extern _Bool	g_hashall;
+extern _Bool	g_history;
+extern _Bool	g_histexpand;
+extern _Bool	g_onecmd;
+extern _Bool	g_verbose;
+extern _Bool	g_emacs;
+extern _Bool	g_vim;
+int				g_jump_arg;
+
+/*
+** Set function to change binding mode
+*/
+void			change_binding(t_o_options **option_list, char *name);
 
 struct			s_cd
 {
