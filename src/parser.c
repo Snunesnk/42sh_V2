@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 18:14:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 18:18:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,14 @@ static void			parse_error(int ret, enum e_token curr_type,
 
 void    init_tab(char **token_tab); /* for debug pupose */
 
-void	print_a_node(int type)
+void	print_a_node(int type, int typenext)
 // for debug purpose
 {
 	static char     *token_tab[NB_TOKEN];
 
 	init_tab(token_tab);
-	ft_printf(">>> %s \n", token_tab[type]);
+	ft_printf("|%s ->", token_tab[type]);
+	ft_printf(" %s|\n", token_tab[typenext]);
 }
 
 int					parser(t_list *lst)
@@ -109,18 +110,16 @@ int					parser(t_list *lst)
 	int					ret;
 
 	ret = SUCCESS;
-//	debug(lst);
 	if (enum_tab == NULL)
 		enum_tab = init_enum_tab();
 	while (lst->next != NULL)
 	{
 		prev_type = ((t_token*)(lst->content))->type;
-		print_a_node(prev_type);
 		curr_type = ((t_token*)(lst->next->content))->type;
+		print_a_node(prev_type, curr_type); /* DEBUG PAIRS OF TOKENS */
 		ret = check_next_token(curr_type, enum_tab[prev_type]);
 		if (ret == FAILURE && curr_type == NEWLINE)
 		{
-			ft_printf("\n\nH\n\n");
 			ret = subprompt(lst, enum_tab[prev_type]);
 			curr_type = ((t_token*)(lst->next->content))->type;
 			continue ;
