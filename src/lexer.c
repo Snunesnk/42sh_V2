@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 12:00:00 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/12 14:14:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,21 @@
 static int	add_token_to_list(t_token *token, t_list **lst)
 {
 	t_list	*new;
-	int		ret;
 
-	ret = SUCCESS;
 	new = ft_lstnew(token, sizeof(*token));
-	if (new == NULL)
-		ret = FAILURE;
+	if (!new)
+		return (FAILURE);
 	ft_lstaddend(lst, new);
-	return (ret);
+	return (SUCCESS);
 }
 
 static int	border_token_list(t_list **lst, enum e_token token_type)
 {
 	t_token	token;
-	int		ret;
 
 	ft_bzero(&token, sizeof(token));
 	token.type = token_type;
-	ret = add_token_to_list(&token, lst);
-	return (ret);
+	return (add_token_to_list(&token, lst));
 }
 
 static int	get_token_list(char *input, t_list **lst)
@@ -63,24 +59,16 @@ static int	get_token_list(char *input, t_list **lst)
 
 int			lexer(char *input, t_list **lst)
 {
-	int				ret;
-
-	ret = SUCCESS;
-	if (input == NULL)
+	if (!input)
 		return (FAILURE);
 	while (ft_isblank(*input) == TRUE)
-		input++;
+		++input;
 	input = ft_strjoin(input, "\n");
-	if (*input != '\0')
-	{
-		ret = border_token_list(lst, START);
-		if (ret == SUCCESS)
+	if (*input && !border_token_list(lst, START))
+		if (!get_token_list(input, lst))
 		{
-			ret = get_token_list(input, lst);
-			if (ret == SUCCESS)
-				ret = border_token_list(lst, END);
+			ft_strdel(&input);
+			return (border_token_list(lst, END));
 		}
-	}
-	ft_strdel(&input);
-	return (ret);
+	return (FAILURE);
 }
