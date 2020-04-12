@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 11:06:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 14:09:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 15:01:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int			launch_lexer_parser(char *input, t_ast **ast)
 	init_token_tab(g_grammar);
 	if (!lexer(input, &lst))
 		if (!parser(lst))
-			return (build_ast(ast, lst));
+			return (build_ast(ast, lst)); /* Here the bug comes from */
 	return (FAILURE);
 }
