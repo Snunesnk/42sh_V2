@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 13:18:01 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 19:39:03 by abarthel         ###   ########.fr       */
+/*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/13 12:27:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ int								initialize_prompt_fd(void);
 int								launch_lexer_parser(char *input, t_ast **ast);
 int								lexer(char *str, t_list **lst);
 int								new_node_ast(t_ast **ast, t_list *head, \
-		t_list **lst, enum e_token type);
+		t_list **lst, int type);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
