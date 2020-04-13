@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:41:14 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 14:49:47 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/13 12:27:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 }
 
 int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
-					enum e_token type)
+					int type)
 {
 	t_ast	*new_ast;
 	t_list	*tmp;
