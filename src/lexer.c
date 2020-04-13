@@ -33,7 +33,7 @@ static int	border_token_list(t_list **lst, enum e_token token_type)
 	return (add_token_to_list(&token, lst));
 }
 
-static int	get_token_list(char *input, t_list **lst)
+int		get_token_list(char *input, t_list **lst)
 {
 	size_t			pos;
 	t_token			token;
@@ -59,16 +59,20 @@ static int	get_token_list(char *input, t_list **lst)
 
 int			lexer(char *input, t_list **lst)
 {
+	int	ret;
+
+	ret = FAILURE;
 	if (!input)
-		return (FAILURE);
+		return (ret);
 	while (ft_isblank(*input) == TRUE)
 		++input;
 	input = ft_strjoin(input, "\n");
-	if (*input && !border_token_list(lst, START))
-		if (!get_token_list(input, lst))
+	if (*input && !(ret = border_token_list(lst, START)))
+		if (!(ret = get_token_list(input, lst)))
 		{
-			ft_strdel(&input);
-			return (border_token_list(lst, END));
+			if (!(ret = border_token_list(lst, END)))
+				ret = check_alias(lst, TRUE);
 		}
-	return (FAILURE);
+	ft_strdel(&input);
+	return (ret);
 }

@@ -338,6 +338,8 @@ enum e_token					**init_enum_tab(void);
 int								initialize_prompt_fd(void);
 int								launch_lexer_parser(char *input, t_ast **ast);
 int								lexer(char *str, t_list **lst);
+int								get_token_list(char *input, t_list **lst);
+int								check_alias(t_list **lst, int check);
 int								new_node_ast(t_ast **ast, t_list *head, \
 		t_list **lst, int type);
 int								only_assignments(t_process *p);
