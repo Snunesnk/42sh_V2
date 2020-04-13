@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 17:22:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/13 11:16:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int				build_ast(t_ast **ast, t_list *lst)
 	t_list			*tmp;
 	enum e_token	type;
 
-//	debug(lst);
-//	write(1,"\n\n", 2);
 	head = remove_border(&lst);
-//	debug(lst);
 	tmp = lst;
 	while (head != NULL)
 	{

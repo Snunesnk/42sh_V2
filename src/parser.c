@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 20:17:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/13 10:16:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int					parser(t_list *lst)
 	{
 		prev_type = ((t_token*)(lst->content))->type;
 		curr_type = ((t_token*)(lst->next->content))->type;
-		print_a_node(prev_type, curr_type); /* DEBUG PAIRS OF TOKENS */
+	//	print_a_node(prev_type, curr_type); /* DEBUG PAIRS OF TOKENS */
 		ret = check_next_token(curr_type, enum_tab[prev_type]);
 		if (ret == FAILURE && curr_type == NEWLINE)
 		{
