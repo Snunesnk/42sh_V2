@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 19:16:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/12 20:17:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ int					parser(t_list *lst)
 	enum e_token		prev_type;
 	int					ret;
 
-	debug(lst);
 	ret = SUCCESS;
 	if (enum_tab == NULL)
 		enum_tab = init_enum_tab();
