@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 11:16:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/13 12:23:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,19 @@ static t_list	*remove_border(t_list **lst)
 
 int				build_ast(t_ast **ast, t_list *lst)
 {
-	t_list			*head;
-	t_list			*tmp;
-	enum e_token	type;
+	t_list	*head;
+	t_list	*tmp;
+	int		type;
 
 	head = remove_border(&lst);
 	tmp = lst;
-	while (head != NULL)
+	while (head)
 	{
-		type = (lst == NULL) ? END : ((t_token*)(lst->content))->type;
-		if (type == END || type == AND || type == AND_IF || type == OR_IF
-			|| type == SEMI)
+		type = lst ? ((t_token*)(lst->content))->type : END;
+		if (type == END || type == AND || type == AND_IF
+			|| type == OR_IF || type == SEMI)
 		{
-			if (lst == NULL)
+			if (!lst)
 				tmp = NULL;
 			if (new_node_ast(ast, head, &tmp, type) == FAILURE)
 				return (FAILURE);
