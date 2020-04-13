@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/12 17:45:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/13 14:09:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	deal_with_spe_opt(char ***args, int *x)
 char	return_next_opt(char ***args, int *x, const char *options_list)
 {
 	char	*tmp;
+	int		ret;
 
 	if ((**args)[1] == '-' && !(**args)[2])
 	{
@@ -91,8 +92,9 @@ char	return_next_opt(char ***args, int *x, const char *options_list)
 			return (deal_with_spe_opt(args, x));
 		return ((**args)[*x]);
 	}
+	ret = *x;
 	get_next_opt(NULL, NULL);
-	return ((**args)[*x]);
+	return ((**args)[ret]);
 }
 
 void	print_error(char *usage, char option, int mode)
