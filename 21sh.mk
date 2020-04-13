@@ -18,6 +18,7 @@ SOURCES :=	main.c \
 		ast.c \
 		ast_order.c \
 		build_redir.c \
+		check_alias.c \
 		debug.c \
 		debug_ast.c \
 		del.c \
@@ -64,6 +65,7 @@ SOURCES :=	main.c \
 		path_concat.c \
 		pathname_expansion.c \
 		process.c \
+		quotes.c \
 		redir.c \
 		redir_less.c \
 		redir_great.c \
