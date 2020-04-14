@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 21:28:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/13 20:55:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_history(void)
 	char	buf[10000];
 	int		fd;
 
-	ft_bzero(buf, 10000);
+	ft_bzero(buf, 9999);
 	get_history_loc();
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
@@ -38,7 +38,7 @@ void	init_history(void)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
 	}
-	while (read(fd, buf, 9999) > 0)
+	while (read(fd, buf, 9998) > 0)
 		add_hentry(buf, 0);
 	remove_nl();
 	g_hist->nb_line = g_hist->total_lines;
