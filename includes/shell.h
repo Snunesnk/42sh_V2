@@ -329,11 +329,10 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
 int								get_next_token(const char *str, \
-		t_token *token, enum e_token *last_token_type);
+		t_token *token);
 t_list							*get_shell_var(char *name, t_list *svar_lst);
 int								get_stdin(char **line);
-size_t							get_word(const char *str, t_token *token, \
-					enum e_token *last_token_type);
+size_t							get_word(const char *str, t_token *token);
 enum e_token					**init_enum_tab(void);
 int								initialize_prompt_fd(void);
 int								launch_lexer_parser(char *input, t_ast **ast);

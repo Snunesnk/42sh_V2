@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 14:14:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 12:18:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,20 @@ int		get_token_list(char *input, t_list **lst)
 {
 	size_t			pos;
 	t_token			token;
-	enum e_token	type;
 	int				ret;
 
 	pos = 0;
 	ret = SUCCESS;
-	type = NONE;
-	while (input[pos] != '\0')
+	token.type = NONE;
+	while (input[pos] && ret == SUCCESS)
 	{
-		while (ft_isblank(input[pos]) == TRUE)
-			pos++;
-		if (input[pos] == '\0')
+		while (ft_isblank(input[pos]))
+			++pos;
+		if (!input[pos])
 			break ;
-		ft_bzero(&token, sizeof(token));
-		pos += get_next_token(input + pos, &token, &type);
+		token.value = NULL;
+		pos += get_next_token(input + pos, &token);
 		ret = add_token_to_list(&token, lst);
-		type = token.type;
 	}
 	return (ret);
 }
