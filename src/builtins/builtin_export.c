@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 16:26:27 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/14 16:04:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,96 +15,116 @@
 
 extern t_list	*g_env;
 
-static void		print_export(t_list *env, t_list **elem)
+static void		print_export(void)
 {
-	char	*tmp;
-	char	*name;
-	char	*value;
+	t_list		*list;
+	t_shell_var	*var;
+	char		*name;
+	char		*value;
 
-	tmp = NULL;
-	name = ((t_shell_var*)(env->content))->name;
-	value = ((t_shell_var*)(env->content))->value;
-	if ((((t_shell_var*)(env->content))->flag & EXPORT) == EXPORT)
+	list = g_env;
+	while (list)
 	{
-		if (((t_shell_var*)(env->content))->value == NULL)
-			ft_asprintf(&tmp, "declare -x %s\n", name);
-		else
+		var = ((t_shell_var*)(list->content));
+		name = var->name;
+		value = var->value;
+		if ((var->flag & EXPORT))
 		{
-			ft_asprintf(&tmp, "declare -x %s=\"%s\"\n", name, value);
+			if (value == NULL)
+				ft_printf("declare -x %s\n", name);
+			else
+				ft_printf("declare -x %s=\"%s\"\n", name, value);
 		}
+		list = list->next;
 	}
-	*elem = ft_lstnew(tmp, ft_strlen(tmp));
+}
+static t_list	*get_env_var(char *name)
+{
+	t_list	*list;
+	char	*var_name;
+
+	list = g_env;
+	while (list)
+	{
+		var_name = ((t_shell_var*)(list->content))->name;
+		if (ft_strequ(name, var_name))
+			return (list);
+		list = list->next;
+	}
+	return (NULL);
 }
 
-static int		get_flags(char **av, char *n_flag, char *p_flag)
+static t_list	*change_var_flag(int option, char *value, t_list *var)
 {
-	size_t		tab_i;
-	size_t		str_i;
+	t_shell_var	*tmp;
 
-	tab_i = 0;
-	while (av[tab_i] != NULL && av[tab_i][0] == '-')
+	tmp = (t_shell_var*)(var->content);
+	if ((option & EXPORT_N_OPT))
+		tmp->flag = SET;
+	else
+		tmp->flag |= EXPORT;
+	if (value)
 	{
-		str_i = 0;
-		while (av[tab_i][str_i] != '\0')
+		free(tmp->value);
+		if (!(tmp->value = ft_strdup(value)))
 		{
-			if (av[tab_i][str_i] == 'n')
-				*n_flag = 1;
-			if (av[tab_i][str_i] == 'p')
-				*p_flag = 1;
-			str_i++;
+			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+			return (NULL);
 		}
-		tab_i++;
 	}
-	return (tab_i);
+	return (var);
 }
 
-static void		remove_flag(char **av)
+static void		exec_export(char **args, int option)
 {
-	size_t	i;
-	t_list	*elem;
+	t_list	*var;
 	char	*name;
 	char	*tmp;
 
-	i = 0;
-	while (av[i] != NULL)
+	var = NULL;
+	if (!*args)
 	{
-		tmp = ft_strchr(av[i], '=');
-		if (tmp != NULL)
-			name = ft_strndup(av[i], tmp - av[i]);
-		else
-			name = ft_strdup(av[i]);
-		elem = get_shell_var(name, g_env);
-		((t_shell_var*)(elem->content))->flag &= ~(EXPORT);
-		ft_strdel(&name);
-		i++;
+		print_export();
+		return ;
+	}
+	while ((name = *args))
+	{
+		tmp = ft_strchr(*args, '=');
+		if (tmp)
+		{
+			*tmp = '\0';
+			tmp += 1;
+		}
+		var = get_env_var(name);
+		if (var)
+			var = change_var_flag(option, tmp, var);
+		args += 1;
 	}
 }
 
 int				cmd_export(int ac, char **av)
 {
 	int		ret;
-	char	n_flag;
-	char	p_flag;
+	char	**args;
+	int		option;
 
-	ret = SUCCESS;
-	n_flag = 0;
-	p_flag = 0;
-	av++;
-	if (ft_getopt(ac - 1, av, "np") == '?')
+	option = 0;
+	args = av + 1;
+	while (ac > 1 && (ret = get_next_opt(&args, "pn")) != -1)
 	{
-		ft_putendl_fd("export: usage: export [-n] [name[=value ...]] \
-or export -p", 2);
-		ret = FAILURE;
+		if (ret == 'p')
+			option |= EXPORT_P_OPT;
+		else if (ret == 'n')
+			option |= EXPORT_N_OPT;
+		else
+		{
+			ft_dprintf(STDERR_FILENO, "./21sh: export: -%c: invalid option.\n" \
+					, ret);
+			ft_putendl_fd("export: usage: export [-n] [name[=value ...]]" \
+				"or export -p", 2);
+			return (e_invalid_input);
+		}
 	}
-	else
-	{
-		av += get_flags(av, &n_flag, &p_flag);
-		if (n_flag == 1)
-			remove_flag(av);
-		else if (ac != 1)
-			ret = add_var(av);
-		if (ac == 1 || p_flag == 1)
-			ft_lstprint(g_env, &print_export);
-	}
+	exec_export(args, option);
 	return (ret);
 }
