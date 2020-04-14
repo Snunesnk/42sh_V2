@@ -13,8 +13,6 @@
 #include "shell.h"
 #include "ft_readline.h"
 
-extern char	*g_grammar[NB_TOKEN];
-
 static int			check_next_token(enum e_token type, enum e_token *enum_tab)
 {
 	enum e_token	token_index;
