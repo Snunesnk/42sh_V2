@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
+#include "quotes.h"
 
 const struct s_tags	g_tags[] =
 {
@@ -131,6 +132,7 @@ int				treat_expansions(t_process *p)
 	{
 		ret = treat_single_exp(p->argv + i, 1);
 		ret = !ret ? pathname_expansion(p, i) : ret;
+		ret = !ret ? rm_quotes(p->argv + i) : ret;
 		if (ret)
 			return (ret);
 		++i;
