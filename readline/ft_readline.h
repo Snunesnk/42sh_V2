@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/03 17:21:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 22:19:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # include "history.h"
 # include "avl.h"
 # include "autocomplete.h"
+# include "prompt.h"
 
 # ifndef SIGWINCH
 #  define SIGWINCH 28
