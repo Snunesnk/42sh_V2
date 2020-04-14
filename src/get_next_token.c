@@ -13,8 +13,6 @@
 #include "libft.h"
 #include "shell.h"
 
-extern char	*g_grammar[NB_TOKEN];
-
 int			get_next_token(const char *str, t_token *token,
 					enum e_token *last_token_type)
 {
