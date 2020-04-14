@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 23:24:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 17:06:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,31 +44,25 @@ void	command_complete(char *to_complete)
 
 void	var_complete(char *to_complete)
 {
-	t_list	*first;
 	t_node	*compl_tree;
 	t_data	*data;
-	char	*env_var;
-	size_t	len;
+	int		is_bracked;
 
-	len = ft_strlen(to_complete);
-	first = g_env;
+	is_bracked = 0;
 	compl_tree = NULL;
 	if (!(data = init_data()))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
-	while (g_env)
-	{
-		env_var = ((t_shell_var*)(g_env->content))->name;
-		if (ft_strnequ(to_complete, env_var, len))
-			compl_tree = add_node(compl_tree, env_var, data, "\033[37m");
-		g_env = g_env->next;
-	}
+	if (to_complete[1] == '{')
+		is_bracked = 1;
+	if (!(compl_tree = get_var_compl(to_complete + 1 + is_bracked, data, \
+					is_bracked)))
+		return ;
 	display_compl(compl_tree, data);
 	free(data);
 	free_node(compl_tree);
-	g_env = first;
 }
 
 void	file_complete(char *to_complete)

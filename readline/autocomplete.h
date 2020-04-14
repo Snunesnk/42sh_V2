@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/12 12:05:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 17:08:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ union u_buffer	g_autocompl_bad_seq;
 void			autocomplete(void);
 t_node			*get_cmd_compl(char *to_complete, char *path, t_data *data);
 t_node			*get_file_compl(char *to_complete, t_data *data);
+t_node			*get_var_compl(char *to_complete, t_data *data, \
+		int is_bracked);
 t_data			*init_data(void);
 t_data			*fill_data(t_data *data, t_node *compl_tree);
 void			print_tree(t_node *compl_tree, t_data *data, int to_print);
