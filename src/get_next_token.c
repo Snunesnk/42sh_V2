@@ -21,18 +21,15 @@ int			get_next_token(const char *str, t_token *token,
 
 	pos = 0;
 	token_index = 0;
-	while (token_index < NB_TOKEN)
-	{
-		if (ft_strnequ(str, g_grammar[token_index],
-				ft_strlen(g_grammar[token_index])) == TRUE)
-		{
-			token->type = token_index;
-			pos = ft_strlen(g_grammar[token_index]);
-			break ;
-		}
-		token_index++;
-	}
-	if (token_index == NB_TOKEN)
+	while (g_grammar[token_index] && ft_strncmp(str,
+		g_grammar[token_index], ft_strlen(g_grammar[token_index])))
+		++token_index;
+	if (!g_grammar[token_index])
 		pos = get_word(str, token, last_token_type);
+	else
+	{
+		token->type = token_index;
+		pos = ft_strlen(g_grammar[token_index]);
+	}
 	return (pos);
 }
