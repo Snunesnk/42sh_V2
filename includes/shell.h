@@ -258,7 +258,7 @@ int								do_iodup(t_redirection *r);
 int								do_redirection(t_redirection *r);
 
 extern char						*g_filename_redir_error;
-extern char						*g_grammar[NB_TOKEN];
+extern char						*g_token_tab[NB_TOKEN];
 
 enum							e_token
 {
