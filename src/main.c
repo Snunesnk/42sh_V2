@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 23:50:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 22:16:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int			main(int argc, char **argv)
 	char			*input;
 	volatile int	status;
 	int				stop;
+	char			*prompt;
 
 	stop = 0;
 	(void)argc;
@@ -93,9 +94,10 @@ int			main(int argc, char **argv)
 	}
 	while (stop == 0)
 	{
+		prompt = get_prompt();
 		if (g_onecmd)
 			stop = 1;
-		if (!g_pending_cmd && !(input = ft_readline("21sh$ ")))
+		if (!g_pending_cmd && !(input = ft_readline(prompt)))
 		{
 			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
@@ -107,6 +109,7 @@ int			main(int argc, char **argv)
 		}
 		exec_input(input);
 		test_hash_path();
+		free(prompt);
 	}
 	free_hash_table();
 	ft_tabdel(&environ);
