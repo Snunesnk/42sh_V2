@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 16:04:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 20:58:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,54 @@ static void		print_export(void)
 		list = list->next;
 	}
 }
-static t_list	*get_env_var(char *name)
-{
-	t_list	*list;
-	char	*var_name;
 
-	list = g_env;
-	while (list)
+static void	add_env_var(char *name, char *value)
+{
+	t_list		*lst_new;
+	t_shell_var	shell_var;
+
+	shell_var.name = ft_strdup(name);
+	shell_var.value = ft_strdup(value);
+	shell_var.flag |= EXPORT;
+	lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
+	if (!lst_new)
 	{
-		var_name = ((t_shell_var*)(list->content))->name;
-		if (ft_strequ(name, var_name))
-			return (list);
-		list = list->next;
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		return ;
 	}
-	return (NULL);
+	ft_lstadd(&g_env, lst_new);
+	ft_merge_sort(&g_env, &alpha_sort);
 }
 
-static t_list	*change_var_flag(int option, char *value, t_list *var)
+static int	change_var_flag(int option, char *name, char *value)
 {
 	t_shell_var	*tmp;
+	t_list		*list;
 
-	tmp = (t_shell_var*)(var->content);
-	if ((option & EXPORT_N_OPT))
-		tmp->flag = SET;
-	else
-		tmp->flag |= EXPORT;
+	list = g_env;
+	while (list && !ft_strequ(((t_shell_var*)(list->content))->name, name))
+		list = list->next;
+	if (!list)
+		return (0);
+	tmp = (t_shell_var*)(list->content);
+	tmp->flag = ((option & EXPORT_N_OPT)) ? SET : EXPORT + 1;
 	if (value)
 	{
 		free(tmp->value);
 		if (!(tmp->value = ft_strdup(value)))
 		{
 			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-			return (NULL);
+			return (0);
 		}
 	}
-	return (var);
+	return (1);
 }
 
 static void		exec_export(char **args, int option)
 {
-	t_list	*var;
 	char	*name;
-	char	*tmp;
+	char	*value;
 
-	var = NULL;
 	if (!*args)
 	{
 		print_export();
@@ -89,15 +93,14 @@ static void		exec_export(char **args, int option)
 	}
 	while ((name = *args))
 	{
-		tmp = ft_strchr(*args, '=');
-		if (tmp)
+		value = ft_strchr(*args, '=');
+		if (value)
 		{
-			*tmp = '\0';
-			tmp += 1;
+			*value = '\0';
+			value += 1;
 		}
-		var = get_env_var(name);
-		if (var)
-			var = change_var_flag(option, tmp, var);
+		if (!change_var_flag(option, name, value))
+			add_env_var(name, value);
 		args += 1;
 	}
 }
