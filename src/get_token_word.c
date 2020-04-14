@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 12:05:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 12:43:12 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:49:03 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,10 @@ static int		is_io_number(const char *str)
 
 	i = 0;
 	if (ft_atoifd(str) < 0)
-		return (FALSE);
-	else
-	{
-		while (ft_isdigit(str[i]))
-			i++;
-		if (str[i] == '>' || str[i] == '<')
-			return (TRUE);
-	}
-	return (FALSE);
+		return (0);
+	while (ft_isdigit(str[i]))
+		++i;
+	return (str[i] == '>' || str[i] == '<');
 }
 
 static size_t	get_token_comment(const char *str, t_token *token)

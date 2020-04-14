@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:51:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/09 13:20:21 by efischer         ###   ########.fr       */
+/*   Updated: 2020/04/14 12:47:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,7 @@
 
 int		ft_ismeta(int c)
 {
-	int		ret;
-
-	ret = FALSE;
-	if (c == '|' || c == '&' || c == ';' || c == '<' || c == '>')
-	{
-		ret = TRUE;
-	}
-	return (ret);
+	return (c == '|' || c == '&' || c == ';' || c == '<' || c == '>');
 }
 
 char	*ft_join_free(char *s1, char *s2, int op)
