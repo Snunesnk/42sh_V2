@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:41:14 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 12:27:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/13 13:26:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static t_ast	*astnew(t_list *lst, uint64_t type)
 	t_ast	*ast;
 
 	ast = (t_ast*)malloc(sizeof(t_ast));
-	if (ast != NULL)
+	if (ast)
 	{
 		ft_bzero(ast, sizeof(t_ast));
 		ast->type = type;
@@ -66,17 +66,15 @@ int				new_node_ast(t_ast **ast, t_list *head, t_list **lst,
 	t_list	*tmp;
 	t_list	*process;
 
-	if (*lst == NULL)
+	if (!*lst)
 	{
 		new_ast = astnew(head, NONE);
 		astadd_right(ast, new_ast);
 		return (SUCCESS);
 	}
-	process = (*lst)->next;
-	if (process != NULL)
+	if ((process = (*lst)->next))
 		tmp = process->next;
-	new_ast = astnew(NULL, type);
-	if (new_ast == NULL)
+	if (!(new_ast = astnew(NULL, type)))
 		return (FAILURE);
 	(*lst)->next = NULL;
 	astadd_right(ast, new_ast);

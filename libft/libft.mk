@@ -57,6 +57,8 @@ SOURCES	:= \
 		ds_singly_linked_list/ft_lstnew.c \
 		ds_singly_linked_list/ft_lstnew_str.c \
 		ds_singly_linked_list/ft_lstprint.c \
+		ds_singly_linked_list/ft_lst_find.c \
+		ds_singly_linked_list/ft_lst_last.c \
 		ds_singly_linked_list/ft_lst_to_char_tab.c \
 		f_ctype/ft_isalnum.c \
 		f_ctype/ft_isblank.c \

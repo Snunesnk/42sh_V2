@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 12:23:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/13 16:04:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,11 @@ int				build_ast(t_ast **ast, t_list *lst)
 		}
 		lst = lst->next;
 	}
+	ft_printf("\n---------BEFORE-------\n");
+	debug_ast(*ast);
+	ft_printf("\n---------AFTER-------\n");
 	ast_order(ast);
+	debug_ast(*ast);
+	ft_printf("\n---NEXT---\n");
 	return (SUCCESS);
 }

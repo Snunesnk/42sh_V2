@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 14:14:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 12:36:59 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,40 @@ static int	border_token_list(t_list **lst, enum e_token token_type)
 	return (add_token_to_list(&token, lst));
 }
 
-static int	get_token_list(char *input, t_list **lst)
+int		get_token_list(char *input, t_list **lst)
 {
 	size_t			pos;
 	t_token			token;
-	enum e_token	type;
 	int				ret;
 
 	pos = 0;
 	ret = SUCCESS;
-	type = NONE;
-	while (input[pos] != '\0')
+	token.type = NONE;
+	while (input[pos] && ret == SUCCESS)
 	{
-		while (ft_isblank(input[pos]) == TRUE)
-			pos++;
-		if (input[pos] == '\0')
+		while (ft_isblank(input[pos]))
+			++pos;
+		if (!input[pos])
 			break ;
-		ft_bzero(&token, sizeof(token));
-		pos += get_next_token(input + pos, &token, &type);
+		token.value = NULL;
+		pos += get_next_token(input + pos, &token);
 		ret = add_token_to_list(&token, lst);
-		type = token.type;
 	}
 	return (ret);
 }
 
 int			lexer(char *input, t_list **lst)
 {
+	int	ret;
+
+	ret = FAILURE;
 	if (!input)
-		return (FAILURE);
-	while (ft_isblank(*input) == TRUE)
+		return (ret);
+	while (ft_isblank(*input))
 		++input;
-	input = ft_strjoin(input, "\n");
-	if (*input && !border_token_list(lst, START))
-		if (!get_token_list(input, lst))
-		{
-			ft_strdel(&input);
-			return (border_token_list(lst, END));
-		}
-	return (FAILURE);
+	if ((input = ft_strjoin(input, "\n")) && *input)
+		ret = border_token_list(lst, START) || get_token_list(input, lst)
+			|| border_token_list(lst, END) || check_alias(lst, TRUE);
+	ft_strdel(&input);
+	return (ret);
 }

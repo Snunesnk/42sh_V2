@@ -258,7 +258,7 @@ int								do_iodup(t_redirection *r);
 int								do_redirection(t_redirection *r);
 
 extern char						*g_filename_redir_error;
-extern char						*g_grammar[NB_TOKEN];
+extern char						*g_token_tab[NB_TOKEN];
 
 enum							e_token
 {
@@ -329,15 +329,16 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
 int								get_next_token(const char *str, \
-		t_token *token, enum e_token *last_token_type);
+		t_token *token);
 t_list							*get_shell_var(char *name, t_list *svar_lst);
 int								get_stdin(char **line);
-size_t							get_word(const char *str, t_token *token, \
-					enum e_token *last_token_type);
+size_t							get_word(const char *str, t_token *token);
 enum e_token					**init_enum_tab(void);
 int								initialize_prompt_fd(void);
 int								launch_lexer_parser(char *input, t_ast **ast);
 int								lexer(char *str, t_list **lst);
+int								get_token_list(char *input, t_list **lst);
+int								check_alias(t_list **lst, int check);
 int								new_node_ast(t_ast **ast, t_list *head, \
 		t_list **lst, int type);
 int								only_assignments(t_process *p);

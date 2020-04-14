@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 11:31:34 by efischer          #+#    #+#             */
-/*   Updated: 2020/03/10 15:54:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/13 17:09:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	debug_ast(t_ast *ast)
 	debug(ast->content);
 	if (ast->left != NULL)
 	{
-		ft_putendl("LEFT");
+		ft_putstr("LEFT:");
 		debug_ast(ast->left);
 		debug(ast->content);
 	}
 	if (ast->right != NULL)
 	{
-		ft_putendl("RIGHT");
+		ft_putstr("RIGHT: ");
 		debug_ast(ast->right);
 	}
 }
