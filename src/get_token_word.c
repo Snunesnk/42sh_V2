@@ -6,12 +6,13 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 12:05:43 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 12:49:03 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/14 13:40:35 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
 static int		is_io_number(const char *str)
 {
@@ -53,12 +54,20 @@ static size_t	get_token_ionumber(const char *str, t_token *token)
 
 static void		get_token_word(const char *str, t_token *token, size_t *len)
 {
+	int	qmode;
+
 	if (str[*len] == '-' && (token->type == GREATAND || token->type == LESSAND))
 		*len = 1;
 	else
-		while (str[*len] && !ft_isblank(str[*len])
-			&& !ft_ismeta(str[*len]) && str[*len] != '\n')
+	{
+		qmode = NO_QUOTE;
+		while (str[*len] && (qmode || (!ft_isblank(str[*len])
+			&& !ft_ismeta(str[*len]) && str[*len] != '\n')))
+		{
+			qmode = get_qmode(qmode, str[*len]);
 			++(*len);
+		}
+	}
 	token->value = ft_strndup(str, *len);
 	token->type = WORD;
 	if (token->value == NULL)
