@@ -12,7 +12,7 @@
 
 #include "shell.h"
 
-char	*g_grammar[NB_TOKEN] = {
+char	*g_token_tab[NB_TOKEN] = {
 	[SEMI] = ";",
 	[OR_IF] = "||",
 	[PIPE] = "|",

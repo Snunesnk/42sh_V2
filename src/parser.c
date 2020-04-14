@@ -82,7 +82,7 @@ static void			parse_error(int ret, enum e_token curr_type,
 	{
 		value = ((t_token*)(lst->content))->value;
 		ft_dprintf(2, "\n21sh: syntax error near unexpected token `%s'%s%s\n",
-			g_grammar[curr_type], curr_type < 14 ? "" : " -> ",
+			g_token_tab[curr_type], curr_type < 14 ? "" : " -> ",
 			curr_type < 14 ? "" : value);
 	}
 }

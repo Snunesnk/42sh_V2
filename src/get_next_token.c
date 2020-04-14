@@ -16,20 +16,20 @@
 int			get_next_token(const char *str, t_token *token,
 					enum e_token *last_token_type)
 {
-	size_t	token_index;
+	size_t	token_i;
 	size_t	pos;
 
 	pos = 0;
-	token_index = 0;
-	while (g_grammar[token_index] && ft_strncmp(str,
-		g_grammar[token_index], ft_strlen(g_grammar[token_index])))
-		++token_index;
-	if (!g_grammar[token_index])
+	token_i = 0;
+	while (g_token_tab[token_i] && ft_strncmp(str,
+		g_token_tab[token_i], ft_strlen(g_token_tab[token_i])))
+		++token_i;
+	if (!g_token_tab[token_i])
 		pos = get_word(str, token, last_token_type);
 	else
 	{
-		token->type = token_index;
-		pos = ft_strlen(g_grammar[token_index]);
+		token->type = token_i;
+		pos = ft_strlen(g_token_tab[token_i]);
 	}
 	return (pos);
 }
