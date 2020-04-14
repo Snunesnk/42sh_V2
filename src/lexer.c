@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 12:18:43 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/14 12:36:59 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,11 @@ int			lexer(char *input, t_list **lst)
 	ret = FAILURE;
 	if (!input)
 		return (ret);
-	while (ft_isblank(*input) == TRUE)
+	while (ft_isblank(*input))
 		++input;
-	input = ft_strjoin(input, "\n");
-	if (*input && !(ret = border_token_list(lst, START)))
-		if (!(ret = get_token_list(input, lst)))
-		{
-			if (!(ret = border_token_list(lst, END)))
-				ret = check_alias(lst, TRUE);
-		}
+	if ((input = ft_strjoin(input, "\n")) && *input)
+		ret = border_token_list(lst, START) || get_token_list(input, lst)
+			|| border_token_list(lst, END) || check_alias(lst, TRUE);
 	ft_strdel(&input);
 	return (ret);
 }
