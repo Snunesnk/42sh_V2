@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/15 14:45:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 22:37:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,12 @@ int			treat_shell_variables(t_process *p, int opt)
 	t_list			*elem;
 	char			*name;
 	char			*value;
-	int				i;
 
-	i = 0;
 	if (!p->argv[0])
 		return (0);
-	while (p->argv[i] != NULL)
+	while (p->argv != NULL && (value = is_valid_assignment(p->argv[0])))
 	{
-//		ft_putendl(p->argv[i]);
-		i++;
-	}
-	while (p->argv != NULL && (value = ft_strchr(p->argv[0], '=')) != NULL)
-	{
-		if (value != NULL && opt == 1)
+		if (opt == 1)
 		{
 			name = ft_strndup(p->argv[0], value - p->argv[0]);
 			value = ft_strdup(value + 1);
