@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:21:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 15:56:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int			exec_input(char *input)
 	status = 0;
 	lst = lexer(input);
 	free(input);
-	debug(lst); /* Debug */
 	status = parser(lst); /* Status has error if parsing error */
+	debug(lst); /* Debug */
 	ft_printf("\nstatus: %d\n", status);
 	exit(1); /* Debug */
 	if (status)
