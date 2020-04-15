@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 17:46:34 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/15 18:36:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,27 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static char	*get_closest_exp(char *str, int tilde, int *ref)
+static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 {
 	int		i;
 	char	*ptr;
 	char	*closest;
+	int		tmp_qmode;
+	int		orig_qmode;
 
 	i = 0;
 	*ref = -1;
 	closest = NULL;
+	orig_qmode = *qmode;
 	while (*(g_tags[i].opentag))
 	{
+		tmp_qmode = orig_qmode;
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
 			break ;
-		ptr = ft_strstr(str, g_tags[i].opentag);
+		ptr = ft_strstr_qmode(str, g_tags[i].opentag, DQUOTE, &tmp_qmode);
 		if (ptr && (!closest || ptr < closest ))
 		{
+			*qmode = tmp_qmode;
 			closest = ptr;
 			*ref = i;
 		}
@@ -78,16 +83,17 @@ int				treat_single_exp(char **str, int tilde)
 {
 	int		ref;
 	int		ret;
+	int		qmode;
 	char	*next;
 
 	next = *str;
-	while ((next = get_closest_exp(next, tilde, &ref)))
+	qmode = NO_QUOTE;
+	while ((next = get_closest_exp(next, tilde, &ref, &qmode)))
 	{
 		if (tilde && (next > *str || (next[1] && next[1] != '/')))
-		{
 			tilde = 0;
+		if (!tilde && *next == '~')
 			continue ;
-		}
 		if ((ret = replace_expansion(str, &next, ref)))
 		{
 			psherror(ret, *str, e_cmd_type);
