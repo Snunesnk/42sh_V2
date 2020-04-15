@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:58:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 16:57:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,15 @@ int			exec_input(char *input)
 	status = 0;
 	lst = lexer(input);
 	free(input);
-	status = parser(lst); /* Status has error if parsing error */
-	debug(lst); /* Debug */
-	ft_printf("\nstatus: %d\n", status);
-	exit(1); /* Debug */
+	status = parser(lst);
 	if (status)
 	{
-		/* Should free lst too */
+		ft_lstdelone(&lst, &del);
 		return (status);
 	}
-//	ast = build_ast(lst);
-//	debug_ast(ast);
+	ast = build_ast(lst); /* Debugging AST */
+	debug_ast(ast);
+	exit(1);
 	status = execute_node(ast, 1);
 	astdel(&ast);
 	g_retval = status;
