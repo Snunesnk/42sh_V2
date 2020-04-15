@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/14 16:48:16 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/15 18:22:35 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,29 @@ int		get_qmode(int qmode, char c)
 	else if (c == '\'' && qmode != DQUOTE)
 		return (qmode == SQUOTE ? NO_QUOTE : SQUOTE);
 	return (qmode);
+}
+
+char	*ft_strstr_qmode(const char *str, const char *to_find,
+			int allowed_qmodes, int *qmode)
+{
+	int			l;
+	const char	*needle;
+
+	l = ft_strlen(to_find);
+	while (*str && *to_find)
+	{
+		needle = to_find;
+		while (*str && *needle && *str == *needle)
+		{
+			++str;
+			++needle;
+		}
+		if (!*needle && !(*qmode & ~allowed_qmodes))
+			return ((char *)str - l);
+		str -= needle - to_find;
+		*qmode = get_qmode(*qmode, *str++);
+	}
+	return (l ? 0 : (char *)str);
 }
 
 //TEMP

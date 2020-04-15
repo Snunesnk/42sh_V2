@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 14:47:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 22:39:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,7 @@ int								get_token_list(char *input, t_list **lst);
 int								check_alias(t_list **lst, int check);
 int								new_node_ast(t_ast **ast, t_list *head, \
 		t_list **lst, int type);
+char							*is_valid_assignment(const char *str);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
