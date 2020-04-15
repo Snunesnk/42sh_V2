@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/12 12:05:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 18:57:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ static int	ask_confirmation(t_data *data)
 	return (0);
 }
 
-static void	restore_line(t_data *data, int line)
+static void	restore_line(int line)
 {
-	ft_putstr(tgoto(g_termcaps.gup, 0, line + data->overflow));
+	ft_putstr(g_termcaps.cd);
+	if (line)
+		ft_putstr(tgoto(g_termcaps.gup, 0, line));
 	update_line();
 }
 
@@ -71,7 +73,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 	}
 	ft_printf("%s%s", list_compl.content, g_termcaps.cd);
 	free(list_compl.content);
-	restore_line(data, line);
+	restore_line(data->overflow + line);
 }
 
 static int	is_compl_char(union u_buffer c)
@@ -114,6 +116,5 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		g_autocompl_bad_seq = c;
 	if (!enter_rc(c) && c.value != ' ' && g_line.line[g_dis.cbpos - 1] != '/')
 		insert_text(" ", 1);
-	ft_putstr(g_termcaps.cd);
-	update_line();
+	restore_line((g_dis.prompt_l + g_line.len) / data->column);
 }
