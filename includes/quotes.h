@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:12:33 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/14 14:30:27 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/15 18:38:31 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define BSQUOTE	0x04
 
 int		get_qmode(int qmode, char c);
+char	*ft_strstr_qmode(const char *str, const char *to_find,
+			int allowed_qmodes, int *qmode);
 char	*unquote_str(char *quoted_str);
 int		rm_quotes(char **str, int old_qmode);
 
