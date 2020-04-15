@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 16:57:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 17:23:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,14 @@ int			exec_input(char *input)
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
+	debug(lst);
 	if (status)
 	{
 		ft_lstdelone(&lst, &del);
 		return (status);
 	}
-	ast = build_ast(lst); /* Debugging AST */
-	debug_ast(ast);
+//	ast = build_ast(lst); /* Debugging AST */
+//	debug_ast(ast);
 	exit(1);
 	status = execute_node(ast, 1);
 	astdel(&ast);
