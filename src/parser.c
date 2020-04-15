@@ -6,23 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:57:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 17:31:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
 #include "ft_readline.h"
-/*
-void    init_tab(char **token_tab); // for debug pupose
-void	print_a_node(int type, int typenext) // for debug purpose
-{
-	static char     *token_tab[NB_TOKEN];
-
-	init_tab(token_tab);
-	ft_printf("|%s ->", token_tab[type]);
-	ft_printf(" %s|\n", token_tab[typenext]);
-}*/
 
 static t_list	*subprompt(void)
 {
@@ -58,7 +48,6 @@ int				parser(t_list *lst)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
-//		print_a_node(curr_type, next_type); /* DEBUG PAIRS OF TOKENS */
 		if (lookahead(curr_type, next_type))
 		{
 			if ((curr_type == LESS || curr_type == DLESS || curr_type == GREAT || curr_type == DGREAT
