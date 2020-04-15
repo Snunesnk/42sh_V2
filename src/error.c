@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 16:19:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 15:27:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ const struct s_error_desc	g_errordesc[] =
 {
 	{ 0, "no error" },
 	{ 1, "invalid input" },
-	{ 1, "syntax error near unexpected token" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
 	{ 1, "cannot assign list to array member" },
 	{ 1, "ambiguous redirect" },
 	{ 1, "Bad file descriptor" },
+	{ 2, "syntax error near unexpected token" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },

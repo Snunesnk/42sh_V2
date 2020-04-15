@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:40:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 15:28:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ enum								e_minishell_error
 {
 	e_success,
 	e_invalid_input,
-	e_syntax_error,
 	e_no_builtin,
 	e_bad_substitution,
 	e_cannot_assign_list_to_array_member,
 	e_ambiguous_redirect,
 	e_bad_file_descriptor,
+	e_syntax_error,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
