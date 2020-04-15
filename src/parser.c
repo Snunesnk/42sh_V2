@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 14:33:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 15:20:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ft_readline.h"
 
-static int			lookahead(int curr, int next)
+static int	lookahead(int curr, int next)
 {
 	int	i;
 
@@ -26,8 +26,8 @@ static int			lookahead(int curr, int next)
 	}
 	return (FAILURE);
 }
-
-static void			merge_list(t_list *lst1, t_list *lst2)
+/*
+static void	merge_list(t_list *lst1, t_list *lst2)
 {
 	t_list	*tmp;
 
@@ -40,7 +40,7 @@ static void			merge_list(t_list *lst1, t_list *lst2)
 	}
 }
 
-static int			subprompt(t_list *lst, enum e_token *enum_tab)
+static int	subprompt(t_list *lst, enum e_token *enum_tab)
 {
 	t_list	*new_lst;
 	char	*tmp;
@@ -64,19 +64,14 @@ static int			subprompt(t_list *lst, enum e_token *enum_tab)
 	}
 	return (ret);
 }
-
-static void			parse_error(int ret, enum e_token curr_type,
-							t_list *lst)
+*/
+static int	parse_error(int type)
 {
-	char	*value;
-
-	if (ret == FAILURE)
-	{
-		value = ((t_token*)(lst->content))->value;
-		ft_dprintf(2, "\n21sh: syntax error near unexpected token `%s'%s%s\n",
-			g_tokval[curr_type], curr_type < 14 ? "" : " -> ",
-			curr_type < 14 ? "" : value);
-	}
+	if (type != NEWLINE)
+		ft_dprintf(STDERR_FILENO, "\n21sh: syntax error near unexpected token `%s'\n", g_tokval[type]);
+	else
+		ft_dprintf(STDERR_FILENO, "\n21sh: syntax error near unexpected token `%s'\n", "newline");
+	return (2); /* Add it to error.c */
 }
 
 void    init_tab(char **token_tab); /* for debug pupose */
@@ -95,26 +90,32 @@ int					parser(t_list *lst)
 {
 	int	curr_type;
 	int	next_type;
-	int	ret;
 
-	ret = SUCCESS;
 	while (lst->next)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
 		print_a_node(curr_type, next_type); /* DEBUG PAIRS OF TOKENS */
-		ret = lookahead(curr_type, next_type);
-		if (ret == FAILURE && curr_type == NEWLINE)
+		if (lookahead(curr_type, next_type))
 		{
-			ret = subprompt(lst, enum_tab[prev_type]);
-			curr_type = ((t_token*)(lst->next->content))->type;
-			lst = lst->next;
-			continue ;
+			/* Check type of error depending on token, to see if need to ask subprompt or not */
+			if ((curr_type == LESS || curr_type == DLESS || curr_type == GREAT || curr_type == DGREAT
+				|| curr_type == GREATAND || curr_type == LESSAND || curr_type == ANDGREAT
+				|| curr_type == DLESSDASH)
+				&& next_type == NEWLINE)
+				return (parse_error(next_type));
+			else if (next_type == NEWLINE)
+			{	/* Subprompt */
+				ft_printf("\nSUBPROMPT !!\n");
+				//subprompt(lst, enum_tab[prev_type]);
+				//curr_type = ((t_token*)(lst->next->content))->type;
+				//lst = lst->next;
+				//continue ;
+			}
+			else
+				return (parse_error(curr_type));
 		}
-		if (ret == FAILURE)
-			break;
 		lst = lst->next;
 	}
-	parse_error(ret, curr_type, lst);
-	return (ret);
+	return (SUCCESS);
 }
