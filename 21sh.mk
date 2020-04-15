@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/15 12:58:55 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/15 13:15:03 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SOURCES :=	main.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
-		init_enum_tab.c \
+		parse_table.c \
 		job.c \
 		job_control.c \
 		job_control2.c \
