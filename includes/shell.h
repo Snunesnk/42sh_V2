@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 13:33:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 17:17:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,9 +306,8 @@ typedef struct					s_shell_var
 
 void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
-void							ast_order(t_ast **ast);
 void							astdel(t_ast **ast);
-int								build_ast(t_ast **ast, t_list *lst);
+t_ast							*build_ast(t_list *lst);
 void							debug(t_list *lst);
 void							debug_ast(t_ast *ast);
 void							del(void *content, size_t content_size);
@@ -335,8 +334,6 @@ int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
 int								check_alias(t_list **lst, int check);
-int								new_node_ast(t_ast **ast, t_list *head, \
-		t_list **lst, int type);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
