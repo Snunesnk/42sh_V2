@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 12:13:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 22:55:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ struct	s_display
 	char	*prompt;
 	char	*display_prompt;
 	int		prompt_l;
+	int		real_prompt_l;
 	int		botl;
 	int		cbpos;
 	int		cbpos_prev;

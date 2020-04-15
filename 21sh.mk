@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/15 13:15:03 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/15 15:58:07 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -125,6 +125,7 @@ SOURCES :=	main.c \
 		../globbings/utils/ft_swap_p.c \
 		../readline/bind.c \
 		../readline/display.c \
+		../readline/get_prompt.c \
 		../readline/emacs_keymap.c \
 		../readline/vim_keymap.c \
 		../readline/vim.c \
