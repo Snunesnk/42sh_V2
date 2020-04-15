@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 23:34:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 16:10:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,19 @@ _Bool	g_emacs = 1;
 _Bool	g_vim = 0;
 int		g_jump_arg = 0;
 
-static void	print_set(t_list *env, t_list **elem)
+static void	print_set(void)
 {
-	char	*tmp;
+	t_shell_var	*var;
+	t_list		*list;
 
-	tmp = NULL;
-	if ((((t_shell_var*)(env->content))->flag & SET) == SET)
+	list = g_env;
+	while (list)
 	{
-		ft_asprintf(&tmp, "%s=\"%s\"\n", ((t_shell_var*)(env->content))->name,
-				((t_shell_var*)(env->content))->value);
+		var = ((t_shell_var*)(list->content));
+		if ((var->flag & SET))
+			ft_printf("%s=\"%s\"\n", var->name, var->value);
+		list = list->next;
 	}
-	*elem = ft_lstnew(tmp, ft_strlen(tmp));
-	ft_strdel(&tmp);
 }
 
 static void	print_variables(char **args, t_o_options *option_list)
@@ -119,7 +120,7 @@ int			cmd_set(int ac, char **av)
 	int						i;
 
 	if (ac == 1)
-		ft_lstprint(g_env, &print_set);
+		print_set();
 	args = av + 1;
 	g_builtin_name = av[0];
 	while (ac > 1 && args && *args && ((*args)[0] == '-' || (*args)[0] == '+'))

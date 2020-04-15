@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/12 23:24:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 14:00:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 # define FC_R_OPTION 8
 # define FC_S_OPTION 16
 # define FC_E_OPTION 32
+
+/*
+** Flags for export option
+*/
+# define EXPORT_P_OPT 1
+# define EXPORT_N_OPT 2
 
 /*
 ** Set struct containing suported values
