@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 18:57:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 23:32:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-union u_buffer	g_autocompl_bad_seq;
+union u_buffer	g_bad_seq;
 
 static int	ask_confirmation(t_data *data)
 {
@@ -34,7 +34,7 @@ static int	ask_confirmation(t_data *data)
 			return (0);
 		}
 	}
-	g_autocompl_bad_seq = c;
+	g_bad_seq = c;
 	update_line();
 	return (0);
 }
@@ -97,7 +97,7 @@ void		display_compl(t_node *compl_tree, t_data *data)
 	union u_buffer	c;
 
 	c.value = 10000;
-	g_autocompl_bad_seq.value = 0;
+	g_bad_seq.value = 0;
 	fill_data(data, compl_tree);
 	data->compl_start = get_compl_start();
 	if (data->nb_exec >= 100 && !ask_confirmation(data))
@@ -113,7 +113,7 @@ void		display_compl(t_node *compl_tree, t_data *data)
 	if (data->nb_exec == 1)
 		insert_compl(compl_tree, data);
 	else if (!enter_rc(c))
-		g_autocompl_bad_seq = c;
+		g_bad_seq = c;
 	if (!enter_rc(c) && c.value != ' ' && g_line.line[g_dis.cbpos - 1] != '/')
 		insert_text(" ", 1);
 	restore_line((g_dis.prompt_l + g_line.len) / data->column);
