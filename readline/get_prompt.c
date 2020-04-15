@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/15 12:53:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 17:29:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char		*get_prompt(void)
 	if (!(pwd = ft_getenv("PWD")))
 		return (ft_strdup("21sh$ "));
 	len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + ft_strlen(PROMPT_COLOR) \
-		  + ft_strlen(END_SIGN) + 1;
+		+ ft_strlen(END_SIGN) + 1;
 	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len + 1))))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
