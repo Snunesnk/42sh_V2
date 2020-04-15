@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 17:17:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 19:36:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,10 +291,10 @@ typedef struct					s_token
 
 typedef struct					s_ast
 {
-	enum e_token	type;
+	int			type;
 	t_list			*content;
-	void			*left;
-	void			*right;
+	struct s_ast		*left;
+	struct s_ast		*right;
 }								t_ast;
 
 typedef struct					s_shell_var
@@ -308,6 +308,8 @@ void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
 void							astdel(t_ast **ast);
 t_ast							*build_ast(t_list *lst);
+t_ast							*node(int type, t_list *pipeline, \
+		t_ast *left, t_ast *right);
 void							debug(t_list *lst);
 void							debug_ast(t_ast *ast);
 void							del(void *content, size_t content_size);
