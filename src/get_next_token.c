@@ -3,32 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_token.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/18 13:01:12 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 12:06:18 by yforeau          ###   ########.fr       */
+/*   Created: 2020/04/15 12:01:46 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/15 12:01:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
-int			get_next_token(const char *str, t_token *token)
+static int		is_io_number(const char *str)
 {
-	size_t	token_i;
-	size_t	pos;
+	size_t	i;
 
-	pos = 0;
-	token_i = 0;
-	while (g_token_tab[token_i] && ft_strncmp(str,
-		g_token_tab[token_i], ft_strlen(g_token_tab[token_i])))
-		++token_i;
-	if (!g_token_tab[token_i])
-		pos = get_word(str, token);
+	i = 0;
+	if (ft_atoifd(str) < 0)
+		return (0);
+	while (ft_isdigit(str[i]))
+		++i;
+	return (str[i] == '>' || str[i] == '<');
+}
+
+static t_token	*get_token_ionumber(const char *str, size_t *i)
+{
+	t_token	*token;
+	int		len;
+
+	len = 0;
+	token = ft_memalloc(sizeof(t_token));
+	while (ft_isdigit(str[*i + len]))
+		++len;
+	token->type = IO_NB;
+	token->value = ft_strndup(&str[*i], len);
+	*i += len;
+	return (token);
+}
+
+static t_token	*get_token_word(const char *str, size_t *i, int prevtype)
+{
+	t_token	*token;
+	int		qmode;
+	int		len;
+
+	len = 0;
+	token = ft_memalloc(sizeof(t_token));
+	if (str[*i] == '-' && (prevtype == GREATAND || prevtype == LESSAND))
+		len += 1;
 	else
 	{
-		token->type = token_i;
-		pos = ft_strlen(g_token_tab[token_i]);
+		qmode = NO_QUOTE;
+		while (str[*i + len] && (qmode || (!ft_isblank(str[*i + len])
+			&& !ft_ismeta(str[*i + len]) && str[*i + len] != '\n')))
+		{
+			qmode = get_qmode(qmode, str[*i + len]);
+			++len;
+		}
 	}
-	return (pos);
+	token->value = ft_strndup(&str[*i], len);
+	token->type = WORD;
+	*i += len;
+	return (token);
+}
+
+t_token		*get_word(const char *str, size_t *i, int prevtype)
+{
+	t_token	*token;
+
+	if (str[*i] == '#')
+		while (str[*i] && str[*i] != '\n')
+			++*i;
+	if (ft_isdigit(str[*i]) && is_io_number(&str[*i]))
+		token = get_token_ionumber(str, i);
+	else
+		token = get_token_word(str, i, prevtype);
+	return (token);
 }

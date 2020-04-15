@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 16:17:27 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 19:33:30 by abarthel         ###   ########.fr       */
+/*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/15 12:02:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int			subprompt(t_list *lst, enum e_token *enum_tab)
 		|| ((t_token*)(lst->content))->type == OR_IF)
 	{
 		tmp = ft_readline("> ");
-		ret = lexer(tmp, &new_lst);
+	//	ret = lexer(tmp, &new_lst);
 		if (ret == SUCCESS)
 		{
 			merge_list(lst, new_lst);
@@ -82,7 +82,7 @@ static void			parse_error(int ret, enum e_token curr_type,
 	{
 		value = ((t_token*)(lst->content))->value;
 		ft_dprintf(2, "\n21sh: syntax error near unexpected token `%s'%s%s\n",
-			g_token_tab[curr_type], curr_type < 14 ? "" : " -> ",
+			g_tokval[curr_type], curr_type < 14 ? "" : " -> ",
 			curr_type < 14 ? "" : value);
 	}
 }

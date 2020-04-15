@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 16:04:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 18:19:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int				build_ast(t_ast **ast, t_list *lst)
 	tmp = lst;
 	while (head)
 	{
-		type = lst ? ((t_token*)(lst->content))->type : END;
-		if (type == END || type == AND || type == AND_IF
-			|| type == OR_IF || type == SEMI)
+		type = lst ? ((t_token*)(lst->content))->type : 0;
+		if (type && (type == AND || type == AND_IF
+			|| type == OR_IF || type == SEMI))
 		{
 			if (!lst)
 				tmp = NULL;

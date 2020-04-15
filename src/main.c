@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/12/02 14:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/12 23:50:10 by snunes           ###   ########.fr       */
+/*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/15 12:04:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,24 @@ char		*get_next_pending_cmd(void)
 int			exec_input(char *input)
 {
 	t_ast	*ast;
+	t_list	*lst;
 	int		status;
 
-	if (input[0] <= 0)
-	{
-		free(input);
-		return (0);
-	}
 	status = 0;
-	ast = NULL;
-	if (launch_lexer_parser(input, &ast) == SUCCESS)
+	lst = lexer(input);
+	free(input);
+	debug(lst); /* Debug */
+	status = parser(lst); /* Status has error if parsing error */
+	exit(1); /* Debug */
+	iif (status)
 	{
-	//	debug_ast(ast);
-		status = execute_node(ast, 1);
+		/* Should free lst too */
+		return (status);
 	}
+//	ast = build_ast(lst);
+//	debug_ast(ast);
+	status = execute_node(ast, 1);
 	astdel(&ast);
-	ft_strdel(&input);
 	g_retval = status;
 	do_job_notification(g_first_job, NULL, NULL);
 	return (status);
