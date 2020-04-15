@@ -1,43 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast.c                                              :+:      :+:    :+:   */
+/*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 19:49:53 by abarthel         ###   ########.fr       */
+/*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/15 19:35:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-t_ast			*side(t_list *lst)
+t_ast	*node(int type, t_list *pipeline, t_ast *left, t_ast *right)
 {
-	t_ast	side;
+	t_ast	*node;
 
-	
-}
-
-t_ast			*semi_and(t_list *lst)
-{
-	t_ast	*semi;
-	t_ast	*side;
-
-	semi = node(SEMI, NULL, NULL, NULL)
-	side = 
-
-	return (semi);
-}
-
-
-t_ast			*build_ast(t_list *lst)
-{
-	t_ast	*ast;
-
-	ast = NULL;
-	(void)lst;
-//	debug_ast(*ast);
-	return (ast);
+	node = ft_memalloc(sizeof(t_ast));
+	if (!node)
+		return (NULL);
+	node->type = type;
+	node->content = pipeline;
+	node->left = left;
+	node->right = right;
+	return (node);
 }
