@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:59:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 13:33:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ char							*short_physical_path(char **cwd);
 extern char						g_pwd[PATH_MAX];
 extern t_list					*g_env;
 extern t_list					*g_pending_cmd;
+
+extern int					*g_parse_table[NB_TOKEN];
 
 extern t_list					*g_alias;
 
@@ -329,7 +331,6 @@ t_list							*get_shell_var(char *name, t_list *svar_lst);
 int								get_stdin(char **line);
 t_token							*get_word(const char *str, size_t *i, \
 		int prevtype);
-enum e_token					**init_enum_tab(void);
 int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);

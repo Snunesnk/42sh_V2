@@ -6,33 +6,25 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:02:50 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 14:33:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ft_readline.h"
 
-static int			check_next_token(enum e_token type, enum e_token *enum_tab)
+static int			lookahead(int curr, int next)
 {
-	enum e_token	token_index;
-	int				ret;
+	int	i;
 
-	ret = FAILURE;
-	token_index = 0;
-	if (enum_tab != NULL)
+	i = 0;
+	while (g_parse_table[curr][i] != NONE)
 	{
-		while (enum_tab[token_index] != NONE)
-		{
-			if (type == enum_tab[token_index])
-			{
-				ret = SUCCESS;
-				break ;
-			}
-			token_index++;
-		}
+		if (g_parse_table[curr][i] == next)
+			return (SUCCESS);
+		++i;
 	}
-	return (ret);
+	return (FAILURE);
 }
 
 static void			merge_list(t_list *lst1, t_list *lst2)
@@ -101,20 +93,17 @@ void	print_a_node(int type, int typenext)
 
 int					parser(t_list *lst)
 {
-	static enum e_token	**enum_tab = NULL;
-	enum e_token		curr_type;
-	enum e_token		prev_type;
-	int					ret;
+	int	curr_type;
+	int	next_type;
+	int	ret;
 
 	ret = SUCCESS;
-	if (enum_tab == NULL)
-		enum_tab = init_enum_tab();
-	while (lst->next != NULL)
+	while (lst->next)
 	{
-		prev_type = ((t_token*)(lst->content))->type;
-		curr_type = ((t_token*)(lst->next->content))->type;
-		print_a_node(prev_type, curr_type); /* DEBUG PAIRS OF TOKENS */
-		ret = check_next_token(curr_type, enum_tab[prev_type]);
+		curr_type = ((t_token*)(lst->content))->type;
+		next_type = ((t_token*)(lst->next->content))->type;
+		print_a_node(curr_type, next_type); /* DEBUG PAIRS OF TOKENS */
+		ret = lookahead(curr_type, next_type);
 		if (ret == FAILURE && curr_type == NEWLINE)
 		{
 			ret = subprompt(lst, enum_tab[prev_type]);
