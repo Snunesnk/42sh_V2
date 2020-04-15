@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:04:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 12:59:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			exec_input(char *input)
 	debug(lst); /* Debug */
 	status = parser(lst); /* Status has error if parsing error */
 	exit(1); /* Debug */
-	iif (status)
+	if (status)
 	{
 		/* Should free lst too */
 		return (status);
