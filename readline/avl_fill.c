@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 23:26:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 13:57:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,30 @@
 
 char	*extract_file_name(char *name)
 {
-	int	i;
+	char	*new_name;
+	int		i;
 
 	i = ft_str_wchar_len(name) - 2;
 	while (i >= 0 && name[i] != '/')
 		i--;
 	if (i >= 0)
-		return (ft_strdup(name + i + 1));
-	return (ft_strdup(name));
+	{
+		name[0] = '\0';
+		name = ft_strcat(name, name + i + 1);
+	}
+	i = 0;
+	if (!(new_name = (char *)ft_memalloc(sizeof(char) * (ft_strlen(name) \
+						+ count_inhib(name) + 1))))
+		return (NULL);
+	i = 0;
+	while (name[i])
+	{
+		if (is_inhib(name[i]))
+			new_name = ft_strcat(new_name, "\\");
+		new_name = ft_strncat(new_name, name + i, 1);
+		i++;
+	}
+	return (new_name);
 }
 
 int		ft_node_cmp(t_node *tree, t_node *node)
@@ -80,7 +96,10 @@ t_node	*add_node(t_node *tree, char *name, t_data *data, char *color)
 	if (!(node = (t_node *)ft_memalloc(sizeof(t_node))))
 		return (NULL);
 	if (!(node->name = extract_file_name(name)))
+	{
+		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return (NULL);
+	}
 	if (!(node->color = ft_strdup(color)))
 		return (NULL);
 	node->right = NULL;
