@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 16:20:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 14:45:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	**tab_remove_first_elem(int *ac, char **av)
 	return (new_tab);
 }
 
-static int	set_shell_var(t_list *elem, char *name, char *value)
+int			set_shell_var(t_list *elem, char *name, char *value)
 {
 	extern t_list	*g_env;
 	t_list			*lst_new;
