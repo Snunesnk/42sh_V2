@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:39:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 23:11:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	clear_befline(void)
 		g_clip.str = ft_strndup(g_line.line, g_dis.cbpos);
 		g_clip.l = g_dis.cbpos;
 		g_line.len -= g_dis.cbpos;
-		ft_memmove(g_line.line, &(g_line.line[g_dis.cbpos]),
-		g_dis.cbpos);
+		ft_memmove(g_line.line, g_line.line+ g_dis.cbpos, g_line.len);
 		ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
 		g_dis.cbpos = 0;
 		rl_home();
