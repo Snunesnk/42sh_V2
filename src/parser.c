@@ -6,10 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:20:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 15:35:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "error.h"
 #include "shell.h"
 #include "ft_readline.h"
 
@@ -21,10 +22,10 @@ static int	lookahead(int curr, int next)
 	while (g_parse_table[curr][i] != NONE)
 	{
 		if (g_parse_table[curr][i] == next)
-			return (SUCCESS);
+			return (e_success);
 		++i;
 	}
-	return (FAILURE);
+	return (e_syntax_error);
 }
 /*
 static void	merge_list(t_list *lst1, t_list *lst2)
@@ -65,14 +66,6 @@ static int	subprompt(t_list *lst, enum e_token *enum_tab)
 	return (ret);
 }
 */
-static int	parse_error(int type)
-{
-	if (type != NEWLINE)
-		ft_dprintf(STDERR_FILENO, "\n21sh: syntax error near unexpected token `%s'\n", g_tokval[type]);
-	else
-		ft_dprintf(STDERR_FILENO, "\n21sh: syntax error near unexpected token `%s'\n", "newline");
-	return (2); /* Add it to error.c */
-}
 
 void    init_tab(char **token_tab); /* for debug pupose */
 
@@ -103,7 +96,10 @@ int					parser(t_list *lst)
 				|| curr_type == GREATAND || curr_type == LESSAND || curr_type == ANDGREAT
 				|| curr_type == DLESSDASH)
 				&& next_type == NEWLINE)
-				return (parse_error(next_type));
+			{
+				psherror(e_syntax_error, "newline", e_parsing_type);
+				return (g_errordesc[e_syntax_error].code);
+			}
 			else if (next_type == NEWLINE)
 			{	/* Subprompt */
 				ft_printf("\nSUBPROMPT !!\n");
@@ -113,9 +109,12 @@ int					parser(t_list *lst)
 				//continue ;
 			}
 			else
-				return (parse_error(curr_type));
+			{
+				psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
+				return (g_errordesc[e_syntax_error].code);
+			}
 		}
 		lst = lst->next;
 	}
-	return (SUCCESS);
+	return (e_success);
 }
