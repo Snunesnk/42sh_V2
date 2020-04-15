@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 18:33:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 12:59:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,7 +385,8 @@ int								parameter_expansions(size_t *lcontent, \
 		char **str, const char *opentag, const char *closetag);
 int								tilde_expansion(size_t *index, char **str, \
 		const char *opentag, const char *closetag);
-int								pathname_expansion(t_process *p, int i);
+int								pathname_expansion(t_process *p, int i, \
+		int *skip);
 
 struct							s_param_exp
 {
