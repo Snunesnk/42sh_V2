@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:13:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 15:14:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 12:29:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "error.h"
 #include "shell.h"
 
-static int	replace_pattern(t_process *p, int i, t_glob *gl)
+static int	replace_pattern(t_process *p, int i, t_glob *gl, int *skip)
 {
 	int		new_argc;
 	char	**new_argv;
@@ -35,6 +35,7 @@ static int	replace_pattern(t_process *p, int i, t_glob *gl)
 	}
 	ft_memcpy(p->argv + i, gl->gl_pathv, gl->gl_pathc * sizeof(char *));
 	ft_bzero(gl->gl_pathv, gl->gl_pathc * sizeof(char *));
+	*skip = gl->gl_pathc;
 	ft_globfree(gl);
 	return (e_success);
 }
@@ -44,7 +45,7 @@ static int	replace_pattern(t_process *p, int i, t_glob *gl)
 ** instead of copying the entire argv each time
 */
 
-int			pathname_expansion(t_process *p, int i)
+int			pathname_expansion(t_process *p, int i, int *skip)
 {
 	t_glob	gl;
 	int		ret;
@@ -52,7 +53,7 @@ int			pathname_expansion(t_process *p, int i)
 	ft_bzero(&gl, sizeof(t_glob));
 	ret = ft_glob(p->argv[i], FT_GLOB_BRACE, NULL, &gl);
 	if (!ret)
-		return (replace_pattern(p, i, &gl));
+		return (replace_pattern(p, i, &gl, skip));
 	else if (ret == FT_GLOB_NOSPACE)
 		return (e_cannot_allocate_memory);
 	else if (ret == FT_GLOB_ABORTED)

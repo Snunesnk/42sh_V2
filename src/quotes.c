@@ -6,37 +6,14 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 14:39:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/14 16:48:16 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
-#include "quotes.h" //TEMP
-
-/*
-** Return 1 if index is without quotes or has \ before, i.e. inihibited
-*/
-
-/*
-char	*move_to_next_inhibitor_boundary(char *s)
-{
-	char	backq;
-	size_t	i;
-
-	i = 0;
-	baskq = 0;
-	while (s[i] && i < index)
-	{
-		if (s[i] == '\'')
-			backq ^= '\'';
-	}
-	return (backq);
-}
-*/
-
-//TEMP: unquote aliases
+#include "quotes.h"
 
 int		get_qmode(int qmode, char c)
 {
@@ -51,6 +28,7 @@ int		get_qmode(int qmode, char c)
 	return (qmode);
 }
 
+//TEMP
 char		*unquote_str(char *quoted_str)
 {
 	char	*cpy;
@@ -72,18 +50,17 @@ char		*unquote_str(char *quoted_str)
 	cpy[i] = 0;
 	return (cpy);
 }
+//TEMP
 
-int		rm_quotes(char **str)
+int		rm_quotes(char **str, int old_qmode)
 {
 	char	*dup;
 	char	*pdup;
 	char	*pstr;
 	int		qmode;
-	int		old_qmode;
 
 	pstr = *str;
 	dup = NULL;
-	old_qmode = NO_QUOTE;
 	while (*pstr)
 	{
 		if ((qmode = get_qmode(old_qmode, *pstr)) != old_qmode && !dup)
@@ -92,7 +69,8 @@ int		rm_quotes(char **str)
 				return (e_cannot_allocate_memory);
 			pdup = ft_strncat(dup, *str, pstr - *str) + (pstr - *str);
 		}
-		else if ((qmode == old_qmode || qmode == (old_qmode & ~BSQUOTE)) && dup)
+		else if (dup && (qmode == old_qmode || qmode == (old_qmode & ~BSQUOTE)
+			|| (qmode == (DQUOTE | BSQUOTE) && !ft_strchr("\\\"", pstr[1]))))
 			*pdup++ = *pstr;
 		old_qmode = qmode;
 		++pstr;
@@ -101,5 +79,3 @@ int		rm_quotes(char **str)
 	ft_memdel((void **)&dup);
 	return (e_success);
 }
-
-//TEMP
