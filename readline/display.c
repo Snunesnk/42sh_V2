@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:00:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/14 22:54:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ struct s_display	g_dis =
 	.prompt = NULL,
 	.display_prompt = NULL,
 	.prompt_l = 0,
+	.real_prompt_l = 0,
 	.botl = 0,
 	.cbpos = 0,
 	.line_size = 1024,
@@ -30,7 +31,7 @@ struct s_line_state	g_line = {0};
 
 void		display_prompt(void)
 {
-	write(STDERR_FILENO, g_dis.display_prompt, g_dis.prompt_l);
+	write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l);
 }
 
 void		set_prompt(const char *prompt)
@@ -45,7 +46,8 @@ void		set_prompt(const char *prompt)
 		g_dis.display_prompt = "";
 	else
 		g_dis.display_prompt = g_dis.prompt;
-	g_dis.prompt_l = ft_strlen(g_dis.display_prompt);
+	g_dis.prompt_l = get_vis_prompt_len(g_dis.display_prompt);
+	g_dis.real_prompt_l = ft_strlen(g_dis.display_prompt);
 	g_dis.fst_line_l = g_sc.w - g_dis.prompt_l;
 }
 
