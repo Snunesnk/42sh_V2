@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/12 22:43:52 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/14 17:12:29 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,6 @@ SOURCES :=	main.c \
 		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
-		get_token_word.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
@@ -52,7 +51,6 @@ SOURCES :=	main.c \
 		job_control3.c \
 		job_bookeeping.c \
 		launch_builtin.c \
-		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
 		manage_shell_var.c \
