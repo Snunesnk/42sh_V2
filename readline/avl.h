@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:27:51 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/15 13:46:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 15:14:02 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				max(int a, int b);
 int				heigth(t_node *node);
 int				ft_node_cmp(t_node *tree, t_node *node);
 char			*get_color(char *file);
-int				is_inhib(char str);
-int				count_inhib(char *str);
+int				is_shell_spec(char str);
+int				count_shell_spec(char *str);
 
 #endif
