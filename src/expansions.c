@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:58:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 17:46:34 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,46 +23,25 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static int	expansion_dispatcher(char *str, int tilde)
+static char	*get_closest_exp(char *str, int tilde, int *ref)
 {
 	int		i;
-	int		ref;
 	char	*ptr;
 	char	*closest;
 
 	i = 0;
+	*ref = -1;
 	closest = NULL;
-	ref = -1;
 	while (*(g_tags[i].opentag))
 	{
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
 			break ;
 		ptr = ft_strstr(str, g_tags[i].opentag);
-		if (ptr && (!closest || (ptr < closest && closest)))
+		if (ptr && (!closest || ptr < closest ))
 		{
 			closest = ptr;
-			ref = i;
+			*ref = i;
 		}
-		++i;
-	}
-	return (ref);
-}
-
-static char	*get_closest_exp(char *str, int tilde)
-{
-	int		i;
-	char	*ptr;
-	char	*closest;
-
-	i = 0;
-	closest = NULL;
-	while (*(g_tags[i].opentag))
-	{
-		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break ;
-		ptr = ft_strstr(str, g_tags[i].opentag);
-		if (ptr && (!closest || (ptr < closest && closest)))
-			closest = ptr;
 		++i;
 	}
 	return (closest);
@@ -102,15 +81,13 @@ int				treat_single_exp(char **str, int tilde)
 	char	*next;
 
 	next = *str;
-	while ((next = get_closest_exp(next, tilde)))
+	while ((next = get_closest_exp(next, tilde, &ref)))
 	{
-		if (tilde && (next > *str
-		|| (next == *str && (next[1] != '/' && next[1] != '\0'))))
+		if (tilde && (next > *str || (next[1] && next[1] != '/')))
 		{
 			tilde = 0;
 			continue ;
 		}
-		ref = expansion_dispatcher(next, tilde);
 		if ((ret = replace_expansion(str, &next, ref)))
 		{
 			psherror(ret, *str, e_cmd_type);
