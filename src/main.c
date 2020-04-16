@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:16:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:51:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			exec_input(char *input)
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
-	if (status)
+	if (status || ((t_token*)(lst->content))->type == NEWLINE)
 	{
 		ft_lstdelone(&lst, &del);
 		return (status);
