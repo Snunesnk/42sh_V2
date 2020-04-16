@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:23:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:47:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,21 @@ void	free_job(t_job *j)
 			}
 			j_next = j_next->next;
 		}
+	}
+}
+
+static void	j_status(t_job *j, int foreground)
+{
+	if (!g_shell_is_interactive)
+		wait_for_job(j);
+	else if (g_subshell)
+		wait_for_job(j);
+	else if (foreground)
+		put_job_in_foreground(j, 0);
+	else
+	{
+		put_job_in_background(j, 0);
+		format_job_info(j, "launched");
 	}
 }
 
@@ -126,16 +141,6 @@ int		launch_job(t_job *j, int foreground)
 		infile = mypipe[0];
 		p = p->next;
 	}
-	if (!g_shell_is_interactive)
-		wait_for_job(j);
-	else if (g_subshell)
-		wait_for_job(j);
-	else if (foreground)
-		put_job_in_foreground(j, 0);
-	else
-	{
-		put_job_in_background(j, 0);
-		format_job_info(j, "launched");
-	}
+	j_status(j, foreground);
 	return (-1);
 }
