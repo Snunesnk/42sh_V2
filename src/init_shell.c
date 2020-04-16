@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:53:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:10:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	init_shell_suite(void)
 	return (0);
 }
 
-int		init_shell(void)
+int			init_shell(void)
 {
 	g_shell_terminal = STDIN_FILENO;
 	g_shell_is_interactive = isatty(g_shell_terminal);
@@ -68,7 +68,7 @@ int		init_shell(void)
 	return (0);
 }
 
-void	set_minimal_env2(char **tmp)
+void		set_minimal_env2(char **tmp)
 {
 	if (PATH_MAX > 0)
 	{
@@ -78,7 +78,7 @@ void	set_minimal_env2(char **tmp)
 	}
 }
 
-int		set_minimal_env(void)
+int			set_minimal_env(void)
 {
 	char	*tmp;
 	int		shlvl;
