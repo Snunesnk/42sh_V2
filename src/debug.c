@@ -6,14 +6,14 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 18:20:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 13:13:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-void	init_tab(char **token_tab)
+void		init_tab(char **token_tab)
 {
 	token_tab[OR_IF] = "OR_IF";
 	token_tab[PIPE] = "PIPE";

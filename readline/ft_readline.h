@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 22:19:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 15:10:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@
 # ifndef SIGWINCH
 #  define SIGWINCH 28
 # endif
+
+# define SHELL_SPECIAL_CHARS	"|&;<>()$`\\\"'*?[#˜=% \t\n"
 
 char	*ft_readline(const char *prompt);
 

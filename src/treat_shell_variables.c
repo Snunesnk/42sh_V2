@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/10 16:20:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 10:04:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	**tab_remove_first_elem(int *ac, char **av)
 	return (new_tab);
 }
 
-static int	set_shell_var(t_list *elem, char *name, char *value)
+int			set_shell_var(t_list *elem, char *name, char *value)
 {
 	extern t_list	*g_env;
 	t_list			*lst_new;
@@ -62,33 +62,22 @@ static int	set_shell_var(t_list *elem, char *name, char *value)
 	return (SUCCESS);
 }
 
-int			treat_shell_variables(t_process *p, int opt)
+int			treat_shell_variables(t_process *p)
 {
 	t_list			*elem;
 	char			*name;
 	char			*value;
-	int				i;
 
-	i = 0;
 	if (!p->argv[0])
 		return (0);
-	while (p->argv[i] != NULL)
+	while (p->argv != NULL && (value = is_valid_assignment(p->argv[0])))
 	{
-//		ft_putendl(p->argv[i]);
-		i++;
-	}
-	while (p->argv != NULL && (value = ft_strchr(p->argv[0], '=')) != NULL)
-	{
-		if (value != NULL && opt == 1)
-		{
-			name = ft_strndup(p->argv[0], value - p->argv[0]);
-			value = ft_strdup(value + 1);
-			elem = get_shell_var(name, g_env);
-			if (set_shell_var(elem, name, value) == FAILURE)
-				return (FAILURE);
-		}
-		if ((p->argv = tab_remove_first_elem(&p->argc, p->argv)) == NULL)
-			break ;
+		name = ft_strndup(p->argv[0], value - p->argv[0]);
+		value = ft_strdup(value + 1);
+		elem = get_shell_var(name, g_env);
+		if (!name || !value || set_shell_var(elem, name, value) == FAILURE)
+			return (FAILURE);
+		p->argv = tab_remove_first_elem(&p->argc, p->argv);
 	}
 	ft_merge_sort(&g_env, &alpha_sort);
 	return (SUCCESS);
