@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/15 18:22:35 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 15:22:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ char	*ft_strstr_qmode(const char *str, const char *to_find,
 	return (l ? 0 : (char *)str);
 }
 
-//TEMP
-char		*unquote_str(char *quoted_str)
+char	*unquote_str(char *quoted_str)
 {
 	char	*cpy;
 	int		i;
@@ -73,7 +72,6 @@ char		*unquote_str(char *quoted_str)
 	cpy[i] = 0;
 	return (cpy);
 }
-//TEMP
 
 int		rm_quotes(char **str, int old_qmode)
 {
