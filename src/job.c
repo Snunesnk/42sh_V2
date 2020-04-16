@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:48:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 22:59:13 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	{
 		if (e->infile != e->mypipe[0] && e->mypipe[0] != -1)
 			close(e->mypipe[0]);
+		//TODO: this shit can make p->argv NULL, check what to do
+		//in this case beside segfault
+		//from tests, the rest of the pipeline should none the less
+		//execute normally after this
 		treat_shell_variables(e->p, SET | EXPORT);
 		e->p->infile = e->infile;
 		e->p->errfile = j->stderr;

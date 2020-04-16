@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:55:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 22:42:35 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*is_valid_assignment(const char *str)
 {
 	char	*equal;
 
-	if (!(equal = ft_strchr(str, '=')) || equal == str)
+	if (!str || !(equal = ft_strchr(str, '=')) || equal == str)
 		return (NULL);
 	while (*str && (*str == '_' || ft_isalnum(*str)))
 		++str;
@@ -29,7 +29,7 @@ int		only_assignments(t_process *p)
 	int i;
 
 	i = 0;
-	while (i < p->argc && is_valid_assignment(p->argv[i]))
+	while (is_valid_assignment(p->argv[i]))
 		++i;
 	return (i > 0 && i == p->argc);
 }
