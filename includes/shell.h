@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 22:39:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 10:06:15 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,7 +349,7 @@ int								path_concat(char **bin, char *beg, char *env, \
 void							print_env(t_list *env, t_list **elem);
 _Bool							prompt_display(int status);
 int								set_minimal_env(void);
-int								treat_shell_variables(t_process *p, int	opt);
+int								treat_shell_variables(t_process *p);
 int								set_shell_var(t_list *elem, char *name, \
 		char *value);
 int								treat_single_exp(char **str, int tilde);

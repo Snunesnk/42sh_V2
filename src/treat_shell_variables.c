@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/15 22:37:43 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 10:04:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			set_shell_var(t_list *elem, char *name, char *value)
 	return (SUCCESS);
 }
 
-int			treat_shell_variables(t_process *p, int opt)
+int			treat_shell_variables(t_process *p)
 {
 	t_list			*elem;
 	char			*name;
@@ -72,16 +72,12 @@ int			treat_shell_variables(t_process *p, int opt)
 		return (0);
 	while (p->argv != NULL && (value = is_valid_assignment(p->argv[0])))
 	{
-		if (opt == 1)
-		{
-			name = ft_strndup(p->argv[0], value - p->argv[0]);
-			value = ft_strdup(value + 1);
-			elem = get_shell_var(name, g_env);
-			if (set_shell_var(elem, name, value) == FAILURE)
-				return (FAILURE);
-		}
-		if ((p->argv = tab_remove_first_elem(&p->argc, p->argv)) == NULL)
-			break ;
+		name = ft_strndup(p->argv[0], value - p->argv[0]);
+		value = ft_strdup(value + 1);
+		elem = get_shell_var(name, g_env);
+		if (!name || !value || set_shell_var(elem, name, value) == FAILURE)
+			return (FAILURE);
+		p->argv = tab_remove_first_elem(&p->argc, p->argv);
 	}
 	ft_merge_sort(&g_env, &alpha_sort);
 	return (SUCCESS);
