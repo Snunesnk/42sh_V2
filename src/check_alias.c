@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:30:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 22:21:02 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	is_valid_alias(t_list *alias_stack, char *token_value,
 		*alias_value = ((t_shell_var *)elem->content)->value;
 		return (TRUE);
 	}
-	*alias_value = NULL;
 	return (FALSE);
 }
 
@@ -76,6 +75,17 @@ static int	replace_alias(t_list ***lst, t_list *next,
 	return (ret);
 }
 
+static t_list	**get_first_word(t_list **lst)
+{
+	t_token	*token;
+
+	while (*lst && (token = (*lst)->content)
+		&& token->type == WORD
+		&& is_valid_assignment(token->value))
+		lst = &(*lst)->next;
+	return (lst);
+}
+
 int			check_alias(t_list **lst, int check)
 {
 	static t_list	*alias_stack;
@@ -85,6 +95,7 @@ int			check_alias(t_list **lst, int check)
 	int				ret;
 
 	ret = SUCCESS;
+	lst = get_first_word(lst);
 	token = *lst ? (*lst)->content : NULL;
 	if (!token)
 		return (ret);
