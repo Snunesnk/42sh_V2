@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 21:16:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 13:22:48 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,15 @@ int				is_a_builtin(char *cmd)
 		return (1);
 	else
 		return (0);
+}
+
+int				is_a_builtin_command(char **command)
+{
+	if (!command)
+		return (0);
+	while (is_valid_assignment(*command))
+		++command;
+	return (is_a_builtin(*command));
 }
 
 int				builtins_dispatcher(char **argv)

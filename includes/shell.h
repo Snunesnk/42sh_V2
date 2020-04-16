@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:12:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:35:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define EXPORT		0x02
 # define RDONLY		0x04
 # define ARRAY		0x08
+# define TEMP		0x10
 
 # define IOTYPE		0xF
 # define IOREAD		0x1
@@ -76,6 +77,7 @@ char							*short_physical_path(char **cwd);
 
 extern char						g_pwd[PATH_MAX];
 extern t_list					*g_env;
+extern t_list					*g_tmp_env;
 extern t_list					*g_pending_cmd;
 
 extern int					*g_parse_table[NB_TOKEN];
@@ -344,9 +346,11 @@ int								path_concat(char **bin, char *beg, char *env, \
 void							print_env(t_list *env, t_list **elem);
 _Bool							prompt_display(int status);
 int								set_minimal_env(void);
-int								treat_shell_variables(t_process *p);
+int								treat_shell_variables(t_process *p,
+		uint64_t flags);
 int								set_shell_var(t_list *elem, char *name, \
-		char *value);
+		char *value, uint64_t flags);
+void							unset_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
 
