@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/06 17:07:51 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/16 13:03:46 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SOURCES	:= \
 		ds_singly_linked_list/ft_lstnew.c \
 		ds_singly_linked_list/ft_lstnew_str.c \
 		ds_singly_linked_list/ft_lstprint.c \
+		ds_singly_linked_list/ft_lst_del_if.c \
 		ds_singly_linked_list/ft_lst_find.c \
 		ds_singly_linked_list/ft_lst_last.c \
 		ds_singly_linked_list/ft_lst_to_char_tab.c \
