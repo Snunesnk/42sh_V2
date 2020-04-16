@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:16:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:14:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,10 +293,10 @@ typedef struct					s_token
 
 typedef struct					s_ast
 {
-	int			type;
+	int				type;
 	t_list			*content;
-	struct s_ast		*left;
-	struct s_ast		*right;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }								t_ast;
 
 typedef struct					s_shell_var
