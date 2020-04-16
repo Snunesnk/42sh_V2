@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:58:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 18:36:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,46 +23,30 @@ const struct s_tags	g_tags[] =
 	{"\0", NULL, NULL}
 };
 
-static int	expansion_dispatcher(char *str, int tilde)
+static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 {
 	int		i;
-	int		ref;
 	char	*ptr;
 	char	*closest;
+	int		tmp_qmode;
+	int		orig_qmode;
 
 	i = 0;
+	*ref = -1;
 	closest = NULL;
-	ref = -1;
+	orig_qmode = *qmode;
 	while (*(g_tags[i].opentag))
 	{
+		tmp_qmode = orig_qmode;
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
 			break ;
-		ptr = ft_strstr(str, g_tags[i].opentag);
-		if (ptr && (!closest || (ptr < closest && closest)))
+		ptr = ft_strstr_qmode(str, g_tags[i].opentag, DQUOTE, &tmp_qmode);
+		if (ptr && (!closest || ptr < closest ))
 		{
+			*qmode = tmp_qmode;
 			closest = ptr;
-			ref = i;
+			*ref = i;
 		}
-		++i;
-	}
-	return (ref);
-}
-
-static char	*get_closest_exp(char *str, int tilde)
-{
-	int		i;
-	char	*ptr;
-	char	*closest;
-
-	i = 0;
-	closest = NULL;
-	while (*(g_tags[i].opentag))
-	{
-		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break ;
-		ptr = ft_strstr(str, g_tags[i].opentag);
-		if (ptr && (!closest || (ptr < closest && closest)))
-			closest = ptr;
 		++i;
 	}
 	return (closest);
@@ -99,18 +83,17 @@ int				treat_single_exp(char **str, int tilde)
 {
 	int		ref;
 	int		ret;
+	int		qmode;
 	char	*next;
 
 	next = *str;
-	while ((next = get_closest_exp(next, tilde)))
+	qmode = NO_QUOTE;
+	while ((next = get_closest_exp(next, tilde, &ref, &qmode)))
 	{
-		if (tilde && (next > *str
-		|| (next == *str && (next[1] != '/' && next[1] != '\0'))))
-		{
+		if (tilde && (next > *str || (next[1] && next[1] != '/')))
 			tilde = 0;
+		if (!tilde && *next == '~')
 			continue ;
-		}
-		ref = expansion_dispatcher(next, tilde);
 		if ((ret = replace_expansion(str, &next, ref)))
 		{
 			psherror(ret, *str, e_cmd_type);

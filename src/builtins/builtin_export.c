@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 20:58:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 17:32:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 extern t_list	*g_env;
 
-static void		print_export(void)
+static void	print_export(void)
 {
 	t_list		*list;
 	t_shell_var	*var;
@@ -46,7 +46,7 @@ static void	add_env_var(char *name, char *value)
 
 	shell_var.name = ft_strdup(name);
 	shell_var.value = ft_strdup(value);
-	shell_var.flag |= EXPORT;
+	shell_var.flag |= EXPORT + SET;
 	lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
 	if (!lst_new)
 	{
@@ -81,7 +81,7 @@ static int	change_var_flag(int option, char *name, char *value)
 	return (1);
 }
 
-static void		exec_export(char **args, int option)
+static void	exec_export(char **args, int option)
 {
 	char	*name;
 	char	*value;
@@ -105,7 +105,7 @@ static void		exec_export(char **args, int option)
 	}
 }
 
-int				cmd_export(int ac, char **av)
+int			cmd_export(int ac, char **av)
 {
 	int		ret;
 	char	**args;
@@ -129,5 +129,5 @@ int				cmd_export(int ac, char **av)
 		}
 	}
 	exec_export(args, option);
-	return (ret);
+	return (e_success);
 }

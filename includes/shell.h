@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 12:33:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 13:12:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,6 +336,7 @@ int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
 int								check_alias(t_list **lst, int check);
+char							*is_valid_assignment(const char *str);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
@@ -343,7 +344,9 @@ int								path_concat(char **bin, char *beg, char *env, \
 void							print_env(t_list *env, t_list **elem);
 _Bool							prompt_display(int status);
 int								set_minimal_env(void);
-int								treat_shell_variables(t_process *p, int	opt);
+int								treat_shell_variables(t_process *p);
+int								set_shell_var(t_list *elem, char *name, \
+		char *value);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
 

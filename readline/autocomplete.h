@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/14 17:08:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 23:34:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct	s_print_list
 }				t_print_list;
 
 int				g_autocompl_on;
-union u_buffer	g_autocompl_bad_seq;
+union u_buffer	g_bad_seq;
 
 void			autocomplete(void);
 t_node			*get_cmd_compl(char *to_complete, char *path, t_data *data);

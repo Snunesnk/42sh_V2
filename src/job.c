@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/12 23:42:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 10:11:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,10 @@ int		launch_job(t_job *j, int foreground)
 		else
 			outfile = j->stdout;
 		if (!j->first_process->next && only_assignments(p))
-			treat_shell_variables(p, 1);
+			treat_shell_variables(p);
 		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) \
 				&& !j->first_process->next)
-		{
-			treat_shell_variables(p, 0);
 			return (launch_builtin(p));
-		}
 		else
 		{
 			pid = fork();
@@ -98,7 +95,7 @@ int		launch_job(t_job *j, int foreground)
 			{
 				if (infile != mypipe[0] && mypipe[0] != -1)
 					close(mypipe[0]);
-				treat_shell_variables(p, 1);
+				treat_shell_variables(p);
 				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
 			}
 			else if (pid < 0)

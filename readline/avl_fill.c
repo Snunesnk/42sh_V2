@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 13:57:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/15 15:14:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ char	*extract_file_name(char *name)
 	}
 	i = 0;
 	if (!(new_name = (char *)ft_memalloc(sizeof(char) * (ft_strlen(name) \
-						+ count_inhib(name) + 1))))
+						+ count_shell_spec(name) + 1))))
 		return (NULL);
 	i = 0;
 	while (name[i])
 	{
-		if (is_inhib(name[i]))
+		if (is_shell_spec(name[i]))
 			new_name = ft_strcat(new_name, "\\");
 		new_name = ft_strncat(new_name, name + i, 1);
 		i++;
