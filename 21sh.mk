@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/14 22:17:30 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/15 19:36:09 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
 		ast.c \
-		ast_order.c \
+		ast_utils.c \
 		build_redir.c \
 		check_alias.c \
 		debug.c \
@@ -41,22 +41,19 @@ SOURCES :=	main.c \
 		get_env_tab.c \
 		get_next_token.c \
 		get_param.c \
-		get_token_word.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
-		init_enum_tab.c \
+		parse_table.c \
 		job.c \
 		job_control.c \
 		job_control2.c \
 		job_control3.c \
 		job_bookeeping.c \
 		launch_builtin.c \
-		launch_lexer_parser.c \
 		lexer.c \
 		lexer_utils.c \
 		manage_shell_var.c \
-		new_node_ast.c \
 		only_assignments.c \
 		dollar_expansions.c \
 		parameter_expansions.c \

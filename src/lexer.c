@@ -3,70 +3,109 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/04 13:59:39 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 12:36:59 by yforeau          ###   ########.fr       */
+/*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/16 13:51:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static int	add_token_to_list(t_token *token, t_list **lst)
+char	*g_tokval[NB_TOKEN] = {
+	[SEMI] = ";",
+	[OR_IF] = "||",
+	[PIPE] = "|",
+	[AND_IF] = "&&",
+	[GREATAND] = ">&",
+	[LESSAND] = "<&",
+	[ANDGREAT] = "&>",
+	[AND] = "&",
+	[DGREAT] = ">>",
+	[DLESSDASH] = "<<-",
+	[DLESS] = "<<",
+	[GREAT] = ">",
+	[LESS] = "<",
+	[NEWLINE] = "\n",
+	[IO_NB] = NULL,
+	[WORD] = NULL,
+	[NONE] = NULL
+};
+
+static t_token	*get_next_token(const char *str, size_t *i, int prevtype)
+{
+	t_token	*token;
+	size_t	t;
+
+	t = 0;
+	while (g_tokval[t]
+		&& ft_strncmp(&str[*i], g_tokval[t], ft_strlen(g_tokval[t])))
+		++t;
+	if (!g_tokval[t])
+		token = get_word(str, i, prevtype);
+	else
+	{
+		token = ft_memalloc(sizeof(t_token));
+		token->type = t;
+		*i += ft_strlen(g_tokval[t]);
+	}
+	return (token);
+}
+
+static int		add_token_to_list(t_token *token, t_list **lst)
 {
 	t_list	*new;
+	t_list	*tmp;
 
-	new = ft_lstnew(token, sizeof(*token));
+	tmp = *lst;
+	new = ft_memalloc(sizeof(t_list));
+	new->content = token;
 	if (!new)
 		return (FAILURE);
-	ft_lstaddend(lst, new);
+	if (!*lst)
+		*lst = new;
+	else
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
 	return (SUCCESS);
 }
 
-static int	border_token_list(t_list **lst, enum e_token token_type)
+t_list			*list_tokens(const char *input)
 {
-	t_token	token;
+	t_list	*lst;
+	t_token	*token;
+	size_t	i;
+	int		prevtype;
 
-	ft_bzero(&token, sizeof(token));
-	token.type = token_type;
-	return (add_token_to_list(&token, lst));
-}
-
-int		get_token_list(char *input, t_list **lst)
-{
-	size_t			pos;
-	t_token			token;
-	int				ret;
-
-	pos = 0;
-	ret = SUCCESS;
-	token.type = NONE;
-	while (input[pos] && ret == SUCCESS)
+	i = 0;
+	lst = NULL;
+	prevtype = WORD;
+	while (input[i])
 	{
-		while (ft_isblank(input[pos]))
-			++pos;
-		if (!input[pos])
-			break ;
-		token.value = NULL;
-		pos += get_next_token(input + pos, &token);
-		ret = add_token_to_list(&token, lst);
+		token = get_next_token(input, &i, prevtype);
+		prevtype = token->type;
+		add_token_to_list(token, &lst);
+		while (input[i] != '\n' && ft_isspace(input[i]))
+			++i;
 	}
-	return (ret);
+	return (lst);
 }
 
-int			lexer(char *input, t_list **lst)
+t_list			*lexer(const char *input)
 {
-	int	ret;
+	t_list	*lst;
 
-	ret = FAILURE;
-	if (!input)
-		return (ret);
 	while (ft_isblank(*input))
 		++input;
-	if ((input = ft_strjoin(input, "\n")) && *input)
-		ret = border_token_list(lst, START) || get_token_list(input, lst)
-			|| border_token_list(lst, END) || check_alias(lst, TRUE);
-	ft_strdel(&input);
-	return (ret);
+	input = ft_strjoin(input, "\n");
+	if (!input)
+		return (NULL);
+	lst = list_tokens(input);
+	if (lst)
+		check_alias(&lst, TRUE);
+	return (lst);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 10:06:15 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 13:12:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define TRUE		1
 # define FALSE		0
 # define BUF_SIZE	32
-# define NB_TOKEN	20
+# define NB_TOKEN	17
 
 # define SET		0x01
 # define EXPORT		0x02
@@ -77,6 +77,8 @@ char							*short_physical_path(char **cwd);
 extern char						g_pwd[PATH_MAX];
 extern t_list					*g_env;
 extern t_list					*g_pending_cmd;
+
+extern int					*g_parse_table[NB_TOKEN];
 
 extern t_list					*g_alias;
 
@@ -258,7 +260,7 @@ int								do_iodup(t_redirection *r);
 int								do_redirection(t_redirection *r);
 
 extern char						*g_filename_redir_error;
-extern char						*g_token_tab[NB_TOKEN];
+extern char						*g_tokval[NB_TOKEN];
 
 enum							e_token
 {
@@ -277,10 +279,7 @@ enum							e_token
 	LESS,
 	NEWLINE,
 	IO_NB,
-	COMMENT,
 	WORD,
-	START,
-	END,
 	NONE
 };
 
@@ -292,10 +291,10 @@ typedef struct					s_token
 
 typedef struct					s_ast
 {
-	enum e_token	type;
+	int			type;
 	t_list			*content;
-	void			*left;
-	void			*right;
+	struct s_ast		*left;
+	struct s_ast		*right;
 }								t_ast;
 
 typedef struct					s_shell_var
@@ -307,9 +306,10 @@ typedef struct					s_shell_var
 
 void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
-void							ast_order(t_ast **ast);
 void							astdel(t_ast **ast);
-int								build_ast(t_ast **ast, t_list *lst);
+t_ast							*build_ast(t_list **lst);
+t_ast							*alloc_node(int type, t_list *pipeline, \
+		t_ast *left, t_ast *right);
 void							debug(t_list *lst);
 void							debug_ast(t_ast *ast);
 void							del(void *content, size_t content_size);
@@ -328,19 +328,14 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 		t_list **head);
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
-int								get_next_token(const char *str, \
-		t_token *token);
 t_list							*get_shell_var(char *name, t_list *svar_lst);
 int								get_stdin(char **line);
-size_t							get_word(const char *str, t_token *token);
-enum e_token					**init_enum_tab(void);
+t_token							*get_word(const char *str, size_t *i, \
+		int prevtype);
 int								initialize_prompt_fd(void);
-int								launch_lexer_parser(char *input, t_ast **ast);
-int								lexer(char *str, t_list **lst);
-int								get_token_list(char *input, t_list **lst);
+t_list							*lexer(const char *str);
+t_list							*list_tokens(const char *input);
 int								check_alias(t_list **lst, int check);
-int								new_node_ast(t_ast **ast, t_list *head, \
-		t_list **lst, int type);
 char							*is_valid_assignment(const char *str);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);

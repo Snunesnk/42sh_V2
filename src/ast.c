@@ -3,66 +3,66 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/02/12 10:39:25 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/13 16:04:54 by abarthel         ###   ########.fr       */
+/*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/16 13:47:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static t_list	*remove_border(t_list **lst)
+static t_list	*build_leaf(t_list **lst)
 {
-	t_list	*next;
-	t_list	*tmp;
+	t_list	*pipeline;
+	t_list	*prev;
 
-	next = (*lst)->next;
-	ft_lstdelone(lst, &del);
-	*lst = next;
-	tmp = next;
-	while (tmp != NULL && tmp->next != NULL && tmp->next->next != NULL
-		&& tmp->next->next->next != NULL)
+	pipeline = *lst;
+	prev = *lst;
+	while (((t_token*)((*lst)->content))->type != AND_IF
+		&& ((t_token*)((*lst)->content))->type != OR_IF
+		&& ((t_token*)((*lst)->content))->type != SEMI
+		&& ((t_token*)((*lst)->content))->type != AND
+		&& ((t_token*)((*lst)->content))->type != NEWLINE)
 	{
-		tmp = tmp->next;
+		prev = *lst;
+		*lst = (*lst)->next;
 	}
-	ft_lstdelone(&(tmp->next->next), &del);
-	ft_lstdelone(&(tmp->next), &del);
-	tmp->next = NULL;
-	return (next);
+	prev->next = NULL;
+	return (pipeline);
 }
 
-int				build_ast(t_ast **ast, t_list *lst)
+static t_ast	*build_node(t_list **lst)
 {
-	t_list	*head;
-	t_list	*tmp;
+	t_list	*pipeline;
 	int		type;
 
-	head = remove_border(&lst);
-	tmp = lst;
-	while (head)
+	pipeline = build_leaf(lst);
+	type = ((t_token*)((*lst)->content))->type;
+	if (type == AND_IF || type == OR_IF)
 	{
-		type = lst ? ((t_token*)(lst->content))->type : END;
-		if (type == END || type == AND || type == AND_IF
-			|| type == OR_IF || type == SEMI)
-		{
-			if (!lst)
-				tmp = NULL;
-			if (new_node_ast(ast, head, &tmp, type) == FAILURE)
-				return (FAILURE);
-			head = tmp;
-			lst = head;
-			tmp = lst;
-			continue ;
-		}
-		lst = lst->next;
+		(*lst) = (*lst)->next;
+		return (alloc_node(type, NULL,
+			alloc_node(WORD, pipeline, NULL, NULL),
+			build_node(lst)));
 	}
-	ft_printf("\n---------BEFORE-------\n");
-	debug_ast(*ast);
-	ft_printf("\n---------AFTER-------\n");
-	ast_order(ast);
-	debug_ast(*ast);
-	ft_printf("\n---NEXT---\n");
-	return (SUCCESS);
+	return (alloc_node(WORD, pipeline, NULL, NULL));
+}
+
+t_ast			*build_ast(t_list **lst)
+{
+	t_ast	*ast;
+	int		type;
+
+	if (((t_token*)((*lst)->content))->type == NEWLINE)
+		return (NULL);
+	ast = build_node(lst);
+	type = ((t_token*)((*lst)->content))->type;
+	if (type == SEMI || type == AND)
+	{
+		(*lst) = (*lst)->next;
+		ast = alloc_node(type, NULL, ast, build_ast(lst));
+	}
+	return (ast);
 }

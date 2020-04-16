@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 17:37:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/15 20:04:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@ int			execute_pipeline(t_ast *node, int foreground)
 
 int			execute_semi(t_ast *node, int foreground)
 {
-	if (node->left)
-		execute_node(node->left, foreground);
 	if (node->right)
+	{
+		execute_node(node->left, foreground);
 		return (execute_node(node->right, foreground));
-	return (ASTERROR);
+	}
+	else
+		return (execute_node(node->left, foreground));
 }
 
 static int	parent_shell(int foreground, pid_t pid)

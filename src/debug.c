@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/15 17:31:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 13:13:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void		init_tab(char **token_tab)
 	token_tab[WORD] = "WORD";
 	token_tab[IO_NB] = "IO_NB";
 	token_tab[NEWLINE] = "NEWLINE";
-	token_tab[COMMENT] = "COMMENT";
-	token_tab[START] = "START";
-	token_tab[END] = "END";
 }
 
 static void	print(t_list *lst, t_list **elem)
