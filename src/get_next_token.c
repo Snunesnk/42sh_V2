@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:01:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 12:01:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:20:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static t_token	*get_token_word(const char *str, size_t *i, int prevtype)
 	return (token);
 }
 
-t_token		*get_word(const char *str, size_t *i, int prevtype)
+t_token			*get_word(const char *str, size_t *i, int prevtype)
 {
 	t_token	*token;
 

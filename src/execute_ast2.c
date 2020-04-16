@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:08:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:16:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,5 @@ int	execute_node(t_ast *node, int foreground)
 		return (execute_andand(node, foreground));
 	else if (node->type == OR_IF)
 		return (execute_or(node, foreground));
-//	ft_printf("\nNO\n"); /* DEBUGG AST AND ITS EXEC */
 	return (ASTERROR);
 }
