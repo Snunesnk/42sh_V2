@@ -7,9 +7,6 @@ static enum e_token	g_delim_tokens[10] = {
 	AND_IF,
 	AND,
 	NEWLINE,
-	COMMENT,
-	START,
-	END,
 	NONE
 };
 
@@ -48,7 +45,7 @@ static int		replace_alias(t_list ***lst, t_list *next,
 
 	new_tokens = NULL;
 	*check = *value && value[ft_strlen(value) - 1] == ' ' ? TRUE : FALSE;
-	if ((ret = get_token_list(value, &new_tokens)) == SUCCESS
+	if ((new_tokens = list_tokens(value))
 		&& (ret = check_alias(&new_tokens, TRUE)) == FAILURE)
 		ft_lstdel(&new_tokens, del);
 	else if (ret == SUCCESS)
@@ -77,7 +74,7 @@ int			check_alias(t_list **lst, int check)
 
 	ret = SUCCESS;
 	token = *lst ? (*lst)->content : NULL;
-	if (!token || token->type == END)
+	if (!token)
 		return (ret);
 	ft_bzero((void *)&cur, sizeof(t_list));
 	ft_lstadd(&alias_stack, &cur);
