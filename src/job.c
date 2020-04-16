@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:39:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:48:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,6 @@
 #include "shell.h"
 #include "builtins.h"
 #include "exec.h"
-
-void	free_all_processes(t_process *p)
-{
-	t_process	*next_p;
-
-	while (p)
-	{
-		next_p = p->next;
-		free_process(p);
-		p = next_p;
-	}
-}
-
-void	free_job(t_job *j)
-{
-	t_job	*j_next;
-	t_job	*tmp;
-
-	if (j == g_first_job)
-	{
-		free_all_processes(j->first_process);
-		free(j);
-		g_first_job = NULL;
-	}
-	else
-	{
-		j_next = g_first_job;
-		while (j_next && j_next->next)
-		{
-			if (j_next->next->pgid == j->pgid)
-			{
-				tmp = j_next->next;
-				j_next->next = tmp->next;
-				free_all_processes(tmp->first_process);
-				free(tmp);
-				return ;
-			}
-			j_next = j_next->next;
-		}
-	}
-}
 
 static void	j_status(t_job *j, int foreground)
 {
@@ -110,11 +69,8 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 		e->p->outfile = e->outfile;
 		launch_process(e->p, j->pgid, foreground);
 	}
-	else if (e->pid < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "System call fork(2) failed->\n");
+	else if (e->pid < 0 && ft_dprintf(STDERR_FILENO, "fork(2) failed\n"))
 		exit(1);
-	}
 	else
 	{
 		e->p->pid = e->pid;
@@ -129,7 +85,7 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	}
 }
 
-int		launch_job(t_job *j, int foreground)
+int			launch_job(t_job *j, int foreground)
 {
 	t_exec		e;
 
