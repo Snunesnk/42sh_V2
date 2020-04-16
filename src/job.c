@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:47:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:07:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ static void	j_status(t_job *j, int foreground)
 	}
 }
 
+static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
+{
+	if (*infile != j->stdin)
+		close(*infile);
+	if (*outfile != j->stdout)
+		close(*outfile);
+	*infile = mypipe;
+}
+
 int		launch_job(t_job *j, int foreground)
 {
 	t_process	*p;
@@ -87,17 +96,21 @@ int		launch_job(t_job *j, int foreground)
 	{
 		if (treat_expansions(p))
 			p->argv[0] = NULL;
+
+		/* Set mypipe */
 		if (p->next)
 		{
 			if (pipe(mypipe) < 0)
 			{
-				perror("pipe");
+				ft_dprintf(STDERR_FILENO, "System call pipe(2) failed.\n");
 				exit(1);
 			}
 			outfile = mypipe[1];
 		}
 		else
 			outfile = j->stdout;
+
+		/* Exec */
 		if (!j->first_process->next && only_assignments(p))
 			treat_shell_variables(p, SET);
 		else if (outfile == j->stdout && is_a_builtin_command(p->argv) \
@@ -118,7 +131,7 @@ int		launch_job(t_job *j, int foreground)
 			}
 			else if (pid < 0)
 			{
-				perror("fork");
+				ft_dprintf(STDERR_FILENO, "System call fork(2) failed.\n");
 				exit(1);
 			}
 			else
@@ -134,11 +147,8 @@ int		launch_job(t_job *j, int foreground)
 					add_name_hash_table(p->argv[0], 1);
 			}
 		}
-		if (infile != j->stdin)
-			close(infile);
-		if (outfile != j->stdout)
-			close(outfile);
-		infile = mypipe[0];
+
+		set_outfiles(j, &infile, &outfile, mypipe[0]);
 		p = p->next;
 	}
 	j_status(j, foreground);
