@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/06 17:08:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 12:59:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,5 +279,7 @@ void			ft_lstaddend(t_list **alst, t_list *new);
 void			ft_lstadd(t_list **alst, t_list *new);
 t_list			*ft_lst_last(t_list *lst);
 t_list			*ft_lst_find(t_list *lst, void *content_ref, int (*cmp)());
+void			ft_lst_del_if(t_list **lst, void *content_ref,
+					void (*del)(void *, size_t), int (*cmp)());
 
 #endif

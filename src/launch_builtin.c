@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:49 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 19:57:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 13:27:36 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ int			launch_builtin(t_process *p)
 		tag_all_redirections(p->redir);
 	if ((ret = do_redirection(p->redir)))
 		return (g_errordesc[ret].code);
+	treat_shell_variables(p, SET | EXPORT | TEMP);
 	ret = builtins_dispatcher(p->argv);
+	unset_temp_shell_variables();
 	if (p && p->redir)
 		undo_redirection(p->redir);
 	return (ret);

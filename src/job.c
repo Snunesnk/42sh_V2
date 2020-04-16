@@ -6,123 +6,17 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 10:11:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 17:48:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "builtins.h"
+#include "exec.h"
 
-void	free_all_processes(t_process *p)
+static void	j_status(t_job *j, int foreground)
 {
-	t_process	*next_p;
-
-	while (p)
-	{
-		next_p = p->next;
-		free_process(p);
-		p = next_p;
-	}
-}
-
-void	free_job(t_job *j)
-{
-	t_job	*j_next;
-	t_job	*tmp;
-
-	if (j == g_first_job)
-	{
-		free_all_processes(j->first_process);
-		free(j);
-		g_first_job = NULL;
-	}
-	else
-	{
-		j_next = g_first_job;
-		while (j_next && j_next->next)
-		{
-			if (j_next->next->pgid == j->pgid)
-			{
-				tmp = j_next->next;
-				j_next->next = tmp->next;
-				free_all_processes(tmp->first_process);
-				free(tmp);
-				return ;
-			}
-			j_next = j_next->next;
-		}
-	}
-}
-
-int		launch_job(t_job *j, int foreground)
-{
-	t_process	*p;
-	pid_t		pid;
-	int			mypipe[2];
-	int			infile;
-	int			outfile;
-
-	mypipe[0] = -1;
-	mypipe[1] = -1;
-	outfile = -1;
-	infile = j->stdin;
-	p = j->first_process;
-	while (p)
-	{
-		if (treat_expansions(p))
-			p->argv[0] = NULL;
-		if (p->next)
-		{
-			if (pipe(mypipe) < 0)
-			{
-				perror("pipe");
-				exit(1);
-			}
-			outfile = mypipe[1];
-		}
-		else
-			outfile = j->stdout;
-		if (!j->first_process->next && only_assignments(p))
-			treat_shell_variables(p);
-		else if (outfile == j->stdout && is_a_builtin(p->argv[0]) \
-				&& !j->first_process->next)
-			return (launch_builtin(p));
-		else
-		{
-			pid = fork();
-			if (pid == 0)
-			{
-				if (infile != mypipe[0] && mypipe[0] != -1)
-					close(mypipe[0]);
-				treat_shell_variables(p);
-				launch_process(p, j->pgid, infile, outfile, j->stderr, foreground);
-			}
-			else if (pid < 0)
-			{
-				perror("fork");
-				exit(1);
-			}
-			else
-			{
-				p->pid = pid;
-				if (g_shell_is_interactive)
-				{
-					if (!j->pgid)
-						j->pgid = pid;
-					setpgid(pid, j->pgid);
-				}
-				if (g_hashall)
-					add_name_hash_table(p->argv[0], 1);
-			}
-		}
-		if (infile != j->stdin)
-			close(infile);
-		if (outfile != j->stdout)
-			close(outfile);
-		infile = mypipe[0];
-		p = p->next;
-	}
 	if (!g_shell_is_interactive)
 		wait_for_job(j);
 	else if (g_subshell)
@@ -134,5 +28,84 @@ int		launch_job(t_job *j, int foreground)
 		put_job_in_background(j, 0);
 		format_job_info(j, "launched");
 	}
+}
+
+static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
+{
+	if (*infile != j->stdin)
+		close(*infile);
+	if (*outfile != j->stdout)
+		close(*outfile);
+	*infile = mypipe;
+}
+
+static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
+{
+	if (treat_expansions(p))
+		p->argv[0] = NULL;
+	if (p->next)
+	{
+		if (pipe(mypipe) < 0)
+		{
+			ft_dprintf(STDERR_FILENO, "System call pipe(2) failed.\n");
+			exit(1);
+		}
+		return (mypipe[1]);
+	}
+	else
+		return (j->stdout);
+}
+
+static void	execute(t_job *j, t_exec *e, int foreground)
+{
+	e->pid = fork();
+	if (e->pid == 0)
+	{
+		if (e->infile != e->mypipe[0] && e->mypipe[0] != -1)
+			close(e->mypipe[0]);
+		treat_shell_variables(e->p, SET | EXPORT);
+		e->p->infile = e->infile;
+		e->p->errfile = j->stderr;
+		e->p->outfile = e->outfile;
+		launch_process(e->p, j->pgid, foreground);
+	}
+	else if (e->pid < 0 && ft_dprintf(STDERR_FILENO, "fork(2) failed\n"))
+		exit(1);
+	else
+	{
+		e->p->pid = e->pid;
+		if (g_shell_is_interactive)
+		{
+			if (!j->pgid)
+				j->pgid = e->pid;
+			setpgid(e->pid, j->pgid);
+		}
+		if (g_hashall)
+			add_name_hash_table(e->p->argv[0], 1);
+	}
+}
+
+int			launch_job(t_job *j, int foreground)
+{
+	t_exec		e;
+
+	e.mypipe[0] = -1;
+	e.mypipe[1] = -1;
+	e.infile = j->stdin;
+	e.p = j->first_process;
+	while (e.p)
+	{
+		e.outfile = set_mypipe(e.p, j, e.mypipe);
+		if (!j->first_process->next && only_assignments(e.p))
+			treat_shell_variables(e.p, SET);
+		else if (e.outfile == j->stdout && is_a_builtin_command(e.p->argv) \
+				&& !j->first_process->next)
+			return (launch_builtin(e.p));
+		else
+			execute(j, &e, foreground);
+		set_outfiles(j, &e.infile, &e.outfile, e.mypipe[0]);
+		e.p = e.p->next;
+	}
+	j_status(j, foreground);
 	return (-1);
 }

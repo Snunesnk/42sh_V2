@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/15 19:36:09 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/16 17:43:39 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SOURCES :=	main.c \
 		init_shell.c \
 		parse_table.c \
 		job.c \
+		job_utils.c \
 		job_control.c \
 		job_control2.c \
 		job_control3.c \

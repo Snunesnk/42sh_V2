@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 17:45:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:47:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,5 @@ int			cmd_cd(int argc, char **argv)
 		return (access_failure(argv, &cd));
 	if ((cd.ret = change_dir(cd.path, cd.p)))
 		return (changedir_failure(argv, &cd));
-	ft_memdel((void**)&(cd.path));
 	return (cd.ret);
 }
