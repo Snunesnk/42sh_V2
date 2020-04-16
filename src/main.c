@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:44:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:51:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,7 @@ int			exec_input(char *input)
 		ft_lstdelone(&lst, &del);
 		return (status);
 	}
-	ast = build_ast(&lst); /* Debugging AST */
-//	debug_ast(ast);
+	ast = build_ast(&lst);
 	status = execute_node(ast, 1);
 	astdel(&ast);
 	g_retval = status;
@@ -72,26 +71,12 @@ int			main(int argc, char **argv)
 	int				stop;
 	char			*prompt;
 
-	stop = 0;
 	(void)argc;
+	stop = 0;
 	status = 0;
 	g_progname = argv[0];
 	if (init_shell())
 		return (EXIT_FAILURE);
-	if (!(environ = ft_tabcpy(environ)))
-	{
-		psherror(e_cannot_allocate_memory, argv[0], e_cmd_type);
-		return (1);
-	}
-	init_hash_table();
-	get_env_list(environ);
-	g_retval = e_success;
-	if ((g_retval = set_minimal_env()))
-	{
-		psherror(g_retval, argv[0], e_cmd_type);
-		ft_tabdel(&environ);
-		return (1);
-	}
 	while (stop == 0)
 	{
 		prompt = get_prompt();
