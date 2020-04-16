@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 11:18:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 12:20:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	execute_or(t_ast *node, int foreground)
 {
 	if (execute_node(node->left, foreground))
 		return (execute_node(node->right, foreground));
-	return (ASTERROR);
+	return (0);
 }
 
 int	execute_node(t_ast *node, int foreground)
