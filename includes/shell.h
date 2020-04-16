@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:35:26 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 15:16:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
 int								exec_input(char *input);
-int								init_shell(void);
+int								init_shell(char *argv, int argc);
 int								launch_job(t_job *j, int foreground);
 void							format_job_info (t_job *j, const char *status);
 void							wait_for_job(t_job *j);

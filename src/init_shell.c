@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:10:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:16:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ static int	init_shell_suite(void)
 	return (0);
 }
 
-int			init_shell(void)
+int			init_shell(char *argv, int argc)
 {
+	(void)argc;
+	g_progname = argv;
 	g_shell_terminal = STDIN_FILENO;
 	g_shell_is_interactive = isatty(g_shell_terminal);
 	if (g_shell_is_interactive)

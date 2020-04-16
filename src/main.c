@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:55:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:16:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_readline.h"
 #include "builtins.h"
 
-extern char	**environ;
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
 t_list		*g_tmp_env;
@@ -65,6 +64,15 @@ int			exec_input(char *input)
 	return (status);
 }
 
+void		exit_clean(void)
+{
+	extern char	**environ;
+
+	free_hash_table();
+	ft_tabdel(&environ);
+	ft_lstdel(&g_env, &del_env);
+}
+
 int			main(int argc, char **argv)
 {
 	char			*input;
@@ -72,11 +80,9 @@ int			main(int argc, char **argv)
 	int				stop;
 	char			*prompt;
 
-	(void)argc;
 	stop = 0;
 	status = 0;
-	g_progname = argv[0];
-	if (init_shell())
+	if (init_shell(argv[0], argc))
 		return (EXIT_FAILURE);
 	while (stop == 0)
 	{
@@ -84,21 +90,14 @@ int			main(int argc, char **argv)
 		if (g_onecmd)
 			stop = 1;
 		if (!g_pending_cmd && !(input = ft_readline(prompt)))
-		{
-			ft_printf("\nKICCCCCCKKKK OOOOOOFFFFFF\n\n");
 			break ;
-		}
 		else if (g_pending_cmd)
-		{
 			if (!(input = get_next_pending_cmd()))
 				break ;
-		}
 		exec_input(input);
 		test_hash_path();
 		free(prompt);
 	}
-	free_hash_table();
-	ft_tabdel(&environ);
-	ft_lstdel(&g_env, &del_env);
+	exit_clean();
 	return (status);
 }
