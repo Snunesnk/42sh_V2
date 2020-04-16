@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 20:05:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 13:51:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	*g_tokval[NB_TOKEN] = {
 static t_token	*get_next_token(const char *str, size_t *i, int prevtype)
 {
 	t_token	*token;
-	size_t		t;
+	size_t	t;
 
 	t = 0;
-	while (g_tokval[t] && ft_strncmp(&str[*i], g_tokval[t], ft_strlen(g_tokval[t])))
+	while (g_tokval[t]
+		&& ft_strncmp(&str[*i], g_tokval[t], ft_strlen(g_tokval[t])))
 		++t;
 	if (!g_tokval[t])
 		token = get_word(str, i, prevtype);
@@ -52,7 +53,7 @@ static t_token	*get_next_token(const char *str, size_t *i, int prevtype)
 	return (token);
 }
 
-static int	add_token_to_list(t_token *token, t_list **lst)
+static int		add_token_to_list(t_token *token, t_list **lst)
 {
 	t_list	*new;
 	t_list	*tmp;
@@ -73,12 +74,12 @@ static int	add_token_to_list(t_token *token, t_list **lst)
 	return (SUCCESS);
 }
 
-t_list		*list_tokens(const char *input)
+t_list			*list_tokens(const char *input)
 {
-	t_list			*lst;
-	t_token			*token;
-	size_t			i;
-	int			prevtype;
+	t_list	*lst;
+	t_token	*token;
+	size_t	i;
+	int		prevtype;
 
 	i = 0;
 	lst = NULL;

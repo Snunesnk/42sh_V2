@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:17:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 13:47:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static t_list		*build_leaf(t_list **lst)
+static t_list	*build_leaf(t_list **lst)
 {
 	t_list	*pipeline;
 	t_list	*prev;
@@ -33,14 +33,14 @@ static t_list		*build_leaf(t_list **lst)
 	return (pipeline);
 }
 
-static t_ast		*build_node(t_list **lst)
+static t_ast	*build_node(t_list **lst)
 {
 	t_list	*pipeline;
 	int		type;
 
 	pipeline = build_leaf(lst);
 	type = ((t_token*)((*lst)->content))->type;
-	if (type  == AND_IF || type  == OR_IF)
+	if (type == AND_IF || type == OR_IF)
 	{
 		(*lst) = (*lst)->next;
 		return (alloc_node(type, NULL,
