@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 14:53:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 15:39:08 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include "libft.h"
 #include "error.h"
+#include "shell.h"
 
 static int	replace_tilde(char **str, char *start, char *env)
 {
@@ -39,19 +40,19 @@ static void	test_syntax(size_t *index, char **str, int *ret)
 
 	if (!(*str)[1] || (*str)[1] == '/')
 	{
-		env = ft_getenv("HOME");
+		env = get_shell_var_value("HOME", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[1], env);
 	}
 	else if ((*str)[1] == '-' && ((*str)[2] == '/' || !(*str)[2]))
 	{
-		env = ft_getenv("OLDPWD");
+		env = get_shell_var_value("OLDPWD", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[2], env);
 	}
 	else if ((*str)[1] == '+' && ((*str)[2] == '/' || !(*str)[2]))
 	{
-		env = ft_getenv("PWD");
+		env = get_shell_var_value("PWD", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[2], env);
 	}

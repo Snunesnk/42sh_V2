@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:08 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:37:19 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 16:05:11 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,6 @@ void		unset_temp_shell_variables(void)
 	ft_lstaddend(&g_env, g_tmp_env);
 	g_tmp_env = NULL;
 	ft_merge_sort(&g_env, alpha_sort);
-}
-
-int			set_shell_var(t_list *elem, char *name,
-				char *value, uint64_t flags)
-{
-	t_list			*lst_new;
-	t_shell_var		shell_var;
-
-	ft_bzero(&shell_var, sizeof(shell_var));
-	if (!elem || (flags & TEMP))
-	{
-		shell_var.name = name;
-		shell_var.flag = elem ? ((t_shell_var *)elem->content)->flag : flags;
-		shell_var.value = elem ? ((t_shell_var *)elem->content)->value : value;
-		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-		if (lst_new == NULL)
-			return (FAILURE);
-		ft_lstadd(elem ? &g_tmp_env : &g_env, lst_new);
-	}
-	if (elem)
-	{
-		((t_shell_var*)(elem->content))->value = value;
-		((t_shell_var*)(elem->content))->flag |= flags;
-	}
-	return (SUCCESS);
 }
 
 int			treat_shell_variables(t_process *p, uint64_t flags)

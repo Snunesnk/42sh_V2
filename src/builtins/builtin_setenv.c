@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 17:01:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:31:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int			cmd_setenv(int argc, char **argv)
 	{
 		if ((ft_setenv(argv[1], argv[2], 1)))
 			return (g_errordesc[e_cannot_allocate_memory].code);
+//		if ((set_shell_var_value(argv[1], argv[2], EXPORT | SET, g_env)))
+//			return (g_errordesc[e_cannot_allocate_memory].code);
 	}
 	return (e_success);
 }

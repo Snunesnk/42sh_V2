@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:43:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:47:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,12 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
 t_list							*get_shell_var(char *name, t_list *svar_lst);
+char							*get_shell_var_value(char *name,
+		t_list *svar_lst);
+int								set_shell_var(t_list *elem, char *name, \
+		char *value, uint64_t flags);
+int								set_shell_var_value(char *name,
+		char *value, uint64_t flags, t_list *svar_lst);
 int								get_stdin(char **line);
 t_token							*get_word(const char *str, size_t *i, \
 		int prevtype);
@@ -350,8 +356,6 @@ _Bool							prompt_display(int status);
 int								set_minimal_env(void);
 int								treat_shell_variables(t_process *p,
 		uint64_t flags);
-int								set_shell_var(t_list *elem, char *name, \
-		char *value, uint64_t flags);
 void							unset_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);

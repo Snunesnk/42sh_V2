@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*   builtin_cd_path.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 18:01:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:05:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_oldpwd(void)
 		if (!(cwd = getcwd(NULL, 0)))
 			return (e_system_call_error);
 	}
-	if (ft_setenv("OLDPWD", cwd, 1))
+	if (set_shell_var_value("OLDPWD", ft_strdup(cwd), EXPORT | SET, g_env))
 	{
 		if (allocated)
 			ft_memdel((void**)&cwd);
@@ -48,15 +48,14 @@ int	refresh_pwd(const char *path, _Bool p)
 	{
 		if (!(cwd = getcwd(NULL, 0)))
 			return (e_system_call_error);
-		if (ft_setenv("PWD", cwd, 1))
+		if (set_shell_var_value("PWD", cwd, EXPORT | SET, g_env))
 			return (e_cannot_allocate_memory);
 		ft_bzero((void*)g_pwd, sizeof(g_pwd));
 		ft_strncpy(g_pwd, cwd, sizeof(g_pwd));
-		ft_memdel((void**)&cwd);
 	}
 	else
 	{
-		if (ft_setenv("PWD", path, 1))
+		if (set_shell_var_value("PWD", (char *)path, EXPORT | SET, g_env))
 			return (e_cannot_allocate_memory);
 		ft_bzero((void*)g_pwd, sizeof(g_pwd));
 		ft_strncpy(g_pwd, path, sizeof(g_pwd));
@@ -70,7 +69,7 @@ int	cdpath_concat(char **path, char *env)
 	char	*dir;
 	char	*pathname;
 
-	if (!(beg = ft_getenv("CDPATH")))
+	if (!(beg = get_shell_var_value("CDPATH", g_env)))
 		return (e_success);
 	if (!(env = ft_strdup(beg)))
 		return (e_cannot_allocate_memory);
