@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:55:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:36:31 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,18 @@ char	*get_env_elem(t_list *lst)
 char	**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *))
 {
 	char	**buf;
-	char	*tmp;
-	size_t	lst_len;
 	size_t	i;
 
 	if (lst == NULL || f == NULL)
 		return (NULL);
 	i = 0;
-	lst_len = ft_lstlen(lst);
-	buf = (char**)malloc(sizeof(char*) * (lst_len + 1));
+	buf = (char**)malloc(sizeof(char*) * (ft_lstlen(lst) + 1));
 	if (buf == NULL)
 		return (NULL);
 	while (lst != NULL)
 	{
-		tmp = f(lst);
-		if (tmp != NULL)
-		{
-			buf[i] = ft_strdup(tmp);
-			i++;
-		}
+		if ((buf[i] = f(lst)))
+			++i;
 		lst = lst->next;
 	}
 	buf[i] = NULL;

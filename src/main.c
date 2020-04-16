@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:51:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 14:55:33 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 extern char	**environ;
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env;
+t_list		*g_tmp_env;
 t_list		*g_alias;
 
 char		*get_next_pending_cmd(void)
