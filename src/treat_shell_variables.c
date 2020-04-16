@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   treat_shell_variables.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/05 13:33:10 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/16 10:04:18 by yforeau          ###   ########.fr       */
+/*   Created: 2020/04/16 13:54:08 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/16 13:54:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
