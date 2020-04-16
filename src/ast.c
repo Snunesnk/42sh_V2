@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 11:17:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 12:13:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_ast			*semi_and(t_list **lst)
 	return (node);
 }
 */
-static t_list		*build_leaf(t_list **lst, int *type)
+static t_list		*build_leaf(t_list **lst)
 {
 	t_list	*pipeline;
 	t_list	*prev;
@@ -40,31 +40,34 @@ static t_list		*build_leaf(t_list **lst, int *type)
 		prev = *lst;
 		*lst = (*lst)->next;
 	}
-//	if (((t_token*)((*lst)->content))->type != AND_IF
-//		|| ((t_token*)((*lst)->content))->type != OR_IF)
-//		*type = ((t_token*)((*lst)->content))->type;
-	if (((t_token*)((*lst)->content))->type == NEWLINE)
-		*type = WORD;
-//	*type = ((t_token*)((*lst)->content))->type;
 	prev->next = NULL;
 	return (pipeline);
 }
 
-static t_ast		*build_node(t_list **lst, int *type)
+static t_ast		*build_node(t_list **lst)
 {
-	t_ast	*node;
 	t_list	*pipeline;
+	int		type;
 
-	pipeline = build_leaf(lst, type);
-	node = alloc_node(*type, pipeline, NULL, NULL);
-	return (node);
+	pipeline = build_leaf(lst);
+//	debug(*lst);
+	type = ((t_token*)((*lst)->content))->type;
+	if (type  == AND_IF || type  == OR_IF)
+	{
+		(*lst) = (*lst)->next;
+		ft_printf("\n|%s|\n", g_tokval[type]);
+		return (alloc_node(type, NULL,
+			alloc_node(WORD, pipeline, NULL, NULL),
+			build_node(lst)));
+	}
+	return (alloc_node(WORD, pipeline, NULL, NULL));
 }
 
 t_ast			*build_ast(t_list *lst)
 {
 	t_ast	*ast;
-	int	type;
 
-	ast = build_node(&lst, &type);
+	ast = build_node(&lst);
+//	ft_printf("\n|%s|\n", g_tokval[ast->type]);
 	return (ast);
 }
