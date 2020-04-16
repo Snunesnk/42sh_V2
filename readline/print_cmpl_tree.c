@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 23:32:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 17:48:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,15 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		return ;
 	while (is_compl_char(c) && data->nb_exec > 1)
 	{
-		insert_compl(compl_tree, data);
+		insert_compl(compl_tree, data, 0);
 		print_compl(compl_tree, data);
 		c = read_key();
 		update_exec(c, data);
 		fill_data(data, compl_tree);
 	}
 	if (data->nb_exec == 1)
-		insert_compl(compl_tree, data);
+		insert_compl(compl_tree, data, c.value);
 	else if (!enter_rc(c))
 		g_bad_seq = c;
-	if (!enter_rc(c) && c.value != ' ' && g_line.line[g_dis.cbpos - 1] != '/')
-		insert_text(" ", 1);
 	restore_line((g_dis.prompt_l + g_line.len) / data->column);
 }

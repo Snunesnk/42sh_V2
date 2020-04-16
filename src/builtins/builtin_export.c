@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/15 17:32:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 19:24:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	exec_export(char **args, int option)
 			*value = '\0';
 			value += 1;
 		}
-		if (!change_var_flag(option, name, value))
+		if (!change_var_flag(option, name, value) && value)
 			add_env_var(name, value);
 		args += 1;
 	}
