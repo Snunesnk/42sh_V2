@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:07:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:17:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,23 @@ static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
 	*infile = mypipe;
 }
 
+static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
+{
+	if (treat_expansions(p))
+		p->argv[0] = NULL;
+	if (p->next)
+	{
+		if (pipe(mypipe) < 0)
+		{
+			ft_dprintf(STDERR_FILENO, "System call pipe(2) failed.\n");
+			exit(1);
+		}
+		return (mypipe[1]);
+	}
+	else
+		return (j->stdout);
+}
+
 int		launch_job(t_job *j, int foreground)
 {
 	t_process	*p;
@@ -94,21 +111,7 @@ int		launch_job(t_job *j, int foreground)
 	p = j->first_process;
 	while (p)
 	{
-		if (treat_expansions(p))
-			p->argv[0] = NULL;
-
-		/* Set mypipe */
-		if (p->next)
-		{
-			if (pipe(mypipe) < 0)
-			{
-				ft_dprintf(STDERR_FILENO, "System call pipe(2) failed.\n");
-				exit(1);
-			}
-			outfile = mypipe[1];
-		}
-		else
-			outfile = j->stdout;
+		outfile = set_mypipe(p, j, mypipe);
 
 		/* Exec */
 		if (!j->first_process->next && only_assignments(p))
