@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 19:36:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 11:10:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -308,7 +308,7 @@ void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
 void							astdel(t_ast **ast);
 t_ast							*build_ast(t_list *lst);
-t_ast							*node(int type, t_list *pipeline, \
+t_ast							*alloc_node(int type, t_list *pipeline, \
 		t_ast *left, t_ast *right);
 void							debug(t_list *lst);
 void							debug_ast(t_ast *ast);
