@@ -6,25 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 12:13:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 13:07:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-/*
-t_ast			*semi_and(t_list **lst)
-{
-	t_ast	*node;
-	int	type;
 
-	node = node(SEMI, NULL, NULL, NULL); // Default node semi
-	node->left = side(lst, &type); // Get the first pipeline or AND_IF or AND_OR etc. Type check if NEWLINE, SEMI or AND
-	node->type = type; // Assign type of token ending node->left
-	node->right = semi_and(lst); // Recursion to build right part of the ast
-	return (node);
-}
-*/
 static t_list		*build_leaf(t_list **lst)
 {
 	t_list	*pipeline;
@@ -35,6 +23,7 @@ static t_list		*build_leaf(t_list **lst)
 	while (((t_token*)((*lst)->content))->type != AND_IF
 		&& ((t_token*)((*lst)->content))->type != OR_IF
 		&& ((t_token*)((*lst)->content))->type != SEMI
+		&& ((t_token*)((*lst)->content))->type != AND
 		&& ((t_token*)((*lst)->content))->type != NEWLINE)
 	{
 		prev = *lst;
@@ -55,7 +44,7 @@ static t_ast		*build_node(t_list **lst)
 	if (type  == AND_IF || type  == OR_IF)
 	{
 		(*lst) = (*lst)->next;
-		ft_printf("\n|%s|\n", g_tokval[type]);
+//		ft_printf("\n|%s|\n", g_tokval[type]);
 		return (alloc_node(type, NULL,
 			alloc_node(WORD, pipeline, NULL, NULL),
 			build_node(lst)));
@@ -63,11 +52,23 @@ static t_ast		*build_node(t_list **lst)
 	return (alloc_node(WORD, pipeline, NULL, NULL));
 }
 
-t_ast			*build_ast(t_list *lst)
+t_ast			*build_ast(t_list **lst)
 {
 	t_ast	*ast;
+	int		type;
 
-	ast = build_node(&lst);
-//	ft_printf("\n|%s|\n", g_tokval[ast->type]);
+	if (((t_token*)((*lst)->content))->type == NEWLINE)
+		return (NULL);
+	ast = build_node(lst);
+//	ft_printf("\n--START---\n");
+//	debug_ast(ast);
+//	ft_printf("\n--END---\n");
+	type = ((t_token*)((*lst)->content))->type;
+//	ft_printf("\n|%s|\n", g_tokval[type]);
+	if (type == SEMI || type == AND)
+	{
+		(*lst) = (*lst)->next;
+		ast = alloc_node(type, NULL, ast, build_ast(lst));
+	}
 	return (ast);
 }
