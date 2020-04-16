@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:14:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:24:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,7 +180,7 @@ void							wait_for_job(t_job *j);
 void							continue_job(t_job *j, int foreground);
 void							free_job(t_job *j);
 int								launch_process(t_process *p, pid_t pgid, \
-		int infile, int outfile, int errfile, int foreground);
+		int foreground);
 void							free_process(t_process *p);
 int								execute_process(char **argv, char **envp, \
 		t_hash_table *tmp, char *pathname);
