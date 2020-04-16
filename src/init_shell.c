@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:09:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/16 15:16:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_errno.h"
 #include "shell.h"
 #include "error.h"
+#include "builtins.h"
 
 pid_t			g_shell_pgid;
 struct termios	shell_tmodes;
@@ -23,8 +24,31 @@ int				g_subshell = 0;
 int				g_retval;
 char			g_pwd[] = {0};
 
-int		init_shell(void)
+static int	init_shell_suite(void)
 {
+	extern char	**environ;
+
+	if (!(environ = ft_tabcpy(environ)))
+	{
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
+		return (1);
+	}
+	init_hash_table();
+	g_retval = e_success;
+	if ((g_retval = set_minimal_env()))
+	{
+		psherror(g_retval, g_progname, e_cmd_type);
+		ft_tabdel(&environ);
+		return (1);
+	}
+	get_env_list(environ);
+	return (0);
+}
+
+int			init_shell(char *argv, int argc)
+{
+	(void)argc;
+	g_progname = argv;
 	g_shell_terminal = STDIN_FILENO;
 	g_shell_is_interactive = isatty(g_shell_terminal);
 	if (g_shell_is_interactive)
@@ -41,10 +65,12 @@ int		init_shell(void)
 		tcsetpgrp(g_shell_terminal, g_shell_pgid);
 		tcgetattr(g_shell_terminal, &shell_tmodes);
 	}
+	if (init_shell_suite())
+		return (1);
 	return (0);
 }
 
-void	set_minimal_env2(char **tmp)
+void		set_minimal_env2(char **tmp)
 {
 	if (PATH_MAX > 0)
 	{
@@ -54,7 +80,7 @@ void	set_minimal_env2(char **tmp)
 	}
 }
 
-int		set_minimal_env(void)
+int			set_minimal_env(void)
 {
 	char	*tmp;
 	int		shlvl;

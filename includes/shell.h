@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:12:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 17:47:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define EXPORT		0x02
 # define RDONLY		0x04
 # define ARRAY		0x08
+# define TEMP		0x10
 
 # define IOTYPE		0xF
 # define IOREAD		0x1
@@ -76,6 +77,7 @@ char							*short_physical_path(char **cwd);
 
 extern char						g_pwd[PATH_MAX];
 extern t_list					*g_env;
+extern t_list					*g_tmp_env;
 extern t_list					*g_pending_cmd;
 
 extern int					*g_parse_table[NB_TOKEN];
@@ -171,14 +173,16 @@ extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
 int								exec_input(char *input);
-int								init_shell(void);
+int								init_shell(char *argv, int argc);
 int								launch_job(t_job *j, int foreground);
+void							free_all_processes(t_process *p);
+void							free_job(t_job *j);
 void							format_job_info (t_job *j, const char *status);
 void							wait_for_job(t_job *j);
 void							continue_job(t_job *j, int foreground);
 void							free_job(t_job *j);
 int								launch_process(t_process *p, pid_t pgid, \
-		int infile, int outfile, int errfile, int foreground);
+		int foreground);
 void							free_process(t_process *p);
 int								execute_process(char **argv, char **envp, \
 		t_hash_table *tmp, char *pathname);
@@ -291,10 +295,10 @@ typedef struct					s_token
 
 typedef struct					s_ast
 {
-	int			type;
+	int				type;
 	t_list			*content;
-	struct s_ast		*left;
-	struct s_ast		*right;
+	struct s_ast	*left;
+	struct s_ast	*right;
 }								t_ast;
 
 typedef struct					s_shell_var
@@ -329,6 +333,12 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
 t_list							*get_shell_var(char *name, t_list *svar_lst);
+char							*get_shell_var_value(char *name,
+		t_list *svar_lst);
+int								set_shell_var(t_list *elem, char *name, \
+		char *value, uint64_t flags);
+int								set_shell_var_value(char *name,
+		char *value, uint64_t flags, t_list *svar_lst);
 int								get_stdin(char **line);
 t_token							*get_word(const char *str, size_t *i, \
 		int prevtype);
@@ -344,9 +354,9 @@ int								path_concat(char **bin, char *beg, char *env, \
 void							print_env(t_list *env, t_list **elem);
 _Bool							prompt_display(int status);
 int								set_minimal_env(void);
-int								treat_shell_variables(t_process *p);
-int								set_shell_var(t_list *elem, char *name, \
-		char *value);
+int								treat_shell_variables(t_process *p,
+		uint64_t flags);
+void							unset_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
 

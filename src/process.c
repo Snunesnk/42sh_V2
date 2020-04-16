@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:18:52 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/16 16:24:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ static void	perf_redir(t_process *p)
 	}
 }
 
-int			launch_process(t_process *p, pid_t pgid, int infile,
-		int outfile, int errfile, int foreground)
+int			launch_process(t_process *p, pid_t pgid, int foreground)
 {
 	char		**envp;
 	pid_t		pid;
@@ -72,9 +71,6 @@ int			launch_process(t_process *p, pid_t pgid, int infile,
 			tcsetpgrp(g_shell_terminal, pgid);
 		restore_procmask();
 	}
-	p->infile = infile;
-	p->errfile = errfile;
-	p->outfile = outfile;
 	perf_redir(p);
 	ret = execute_process(p->argv, envp, NULL, NULL);
 	free_process(p);

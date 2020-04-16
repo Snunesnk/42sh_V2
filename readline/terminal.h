@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:01:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/16 16:37:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMINAL_H
 # define TERMINAL_H
 
-# define NUM_TC_STRINGS (sizeof(g_tc_strings) / sizeof(struct s_termcaps_string))
+# define NUM_TC_STRINGS 12
 
 struct	s_termcaps
 {

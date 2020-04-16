@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_alias.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/16 16:30:00 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 
 static enum e_token	g_delim_tokens[10] = {
@@ -10,7 +22,7 @@ static enum e_token	g_delim_tokens[10] = {
 	NONE
 };
 
-static int		is_delim_token(t_token *token)
+static int	is_delim_token(t_token *token)
 {
 	int	i;
 
@@ -20,7 +32,7 @@ static int		is_delim_token(t_token *token)
 	return (g_delim_tokens[i] == NONE ? FALSE : TRUE);
 }
 
-static int		is_valid_alias(t_list *alias_stack, char *token_value,
+static int	is_valid_alias(t_list *alias_stack, char *token_value,
 				char **alias_value)
 {
 	t_list	*elem;
@@ -36,12 +48,12 @@ static int		is_valid_alias(t_list *alias_stack, char *token_value,
 	return (FALSE);
 }
 
-static int		replace_alias(t_list ***lst, t_list *next,
+static int	replace_alias(t_list ***lst, t_list *next,
 				char *value, int *check)
 {
-	int	ret;
 	t_list	*last;
 	t_list	*new_tokens;
+	int		ret;
 
 	new_tokens = NULL;
 	*check = *value && value[ft_strlen(value) - 1] == ' ' ? TRUE : FALSE;
@@ -66,11 +78,11 @@ static int		replace_alias(t_list ***lst, t_list *next,
 
 int			check_alias(t_list **lst, int check)
 {
-	static t_list	*alias_stack = NULL;
-	char		*alias_value;
-	t_token		*token;
-	t_list		cur;
-	int		ret;
+	static t_list	*alias_stack;
+	char			*alias_value;
+	t_token			*token;
+	t_list			cur;
+	int				ret;
 
 	ret = SUCCESS;
 	token = *lst ? (*lst)->content : NULL;

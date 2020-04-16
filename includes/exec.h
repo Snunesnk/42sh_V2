@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   undo_redir3.c                                      :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:23:47 by abarthel         ###   ########.fr       */
+/*   Created: 2020/04/16 17:27:01 by abarthel          #+#    #+#             */
+/*   Updated: 2020/04/16 17:30:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "error.h"
-#include "shell.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-int		undo_redirection(t_redirection *r)
+# include "shell.h"
+
+struct	s_exec
 {
-	t_shell_fds	*shell_fd;
+	t_process	*p;
+	pid_t		pid;
+	int			mypipe[2];
+	int			infile;
+	int			outfile;
+};
 
-	shell_fd = NULL;
-	if (r)
-	{
-		undo_redirection_internal(r, shell_fd);
-		free_restored_fd(shell_fd);
-	}
-	return (0);
-}
+typedef struct s_exec	t_exec;
+
+#endif
