@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 18:36:44 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/16 14:18:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
 			break ;
 		ptr = ft_strstr_qmode(str, g_tags[i].opentag, DQUOTE, &tmp_qmode);
-		if (ptr && (!closest || ptr < closest ))
+		if (ptr && (!closest || ptr < closest))
 		{
 			*qmode = tmp_qmode;
 			closest = ptr;
@@ -79,7 +79,7 @@ static int	replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-int				treat_single_exp(char **str, int tilde)
+int			treat_single_exp(char **str, int tilde)
 {
 	int		ref;
 	int		ret;
@@ -103,7 +103,7 @@ int				treat_single_exp(char **str, int tilde)
 	return (e_success);
 }
 
-int				treat_expansions(t_process *p)
+int			treat_expansions(t_process *p)
 {
 	int	i;
 	int	ret;
