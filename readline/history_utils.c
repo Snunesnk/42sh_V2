@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 13:33:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 14:57:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,22 @@ void	free_hist(void)
 {
 	int				fd;
 	unsigned int	i;
-//	unsigned int	last;
+	unsigned int	last;
 
 	if ((fd = open(g_hist_loc, (O_WRONLY | O_CREAT | O_TRUNC), 0644)) < 0)
 		ft_printf("./21sh: cannot open %s\n", g_hist_loc);
 	else
 	{
 		i = 0;
-//		last = 0;
+		last = 0;
 		while (i < g_hist->used)
 		{
-	//		if (!g_hist->history_content[i])
-	//		{
-	//			write(fd, g_hist->history_content + last, i - last);
-	//			write(fd, "\n\0", 2);
-//				last = i;
-	//		}
+			if (!g_hist->history_content[i])
+			{
+				write(fd, g_hist->history_content + last, i - last);
+				write(fd, "\n", 1);
+				last = i;
+			}
 			i++;
 		}
 		close(fd);

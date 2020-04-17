@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 00:59:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 14:57:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ void	remove_nl(void)
 		return ;
 	while (i < g_hist->used)
 	{
-		if (g_hist->history_content[i] == '\n' \
-				&& g_hist->history_content[i + 1] == '\0')
+		if (g_hist->history_content[i] == '\n')
+		//		&& g_hist->history_content[i + 1] == '\0')
 		{
 			g_hist->total_lines += 1;
 			g_hist->history_content[i] = '\0';
-			ft_memmove(g_hist->history_content + i, g_hist->history_content \
-					+ i + 1, g_hist->used - (i + 1));
+//			ft_memmove(g_hist->history_content + i, g_hist->history_content 
+//					+ i + 1, g_hist->used - (i + 1));
 		}
 		i++;
 	}
@@ -93,7 +93,6 @@ void	get_history_loc(void)
 void	add_hentry(const char *buf, int size, int mode)
 {
 
-	ft_printf("new entry: |%s|, size: %d\n", buf, size);
 	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
 	{
 		if (!g_hist->capacity)
