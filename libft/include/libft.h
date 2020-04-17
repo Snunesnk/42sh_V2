@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 12:59:50 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:54:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <stdarg.h>
+# include <stdint.h>
 
 # define SUCCESS 0
 # define FAILURE -1
@@ -265,6 +266,7 @@ void			ft_nmemdel(size_t n, void **ptr, ...);
 
 void			ft_free_tab(int ac, char ***av);
 
+void			ft_swap_p(uintptr_t *p1, uintptr_t *p2);
 char			**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
 int				ft_lstprint(t_list *lst, void (*f)(t_list*, t_list**));
 t_list			*ft_lstnew_str(char const *content, size_t content_size);
@@ -279,7 +281,7 @@ void			ft_lstaddend(t_list **alst, t_list *new);
 void			ft_lstadd(t_list **alst, t_list *new);
 t_list			*ft_lst_last(t_list *lst);
 t_list			*ft_lst_find(t_list *lst, void *content_ref, int (*cmp)());
-void			ft_lst_del_if(t_list **lst, void *content_ref,
+int				ft_lst_del_if(t_list **lst, void *content_ref,
 					void (*del)(void *, size_t), int (*cmp)());
 
 #endif
