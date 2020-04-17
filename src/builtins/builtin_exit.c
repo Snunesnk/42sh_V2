@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 16:28:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:45:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int				cmd_exit(int argc, char **argv)
 	free_hash_table();
 	ft_tabdel(&argv);
 	ft_tabdel(&environ);
-//	free_hist();
+	free_hist();
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(status);
 }
