@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 15:11:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 15:18:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		insert_compl(compl_tree, data, c.value);
 	else if (!enter_rc(c))
 		g_bad_seq = c;
-	restore_line((g_dis.prompt_l + g_line.len) / data->column);
+	restore_line(0);
 }

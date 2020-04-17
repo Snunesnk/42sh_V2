@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 15:12:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 15:17:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	update_l(t_node *node, t_data *data)
 	}
 	if (len + 2 > (size_t)data->name_l)
 		data->name_l = ft_strlen(node->name) + 2;
-	ft_printf("%s is smaller. name_l: %d\n", node->name, data->name_l);
 }
 
 t_node	*place_node(t_node *tree, t_node *new_node, t_data *data)
