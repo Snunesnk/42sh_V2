@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 12:01:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:42:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int				name_shvar_cmp(void *str_ref, void *shvar_ptr)
 	return (ft_strcmp((char *)str_ref, name));
 }
 
-static int		set_shell_var(t_shell_var *orig_var, t_shell_var *new_var,
-					t_list **svar_lst)
+static int		set_shell_var_internal(t_shell_var *orig_var,
+					t_shell_var *new_var, t_list **svar_lst)
 {
 	int		flag;
 	t_list	*new_elem;
@@ -50,7 +50,7 @@ static int		set_shell_var(t_shell_var *orig_var, t_shell_var *new_var,
 //TODO: find a way to handle the case where a TEMP alias is set
 //decide if this should be an error or not
 //(if it is not an error, set up a way to associate the temp and non-temp)
-int				set_shell_var_value(const char *name, const char *value,
+int				set_shell_var(const char *name, const char *value,
 					uint64_t flags, t_list **svar_lst)
 {
 	int			ret;
@@ -67,9 +67,9 @@ int				set_shell_var_value(const char *name, const char *value,
 		|| (value && !(new_var.value = ft_strdup(value))))
 		ret = FAILURE;
 	if (ret == SUCCESS && orig_var && (flags & TEMP))
-		ret = set_shell_var(NULL, orig_var, &g_tmp_env);
+		ret = set_shell_var_internal(NULL, orig_var, &g_tmp_env);
 	if (ret == SUCCESS)
-		ret = set_shell_var(orig_var, &new_var, svar_lst);
+		ret = set_shell_var_internal(orig_var, &new_var, svar_lst);
 	if (ret == FAILURE)
 	{
 		ft_strdel(&new_var.name);
@@ -85,7 +85,7 @@ int				unset_shell_var(const char *name, t_list **svar_lst)
 	return (SUCCESS);
 }
 
-char			*get_shell_var_value(const char *name, t_list *svar_lst)
+char			*get_shell_var(const char *name, t_list *svar_lst)
 {
 	t_list	*elem;
 

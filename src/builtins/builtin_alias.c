@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 10:08:22 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:35:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	add_alias(char **av)
 		if (get_assignment(*av, &name, &value) == SUCCESS && value[1])
 		{
 			*value = 0;
-			ret = set_shell_var_value(name, value + 1, 0, &g_alias);
+			ret = set_shell_var(name, value + 1, 0, &g_alias);
 		}
 		else if (!*name || *name == '=')
 			ft_putstr_fd("alias: invalid alias name\n", 2);

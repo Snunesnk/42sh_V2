@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 11:46:43 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:36:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int				add_var(char **av)
 			*value++ = 0;
 		else if (!*name || *name == '=')
 			return (FAILURE);
-		if (set_shell_var_value(name, value,
+		if (set_shell_var(name, value,
 			EXPORT | (value ? SET : 0), &g_env) == FAILURE)
 			return (FAILURE);
 		++i;

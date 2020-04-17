@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 07:04:09 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:36:07 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	is_valid_alias(t_list *alias_stack, char *token_value,
 {
 	if (ft_lst_find(alias_stack, token_value, ft_strcmp))
 		return (FALSE);
-	if ((*alias_value = get_shell_var_value(token_value, g_alias)))
+	if ((*alias_value = get_shell_var(token_value, g_alias)))
 		return (TRUE);
 	return (FALSE);
 }
