@@ -6,20 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 15:03:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 11:39:29 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-
-static int	name_shvar_cmp(void *str_ref, void *shvar_ptr)
-{
-	char	*name;
-
-	name = ((t_shell_var *)shvar_ptr)->name;
-	return (ft_strcmp((char *)str_ref, name));
-}
 
 static char	**unalias_opt(int argc, char **argv)
 {
@@ -41,35 +33,6 @@ static char	**unalias_opt(int argc, char **argv)
 	return (argv + g_optind);
 }
 
-static int	remove_alias(t_list **lst, void *content_ref)
-{
-	t_list	*prev;
-	t_list	*cur;
-	t_list	*next;
-
-	if (!lst || !*lst)
-		return (FAILURE);
-	prev = NULL;
-	cur = *lst;
-	next = cur ? cur->next : NULL;
-	while (cur)
-	{
-		if (!name_shvar_cmp(content_ref, cur->content))
-		{
-			ft_lstdelone(&cur, del_env);
-			if (prev)
-				prev->next = next;
-			else
-				*lst = next;
-			return (SUCCESS);
-		}
-		prev = cur ? cur : prev;
-		cur = next;
-		next = cur ? cur->next : next;
-	}
-	return (FAILURE);
-}
-
 int			cmd_unalias(int argc, char **argv)
 {
 	int			ret;
@@ -84,7 +47,7 @@ int			cmd_unalias(int argc, char **argv)
 			return (FAILURE);
 		while (*argv)
 		{
-			if (remove_alias(&g_alias, *argv) == FAILURE)
+			if (unset_shell_var(*argv, &g_alias) == FAILURE)
 			{
 				ft_dprintf(2, "unalias: %s: not found\n", *argv);
 				ret = FAILURE;

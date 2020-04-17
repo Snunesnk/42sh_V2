@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 22:21:02 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 07:04:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,17 @@ static int	is_delim_token(t_token *token)
 }
 
 static int	is_valid_alias(t_list *alias_stack, char *token_value,
-				char **alias_value)
+				const char **alias_value)
 {
-	t_list	*elem;
-
 	if (ft_lst_find(alias_stack, token_value, ft_strcmp))
 		return (FALSE);
-	if ((elem = get_shell_var(token_value, g_alias)))
-	{
-		*alias_value = ((t_shell_var *)elem->content)->value;
+	if ((*alias_value = get_shell_var_value(token_value, g_alias)))
 		return (TRUE);
-	}
 	return (FALSE);
 }
 
 static int	replace_alias(t_list ***lst, t_list *next,
-				char *value, int *check)
+				const char *value, int *check)
 {
 	t_list	*last;
 	t_list	*new_tokens;
@@ -89,7 +84,7 @@ static t_list	**get_first_word(t_list **lst)
 int			check_alias(t_list **lst, int check)
 {
 	static t_list	*alias_stack;
-	char			*alias_value;
+	const char		*alias_value;
 	t_token			*token;
 	t_list			cur;
 	int				ret;

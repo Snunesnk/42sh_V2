@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/16 17:43:39 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/17 11:52:14 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,6 @@ SOURCES :=	main.c \
 		../globbings/utils/ft_lst_pop.c \
 		../globbings/utils/ft_lst_quicksort.c \
 		../globbings/utils/ft_lst_size.c \
-		../globbings/utils/ft_swap_p.c \
 		../readline/bind.c \
 		../readline/display.c \
 		../readline/get_prompt.c \
