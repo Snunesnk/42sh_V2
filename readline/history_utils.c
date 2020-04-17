@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 19:18:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:34:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ void	free_hist(void)
 			if (!g_hist->history_content[i])
 			{
 				write(fd, g_hist->history_content + last, i - last);
-				write(fd, "\n\0", 2);
-				i++;
+				i += write(fd, "\n\0", 2) - 1;
 				last = i;
 			}
 			i++;

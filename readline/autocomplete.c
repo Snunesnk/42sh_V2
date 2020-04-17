@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 14:47:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:32:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_node	*get_alias_compl(t_node *compl_tree, char *to_complete,
 	return (compl_tree);
 }
 
-void	command_complete(char *to_complete)
+void			command_complete(char *to_complete)
 {
 	char	*path;
 	t_node	*compl_tree;
@@ -62,7 +62,7 @@ void	command_complete(char *to_complete)
 	free_node(compl_tree);
 }
 
-void	var_complete(char *to_complete)
+void			var_complete(char *to_complete)
 {
 	t_node	*compl_tree;
 	t_data	*data;
@@ -85,7 +85,7 @@ void	var_complete(char *to_complete)
 	free_node(compl_tree);
 }
 
-void	file_complete(char *to_complete)
+void			file_complete(char *to_complete)
 {
 	t_node	*compl_tree;
 	t_data	*data;
@@ -102,7 +102,7 @@ void	file_complete(char *to_complete)
 	free_node(compl_tree);
 }
 
-void	autocomplete(void)
+void			autocomplete(void)
 {
 	char	*to_complete;
 	int		start;
