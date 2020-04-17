@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:39:08 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:39:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ static void	test_syntax(size_t *index, char **str, int *ret)
 
 	if (!(*str)[1] || (*str)[1] == '/')
 	{
-		env = get_shell_var_value("HOME", g_env);
+		env = get_shell_var("HOME", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[1], env);
 	}
 	else if ((*str)[1] == '-' && ((*str)[2] == '/' || !(*str)[2]))
 	{
-		env = get_shell_var_value("OLDPWD", g_env);
+		env = get_shell_var("OLDPWD", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[2], env);
 	}
 	else if ((*str)[1] == '+' && ((*str)[2] == '/' || !(*str)[2]))
 	{
-		env = get_shell_var_value("PWD", g_env);
+		env = get_shell_var("PWD", g_env);
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[2], env);
 	}

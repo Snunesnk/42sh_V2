@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 07:20:10 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:36:32 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*get_content(const char *str)
 	char	*cpy;
 
 	cpy = NULL;
-	if ((content = get_shell_var_value(str, g_env)))
+	if ((content = get_shell_var(str, g_env)))
 		cpy = ft_strdup(content);
 	return (cpy);
 }

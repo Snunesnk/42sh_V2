@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 11:48:10 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:37:13 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	set_oldpwd(void)
 		if (!(cwd = getcwd(NULL, 0)))
 			return (e_system_call_error);
 	}
-	if (set_shell_var_value("OLDPWD", cwd, EXPORT | SET, &g_env))
+	if (set_shell_var("OLDPWD", cwd, EXPORT | SET, &g_env))
 	{
 		if (allocated)
 			ft_memdel((void**)&cwd);
@@ -48,7 +48,7 @@ int	refresh_pwd(const char *path, _Bool p)
 	{
 		if (!(cwd = getcwd(NULL, 0)))
 			return (e_system_call_error);
-		if (set_shell_var_value("PWD", cwd, EXPORT | SET, &g_env))
+		if (set_shell_var("PWD", cwd, EXPORT | SET, &g_env))
 			return (e_cannot_allocate_memory);
 		ft_bzero((void*)g_pwd, sizeof(g_pwd));
 		ft_strncpy(g_pwd, cwd, sizeof(g_pwd));
@@ -56,7 +56,7 @@ int	refresh_pwd(const char *path, _Bool p)
 	}
 	else
 	{
-		if (set_shell_var_value("PWD", path, EXPORT | SET, &g_env))
+		if (set_shell_var("PWD", path, EXPORT | SET, &g_env))
 			return (e_cannot_allocate_memory);
 		ft_bzero((void*)g_pwd, sizeof(g_pwd));
 		ft_strncpy(g_pwd, path, sizeof(g_pwd));
@@ -70,7 +70,7 @@ int	cdpath_concat(char **path, char *env)
 	char	*dir;
 	char	*pathname;
 
-	if (!(beg = get_shell_var_value("CDPATH", g_env)))
+	if (!(beg = get_shell_var("CDPATH", g_env)))
 		return (e_success);
 	if (!(env = ft_strdup(beg)))
 		return (e_cannot_allocate_memory);

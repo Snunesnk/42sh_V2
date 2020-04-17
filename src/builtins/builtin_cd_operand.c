@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:39:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:37:52 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	concatenable_operand(const char *str)
 
 int	gfp_env(struct s_cd *cd)
 {
-	if (!(cd->path = get_shell_var_value("HOME", g_env)))
-		if (!(cd->path = get_shell_var_value("PWD", g_env)))
+	if (!(cd->path = get_shell_var("HOME", g_env)))
+		if (!(cd->path = get_shell_var("PWD", g_env)))
 			return (1);
 	if (cd->p)
 		cd->path = ft_realpath(cd->path, NULL);
@@ -58,7 +58,7 @@ int	gfp_env(struct s_cd *cd)
 
 int	gfp_previous(char **argv, struct s_cd *cd)
 {
-	if (!(cd->oldpwd = get_shell_var_value("OLDPWD", g_env)))
+	if (!(cd->oldpwd = get_shell_var("OLDPWD", g_env)))
 	{
 		ft_dprintf(STDERR_FILENO,
 				"%s: %s: OLDPWD not set\n", g_progname, argv[0]);

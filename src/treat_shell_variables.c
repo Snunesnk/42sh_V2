@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:08 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 12:16:34 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:35:30 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int			treat_shell_variables(t_process *p, uint64_t flags)
 	while (p->argv && get_assignment(p->argv[0], &name, &value) == SUCCESS)
 	{
 		*value++ = 0;
-		if (set_shell_var_value(name, value, flags, &g_env) == FAILURE)
+		if (set_shell_var(name, value, flags, &g_env) == FAILURE)
 			return (FAILURE);
 		tab_remove_first_elem(&p->argc, &p->argv);
 	}
