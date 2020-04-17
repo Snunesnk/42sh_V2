@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:32:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 20:25:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void			command_complete(char *to_complete)
 		return ;
 	}
 	compl_tree = get_cmd_compl(to_complete, path, data);
-	if (!(compl_tree = get_alias_compl(compl_tree, to_complete, data)))
-		return ;
-	display_compl(compl_tree, data);
+	compl_tree = get_alias_compl(compl_tree, to_complete, data);
+	if (compl_tree)
+		display_compl(compl_tree, data);
 	free(data);
 	free(path);
 	free_node(compl_tree);
