@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 12:33:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 14:19:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ char		*add_to_path(const char *path, const char *to_add)
 		return (ft_strdup(to_add));
 	if (!(pathname = ft_strnew(ft_strlen(path) + ft_strlen(to_add) + 1)))
 		return (NULL);
-	ft_strcpy(pathname, path);
+	pathname = ft_strcat(pathname, path);
 	if (path[ft_strlen(path) - 1] != '/')
 		ft_strcat(pathname, "/");
-	ft_strcat(pathname, to_add);
+	pathname = ft_strcat(pathname, to_add);
 	return (pathname);
 }
 
@@ -52,15 +52,18 @@ int			is_dir(const char *pathname, t_glob_internal *gl)
 t_file_data	*init_file(t_file_data *dest, const char *path, \
 			const char *name, t_glob_internal *gl)
 {
+
 	dest->name = name;
 	if (!(dest->pathname = (const char *)check_mem(gl,
 		(void *)add_to_path(path, name))))
 		return (NULL);
-	else if ((dest->dir = is_dir(dest->pathname, gl)) == -1)
+	if ((dest->dir = is_dir(dest->pathname, gl)) == -1)
 	{
 		ft_memdel((void **)&dest->pathname);
 		return (NULL);
 	}
+	if (gl->flags & FT_GLOB_ESCAPE)
+		dest->pathname = add_esc_to_path((char *)(dest->pathname));
 	return (dest);
 }
 

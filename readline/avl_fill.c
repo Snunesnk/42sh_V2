@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:14:38 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 01:31:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,8 @@ char	*extract_file_name(char *name)
 	i = ft_str_wchar_len(name) - 2;
 	while (i >= 0 && name[i] != '/')
 		i--;
-	if (i >= 0)
-	{
-		name[0] = '\0';
-		name = ft_strcat(name, name + i + 1);
-	}
-	i = 0;
-	if (!(new_name = (char *)ft_memalloc(sizeof(char) * (ft_strlen(name) \
-						+ count_shell_spec(name) + 1))))
-		return (NULL);
-	i = 0;
-	while (name[i])
-	{
-		if (is_shell_spec(name[i]))
-			new_name = ft_strcat(new_name, "\\");
-		new_name = ft_strncat(new_name, name + i, 1);
-		i++;
-	}
-	return (new_name);
+	new_name = name + i + 1;
+	return (ft_strdup(new_name));
 }
 
 int		ft_node_cmp(t_node *tree, t_node *node)

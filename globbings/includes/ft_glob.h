@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:45:02 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 18:37:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 13:11:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ typedef struct	s_glob
 ** Expand tilde but NOMATCH on fail
 */
 # define FT_GLOB_TILDE_CHECK	0x400
+
+/*
+** Escape special char
+*/
+# define FT_GLOB_ESCAPE			0x800
 
 /*
 ** Glob return values

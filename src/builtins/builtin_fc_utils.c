@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/12 15:59:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 00:58:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	fc_replace_last_hist(char *tmp)
 	g_hist->used = g_hist->offset + 1;
 	g_hist->total_lines -= 1;
 	if (tmp)
-		add_hentry(tmp, 1);
+		add_hentry(tmp, ft_strlen(tmp), 1);
 }
 
 char	*ft_strreplace(char **str, char *pattern, char *replacement)

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 19:26:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 00:57:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char		*get_next_pending_cmd(void)
 	if (input[0] > 0)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", input);
-		add_hentry(input, 1);
+		add_hentry(input, ft_strlen(input), 1);
 	}
 	return (input);
 }

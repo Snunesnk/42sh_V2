@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 13:20:50 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 13:22:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 14:18:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "ft_glob.h"
 # include "libft.h"
+
+# define SHELL_SPECIAL_CHARS	"|&;<>()$`\\\"'*?[#˜=% \t\n"
 
 typedef struct	s_glob_internal
 {
@@ -42,11 +44,14 @@ enum	e_pathtype {GL_NONE, GL_END, GL_RAWPATH, GL_WILDCARD};
 void			set_read_error(t_glob_internal *gl,
 				const char *pathname, int err);
 char			*add_to_path(const char *path, const char *to_add);
+char			*add_esc_to_path(char *path);
 int				is_dir(const char *pathname, t_glob_internal *gl);
 t_file_data		*init_file(t_file_data *dest, const char *path,
 				const char *name, t_glob_internal *gl);
 t_list			*add_file_lst(const char **file, int add_slash,
 				t_glob_internal *gl);
+int				is_shell_spec(char c);
+int				count_shell_spec(const char *str);
 
 /*
 ** Build patterns

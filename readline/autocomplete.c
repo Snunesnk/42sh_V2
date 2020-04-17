@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:41:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 01:11:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,21 +85,20 @@ void	file_complete(char *to_complete)
 void	autocomplete(void)
 {
 	char	*to_complete;
-	int		i;
+	int		start;
 
 	if (g_line.len == 0 || ft_str_isspace(g_line.line))
 		return ;
 	g_autocompl_on = 1;
-	i = g_dis.cbpos - 1;
-	while (i >= 0 && !ft_isspace(g_line.line[i]))
-		i--;
-	to_complete = ft_strsub(g_line.line, i + 1, g_dis.cbpos - (i + 1));
-	to_complete = ft_strtrim(to_complete);
+	start = g_dis.cbpos - 1;
+	while (start >= 0 && !ft_isspace(g_line.line[start]))
+		start--;
+	to_complete = ft_strsub(g_line.line, start + 1, g_dis.cbpos - start - 1);
 	if (ft_strchr(to_complete, '/'))
 		file_complete(to_complete);
-	else if (g_line.line[i + 1] == '$')
+	else if (g_line.line[start + 1] == '$')
 		var_complete(to_complete);
-	else if (i <= 0)
+	else if (start <= 0)
 		command_complete(to_complete);
 	else
 		file_complete(to_complete);
