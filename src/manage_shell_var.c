@@ -6,65 +6,87 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:44:00 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:48:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-int				set_shell_var(t_list *elem, char *name,
-					char *value, uint64_t flags)
+int				name_shvar_cmp(void *str_ref, void *shvar_ptr)
 {
-	t_list			*lst_new;
-	t_shell_var		shell_var;
+	char	*name;
 
-	ft_bzero(&shell_var, sizeof(shell_var));
-	if (!elem || (flags & TEMP))
+	name = ((t_shell_var *)shvar_ptr)->name;
+	return (ft_strcmp((char *)str_ref, name));
+}
+
+static int		set_shell_var_internal(t_shell_var *orig_var,
+					t_shell_var *new_var, t_list **svar_lst)
+{
+	int		flag;
+	t_list	*new_elem;
+
+	if (orig_var)
 	{
-		shell_var.name = name;
-		shell_var.flag = elem ? ((t_shell_var *)elem->content)->flag : flags;
-		shell_var.value = elem ? ((t_shell_var *)elem->content)->value : value;
-		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-		if (lst_new == NULL)
-			return (FAILURE);
-		ft_lstadd(elem ? &g_tmp_env : &g_env, lst_new);
+		ft_swap_p((uintptr_t *)&orig_var->name, (uintptr_t *)&new_var->name);
+		ft_swap_p((uintptr_t *)&orig_var->value, (uintptr_t *)&new_var->value);
+		flag = new_var->flag;
+		new_var->flag = orig_var->flag;
+		orig_var->flag = flag;
 	}
-	if (elem)
+	else if (!(new_elem = ft_lstnew(new_var, sizeof(t_shell_var))))
+		return (FAILURE);
+	else
+		ft_lstadd(svar_lst, new_elem);
+	if (orig_var && !(flag & TEMP))
 	{
-		if (!(flags & TEMP))
-			ft_strdel(&((t_shell_var *)(elem->content))->value);
-		((t_shell_var*)(elem->content))->value = value;
-		((t_shell_var*)(elem->content))->flag |= flags; //TODO: change to '='
+		ft_strdel(&new_var->name);
+		ft_strdel(&new_var->value);
 	}
 	return (SUCCESS);
 }
 
-int				set_shell_var_value(char *name, char *value,
-					uint64_t flags, t_list *svar_lst)
+int				set_shell_var(const char *name, const char *value,
+					uint64_t flags, t_list **svar_lst)
 {
-	t_list	*elem;
+	int			ret;
+	t_list		*elem;
+	t_shell_var	new_var;
+	t_shell_var	*orig_var;
 
-	elem = get_shell_var(name, svar_lst);
-	return (set_shell_var(elem, name, value, flags));
-}
-
-t_list			*get_shell_var(char *name, t_list *svar_lst)
-{
-	while (svar_lst)
+	ret = SUCCESS;
+	elem = ft_lst_find(*svar_lst, (void *)name, name_shvar_cmp);
+	orig_var = elem ? (t_shell_var *)elem->content : NULL;
+	ft_bzero(&new_var, sizeof(t_shell_var));
+	new_var.flag = flags;
+	if (!(new_var.name = ft_strdup(name))
+		|| (value && !(new_var.value = ft_strdup(value))))
+		ret = FAILURE;
+	if (ret == SUCCESS && orig_var && (flags & TEMP))
+		ret = set_shell_var_internal(NULL, orig_var, &g_tmp_env);
+	if (ret == SUCCESS)
+		ret = set_shell_var_internal(orig_var, &new_var, svar_lst);
+	if (ret == FAILURE)
 	{
-		if (ft_strequ(name, ((t_shell_var*)(svar_lst->content))->name))
-			break ;
-		svar_lst = svar_lst->next;
+		ft_strdel(&new_var.name);
+		ft_strdel(&new_var.value);
 	}
-	return (svar_lst);
+	return (ret);
 }
 
-char			*get_shell_var_value(char *name, t_list *svar_lst)
+int				unset_shell_var(const char *name, t_list **svar_lst)
+{
+	if (!ft_lst_del_if(svar_lst, (void *)name, del_env, name_shvar_cmp))
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+char			*get_shell_var(const char *name, t_list *svar_lst)
 {
 	t_list	*elem;
 
-	if (!(elem = get_shell_var(name, svar_lst)))
+	if (!(elem = ft_lst_find(svar_lst, (void *)name, name_shvar_cmp)))
 		return (NULL);
 	return (((t_shell_var *)elem->content)->value);
 }

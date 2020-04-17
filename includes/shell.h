@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:47:18 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:35:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,13 +332,13 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 		t_list **head);
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
-t_list							*get_shell_var(char *name, t_list *svar_lst);
-char							*get_shell_var_value(char *name,
+int								name_shvar_cmp(void *str_ref, void *shvar_ptr);
+char							*get_shell_var(const char *name,
 		t_list *svar_lst);
-int								set_shell_var(t_list *elem, char *name, \
-		char *value, uint64_t flags);
-int								set_shell_var_value(char *name,
-		char *value, uint64_t flags, t_list *svar_lst);
+int								unset_shell_var(const char *name,
+		t_list **svar_lst);
+int								set_shell_var(const char *name,
+		const char *value, uint64_t flags, t_list **svar_lst);
 int								get_stdin(char **line);
 t_token							*get_word(const char *str, size_t *i, \
 		int prevtype);
@@ -347,6 +347,8 @@ t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
 int								check_alias(t_list **lst, int check);
 char							*is_valid_assignment(const char *str);
+int								get_assignment(const char *assignment,
+									char **name, char **value);
 int								only_assignments(t_process *p);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 01:11:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 14:47:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 #include "shell.h"
 
 int	g_autocompl_on = 0;
+
+static t_node	*get_alias_compl(t_node *compl_tree, char *to_complete,
+					t_data *data)
+{
+	t_list	*alias_var;
+	char	*alias_name;
+	int		pattern_len;
+
+	pattern_len = ft_strlen(to_complete);
+	alias_var = g_alias;
+	while (alias_var)
+	{
+		alias_name = ((t_shell_var*)(alias_var->content))->name;
+		if (!pattern_len || ft_strnequ(alias_name, to_complete, pattern_len))
+			compl_tree = add_node(compl_tree, alias_name, data, "\033[37m");
+		alias_var = alias_var->next;
+	}
+	return (compl_tree);
+}
 
 void	command_complete(char *to_complete)
 {
@@ -34,7 +53,8 @@ void	command_complete(char *to_complete)
 			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
-	if (!(compl_tree = get_cmd_compl(to_complete, path, data)))
+	compl_tree = get_cmd_compl(to_complete, path, data);
+	if (!(compl_tree = get_alias_compl(compl_tree, to_complete, data)))
 		return ;
 	display_compl(compl_tree, data);
 	free(data);
