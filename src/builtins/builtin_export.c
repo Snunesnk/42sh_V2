@@ -6,14 +6,12 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/17 22:58:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 00:52:05 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
-
-extern t_list	*g_env;
 
 static void	print_export(void)
 {
@@ -39,51 +37,31 @@ static void	print_export(void)
 	}
 }
 
-static int	change_var_flag(int option, char *name, char *value)
-{
-	t_shell_var	*tmp;
-	t_list		*list;
-
-	list = g_env;
-	while (list && !ft_strequ(((t_shell_var*)(list->content))->name, name))
-		list = list->next;
-	if (!list)
-		return (0);
-	tmp = (t_shell_var*)(list->content);
-	tmp->flag = ((option & EXPORT_N_OPT)) ? SET : EXPORT + 1;
-	if (value)
-	{
-		free(tmp->value);
-		if (!(tmp->value = ft_strdup(value)))
-		{
-			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-			return (0);
-		}
-	}
-	return (1);
-}
-
 static void	exec_export(char **args, int option)
 {
-	char	*name;
-	char	*value;
+	char		*name;
+	char		*value;
+	uint64_t	flags;
 
 	if (!*args)
-	{
 		print_export();
-		return ;
-	}
+	flags = !(option & EXPORT_N_OPT) ? EXPORT : 0;
 	while ((name = *args))
 	{
-		value = ft_strchr(*args, '=');
-		if (value)
-		{
-			*value = '\0';
-			value += 1;
-		}
-		if (!change_var_flag(option, name, value) && value)
-			set_shell_var(name, value, EXPORT | (value ? SET : 0), &g_env);
-		args += 1;
+		if (get_assignment(*args, &name, &value) == SUCCESS)
+			*value++ = 0;
+		if (!*name || *name == '=')
+			ft_dprintf(STDERR_FILENO,
+				"export: `%s': not a valid identifier\n", name);
+		else if (value)
+			set_shell_var(name, value, flags | SET, &g_env);
+		else if (!(value = get_shell_var(name, g_env)) && flags)
+			set_shell_var(name, value, flags, &g_env);
+		else if (value && !flags)
+			set_shell_var(name, value, EXPORT >> SHVAR_RM_OFF, &g_env);
+		else if (value && flags)
+			set_shell_var(name, value, EXPORT >> SHVAR_ADD_OFF, &g_env);
+		++args;
 	}
 }
 
