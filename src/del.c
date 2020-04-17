@@ -6,32 +6,41 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:54:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:13:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-void	del_elem(void *content, size_t content_size)
+void	free_token(t_token *token)
 {
-	(void)content_size;
-	ft_strdel(&((t_shell_var*)(content))->name);
-	ft_strdel(&((t_shell_var*)(content))->value);
-	free(content);
+	if (token->type == WORD)
+		free(token->value);
+	free(token);
 }
 
-void	astdel(t_ast **ast)
+void	free_lst(t_list *lst)
 {
-	if (*ast != NULL)
+	if (lst)
 	{
-		ft_lstdel(&(*ast)->content, del);
-		if ((*ast)->left != NULL)
-			astdel((t_ast**)&(*ast)->left);
-		if ((*ast)->right != NULL)
-			astdel((t_ast**)&(*ast)->right);
-		free(*ast);
-		*ast = NULL;
+		free_lst(lst->next);
+		free_token(lst->content);
+		free(lst);
+	}
+}
+
+void	free_ast(t_ast *ast)
+{
+	if (ast)
+	{
+		if (ast->left)
+			free_ast(ast->left);
+		if (ast->right)
+			free_ast(ast->right);
+		if (ast->type == WORD)
+			free_lst(ast->content);
+		free(ast);
 	}
 }
 
