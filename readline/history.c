@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:57:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:19:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ char		*g_hist_loc = NULL;
 
 void	init_history(void)
 {
-	char	buf[10000];
+	char	*buf;
 	int		fd;
-	int		ret;
 
+	buf = NULL;
 	get_history_loc();
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
@@ -38,9 +38,9 @@ void	init_history(void)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
 	}
-	while ((ret = read(fd, buf, 9998)) > 0)
-		add_hentry(buf, ret, 0);
-	remove_nl();
+	while (get_next_cmd(fd, &buf) > 0)
+		add_hentry(buf, ft_strlen(buf), 1);
+//	remove_nl();
 	g_hist->nb_line = g_hist->total_lines;
 	close(fd);
 }
@@ -54,18 +54,16 @@ void	remove_nl(void)
 		return ;
 	while (i < g_hist->used)
 	{
-		if (g_hist->history_content[i] == '\n')
-		//		&& g_hist->history_content[i + 1] == '\0')
+		if (!g_hist->history_content[i])
 		{
-			g_hist->total_lines += 1;
-			g_hist->history_content[i] = '\0';
-//			ft_memmove(g_hist->history_content + i, g_hist->history_content 
-//					+ i + 1, g_hist->used - (i + 1));
+			ft_memmove(g_hist->history_content + i - 1, \
+					g_hist->history_content + i, g_hist->used - i + 1);
+			g_hist->used -= 1;
 		}
-		i++;
+		else
+			i++;
 	}
-	if (g_hist->total_lines > 0)
-		g_hist->total_lines -= 1;
+	g_hist->offset -= g_hist->used - 1;
 }
 
 void	get_history_loc(void)
@@ -92,7 +90,8 @@ void	get_history_loc(void)
 
 void	add_hentry(const char *buf, int size, int mode)
 {
-
+	if (!*buf)
+		return ;
 	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
 	{
 		if (!g_hist->capacity)
