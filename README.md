@@ -3,6 +3,8 @@ A tiny shell. [42 project]
 
 ToDo:
 
+valgrind --leak-check=full --track-origins=yes ./21sh
+
 Simon:
 - 21sh builtins export, set and unset.
 - 21sh Norme everything.
