@@ -6,21 +6,21 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:02:12 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/16 13:02:13 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 11:32:25 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lst_del_if(t_list **lst, void *content_ref,
+int		ft_lst_del_if(t_list **lst, void *content_ref,
 			void (*del)(void *, size_t), int (*cmp)())
 {
+	int		del_count;
 	t_list	*prev;
 	t_list	*cur;
 	t_list	*next;
 
-	if (!lst || !*lst || !del || !cmp)
-		return ;
+	del_count = 0;
 	prev = NULL;
 	cur = *lst;
 	next = cur ? cur->next : NULL;
@@ -33,9 +33,11 @@ void	ft_lst_del_if(t_list **lst, void *content_ref,
 				prev->next = next;
 			else
 				*lst = next;
+			++del_count;
 		}
 		prev = cur ? cur : prev;
 		cur = next;
 		next = cur ? cur->next : next;
 	}
+	return (del_count);
 }
