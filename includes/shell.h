@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 16:34:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:11:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ typedef struct					s_shell_var
 
 void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
-void							astdel(t_ast **ast);
+void							free_ast(t_ast *ast);
 t_ast							*build_ast(t_list **lst);
 t_ast							*alloc_node(int type, t_list *pipeline, \
 		t_ast *left, t_ast *right);
