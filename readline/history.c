@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/13 20:55:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 00:59:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	init_history(void)
 {
 	char	buf[10000];
 	int		fd;
+	int		ret;
 
-	ft_bzero(buf, 9999);
 	get_history_loc();
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
@@ -38,8 +38,8 @@ void	init_history(void)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
 	}
-	while (read(fd, buf, 9998) > 0)
-		add_hentry(buf, 0);
+	while ((ret = read(fd, buf, 9998)) > 0)
+		add_hentry(buf, ret, 0);
 	remove_nl();
 	g_hist->nb_line = g_hist->total_lines;
 	close(fd);
@@ -54,10 +54,13 @@ void	remove_nl(void)
 		return ;
 	while (i < g_hist->used)
 	{
-		if (g_hist->history_content[i] == '\n')
+		if (g_hist->history_content[i] == '\n' \
+				&& g_hist->history_content[i + 1] == '\0')
 		{
 			g_hist->total_lines += 1;
 			g_hist->history_content[i] = '\0';
+			ft_memmove(g_hist->history_content + i, g_hist->history_content \
+					+ i + 1, g_hist->used - (i + 1));
 		}
 		i++;
 	}
@@ -87,11 +90,10 @@ void	get_history_loc(void)
 	}
 }
 
-void	add_hentry(const char *buf, int mode)
+void	add_hentry(const char *buf, int size, int mode)
 {
-	int	size;
 
-	size = ft_strlen(buf);
+	ft_printf("new entry: |%s|, size: %d\n", buf, size);
 	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
 	{
 		if (!g_hist->capacity)

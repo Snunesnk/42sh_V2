@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/16 17:43:39 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/17 12:00:05 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -112,6 +112,7 @@ SOURCES :=	main.c \
 		../globbings/ft_glob/build_brace_patterns.c \
 		../globbings/ft_glob/build_patterns.c \
 		../globbings/ft_glob/file_utils.c \
+		../globbings/ft_glob/esc_char.c \
 		../globbings/ft_glob/ft_glob.c \
 		../globbings/ft_glob/ft_glob_internal.c \
 		../globbings/ft_glob/match_patterns.c \
