@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:12:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:53:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void		exit_clean(void)
 	extern char	**environ;
 
 	free_hash_table();
+	free_hist();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 }
