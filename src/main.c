@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 00:57:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:12:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,25 @@ int			exec_input(char *input)
 	t_ast	*ast;
 	t_list	*lst;
 	int		status;
+	char	*tmp;
 
 	status = 0;
+	tmp = ft_strjoin(input, "\n");
+	free(input);
+	input = tmp;
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
 	if (status || ((t_token*)(lst->content))->type == NEWLINE)
 	{
 		do_job_notification(g_first_job, NULL, NULL);
-		ft_lstdelone(&lst, &del);
+		free_lst(lst);
 		return (status);
 	}
 	ast = build_ast(&lst);
+	free_lst(lst);
 	status = execute_node(ast, 1);
-	astdel(&ast);
+	free_ast(ast);
 	g_retval = status;
 	do_job_notification(g_first_job, NULL, NULL);
 	return (status);

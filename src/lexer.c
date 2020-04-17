@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:51:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:05:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ static int		add_token_to_list(t_token *token, t_list **lst)
 
 	tmp = *lst;
 	new = ft_memalloc(sizeof(t_list));
-	new->content = token;
 	if (!new)
 		return (FAILURE);
+	new->content = token;
 	if (!*lst)
 		*lst = new;
 	else
@@ -101,7 +101,6 @@ t_list			*lexer(const char *input)
 
 	while (ft_isblank(*input))
 		++input;
-	input = ft_strjoin(input, "\n");
 	if (!input)
 		return (NULL);
 	lst = list_tokens(input);
