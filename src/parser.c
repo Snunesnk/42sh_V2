@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:13:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:56:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	}
 	else if (next_type == NEWLINE)
 	{
-		ft_lstdelone(&(*lst)->next, &del);
+		free_lst((*lst)->next);
+		(*lst)->next = NULL;
+//		ft_lstdelone(&(*lst)->next, &del);
 		(*lst)->next = subprompt();
 		return (e_success);
 	}
