@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 21:55:19 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:46:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:37:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,7 @@ char		*get_color(char *file)
 	else if (S_ISSOCK(st.st_mode))
 		tmp = color[5];
 	else if (S_ISREG(st.st_mode))
-	{
-		if (is_exec(file))
-			tmp = get_sp_color(st);
-		tmp = color[0];
-	}
+		tmp = (is_exec(file)) ? get_sp_color(st) : color[0];
 	free(no_esc_file);
 	return (tmp);
 }
