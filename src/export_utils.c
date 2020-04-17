@@ -6,45 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:55:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 13:36:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static int		add_var_to_env(char *name, char *value, t_list *elem)
-{
-	t_shell_var	shell_var;
-	t_list		*lst_new;
-
-	ft_bzero(&shell_var, sizeof(shell_var));
-	if (elem != NULL)
-	{
-		if (value != NULL)
-			((t_shell_var*)(elem->content))->value = value;
-		((t_shell_var*)(elem->content))->flag |= (SET | EXPORT);
-	}
-	else
-	{
-		shell_var.name = name;
-		if (value != NULL)
-		{
-			shell_var.value = value;
-			shell_var.flag |= SET;
-		}
-		shell_var.flag |= EXPORT;
-		lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-		if (lst_new == NULL)
-			return (FAILURE);
-		ft_lstadd(&g_env, lst_new);
-	}
-	return (SUCCESS);
-}
-
 int				add_var(char **av)
 {
-	t_list		*elem;
 	char		*name;
 	char		*value;
 	size_t		i;
@@ -52,19 +22,15 @@ int				add_var(char **av)
 	i = 0;
 	while (av[i] != NULL)
 	{
-		value = ft_strchr(av[i], '=');
-		if (value != NULL)
-		{
-			name = ft_strndup(av[i], value - av[i]);
-			value = ft_strdup(value + 1);
-		}
-		else
-			name = ft_strdup(av[i]);
-		elem = get_shell_var(name, g_env);
-		if (add_var_to_env(name, value, elem) == FAILURE)
+		if (get_assignment(av[i], &name, &value) == SUCCESS)
+			*value++ = 0;
+		else if (!*name || *name == '=')
 			return (FAILURE);
-		i++;
+		if (set_shell_var(name, value,
+			EXPORT | (value ? SET : 0), &g_env) == FAILURE)
+			return (FAILURE);
+		++i;
 	}
-	ft_merge_sort(&g_env, &alpha_sort);
+	ft_merge_sort(&g_env, alpha_sort);
 	return (SUCCESS);
 }

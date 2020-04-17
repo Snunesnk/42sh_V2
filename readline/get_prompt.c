@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/16 15:40:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:40:30 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	remove_home(char **pwd)
 	char	*home;
 	char	*tmp;
 
-	if (!(home = get_shell_var_value("HOME", g_env)))
+	if (!(home = get_shell_var("HOME", g_env)))
 		return (e_success);
 	if (!(tmp = ft_strstr(*pwd, home)))
 		return (e_success);
@@ -72,7 +72,7 @@ char		*get_prompt(void)
 	char	*pwd;
 	int		len;
 
-	if (!(pwd = get_shell_var_value("PWD", g_env)))
+	if (!(pwd = get_shell_var("PWD", g_env)))
 		return (ft_strdup("21sh$ "));
 	len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + ft_strlen(PROMPT_COLOR) \
 		+ ft_strlen(END_SIGN) + 1;
@@ -89,7 +89,7 @@ char		*get_prompt(void)
 	if (remove_home(&pwd))
 		return (NULL);
 	ft_strcat(prompt, pwd);
-	if (!ft_strequ(pwd, get_shell_var_value("PWD", g_env)))
+	if (!ft_strequ(pwd, get_shell_var("PWD", g_env)))
 		free(pwd);
 	ft_strcat(prompt, END_SIGN);
 	return (prompt);

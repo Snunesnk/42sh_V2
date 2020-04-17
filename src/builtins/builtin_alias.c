@@ -6,77 +6,37 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 15:04:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 13:35:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static int	add_alias_to_list(char *name, char *value, t_list *elem)
-{
-	t_shell_var	shell_var;
-	t_shell_var	*svar_ptr;
-	t_list		*lst_new;
-
-	ft_bzero(&shell_var, sizeof(shell_var));
-	if (elem != NULL)
-	{
-		svar_ptr = (t_shell_var *)elem->content;
-		ft_strdel(&svar_ptr->value);
-		svar_ptr->value = value;
-	}
-	else
-	{
-		shell_var.name = name;
-		shell_var.value = value;
-		if (!(lst_new = ft_lstnew(&shell_var, sizeof(shell_var))))
-		{
-			ft_strdel(&name);
-			ft_strdel(&value);
-			return (FAILURE);
-		}
-		ft_lstadd(&g_alias, lst_new);
-	}
-	return (SUCCESS);
-}
-
-static char	*get_alias_name(char *str)
-{
-	char	*delim;
-
-	if (!str || !(delim = ft_strchr(str, '=')) || delim == str)
-	{
-		if (!str || delim == str)
-			ft_putstr_fd("alias: invalid alias name\n", 2);
-		else
-			ft_putstr_fd("alias: empty alias\n", 2);
-		return (NULL);
-	}
-	return (ft_strndup(str, delim - str));
-}
-
 static int	add_alias(char **av)
 {
-	t_list		*elem;
+	int			ret;
 	char		*name;
 	char		*value;
 
-	while (*av != NULL)
+	ret = SUCCESS;
+	while (*av && ret == SUCCESS)
 	{
-		if (!(name = get_alias_name(*av))
-			|| !(value = ft_strdup(ft_strchr(*av, '=') + 1)))
+		ret = FAILURE;
+		name = *av;
+		if (get_assignment(*av, &name, &value) == SUCCESS && value[1])
 		{
-			ft_strdel(&name);
-			return (FAILURE);
+			*value = 0;
+			ret = set_shell_var(name, value + 1, 0, &g_alias);
 		}
-		elem = get_shell_var(name, g_alias);
-		if (add_alias_to_list(name, value, elem) == FAILURE)
-			return (FAILURE);
+		else if (!*name || *name == '=')
+			ft_putstr_fd("alias: invalid alias name\n", 2);
+		else
+			ft_putstr_fd("alias: empty alias\n", 2);
 		++av;
 	}
-	ft_merge_sort(&g_alias, &alpha_sort);
-	return (SUCCESS);
+	ft_merge_sort(&g_alias, alpha_sort);
+	return (ret);
 }
 
 static void	print_alias_list(t_list *lst)
