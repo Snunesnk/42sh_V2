@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:42:06 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 13:48:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		set_shell_var_internal(t_shell_var *orig_var,
 	else if (!(new_elem = ft_lstnew(new_var, sizeof(t_shell_var))))
 		return (FAILURE);
 	else
-		ft_lstadd(svar_lst, new_elem); //sort ? probably.
+		ft_lstadd(svar_lst, new_elem);
 	if (orig_var && !(flag & TEMP))
 	{
 		ft_strdel(&new_var->name);
@@ -47,9 +47,6 @@ static int		set_shell_var_internal(t_shell_var *orig_var,
 	return (SUCCESS);
 }
 
-//TODO: find a way to handle the case where a TEMP alias is set
-//decide if this should be an error or not
-//(if it is not an error, set up a way to associate the temp and non-temp)
 int				set_shell_var(const char *name, const char *value,
 					uint64_t flags, t_list **svar_lst)
 {
