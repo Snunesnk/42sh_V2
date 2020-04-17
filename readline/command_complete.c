@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 20:35:48 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/17 23:11:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		is_exec(char *file)
 	struct stat	st;
 	int			perm;
 
+	ft_bzero(&st, sizeof(struct stat));
 	stat(file, &st);
 	perm = (st.st_mode & S_IRWXU) / 64;
 	if (perm % 2 != 0)
