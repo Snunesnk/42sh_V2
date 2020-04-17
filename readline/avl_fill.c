@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 01:31:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 15:12:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ void	update_l(t_node *node, t_data *data)
 	ioctl(0, TIOCGWINSZ, &size);
 	data->column = size.ws_col;
 	data->row = size.ws_row;
-	if (len > (size_t)data->column)
+	if (len + 2 > (size_t)data->column)
 	{
-		data->overflow += len / data->column;
+		data->overflow += (len + 1) / data->column;
 		return ;
 	}
 	if (len + 2 > (size_t)data->name_l)
 		data->name_l = ft_strlen(node->name) + 2;
+	ft_printf("%s is smaller. name_l: %d\n", node->name, data->name_l);
 }
 
 t_node	*place_node(t_node *tree, t_node *new_node, t_data *data)
