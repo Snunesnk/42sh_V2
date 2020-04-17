@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 00:57:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 16:35:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,12 @@ int			exec_input(char *input)
 	t_ast	*ast;
 	t_list	*lst;
 	int		status;
+	char	*tmp;
 
 	status = 0;
+	tmp = ft_strjoin(input, "\n");
+	free(input);
+	input = tmp;
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
