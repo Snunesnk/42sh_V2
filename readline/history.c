@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 19:19:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:23:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,8 @@ void	init_history(void)
 	}
 	while (get_next_cmd(fd, &buf) > 0)
 		add_hentry(buf, ft_strlen(buf), 1);
-//	remove_nl();
 	g_hist->nb_line = g_hist->total_lines;
 	close(fd);
-}
-
-void	remove_nl(void)
-{
-	unsigned int	i;
-
-	i = 0;
-	if (!g_hist || !g_hist->history_content)
-		return ;
-	while (i < g_hist->used)
-	{
-		if (!g_hist->history_content[i])
-		{
-			ft_memmove(g_hist->history_content + i - 1, \
-					g_hist->history_content + i, g_hist->used - i + 1);
-			g_hist->used -= 1;
-		}
-		else
-			i++;
-	}
-	g_hist->offset -= g_hist->used - 1;
 }
 
 void	get_history_loc(void)
