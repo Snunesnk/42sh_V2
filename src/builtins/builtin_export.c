@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/16 19:24:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 22:58:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ static void	print_export(void)
 		}
 		list = list->next;
 	}
-}
-
-static void	add_env_var(char *name, char *value)
-{
-	t_list		*lst_new;
-	t_shell_var	shell_var;
-
-	shell_var.name = ft_strdup(name);
-	shell_var.value = ft_strdup(value);
-	shell_var.flag |= EXPORT + SET;
-	lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-	if (!lst_new)
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return ;
-	}
-	ft_lstadd(&g_env, lst_new);
-	ft_merge_sort(&g_env, &alpha_sort);
 }
 
 static int	change_var_flag(int option, char *name, char *value)
@@ -100,7 +82,7 @@ static void	exec_export(char **args, int option)
 			value += 1;
 		}
 		if (!change_var_flag(option, name, value) && value)
-			add_env_var(name, value);
+			set_shell_var(name, value, EXPORT | (value ? SET : 0), &g_env);
 		args += 1;
 	}
 }
