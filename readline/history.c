@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 19:23:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 13:28:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	get_history_loc(void)
 
 void	add_hentry(const char *buf, int size, int mode)
 {
-	if (!*buf)
+	if (!*buf || ft_str_isspace((char *)buf))
 		return ;
 	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
 	{

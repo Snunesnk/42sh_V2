@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 21:30:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:23:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,18 @@ int			exec_input(char *input)
 	return (status);
 }
 
-void		exit_clean(void)
+int			exit_clean(int ret)
 {
 	extern char	**environ;
 
 	free_hash_table();
-	free_hist();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
+	free(g_dis.prompt);
+	free(g_dis.display_prompt);
+	free(g_line.line);
+	exit(ret);
+	return (ret);
 }
 
 int			main(int argc, char **argv)
@@ -105,6 +109,6 @@ int			main(int argc, char **argv)
 		test_hash_path();
 		free(prompt);
 	}
-	exit_clean();
-	return (status);
+	free_hist();
+	return (exit_clean(status));
 }

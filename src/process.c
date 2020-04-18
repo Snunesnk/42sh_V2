@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:24:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 16:24:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 	perf_redir(p);
 	ret = execute_process(p->argv, envp, NULL, NULL);
 	free_process(p);
-	exit(ret);
+	return (exit_clean(ret));
 }

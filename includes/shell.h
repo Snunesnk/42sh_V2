@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 18:57:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 16:20:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,5 +416,7 @@ struct							s_param_exp
 	size_t	lcontent;
 	char	*new;
 };
+
+int								exit_clean(int status);
 
 #endif

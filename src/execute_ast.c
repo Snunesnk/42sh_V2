@@ -6,11 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 20:04:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 16:19:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 #define ASTERROR 125
 
@@ -62,7 +63,7 @@ int			execute_subshell(t_ast *node, int foreground)
 		g_subshell = 1;
 		restore_procmask();
 		setpgid(pid, pid);
-		exit(execute_node(node, foreground));
+		exit_clean(execute_node(node, foreground));
 	}
 	else if (pid < 0)
 	{
