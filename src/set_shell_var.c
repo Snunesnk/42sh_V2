@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 18:19:12 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/17 21:07:17 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 02:08:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ static uint64_t	set_flags(uint64_t old_flags, uint64_t new_flags)
 	}
 	else
 		return (new_flags & SHVAR_OVERWRITE_MASK);
+}
+
+int				flag_shell_var(const char *name, uint64_t flags,
+					t_list *svar_lst)
+{
+	t_shell_var	*var;
+	t_list		*elem;
+
+	if (!(elem = ft_lst_find(svar_lst, (void *)name, name_shvar_cmp)))
+		return (FAILURE);
+	var = elem->content;
+	var->flag = set_flags(var->flag, flags);
+	return (SUCCESS);
 }
 
 static int		set_shell_var_internal(t_shell_var *orig_var,

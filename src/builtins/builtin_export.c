@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/18 00:52:05 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 02:06:17 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ static void	exec_export(char **args, int option)
 				"export: `%s': not a valid identifier\n", name);
 		else if (value)
 			set_shell_var(name, value, flags | SET, &g_env);
-		else if (!(value = get_shell_var(name, g_env)) && flags)
-			set_shell_var(name, value, flags, &g_env);
-		else if (value && !flags)
-			set_shell_var(name, value, EXPORT >> SHVAR_RM_OFF, &g_env);
-		else if (value && flags)
-			set_shell_var(name, value, EXPORT >> SHVAR_ADD_OFF, &g_env);
+		else if (flags)
+		{
+			if (flag_shell_var(name, flags >> SHVAR_ADD_OFF, g_env) == FAILURE)
+				set_shell_var(name, value, flags, &g_env);
+		}
+		else
+			flag_shell_var(name, EXPORT >> SHVAR_RM_OFF, g_env);
 		++args;
 	}
 }
