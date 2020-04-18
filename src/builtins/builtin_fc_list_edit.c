@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 20:27:47 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:24:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char		*get_editor(int opt_list)
 		editor = ft_strdup("vi");
 	if (!(editor))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		pbierror("cannot allocate memory");
 		return (NULL);
 	}
 	return (editor);
@@ -69,12 +69,12 @@ int			re_execute_cmd(int opt_list)
 	if (!(editor = get_editor(opt_list)))
 		return (e_cannot_allocate_memory);
 	if (!(command = ft_strjoin(editor, " .21sh_tmp_file")) \
-			&& ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n"))
+			&& pbierror("cannot allocate memory"))
 		return (e_cannot_allocate_memory);
 	free(editor);
 	exec_input(command);
 	if ((fd = open(".21sh_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
-			&& ft_printf("./21sh: cannot open temporary file\n"))
+			&& pbierror("cannot open temporary file"))
 		return (1);
 	while (get_next_line(fd, &command) > 0)
 	{
@@ -98,7 +98,7 @@ int			get_fd_and_print(int opt_list, int hist_beg, int hist_end)
 		if ((fd = open(".21sh_tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644)) \
 				< 0)
 		{
-			ft_printf("./21sh: cannot open temporary file\n");
+			pbierror("cannot open temporary file");
 			return (1);
 		}
 	}
@@ -128,7 +128,7 @@ int			exec_fc_other_opt(int opt_list, char **args)
 	}
 	if (h_end < 0 || h_beg < 0 || g_hist->total_lines == 1)
 	{
-		ft_printf("./21sh: fc: history specification out of range\n");
+		pbierror("history specification out of range");
 		if (g_hist->total_lines != 1 && g_shell_is_interactive)
 			fc_replace_last_hist(NULL);
 		return (e_invalid_input);
