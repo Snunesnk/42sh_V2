@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 17:27:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 17:45:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static int	add_alias(char **av, char *builtin_name)
 		else if (!*name || *name == '=')
 			pbierror(builtin_name, "'%s': invalid alias name", name);
 		else if ((ret = print_alias(name, NULL)) == FAILURE)
-			pbierror(builtin_name, "empty alias");
+			pbierror(builtin_name, "'%s': not found", name);
 	}
 	ft_merge_sort(&g_alias, alpha_sort);
-	return (ret);
+	return (!!ret);
 }
 
 int			cmd_alias(int argc, char **argv)
@@ -65,5 +65,5 @@ int			cmd_alias(int argc, char **argv)
 		print_alias_list(g_alias);
 	else
 		return (add_alias(argv, argv[0]));
-	return (SUCCESS);
+	return (0);
 }
