@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 12:03:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 12:12:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static t_list	*build_leaf(t_list **lst)
 	return (pipeline);
 }
 
-void	free_token(t_token *token);
-
 static t_ast	*build_node(t_list **lst)
 {
 	t_list	*pipeline;
@@ -42,13 +40,6 @@ static t_ast	*build_node(t_list **lst)
 	int		type;
 
 	pipeline = build_leaf(lst);
-
-/*	ft_printf("-----------LIST--------\n");
-	debug(pipeline);
-	ft_printf("-----------REST--------\n");
-	debug(*lst);
-	ft_putchar('\n');
-*/
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == AND_IF || type == OR_IF)
 	{
