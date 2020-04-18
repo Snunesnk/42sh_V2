@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/06 21:14:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		print_hashed_commands(int options_list)
 		i++;
 	}
 	if (!nb)
-		ft_printf("hash: hash table empty\n");
+		pbierror("hash table empty");
 	return (0);
 }
 
@@ -72,7 +72,7 @@ int		print_hashed_targets(int options_list, char **args)
 	{
 		if (!(tmp = find_occurence(*args)))
 		{
-			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", *args);
+			pbierror("%s: not found", *args);
 			status = e_command_not_found;
 		}
 		else
@@ -94,7 +94,7 @@ int		change_hash_entry(char *path, char *name)
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: Is a directory\n", path);
+		pbierror("%s: Is a directory", path);
 		return (e_invalid_input);
 	}
 	if (find_occurence(name))
@@ -113,7 +113,7 @@ void	remove_hash_entry(char *name)
 	tmp = find_occurence(name);
 	if (!tmp)
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", name);
+		pbierror("%s: not found", name);
 		return ;
 	}
 	prev = find_prev_occurence(name);
