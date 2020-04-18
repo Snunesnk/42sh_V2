@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 02:15:53 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 03:00:03 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,22 @@
 
 int				cmd_unsetenv(int argc, char **argv)
 {
-	if (argc != 2)
+	char	*builtin_name;
+
+	builtin_name = argv[0];
+	if (argc == 1)
 	{
-		psherror(e_invalid_input, argv[0], e_cmd_type);
-		ft_dprintf(STDERR_FILENO, "Usage: %s VAR\n", argv[0]);
-		return (g_errordesc[e_invalid_input].code);
-	}
-	else if (!argv[1] || !*argv[1] || ft_strstr(argv[1], "="))
-	{
-		g_errno = E_EINVAL;
-		ft_perror(NULL);
+		ft_dprintf(STDERR_FILENO, "%s: usage: %s name ...\n",
+			builtin_name, builtin_name);
 		return (FAILURE);
 	}
-	else
-		flag_shell_var(argv[1], EXPORT >> SHVAR_RM_OFF, g_env);
+	while (*++argv)
+	{
+		if (!**argv || ft_strchr(*argv, '='))
+			ft_dprintf(STDERR_FILENO, "%s: `%s': not a valid identifier\n",
+				builtin_name, *argv);
+		else
+			flag_shell_var(*argv, EXPORT >> SHVAR_RM_OFF, g_env);
+	}
 	return (SUCCESS);
 }
