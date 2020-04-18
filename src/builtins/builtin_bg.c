@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 15:02:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 17:35:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,6 @@ int	cmd_bg(int argc, char **argv)
 		put_job_in_background(j, 1);
 	}
 	else
-		ft_dprintf(STDERR_FILENO, "bg: usage: bg [job_spec]\n");
+		return (pbierror(argv[0], "usage: %s [job_spec]", argv[0]));
 	return (0);
 }
