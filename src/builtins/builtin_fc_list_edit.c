@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/12 16:02:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 20:27:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,12 +129,12 @@ int			exec_fc_other_opt(int opt_list, char **args)
 	if (h_end < 0 || h_beg < 0 || g_hist->total_lines == 1)
 	{
 		ft_printf("./21sh: fc: history specification out of range\n");
-		if (g_hist->total_lines != 1)
+		if (g_hist->total_lines != 1 && g_shell_is_interactive)
 			fc_replace_last_hist(NULL);
 		return (e_invalid_input);
 	}
 	if (get_fd_and_print(opt_list, h_beg, h_end))
 		return ((opt_list & FC_L_OPTION) ? e_success : 1);
-	fc_replace_last_hist(NULL);
+	(g_shell_is_interactive) ? fc_replace_last_hist(NULL) : rl_void();
 	return (re_execute_cmd(opt_list));
 }

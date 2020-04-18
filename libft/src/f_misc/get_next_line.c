@@ -3,100 +3,98 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: simon <simon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 12:01:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 23:31:45 by snunes           ###   ########.fr       */
+/*   Created: 2019/04/28 09:38:33 by simon             #+#    #+#             */
+/*   Updated: 2020/04/18 20:36:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+#include "libft.h"
 #include <unistd.h>
 
-#include "libft.h"
-#include "get_next_line.h"
-
-#define CHR_SRCH '\n'
-
-static inline t_list	*lst_select(int fd)
+int		ft_putfirst(char *buff, char tofind)
 {
-	static t_list	*lst;
-	t_list			*fd_lst;
+	int	i;
+	int	pos;
 
-	if (!lst)
-		lst = ft_lstnew("", fd);
-	fd_lst = lst;
-	while ((int)(fd_lst->content_size) != fd)
+	i = 0;
+	pos = 0;
+	while (buff[i] != tofind && buff[i])
+		i++;
+	if (buff[i])
+		i++;
+	while (buff[i])
 	{
-		if (!fd_lst->next)
-		{
-			fd_lst->next = ft_lstnew("", fd);
-			return (fd_lst->next);
-		}
-		else if (fd_lst->next)
-			fd_lst = fd_lst->next;
+		buff[pos] = buff[i];
+		pos++;
+		i++;
 	}
-	return (fd_lst);
+	buff[pos] = '\0';
+	return (1);
 }
 
-static inline int		feedline(t_list *lst, int ret, char **line, int has_chr)
+int		ft_find(char **line, char *buff)
 {
-	char	*location;
 	char	*tmp;
+	int		i;
 
-	if (has_chr || (!ret && ft_isempty(lst->content)))
+	i = 0;
+	while (buff[i])
 	{
-		*line = ft_strsub(lst->content, 0, ft_strclen(lst->content, CHR_SRCH));
-		if (!ret && ft_isempty(lst->content))
+		if (buff[i] == '\n')
 		{
-			ft_strclr(lst->content);
-			return (0);
+			buff[i] = '\0';
+			tmp = *line;
+			if (!(*line = ft_strjoin(*line, buff)))
+				return (-1);
+			free(tmp);
+			buff[i] = '\n';
+			return (2);
 		}
-		tmp = lst->content;
-		location = ft_strchr(lst->content, CHR_SRCH) + 1;
-		lst->content = ft_strndup(location, ft_strlen(location));
-		ft_memdel((void**)&tmp);
+		i++;
 	}
 	return (1);
 }
 
-static inline int		readl(t_list *lst, int fd, char **line)
+int		ft_fill_line(char **line, char *buff, int fd)
 {
-	int		ret;
-	int		has_chr;
-	char	buffer[BUFF_SIZE + 1];
 	char	*tmp;
+	int		state;
 
-	ret = 1;
-	while (!(has_chr = ft_chrsearch(lst->content, CHR_SRCH)))
+	if (!*buff)
 	{
-		ft_bzero(buffer, BUFF_SIZE + 1);
-		if ((ret = read(fd, buffer, BUFF_SIZE)) < 0)
-			return (-1);
-		else if (!ret && !ft_isempty(lst->content))
-			return (0);
-		tmp = lst->content;
-		lst->content = ft_strjoin(lst->content, buffer);
-		ft_memdel((void**)&tmp);
-		if (!ret)
-			break ;
+		state = read(fd, buff, BUFF_SIZE);
+		if (state == -1 || (!*buff && state == 0 && !**line))
+			return (state);
+		buff[state] = '\0';
 	}
-	if (!(feedline(lst, ret, line, has_chr)))
+	state = ft_find(line, buff);
+	if (state == -1 || state == 2)
+		return (state);
+	tmp = *line;
+	*line = ft_strjoin(*line, buff);
+	free(tmp);
+	if (!*buff && *line)
 		return (1);
-	return (1);
+	ft_strclr(buff);
+	return ((!*line) ? -1 : ft_fill_line(line, buff, fd));
 }
 
-int						get_next_line(const int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
-	int		ret;
-	int		isempty;
-	t_list	*lst;
+	int			state;
+	static char	buff[FD_MAX][BUFF_SIZE + 1];
 
-	lst = lst_select(fd);
-	if (fd < 0 || !line || BUFF_SIZE < 0)
+	if (!line || fd < 0 || fd > FD_MAX || BUFF_SIZE <= 0)
 		return (-1);
-	else if (!BUFF_SIZE || (!(ret = readl(lst, fd, line))
-				&& !(isempty = ft_isempty(lst->content))))
-		return (0);
-	else
-		return (ret);
+	if (!(*line = ft_strnew(0)))
+		return (-1);
+	state = ft_fill_line(line, buff[fd], fd);
+	if (state == -1 || state == 0)
+		return (state);
+	if (state == 2)
+		ft_putfirst((char *)buff[fd], '\n');
+	return (1);
 }

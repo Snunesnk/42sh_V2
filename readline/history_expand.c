@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/12 23:39:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 19:56:09 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*hist_expanse(char *value)
 {
 	char	*hist_entry;
 
-	if (!g_histexpand)
+	if (!g_histexpand || !g_shell_is_interactive)
 		return (value);
 	hist_entry = value;
 	hist_entry = do_hist_exp(&value, hist_entry);
