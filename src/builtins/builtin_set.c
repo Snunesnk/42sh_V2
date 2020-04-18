@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/14 16:10:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,28 +116,27 @@ static int	flip_opt(char opt, char ***args)
 int			cmd_set(int ac, char **av)
 {
 	extern t_list			*g_env;
-	char					**args;
 	int						i;
 
+	g_builtin_name = *av++;
 	if (ac == 1)
 		print_set();
-	args = av + 1;
-	g_builtin_name = av[0];
-	while (ac > 1 && args && *args && ((*args)[0] == '-' || (*args)[0] == '+'))
+	while (ac > 1 && av && *av && ((*av)[0] == '-' || (*av)[0] == '+'))
 	{
 		g_jump_arg = 0;
 		i = 1;
-		while ((*args)[i])
+		while ((*av)[i])
 		{
-			if (flip_opt((*args)[i], &args) == -1)
+			if (flip_opt((*av)[i], &av) == -1)
 			{
-				ft_printf("./21sh: set: -%c: invalid option\nset: usage: set" \
-						"[-hHtv] [-o option_name] [arg ...]\n", (*args)[i]);
+				pbierror("-%c: invalid option\nset: usage: %s"
+						"[-hHtv] [-o option_name] [arg ...]", (*av)[i],
+						g_builtin_name);
 				return (e_invalid_input);
 			}
 			i++;
 		}
-		args += g_jump_arg + 1;
+		av += g_jump_arg + 1;
 	}
 	return (e_success);
 }

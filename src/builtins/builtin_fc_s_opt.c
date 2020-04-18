@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 20:24:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:23:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_sub	*init_sub(t_sub *prev_sub)
 
 	if (!(new_sub = (t_sub *)ft_memalloc(sizeof(t_sub))))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		pbierror("cannot allocate memory");
 		return (NULL);
 	}
 	new_sub->next = NULL;
@@ -35,7 +35,7 @@ t_sub	*fill_sub(t_sub *sub_list, char *pat, char *rep)
 	if (!(sub_list->pat = ft_strdup(pat)) \
 			|| !(sub_list->rep = ft_strdup(rep)))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		pbierror("cannot allocate memory");
 		return (NULL);
 	}
 	return (sub_list);
@@ -47,14 +47,14 @@ char	*fc_do_substitute(char *str, t_sub *sub_list)
 
 	if (!(new_cmd = ft_strdup(str)))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		pbierror("cannot allocate memory");
 		return (NULL);
 	}
 	while (sub_list && sub_list->pat && sub_list->rep)
 	{
 		if (!(new_cmd = ft_strreplace(&new_cmd, sub_list->pat, sub_list->rep)))
 		{
-			ft_printf("./21sh: cannot allocate memory\n");
+			pbierror("cannot allocate memory");
 			return (NULL);
 		}
 		sub_list = sub_list->next;
@@ -95,7 +95,7 @@ int		exec_fc_s_opt(char **args)
 		return (e_cannot_allocate_memory);
 	if (*args && !(get_beg_matching_hist(&tmp, *args)))
 	{
-		ft_printf("./21sh: fc: no command found\n");
+		pbierror("no command found");
 		if (sub_list->pat)
 			free_substitute(sub_list);
 		return (e_command_not_found);

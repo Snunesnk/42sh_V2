@@ -6,11 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:04:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 t_job	*find_lastbackgrounded(void)
 {
@@ -31,14 +32,14 @@ int		cmd_fg(int argc, char **argv)
 {
 	t_job	*j;
 
+	g_builtin_name = argv[0];
 	if (argc == 1)
 	{
 		if ((j = find_lastbackgrounded()))
 			put_job_in_foreground(j, 1);
 		else
 		{
-			ft_dprintf(STDERR_FILENO, "%s: %s: current: no such job\n",
-					g_progname, argv[0]);
+			pbierror("current: no such job");
 			return (1);
 		}
 	}
@@ -48,6 +49,7 @@ int		cmd_fg(int argc, char **argv)
 		put_job_in_foreground(j, 1);
 	}
 	else
-		ft_dprintf(STDERR_FILENO, "fg: usage: fg [job_spec]\n");
+		return (pbierror("usage: %s [job_spec]",
+			g_builtin_name));
 	return (0);
 }

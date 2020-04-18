@@ -6,12 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 11:39:29 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "builtins.h"
 
 static char	**unalias_opt(int argc, char **argv)
 {
@@ -37,9 +38,10 @@ int			cmd_unalias(int argc, char **argv)
 {
 	int			ret;
 
+	g_builtin_name = argv[0];
 	ret = FAILURE;
 	if (argc == 1)
-		ft_putstr_fd("unalias: no argument\n", 2);
+		pbierror("no argument");
 	else
 	{
 		ret = SUCCESS;
@@ -49,11 +51,11 @@ int			cmd_unalias(int argc, char **argv)
 		{
 			if (unset_shell_var(*argv, &g_alias) == FAILURE)
 			{
-				ft_dprintf(2, "unalias: %s: not found\n", *argv);
+				pbierror("%s: not found", *argv);
 				ret = FAILURE;
 			}
 			++argv;
 		}
 	}
-	return (ret);
+	return (!!ret);
 }

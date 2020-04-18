@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 16:49:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,38 +64,36 @@ static char		*getbinpath(char *bin)
 	}
 }
 
-static void		display_err_msg(_Bool *error, int i, char **argv)
+static void		display_err_msg(_Bool *error, char *name)
 {
 	*error |= 1;
-	ft_dprintf(STDERR_FILENO, "%s: %s: %s: not found\n",
-				g_progname, *argv, argv[i]);
+	pbierror("%s: not found", name);
 }
 
 int				cmd_type(int argc, char **argv)
 {
 	_Bool			error;
-	int				i;
 	t_hash_table	*path;
 	char			*str;
 
+	(void)argc;
 	error = 0;
-	i = 1;
-	while (i < argc)
+	g_builtin_name = argv[0];
+	while (*++argv)
 	{
-		if (is_a_builtin(argv[i]))
-			ft_printf("%s is a shell builtin\n", argv[i]);
-		else if (is_a_keyword(argv[i]))
-			ft_printf("%s is a shell keyword\n", argv[i]);
-		else if ((path = find_occurence(argv[i])))
-			ft_printf("%s is hashed (%s)\n", argv[i], path->command_path);
-		else if ((str = getbinpath(argv[i])))
+		if (is_a_builtin(*argv))
+			ft_printf("%s is a shell builtin\n", *argv);
+		else if (is_a_keyword(*argv))
+			ft_printf("%s is a shell keyword\n", *argv);
+		else if ((path = find_occurence(*argv)))
+			ft_printf("%s is hashed (%s)\n", *argv, path->command_path);
+		else if ((str = getbinpath(*argv)))
 		{
-			ft_printf("%s is %s\n", argv[i], str);
+			ft_printf("%s is %s\n", *argv, str);
 			ft_memdel((void**)&str);
 		}
 		else
-			display_err_msg(&error, i, argv);
-		++i;
+			display_err_msg(&error, *argv);
 	}
 	return (error);
 }

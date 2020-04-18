@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:37:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ int	gfp_env(struct s_cd *cd)
 	return (0);
 }
 
-int	gfp_previous(char **argv, struct s_cd *cd)
+int	gfp_previous(struct s_cd *cd)
 {
 	if (!(cd->oldpwd = get_shell_var("OLDPWD", g_env)))
 	{
-		ft_dprintf(STDERR_FILENO,
-				"%s: %s: OLDPWD not set\n", g_progname, argv[0]);
+		pbierror("OLDPWD not set");
 		g_optind = 1;
 		return (e_invalid_input);
 	}

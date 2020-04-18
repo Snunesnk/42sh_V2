@@ -6,11 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:14:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:22:39 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "builtins.h"
 
 static int		part_sep(int argc, char **argv)
 {
@@ -39,8 +40,7 @@ static int		numarg_exit(int argc, char **argv, int i)
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	if (argc > i + 1)
 	{
-		ft_dprintf(STDERR_FILENO,
-				"%s: %s: too many arguments\n", g_progname, argv[0]);
+		pbierror("too many arguments");
 		return (1);
 	}
 	status = (unsigned char)ft_atoi(argv[i]);
@@ -53,9 +53,7 @@ static void		nomatter_exit(char **argv, int i)
 {
 
 	ft_dprintf(STDERR_FILENO, "exit\n");
-	ft_dprintf(STDERR_FILENO,
-	"%s: %s: %s: numeric argument required\n",
-			g_progname, argv[0], argv[i]);
+	pbierror("%s: numeric argument required", argv[i]);
 	ft_tabdel(&argv);
 	free_hist();
 	exit_clean(2);
@@ -66,6 +64,7 @@ int				cmd_exit(int argc, char **argv)
 	unsigned char	status;
 	int				i;
 
+	g_builtin_name = argv[0];
 	status = g_retval;
 	if (argc > 1)
 	{
