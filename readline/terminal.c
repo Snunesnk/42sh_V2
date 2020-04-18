@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 15:19:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 18:19:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ struct s_termcaps g_termcaps =
 struct s_term g_term =
 {
 	.terminal_name = NULL,
-	.term_string_buffer = NULL,
 	.term_buffer = NULL,
 };
 
@@ -54,7 +53,7 @@ const struct s_termcaps_string g_tc_strings[] =
 	{"up", &g_termcaps.up}
 };
 
-void	get_term_capabilities(char **bp)
+static void	get_term_capabilities(void)
 {
 	register int i;
 
@@ -62,12 +61,12 @@ void	get_term_capabilities(char **bp)
 	while (i < (int)NUM_TC_STRINGS)
 	{
 		*(g_tc_strings[i].value) = tgetstr((char *)g_tc_strings[i].var,
-				bp);
+				NULL);
 		++i;
 	}
 }
 
-int		get_screensize(int tty)
+int			get_screensize(int tty)
 {
 	struct winsize	window_size;
 
@@ -82,37 +81,29 @@ int		get_screensize(int tty)
 	return (0);
 }
 
-void	resize_terminal(int signo)
+void		resize_terminal(int signo)
 {
 	(void)signo;
 	get_screensize(STDIN_FILENO);
 	redisplay_after_sigwinch();
 }
 
-int		init_terminal(void)
+int			init_terminal(void)
 {
-	char *buffer;
-
 	if (g_term.terminal_name == NULL)
 		g_term.terminal_name = "xterm-256color";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
-	if (g_term.term_string_buffer == NULL)
-		g_term.term_string_buffer = (char*)malloc(2032);
 	if (g_term.term_buffer == NULL)
 		g_term.term_buffer = (char*)malloc(4080);
 	if (tgetent(g_term.term_buffer, g_term.terminal_name) <= 0)
 	{
-		if (g_term.term_string_buffer)
-			free(g_term.term_string_buffer);
 		if (g_term.term_buffer)
 			free(g_term.term_buffer);
 		g_term.term_buffer = NULL;
-		g_term.term_string_buffer = NULL;
 		return (-1);
 	}
-	buffer = g_term.term_string_buffer;
-	get_term_capabilities(&buffer);
+	get_term_capabilities();
 	bind_keys();
 	return (0);
 }

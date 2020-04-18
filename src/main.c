@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 16:27:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 18:03:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int			exit_clean(int ret)
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 	free(g_dis.prompt);
-	free(g_dis.display_prompt);
-	free(g_line.line);
+//	free(g_dis.display_prompt);
+//	free(g_line.line);
 	exit(ret);
 	return (ret);
 }
