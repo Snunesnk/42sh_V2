@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 14:11:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:28:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,6 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	{
 		if (e->infile != e->mypipe[0] && e->mypipe[0] != -1)
 			close(e->mypipe[0]);
-		//TODO: this shit can make p->argv NULL, check what to do
-		//in this case beside segfault
-		//from tests, the rest of the pipeline should none the less
-		//execute normally after this
 		treat_shell_variables(e->p, SET | EXPORT);
 		e->p->infile = e->infile;
 		e->p->errfile = j->stderr;
@@ -101,7 +97,7 @@ int			launch_job(t_job *j, int foreground)
 	{
 		e.outfile = set_mypipe(e.p, j, e.mypipe);
 		if (!j->first_process->next && only_assignments(e.p))
-			treat_shell_variables(e.p, SET);
+			treat_shell_variables(e.p, SET >> SHVAR_ADD_OFF);
 		else if (e.outfile == j->stdout && is_a_builtin_command(e.p->argv) \
 				&& !j->first_process->next)
 			return (launch_builtin(e.p));

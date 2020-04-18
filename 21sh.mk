@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/17 16:29:35 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/18 15:05:44 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SOURCES :=	main.c \
 		do_redir2.c \
 		do_redir3.c \
 		error.c \
+		input.c \
 		execute_ast.c \
 		execute_ast2.c \
 		execute_job.c \
@@ -34,7 +35,6 @@ SOURCES :=	main.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
-		export_utils.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
@@ -68,6 +68,7 @@ SOURCES :=	main.c \
 		redir_less.c \
 		redir_great.c \
 		redir_great2.c \
+		set_shell_var.c \
 		signals.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \
@@ -192,7 +193,7 @@ LDLIBS += $(PATH_LIB)libft.a -ltermcap
 LDFLAGS += $(DEBUG)
 #LDFLAGS += -flto=full
 
-CFLAGS += -Wall -Wextra -Werror -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
+CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
-DEBUG += -g3 #-fsanitize=address,undefined
+DEBUG += -fsanitize=address,undefined

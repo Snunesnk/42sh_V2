@@ -6,65 +6,37 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:37:05 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 02:55:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-static void	print_setenv_syntax_error(char *cmd_name, char *str)
-{
-	ft_dprintf(STDERR_FILENO, "%s: %s: \'%s\': not a valid identifier\n",
-					g_progname, cmd_name, str);
-}
-
-static int	is_valid_chr(const char c)
-{
-	if (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9') || c == '_' || c == '/'))
-		return (1);
-	else
-		return (0);
-}
-
-static int	has_invalid_syntax(const char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!is_valid_chr(str[i]))
-			return (e_invalid_input);
-		++i;
-	}
-	return (e_success);
-}
-
 int			cmd_setenv(int argc, char **argv)
 {
-	if (argc != 3)
+	char	*name;
+	char	*value;
+	char	*builtin_name;
+
+	builtin_name = argv[0];
+	if (argc == 1)
 	{
-		psherror(e_invalid_input, argv[0], e_cmd_type);
-		ft_dprintf(STDERR_FILENO, "Usage: %s VAR [VALUE]\n", argv[0]);
-		return (g_errordesc[e_invalid_input].code);
+		ft_dprintf(STDERR_FILENO, "%s: usage: %s name[=value] ...\n",
+			builtin_name, builtin_name);
+		return (FAILURE);
 	}
-	if (has_invalid_syntax(argv[1]))
+	while (*++argv)
 	{
-		print_setenv_syntax_error(argv[0], argv[1]);
-		return (g_errordesc[e_invalid_input].code);
+		if (get_assignment(*argv, &name, &value) == SUCCESS)
+			*value++ = 0;
+		if (!*name || *name == '=')
+			ft_dprintf(STDERR_FILENO, "%s: `%s': not a valid identifier\n",
+				builtin_name, name);
+		else if (value)
+			set_shell_var(name, value, EXPORT >> SHVAR_ADD_OFF, &g_env);
+		else if (flag_shell_var(name, EXPORT >> SHVAR_ADD_OFF, g_env)
+			== FAILURE)
+			set_shell_var(name, value, EXPORT, &g_env);
 	}
-	else if (has_invalid_syntax(argv[2]))
-	{
-		print_setenv_syntax_error(argv[0], argv[2]);
-		return (g_errordesc[e_invalid_input].code);
-	}
-	else
-	{
-		if ((ft_setenv(argv[1], argv[2], 1)))
-			return (g_errordesc[e_cannot_allocate_memory].code);
-		if ((set_shell_var(argv[1], argv[2], EXPORT | SET, &g_env)))
-			return (g_errordesc[e_cannot_allocate_memory].code);
-	}
-	return (e_success);
+	return (SUCCESS);
 }

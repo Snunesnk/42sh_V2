@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 16:20:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:29:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,18 @@
 # define BUF_SIZE	32
 # define NB_TOKEN	17
 
-# define SET		0x01
-# define EXPORT		0x02
-# define RDONLY		0x04
-# define ARRAY		0x08
-# define TEMP		0x10
+# define SET					0x010000
+# define EXPORT					0x020000
+# define RDONLY					0x040000
+# define TEMP					0x080000
+
+# define SHVAR_ADD_OFF			16
+# define SHVAR_RM_OFF			8
+# define SHVAR_OVERWRITE_OFF	0
+
+# define SHVAR_ADD_MASK			0x0000ff
+# define SHVAR_RM_MASK			0x00ff00
+# define SHVAR_OVERWRITE_MASK	0xff0000
 
 # define IOTYPE		0xF
 # define IOREAD		0x1
@@ -172,6 +179,7 @@ extern struct termios			shell_tmodes;
 extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
+int								get_stdin(char **line);
 int								exec_input(char *input);
 int								init_shell(char *argv, int argc);
 int								launch_job(t_job *j, int foreground);
@@ -310,6 +318,7 @@ typedef struct					s_shell_var
 
 void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
+void							free_token(t_token *token);
 void							free_lst(t_list *lst);
 void							free_ast(t_ast *ast);
 t_ast							*build_ast(t_list **lst);
@@ -323,7 +332,6 @@ void							del_env(void *content, size_t content_size);
 int								execute_job(t_list *lst, int foreground);
 int								mark_process_status(pid_t pid, int status);
 int								execute_node(t_ast *node, int foreground);
-int								add_var(char **av);
 int								ft_atoifd(const char *str);
 int								ft_ismeta(int c);
 char							*ft_join_free(char *s1, char *s2, int op);
@@ -338,6 +346,8 @@ char							*get_shell_var(const char *name,
 		t_list *svar_lst);
 int								unset_shell_var(const char *name,
 		t_list **svar_lst);
+int								flag_shell_var(const char *name, uint64_t flags,
+		t_list *svar_lst);
 int								set_shell_var(const char *name,
 		const char *value, uint64_t flags, t_list **svar_lst);
 int								get_stdin(char **line);
