@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 22:59:13 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/17 19:39:45 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			launch_job(t_job *j, int foreground)
 	{
 		e.outfile = set_mypipe(e.p, j, e.mypipe);
 		if (!j->first_process->next && only_assignments(e.p))
-			treat_shell_variables(e.p, SET);
+			treat_shell_variables(e.p, SET >> SHVAR_ADD_OFF);
 		else if (e.outfile == j->stdout && is_a_builtin_command(e.p->argv) \
 				&& !j->first_process->next)
 			return (launch_builtin(e.p));

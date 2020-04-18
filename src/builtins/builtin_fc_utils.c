@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 00:58:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 21:32:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,9 @@ int		add_pending_cmd(char *command)
 {
 	t_list	*new_lst;
 
-	if (!(new_lst = ft_lstnew(command, ft_strlen(command))))
+	if (!command)
+		return (0);
+	if (!(new_lst = ft_lstnew(command, ft_strlen(command) + 1)))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return (0);

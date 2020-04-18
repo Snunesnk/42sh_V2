@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/17 16:29:35 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/18 00:52:48 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,6 @@ SOURCES :=	main.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
-		export_utils.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
@@ -68,6 +67,7 @@ SOURCES :=	main.c \
 		redir_less.c \
 		redir_great.c \
 		redir_great2.c \
+		set_shell_var.c \
 		signals.c \
 		tilde_expansion.c \
 		treat_shell_variables.c \

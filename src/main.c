@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 10:04:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 10:10:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int			exec_input(char *input)
 		return (status);
 	}
 	ast = build_ast(&lst);
-//	debug_ast(ast);
 	status = execute_node(ast, 1);
 	free_ast(ast);
 	g_retval = status;
@@ -75,6 +74,7 @@ void		exit_clean(void)
 	extern char	**environ;
 
 	free_hash_table();
+	free_hist();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 }
