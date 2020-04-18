@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/16 17:46:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 22:40:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ t_print_list	add_compl(t_print_list list_compl, int to_print, \
 t_print_list	list_compl_add(t_print_list list_compl, char *to_add);
 int				is_exec(char *file);
 size_t			ft_str_wchar_len(char *str);
+int				has_no_cmd(char *line, int start);
 
 #endif
