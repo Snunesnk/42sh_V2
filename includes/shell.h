@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 10:10:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 12:12:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,7 @@ typedef struct					s_shell_var
 
 void							alpha_sort(t_list **lst1, t_list **lst2, \
 		t_list **head);
+void							free_token(t_token *token);
 void							free_lst(t_list *lst);
 void							free_ast(t_ast *ast);
 t_ast							*build_ast(t_list **lst);
