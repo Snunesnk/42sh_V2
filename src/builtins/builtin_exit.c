@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 16:22:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:14:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int				cmd_exit(int argc, char **argv)
 			nomatter_exit(argv, i);
 	}
 	ft_tabdel(&argv);
+	if (g_shell_is_interactive && g_hist)
 	free_hist();
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	return (exit_clean(status));
