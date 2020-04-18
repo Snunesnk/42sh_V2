@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 12:01:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 12:03:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ t_ast			*build_ast(t_list **lst)
 		return (NULL);
 	}
 	ast = build_node(lst);
+	if (((t_token*)((*lst)->content))->type == NEWLINE)
+	{
+		free_lst(*lst);
+		return (ast);
+	}
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == SEMI || type == AND)
 	{
