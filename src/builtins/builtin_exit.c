@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:45:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:22:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static int		part_sep(int argc, char **argv)
 {
-	extern char		**environ;
 	unsigned char	status;
 
 	status = g_retval;
@@ -22,12 +21,10 @@ static int		part_sep(int argc, char **argv)
 	{
 		if (argc == 2)
 		{
-			free_hash_table();
 			ft_tabdel(&argv);
-			ft_tabdel(&environ);
 			free_hist();
 			ft_dprintf(STDERR_FILENO, "exit\n");
-			exit(status);
+			exit_clean(status);
 		}
 		return (2);
 	}
@@ -36,7 +33,6 @@ static int		part_sep(int argc, char **argv)
 
 static int		numarg_exit(int argc, char **argv, int i)
 {
-	extern char		**environ;
 	unsigned char	status;
 
 	status = g_retval;
@@ -48,31 +44,25 @@ static int		numarg_exit(int argc, char **argv, int i)
 		return (1);
 	}
 	status = (unsigned char)ft_atoi(argv[i]);
-	free_hash_table();
 	ft_tabdel(&argv);
-	ft_tabdel(&environ);
 	free_hist();
-	exit(status);
+	return (exit_clean(status));
 }
 
 static void		nomatter_exit(char **argv, int i)
 {
-	extern char	**environ;
 
 	ft_dprintf(STDERR_FILENO, "exit\n");
 	ft_dprintf(STDERR_FILENO,
 	"%s: %s: %s: numeric argument required\n",
 			g_progname, argv[0], argv[i]);
-	free_hash_table();
 	ft_tabdel(&argv);
-	ft_tabdel(&environ);
 	free_hist();
-	exit(2);
+	exit_clean(2);
 }
 
 int				cmd_exit(int argc, char **argv)
 {
-	extern char		**environ;
 	unsigned char	status;
 	int				i;
 
@@ -87,10 +77,8 @@ int				cmd_exit(int argc, char **argv)
 		else
 			nomatter_exit(argv, i);
 	}
-	free_hash_table();
 	ft_tabdel(&argv);
-	ft_tabdel(&environ);
 	free_hist();
 	ft_dprintf(STDERR_FILENO, "exit\n");
-	exit(status);
+	return (exit_clean(status));
 }
