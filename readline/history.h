@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 00:56:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 18:51:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define HISTORY_H
 
 # define ADD_SEPARATOR 1
+# define READ_SIZE 9000
 
 struct	s_hist
 {
@@ -51,5 +52,6 @@ char	*get_matching_hist(char **line, char *patern);
 char	*get_beg_matching_hist(char **line, char *patern);
 int		check_end_bracket(char *tmp);
 char	*do_hist_exp(char **value, char *hist_entry);
+int		get_next_cmd(int fd, char **buf);
 
 #endif

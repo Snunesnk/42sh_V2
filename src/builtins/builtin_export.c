@@ -6,14 +6,12 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/16 19:24:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 02:24:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
-
-extern t_list	*g_env;
 
 static void	print_export(void)
 {
@@ -39,69 +37,32 @@ static void	print_export(void)
 	}
 }
 
-static void	add_env_var(char *name, char *value)
+static void	exec_export(char *builtin_name, char **args, int option)
 {
-	t_list		*lst_new;
-	t_shell_var	shell_var;
-
-	shell_var.name = ft_strdup(name);
-	shell_var.value = ft_strdup(value);
-	shell_var.flag |= EXPORT + SET;
-	lst_new = ft_lstnew(&shell_var, sizeof(shell_var));
-	if (!lst_new)
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return ;
-	}
-	ft_lstadd(&g_env, lst_new);
-	ft_merge_sort(&g_env, &alpha_sort);
-}
-
-static int	change_var_flag(int option, char *name, char *value)
-{
-	t_shell_var	*tmp;
-	t_list		*list;
-
-	list = g_env;
-	while (list && !ft_strequ(((t_shell_var*)(list->content))->name, name))
-		list = list->next;
-	if (!list)
-		return (0);
-	tmp = (t_shell_var*)(list->content);
-	tmp->flag = ((option & EXPORT_N_OPT)) ? SET : EXPORT + 1;
-	if (value)
-	{
-		free(tmp->value);
-		if (!(tmp->value = ft_strdup(value)))
-		{
-			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-			return (0);
-		}
-	}
-	return (1);
-}
-
-static void	exec_export(char **args, int option)
-{
-	char	*name;
-	char	*value;
+	char		*name;
+	char		*value;
+	uint64_t	flags;
 
 	if (!*args)
-	{
 		print_export();
-		return ;
-	}
+	flags = !(option & EXPORT_N_OPT) ? EXPORT : 0;
 	while ((name = *args))
 	{
-		value = ft_strchr(*args, '=');
-		if (value)
+		if (get_assignment(*args, &name, &value) == SUCCESS)
+			*value++ = 0;
+		if (!*name || *name == '=')
+			ft_dprintf(STDERR_FILENO, "%s: `%s': not a valid identifier\n",
+				builtin_name, name);
+		else if (value)
+			set_shell_var(name, value, flags | SET, &g_env);
+		else if (flags)
 		{
-			*value = '\0';
-			value += 1;
+			if (flag_shell_var(name, flags >> SHVAR_ADD_OFF, g_env) == FAILURE)
+				set_shell_var(name, value, flags, &g_env);
 		}
-		if (!change_var_flag(option, name, value) && value)
-			add_env_var(name, value);
-		args += 1;
+		else
+			flag_shell_var(name, EXPORT >> SHVAR_RM_OFF, g_env);
+		++args;
 	}
 }
 
@@ -121,13 +82,14 @@ int			cmd_export(int ac, char **av)
 			option |= EXPORT_N_OPT;
 		else
 		{
-			ft_dprintf(STDERR_FILENO, "./21sh: export: -%c: invalid option.\n" \
-					, ret);
-			ft_putendl_fd("export: usage: export [-n] [name[=value ...]]" \
-				"or export -p", 2);
+			ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: invalid option.\n",
+					av[0], ret);
+			ft_dprintf(STDERR_FILENO,
+					"%s: usage: %s [-n] [name[=value ...]] or %s -p\n",
+					av[0], av[0], av[0]);
 			return (e_invalid_input);
 		}
 	}
-	exec_export(args, option);
+	exec_export(av[0], args, option);
 	return (e_success);
 }

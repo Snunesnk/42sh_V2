@@ -6,12 +6,42 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:57:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 19:34:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
+#include "libft.h"
+
+int		get_next_cmd(int fd, char **buf)
+{
+	static char	cmd[READ_SIZE];
+	char		*tmp;
+	static int	ret = 0;
+
+	if (!ret)
+	{
+		ret = read(fd, cmd, READ_SIZE - 2);
+		if (!ret)
+			return (0);
+	}
+	else
+	{
+		while (cmd[0])
+		{
+			ft_memmove(cmd, cmd + 1, ret + 1);
+			ret--;
+		}
+		ft_memmove(cmd, cmd + 1, ret + 1);
+		ret--;
+	}
+	tmp = ft_strstr(cmd, "\n\0");
+	if (tmp)
+		*tmp = '\0';
+	*buf = cmd;
+	return (1);
+}
 
 char	*prev_hist(void)
 {
@@ -66,7 +96,7 @@ void	free_hist(void)
 			if (!g_hist->history_content[i])
 			{
 				write(fd, g_hist->history_content + last, i - last);
-				write(fd, "\n", 1);
+				i += write(fd, "\n\0", 2) - 1;
 				last = i;
 			}
 			i++;

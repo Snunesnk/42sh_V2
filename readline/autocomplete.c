@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 14:47:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/17 20:32:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_node	*get_alias_compl(t_node *compl_tree, char *to_complete,
 	return (compl_tree);
 }
 
-void	command_complete(char *to_complete)
+void			command_complete(char *to_complete)
 {
 	char	*path;
 	t_node	*compl_tree;
@@ -54,15 +54,15 @@ void	command_complete(char *to_complete)
 		return ;
 	}
 	compl_tree = get_cmd_compl(to_complete, path, data);
-	if (!(compl_tree = get_alias_compl(compl_tree, to_complete, data)))
-		return ;
-	display_compl(compl_tree, data);
+	compl_tree = get_alias_compl(compl_tree, to_complete, data);
+	if (compl_tree)
+		display_compl(compl_tree, data);
 	free(data);
 	free(path);
 	free_node(compl_tree);
 }
 
-void	var_complete(char *to_complete)
+void			var_complete(char *to_complete)
 {
 	t_node	*compl_tree;
 	t_data	*data;
@@ -77,15 +77,14 @@ void	var_complete(char *to_complete)
 	}
 	if (to_complete[1] == '{')
 		is_bracked = 1;
-	if (!(compl_tree = get_var_compl(to_complete + 1 + is_bracked, data, \
-					is_bracked)))
-		return ;
-	display_compl(compl_tree, data);
+	compl_tree = get_var_compl(to_complete + 1 + is_bracked, data, is_bracked);
+	if (compl_tree)
+		display_compl(compl_tree, data);
 	free(data);
 	free_node(compl_tree);
 }
 
-void	file_complete(char *to_complete)
+void			file_complete(char *to_complete)
 {
 	t_node	*compl_tree;
 	t_data	*data;
@@ -95,14 +94,14 @@ void	file_complete(char *to_complete)
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
-	if (!(compl_tree = get_file_compl(to_complete, data)))
-		return ;
-	display_compl(compl_tree, data);
+	compl_tree = get_file_compl(to_complete, data);
+	if (compl_tree)
+		display_compl(compl_tree, data);
 	free(data);
 	free_node(compl_tree);
 }
 
-void	autocomplete(void)
+void			autocomplete(void)
 {
 	char	*to_complete;
 	int		start;
