@@ -5,7 +5,7 @@
 
 An implementation of a small **shell** [a 42 project].
 
-This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims to get a better grasp of the parsing theorie **LL(1)**, **job control** and general programming in **Unix environment**.
+This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims at getting a better grasp of the LL(1) parsing theory, job control and general programming in Unix environment.
 
 ---
 

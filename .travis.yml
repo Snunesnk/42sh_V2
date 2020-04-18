@@ -1,7 +1,5 @@
 language: c
 
-sudo: true
-
 script:
     - make
 
@@ -21,10 +19,10 @@ notifications:
 matrix:
   include:
     - os: osx
-      osx_image: xcode9.2
+      osx_image: xcode7.3
 
     - os: osx
-      osx_image: xcode9.3
+      osx_image: xcode8.3
 
     - os: osx
       osx_image: xcode9.4
@@ -36,10 +34,10 @@ matrix:
       osx_image: xcode10.1
 
     - os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
 
-    # Clang Linux
     - os: linux
+      dist: xenial
       addons:
         apt:
           sources:
@@ -51,6 +49,7 @@ matrix:
         - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8"
 
     - os: linux
+      dist: trusty
       addons:
         apt:
           sources:
@@ -61,6 +60,7 @@ matrix:
         - MATRIX_EVAL="CC=clang-3.9 && CXX=clang++-3.9"
 
     - os: linux
+      dist: bionic
       addons:
         apt:
           sources:
@@ -70,8 +70,8 @@ matrix:
       env:
         - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
 
-    # GCC Linux
     - os: linux
+      dist: trusty
       addons:
         apt:
           sources:
@@ -82,6 +82,7 @@ matrix:
          - MATRIX_EVAL="CC=gcc-4.9 && CXX=g++-4.9"
 
     - os: linux
+      dist: xenial
       addons:
         apt:
           sources:
@@ -92,6 +93,7 @@ matrix:
         - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
 
     - os: linux
+      dist: bionic
       addons:
         apt:
           sources:
