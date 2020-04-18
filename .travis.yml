@@ -1,7 +1,7 @@
 language: c
 
 script:
-    - make
+    - make test
 
 env:
     global:

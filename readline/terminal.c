@@ -6,16 +6,30 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:01:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 15:19:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
 struct s_screen g_sc;
-struct s_termcaps g_termcaps = {0};
 struct termios g_termios;
 struct termios g_termios_backup;
+struct s_termcaps g_termcaps =
+{
+	.gdo = NULL,
+	.gup = NULL,
+	.bl = NULL,
+	.cd = NULL,
+	.clreol = NULL,
+	.ch = NULL,
+	.clrpag = NULL,
+	.cr = NULL,
+	.do1 = NULL,
+	.backspace = NULL,
+	.forward_char = NULL,
+	.up = NULL
+};
 
 struct s_term g_term =
 {
