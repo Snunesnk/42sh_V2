@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 11:48:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 12:01:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_token(t_token *token);
 static t_ast	*build_node(t_list **lst)
 {
 	t_list	*pipeline;
+	t_list	*content;
 	int		type;
 
 	pipeline = build_leaf(lst);
@@ -51,8 +52,10 @@ static t_ast	*build_node(t_list **lst)
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == AND_IF || type == OR_IF)
 	{
+		content = (*lst);
 		(*lst) = (*lst)->next;
-		return (alloc_node(type, NULL,
+		content->next = NULL;
+		return (alloc_node(type, content,
 			alloc_node(WORD, pipeline, NULL, NULL),
 			build_node(lst)));
 	}
@@ -62,16 +65,22 @@ static t_ast	*build_node(t_list **lst)
 t_ast			*build_ast(t_list **lst)
 {
 	t_ast	*ast;
+	t_list	*content;
 	int		type;
 
 	if (((t_token*)((*lst)->content))->type == NEWLINE)
+	{
+		free_lst(*lst);
 		return (NULL);
+	}
 	ast = build_node(lst);
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == SEMI || type == AND)
 	{
+		content = (*lst);
 		(*lst) = (*lst)->next;
-		ast = alloc_node(type, NULL, ast, build_ast(lst));
+		content->next = NULL;
+		ast = alloc_node(type, content, ast, build_ast(lst));
 	}
 	return (ast);
 }
