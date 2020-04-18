@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:28:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 17:05:34 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 # define ERROR_H
+
+# include <stdarg.h>
 
 enum								e_minishell_error
 {
@@ -53,5 +55,8 @@ extern char							*g_progname;
 
 int									psherror(int e_error, char *str, \
 		int e_message_type);
+
+int									pbierror(const char *builtin_name,
+		const char *err_fmt, ...) __attribute__ ((format(printf,2,3)));
 
 #endif

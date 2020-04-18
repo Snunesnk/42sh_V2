@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 15:27:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 17:05:01 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,17 @@ int	psherror(int e_error, char *str, int e_message_type)
 				g_progname, g_errordesc[e_error].message);
 	}
 	return (e_error);
+}
+
+int	pbierror(const char *builtin_name, const char *err_fmt, ...)
+{
+	va_list	ap;
+	int		ret;
+
+	ret = ft_dprintf(STDERR_FILENO, "%s: %s: ", g_progname, builtin_name);
+	va_start(ap, err_fmt);
+	ret += ft_vdprintf(STDERR_FILENO, err_fmt, ap);
+	va_end(ap);
+	ret += write(STDERR_FILENO, "\n", 1);
+	return (ret);
 }
