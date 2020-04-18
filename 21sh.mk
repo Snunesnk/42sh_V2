@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/18 20:39:26 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/18 22:40:23 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,6 +141,7 @@ SOURCES :=	main.c \
 		../readline/history_lookup.c \
 		../readline/history_utils.c \
 		../readline/autocomplete.c \
+		../readline/autocomplete_utils.c \
 		../readline/autocompl_color.c \
 		../readline/insert_compl.c \
 		../readline/fill_data_util.c \
@@ -196,4 +197,4 @@ LDFLAGS += $(DEBUG)
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
-#DEBUG += -fsanitize=address,undefined
+DEBUG += -fsanitize=address,undefined

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/14 16:05:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ int		check_for_needed_arguments(int options_list, char **args)
 
 	if (!*args && options_list & HASH_T_OPTION)
 	{
-		ft_dprintf(STDERR_FILENO, \
-				"./21sh: hash: -t: option requires an argument\n");
+		pbierror("-t: option requires an argument");
 		return (e_invalid_input);
 	}
 	status = exec_hash_builtin(options_list, args);
@@ -123,7 +122,7 @@ int		exec_hash_builtin(int options_list, char **args)
 				&& !(options_list & HASH_D_OPTION))
 			status = add_name_hash_table(*args, 0);
 		if (status == e_command_not_found || (*args)[0] == '.')
-			ft_dprintf(STDERR_FILENO, "./21sh: hash: %s: not found\n", *args);
+			pbierror("%s: not found", *args);
 		args++;
 	}
 	return (status);
