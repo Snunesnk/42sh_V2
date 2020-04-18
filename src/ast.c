@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:14:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/17 19:41:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ t_ast			*build_ast(t_list **lst)
 	int		type;
 
 	if (((t_token*)((*lst)->content))->type == NEWLINE)
+	{
+//		free_lst(*lst);
+//		ft_printf("NEWLINE");
 		return (NULL);
+	}
 	ast = build_node(lst);
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == SEMI || type == AND)
