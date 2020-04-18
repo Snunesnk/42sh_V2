@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/17 11:36:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int				cmd_unset(int ac, char **args)
 	int		ret;
 	int		option;
 
-	++args;
+	g_builtin_name = args[0];
 	option = 1;
+	++args;
 	if (ac > 1 && (ret = get_next_opt(&args, "v")) != -1)
 	{
 		if (ret != 'v')
 		{
-			ft_dprintf(STDERR_FILENO, "./21sh: unset: -%c: invalid option\n", \
-					ret);
-			ft_putendl_fd("unset: usage: unset [-v] [arg ...]", 2);
+			pbierror("-%c: invalid option", ret);
+			pbierror("usage: unset [-v] [arg ...]");
 			return (e_invalid_input);
 		}
 		option++;

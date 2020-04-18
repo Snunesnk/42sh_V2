@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:37:13 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	getfullpath(char **argv, struct s_cd *cd)
 	if (!argv[g_optind])
 		return (gfp_env(cd));
 	else if (!ft_strcmp(argv[g_optind], "-"))
-		return (gfp_previous(argv, cd));
+		return (gfp_previous(cd));
 	else if (*(argv[g_optind]) == '/')
 		cd->path = ft_strdup(argv[g_optind]);
 	else if (concatenable_operand(argv[g_optind]))
@@ -116,17 +116,10 @@ int	getfullpath(char **argv, struct s_cd *cd)
 int	stat_failure(char **argv, struct s_cd *cd)
 {
 	if (!argv[g_optind] || !*argv[g_optind])
-	{
-		ft_dprintf(STDERR_FILENO,
-		"%s: %s: %s: No such file or directory\n",
-		g_progname, argv[0], cd->path);
-	}
+		pbierror("%s: No such file or directory", cd->path);
 	else
-	{
-		ft_dprintf(STDERR_FILENO,
-		"%s: %s: %s: No such file or directory\n",
-		g_progname, argv[0], argv[g_optind]);
-	}
+		pbierror("%s: No such file or directory",
+			argv[g_optind]);
 	ft_memdel((void**)&(cd->path));
 	return (1);
 }

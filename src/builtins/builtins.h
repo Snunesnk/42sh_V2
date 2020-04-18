@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 12:28:49 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:07:29 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ int				builtins_dispatcher(char **argv);
 int				concatenable_operand_while(const char *str);
 int				concatenable_operand(const char *str);
 int				gfp_env(struct s_cd *cd);
-int				gfp_previous(char **argv, struct s_cd *cd);
+int				gfp_previous(struct s_cd *cd);
 int				gfp_concatenable(char **argv, struct s_cd *cd);
 int				set_oldpwd(void);
 int				refresh_pwd(const char *path, _Bool p);

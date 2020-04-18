@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 19:59:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 21:29:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,14 @@ char	*next_hist(void)
 	return (g_hist->history_content + g_hist->offset + 1);
 }
 
+void	hist_free()
+{
+	free(g_hist->history_content);
+	free(g_hist);
+	g_hist = NULL;
+	free(g_hist_loc);
+}
+
 void	free_hist(void)
 {
 	int				fd;
@@ -90,7 +98,7 @@ void	free_hist(void)
 	{
 		i = 0;
 		last = 0;
-		while (i < g_hist->used)
+		while (g_hist && i < g_hist->used)
 		{
 			if (!g_hist->history_content[i])
 			{
@@ -102,8 +110,6 @@ void	free_hist(void)
 		}
 		close(fd);
 	}
-	free(g_hist->history_content);
-	free(g_hist);
-	g_hist = NULL;
-	free(g_hist_loc);
+	if (g_hist)
+		hist_free();
 }
