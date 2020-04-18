@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 12:27:46 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 14:25:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,14 @@ int			cmd_cd(int argc, char **argv)
 	cd.path = NULL;
 	if ((cd.ret = cd_parse_opt(argc, argv, &cd.p)))
 		return (cd.ret);
-	//TODO: free cd.path if getfullpath fails, else leak
 	if ((cd.ret = getfullpath(argv, &cd)))
 		return (cd.ret);
-	cd.path = ft_resolvepath(cd.path);
-	if (!cd.path)
+	if (!(cd.tmp = ft_resolvepath(cd.path)))
+	{
+		ft_memdel((void **)&(cd.path));
 		return (1);
+	}
+	cd.path = cd.tmp;
 	if (stat(cd.path, &(cd.buf)))
 		return (stat_failure(argv, &cd));
 	if (access(cd.path, F_OK))
