@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/18 19:37:28 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/18 20:39:26 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -196,4 +196,4 @@ LDFLAGS += $(DEBUG)
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 #CFLAGS += -fno-builtin -O2
 
-DEBUG += -g3 -fsanitize=address,undefined
+#DEBUG += -fsanitize=address,undefined
