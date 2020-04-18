@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 19:11:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 20:01:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int			exit_clean(int ret)
 	{
 		free(g_hist->history_content);
 		free(g_hist);
+		free(g_hist_loc);
 	}
-	free(g_hist_loc);
 	free(g_dis.prompt);
 	exit(ret);
 	return (ret);
@@ -124,7 +124,6 @@ int			main(int argc, char **argv)
 			free(prompt);
 		}
 	}
-	if (g_shell_is_interactive)
-		free_hist();
+	free_hist();
 	return (exit_clean(status));
 }

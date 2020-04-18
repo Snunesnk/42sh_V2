@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 21:44:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 20:24:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		exec_fc_s_opt(char **args)
 		return (e_cannot_allocate_memory);
 	free_substitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
-	fc_replace_last_hist(tmp);
+	if (g_shell_is_interactive)
+		fc_replace_last_hist(tmp);
 	return (exec_input(tmp));
 }
