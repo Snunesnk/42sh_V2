@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 20:04:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 14:36:42 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	replace_alias(t_list ***lst, t_list *next,
 	t_list	*new_tokens;
 	int		ret;
 
+	ret = SUCCESS;
 	new_tokens = NULL;
 	*check = *value && value[ft_strlen(value) - 1] == ' ' ? TRUE : FALSE;
 	if ((new_tokens = list_tokens(value))
