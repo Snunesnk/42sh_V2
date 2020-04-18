@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 01:58:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 02:15:53 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int				cmd_unsetenv(int argc, char **argv)
 	if (argc != 2)
 	{
 		psherror(e_invalid_input, argv[0], e_cmd_type);
-		ft_dprintf(STDERR_FILENO, "Usage: %s VAR [VALUE]\n", argv[0]);
+		ft_dprintf(STDERR_FILENO, "Usage: %s VAR\n", argv[0]);
 		return (g_errordesc[e_invalid_input].code);
 	}
 	else if (!argv[1] || !*argv[1] || ft_strstr(argv[1], "="))

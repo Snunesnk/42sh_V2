@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/18 02:06:17 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 02:24:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	print_export(void)
 	}
 }
 
-static void	exec_export(char **args, int option)
+static void	exec_export(char *builtin_name, char **args, int option)
 {
 	char		*name;
 	char		*value;
@@ -51,8 +51,8 @@ static void	exec_export(char **args, int option)
 		if (get_assignment(*args, &name, &value) == SUCCESS)
 			*value++ = 0;
 		if (!*name || *name == '=')
-			ft_dprintf(STDERR_FILENO,
-				"export: `%s': not a valid identifier\n", name);
+			ft_dprintf(STDERR_FILENO, "%s: `%s': not a valid identifier\n",
+				builtin_name, name);
 		else if (value)
 			set_shell_var(name, value, flags | SET, &g_env);
 		else if (flags)
@@ -82,13 +82,14 @@ int			cmd_export(int ac, char **av)
 			option |= EXPORT_N_OPT;
 		else
 		{
-			ft_dprintf(STDERR_FILENO, "./21sh: export: -%c: invalid option.\n" \
-					, ret);
-			ft_putendl_fd("export: usage: export [-n] [name[=value ...]]" \
-				"or export -p", 2);
+			ft_dprintf(STDERR_FILENO, "./21sh: %s: -%c: invalid option.\n",
+					av[0], ret);
+			ft_dprintf(STDERR_FILENO,
+					"%s: usage: %s [-n] [name[=value ...]] or %s -p\n",
+					av[0], av[0], av[0]);
 			return (e_invalid_input);
 		}
 	}
-	exec_export(args, option);
+	exec_export(av[0], args, option);
 	return (e_success);
 }
