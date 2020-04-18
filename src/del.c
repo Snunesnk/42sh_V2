@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 18:13:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 10:09:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	free_token(t_token *token)
 {
-	if (token->type == WORD)
+	if (token->value)
 		free(token->value);
 	free(token);
 }
@@ -38,8 +38,7 @@ void	free_ast(t_ast *ast)
 			free_ast(ast->left);
 		if (ast->right)
 			free_ast(ast->right);
-		if (ast->type == WORD)
-			free_lst(ast->content);
+		free_lst(ast->content);
 		free(ast);
 	}
 }

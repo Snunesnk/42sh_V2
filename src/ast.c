@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:14:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 12:12:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,17 @@ static t_list	*build_leaf(t_list **lst)
 static t_ast	*build_node(t_list **lst)
 {
 	t_list	*pipeline;
+	t_list	*content;
 	int		type;
 
 	pipeline = build_leaf(lst);
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == AND_IF || type == OR_IF)
 	{
+		content = (*lst);
 		(*lst) = (*lst)->next;
-		return (alloc_node(type, NULL,
+		content->next = NULL;
+		return (alloc_node(type, content,
 			alloc_node(WORD, pipeline, NULL, NULL),
 			build_node(lst)));
 	}
@@ -53,16 +56,27 @@ static t_ast	*build_node(t_list **lst)
 t_ast			*build_ast(t_list **lst)
 {
 	t_ast	*ast;
+	t_list	*content;
 	int		type;
 
 	if (((t_token*)((*lst)->content))->type == NEWLINE)
+	{
+		free_lst(*lst);
 		return (NULL);
+	}
 	ast = build_node(lst);
+	if (((t_token*)((*lst)->content))->type == NEWLINE)
+	{
+		free_lst(*lst);
+		return (ast);
+	}
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == SEMI || type == AND)
 	{
+		content = (*lst);
 		(*lst) = (*lst)->next;
-		ast = alloc_node(type, NULL, ast, build_ast(lst));
+		content->next = NULL;
+		ast = alloc_node(type, content, ast, build_ast(lst));
 	}
 	return (ast);
 }

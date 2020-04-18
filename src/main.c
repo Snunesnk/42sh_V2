@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 16:23:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:27:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int			exec_input(char *input)
 		return (status);
 	}
 	ast = build_ast(&lst);
-	free_lst(lst);
 	status = execute_node(ast, 1);
 	free_ast(ast);
 	g_retval = status;
@@ -74,7 +73,8 @@ int			exit_clean(int ret)
 {
 	extern char	**environ;
 
-	free_hash_table();
+	if (g_shell_is_interactive)
+		free_hash_table();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 	free(g_dis.prompt);
@@ -97,18 +97,30 @@ int			main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	while (stop == 0)
 	{
-		prompt = get_prompt();
-		if (g_onecmd)
-			stop = 1;
-		if (!g_pending_cmd && !(input = ft_readline(prompt)))
-			break ;
-		else if (g_pending_cmd)
-			if (!(input = get_next_pending_cmd()))
+		if (g_shell_is_interactive)
+		{
+			prompt = get_prompt();
+			if (g_onecmd)
+				stop = 1;
+			if (!g_pending_cmd && !(input = ft_readline(prompt)))
 				break ;
+			else if (g_pending_cmd)
+				if (!(input = get_next_pending_cmd()))
+					break ;
+		}
+		else
+		{
+			if (get_stdin(&input) < 0)
+				break;
+		}
 		exec_input(input);
-		test_hash_path();
-		free(prompt);
+		if (g_shell_is_interactive)
+		{
+			test_hash_path();
+			free(prompt);
+		}
 	}
-	free_hist();
+	if (g_shell_is_interactive)
+		free_hist();
 	return (exit_clean(status));
 }

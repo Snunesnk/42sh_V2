@@ -62,9 +62,9 @@ exit abc
 echo ${?}
 exit 1 2 3
 echo ${?}
-cd {{ /absolute/path/of/your/choice }}
+cd ../../
 pwd
-cd relative/path/of/your/choice
+cd */*
 pwd
 cd /tmp
 /bin/pwd

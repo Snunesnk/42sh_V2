@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 22:54:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 14:36:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ struct s_display	g_dis =
 struct s_cursor		g_cursor =
 { .c_pos = 0, .v_pos = 0 };
 
-struct s_line_state	g_line = {0};
+struct s_line_state	g_line =
+{ .line = NULL, .size_buf = 0, .len = 0 };
 
 void		display_prompt(void)
 {
