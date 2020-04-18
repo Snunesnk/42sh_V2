@@ -6,12 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 17:45:12 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "builtins.h"
 
 static int	print_alias(char *name, char *value)
 {
@@ -34,7 +35,7 @@ static void	print_alias_list(t_list *lst)
 	}
 }
 
-static int	add_alias(char **av, char *builtin_name)
+static int	add_alias(char **av)
 {
 	int			ret;
 	char		*name;
@@ -51,9 +52,9 @@ static int	add_alias(char **av, char *builtin_name)
 			ret = set_shell_var(name, value + 1, 0, &g_alias);
 		}
 		else if (!*name || *name == '=')
-			pbierror(builtin_name, "'%s': invalid alias name", name);
+			pbierror("'%s': invalid alias name", name);
 		else if ((ret = print_alias(name, NULL)) == FAILURE)
-			pbierror(builtin_name, "'%s': not found", name);
+			pbierror("'%s': not found", name);
 	}
 	ft_merge_sort(&g_alias, alpha_sort);
 	return (!!ret);
@@ -61,9 +62,11 @@ static int	add_alias(char **av, char *builtin_name)
 
 int			cmd_alias(int argc, char **argv)
 {
+	g_builtin_name = argv[0];
+
 	if (argc == 1)
 		print_alias_list(g_alias);
 	else
-		return (add_alias(argv, argv[0]));
+		return (add_alias(argv));
 	return (0);
 }
