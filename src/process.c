@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 17:12:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 23:32:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,9 @@
 
 void		free_process(t_process *p)
 {
-	char	**wt;
-
 	free_redirections(p->redir);
-	if ((wt = p->argv))
-		while (*wt)
-			free(*wt++);
 	free(p->argv);
 	free(p);
-	p = NULL;
 }
 
 static void	perf_redir(t_process *p)
