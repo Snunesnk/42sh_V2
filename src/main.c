@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 15:00:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 15:10:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,11 @@ void		exit_clean(void)
 {
 	extern char	**environ;
 
-	free_hash_table();
-	free_hist();
+	if (g_shell_is_interactive)
+	{
+		free_hash_table();
+		free_hist();
+	}
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 }
@@ -104,7 +107,10 @@ int			main(int argc, char **argv)
 					break ;
 		}
 		else
-			get_stdin(&input);
+		{
+			if (get_stdin(&input) < 0)
+				break;
+		}
 		exec_input(input);
 		if (g_shell_is_interactive)
 		{
