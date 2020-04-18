@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 18:16:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 19:25:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ struct	s_screen
 struct	s_term
 {
 	char	*terminal_name;
-	char	*term_buffer;
 };
 
 extern struct s_termcaps				g_termcaps;
