@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 12:12:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 14:52:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ extern struct termios			shell_tmodes;
 extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
+int								get_stdin(char **line);
 int								exec_input(char *input);
 int								init_shell(char *argv, int argc);
 int								launch_job(t_job *j, int foreground);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 11:47:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 15:00:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,17 +92,25 @@ int			main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	while (stop == 0)
 	{
-		prompt = get_prompt();
-		if (g_onecmd)
-			stop = 1;
-		if (!g_pending_cmd && !(input = ft_readline(prompt)))
-			break ;
-		else if (g_pending_cmd)
-			if (!(input = get_next_pending_cmd()))
+		if (g_shell_is_interactive)
+		{
+			prompt = get_prompt();
+			if (g_onecmd)
+				stop = 1;
+			if (!g_pending_cmd && !(input = ft_readline(prompt)))
 				break ;
+			else if (g_pending_cmd)
+				if (!(input = get_next_pending_cmd()))
+					break ;
+		}
+		else
+			get_stdin(&input);
 		exec_input(input);
-		test_hash_path();
-		free(prompt);
+		if (g_shell_is_interactive)
+		{
+			test_hash_path();
+			free(prompt);
+		}
 	}
 	exit_clean();
 	return (status);

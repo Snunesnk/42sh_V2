@@ -1,3 +1,7 @@
+echo /~
+echo ~/
+echo /~
+echo ~/
 echo ~$LOGNAME
 echo ~
 echo ~+
