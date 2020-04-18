@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 19:34:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/18 16:54:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ void	free_hist(void)
 	unsigned int	i;
 	unsigned int	last;
 
-	if ((fd = open(g_hist_loc, (O_WRONLY | O_CREAT | O_TRUNC), 0644)) < 0)
-		ft_printf("./21sh: cannot open %s\n", g_hist_loc);
-	else
+	if ((fd = open(g_hist_loc, (O_WRONLY | O_CREAT | O_TRUNC), 0644)) >= 0)
 	{
 		i = 0;
 		last = 0;
@@ -105,5 +103,6 @@ void	free_hist(void)
 	}
 	free(g_hist->history_content);
 	free(g_hist);
+	g_hist = NULL;
 	free(g_hist_loc);
 }
