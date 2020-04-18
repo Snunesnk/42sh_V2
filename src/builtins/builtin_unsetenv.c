@@ -6,62 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 16:50:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 01:58:56 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
-
-static char		**getenvvar(const char *name)
-{
-	extern char **environ;
-	int			i;
-	int			j;
-
-	if (name)
-	{
-		i = 0;
-		while (environ[i])
-		{
-			j = 0;
-			while (name[j] && environ[i][j] && name[j] == environ[i][j])
-				++j;
-			if (environ[i][j] != '=' || name[j])
-				++i;
-			else
-			{
-				++j;
-				return (&environ[i]);
-			}
-		}
-	}
-	return (NULL);
-}
-
-static int		ft_unset_alloc_env(const char *name)
-{
-	extern char	**environ;
-	char		**dst;
-	char		**src;
-	int			tlen;
-
-	if (!name || !*name || ft_strstr(name, "="))
-	{
-		g_errno = E_EINVAL;
-		return (-1);
-	}
-	else
-	{
-		if (!(dst = getenvvar(name)))
-			return (0);
-		ft_memdel((void**)dst);
-		src = dst + 1;
-		tlen = ft_tablen(src);
-		ft_memmove(dst, src, sizeof(char*) * tlen);
-		dst[tlen] = NULL;
-		return (0);
-	}
-}
 
 int				cmd_unsetenv(int argc, char **argv)
 {
@@ -71,14 +20,13 @@ int				cmd_unsetenv(int argc, char **argv)
 		ft_dprintf(STDERR_FILENO, "Usage: %s VAR [VALUE]\n", argv[0]);
 		return (g_errordesc[e_invalid_input].code);
 	}
-	else
+	else if (!argv[1] || !*argv[1] || ft_strstr(argv[1], "="))
 	{
-		if (ft_unset_alloc_env(argv[1]))
-		{
-			ft_perror(NULL);
-			return (1);
-		}
-		else
-			return (0);
+		g_errno = E_EINVAL;
+		ft_perror(NULL);
+		return (FAILURE);
 	}
+	else
+		flag_shell_var(argv[1], EXPORT >> SHVAR_RM_OFF, g_env);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 00:51:01 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/18 01:56:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,6 +344,8 @@ char							*get_shell_var(const char *name,
 		t_list *svar_lst);
 int								unset_shell_var(const char *name,
 		t_list **svar_lst);
+int								flag_shell_var(const char *name, uint64_t flags,
+		t_list *svar_lst);
 int								set_shell_var(const char *name,
 		const char *value, uint64_t flags, t_list **svar_lst);
 int								get_stdin(char **line);
