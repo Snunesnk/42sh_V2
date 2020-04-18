@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 18:19:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/18 19:24:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ struct s_termcaps g_termcaps =
 struct s_term g_term =
 {
 	.terminal_name = NULL,
-	.term_buffer = NULL,
 };
 
 const struct s_termcaps_string g_tc_strings[] =
@@ -94,15 +93,8 @@ int			init_terminal(void)
 		g_term.terminal_name = "xterm-256color";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
-	if (g_term.term_buffer == NULL)
-		g_term.term_buffer = (char*)malloc(4080);
-	if (tgetent(g_term.term_buffer, g_term.terminal_name) <= 0)
-	{
-		if (g_term.term_buffer)
-			free(g_term.term_buffer);
-		g_term.term_buffer = NULL;
+	if (tgetent(NULL, g_term.terminal_name) <= 0)
 		return (-1);
-	}
 	get_term_capabilities();
 	bind_keys();
 	return (0);
