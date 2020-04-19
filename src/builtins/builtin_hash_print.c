@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/19 21:35:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,6 @@ int		print_hashed_commands(int options_list)
 	if (!nb)
 		pbierror("hash table empty");
 	return (0);
-}
-
-void	del_hashed_commands(void)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < HASH_SIZE)
-	{
-		if (g_hash_table[i])
-		{
-			free(g_hash_table[i]->command_path);
-			free(g_hash_table[i]->command_name);
-			free(g_hash_table[i]);
-			g_hash_table[i] = NULL;
-		}
-		i++;
-	}
 }
 
 int		print_hashed_targets(int options_list, char **args)
