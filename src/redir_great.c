@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 13:03:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 17:32:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 14:36:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_redirection	*subtype_great_redirection(t_list **lst, int io_nb)
 	else
 		r->redirector.dest = io_nb;
 	(*lst) = (*lst)->next;
-	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	r->redirectee.filename = get_tokvalue(*lst);
 	if (treat_single_exp(&(r->redirectee.filename), 1))
 		r->error = e_bad_substitution;
 	(*lst) = (*lst)->next;
@@ -76,7 +76,7 @@ t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	r->instruction = IODUP;
 	(*lst) = (*lst)->next;
-	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
+	r->redirectee.filename = get_tokvalue(*lst);
 	if (ft_strcmp("-", r->redirectee.filename) && ha(r->redirectee.filename))
 	{
 		r->error = e_ambiguous_redirect;
