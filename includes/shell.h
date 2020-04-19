@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 16:29:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/19 20:56:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # endif
 
 # ifndef HASH_SIZE
-#  define HASH_SIZE 64
+#  define HASH_SIZE 1
 # endif
 
 # define TRUE		1

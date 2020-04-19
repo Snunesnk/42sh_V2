@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/12 18:04:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/19 20:54:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_hash_table	*find_prev_occurence(char *name)
 
 void			free_hash_table(void)
 {
-	t_hash_table	*prev;
+	t_hash_table	*next;
 	t_hash_table	*tmp;
 	unsigned int	i;
 
@@ -56,12 +56,15 @@ void			free_hash_table(void)
 	while (i < HASH_SIZE)
 	{
 		tmp = g_hash_table[i];
-		while (tmp && tmp->next)
-			tmp = tmp->next;
-		while (tmp && (prev = find_prev_occurence(tmp->command_name)))
-			remove_hash_entry(prev->command_name);
-		if (tmp)
-			remove_hash_entry(tmp->command_name);
+		while (tmp)
+		{
+			next = tmp->next;
+			free(tmp->command_name);
+			free(tmp->command_path);
+			free(tmp);
+			tmp = next;
+		}
+		g_hash_table[i] = NULL;
 		i++;
 	}
 }
