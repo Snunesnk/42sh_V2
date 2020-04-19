@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 18:52:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 22:38:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@ static t_list	*subprompt(void)
 {
 	t_list	*lst;
 	char	*input;
+	char	*tmp;
 
-	input = ft_readline("> ");
+	tmp = ft_readline("> ");
+	input = ft_strjoin(tmp, "\n");
 	lst = lexer(input);
 	free(input);
+	free(tmp);
 	return (lst);
 }
 
