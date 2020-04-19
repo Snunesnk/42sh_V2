@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/19 18:48:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int		cmd_hash(int argc, char **argv)
 		else
 			return (print_usage(*args));
 	}
-	if (!args)
-		return (e_invalid_input);
 	return (check_for_needed_arguments(options_list, args) > 0);
 }
 
@@ -86,6 +84,12 @@ int		check_for_needed_arguments(int options_list, char **args)
 {
 	int	status;
 
+	if (!args)
+	{
+		if (g_needed_arg)
+			free(g_needed_arg);
+		return (e_invalid_input);
+	}
 	if (!*args && options_list & HASH_T_OPTION)
 	{
 		pbierror("-t: option requires an argument");
