@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 19:00:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 19:02:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int				parser(t_list *lst)
 	int	next_type;
 	int	ret;
 
+	curr_type = ((t_token*)(lst->content))->type;
+	if (lookahead(NEWLINE, curr_type))
+	{
+		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
+		return (e_syntax_error);
+	}
 	while (lst->next)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
