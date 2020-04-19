@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/16 15:22:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 15:19:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,6 @@ int		rm_quotes(char **str, int old_qmode)
 		++pstr;
 	}
 	*str = dup ? ft_strcpy(*str, dup) : *str;
-	ft_memdel((void **)&dup);
+	free(dup);
 	return (e_success);
 }

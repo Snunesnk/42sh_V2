@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 23:31:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 15:10:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 
 char	*dup_token_value(char **argv, int i, t_list *lst)
 {
-	char	**wt;
-
 	if (!(argv[i] = get_tokvalue(lst)))
 	{
-		wt = argv;
-		while (*wt)
-			free(*wt++);
 		free(argv);
 		return (NULL);
 	}
