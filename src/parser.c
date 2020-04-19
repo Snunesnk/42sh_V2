@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 18:52:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/19 19:02:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,16 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	}
 }
 
-static int		start(t_list *lst)
-{
-	int	type;
-
-	type = ((t_token*)(lst->content))->type;
-	if (type == SEMI || type == OR_IF || type == NONE || type == PIPE
-		|| type == AND_IF || type == AND)
-		return (e_syntax_error);
-	else
-		return (e_success);
-}
-
 int				parser(t_list *lst)
 {
 	int	curr_type;
 	int	next_type;
 	int	ret;
 
-	if (start(lst))
+	curr_type = ((t_token*)(lst->content))->type;
+	if (lookahead(NEWLINE, curr_type))
 	{
-		psherror(e_syntax_error,
-	g_tokval[((t_token*)(lst->content))->type], e_parsing_type);
+		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
 		return (e_syntax_error);
 	}
 	while (lst->next)
