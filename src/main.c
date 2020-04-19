@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 16:17:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/19 21:28:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,7 @@ int			exit_clean(int ret)
 {
 	extern char	**environ;
 
-	if (g_shell_is_interactive)
-		free_hash_table();
+	free_hash_table();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
 	if (g_hist)
@@ -84,6 +83,7 @@ int			exit_clean(int ret)
 		free(g_hist_loc);
 	}
 	free(g_dis.prompt);
+	free_hash_table();
 	exit(ret);
 	return (ret);
 }

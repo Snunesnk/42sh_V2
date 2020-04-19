@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 18:48:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/19 21:36:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,7 @@ int		check_for_needed_arguments(int options_list, char **args)
 	}
 	status = exec_hash_builtin(options_list, args);
 	if (g_needed_arg)
-	{
-		free(g_needed_arg);
 		g_needed_arg = NULL;
-	}
 	return (status);
 }
 
@@ -113,7 +110,7 @@ int		exec_hash_builtin(int options_list, char **args)
 			|| (*args && !(*args + 1) && options_list & HASH_P_OPTION))
 		return (print_hashed_commands(options_list));
 	if (options_list & HASH_R_OPTION)
-		del_hashed_commands();
+		free_hash_table();
 	if (options_list & HASH_T_OPTION)
 		return (print_hashed_targets(options_list, args));
 	while (status != e_cannot_allocate_memory && *args)
