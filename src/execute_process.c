@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 17:27:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 16:53:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			execute_process(char **argv, char **envp,
 {
 	int				ret;
 
-	if (!argv || !*argv)
+	if (!argv)
 		return (0);
 	if (!ft_strcmp(argv[0], "builtin"))
 		return (builtin_keyword_exec(argv));
