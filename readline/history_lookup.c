@@ -6,66 +6,54 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/10 19:15:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 21:06:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
-void	fill_line(char value, char *user_input, char *hist_proposal, int mode)
+static void	fill_line(char *hist_proposal, int mode)
 {
-	int	user_len;
 	int	hist_len;
-	int	cursor_pos;
 
-	ft_bzero(g_line.line, g_line.size_buf);
-	clear_line();
-	user_len = ft_strlen(user_input);
 	hist_len = ft_strlen(hist_proposal);
-	if (user_len >= 1 && value != 127)
-		user_len--;
-	if (user_input && mode)
-		insert_text(user_input, user_len);
-	cursor_pos = g_dis.cbpos;
-	if (mode)
-		insert_text("' : ", 4);
-	insert_text(hist_proposal, hist_len);
-	g_dis.cbpos = cursor_pos;
-	update_line();
-	free(hist_proposal);
-	if (mode)
-		free(user_input);
-}
-
-char	*get_input_proposal(char value, char **user_input, char **hist_proposal)
-{
-	char	*tmp;
-	char	buf[2];
-
-	buf[0] = value;
-	buf[1] = '\0';
-	tmp = g_line.line + g_dis.cbpos;
-	*tmp = '\0';
-	if (value == 127)
-		*user_input = ft_strdup(g_line.line);
-	else if (isprintchr(value))
-		*user_input = ft_strjoin(g_line.line, buf);
-	else
-		*user_input = tmp;
-	*hist_proposal = ft_strdup(tmp + 4);
-	if (!*user_input || !*hist_proposal)
+	if (mode == 1)
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return (NULL);
+		while (g_dis.cbpos > 0 && g_line.line[g_dis.cbpos])
+			rl_delete();
+		insert_text(hist_proposal, hist_len);
+		g_dis.cbpos -= hist_len;
 	}
-	return (tmp);
+	else
+	{
+		clear_line();
+		insert_text(hist_proposal, hist_len);
+	}
+	update_line();
 }
 
-void	prepare_hist_lookup(char **original_prompt)
+static void	get_input_proposal(char value, char **hist_proposal)
 {
-	char	*hist_proposal;
+	char	*user_input;
 
-	hist_proposal = NULL;
+	g_dis.cbpos -= 4;
+	if (ft_isprint(value))
+		insert_text((char *)&value, 1);
+	else if (value == 127)
+		rl_backspace();
+	g_line.line[g_dis.cbpos] = '\0';
+	g_dis.cbpos += 4;
+	user_input = g_line.line;
+	*hist_proposal = g_hist->history_content + g_hist->offset + 1;
+	if (!(get_matching_hist(hist_proposal, user_input)))
+		set_prompt("(failed reverse-i-search)`");
+	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
+		set_prompt("(reverse-i-search)`");
+	g_line.line[g_dis.cbpos - 4] = '\'';
+}
+
+static void	prepare_hist_lookup(char **original_prompt)
+{
 	if (!(*original_prompt = ft_strdup(g_dis.prompt)))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
@@ -73,59 +61,52 @@ void	prepare_hist_lookup(char **original_prompt)
 	}
 	g_hist_lookup = 1;
 	set_prompt("(reverse-i-search)`");
-	if (!(hist_proposal = ft_strdup(g_line.line)))
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return ;
-	}
-	fill_line(127, NULL, hist_proposal, 1);
+	g_dis.cbpos = 0;
+	insert_text("' : ", 4);
 }
 
-void	add_new_proposal(char value, char *user_input, char *hist_proposal)
-{
-	char		*tmp;
-
-	tmp = hist_proposal;
-	if (value == 127 && ft_strlen(user_input) > 0)
-		user_input[ft_strlen(user_input) - 1] = '\0';
-	if (!(get_matching_hist(&tmp, user_input)))
-		set_prompt("(failed reverse-i-search)`");
-	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
-		set_prompt("(reverse-i-search)`");
-	if (value == 127)
-		user_input[ft_strlen(user_input)] = 'p';
-	if (!(tmp = ft_strdup(tmp)))
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
-		return ;
-	}
-	free(hist_proposal);
-	fill_line(value, user_input, tmp, 1);
-}
-
-void	hist_lookup(union u_buffer c)
+/*
+** This is the main function.
+** First, it looks for the value of g_hist_lookup. If g_hist_lookup == 0, then
+** this is the first time hist_lookup is called, therefor the prompt needs to
+** be replaced by a new one: (reverse i-search)`, and the old one is saved in
+** the static original_prompt.
+** Then it set the value of g_hist_lookup to 1, and set the content of g_line
+** as hist proposal following this pattern: [user_input]' : [hist_proposal].
+**
+** Then, if this is the second time or more hist_lookup is called, add the
+** given char to [user_input] if it's a printable one, or delete the last one
+** if it correspond to backspace key.
+** Now, a new hist_proposal needs to be found according to this new user input,
+** and it is performed by get_matching_hist.
+**
+** Two cases now : if the user_input is not handle by history_lookup, set the
+** original_prompt back, set g_hist_lookup to 0 to not enter this function
+** until CTRL-R is pressed again, and set g_line with the last input proposal.
+**
+** Else, just erase the last hist_proposal from g_line, and adds the new one.
+** Then wait for readline to read another char and send it to hist_lookup.
+*/
+void		hist_lookup(union u_buffer c)
 {
 	static char	*original_prompt = NULL;
-	char		*user_input;
 	char		*hist_proposal;
 
-	user_input = NULL;
 	hist_proposal = NULL;
 	if (!g_hist_lookup)
 	{
 		prepare_hist_lookup(&original_prompt);
 		return ;
 	}
-	if (!(get_input_proposal(c.value, &user_input, &hist_proposal)))
-		return ;
+	get_input_proposal(c.value, &hist_proposal);
 	if (!isprintchr(c.value) && c.value != 127)
 	{
 		set_prompt(original_prompt);
 		free(original_prompt);
 		original_prompt = NULL;
 		g_hist_lookup = 0;
-		fill_line(c.value, user_input, hist_proposal, 0);
+		fill_line(hist_proposal, 0);
 		return ;
 	}
-	add_new_proposal(c.value, user_input, hist_proposal);
+	fill_line(hist_proposal, 1);
 }

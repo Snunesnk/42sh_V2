@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/09 22:37:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 20:53:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ char		*get_beg_matching_hist(char **line, char *patern)
 char		*get_matching_hist(char **line, char *patern)
 {
 	char *tmp;
+	int		ret;
 
+	ret = g_hist->nb_line;
 	tmp = *line;
 	if (!tmp)
 		return (tmp);
@@ -51,7 +53,7 @@ char		*get_matching_hist(char **line, char *patern)
 		*line = tmp;
 	else
 	{
-		while (!ft_strstr(tmp, *line) && g_hist->nb_line < g_hist->total_lines)
+		while (g_hist->nb_line < ret)
 			tmp = next_hist();
 		*line = tmp;
 		tmp = NULL;
