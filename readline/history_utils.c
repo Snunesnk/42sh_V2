@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:29:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 21:59:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*next_hist(void)
 	return (g_hist->history_content + g_hist->offset + 1);
 }
 
-void	hist_free()
+void	hist_free(void)
 {
 	free(g_hist->history_content);
 	free(g_hist);

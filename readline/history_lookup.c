@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/20 21:06:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 21:55:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	prepare_hist_lookup(char **original_prompt)
 ** Else, just erase the last hist_proposal from g_line, and adds the new one.
 ** Then wait for readline to read another char and send it to hist_lookup.
 */
+
 void		hist_lookup(union u_buffer c)
 {
 	static char	*original_prompt = NULL;
