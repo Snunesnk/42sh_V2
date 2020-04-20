@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/20 20:53:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 21:58:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char		*get_beg_matching_hist(char **line, char *patern)
 
 char		*get_matching_hist(char **line, char *patern)
 {
-	char *tmp;
+	char	*tmp;
 	int		ret;
 
 	ret = g_hist->nb_line;
