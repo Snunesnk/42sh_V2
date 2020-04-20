@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 17:12:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 16:56:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 	pid_t		pid;
 	int			ret;
 
+	if (p->argc == -1)
+		exit(1);
 	envp = get_env_tab();
 	if (g_shell_is_interactive)
 	{
