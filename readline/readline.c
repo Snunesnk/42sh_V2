@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 19:55:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/20 19:52:12 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 			c = read_key();
 		if (g_ctrl_mode)
 			rl_ctrl_mode(c);
-		else if (enter_rc(c))
+		else if (enter_rc(c) && !g_hist_lookup)
 			return (g_vim_mode ? vim_insert() : rl_void());
 		else
 			readline_internal_test_cvalue(c);
