@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:01:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 14:20:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/20 17:35:55 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_token	*get_token_word(const char *str, size_t *i, int prevtype)
 	{
 		qmode = NO_QUOTE;
 		while (str[*i + len] && (qmode || (!ft_isblank(str[*i + len])
-			&& !ft_ismeta(str[*i + len]) && str[*i + len] != '\n')))
+			&& !ft_ismeta(str[*i + len]))) && str[*i + len] != '\n')
 		{
 			qmode = get_qmode(qmode, str[*i + len]);
 			++len;
