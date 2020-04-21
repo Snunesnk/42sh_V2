@@ -21,10 +21,10 @@ unsetenv FOO
 unsetenv PATH
 setenv PATH "/bin:/usr/bin"
 ls
-emacs
+nano
 unsetenv PATH
-emacs
-/usr/bin/emacs
+nano
+/usr/bin/nano
 
  
  	 	 	 	 	 	
