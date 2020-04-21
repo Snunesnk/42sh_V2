@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 21:37:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 16:45:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int				print_hashed_commands(int options_list);
 int				print_hashed_targets(int options_list, char **argv);
 int				change_hash_entry(char *pathname, char *name);
 void			remove_hash_entry(char *name);
-int				print_usage(char *args);
+int				print_usage(char *args, char ret);
 void			print_hashed_targets_util(t_hash_table *tmp, int l_option, \
 		char *arg, int multiple);
 void			print_hashed_commands_util(t_hash_table *tmp, int l_option);
@@ -151,7 +151,7 @@ void			fc_replace_last_hist(char *tmp);
 void			free_substitute(t_sub *substitute);
 void			get_hist_num(char **args, int *opt_list, int *hist_end, \
 		int *hist_beg);
-int				fc_invalid_input(char *args);
+int				fc_invalid_input(char *args, char opt);
 void			print_error(char *usage, char option, int mode);
 int				exec_fc_s_opt(char **args);
 void			swap_entries(int *hist_end, int *hist_beg);
