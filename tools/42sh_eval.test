@@ -110,11 +110,11 @@ true; echo ${?}; false; echo ${?}
 mkfifo fifo
 ls -lR /usr >fifo 2>&1 &
 jobs
-emacs -nw &
-emacs -nw &
-emacs -nw &
-emacs -nw &
-emacs -nw &
+nano -nw &
+nano -nw &
+nano -nw &
+nano -nw &
+nano -nw &
 jobs
 fg %nb
 cat -e
