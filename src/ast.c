@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 17:04:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 12:12:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/21 10:04:01 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,34 @@ static t_list	*build_leaf(t_list **lst)
 	return (pipeline);
 }
 
+static t_ast	*build_andor(t_list **lst, t_ast *left, int type)
+{
+	int		next_type;
+	t_ast	*cur_node;
+	t_list	*content;
+	t_list	*right_pipeline;
+
+	content = *lst;
+	*lst = (*lst)->next;
+	content->next = NULL;
+	right_pipeline = build_leaf(lst);
+	next_type = ((t_token*)((*lst)->content))->type;
+	cur_node = alloc_node(type, content, left,
+		alloc_node(WORD, right_pipeline, NULL, NULL));
+	if (next_type == AND_IF || next_type == OR_IF)
+		return (build_andor(lst, cur_node, next_type));
+	return (cur_node);
+}
+
 static t_ast	*build_node(t_list **lst)
 {
 	t_list	*pipeline;
-	t_list	*content;
 	int		type;
 
 	pipeline = build_leaf(lst);
 	type = ((t_token*)((*lst)->content))->type;
 	if (type == AND_IF || type == OR_IF)
-	{
-		content = (*lst);
-		(*lst) = (*lst)->next;
-		content->next = NULL;
-		return (alloc_node(type, content,
-			alloc_node(WORD, pipeline, NULL, NULL),
-			build_node(lst)));
-	}
+		return (build_andor(lst, alloc_node(WORD, pipeline, NULL, NULL), type));
 	return (alloc_node(WORD, pipeline, NULL, NULL));
 }
 
