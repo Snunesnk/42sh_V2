@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 21:36:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 08:25:54 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		cmd_hash(int argc, char **argv)
 	int		options_list;
 	int		status;
 
-	args = (argv) ? argv + 1 : argv;
+	args = (argv) ? argv + 1 : argv; //TODO: what is this ???? why test argv ?
 	options_list = 0;
-	g_builtin_name = (argv) ? argv[0] : NULL;
+//	g_builtin_name = (argv) ? argv[0] : NULL;
 	while (args && argc > 1 && (status = get_next_opt(&args, "dlp:rt")) != -1)
 	{
 		if (status == 'd')

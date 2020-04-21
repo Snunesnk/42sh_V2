@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:23:56 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int			cmd_export(int ac, char **av)
 
 	option = 0;
 	args = av + 1;
-	g_builtin_name = av[0];
 	while (ac > 1 && (ret = get_next_opt(&args, "pn")) != -1)
 	{
 		if (ret == 'p')

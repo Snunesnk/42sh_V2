@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:22:39 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:20:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int				cmd_exit(int argc, char **argv)
 	unsigned char	status;
 	int				i;
 
-	g_builtin_name = argv[0];
 	status = g_retval;
 	if (argc > 1)
 	{
