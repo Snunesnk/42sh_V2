@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:23:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int				cmd_unsetenv(int argc, char **argv)
 	int	ret;
 
 	ret = 0;
-	g_builtin_name = argv[0];
 	if (argc == 1)
 	{
 		pbierror("usage: %s name ...", g_builtin_name);

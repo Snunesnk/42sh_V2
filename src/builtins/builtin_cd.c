@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:20:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int			cmd_cd(int argc, char **argv)
 {
 	struct s_cd	cd;
 
-	g_builtin_name = argv[0];
 	cd.path = NULL;
 	if ((cd.ret = cd_parse_opt(argc, argv, &cd.p)))
 		return (cd.ret);

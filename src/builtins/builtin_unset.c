@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:32:50 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:28:01 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int				cmd_unset(int ac, char **args)
 	int		ret;
 	int		option;
 
-	g_builtin_name = args[0];
 	option = 1;
 	++args;
 	if (ac > 1 && (ret = get_next_opt(&args, "v")) != -1)

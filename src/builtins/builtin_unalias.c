@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:22:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int			cmd_unalias(int argc, char **argv)
 {
 	int			ret;
 
-	g_builtin_name = argv[0];
 	ret = FAILURE;
 	if (argc == 1)
 		pbierror("no argument");

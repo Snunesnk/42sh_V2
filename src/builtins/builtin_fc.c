@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 19:13:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 08:20:55 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int			cmd_fc(int argc, char **argv)
 	if (!argv)
 		return (e_invalid_input);
 	args = argv + 1;
-	g_builtin_name = argv[0];
 	if ((opt_list = parse_fc_option(&args)) == 2)
 		return (e_invalid_input);
 	if (g_needed_arg && g_needed_arg[0] == '-' && g_needed_arg[1] == '\0')

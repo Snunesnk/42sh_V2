@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:20:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	cmd_bg(int argc, char **argv)
 {
 	t_job	*j;
 
-	g_builtin_name = argv[0];
 	if (argc == 2)
 	{
 		j = find_job(ft_atoi(argv[1]));

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 13:22:48 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:13:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int				builtins_dispatcher(char **argv)
 	ret = e_command_not_found;
 	if ((f = dispatcher(*argv)))
 	{
+		g_builtin_name = *argv;
 		while (argv[argc])
 			++argc;
 		ret = f(argc, argv);

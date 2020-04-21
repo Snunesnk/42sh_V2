@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:21 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 08:27:23 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int			cmd_set(int ac, char **av)
 	extern t_list			*g_env;
 	int						i;
 
-	g_builtin_name = *av++;
+	++av;
 	if (ac == 1)
 		print_set();
 	while (ac > 1 && av && *av && ((*av)[0] == '-' || (*av)[0] == '+'))
