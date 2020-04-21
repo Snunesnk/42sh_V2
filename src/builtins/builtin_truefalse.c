@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/21 08:42:27 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ int	cmd_true(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	return (1);
+	return (0);
 }
 
 int	cmd_false(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
-	return (0);
+	return (1);
 }
