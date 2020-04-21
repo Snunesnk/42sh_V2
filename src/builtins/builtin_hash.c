@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 16:53:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 17:51:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*g_needed_arg = NULL;
 int		cmd_hash(int argc, char **argv)
 {
 	int		options_list;
+	char	**args;
 	int		status;
 
 	args = argv + 1;

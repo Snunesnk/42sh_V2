@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:31:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 20:52:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,15 +86,26 @@ void			var_complete(char *to_complete)
 
 void			file_complete(char *to_complete)
 {
-	t_node	*compl_tree;
-	t_data	*data;
+	int			i;
+	t_node		*compl_tree;
+	t_data		*data;
+	static char	operator[] = "&|;<>";
+	int			start;
 
+	start = 0;
+	i = 0;
+	while (to_complete[i])
+	{
+		if (ft_strchr(operator, to_complete[i]))
+			start = i + 1;
+		i++;
+	}
 	if (!(data = init_data()))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
 	}
-	compl_tree = get_file_compl(to_complete, data);
+	compl_tree = get_file_compl(to_complete + start, data);
 	if (compl_tree)
 		display_compl(compl_tree, data);
 	free(data);
@@ -113,7 +124,7 @@ void			autocomplete(void)
 	while (start >= 0 && !ft_isspace(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_dis.cbpos - start - 1);
-	if (ft_strchr(to_complete, '/'))
+	if (ft_strchr(to_complete, '/') || has_operator(to_complete))
 		file_complete(to_complete);
 	else if (g_line.line[start + 1] == '$')
 		var_complete(to_complete);
