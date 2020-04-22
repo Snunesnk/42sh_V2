@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/20 21:55:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 17:47:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	fill_line(char *hist_proposal, int mode)
 		clear_line();
 		insert_text(hist_proposal, hist_len);
 	}
-	update_line();
+//	update_line();
 }
 
 static void	get_input_proposal(char value, char **hist_proposal)
