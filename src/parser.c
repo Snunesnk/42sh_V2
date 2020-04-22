@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 22:40:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/22 11:45:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,44 @@ static t_list	*subprompt(void)
 	return (lst);
 }
 
-static int		lookahead(int curr, int next)
+static char	*get_heredoc_input(char *eof)
+{
+	char	*line;
+	char	*tmp;
+	char	*here;
+
+	here = ft_strdup("");
+	tmp = ft_readline("> ");
+	while (ft_strcmp(eof, tmp))
+	{
+		line = ft_strjoin(tmp, "\n");
+		free(tmp);
+		tmp = ft_strjoin(here, line);
+		free(here);
+		free(line);
+		here = tmp;
+		tmp = ft_readline("> ");
+	}
+	free(tmp);
+	return (here);
+}
+
+static void	heredoc(t_list *lst, int curr, int next)
+{
+	char	*eof;
+	char	*heredoc;
+
+	if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
+	{
+		eof = ((t_token*)(lst->next->content))->value;
+		heredoc = get_heredoc_input(eof);
+		free(eof);
+		((t_token*)(lst->next->content))->value = heredoc;
+	}
+}
+
+
+static int		lookahead(t_list *lst, int curr, int next)
 {
 	int	i;
 
@@ -36,7 +73,10 @@ static int		lookahead(int curr, int next)
 	while (g_parse_table[curr][i] != NONE)
 	{
 		if (g_parse_table[curr][i] == next)
+		{
+			heredoc(lst, curr, next);
 			return (e_success);
+		}
 		++i;
 	}
 	return (e_syntax_error);
@@ -73,7 +113,7 @@ int				parser(t_list *lst)
 	int	ret;
 
 	curr_type = ((t_token*)(lst->content))->type;
-	if (lookahead(NEWLINE, curr_type))
+	if (lookahead(lst, NEWLINE, curr_type))
 	{
 		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
 		return (e_syntax_error);
@@ -82,7 +122,7 @@ int				parser(t_list *lst)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
-		if (lookahead(curr_type, next_type))
+		if (lookahead(lst, curr_type, next_type))
 		{
 			if (!(ret = ppar(&lst, curr_type, next_type)))
 				continue ;
