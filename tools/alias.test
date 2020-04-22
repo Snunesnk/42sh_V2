@@ -1,0 +1,33 @@
+alias
+unalias
+type ls
+alias ls="ls --color"
+type ls
+ls -la
+alias recursive_alias=subrec1
+alias subrec1=subrec2
+alias subrec2=subrec3
+alias subrec3=recursive_alias
+recursive_alias
+subrec3
+subrec2
+alias subrec3=ls
+alias ls=recursive_alias
+ls
+recursive_alias
+subrec3
+unalias ls
+recursive_alias
+unalias -a
+alias
+alias ====
+alias ===blabla
+alias blabla===
+alias =b=lab=bla
+alias foo=bar === bar="echo ALL RIIIIGHT!!!"
+alias foo
+alias bar
+foo
+bar
+bar="echo ALL RIIIIGHT!!!"
+foo
