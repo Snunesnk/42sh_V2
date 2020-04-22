@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 08:20:55 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 16:43:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	parse_fc_option(char ***args)
 			opt_list |= FC_E_OPTION;
 		else
 		{
-			if (fc_invalid_input(**args))
+			if (fc_invalid_input(**args, opt))
 				return (2);
 			break ;
 		}
@@ -60,9 +60,6 @@ int			cmd_fc(int argc, char **argv)
 	else
 		status = exec_fc_other_opt(opt_list, args);
 	if (g_needed_arg)
-	{
-		free(g_needed_arg);
 		g_needed_arg = NULL;
-	}
 	return (status);
 }

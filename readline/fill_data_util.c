@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/11 22:03:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 20:08:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,13 @@ int	ft_str_isspace(char *str)
 
 int	get_compl_start(void)
 {
-	int	start;
+	int			start;
+	static char	operator[] = "&|<>;";
 
 	start = g_dis.cbpos;
 	while (start > 0 && !ft_isspace(g_line.line[start - 1]) \
-				&& g_line.line[start - 1] != '/')
+				&& g_line.line[start - 1] != '/' \
+				&& !ft_strchr(operator, g_line.line[start - 1]))
 		start--;
 	return (start);
 }

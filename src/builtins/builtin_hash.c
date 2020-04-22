@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 08:25:54 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 17:51:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,12 @@ char	*g_needed_arg = NULL;
 
 int		cmd_hash(int argc, char **argv)
 {
-	char	**args;
 	int		options_list;
+	char	**args;
 	int		status;
 
-	args = (argv) ? argv + 1 : argv; //TODO: what is this ???? why test argv ?
+	args = argv + 1;
 	options_list = 0;
-//	g_builtin_name = (argv) ? argv[0] : NULL;
 	while (args && argc > 1 && (status = get_next_opt(&args, "dlp:rt")) != -1)
 	{
 		if (status == 'd')
@@ -37,7 +36,7 @@ int		cmd_hash(int argc, char **argv)
 		else if (status == 't')
 			options_list |= HASH_T_OPTION;
 		else
-			return (print_usage(*args));
+			return (print_usage(*args, status));
 	}
 	return (check_for_needed_arguments(options_list, args) > 0);
 }
@@ -69,14 +68,17 @@ char	get_next_opt(char ***args, const char *options_list)
 	return (get_next_opt(NULL, NULL));
 }
 
-int		print_usage(char *args)
+int		print_usage(char *args, char ret)
 {
 	int	x;
 
 	x = 0;
 	while (args[x] && ft_strchr("-dlprt", args[x]))
 		x += 1;
-	print_error("[-lr] [-p pathname] [-dt] [name ...]", args[x], 3);
+	if (ret == 1)
+		print_error("[-lr] [-p pathname] [-dt] [name ...]", args[x], 2);
+	else
+		print_error("[-lr] [-p pathname] [-dt] [name ...]", args[x], 3);
 	return (e_invalid_input);
 }
 
