@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 14:06:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/22 16:50:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	perf_redir(t_process *p)
 	if ((ret = do_redirection(p->redir)))
 	{
 		free_process(p);
-		exit(g_errordesc[ret].code);
+		exit_clean(g_errordesc[ret].code);
 	}
 }
 
