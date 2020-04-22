@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 11:45:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/22 12:49:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,43 +27,6 @@ static t_list	*subprompt(void)
 	free(tmp);
 	return (lst);
 }
-
-static char	*get_heredoc_input(char *eof)
-{
-	char	*line;
-	char	*tmp;
-	char	*here;
-
-	here = ft_strdup("");
-	tmp = ft_readline("> ");
-	while (ft_strcmp(eof, tmp))
-	{
-		line = ft_strjoin(tmp, "\n");
-		free(tmp);
-		tmp = ft_strjoin(here, line);
-		free(here);
-		free(line);
-		here = tmp;
-		tmp = ft_readline("> ");
-	}
-	free(tmp);
-	return (here);
-}
-
-static void	heredoc(t_list *lst, int curr, int next)
-{
-	char	*eof;
-	char	*heredoc;
-
-	if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
-	{
-		eof = ((t_token*)(lst->next->content))->value;
-		heredoc = get_heredoc_input(eof);
-		free(eof);
-		((t_token*)(lst->next->content))->value = heredoc;
-	}
-}
-
 
 static int		lookahead(t_list *lst, int curr, int next)
 {

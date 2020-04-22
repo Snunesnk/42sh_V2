@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 20:56:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 14:06:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ t_hash_table					*find_prev_occurence(char *name);
 void							free_hash_table(void);
 
 extern int						g_subshell;
+extern int						g_noexit;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
 
@@ -361,6 +362,8 @@ char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,
 									char **name, char **value);
 int								only_assignments(t_process *p);
+
+void							heredoc(t_list *lst, int curr, int next);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);

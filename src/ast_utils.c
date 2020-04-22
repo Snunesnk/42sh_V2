@@ -6,14 +6,50 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 11:09:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/22 12:52:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-t_ast	*alloc_node(int type, t_list *pipeline, t_ast *left, t_ast *right)
+static char	*get_heredoc_input(char *eof)
+{
+	char	*line;
+	char	*tmp;
+	char	*here;
+
+	here = ft_strdup("");
+	tmp = ft_readline("> ");
+	while (ft_strcmp(eof, tmp))
+	{
+		line = ft_strjoin(tmp, "\n");
+		free(tmp);
+		tmp = ft_strjoin(here, line);
+		free(here);
+		free(line);
+		here = tmp;
+		tmp = ft_readline("> ");
+	}
+	free(tmp);
+	return (here);
+}
+
+void		heredoc(t_list *lst, int curr, int next)
+{
+	char	*eof;
+	char	*heredoc;
+
+	if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
+	{
+		eof = ((t_token*)(lst->next->content))->value;
+		heredoc = get_heredoc_input(eof);
+		free(eof);
+		((t_token*)(lst->next->content))->value = heredoc;
+	}
+}
+
+t_ast		*alloc_node(int type, t_list *pipeline, t_ast *left, t_ast *right)
 {
 	t_ast	*node;
 
