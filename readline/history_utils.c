@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/20 21:59:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 18:16:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		get_next_cmd(int fd, char **buf)
 	char		*tmp;
 	static int	ret = 0;
 
-	if (!ret)
+	if (ret <= 0)
 	{
 		ret = read(fd, cmd, READ_SIZE - 2);
 		if (!ret)
