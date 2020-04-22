@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 18:51:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 19:16:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # define ADD_SEPARATOR 1
 # define READ_SIZE 9000
+
+# define MAX_HIST_INIT_SIZE 6000
 
 struct	s_hist
 {

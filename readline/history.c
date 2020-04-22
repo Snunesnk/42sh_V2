@@ -6,11 +6,13 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 13:28:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 19:42:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include <sys/types.h>
+#include <sys/stat.h>
 
 struct s_hist	*g_hist = NULL;
 char		*g_vline = NULL;
@@ -18,11 +20,13 @@ char		*g_hist_loc = NULL;
 
 void	init_history(void)
 {
-	char	*buf;
-	int		fd;
+	char		*buf;
+	int			fd;
+	struct stat	st;
 
 	buf = NULL;
 	get_history_loc();
+	stat(g_hist_loc, &st);
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
@@ -34,11 +38,8 @@ void	init_history(void)
 	g_hist->capacity = 0;
 	g_hist->total_lines = 0;
 	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
-	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot open HOME/.21sh_history\n");
 		return ;
-	}
-	while (get_next_cmd(fd, &buf) > 0)
+	while (st.st_size > 0 && get_next_cmd(fd, &buf) > 0)
 		add_hentry(buf, ft_strlen(buf), 1);
 	g_hist->nb_line = g_hist->total_lines;
 	close(fd);
