@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 17:20:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 18:29:08 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 #include "builtins.h"
 
 t_list		*g_pending_cmd = NULL;
-t_list		*g_env;
-t_list		*g_tmp_env;
-t_list		*g_alias;
+t_list		*g_env = NULL;
+t_list		*g_tmp_env = NULL;
+t_list		*g_alias = NULL;
 
 char		*get_next_pending_cmd(void)
 {
@@ -76,6 +76,8 @@ int			exit_clean(int ret)
 	free_hash_table();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
+	ft_lstdel(&g_tmp_env, &del_env);
+	ft_lstdel(&g_alias, &del_env);
 	if (g_hist)
 	{
 		free(g_hist->history_content);
