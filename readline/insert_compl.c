@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:45:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 21:45:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 void	insert_compl(t_node *compl_tree, t_data *data, long int c)
 {
-	char	*compl;
-	size_t	len;
+	char		*compl;
+	size_t		len;
+	static char	operator[] = "&|<>;";
 
 	while (compl_tree && data->chosen_exec != compl_tree->nb_node)
 	{
@@ -26,8 +27,8 @@ void	insert_compl(t_node *compl_tree, t_data *data, long int c)
 	}
 	compl = compl_tree->name;
 	len = ft_str_wchar_len(compl);
-	while (g_line.line[g_dis.cbpos] && g_line.line[g_dis.cbpos] != '/' \
-			&& g_line.line[g_dis.cbpos] != ' ')
+	while (g_line.line[g_dis.cbpos] && g_line.line[g_dis.cbpos] != ' '\
+			&& !ft_strchr(operator, g_line.line[g_dis.cbpos]))
 		rl_delete();
 	if (g_line.line[g_dis.cbpos] == '/')
 		rl_delete();

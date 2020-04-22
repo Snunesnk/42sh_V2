@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/15 18:41:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/21 22:33:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void		get_exec_lim(t_data *data)
 			data->first_print = 1;
 		data->last_print = data->nb_line;
 	}
+	while (data->last_print + data->overflow > data->row - 1)
+		data->last_print--;
 }
 
 int			get_nb_exec(t_node *compl_tree, int nb_exec)

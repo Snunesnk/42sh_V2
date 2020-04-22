@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/21 16:44:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*ft_strreplace(char **str, char *pattern, char *replacement)
 	return (*str);
 }
 
-int		fc_invalid_input(char *args)
+int		fc_invalid_input(char *args, char opt)
 {
 	int	x;
 
@@ -82,8 +82,12 @@ int		fc_invalid_input(char *args)
 		return (0);
 	while (args[x] && ft_strchr("-elnrs", args[x]))
 		x += 1;
-	print_error("[-e ename] [-lnr] [first] [last] or fc -s [pat=rep] [command]"\
-			, args[x], 3);
+	if (opt == 1)
+		print_error("[-e ename] [-lnr] [first] [last] or fc -s [pat=rep] "\
+				"[command]", args[x], 2);
+	else
+		print_error("[-e ename] [-lnr] [first] [last] or fc -s [pat=rep] "\
+				"[command]", args[x], 3);
 	return (e_invalid_input);
 }
 
