@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 16:32:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/23 14:56:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	do_iowrite(t_redirection *r)
 					r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
-				O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (valid_fd(r->redirector.dest, 0))
