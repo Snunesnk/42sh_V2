@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 18:47:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/23 19:04:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "shell.h"
 #include "builtins.h"
 
-void	wait_for_job(t_job *j)
+void		wait_for_job(t_job *j)
 {
 	int		status;
 	pid_t	pid;
@@ -25,40 +25,45 @@ void	wait_for_job(t_job *j)
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 }
 
-void	format_job_info(t_job *j, const char *status)
+void		format_job_info(t_job *j, const char *status)
 {
 	ft_dprintf(STDERR_FILENO, "%ld (%s): %s\n",
 			(long)j->pgid, status, j->command);
 }
 
-void	do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
+static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
+{
+	if (job_is_completed(*j))
+	{
+		format_job_info(*j, "completed");
+		if (*jlast)
+		{
+			(*jlast)->next = *jnext;
+			free_job(*j);
+		}
+		else
+		{
+			free_job(*j);
+			g_first_job = *jnext;
+		}
+	}
+	else if (job_is_stopped(*j) && !(*j)->notified)
+	{
+		format_job_info(*j, "stopped");
+		(*j)->notified = 1;
+		*jlast = *j;
+	}
+	else
+		*jlast = *j;
+}
+
+void		do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 {
 	update_status();
 	while (j)
 	{
 		jnext = j->next;
-		if (job_is_completed(j))
-		{
-			format_job_info(j, "completed");
-			if (jlast)
-			{
-				jlast->next = jnext;
-				free_job(j);
-			}
-			else
-			{
-				free_job(j);
-				g_first_job = jnext;
-			}
-		}
-		else if (job_is_stopped(j) && !j->notified)
-		{
-			format_job_info(j, "stopped");
-			j->notified = 1;
-			jlast = j;
-		}
-		else
-			jlast = j;
+		do_job_innerloop(&j, &jlast, &jnext);
 		j = jnext;
 	}
 }
