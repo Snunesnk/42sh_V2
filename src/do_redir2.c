@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 12:12:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/23 14:09:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	do_iodup(t_redirection *r)
 		return (psherror(e_ambiguous_redirect,
 					r->redirectee.filename, e_cmd_type));
 	else if (r->flags & FILENAME)
+	{
+		r->instruction |= IOWRITE;
 		return (do_iodfile(r));
+	}
 	else if (r->flags & DEST)
 	{
 		if (valid_fd(r->redirectee.dest, 1))
