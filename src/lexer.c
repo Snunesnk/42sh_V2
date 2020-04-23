@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 11:08:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/23 11:39:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ t_list			*list_tokens(const char *input)
 	while (input[i])
 	{
 		token = get_next_token(input, &i, prevtype);
+		if (token->type == DLESSDASH)
+			token->type = DLESS;
 		prevtype = token->type;
 		add_token_to_list(token, &lst);
 		while (input[i] != '\n' && ft_isspace(input[i]))

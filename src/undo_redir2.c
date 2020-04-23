@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 19:43:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/23 12:26:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		undo_iowrite(t_redirection *r, t_shell_fds **shell_fd)
 
 int		undo_ioread(t_redirection *r, t_shell_fds **shell_fd)
 {
-	if (r->redirectee.dest == r->redirector.dest)
+	if (r->redirectee.dest == r->redirector.dest && !(r->flags & FDCLOSE))
 		return (0);
 	if (!restored_fd(*shell_fd, r->redirectee.dest))
 	{
@@ -86,8 +86,7 @@ int		undo_redirection_internal(t_redirection *r, t_shell_fds *shell_fd)
 			undo_iodfile(r, &shell_fd);
 		else if (r->instruction == IODUP && !(r->flags & FDCLOSE))
 			undo_iodup(r, &shell_fd);
-		else if (r->instruction == (IODUP | IOREAD)
-				&& !(r->flags & FDCLOSE))
+		else if (r->instruction == (IODUP | IOREAD))
 			undo_ioread(r, &shell_fd);
 	}
 	return (0);
