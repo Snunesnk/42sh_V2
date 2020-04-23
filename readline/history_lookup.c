@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history_lookup.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/22 17:47:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/22 21:41:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	fill_line(char *hist_proposal, int mode)
 		while (g_dis.cbpos > 0 && g_line.line[g_dis.cbpos])
 			rl_delete();
 		insert_text(hist_proposal, hist_len);
-		g_dis.cbpos -= hist_len;
+		while (hist_len--)
+			cursor_l();
 	}
 	else
 	{
@@ -44,7 +45,9 @@ static void	get_input_proposal(char value, char **hist_proposal)
 	g_line.line[g_dis.cbpos] = '\0';
 	g_dis.cbpos += 4;
 	user_input = g_line.line;
-	*hist_proposal = g_hist->history_content + g_hist->offset + 1;
+	*hist_proposal = g_hist->history_content + g_hist->offset;
+	if (g_hist->nb_line > 1)
+		*hist_proposal += 1;
 	if (!(get_matching_hist(hist_proposal, user_input)))
 		set_prompt("(failed reverse-i-search)`");
 	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
