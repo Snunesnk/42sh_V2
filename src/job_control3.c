@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:07:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/23 18:47:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,15 @@ void	do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 		{
 			format_job_info(j, "completed");
 			if (jlast)
+			{
 				jlast->next = jnext;
+				free_job(j);
+			}
 			else
+			{
+				free_job(j);
 				g_first_job = jnext;
-			free_job(j);
+			}
 		}
 		else if (job_is_stopped(j) && !j->notified)
 		{
