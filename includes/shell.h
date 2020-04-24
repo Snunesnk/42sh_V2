@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 14:06:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 14:26:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int								undo_iodup(t_redirection *r, \
 int								undo_iodfile(t_redirection *r, \
 		t_shell_fds **shell_fd);
 int								undo_redirection_internal(t_redirection *r, \
-		t_shell_fds *shell_fd);
+		t_shell_fds **shell_fd);
 int								undo_redirection(t_redirection *r);
 
 int								has_redirections(int type);
