@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:43:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 18:13:53 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ extern char							*g_progname;
 int									psherror(int e_error, char *str, \
 		int e_message_type);
 
-int									pbierror(const char *err_fmt, ...)
-		__attribute__ ((format(printf,1,2)));
+int									pbierror(const char *err_fmt,
+		...) __attribute__((format(printf,1,2)));
 
 #endif
