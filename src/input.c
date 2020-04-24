@@ -6,11 +6,9 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 14:57:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 15:21:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include <stdlib.h>
 
 #include "libft.h"
 #include "shell.h"
@@ -74,7 +72,7 @@ int				get_stdin(char **line)
 	{
 		len += 128;
 		new_line = create_new_line(new_line, &len);
-		if (len == -1)
+		if (len == -1 || !new_line)
 			return (-1);
 		*line = new_line;
 		if ((ret = get_block(line, len, '\n')) == -1)
