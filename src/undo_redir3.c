@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:23:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 14:24:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		undo_redirection(t_redirection *r)
 	shell_fd = NULL;
 	if (r)
 	{
-		undo_redirection_internal(r, shell_fd);
+		undo_redirection_internal(r, &shell_fd);
 		free_restored_fd(shell_fd);
 	}
 	return (0);
