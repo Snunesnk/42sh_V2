@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 08:21:08 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/24 17:52:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int		cmd_fg(int argc, char **argv)
 		put_job_in_foreground(j, 1);
 	}
 	else
+	{
 		return (pbierror("usage: %s [job_spec]",
-			g_builtin_name));
+					g_builtin_name));
+	}
 	return (0);
 }

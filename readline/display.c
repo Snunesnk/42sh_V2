@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:22:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 17:40:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ void		update_line(void)
 		ft_putstr(g_termcaps.cd);
 	g_dis.botl = (g_dis.prompt_l + g_line.len + g_dis.start_offset) / g_sc.w;
 	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos + g_dis.start_offset)\
-					 % g_sc.w;
+					% g_sc.w;
 	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos + g_dis.start_offset)\
-					 / g_sc.w;
+					/ g_sc.w;
 	display_lines();
 	if ((g_dis.prompt_l + g_line.len + g_dis.start_offset) % g_sc.w == 0)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));

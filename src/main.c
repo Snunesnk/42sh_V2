@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 18:29:08 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/24 17:44:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			main(int argc, char **argv)
 		else
 		{
 			if (get_stdin(&input) < 0)
-				break;
+				break ;
 		}
 		exec_input(input);
 		if (g_shell_is_interactive)

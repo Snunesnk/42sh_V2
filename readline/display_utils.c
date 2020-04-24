@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 16:59:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 17:41:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 void	get_start_offset(void)
 {
-	int		a = 0;
-	int		i = 0;
+	int		a;
+	int		i;
 	char	input[2];
 
+	a = 0;
+	i = 0;
 	g_dis.start_offset = 0;
 	g_dis.start_line = 0;
 	*input = 0;
@@ -36,6 +38,5 @@ void	get_start_offset(void)
 			a++;
 		i++;
 	}
-	if (g_dis.start_offset)
-		g_dis.start_offset -= 1;
+	g_dis.start_offset -= (g_dis.start_offset) ? 1 : 0;
 }

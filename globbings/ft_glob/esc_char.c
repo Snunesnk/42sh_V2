@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 11:57:39 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:18:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 17:46:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int		count_shell_spec(const char *str)
 	return (nb_spec);
 }
 
-char		*add_esc_to_path(char *path)
+char	*add_esc_to_path(char *path)
 {
 	char	*pathname;
 	int		len;

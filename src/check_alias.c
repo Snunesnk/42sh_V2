@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 14:36:42 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/24 17:51:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static enum e_token	g_delim_tokens[7] = {
 	NONE
 };
 
-static int	is_delim_token(t_token *token)
+static int		is_delim_token(t_token *token)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static int	is_delim_token(t_token *token)
 	return (g_delim_tokens[i] == NONE ? FALSE : TRUE);
 }
 
-static int	is_valid_alias(t_list *alias_stack, char *token_value,
+static int		is_valid_alias(t_list *alias_stack, char *token_value,
 				const char **alias_value)
 {
 	if (ft_lst_find(alias_stack, token_value, ft_strcmp))
@@ -42,7 +42,7 @@ static int	is_valid_alias(t_list *alias_stack, char *token_value,
 	return (FALSE);
 }
 
-static int	replace_alias(t_list ***lst, t_list *next,
+static int		replace_alias(t_list ***lst, t_list *next,
 				const char *value, int *check)
 {
 	t_list	*last;
@@ -82,7 +82,7 @@ static t_list	**get_first_word(t_list **lst)
 	return (lst);
 }
 
-int			check_alias(t_list **lst, int check)
+int				check_alias(t_list **lst, int check)
 {
 	static t_list	*alias_stack;
 	const char		*alias_value;

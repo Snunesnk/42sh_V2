@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:19:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 17:47:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int			is_dir(const char *pathname, t_glob_internal *gl)
 t_file_data	*init_file(t_file_data *dest, const char *path, \
 			const char *name, t_glob_internal *gl)
 {
-
 	dest->name = name;
 	if (!(dest->pathname = (const char *)check_mem(gl,
 		(void *)add_to_path(path, name))))
