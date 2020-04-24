@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:44:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 18:02:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,37 @@ int			exit_clean(int ret)
 	return (ret);
 }
 
+static void	main_loop(void)
+{
+	char			*prompt;
+	char			*input;
+
+	if (g_shell_is_interactive)
+	{
+		prompt = get_prompt();
+		if (!g_pending_cmd && !(input = ft_readline(prompt)))
+			return ;
+		else if (g_pending_cmd)
+			if (!(input = get_next_pending_cmd()))
+				return ;
+	}
+	else
+	{
+		if (get_stdin(&input) < 0)
+			return ;
+	}
+	exec_input(input);
+	if (g_shell_is_interactive)
+	{
+		test_hash_path();
+		free(prompt);
+	}
+}
+
 int			main(int argc, char **argv)
 {
-	char			*input;
 	volatile int	status;
 	int				stop;
-	char			*prompt;
 
 	stop = 0;
 	status = 0;
@@ -103,28 +128,9 @@ int			main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	while (stop == 0)
 	{
-		if (g_shell_is_interactive)
-		{
-			prompt = get_prompt();
-			if (g_onecmd)
-				stop = 1;
-			if (!g_pending_cmd && !(input = ft_readline(prompt)))
-				break ;
-			else if (g_pending_cmd)
-				if (!(input = get_next_pending_cmd()))
-					break ;
-		}
-		else
-		{
-			if (get_stdin(&input) < 0)
-				break ;
-		}
-		exec_input(input);
-		if (g_shell_is_interactive)
-		{
-			test_hash_path();
-			free(prompt);
-		}
+		if (g_onecmd)
+			stop = 1;
+		main_loop();
 	}
 	free_hist();
 	return (exit_clean(status));
