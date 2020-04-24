@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 13:49:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 15:41:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,12 @@ void		display_lines(void)
 	chr_l = g_line.len;
 	index = 0;
 	display_prompt();
+	g_dis.prompt_l = get_vis_prompt_len(g_dis.display_prompt) % g_sc.w;
 	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l + g_dis.start_offset);
 	write(STDOUT_FILENO, g_line.line, g_dis.fst_line_l);
 	chr_l -= g_dis.fst_line_l;
 	index += g_dis.fst_line_l;
-	while (chr_l > 0)
+	while (chr_l > 0 && index >= 0)
 	{
 		if (g_sc.w <= chr_l)
 		{
