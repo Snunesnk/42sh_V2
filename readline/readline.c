@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 13:17:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 15:45:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		else
 			readline_internal_test_cvalue(c);
 		*value = g_line.line;
+		update_line();
 	}
 }
 
@@ -63,7 +64,10 @@ static char	*readline_internal(void)
 	value = NULL;
 	init_line_buffer();
 	value = g_line.line;
-	get_start_offset();
+	if (g_shell_is_interactive)
+		get_start_offset();
+	else
+		g_dis.start_offset = 0;
 	update_line();
 	if (g_vim_mode == 0)
 		add_back();

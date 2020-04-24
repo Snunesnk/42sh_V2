@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 12:36:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 12:26:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 15:56:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
 	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
-	if (treat_single_exp(&(r->redirector.filename), 0))
+	if (treat_single_exp(&(r->redirector.hereword), 0))
 		r->error = e_bad_substitution;
 	(*lst) = (*lst)->next;
 	return (r);
