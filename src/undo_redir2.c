@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 14:10:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 14:26:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,23 @@ int		undo_iodfile(t_redirection *r, t_shell_fds **shell_fd)
 	return (0);
 }
 
-int		undo_redirection_internal(t_redirection *r, t_shell_fds *shell_fd)
+int		undo_redirection_internal(t_redirection *r, t_shell_fds **shell_fd)
 {
 	if (r && (r->flags & REDSUC))
 	{
 		undo_redirection_internal(r->next, shell_fd);
 		if (r->instruction == IOWRITE)
-			undo_iowrite(r, &shell_fd);
+			undo_iowrite(r, shell_fd);
 		else if (r->instruction == IOCAT)
-			undo_iowrite(r, &shell_fd);
+			undo_iowrite(r, shell_fd);
 		else if (r->instruction == IOREAD)
-			undo_ioread(r, &shell_fd);
+			undo_ioread(r, shell_fd);
 		else if (r->instruction == (IODUP | IOWRITE))
-			undo_iodfile(r, &shell_fd);
+			undo_iodfile(r, shell_fd);
 		else if (r->instruction == (IODUP | IOREAD))
-			undo_ioread(r, &shell_fd);
+			undo_ioread(r, shell_fd);
 		else if (r->instruction == IODUP)
-			undo_iodup(r, &shell_fd);
+			undo_iodup(r, shell_fd);
 	}
 	return (0);
 }
