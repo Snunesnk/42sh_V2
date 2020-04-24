@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 17:25:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 13:17:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static char	*readline_internal(void)
 	value = NULL;
 	init_line_buffer();
 	value = g_line.line;
+	get_start_offset();
 	update_line();
 	if (g_vim_mode == 0)
 		add_back();

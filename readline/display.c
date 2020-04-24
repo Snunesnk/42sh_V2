@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 21:22:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 13:49:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void		display_lines(void)
 	chr_l = g_line.len;
 	index = 0;
 	display_prompt();
-	g_dis.fst_line_l = g_sc.w - g_dis.prompt_l;
+	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l + g_dis.start_offset);
 	write(STDOUT_FILENO, g_line.line, g_dis.fst_line_l);
 	chr_l -= g_dis.fst_line_l;
 	index += g_dis.fst_line_l;
@@ -82,18 +82,19 @@ void		display_lines(void)
 
 void		update_line(void)
 {
-	ft_putstr(tgoto(g_termcaps.ch, 0, 0));
+	ft_putstr(tgoto(g_termcaps.ch, 0, g_dis.start_offset));
 	if (g_cursor.v_pos > 0)
 		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
-	if (g_autocompl_on)
-		ft_putstr(g_termcaps.clreol);
-	else
+	ft_putstr(g_termcaps.clreol);
+	if (!g_autocompl_on && !g_dis.start_offset)
 		ft_putstr(g_termcaps.cd);
-	g_dis.botl = (g_dis.prompt_l + g_line.len) / g_sc.w;
-	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
-	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;
+	g_dis.botl = (g_dis.prompt_l + g_line.len + g_dis.start_offset) / g_sc.w;
+	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos + g_dis.start_offset)\
+					 % g_sc.w;
+	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos + g_dis.start_offset)\
+					 / g_sc.w;
 	display_lines();
-	if ((g_dis.prompt_l + g_line.len) % g_sc.w == 0)
+	if ((g_dis.prompt_l + g_line.len + g_dis.start_offset) % g_sc.w == 0)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
 	if (g_dis.botl - g_cursor.v_pos)

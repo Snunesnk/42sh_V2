@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 22:55:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 13:25:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct	s_display
 	int		cbpos_prev;
 	int		line_size;
 	int		fst_line_l;
+	int		start_offset;
 };
 
 struct	s_line_state
@@ -49,5 +50,6 @@ void	display_prompt(void);
 void	update_line(void);
 void	redisplay_after_sigwinch(void);
 void	init_line_buffer(void);
+void	get_start_offset(void);
 
 #endif
