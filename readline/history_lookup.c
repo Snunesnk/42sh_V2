@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/22 21:41:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 14:56:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ static void	fill_line(char *hist_proposal, int mode)
 	hist_len = ft_strlen(hist_proposal);
 	if (mode == 1)
 	{
-		while (g_dis.cbpos > 0 && g_line.line[g_dis.cbpos])
-			rl_delete();
+		insert_text("' : ", 4);
 		insert_text(hist_proposal, hist_len);
 		while (hist_len--)
 			cursor_l();
@@ -30,20 +29,21 @@ static void	fill_line(char *hist_proposal, int mode)
 		clear_line();
 		insert_text(hist_proposal, hist_len);
 	}
-//	update_line();
 }
 
 static void	get_input_proposal(char value, char **hist_proposal)
 {
 	char	*user_input;
+	int		ret;
 
-	g_dis.cbpos -= 4;
+	ret = 0;
+	while (ret++ < 4)
+		cursor_l();
 	if (ft_isprint(value))
 		insert_text((char *)&value, 1);
 	else if (value == 127)
 		rl_backspace();
 	g_line.line[g_dis.cbpos] = '\0';
-	g_dis.cbpos += 4;
 	user_input = g_line.line;
 	*hist_proposal = g_hist->history_content + g_hist->offset;
 	if (g_hist->nb_line > 1)
@@ -52,7 +52,8 @@ static void	get_input_proposal(char value, char **hist_proposal)
 		set_prompt("(failed reverse-i-search)`");
 	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
 		set_prompt("(reverse-i-search)`");
-	g_line.line[g_dis.cbpos - 4] = '\'';
+	g_line.len = ft_strlen(user_input);
+	ft_bzero(g_line.line + g_line.len, g_line.size_buf - g_line.len);
 }
 
 static void	prepare_hist_lookup(char **original_prompt)
@@ -64,7 +65,7 @@ static void	prepare_hist_lookup(char **original_prompt)
 	}
 	g_hist_lookup = 1;
 	set_prompt("(reverse-i-search)`");
-	g_dis.cbpos = 0;
+	clear_line();
 	insert_text("' : ", 4);
 }
 
