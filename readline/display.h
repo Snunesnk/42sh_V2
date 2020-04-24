@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 13:25:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 16:58:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ struct	s_display
 	int		line_size;
 	int		fst_line_l;
 	int		start_offset;
+	int		start_line;
 };
 
 struct	s_line_state

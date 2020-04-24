@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 15:41:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 17:22:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ void		display_lines(void)
 	chr_l = g_line.len;
 	index = 0;
 	display_prompt();
-	g_dis.prompt_l = get_vis_prompt_len(g_dis.display_prompt) % g_sc.w;
-	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l + g_dis.start_offset);
+	g_dis.fst_line_l = g_sc.w - ((g_dis.prompt_l + g_dis.start_offset)\
+			% g_sc.w);
 	write(STDOUT_FILENO, g_line.line, g_dis.fst_line_l);
 	chr_l -= g_dis.fst_line_l;
 	index += g_dis.fst_line_l;
@@ -104,10 +104,8 @@ void		update_line(void)
 
 void		redisplay_after_sigwinch(void)
 {
-	g_dis.fst_line_l = g_sc.w - g_dis.prompt_l;
+	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l % g_sc.w);
 	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
-	if (!g_cursor.c_pos)
-		g_cursor.c_pos = g_sc.w;
 	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;
 	g_dis.botl = (g_dis.prompt_l + g_line.len) / g_sc.w;
 	ft_putstr(tgoto(g_termcaps.ch, 0, 0));

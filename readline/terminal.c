@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 19:24:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 17:03:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ const struct s_termcaps_string g_tc_strings[] =
 	{"do", &g_termcaps.do1},
 	{"le", &g_termcaps.backspace},
 	{"nd", &g_termcaps.forward_char},
-	{"up", &g_termcaps.up}
+	{"up", &g_termcaps.up},
+	{"cm", &g_termcaps.cm}
 };
 
 static void	get_term_capabilities(void)

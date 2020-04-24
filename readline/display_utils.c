@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 13:48:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 16:59:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ void	get_start_offset(void)
 {
 	int		a = 0;
 	int		i = 0;
-	int		rows;
 	char	input[2];
 
 	g_dis.start_offset = 0;
-	rows = 0;
+	g_dis.start_line = 0;
 	*input = 0;
 	write(0, "\033[6n", 4);
 	while (*input != 'R')
@@ -29,7 +28,7 @@ void	get_start_offset(void)
 		if (*input >= '0' && *input <= '9')
 		{
 			if (a == 0)
-				rows = rows * 10 + ft_atoi(input);
+				g_dis.start_line = g_dis.start_line * 10 + ft_atoi(input);
 			else
 				g_dis.start_offset = g_dis.start_offset * 10 + ft_atoi(input);
 		}

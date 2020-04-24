@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 19:25:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 17:02:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ struct	s_termcaps
 	char	*backspace;
 	char	*forward_char;
 	char	*up;
+	char	*cm;
 };
 
 struct	s_termcaps_string
