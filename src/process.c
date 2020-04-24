@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 10:11:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 19:17:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 	int			ret;
 
 	g_noexit = 1;
-	if (p->argc == -1)
-		exit(1);
 	envp = get_env_tab();
+	perf_redir(p);
+	if (p->argc == -1)
+		exit(0);
 	if (g_shell_is_interactive)
 	{
 		pid = getpid();
@@ -74,7 +75,6 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 			tcsetpgrp(g_shell_terminal, pgid);
 		restore_procmask();
 	}
-	perf_redir(p);
 	ret = execute_process(p->argv, envp, NULL, NULL);
 	free_job(g_first_job);
 	ft_tabdel(&envp);
