@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/20 16:53:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/24 19:38:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ static int	builtin_keyword_exec(char **argv)
 
 static int	process_execve(char **argv, char **envp, char *pathname)
 {
-	int	ret;
+//	int	ret;
 
-	ret = execve(pathname, argv, envp);
-	ft_perror("Failed to launch process using execve");
+//	ret = execve(pathname, argv, envp);
+	execve(pathname, argv, envp);
+//	ft_perror("Failed to launch process using execve L");
 	ft_tabdel(&argv);
 	ft_tabdel(&envp);
 	ft_memdel((void**)&pathname);
-	exit(ret);
+	exit(0);
 }
 
 int			execute_process(char **argv, char **envp,
