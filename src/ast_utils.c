@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 16:14:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 20:49:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,10 @@ static char	*get_heredoc_input(char *eof)
 		free(here);
 		free(line);
 		here = tmp;
-		tmp = ft_readline("> ");
+		if (g_shell_is_interactive)
+			tmp = ft_readline("> ");
+		else
+			get_stdin(&tmp);
 	}
 	free(tmp);
 	return (here);
