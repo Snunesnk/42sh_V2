@@ -25,3 +25,4 @@ export | grep notexported
 unset HOME
 HOME=/tmp
 echo $HOME
+exit

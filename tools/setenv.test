@@ -14,3 +14,4 @@ setenv PATH ""
 setenv "" /bin
 setenv "" "" ""
 setenv PATH /bin TOTO ok
+exit

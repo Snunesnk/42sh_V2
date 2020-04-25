@@ -248,3 +248,4 @@ echo ok 5>>poutou >>$42
 echo ok 129>>poutou >>ok
 echo ok 1023>>poutou >> poutou
 echo ok 1024>>poutou >> toto
+exit

@@ -78,3 +78,4 @@ echo {${LOGNAME}
 echo {${LOGNAME}}
 echo ${~}
 echo echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsa${LOGNAME}df$LOGNAME
+exit
