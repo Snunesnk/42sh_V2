@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 20:16:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 20:44:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,22 @@
 #include "error.h"
 #include "shell.h"
 
-#include <errno.h>
-
 int	do_iohere(t_redirection *r)
 {
-	int	fd;
-
 	if (valid_fd(r->redirectee.dest, 1))
 		return (e_bad_file_descriptor);
-
-	/* Create a temporary file not avaible in the filesystem but accessed by process */
-	fd = open("/tmp", __O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
-	if (fd < 0)
-		return (psherror(e_system_call_error, "open(2) cannot create temp file for here-document", e_cmd_type));
-
-	/* Feed the temporary file */
-	if (write(fd, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
+	r->redirector.dest = open("/tmp", __O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
+	if (r->redirector.dest < 0)
+		return (psherror(e_system_call_error,
+	"open(2) cannot create temp file for here-document", e_cmd_type));
+	if (write(r->redirector.dest, r->redirector.hereword,
+				ft_strlen(r->redirector.hereword)) < 0)
 		return (psherror(e_system_call_error, "write(2)", e_cmd_type));
-
-	/* Reset file offest */
-	lseek(fd, 0, SEEK_SET);
-
-	/* Should tag for undo_redir */
-
-	/* Should call a classic dupfd */
+	lseek(r->redirector.dest, 0, SEEK_SET);
+	r->instruction = IOREAD;
 	if (r->flags & NOFORK)
 		r->save[0] = dup(r->redirectee.dest);
-	dup2(fd, r->redirectee.dest);
+	dup2(r->redirector.dest, r->redirectee.dest);
 	return (0);
 }
 
