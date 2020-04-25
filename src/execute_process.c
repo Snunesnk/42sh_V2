@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 20:45:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/25 17:05:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	check_access(char *arg)
 
 	ret = e_success;
 	if ((ret = access(arg, X_OK)))
-		return (psherror(e_permission_denied, arg, e_cmd_type));
+		return (e_permission_denied);
 	return (e_success);
 }
 
