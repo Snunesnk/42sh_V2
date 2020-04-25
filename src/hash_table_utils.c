@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 20:54:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/24 21:01:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ t_hash_table	*find_occurence(char *name)
 		return (NULL);
 	while (tmp && !ft_strequ(tmp->command_name, name))
 		tmp = tmp->next;
+	if (tmp && access(tmp->command_path, F_OK))
+	{
+		ft_printf("./21sh: %s: No such file or directory\n", \
+				tmp->command_path);
+		return (NULL);
+	}
 	return (tmp);
 }
 

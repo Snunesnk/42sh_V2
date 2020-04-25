@@ -11,3 +11,4 @@ echo ~$LOGNAME${LOGNAME}
 echo ~+$LOGNAME${LOGNAME}$USER/$0.toto
 echo ~$LOGNAME${LOGNAME}$USER/toto/~-/${SHLVL}
 echo ~/$LOGNAME${LOGNAME}$USER/toto/~-/${SHLVL}~/$LOGNAM~$LOGNAME${LOGNAME}$USER/toto/~-/${SHLVL}
+exit
