@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 15:21:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 19:17:03 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*create_new_line(char *str, int *len)
 {
 	char	*new_line;
 
-	new_line = (char*)ft_memalloc(*len);
+	new_line = (char*)ft_memalloc(*len + 1);
 	if (!new_line)
 	{
 		*len = -1;
@@ -27,7 +27,7 @@ static char		*create_new_line(char *str, int *len)
 	{
 		if (str)
 		{
-			new_line = ft_strncpy(new_line, str, *len);
+			new_line = ft_strncpy(new_line, str, *len + 1);
 			free(str);
 		}
 		return (new_line);
