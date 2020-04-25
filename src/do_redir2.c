@@ -6,13 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 11:00:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 20:16:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+
+#include <errno.h>
 
 int	do_iohere(t_redirection *r)
 {
@@ -25,15 +27,20 @@ int	do_iohere(t_redirection *r)
 	fd = open("/tmp", __O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
 	if (fd < 0)
 		return (psherror(e_system_call_error, "open(2) cannot create temp file for here-document", e_cmd_type));
+
 	/* Feed the temporary file */
 	if (write(fd, r->redirector.hereword, ft_strlen(r->redirector.hereword)) < 0)
 		return (psherror(e_system_call_error, "write(2)", e_cmd_type));
-	/* Free hereword and put tmp file fd instead */
-	free(r->redirector.hereword);
-	r->redirector.dest = fd;
+
+	/* Reset file offest */
+	lseek(fd, 0, SEEK_SET);
+
+	/* Should tag for undo_redir */
 
 	/* Should call a classic dupfd */
-	// Here the rest of the code and then return
+	if (r->flags & NOFORK)
+		r->save[0] = dup(r->redirectee.dest);
+	dup2(fd, r->redirectee.dest);
 	return (0);
 }
 
