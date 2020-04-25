@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 16:43:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/25 18:41:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int			cmd_fc(int argc, char **argv)
 	int		status;
 
 	(void)argc;
-	if (!argv)
+	if (!argv || !g_hist)
 		return (e_invalid_input);
 	args = argv + 1;
 	if ((opt_list = parse_fc_option(&args)) == 2)
