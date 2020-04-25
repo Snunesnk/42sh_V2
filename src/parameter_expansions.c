@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/01 18:48:23 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 18:27:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	parameter_expansions(size_t *index, char **str, const char *opentag,
 	struct s_param_exp	exp;
 
 	exp.lopen = ft_strlen(opentag);
-	exp.lvarname = ft_varlen(&(*str)[exp.lopen], closetag);
+	if (!(exp.lvarname = ft_varlen(&(*str)[exp.lopen], closetag)))
+		return (e_bad_substitution);
 	exp.lclose = ft_strlen(closetag);
 	exp.rest = &(*str)[exp.lopen + exp.lvarname + exp.lclose];
 	exp.lrest = ft_strlen(exp.rest);
