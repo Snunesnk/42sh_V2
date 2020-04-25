@@ -29,5 +29,6 @@ alias foo
 alias bar
 foo
 bar
-bar="echo ALL RIIIIGHT!!!"
+alias bar="echo ALL RIIIIGHT!!!"
 foo
+exit
