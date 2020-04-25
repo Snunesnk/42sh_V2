@@ -16,3 +16,4 @@ ls |>/dev/null
 ls | >ok
 ls |> ok
 ls| >ok
+exit

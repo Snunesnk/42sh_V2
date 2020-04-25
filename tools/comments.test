@@ -4,3 +4,4 @@ echo "It should prints this" #echo "but not this"
 #
       #
 	  				#
+exit
