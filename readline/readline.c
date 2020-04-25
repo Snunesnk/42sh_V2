@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 15:45:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/25 20:15:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,6 @@ char		*readline_loop(const char *prompt)
 
 	value = NULL;
 	prep_terminal();
-	if (!g_hist)
-		init_history();
 	initialize();
 	set_prompt(prompt);
 	rl_set_signals();

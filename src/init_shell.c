@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 15:16:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/25 20:15:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static int	init_shell_suite(void)
 		return (1);
 	}
 	get_env_list(environ);
+	if (!g_hist)
+		init_history();
 	return (0);
 }
 
