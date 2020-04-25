@@ -21,3 +21,4 @@ sfasfdasdfsafsa
 exit 1 | exit 2 | exit 3; echo "stayin' alive"
 exit
 echo shouldreturn127
+exit

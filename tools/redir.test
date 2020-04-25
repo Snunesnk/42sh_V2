@@ -131,3 +131,4 @@ cat -e 0<&2 okok
 nano | nano | nano
 cat <&4
 echo out >&-; echo out2
+exit

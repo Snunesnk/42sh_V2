@@ -8,3 +8,4 @@ for i in ${ok[]}; do echo ${ok} ; done
 for i in ok[@]; do echo ${ok} ; done
 for i in ok[@]; do echo ${ok[@]} ; done
 for i in ok[@]; do echo ${ok[@]} ; done
+exit
