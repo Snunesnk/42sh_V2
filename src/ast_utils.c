@@ -6,19 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 11:52:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/26 12:04:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-static char	*get_heredoc_input(char *eof, char *here)
+static char	*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 {
-	char	*line;
-	char	*tmp;
-
-	here = ft_strdup("");
 	if (g_shell_is_interactive)
 		tmp = ft_readline("> ");
 	else
@@ -37,7 +33,10 @@ static char	*get_heredoc_input(char *eof, char *here)
 			get_stdin(&tmp);
 	}
 	if (!tmp)
+	{
+		free(here);
 		return (NULL);
+	}
 	free(tmp);
 	return (here);
 }
@@ -50,7 +49,7 @@ int			heredoc(t_list *lst, int curr, int next)
 	if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
 	{
 		eof = ((t_token*)(lst->next->content))->value;
-		heredoc = get_heredoc_input(eof, NULL);
+		heredoc = get_heredoc_input(eof, ft_strdup(""), NULL, NULL);
 		if (!heredoc)
 			return (e_syntax_error);
 		free(eof);
