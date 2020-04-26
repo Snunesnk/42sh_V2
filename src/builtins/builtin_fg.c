@@ -6,25 +6,30 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:52:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 15:33:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
 
+void            print_jobs(void);
+
 t_job	*find_lastbackgrounded(void)
 {
+	t_job	*jlast;
 	t_job	*j;
 
 	j = g_first_job;
-	while (j && j->next)
+	jlast = NULL;
+	while (j)
 	{
+		if (j->pgid)
+			jlast = j;
 		j = j->next;
-		ft_printf("BREAK\n");
 	}
-	if (j)
-		return (j);
+	if (jlast)
+		return (jlast);
 	return (NULL);
 }
 
@@ -32,6 +37,8 @@ int		cmd_fg(int argc, char **argv)
 {
 	t_job	*j;
 
+	if (!g_shell_is_interactive)
+		return (g_errordesc[psherror(e_no_job_control, argv[0], e_cmd_type)].code);
 	if (argc == 1)
 	{
 		if ((j = find_lastbackgrounded()))

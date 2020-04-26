@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:20:08 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/26 13:17:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "cannot assign list to array member" },
 	{ 1, "ambiguous redirect" },
 	{ 1, "Bad file descriptor" },
+	{ 1, "no job control"},
 	{ 2, "syntax error near unexpected token" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
