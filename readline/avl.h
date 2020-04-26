@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:27:51 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/26 17:43:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 19:02:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_data
 	int	last_print;
 	int	compl_start;
 	int	overflow;
+	int	has_overflow;
 }				t_data;
 
 t_node			*add_node(t_node *tree, char *name, t_data *data, char *color);
@@ -50,5 +51,6 @@ int				max(int a, int b);
 int				heigth(t_node *node);
 int				ft_node_cmp(t_node *tree, t_node *node);
 char			*get_color(char *file);
+t_node			*get_node(t_node *tree, int nb_node);
 
 #endif
