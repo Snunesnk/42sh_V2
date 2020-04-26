@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 16:08:35 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/26 11:41:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int		lookahead(t_list *lst, int curr, int next)
 	{
 		if (g_parse_table[curr][i] == next)
 		{
-			heredoc(lst, curr, next);
+			if (heredoc(lst, curr, next))
+				return (e_syntax_error);
 			return (e_success);
 		}
 		++i;
