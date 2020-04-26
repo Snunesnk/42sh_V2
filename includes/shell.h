@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 14:26:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/26 11:53:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,7 @@ int								get_assignment(const char *assignment,
 									char **name, char **value);
 int								only_assignments(t_process *p);
 
-void							heredoc(t_list *lst, int curr, int next);
+int								heredoc(t_list *lst, int curr, int next);
 int								parser(t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);

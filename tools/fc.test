@@ -38,3 +38,4 @@ fc -- -l ls w
 fc ls w make
 fc ls w amke
 fc --l
+exit

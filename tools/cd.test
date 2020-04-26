@@ -1,3 +1,4 @@
 cd -
 setenv CDPTAH /usr:/
 cd src/
+exit

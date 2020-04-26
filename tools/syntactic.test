@@ -6,3 +6,4 @@ ls && ls
 /bin/ls -l -G > newfile
 ls || rm newfile
 exit | exit
+exit

@@ -238,3 +238,4 @@ echo ok 5<auteur <$42
 echo ok 129<auteur <ok
 echo ok 1023<auteur < auteur
 echo ok 1024<auteur < toto
+exit

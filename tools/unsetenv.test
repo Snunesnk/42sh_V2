@@ -23,3 +23,4 @@ unsetenv PATH ""
 unsetenv "" /bin
 unsetenv "" "" ""
 unsetenv PATH /bin TOTO ok
+exit
