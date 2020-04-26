@@ -6,13 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:33:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/15 13:06:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 18:50:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-static t_node	*get_node(t_node *compl_tree, int nb_node)
+t_node			*get_node(t_node *compl_tree, int nb_node)
 {
 	if (nb_node > compl_tree->nb_node)
 		return (get_node(compl_tree->right, nb_node));

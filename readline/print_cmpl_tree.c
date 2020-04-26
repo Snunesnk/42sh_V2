@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 18:14:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 21:39:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void		display_compl(t_node *compl_tree, t_data *data)
 	g_bad_seq.value = 0;
 	fill_data(data, compl_tree);
 	data->compl_start = get_compl_start();
-	if (data->nb_exec >= 100 && !ask_confirmation(data))
+	if (data->nb_line > data->row - 1 && !ask_confirmation(data))
 		return ;
 	while (is_compl_char(c) && data->nb_exec > 1)
 	{

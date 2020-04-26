@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 15:17:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 21:46:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	update_l(t_node *node, t_data *data)
 	data->row = size.ws_row;
 	if (len + 2 > (size_t)data->column)
 	{
-		data->overflow += (len + 1) / data->column;
+		data->has_overflow = 1;
 		return ;
 	}
 	if (len + 2 > (size_t)data->name_l)
