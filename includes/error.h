@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 18:13:53 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/26 13:15:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ enum								e_minishell_error
 	e_cannot_assign_list_to_array_member,
 	e_ambiguous_redirect,
 	e_bad_file_descriptor,
+	e_no_job_control,
 	e_syntax_error,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
