@@ -1,0 +1,2 @@
+ls -lR ~/ &>/dev/null
+fg
