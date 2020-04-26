@@ -6,25 +6,30 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 13:17:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/26 15:33:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
 
+void            print_jobs(void);
+
 t_job	*find_lastbackgrounded(void)
 {
+	t_job	*jlast;
 	t_job	*j;
 
 	j = g_first_job;
-	while (j && j->next)
+	jlast = NULL;
+	while (j)
 	{
+		if (j->pgid)
+			jlast = j;
 		j = j->next;
-		ft_printf("BREAK\n");
 	}
-	if (j)
-		return (j);
+	if (jlast)
+		return (jlast);
 	return (NULL);
 }
 
