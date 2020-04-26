@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 14:02:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/26 17:53:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,32 +52,6 @@ t_data		*init_data(void)
 	new_data->compl_start = 0;
 	new_data->overflow = 0;
 	return (new_data);
-}
-
-void		get_exec_lim(t_data *data)
-{
-	int	chosen_exec_line;
-	int	middle_line;
-
-	chosen_exec_line = data->chosen_exec;
-	while (chosen_exec_line - data->nb_line > 0)
-		chosen_exec_line -= data->nb_line;
-	chosen_exec_line = chosen_exec_line % (data->nb_line + 1);
-	middle_line = data->row / 2;
-	data->first_print = chosen_exec_line - middle_line + 2;
-	if (data->first_print < 1)
-		data->first_print = 1;
-	data->last_print = data->first_print + data->row - 2;
-	if (data->last_print > data->nb_line)
-	{
-		data->first_print -= data->last_print - data->nb_line;
-		if (data->first_print < 1)
-			data->first_print = 1;
-		data->last_print = data->nb_line;
-	}
-	while (data->last_print + data->overflow - data->first_print\
-			> data->row - 1)
-		data->last_print--;
 }
 
 int			get_nb_exec(t_node *compl_tree, int nb_exec)
