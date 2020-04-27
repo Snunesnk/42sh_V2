@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/20 23:47:37 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/27 12:49:31 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,11 @@ SOURCES	:= \
 		ds_singly_linked_list/ft_lst_find.c \
 		ds_singly_linked_list/ft_lst_last.c \
 		ds_singly_linked_list/ft_lst_to_char_tab.c \
+		ds_singly_linked_list/ft_lst_at.c \
+		ds_singly_linked_list/ft_lst_merge.c \
+		ds_singly_linked_list/ft_lst_pop.c \
+		ds_singly_linked_list/ft_lst_quicksort.c \
+		ds_singly_linked_list/ft_lst_size.c \
 		f_ctype/ft_isalnum.c \
 		f_ctype/ft_isblank.c \
 		f_ctype/ft_isalpha.c \
@@ -214,4 +219,4 @@ DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 ARFLAGS := rc
 
-override CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -D_POSIX_C_SOURCE -fno-builtin -O2 -fsanitize=address,undefined
+override CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -D_POSIX_C_SOURCE -fno-builtin -O2 #-fsanitize=address,undefined

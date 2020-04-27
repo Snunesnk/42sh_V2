@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 12:14:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 17:29:23 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,15 @@ static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
 		format_job_info(*j, "completed");
 		if (*jlast)
 		{
-			ft_printf("LAST1\n");
-			ft_printf("==\njob:%s gpid:%d\n==\n", (*j)->first_process->argv[0], (*j)->pgid);
+			ft_printf("LAST1\n"); // DEBUG
+			ft_printf("==\njob:%s gpid:%d\n==\n", (*j)->first_process->argv[0], (*j)->pgid); // DEBUG
 			(*jlast)->next = *jnext;
 			free_job(*j);
 		}
 		else
 		{
-			ft_printf("LAST2\n");
-			ft_printf("==\njob:%s gpid:%d\n==\n", (*j)->first_process->argv[0], (*j)->pgid);
+			ft_printf("LAST2\n"); // DEBUG
+			ft_printf("==\njob:%s gpid:%d\n==\n", (*j)->first_process->argv[0], (*j)->pgid); // DEBUG
 			free_job(*j);
 			g_first_job = *jnext;
 		}
