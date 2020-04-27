@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 13:21:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 10:51:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int	cmd_bg(int argc, char **argv)
 	if (argc == 2)
 	{
 		j = find_job(ft_atoi(argv[1]));
+		if (j == NULL)
+		{
+			pbierror("%d: no such job", ft_atoi(argv[1]));
+			return (1);
+		}
 		put_job_in_background(j, 1);
 	}
 	else
