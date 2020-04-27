@@ -6,14 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 17:38:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 21:05:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SHELL_H
 # define SHELL_H
-
-void	print_jobs(void); // SHELL
 
 # include <signal.h>
 # include <limits.h>
