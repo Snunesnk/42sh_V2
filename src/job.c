@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 17:26:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 21:05:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static void	j_status(t_job *j, int foreground)
 {
-	if (!g_shell_is_interactive && foreground) // No sure whether foreground condition will break job control
+	if (!g_shell_is_interactive && foreground)
 		wait_for_job(j);
 	else if (g_subshell)
 		wait_for_job(j);
@@ -98,8 +98,8 @@ int			launch_job(t_job *j, int foreground)
 		e.outfile = set_mypipe(e.p, j, e.mypipe);
 		if (!j->first_process->next && only_assignments(e.p))
 			treat_shell_variables(e.p, SET >> SHVAR_ADD_OFF);
-		else if (foreground && e.outfile == j->stdout && is_a_builtin_command(e.p->argv) \
-				&& !j->first_process->next)
+		else if (foreground && e.outfile == j->stdout && \
+			is_a_builtin_command(e.p->argv) && !j->first_process->next)
 			return (launch_builtin(e.p));
 		else
 			execute(j, &e, foreground);

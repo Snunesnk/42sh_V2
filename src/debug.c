@@ -6,7 +6,7 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/27 11:51:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 21:05:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,3 @@ void		debug(t_list *lst)
 {
 	ft_lstprint(lst, print);
 }
-
-void		print_jobs(void)
-{
-	for (t_job *j=g_first_job; j; j = j->next)
-	{
-		ft_printf("\n-------\n");
-		ft_printf("job: %s\n", j->first_process->argv[0]);
-		ft_printf("pgid: %d\n", j->pgid);
-		ft_printf("completed: %d\n", j->first_process->completed);
-		ft_printf("stopped: %d\n", j->first_process->stopped);
-		ft_printf("-------\n");
-	}
-}
-
