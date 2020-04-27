@@ -6,34 +6,21 @@
 /*   By: efischer <efischer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by efischer          #+#    #+#             */
-/*   Updated: 2020/04/21 08:23:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:20:11 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
 
-static int	print_export(void)
+static int	print_export(t_shell_var *svar)
 {
-	t_list		*list;
-	t_shell_var	*var;
-	char		*name;
-	char		*value;
-
-	list = g_env;
-	while (list)
+	if (svar->flag & EXPORT)
 	{
-		var = ((t_shell_var*)(list->content));
-		name = var->name;
-		value = var->value;
-		if ((var->flag & EXPORT))
-		{
-			if (value == NULL)
-				ft_printf("declare -x %s\n", name);
-			else
-				ft_printf("declare -x %s=\"%s\"\n", name, value);
-		}
-		list = list->next;
+		if (svar->value == NULL)
+			ft_printf("declare -x %s\n", svar->name);
+		else
+			ft_printf("declare -x %s=\"%s\"\n", svar->name, svar->value);
 	}
 	return (0);
 }
@@ -70,12 +57,11 @@ static int	exec_export(char **args, int option)
 int			cmd_export(int ac, char **av)
 {
 	int		ret;
-	char	**args;
 	int		option;
 
+	++av;
 	option = 0;
-	args = av + 1;
-	while (ac > 1 && (ret = get_next_opt(&args, "pn")) != -1)
+	while (ac > 1 && (ret = get_next_opt(&av, "pn")) != -1)
 	{
 		if (ret == 'p')
 			option |= EXPORT_P_OPT;
@@ -90,7 +76,8 @@ int			cmd_export(int ac, char **av)
 			return (1);
 		}
 	}
-	if (!*args)
-		return (print_export());
-	return (exec_export(args, option));
+	if (*av)
+		return (exec_export(av, option));
+	print_shell_var(g_env, print_export);
+	return (0);
 }

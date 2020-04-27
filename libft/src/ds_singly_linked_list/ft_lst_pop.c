@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_size.c                                      :+:      :+:    :+:   */
+/*   ft_lst_pop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/09 01:45:25 by yforeau           #+#    #+#             */
-/*   Updated: 2018/10/09 01:45:27 by yforeau          ###   ########.fr       */
+/*   Created: 2019/11/22 11:56:06 by yforeau           #+#    #+#             */
+/*   Updated: 2020/04/27 12:01:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glob_utils.h"
+#include "libft.h"
 
-int	ft_lst_size(t_list *lst)
+t_list	*ft_lst_pop(t_list **lst, unsigned int pop)
 {
-	int	size;
+	t_list	*ptr;
+	t_list	*prev;
 
-	size = 0;
-	while (lst)
+	if (!lst || !*lst)
+		return (NULL);
+	prev = NULL;
+	ptr = *lst;
+	while (ptr && pop-- > 0)
 	{
-		lst = lst->next;
-		size++;
+		prev = ptr;
+		ptr = ptr->next;
 	}
-	return (size);
+	if (ptr)
+	{
+		if (!prev)
+			*lst = ptr->next;
+		else
+			prev->next = ptr->next;
+		ptr->next = NULL;
+	}
+	return (ptr);
 }
