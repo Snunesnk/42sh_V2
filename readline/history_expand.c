@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 19:56:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 17:03:21 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char	*hist_expanse(char *value)
 		return (NULL);
 	}
 	else if (g_pattern_length)
-		ft_printf("\n%s\n", value);
+		ft_printf("%s\n", value);
+	g_pattern_length = 0;
 	return (value);
 }
 
@@ -68,12 +69,12 @@ char	*expand_num(char *value, int start, int sign)
 	int		entry;
 
 	hist_entry = NULL;
-	entry = ft_atoi(value + start);
+	entry = ft_atoi(value + start) - 1;
 	if (sign < 0)
 		entry = g_hist->nb_line - entry;
-	if (entry > g_hist->total_lines || entry <= 0 || g_hist->total_lines <= 1)
+	if (entry > g_hist->total_lines || entry < 0 || g_hist->total_lines <= 1)
 	{
-		ft_dprintf(STDERR_FILENO, "\n./21sh: !%s: event not found\n", value);
+		ft_dprintf(STDERR_FILENO, "./21sh: !%s: event not found\n", value);
 		return (NULL);
 	}
 	while (entry > g_hist->nb_line)
