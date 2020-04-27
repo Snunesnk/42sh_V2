@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 17:05:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 16:58:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	check_access(char *arg)
 	return (e_success);
 }
 
-static int	check_type(char *pathname)
+int			check_type(char *pathname)
 {
 	struct stat	buf;
 
@@ -47,7 +47,7 @@ static int	check_type(char *pathname)
 	return (e_permission_denied);
 }
 
-static int	builtin_keyword_exec(char **argv)
+int			builtin_keyword_exec(char **argv)
 {
 	int	ret;
 
@@ -58,7 +58,7 @@ static int	builtin_keyword_exec(char **argv)
 		return (g_errordesc[psherror(e_no_builtin, argv[1], e_cmd_type)].code);
 }
 
-static int	process_execve(char **argv, char **envp, char *pathname)
+int			process_execve(char **argv, char **envp, char *pathname)
 {
 //	int	ret;
 
