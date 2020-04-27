@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 16:45:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 14:46:21 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ int				cmd_export(int argc, char **argv);
 int				cmd_unset(int argc, char **argv);
 int				cmd_alias(int argc, char **argv);
 int				cmd_unalias(int argc, char **argv);
+int				cmd_env(int argc, char **argv);
 
 /*
 ** Hash functions
@@ -156,6 +157,14 @@ void			print_error(char *usage, char option, int mode);
 int				exec_fc_s_opt(char **args);
 void			swap_entries(int *hist_end, int *hist_beg);
 int				add_pending_cmd(char *command);
+
+/*
+** Env functions
+*/
+int				set_temp_variable(char *assignment);
+void			empty_env(t_list **svar_lst);
+int				exec_env_command(char **argv);
+
 
 /*
 ** Global var util for get_next_opt
