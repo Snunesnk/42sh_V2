@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 18:29:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 17:01:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,5 +433,15 @@ struct							s_param_exp
 };
 
 int								exit_clean(int status);
+
+/*
+** Functions needed by builtin env
+** TODO: delete builtin env, make functions static again, and delete
+** these prototyes
+*/
+int								check_type(char *pathname);
+int								builtin_keyword_exec(char **argv);
+int								process_execve(char **argv,
+		char **envp, char *pathname);
 
 #endif
