@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 13:28:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 17:33:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int			main(int argc, char **argv)
 		if (g_onecmd)
 			stop = 1;
 		if (main_loop())
-			break;
+			break ;
 	}
 	free_hist();
 	return (exit_clean(status));

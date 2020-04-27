@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 14:46:21 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 17:34:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,6 @@ int				add_pending_cmd(char *command);
 int				set_temp_variable(char *assignment);
 void			empty_env(t_list **svar_lst);
 int				exec_env_command(char **argv);
-
 
 /*
 ** Global var util for get_next_opt
