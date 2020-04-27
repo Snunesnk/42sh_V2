@@ -6,11 +6,10 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:34:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 12:34:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 12:05:40 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glob_utils.h"
 #include "ft_glob_internal.h"
 
 int			void_strcmp(void *s1, void *s2)
