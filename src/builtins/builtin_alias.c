@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 08:19:54 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/26 18:43:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,19 @@
 #include "shell.h"
 #include "builtins.h"
 
-static int	print_alias(char *name, char *value)
+static int	print_alias(t_shell_var *svar)
+{
+	ft_printf("alias %s='%s'\n", svar->name, svar->value);
+	return (0);
+}
+
+static int	print_single_alias(char *name, char *value)
 {
 	value = !value ? get_shell_var(name, g_alias) : value;
 	if (!value)
 		return (FAILURE);
 	ft_printf("alias %s='%s'\n", name, value);
 	return (SUCCESS);
-}
-
-static void	print_alias_list(t_list *lst)
-{
-	t_shell_var	*svar;
-
-	while (lst)
-	{
-		svar = (t_shell_var *)lst->content;
-		print_alias(svar->name, svar->value);
-		lst = lst->next;
-	}
 }
 
 static int	add_alias(char **av)
@@ -53,7 +47,7 @@ static int	add_alias(char **av)
 		}
 		else if (!*name || *name == '=')
 			pbierror("'%s': invalid alias name", name);
-		else if ((ret = print_alias(name, NULL)) == FAILURE)
+		else if ((ret = print_single_alias(name, NULL)) == FAILURE)
 			pbierror("'%s': not found", name);
 	}
 	ft_merge_sort(&g_alias, alpha_sort);
@@ -63,7 +57,7 @@ static int	add_alias(char **av)
 int			cmd_alias(int argc, char **argv)
 {
 	if (argc == 1)
-		print_alias_list(g_alias);
+		print_shell_var(g_alias, print_alias);
 	else
 		return (add_alias(argv));
 	return (0);

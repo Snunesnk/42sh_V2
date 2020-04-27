@@ -6,12 +6,11 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:14 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 18:37:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 12:05:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glob_internal.h"
-#include "ft_glob_utils.h"
 #include "shell.h"
 
 static t_list	*expand_braces(const char *pattern, t_glob_internal *gl)

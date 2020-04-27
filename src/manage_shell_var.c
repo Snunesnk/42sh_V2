@@ -6,12 +6,22 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 01:53:59 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/26 18:28:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+
+void			print_shell_var(t_list *svar_lst,
+					int (*pshvarf)(t_shell_var *svar))
+{
+	while (svar_lst)
+	{
+		pshvarf((t_shell_var *)svar_lst->content);
+		svar_lst = svar_lst->next;
+	}
+}
 
 int				name_shvar_cmp(void *str_ref, void *shvar_ptr)
 {
