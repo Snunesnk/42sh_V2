@@ -6,11 +6,11 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/23 18:28:59 by yforeau           #+#    #+#             */
-/*   Updated: 2019/01/23 20:43:13 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:01:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glob_utils.h"
+#include "libft.h"
 
 static int	separate(t_list *lst, t_list **pivot,
 					int len, int (*cmp)(void *, void *))

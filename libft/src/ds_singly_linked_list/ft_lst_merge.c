@@ -6,11 +6,11 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/09 01:43:39 by yforeau           #+#    #+#             */
-/*   Updated: 2018/10/09 01:43:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:01:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glob_utils.h"
+#include "libft.h"
 
 void	ft_lst_merge(t_list **lst1, t_list *lst2)
 {

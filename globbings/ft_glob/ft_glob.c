@@ -6,11 +6,10 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/10 18:02:05 by simon            ###   ########.fr       */
+/*   Updated: 2020/04/27 12:05:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_glob_utils.h"
 #include "ft_glob_internal.h"
 #include "ft_fnmatch.h"
 

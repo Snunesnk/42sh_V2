@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/27 12:39:54 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/27 12:45:43 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -119,11 +119,6 @@ SOURCES :=	main.c \
 		../globbings/ft_glob/match_patterns.c \
 		../globbings/ft_glob/slash_path.c \
 		../globbings/ft_glob/store_match_list.c \
-		../globbings/utils/ft_lst_at.c \
-		../globbings/utils/ft_lst_merge.c \
-		../globbings/utils/ft_lst_pop.c \
-		../globbings/utils/ft_lst_quicksort.c \
-		../globbings/utils/ft_lst_size.c \
 		../readline/bind.c \
 		../readline/display.c \
 		../readline/display_utils.c \
