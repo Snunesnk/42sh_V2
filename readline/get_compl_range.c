@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 13:28:52 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/26 21:46:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 17:33:21 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void		get_exec_lim(t_data *data, t_node *compl_tree)
 	{
 		data->first_print = 1;
 		data->last_print = (data->row - 1 > data->nb_line) ? data->nb_line \
-						   : data->row - taken_lines;
+						: data->row - taken_lines;
 		adapt_next_range(data, compl_tree, taken_lines);
 	}
 	else if (chosen_exec_line > data->last_print)
