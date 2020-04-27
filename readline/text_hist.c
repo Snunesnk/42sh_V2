@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/20 21:58:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 23:33:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void		history_up(void)
 {
 	char *s;
 
+	s = g_line.line;
 	if (g_hist->offset == g_hist->used - 1)
 	{
 		if (g_original_cmd)

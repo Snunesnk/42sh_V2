@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:41:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 23:24:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 23:34:09 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	free_all_processes(t_process *p)
 
 	while (p)
 	{
-		ft_printf("process to be freed: %s\n", p->argv[0]);
 		next_p = p->next;
 		free_process(p);
 		p = next_p;
