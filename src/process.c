@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 20:36:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 23:25:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 		restore_procmask();
 	}
 	ret = execute_process(p->argv, envp, NULL, NULL);
-	free_job(&g_first_job);
+	free_job(g_first_job);
 	ft_tabdel(&envp);
 	return (exit_clean(ret));
 }
