@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 12:00:44 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 12:06:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int			exec_input(char *input)
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
+	print_jobs();
 	if (status || ((t_token*)(lst->content))->type == NEWLINE)
 	{
 		do_job_notification(g_first_job, NULL, NULL);
