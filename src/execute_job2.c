@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 16:44:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 20:08:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_process	*build_a_process(t_list **lst)
 		return (p);
 	}
 	free(p);
+	ft_tabdel(&(p->argv));
 	return (NULL);
 }
 
@@ -129,7 +130,7 @@ int			execute_job(t_list *lst, int foreground)
 	if (ret == -1)
 		ret = get_exit_value(get_job_status(j, foreground));
 	if (foreground)
-		free_job(j);
+		free_job(&j);
 	g_retval = ret;
 	return (ret);
 }
