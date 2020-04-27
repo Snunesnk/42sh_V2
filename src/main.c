@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 12:06:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/27 17:34:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			exec_input(char *input)
 	lst = lexer(input);
 	free(input);
 	status = parser(lst);
-	print_jobs();
+	print_jobs(); // DEBUG
 	if (status || ((t_token*)(lst->content))->type == NEWLINE)
 	{
 		do_job_notification(g_first_job, NULL, NULL);
@@ -73,6 +73,7 @@ int			exec_input(char *input)
 int			exit_clean(int ret)
 {
 	extern char	**environ;
+	t_list		*tmp;
 
 	free_hash_table();
 	ft_tabdel(&environ);
@@ -84,6 +85,13 @@ int			exit_clean(int ret)
 		free(g_hist->history_content);
 		free(g_hist);
 		free(g_hist_loc);
+	}
+	while (g_pending_cmd)
+	{
+		tmp = g_pending_cmd->next;
+		free(g_pending_cmd->content);
+		free(g_pending_cmd);
+		g_pending_cmd = tmp;
 	}
 	free(g_dis.prompt);
 	free_hash_table();

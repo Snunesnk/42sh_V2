@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:24:09 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 12:38:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int			re_execute_cmd(int opt_list)
 			break ;
 		free(command);
 	}
+	free(command);
 	close(fd);
 	return (e_success);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 11:54:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 11:59:22 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,5 +283,11 @@ t_list			*ft_lst_last(t_list *lst);
 t_list			*ft_lst_find(t_list *lst, void *content_ref, int (*cmp)());
 int				ft_lst_del_if(t_list **lst, void *content_ref,
 					void (*del)(void *, size_t), int (*cmp)());
+t_list			*ft_lst_at(t_list *lst, unsigned int nbr);
+void			ft_lst_merge(t_list **lst1, t_list *lst2);
+t_list			*ft_lst_pop(t_list **lst, unsigned int pop);
+void			ft_lst_quicksort(t_list *lst, int len,
+					int (*cmp)(void *, void *));
+int				ft_lst_size(t_list *lst);
 
 #endif
