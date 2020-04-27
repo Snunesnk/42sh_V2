@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 18:17:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/27 14:47:07 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/27 15:31:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ int			cmd_env(int argc, char **argv)
 		return (1);
 	if (!argc)
 		print_shell_var(g_env, print_env_var);
-//	else
-//		ret = exec_env_command(argv);
+	else
+		ret = exec_env_command(argv);
 	unset_temp_shell_variables();
 	return (ret);
 }
