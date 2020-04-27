@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 17:41:58 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/27 12:36:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_start_offset(void)
 	i = 0;
 	g_dis.start_offset = 0;
 	g_dis.start_line = 0;
-	*input = 0;
+	ft_bzero(input, 2);
 	write(0, "\033[6n", 4);
 	while (*input != 'R')
 	{
