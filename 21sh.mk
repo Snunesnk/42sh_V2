@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/27 18:14:09 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/28 13:53:56 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,7 @@ SOURCES :=	main.c \
 		builtins/builtin_unalias.c \
 		builtins/builtin_env.c \
 		builtins/builtin_env_utils.c \
+		builtins/builtin_builtin.c \
 		../globbings/ft_fnmatch/char_class_functions_1.c \
 		../globbings/ft_fnmatch/char_class_functions_2.c \
 		../globbings/ft_fnmatch/char_class_functions_3.c \

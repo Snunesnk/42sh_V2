@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 12:44:12 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/28 13:51:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,6 @@ int			check_type(char *pathname)
 	return (e_permission_denied);
 }
 
-int			builtin_keyword_exec(char **argv)
-{
-	int	ret;
-
-	ret = e_success;
-	if (argv[1] && (ret = builtins_dispatcher(&argv[1])) != e_command_not_found)
-		return (ret);
-	else
-		return (g_errordesc[psherror(e_no_builtin, argv[1], e_cmd_type)].code);
-}
-
 int			process_execve(char **argv, char **envp, char *pathname)
 {
 	execve(pathname, argv, envp);
@@ -75,9 +64,7 @@ int			execute_process(char **argv, char **envp,
 
 	if (!argv)
 		return (0);
-	if (!ft_strcmp(argv[0], "builtin"))
-		return (builtin_keyword_exec(argv));
-	else if (is_a_builtin(argv[0]))
+	if (is_a_builtin(argv[0]))
 		return (builtins_dispatcher(argv));
 	pathname = ft_strdup(argv[0]);
 	ret = check_type(pathname);
