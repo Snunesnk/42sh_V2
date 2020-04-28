@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 16:48:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/28 17:56:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,8 @@ static int	main_loop(void)
 			if (!(input = get_next_pending_cmd()))
 				return (1);
 	}
-	else
-		if (get_stdin(&input) < 0)
-			return (1);
+	else if (get_stdin(&input) < 0)
+		return (1);
 	exec_input(input);
 	if (g_shell_is_interactive)
 	{
