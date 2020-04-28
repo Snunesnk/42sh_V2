@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 23:37:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/28 11:50:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,29 @@ t_job	*find_lastbackgrounded(void)
 	return (NULL);
 }
 
+int		two_arg_case(char **argv)
+{
+	t_job	*j;
+
+	j = find_job(ft_atoi(argv[1]));
+	if (j == NULL)
+	{
+		pbierror("%d: no such job", ft_atoi(argv[1]));
+		return (1);
+	}
+	put_job_in_foreground(j, 1);
+	return (0);
+}
+
 int		cmd_fg(int argc, char **argv)
 {
 	t_job	*j;
 
 	if (!g_shell_is_interactive)
-		return (g_errordesc[psherror(e_no_job_control, argv[0], e_cmd_type)].code);
+	{
+		return (g_errordesc[psherror(e_no_job_control,
+				argv[0], e_cmd_type)].code);
+	}
 	if (argc == 1)
 	{
 		if ((j = find_lastbackgrounded()))
@@ -48,17 +65,8 @@ int		cmd_fg(int argc, char **argv)
 		}
 	}
 	else if (argc == 2)
-	{
-		j = find_job(ft_atoi(argv[1]));
-		if (j == NULL)
-		{
-			pbierror("%d: no such job", ft_atoi(argv[1]));
-			return (1);
-		}
-		put_job_in_foreground(j, 1);
-	}
+		return (two_arg_case(argv));
 	else
-		return (pbierror("usage: %s [job_spec]",
-					g_builtin_name));
+		return (pbierror("usage: %s [job_spec]", g_builtin_name));
 	return (0);
 }
