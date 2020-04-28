@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 15:19:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 20:17:36 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int		rm_quotes(char **str, int old_qmode)
 			pdup = ft_strncat(dup, *str, pstr - *str) + (pstr - *str);
 		}
 		else if (dup && (qmode == old_qmode || qmode == (old_qmode & ~BSQUOTE)
-			|| (qmode == (DQUOTE | BSQUOTE) && !ft_strchr("\\\"", pstr[1]))))
+			|| (qmode == (DQUOTE | BSQUOTE) && !ft_strchr("\\\"$", pstr[1]))))
 			*pdup++ = *pstr;
 		old_qmode = qmode;
 		++pstr;
