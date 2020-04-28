@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/13 09:51:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 13:55:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 struct s_keymap_entry g_vim_standard_insert_keymap[] =
 {
-	[ 0 ... 8 ] = { ISFUNC, rl_void },
+	[ 0 ... 3 ] = { ISFUNC, rl_void },
+	{ ISFUNC, rl_eot },
+	[ 5 ... 8 ] = { ISFUNC, rl_void },
 	{ ISFUNC, autocomplete },
 	[ 10 ... 22 ] = { ISFUNC, rl_void },
 	{ ISFUNC, cut_prev_wd },
@@ -53,7 +55,9 @@ struct s_keymap_entry g_vim_meta_insert_keymap[] =
 
 struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 {
-	[ 0 ... 31 ] = { ISFUNC, rl_void },
+	[ 0 ... 3 ] = { ISFUNC, rl_void },
+	{ ISFUNC, rl_eot },
+	[ 5 ... 31 ] = { ISFUNC, rl_void },
 	{ ISFUNC, cursor_r },
 	[ 33 ... 34 ] = { ISFUNC, rl_void },
 	{ ISFUNC, vim_hash },
