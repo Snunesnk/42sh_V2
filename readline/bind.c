@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:20 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 11:56:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 17:11:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ _Bool			g_vim_mode = 0;
 _Bool			g_vim_cmd = 0;
 _Bool			g_replace_mode = 0;
 _Bool			g_got_input = 0;
-void			*g_last_goto_f = NULL;
+int			g_c = 0;
+void			*g_last_goto_f = &goto_pchr_right;
+void			*g_last_goto_b = &goto_pchr_left;
 
 void	bind_keys(void)
 {

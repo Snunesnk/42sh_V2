@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/10 14:13:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 17:01:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ extern _Bool			g_vim_mode;
 extern _Bool			g_replace_mode;
 extern _Bool			g_vim_cmd;
 extern void			*g_last_goto_f;
+extern void			*g_last_goto_b;
 extern _Bool			g_got_input;
+extern int			g_c;
 void	insert_text(const char *string, int len);
 void	clear_line(void);
 void	bind_keys(void);
@@ -69,6 +71,7 @@ void	goto_chr_left(void);
 void	goto_pchr_right(void);
 void	goto_pchr_left(void);
 void	last_goto(void);
+void	next_goto(void);
 void	insert_mode_next(void);
 void	insert_mode_last(void);
 void	insert_mode_first(void);
