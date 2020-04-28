@@ -269,6 +269,7 @@ struct s_keymap_entry g_emacs_meta_keymap[] =
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
+	{ ISFUNC, rl_void },
 	{ ISFUNC, wd_left },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, cut_next_wd },
