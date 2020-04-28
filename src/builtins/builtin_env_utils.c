@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/28 13:59:22 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/28 14:30:37 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #define ESH e_command_not_found
 
-int		set_temp_variable(char *assignment)
+int			set_temp_variable(char *assignment)
 {
 	char	*name;
 	char	*value;
@@ -30,7 +30,7 @@ int		set_temp_variable(char *assignment)
 	return (1);
 }
 
-void	empty_env(t_list **svar_lst)
+void		empty_env(t_list **svar_lst)
 {
 	t_list		*cur;
 	t_shell_var	*svar;
@@ -107,7 +107,7 @@ static int	execute_env_process(char **argv, char **envp,
 	return (psherror(e_command_not_found, argv[0], e_cmd_type));
 }
 
-int		exec_env_command(char **argv)
+int			exec_env_command(char **argv)
 {
 	char	**envp;
 	int		ret;
