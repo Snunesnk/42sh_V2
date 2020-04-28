@@ -6,16 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 10:51:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 11:25:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
-
-/*
-**  https://pubs.opengroup.org/onlinepubs/9699919799/utilities/fg.html
-*/
 
 int	cmd_bg(int argc, char **argv)
 {
