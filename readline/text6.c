@@ -6,11 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:02 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:37:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 12:26:23 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include "shell.h"
 
 _Bool		g_ctrl_mode = 0;
 
@@ -42,7 +43,7 @@ void		rl_eot(void)
 		write(STDOUT_FILENO, "\n", 1);
 		deprep_terminal();
 		rl_clear_signals();
-		exit(0);
+		exit_clean(0);
 	}
 	else
 		rl_delete();
