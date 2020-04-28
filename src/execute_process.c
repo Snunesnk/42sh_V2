@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 13:51:00 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/28 13:58:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ int			execute_process(char **argv, char **envp,
 	if (is_a_builtin(argv[0]))
 		return (builtins_dispatcher(argv));
 	pathname = ft_strdup(argv[0]);
-	ret = check_type(pathname);
-	if (ret == e_success)
+	if ((ret = check_type(pathname)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 	{
