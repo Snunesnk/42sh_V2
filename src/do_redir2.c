@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 10:52:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 18:58:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,23 @@
 
 #define ESYSOP "open(2) cannot create temp file for here-document"
 
+#ifndef __unix__
+# define FL1 O_CREAT
+# define FL2 O_TRUNC
+# define TMPFILE "/tmp/tmp.21sh"
+
+#else
+# define FL1 __O_TMPFILE
+# define FL2 0x0
+# define TMPFILE "/tmp"
+
+#endif
+
 int	do_iohere(t_redirection *r)
 {
 	if (valid_fd(r->redirectee.dest, 1))
 		return (e_bad_file_descriptor);
-	r->redirector.dest = open("/tmp", __O_TMPFILE | O_RDWR, S_IRUSR | S_IWUSR);
+	r->redirector.dest = open(TMPFILE, FL1 | FL2 | O_RDWR, S_IRUSR | S_IWUSR);
 	if (r->redirector.dest < 0)
 		return (psherror(e_system_call_error, ESYSOP, e_cmd_type));
 	if (write(r->redirector.dest, r->redirector.hereword,
