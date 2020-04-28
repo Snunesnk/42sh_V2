@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 11:25:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 11:53:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	cmd_bg(int argc, char **argv)
 	t_job	*j;
 
 	if (!g_shell_is_interactive)
-		return (g_errordesc[psherror(e_no_job_control, argv[0], e_cmd_type)].code);
+	{
+		return (g_errordesc[psherror(e_no_job_control, argv[0],
+						e_cmd_type)].code);
+	}
 	if (argc == 2)
 	{
 		j = find_job(ft_atoi(argv[1]));
