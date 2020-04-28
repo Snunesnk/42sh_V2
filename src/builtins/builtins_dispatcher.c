@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 13:09:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/28 13:52:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ const t_builtins	g_builtins[] =
 	{ "alias", &cmd_alias},
 	{ "unalias", &cmd_unalias},
 	{ "env", &cmd_env},
+	{ "builtin", &cmd_builtin},
 	{ "\0", NULL}
 };
 
