@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 21:06:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 12:44:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ int			process_execve(char **argv, char **envp, char *pathname)
 	ft_tabdel(&argv);
 	ft_tabdel(&envp);
 	ft_memdel((void**)&pathname);
-	exit(0);
+	exit_clean(0);
+	return (0);
 }
 
 int			execute_process(char **argv, char **envp,

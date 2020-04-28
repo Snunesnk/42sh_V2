@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 21:05:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 12:41:32 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 		if (pipe(mypipe) < 0)
 		{
 			ft_dprintf(STDERR_FILENO, "System call pipe(2) failed.\n");
-			exit(1);
+			exit_clean(1);
 		}
 		return (mypipe[1]);
 	}
@@ -70,7 +70,7 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 		launch_process(e->p, j->pgid, foreground);
 	}
 	else if (e->pid < 0 && ft_dprintf(STDERR_FILENO, "fork(2) failed\n"))
-		exit(1);
+		exit_clean(1);
 	else
 	{
 		e->p->pid = e->pid;

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 15:38:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/28 12:40:19 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int			execute_subshell(t_ast *node, int foreground)
 	else if (pid < 0)
 	{
 		ft_printf("Fork subshell failed\n");
-		exit(0);
+		exit_clean(0);
 	}
 	return (parent_shell(foreground, pid));
 }
