@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:35:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 17:29:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,18 @@ void	call_fc(void)
 {
 	char *argv[2];
 
+	if (g_line.len > 0 && !ft_str_isspace(g_line.line))
+		add_hentry(g_line.line, g_line.len, 1);
+	add_hentry("fc", 2, 1);
 	argv[0] = "fc";
 	argv[1] = NULL;
+	deprep_terminal();
+	rl_clear_signals();
 	cmd_fc(1, argv);
+	rl_set_signals();
+	prep_terminal();
+	g_bad_seq.value = '\n';
+	g_input_break = 1;
 }
 
 void	beg_next_wd(void)
