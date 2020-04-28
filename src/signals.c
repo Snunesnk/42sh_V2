@@ -6,7 +6,7 @@
 /*   By: abarthel <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 15:23:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/28 12:42:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	init_shell_sset(void)
 	sigaddset(&newmask, SIGTTOU);
 	sigaddset(&newmask, SIGCHLD);
 	if (sigprocmask(SIG_BLOCK, &newmask, &g_save_procmask))
-		exit(1);
+		exit_clean(1);
 }
 
 void	restore_procmask(void)
 {
 	if (sigprocmask(SIG_SETMASK, &g_save_procmask, NULL))
-		exit(1);
+		exit_clean(1);
 }
