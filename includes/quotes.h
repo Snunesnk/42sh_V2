@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:12:33 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/29 15:56:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 18:28:40 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@ char	*ft_strstr_qmode(const char *str, const char *to_find,
 			int allowed_qmodes, int *qmode);
 char	*unquote_str(char *quoted_str);
 int		rm_quotes(char **str, int old_qmode);
-int		get_str_qmode(char *s);
+int		get_str_qmode(int qmode, char *s);
 
 #endif
