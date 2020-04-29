@@ -6,12 +6,22 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 18:28:58 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 14:35:52 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+
+int				is_new_path(void)
+{
+	static char	*path = NULL;
+	char		*old_path;
+
+	old_path = path;
+	path = get_shell_var("PATH", g_env);
+	return (old_path != path);
+}
 
 void			print_shell_var(t_list *svar_lst,
 					int (*pshvarf)(t_shell_var *svar))

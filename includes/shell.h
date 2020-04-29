@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 13:30:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:33:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,6 +328,7 @@ void							ft_sort_name(t_list **lst1, t_list **lst2, \
 		t_list **head);
 int								get_env_list(char **environ);
 char							**get_env_tab(void);
+int								is_new_path(void);
 int								name_shvar_cmp(void *str_ref, void *shvar_ptr);
 void							print_shell_var(t_list *svar_lst,
 		int (*pshvarf)(t_shell_var *svar));
