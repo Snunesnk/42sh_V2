@@ -6,11 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:33:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:36:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:42:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include "error.h"
 
 t_node			*get_node(t_node *compl_tree, int nb_node)
 {

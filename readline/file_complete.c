@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:34:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:42:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_glob.h"
 #include "sys/types.h"
 #include "sys/stat.h"
+#include "error.h"
 
 size_t		ft_str_wchar_len(char *str)
 {

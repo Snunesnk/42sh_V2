@@ -6,11 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:37:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:43:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+#include "error.h"
 
 char		*get_beg_matching_hist(char **line, char *patern)
 {
