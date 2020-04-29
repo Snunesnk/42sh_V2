@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:41:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:44:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_history_loc(void)
 		ft_printf("./21sh: HOME not set\n");
 		return ;
 	}
-	if (!(g_hist_loc = ft_strjoin(user_home, "/.21sh_history")))
+	if (!(g_hist_loc = ft_strjoin(user_home, "/.ftsh_history")))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;

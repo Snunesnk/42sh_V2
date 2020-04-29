@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 20:08:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:32:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	calc_left_arrow(t_data *data)
 		return (data->chosen_exec - data->nb_line);
 	}
 	data->chosen_exec = (line - 1) + data->nb_line * (data->name_p_line - 1);
-	if (data->chosen_exec > data->nb_exec)
+	while (data->chosen_exec > data->nb_exec)
 		data->chosen_exec -= data->nb_line;
 	return (data->chosen_exec);
 }
