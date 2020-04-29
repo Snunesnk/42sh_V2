@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 10:02:15 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:15:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			exec_input(char *input)
 	{
 		do_job_notification(g_first_job, NULL, NULL);
 		free_lst(lst);
+		g_retval = status;
 		return (status);
 	}
 	ast = build_ast(&lst);
