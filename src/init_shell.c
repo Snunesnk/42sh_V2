@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 20:15:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 18:20:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ int				g_shell_is_interactive;
 int				g_subshell = 0;
 int				g_retval;
 char			g_pwd[] = {0};
+
+static void	get_progname(char *av)
+{
+	if (!ft_strncmp("./", av, 2))
+		g_progname = &av[2];
+	else
+		g_progname = av;
+}
 
 static int	init_shell_suite(void)
 {
@@ -50,7 +58,7 @@ static int	init_shell_suite(void)
 int			init_shell(char *argv, int argc)
 {
 	(void)argc;
-	g_progname = argv;
+	get_progname(argv);
 	g_shell_terminal = STDIN_FILENO;
 	g_shell_is_interactive = isatty(g_shell_terminal);
 	if (g_shell_is_interactive)
