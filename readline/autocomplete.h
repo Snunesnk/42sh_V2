@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 19:24:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 19:30:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define SPACES "                                                           "
 
 # define HIST_COMPL_COLOR "\033[38;5;8m"
-# define G_LINE_COLOR "\033[38;5;250m"
+# define G_LINE_COLOR "\033[38;5;249m"
 # define END_OF_COLOR "\033[0m"
 
 typedef struct	s_print_list
