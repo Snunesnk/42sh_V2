@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 15:58:51 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 18:53:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "quotes.h"
 
 int	g_hist_lookup = 0;
-
-const char	*g_qprompt[5] = {
-	NULL,
-	"dquote> ",
-	"squote> ",
-	NULL,
-	"> "
-};
 
 static void	readline_internal_test_cvalue(union u_buffer c)
 {
@@ -64,9 +56,8 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		*value = g_line.line;
 		if (g_input_break && g_subprompt)
 			return ;
-		insert_hist_compl();
 		update_line();
-		remove_hist_compl();
+		print_hist_compl();
 	}
 }
 
@@ -85,12 +76,14 @@ static char	*readline_internal(void)
 	if (g_vim_mode == 0)
 		add_back();
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
+	remove_completion();
 	return (value);
 }
 
-char		*readline_loop(const char *prompt)
+char		*readline_loop(const char *prompt, int *qmode)
 {
 	char	*value;
+	char	*tmp;
 
 	value = NULL;
 	prep_terminal();
@@ -103,6 +96,14 @@ char		*readline_loop(const char *prompt)
 	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
 		ft_putchar_fd('\n', STDERR_FILENO);
+	if ((*qmode = get_str_qmode(*qmode, value)) & BSQUOTE)
+		value[ft_strlen(value) - 1] = '\0';
+	else
+	{
+		tmp = value;
+		value = ft_strjoin(tmp, "\n");
+		free(tmp);
+	}
 	return (value);
 }
 
@@ -114,12 +115,14 @@ char		*ft_readline(const char *prompt)
 	char	*new;
 
 	input = NULL;
+	qmode = NO_QUOTE;
 	while (!input)
 	{
-		input = readline_loop(prompt);
-		while ((qmode = get_str_qmode(input)) != NO_QUOTE)
+		input = readline_loop(prompt, &qmode);
+		while (qmode != NO_QUOTE)
 		{
-			compl = readline_loop(g_qprompt[qmode]);
+			qmode &= ~BSQUOTE;
+			compl = readline_loop("> ", &qmode);
 			new = ft_strjoin(input, compl);
 			free(input);
 			free(compl);
@@ -127,7 +130,7 @@ char		*ft_readline(const char *prompt)
 		}
 		if (g_shell_is_interactive && input && input[0] && g_history && \
 				(input = hist_expanse(input)))
-			add_hentry(input, ft_strlen(input), 1);
+			add_hentry(input, ft_strlen(input) - 1, 1);
 	}
 	if (g_verbose)
 		ft_printf("%s\n", input);
