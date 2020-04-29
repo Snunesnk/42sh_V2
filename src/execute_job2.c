@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 23:25:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 19:18:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_job		*build_job(t_list **lst)
 	j = (t_job*)ft_memalloc(sizeof(t_job));
 	if (j == NULL)
 		return (NULL);
+	j->command = commandline(*lst);
 	j->stdin = STDIN_FILENO;
 	j->stdout = STDOUT_FILENO;
 	j->stderr = STDERR_FILENO;
