@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 19:17:03 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 13:37:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*create_new_line(char *str, int *len)
 {
 	char	*new_line;
 
-	new_line = (char*)ft_memalloc(*len + 1);
+	new_line = (char*)ft_memalloc(*len + 2);
 	if (!new_line)
 	{
 		*len = -1;
@@ -43,10 +43,12 @@ static int		get_block(char **line, int len, char separator)
 	while (ret < len)
 	{
 		c = ft_getch();
-		if (c == -1)
+		if (c == -1 && **line)
+			c = separator;
+		else if (c == -1)
 			return (-2);
 		if (c == separator || !c)
-		{
+		{	
 			(*line)[ret] = 0;
 			return (ret);
 		}
