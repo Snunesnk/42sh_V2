@@ -6,14 +6,23 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 12:12:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 15:58:51 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "builtins.h"
+#include "quotes.h"
 
 int	g_hist_lookup = 0;
+
+const char	*g_qprompt[5] = {
+	NULL,
+	"dquote> ",
+	"squote> ",
+	NULL,
+	"> "
+};
 
 static void	readline_internal_test_cvalue(union u_buffer c)
 {
@@ -101,15 +110,16 @@ char		*ft_readline(const char *prompt)
 {
 	char	*input;
 	char	*compl;
+	int		qmode;
 	char	*new;
 
 	input = NULL;
 	while (!input)
 	{
 		input = readline_loop(prompt);
-		while (is_quote_open(input))
+		while ((qmode = get_str_qmode(input)) != NO_QUOTE)
 		{
-			compl = readline_loop("> ");
+			compl = readline_loop(g_qprompt[qmode]);
 			new = ft_strjoin(input, compl);
 			free(input);
 			free(compl);
