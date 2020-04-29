@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 15:58:51 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 16:38:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static char	*readline_internal(void)
 char		*readline_loop(const char *prompt)
 {
 	char	*value;
+	char	*compl;
+	char	*new;
 
 	value = NULL;
 	prep_terminal();
@@ -103,6 +105,14 @@ char		*readline_loop(const char *prompt)
 	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
 		ft_putchar_fd('\n', STDERR_FILENO);
+	while ((qmode = get_str_qmode(value)) != NO_QUOTE)
+	{
+		compl = readline_loop(g_qprompt[qmode]);
+		new = ft_strjoin(value, compl);
+		free(value);
+		free(compl);
+		value = new;
+	}
 	return (value);
 }
 
@@ -111,25 +121,19 @@ char		*ft_readline(const char *prompt)
 	char	*input;
 	char	*compl;
 	int		qmode;
-	char	*new;
 
 	input = NULL;
 	while (!input)
 	{
 		input = readline_loop(prompt);
-		while ((qmode = get_str_qmode(input)) != NO_QUOTE)
-		{
-			compl = readline_loop(g_qprompt[qmode]);
-			new = ft_strjoin(input, compl);
-			free(input);
-			free(compl);
-			input = new;
-		}
 		if (g_shell_is_interactive && input && input[0] && g_history && \
 				(input = hist_expanse(input)))
 			add_hentry(input, ft_strlen(input), 1);
 	}
+	while (g_dis.cbpos != g_line.len)
+		cursor_r();
 	if (g_verbose)
 		ft_printf("%s\n", input);
+	insert_text("\n", 1);
 	return (input);
 }
