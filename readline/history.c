@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:44:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:46:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	get_history_loc(void)
 	}
 	if (!(user_home = getenv("HOME")))
 	{
-		ft_printf("./21sh: HOME not set\n");
+		ft_printf("%s: HOME not set\n", g_progname);
 		return ;
 	}
 	if (!(g_hist_loc = ft_strjoin(user_home, "/.ftsh_history")))
