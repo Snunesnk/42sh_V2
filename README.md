@@ -9,15 +9,8 @@ This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims 
 
 ---
 
-ToDo:
+#### Testing
 
+```shell=
 valgrind --leak-check=full --track-origins=yes ./21sh
-
-Simon:
-- 21sh builtins export, set and unset.
-- 21sh Norme everything.
-- 42sh shell variables completion
-- 42sh Perform tilde expansion with globbings. => DONE
-
-Known bugs:
-- The program crash if the prompt needs two lines or more to be entirely displayed.
+```
