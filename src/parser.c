@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:09:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 12:28:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,26 @@
 #include "shell.h"
 #include "ft_readline.h"
 
+int	g_oneline = 0;
+
 static t_list	*subprompt(void)
 {
 	t_list	*lst;
 	char	*input;
 	char	*tmp;
 
-	if (!g_shell_is_interactive)
-		get_stdin(&tmp);
-	else
-		tmp = ft_readline("> ");
+	g_oneline = 1;
+	tmp = get_heredoc_input(NULL, NULL, NULL, NULL);
+	g_oneline = 0;
+	g_subprompt = 0;
+	if (g_input_break)
+	{
+		g_input_break = 0;
+		return (NULL);
+	}
+	g_input_break = 0;
 	input = ft_strjoin(tmp, "\n");
 	lst = lexer(input);
-	free(input);
 	free(tmp);
 	return (lst);
 }
@@ -64,7 +71,8 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL;
-		(*lst)->next = subprompt();
+		if (!((*lst)->next = subprompt()))
+			return (e_invalid_input);
 		return (e_success);
 	}
 	else
@@ -94,8 +102,7 @@ int				parser(t_list *lst)
 		{
 			if (!(ret = ppar(&lst, curr_type, next_type)))
 				continue ;
-			else
-				return (ret);
+			return (ret);
 		}
 		else if (ret == e_invalid_input)
 			return (130);
