@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 13:40:30 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 14:34:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	remove_home(char **pwd)
 		return (e_success);
 	if (!(*pwd = ft_strdup(*pwd)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (e_cannot_allocate_memory);
 	}
 	tmp = ft_strstr(*pwd, home);
@@ -78,7 +78,7 @@ char		*get_prompt(void)
 		+ ft_strlen(END_SIGN) + 1;
 	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len + 1))))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	if (g_retval)

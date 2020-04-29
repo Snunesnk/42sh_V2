@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 14:56:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:37:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	prepare_hist_lookup(char **original_prompt)
 {
 	if (!(*original_prompt = ft_strdup(g_dis.prompt)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	g_hist_lookup = 1;

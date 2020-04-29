@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:35:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:41:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_history(void)
 	stat(g_hist_loc, &st);
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	g_hist->history_content = NULL;
@@ -62,7 +62,7 @@ void	get_history_loc(void)
 	}
 	if (!(g_hist_loc = ft_strjoin(user_home, "/.ftsh_history")))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 }
@@ -79,7 +79,7 @@ void	add_hentry(const char *buf, int size, int mode)
 						(void **)&(g_hist->history_content), g_hist->used, \
 						sizeof(char) * (g_hist->capacity + size) * 3)))
 		{
-			ft_dprintf(STDERR_FILENO, "/.21sh: cannot allocate memory\n");
+			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 			return ;
 		}
 		g_hist->capacity = (g_hist->capacity + size) * 3;

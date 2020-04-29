@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 21:23:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:32:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "shell.h"
+#include "error.c"
 
 int	g_autocompl_on = 0;
 
@@ -42,7 +43,7 @@ void			command_complete(char *to_complete)
 
 	if (!(data = init_data()))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	if (!(path = ft_strdup(getenv("PATH"))))
@@ -50,7 +51,7 @@ void			command_complete(char *to_complete)
 		if (!getenv("PATH"))
 			ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
 		else
-			ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	compl_tree = get_cmd_compl(to_complete, path, data);
@@ -72,7 +73,7 @@ void			var_complete(char *to_complete)
 	compl_tree = NULL;
 	if (!(data = init_data()))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	if (to_complete[1] == '{')
@@ -102,7 +103,7 @@ void			file_complete(char *to_complete)
 	}
 	if (!(data = init_data()))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	compl_tree = get_file_compl(to_complete + start, data);
