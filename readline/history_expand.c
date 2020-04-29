@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 17:03:21 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:36:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char	*replace_hist_exp(char *value, char *hist_entry)
 	size = ft_strlen(value) - g_pattern_length + ft_strlen(hist_entry);
 	if (!(new_value = (char *)ft_memalloc(sizeof(char) * (size + 2))))
 	{
-		ft_printf("\n./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	value[i] = '\0';

@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 16:34:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/14 17:15:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:37:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_var_form(char *var_name, int is_bracked)
 	if (!(var_form = (char *)ft_memalloc(sizeof(char) * \
 					(ft_strlen(var_name) + 2 + is_bracked * 2))))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	ft_strcat(var_form, "$");

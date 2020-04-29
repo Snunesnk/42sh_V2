@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 23:33:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:37:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		history_up(void)
 			free(g_original_cmd);
 		if (!(g_original_cmd = ft_strdup(g_line.line)))
 		{
-			ft_printf("./21sh: cannot allocate mmemory\n");
+			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 			return ;
 		}
 	}

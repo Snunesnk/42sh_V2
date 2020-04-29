@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 21:06:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:33:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ t_node	*add_node(t_node *tree, char *name, t_data *data, char *color)
 		return (NULL);
 	if (!(node->name = extract_file_name(name)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	if (!(node->color = ft_strdup(color)))
