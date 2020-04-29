@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 23:11:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:33:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_node	*search_in_path(char *to_complete, char *path, t_node *compl_tree, \
 	if (!(tmp = ft_strjoin_free(ft_strjoin_free(ft_strjoin(path, "/"), \
 						to_complete, 1), "*", 1)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	ft_glob(tmp, FT_GLOB_MARK, NULL, &gl);
