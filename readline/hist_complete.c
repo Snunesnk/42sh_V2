@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 20:12:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 23:19:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@ void	print_hist_compl(void)
 {
 	char				*hist_compl;
 	unsigned int		offset_save;
+	int					start_col;
+	int					line;
 	int					len;
 
-	len = 0;
+	len = g_line.len - g_dis.cbpos;
 	offset_save = g_hist->offset;
 	hist_compl = g_hist->history_content + g_hist->offset;
 	if (g_hist->offset != 0)
@@ -45,16 +47,16 @@ void	print_hist_compl(void)
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
 	if (hist_compl && g_line.len)
 	{
-		while (g_dis.cbpos + len < g_line.len)
-		{
+		start_col = (g_dis.start_offset + g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
+		line = (start_col + ft_strlen(hist_compl + g_dis.cbpos)) / g_sc.w;
+		while (len--)
 			ft_putstr(g_termcaps.forward_char);
-			len++;
-		}
 		ft_printf("%s%s%s", HIST_COMPL_COLOR, hist_compl + \
 				g_line.len, END_OF_COLOR);
-		len += ft_strlen(hist_compl + g_line.len);
-		while (len--)
-			ft_putstr(g_termcaps.backspace);
+		ft_strlen(hist_compl + g_line.len);
+		ft_putstr(tgoto(g_termcaps.ch, 0, start_col));
+		if (line)
+			ft_putstr(tgoto(g_termcaps.gup, 0, line));
 	}
 	while (g_hist->offset < offset_save)
 		next_hist();
