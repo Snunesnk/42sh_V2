@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 16:58:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 20:20:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ void	update_line(void);
 void	redisplay_after_sigwinch(void);
 void	init_line_buffer(void);
 void	get_start_offset(void);
+void	count_newline(void);
 
 #endif
