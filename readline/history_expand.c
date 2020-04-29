@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:36:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:40:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ char	*expand_num(char *value, int start, int sign)
 		entry = g_hist->nb_line - entry;
 	if (entry > g_hist->total_lines || entry < 0 || g_hist->total_lines <= 1)
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: !%s: event not found\n", value);
+		ft_dprintf(STDERR_FILENO, "%s: !%s: event not found\n",
+						g_progname, value);
 		return (NULL);
 	}
 	while (entry > g_hist->nb_line)
@@ -98,7 +99,8 @@ char	*expand_word(char *value, int start, int sign)
 	if (ft_strncmp(value, g_hist->history_content + g_hist->offset + 1, \
 				g_pattern_length + sign))
 	{
-		ft_dprintf(STDERR_FILENO, "\n./21sh: !%s: event not found\n", value);
+		ft_dprintf(STDERR_FILENO, "\n%s: !%s: event not found\n",
+						g_progname, value);
 		return (NULL);
 	}
 	return (hist_entry);

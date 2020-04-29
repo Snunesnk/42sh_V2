@@ -6,13 +6,14 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:35:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:41:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "error.h"
 
 struct s_hist	*g_hist = NULL;
 char		*g_vline = NULL;

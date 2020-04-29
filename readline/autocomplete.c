@@ -6,13 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:32:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:42:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "shell.h"
-#include "error.c"
+#include "error.h"
 
 int	g_autocompl_on = 0;
 
@@ -49,7 +49,7 @@ void			command_complete(char *to_complete)
 	if (!(path = ft_strdup(getenv("PATH"))))
 	{
 		if (!getenv("PATH"))
-			ft_dprintf(STDERR_FILENO, "./21sh: PATH not set.\n");
+			ft_dprintf(STDERR_FILENO, "%s: PATH not set.\n", g_progname);
 		else
 			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
