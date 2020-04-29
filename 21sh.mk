@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/29 15:51:37 by yforeau          ###   ########.fr        #
+#    Updated: 2020/04/29 19:23:54 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,6 @@ SOURCES :=	main.c \
 		treat_shell_variables.c \
 		undo_redir.c \
 		undo_redir2.c \
-		utils_job.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
@@ -191,9 +190,7 @@ TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 LDLIBS += $(PATH_LIB)libft.a -ltermcap
 
 LDFLAGS += $(DEBUG)
-#LDFLAGS += -flto=full
 
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
-#CFLAGS += -fno-builtin -O2
 
 DEBUG += -g3 #-fsanitize=address,undefined
