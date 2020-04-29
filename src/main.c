@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:15:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:25:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char		*get_next_pending_cmd(void)
 
 	if (!(input = ft_strdup((char *)g_pending_cmd->content)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	tmp = g_pending_cmd->next;
