@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 16:54:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 17:12:47 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	readline_internal_test_cvalue(union u_buffer c)
 {
 	if (!g_ctrl_mode && g_hist_lookup)
 		hist_lookup(c);
-	else if (isstdkey(c.value))
+	else if (isstdkey(c.value) && !enter_rc(c))
 		(g_standard_keymap[c.value].func)(c.value);
 	else if (isctrlkey(c))
 	{
