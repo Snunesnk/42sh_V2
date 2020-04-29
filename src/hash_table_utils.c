@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:27:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 18:50:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ t_hash_table	*find_occurence(char *name)
 	t_hash_table	*tmp;
 	int				hash;
 
+	if (is_new_path())
+		free_hash_table();
 	hash = ft_hash(name);
 	tmp = g_hash_table[hash];
 	if (!tmp)

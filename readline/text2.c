@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 10:55:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 18:30:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	cursor_r(void)
 		}
 		g_dis.cbpos += 1;
 	}
+	else
+		insert_hist_compl();
 }
 
 void	cursor_d(void)
