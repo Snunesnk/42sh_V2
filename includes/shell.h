@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 23:25:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 11:49:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void							free_hash_table(void);
 
 extern int						g_subshell;
 extern int						g_noexit;
+extern int						g_oneline;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
 
@@ -222,6 +223,8 @@ t_redirection					*set_redirection(t_list **lst, int io_nb);
 char							*dup_token_value(char **argv, int i, \
 		t_list *lst);
 
+char							*get_heredoc_input(char *eof, char *here, \
+		char *tmp, char *line);
 void							free_redirections(t_redirection *r);
 int								undo_redirection(t_redirection *r);
 int								restored_fd(t_shell_fds *shell_fd, int fd);
