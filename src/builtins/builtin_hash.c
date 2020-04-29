@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 17:51:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 18:51:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ int		check_for_needed_arguments(int options_list, char **args)
 		pbierror("-t: option requires an argument");
 		return (e_invalid_input);
 	}
+	if (is_new_path())
+		free_hash_table();
 	status = exec_hash_builtin(options_list, args);
 	if (g_needed_arg)
 		g_needed_arg = NULL;
