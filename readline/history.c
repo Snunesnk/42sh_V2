@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/22 19:42:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:35:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_history_loc(void)
 		ft_printf("./21sh: HOME not set\n");
 		return ;
 	}
-	if (!(g_hist_loc = ft_strjoin(user_home, "/.21sh_history")))
+	if (!(g_hist_loc = ft_strjoin(user_home, "/.ftsh_history")))
 	{
 		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
 		return ;
