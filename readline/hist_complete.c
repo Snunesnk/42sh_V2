@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 13:38:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:51:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	insert_hist_compl(void)
 	offset_save = g_hist->offset;
 	pos_save = g_dis.cbpos;
 	hist_compl = g_hist->history_content + g_hist->offset;
+	ft_printf("hist_compl: %s\n", hist_compl);
 	if (g_hist->offset != 0)
 		hist_compl += 1;
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
