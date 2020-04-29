@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/29 13:39:12 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/29 15:51:37 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,7 +156,6 @@ SOURCES :=	main.c \
 		../readline/avl_sort.c \
 		../readline/init.c \
 		../readline/input.c \
-		../readline/quotes.c \
 		../readline/readline.c \
 		../readline/signals.c \
 		../readline/terminal.c \
