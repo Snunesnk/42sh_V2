@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:00:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:16:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,14 @@ static char	*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 	else
 		get_stdin(&tmp);
 	loop_heredoc(&eof, &here, &tmp, &line);
-	g_input_break = 0;
+//	g_input_break = 0;
 	g_subprompt = 0;
+	if (g_input_break)
+	{
+		free(tmp);
+		free(here);
+		return (NULL);
+	}
 	if (!tmp)
 	{
 		free(here);
@@ -58,8 +64,13 @@ int			heredoc(t_list *lst, int curr, int next)
 	{
 		eof = ((t_token*)(lst->next->content))->value;
 		heredoc = get_heredoc_input(eof, ft_strdup(""), NULL, NULL);
-		if (!heredoc)
+		if (!heredoc && !g_input_break)
 			return (e_syntax_error);
+		else if (g_input_break)
+		{
+			g_input_break = 0;
+			return (e_invalid_input);
+		}
 		free(eof);
 		((t_token*)(lst->next->content))->value = heredoc;
 	}

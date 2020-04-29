@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 11:41:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:09:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ static t_list	*subprompt(void)
 static int		lookahead(t_list *lst, int curr, int next)
 {
 	int	i;
+	int	ret;
 
 	i = 0;
 	while (g_parse_table[curr][i] != NONE)
 	{
 		if (g_parse_table[curr][i] == next)
 		{
-			if (heredoc(lst, curr, next))
-				return (e_syntax_error);
+			if ((ret = heredoc(lst, curr, next)))
+				return (ret);
 			return (e_success);
 		}
 		++i;
@@ -89,13 +90,15 @@ int				parser(t_list *lst)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
-		if (lookahead(lst, curr_type, next_type))
+		if ((ret = lookahead(lst, curr_type, next_type)) == e_syntax_error)
 		{
 			if (!(ret = ppar(&lst, curr_type, next_type)))
 				continue ;
 			else
 				return (ret);
 		}
+		else if (ret == e_invalid_input)
+			return (130);
 		lst = lst->next;
 	}
 	return (e_success);
