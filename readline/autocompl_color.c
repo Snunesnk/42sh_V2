@@ -6,13 +6,14 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 21:55:19 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 19:37:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:27:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "sys/types.h"
 #include "sys/stat.h"
+#include "error.h"
 
 char		*remove_esc(char *file)
 {
@@ -22,7 +23,7 @@ char		*remove_esc(char *file)
 	i = 0;
 	if (!(no_esc_file = ft_strdup(file)))
 	{
-		ft_dprintf(STDERR_FILENO, "./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	ft_bzero(no_esc_file, ft_strlen(file));

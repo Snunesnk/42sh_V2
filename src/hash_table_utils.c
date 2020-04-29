@@ -6,12 +6,13 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 21:01:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:27:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
+#include "error.h"
 
 t_hash_table	*find_occurence(char *name)
 {
@@ -26,8 +27,8 @@ t_hash_table	*find_occurence(char *name)
 		tmp = tmp->next;
 	if (tmp && access(tmp->command_path, F_OK))
 	{
-		ft_printf("./21sh: %s: No such file or directory\n", \
-				tmp->command_path);
+		psherror(e_no_such_file_or_directory,
+			tmp->command_path, e_cmd_type);
 		return (NULL);
 	}
 	return (tmp);
@@ -93,7 +94,7 @@ void			test_hash_path(void)
 
 	if (!(getenv("PATH")))
 	{
-		ft_printf("./21sh: PATH not set\n");
+		ft_printf("%s: PATH not set\n", g_progname);
 	}
 	if (!path_remember)
 		path_remember = getenv("PATH");
