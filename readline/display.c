@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 19:09:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 20:05:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,16 @@ void		display_lines(void)
 
 void		update_line(void)
 {
+	int	i;
+
+	i = 0;
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_dis.start_offset));
+	while (g_line.line[i])
+	{
+		if (g_line.line[i] == '\n')
+			g_cursor.v_pos++;
+		i++;
+	}
 	if (g_cursor.v_pos > 0)
 		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
 	ft_putstr(g_termcaps.clreol);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 18:53:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 20:13:57 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		if (g_input_break && g_subprompt)
 			return ;
 		update_line();
-		print_hist_compl();
+		if (g_line.len)
+			print_hist_compl();
 	}
 }
 
