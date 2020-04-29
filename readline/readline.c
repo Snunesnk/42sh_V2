@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 16:38:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:40:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ char		*readline_loop(const char *prompt)
 	char	*value;
 	char	*compl;
 	char	*new;
+	int		qmode;
 
 	value = NULL;
 	prep_terminal();
@@ -119,8 +120,6 @@ char		*readline_loop(const char *prompt)
 char		*ft_readline(const char *prompt)
 {
 	char	*input;
-	char	*compl;
-	int		qmode;
 
 	input = NULL;
 	while (!input)
