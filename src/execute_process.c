@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 12:26:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 18:57:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			execute_process(char **argv, char **envp,
 {
 	int				ret;
 
-	if (!argv)
+	if (!argv || !argv[0][0])
 		return (0);
 	if (is_a_builtin(argv[0]))
 		return (builtins_dispatcher(argv));
