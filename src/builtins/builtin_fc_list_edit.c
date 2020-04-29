@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 12:38:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:54:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ int			re_execute_cmd(int opt_list)
 
 	if (!(editor = get_editor(opt_list)))
 		return (e_cannot_allocate_memory);
-	if (!(command = ft_strjoin(editor, " .21sh_tmp_file")) \
+	if (!(command = ft_strjoin(editor, " .ftsh_tmp_file")) \
 			&& pbierror("cannot allocate memory"))
 		return (e_cannot_allocate_memory);
 	free(editor);
 	exec_input(command);
-	if ((fd = open(".21sh_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
+	if ((fd = open(".ftsh_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
 			&& pbierror("cannot open temporary file"))
 		return (1);
 	while (get_next_line(fd, &command) > 0)
@@ -96,7 +96,7 @@ int			get_fd_and_print(int opt_list, int hist_beg, int hist_end)
 	else
 	{
 		opt_list |= FC_N_OPTION;
-		if ((fd = open(".21sh_tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644)) \
+		if ((fd = open(".ftsh_tmp_file", O_WRONLY | O_CREAT | O_TRUNC, 0644)) \
 				< 0)
 		{
 			pbierror("cannot open temporary file");
