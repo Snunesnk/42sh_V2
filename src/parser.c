@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:48:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 12:14:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,7 @@ int				parser(t_list *lst)
 		{
 			if (!(ret = ppar(&lst, curr_type, next_type)))
 				continue ;
-			else
-				return (ret);
+			return (ret);
 		}
 		else if (ret == e_invalid_input)
 			return (130);

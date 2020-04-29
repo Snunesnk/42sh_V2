@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:46:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 12:12:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
 		else
 			get_stdin(tmp);
 	}
+	g_subprompt = 0;
 }
 
 char		*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
@@ -40,8 +41,7 @@ char		*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 	if (g_oneline)
 		return (tmp);
 	loop_heredoc(&eof, &here, &tmp, &line);
-	g_subprompt = 0;
-	if (g_input_break)
+	if (g_input_break && !g_eof)
 	{
 		free(tmp);
 		free(here);
@@ -67,11 +67,14 @@ int			heredoc(t_list *lst, int curr, int next)
 		heredoc = get_heredoc_input(eof, ft_strdup(""), NULL, NULL);
 		if (!heredoc && !g_input_break)
 			return (e_syntax_error);
-		else if (g_input_break)
+		else if (g_input_break && !g_eof)
 		{
 			g_input_break = 0;
+			g_eof = 0;
 			return (e_invalid_input);
 		}
+		g_input_break = 0;
+		g_eof = 0;
 		free(eof);
 		((t_token*)(lst->next->content))->value = heredoc;
 	}
