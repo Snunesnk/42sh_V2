@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/12 16:34:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 10:38:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ struct					s_quote
 
 extern struct s_quote	g_quote;
 extern _Bool			g_input_break;
+extern _Bool			g_subprompt;
 
 union u_buffer			read_key(void);
 int						is_quote_open(char *s);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:30:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 10:54:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		else
 			readline_internal_test_cvalue(c);
 		*value = g_line.line;
+		if (g_input_break && g_subprompt)
+			return ;
 		update_line();
 	}
 }
@@ -89,7 +91,7 @@ char		*readline_loop(const char *prompt)
 	rl_clear_signals();
 	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
-		ft_putchar_fd('\n', 2);
+		ft_putchar_fd('\n', STDERR_FILENO);
 	return (value);
 }
 

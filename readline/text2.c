@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 15:02:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 10:55:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	kill_line(void)
 {
-	write(STDOUT_FILENO, "^C", 2);
+	write(STDOUT_FILENO, "^C", STDERR_FILENO);
 	ft_bzero(g_line.line, g_line.size_buf);
 	g_dis.cbpos = 0;
 	g_line.len = 0;
@@ -22,8 +22,13 @@ void	kill_line(void)
 	if (g_cursor.v_pos != g_dis.botl)
 		ft_putstr(tgoto(g_termcaps.gdo, 0, g_dis.botl - g_cursor.v_pos));
 	g_cursor.v_pos = 0;
-	write(STDOUT_FILENO, "\n", 1);
-	update_line();
+	if (g_subprompt)
+		g_input_break = 1;
+	else
+	{
+		write(STDOUT_FILENO, "\n", STDOUT_FILENO);
+		update_line();
+	}
 }
 
 void	rl_insert(int c)
