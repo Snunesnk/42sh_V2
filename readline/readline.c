@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 16:40:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 16:54:57 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 			c = read_key();
 		if (g_ctrl_mode)
 			rl_ctrl_mode(c);
-		else if (enter_rc(c) && !g_hist_lookup)
-			return (g_vim_mode ? vim_insert() : rl_void());
 		else
 			readline_internal_test_cvalue(c);
+		if (enter_rc(c) && !g_hist_lookup)
+			return (g_vim_mode ? vim_insert() : rl_void());
 		*value = g_line.line;
 		if (g_input_break && g_subprompt)
 			return ;
@@ -129,10 +129,7 @@ char		*ft_readline(const char *prompt)
 				(input = hist_expanse(input)))
 			add_hentry(input, ft_strlen(input), 1);
 	}
-	while (g_dis.cbpos != g_line.len)
-		cursor_r();
 	if (g_verbose)
 		ft_printf("%s\n", input);
-	insert_text("\n", 1);
 	return (input);
 }
