@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 17:12:47 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 17:22:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ static void	readline_internal_test_cvalue(union u_buffer c)
 {
 	if (!g_ctrl_mode && g_hist_lookup)
 		hist_lookup(c);
-	else if (isstdkey(c.value) && !enter_rc(c))
+	else if (enter_rc(c))
+	{
+		g_dis.cbpos = g_line.len;
+		paste_via_input('\n');
+	}
+	else if (isstdkey(c.value))
 		(g_standard_keymap[c.value].func)(c.value);
 	else if (isctrlkey(c))
 	{
@@ -104,8 +109,6 @@ char		*readline_loop(const char *prompt)
 	deprep_terminal();
 	rl_clear_signals();
 	stack_delete(&g_back, del_stat_line);
-	if (value != NULL)
-		ft_putchar_fd('\n', STDERR_FILENO);
 	while ((qmode = get_str_qmode(value)) != NO_QUOTE)
 	{
 		compl = readline_loop(g_qprompt[qmode]);
