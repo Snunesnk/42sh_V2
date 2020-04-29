@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 15:56:35 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 18:16:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,11 +101,8 @@ int		rm_quotes(char **str, int old_qmode)
 	return (e_success);
 }
 
-int		get_str_qmode(char *s)
+int		get_str_qmode(int qmode, char *s)
 {
-	int	qmode;
-
-	qmode = NO_QUOTE;
 	while (*s)
 		qmode = get_qmode(qmode, *s++);
 	return (qmode);

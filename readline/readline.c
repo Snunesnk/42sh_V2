@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 17:43:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 18:37:32 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,6 @@
 #include "quotes.h"
 
 int	g_hist_lookup = 0;
-
-const char	*g_qprompt[5] = {
-	NULL,
-	"dquote> ",
-	"squote> ",
-	NULL,
-	"> "
-};
 
 static void	readline_internal_test_cvalue(union u_buffer c)
 {
@@ -88,7 +80,7 @@ static char	*readline_internal(void)
 	return (value);
 }
 
-char		*readline_loop(const char *prompt)
+char		*readline_loop(const char *prompt, int *qmode)
 {
 	char	*value;
 	char	*tmp;
@@ -104,9 +96,14 @@ char		*readline_loop(const char *prompt)
 	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
 		ft_putchar_fd('\n', STDERR_FILENO);
-	tmp = value;
-	value = ft_strjoin(tmp, "\n");
-	free(tmp);
+	if ((*qmode = get_str_qmode(*qmode, value)) & BSQUOTE)
+		value[ft_strlen(value) - 1] = '\0';
+	else
+	{
+		tmp = value;
+		value = ft_strjoin(tmp, "\n");
+		free(tmp);
+	}
 	return (value);
 }
 
@@ -114,16 +111,18 @@ char		*ft_readline(const char *prompt)
 {
 	char	*input;
 	char	*compl;
-	char	*new;
 	int		qmode;
+	char	*new;
 
 	input = NULL;
+	qmode = NO_QUOTE;
 	while (!input)
 	{
-		input = readline_loop(prompt);
-		while ((qmode = get_str_qmode(input)) != NO_QUOTE)
+		input = readline_loop(prompt, &qmode);
+		while (qmode != NO_QUOTE)
 		{
-			compl = readline_loop(g_qprompt[qmode]);
+			qmode &= ~BSQUOTE;
+			compl = readline_loop("> ", &qmode);
 			new = ft_strjoin(input, compl);
 			free(input);
 			free(compl);
