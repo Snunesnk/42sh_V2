@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:56:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 10:02:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int			exit_clean(int ret)
 	return (ret);
 }
 
-static int	main_loop(void)
+static int	main_loop(int *status)
 {
-	char			*prompt;
-	char			*input;
+	char	*prompt;
+	char	*input;
 
 	input = NULL;
 	if (g_shell_is_interactive)
@@ -117,7 +117,7 @@ static int	main_loop(void)
 	}
 	else if (get_stdin(&input) < 0)
 		return (1);
-	exec_input(input);
+	*status = exec_input(input);
 	if (g_shell_is_interactive)
 	{
 		test_hash_path();
@@ -128,8 +128,8 @@ static int	main_loop(void)
 
 int			main(int argc, char **argv)
 {
-	volatile int	status;
-	int				stop;
+	int	status;
+	int	stop;
 
 	stop = 0;
 	status = 0;
@@ -139,7 +139,7 @@ int			main(int argc, char **argv)
 	{
 		if (g_onecmd)
 			stop = 1;
-		if (main_loop())
+		if (main_loop(&status))
 			break ;
 	}
 	free_hist();
