@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:34:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:52:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char		*get_prompt(void)
 	int		len;
 
 	if (!(pwd = get_shell_var("PWD", g_env)))
-		return (ft_strdup("21sh$ "));
+		return (ft_strjoin(g_progname, "$ "));
 	len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + ft_strlen(PROMPT_COLOR) \
 		+ ft_strlen(END_SIGN) + 1;
 	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len + 1))))
