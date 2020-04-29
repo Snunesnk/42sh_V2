@@ -6,32 +6,40 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/26 12:04:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:00:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
+static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
+{
+	while (*tmp && ft_strcmp(*eof, *tmp) && !g_input_break)
+	{
+		*line = ft_strjoin(*tmp, "\n");
+		free(*tmp);
+		*tmp = ft_strjoin(*here, *line);
+		free(*here);
+		free(*line);
+		*here = *tmp;
+		if (g_shell_is_interactive)
+			*tmp = ft_readline("> ");
+		else
+			get_stdin(tmp);
+	}
+}
+
 static char	*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 {
+	g_subprompt = 1;
 	if (g_shell_is_interactive)
 		tmp = ft_readline("> ");
 	else
 		get_stdin(&tmp);
-	while (tmp && ft_strcmp(eof, tmp))
-	{
-		line = ft_strjoin(tmp, "\n");
-		free(tmp);
-		tmp = ft_strjoin(here, line);
-		free(here);
-		free(line);
-		here = tmp;
-		if (g_shell_is_interactive)
-			tmp = ft_readline("> ");
-		else
-			get_stdin(&tmp);
-	}
+	loop_heredoc(&eof, &here, &tmp, &line);
+	g_input_break = 0;
+	g_subprompt = 0;
 	if (!tmp)
 	{
 		free(here);

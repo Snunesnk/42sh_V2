@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:04:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 10:39:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "builtins.h"
 
 _Bool			g_input_break = 0;
+_Bool			g_subprompt = 0;
 int				g_add_back_buf;
 struct s_stack	*g_back = NULL;
 
