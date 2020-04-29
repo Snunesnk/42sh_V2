@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 12:25:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 13:30:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,6 @@ extern int					*g_parse_table[NB_TOKEN];
 
 extern t_list					*g_alias;
 
-struct							s_shell_fds
-{
-	int					fd;
-	struct s_shell_fds	*next;
-};
-
 typedef struct					s_redirectee
 {
 	int		dest;
@@ -152,7 +146,6 @@ struct							s_hash_table
 	int					nb_called;
 };
 
-typedef struct s_shell_fds		t_shell_fds;
 typedef struct s_process		t_process;
 typedef struct s_job			t_job;
 typedef struct s_redirection	t_redirection;
@@ -228,22 +221,12 @@ char							*get_heredoc_input(char *eof, char *here, \
 		char *tmp, char *line);
 void							free_redirections(t_redirection *r);
 int								undo_redirection(t_redirection *r);
-int								restored_fd(t_shell_fds *shell_fd, int fd);
-void							add_restored_fd(t_shell_fds **shell_fd, \
-		int add);
-void							free_restored_fd(t_shell_fds *l);
 void							free_redirections(t_redirection *r);
-int								undo_iowrite(t_redirection *r, \
-		t_shell_fds **shell_fd);
-int								undo_ioread(t_redirection *r, \
-		t_shell_fds **shell_fd);
-int								undo_iodup(t_redirection *r, \
-		t_shell_fds **shell_fd);
-int								undo_iodfile(t_redirection *r, \
-		t_shell_fds **shell_fd);
-int								undo_redirection_internal(t_redirection *r, \
-		t_shell_fds **shell_fd);
-int								undo_redirection(t_redirection *r);
+int								undo_iowrite(t_redirection *r);
+int								undo_ioread(t_redirection *r);
+int								undo_iodup(t_redirection *r);
+int								undo_iodfile(t_redirection *r);
+int								undo_redirection_internal(t_redirection *r);
 
 int								has_redirections(int type);
 int								ha(char *str);
