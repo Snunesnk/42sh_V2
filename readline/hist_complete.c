@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 19:09:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 20:12:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	print_hist_compl(void)
 	if (g_hist->offset != 0)
 		hist_compl += 1;
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
-	if (hist_compl)
+	if (hist_compl && g_line.len)
 	{
 		while (g_dis.cbpos + len < g_line.len)
 		{
