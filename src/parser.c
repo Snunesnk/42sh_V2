@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 11:09:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 11:48:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 #include "shell.h"
 #include "ft_readline.h"
 
+int	g_oneline = 0;
+
 static t_list	*subprompt(void)
 {
 	t_list	*lst;
 	char	*input;
 	char	*tmp;
 
-	if (!g_shell_is_interactive)
-		get_stdin(&tmp);
-	else
-		tmp = ft_readline("> ");
+	g_oneline = 1;
+	tmp = get_heredoc_input(NULL, NULL, NULL, NULL);
+	g_oneline = 0;
+	g_input_break = 0;
 	input = ft_strjoin(tmp, "\n");
 	lst = lexer(input);
-	free(input);
 	free(tmp);
 	return (lst);
 }
