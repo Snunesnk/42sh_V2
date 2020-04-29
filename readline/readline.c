@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 17:43:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 18:36:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,8 @@ static void	readline_internal_keys(union u_buffer c, char **value)
 		*value = g_line.line;
 		if (g_input_break && g_subprompt)
 			return ;
-		insert_hist_compl();
 		update_line();
-		remove_hist_compl();
+		print_hist_compl();
 	}
 }
 
@@ -85,6 +84,7 @@ static char	*readline_internal(void)
 	if (g_vim_mode == 0)
 		add_back();
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
+	remove_completion();
 	return (value);
 }
 
