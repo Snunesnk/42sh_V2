@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:33:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/26 18:50:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 14:36:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_print_list	*get_list_compl(t_print_list *list_compl, t_data *data)
 	if (!(list_compl->content = (char *)ft_memalloc(sizeof(char) * \
 					(data->row * data->column * 3))))
 	{
-		ft_printf("./21sh: cannot allocate memory\n");
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
 	list_compl->used = 0;
