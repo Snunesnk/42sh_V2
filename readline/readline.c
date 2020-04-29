@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 20:13:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 23:20:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static char	*readline_internal(void)
 		add_back();
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
 	remove_completion();
+	ft_putstr(g_termcaps.cd);
 	return (value);
 }
 
