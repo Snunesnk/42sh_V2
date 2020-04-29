@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/26 19:06:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 12:57:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define ARROW_RIGHT	4414235
 
 # define SPACES "                                                           "
+
+# define HIST_COMPL_COLOR "\033[33m"
 
 typedef struct	s_print_list
 {
@@ -56,5 +58,7 @@ size_t			ft_str_wchar_len(char *str);
 int				has_no_cmd(char *line, int start);
 int				has_operator(char *to_complete);
 void			get_exec_lim(t_data *data, t_node *compl_tree);
+void			insert_hist_compl(void);
+void			remove_hist_compl(void);
 
 #endif
