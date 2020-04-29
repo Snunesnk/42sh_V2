@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 18:39:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 19:09:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	print_hist_compl(void)
 			ft_putstr(g_termcaps.forward_char);
 			len++;
 		}
-		ft_printf("%s%s\033[0m", HIST_COMPL_COLOR, hist_compl + \
-				g_line.len);
+		ft_printf("%s%s%s", HIST_COMPL_COLOR, hist_compl + \
+				g_line.len, END_OF_COLOR);
 		len += ft_strlen(hist_compl + g_line.len);
 		while (len--)
 			ft_putstr(g_termcaps.backspace);

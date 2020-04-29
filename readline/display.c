@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 14:45:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 19:09:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ struct s_line_state	g_line =
 void		display_prompt(void)
 {
 	write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l);
+	ft_putstr(G_LINE_COLOR);
 }
 
 void		set_prompt(const char *prompt)
@@ -95,6 +96,7 @@ void		update_line(void)
 	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos + g_dis.start_offset)\
 					/ g_sc.w;
 	display_lines();
+	ft_putstr(END_OF_COLOR);
 	if ((g_dis.prompt_l + g_line.len + g_dis.start_offset) % g_sc.w == 0)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
@@ -117,6 +119,7 @@ void		redisplay_after_sigwinch(void)
 	if (g_cursor.v_pos < 0)
 		g_cursor.v_pos = 0;
 	display_lines();
+	ft_putstr(END_OF_COLOR);
 	if ((g_dis.prompt_l + g_line.len) % g_sc.w == 0)
 		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
 	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
