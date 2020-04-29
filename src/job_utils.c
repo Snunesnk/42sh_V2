@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:41:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 19:45:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 20:01:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ char		*commandline(t_list *lst)
 	while (lst)
 	{
 		type = get_tokentype(lst);
-		if (type == WORD)
+		if (type == WORD || type == IO_NB)
 			cmd = join_cmd(cmd, get_tokvalue(lst));
 		else
 			cmd = join_cmd(cmd, g_tokval[type]);
-		if (lst->next)
+		if (type != IO_NB && lst->next)
 			cmd = join_cmd(cmd, " ");
 		lst = lst->next;
 	}
