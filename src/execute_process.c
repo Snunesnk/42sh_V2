@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 14:26:15 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/29 12:26:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int			check_type(char *pathname)
 	struct stat	buf;
 
 	buf = (struct stat){.st_mode = 0};
-	if (!ft_strchr(pathname, '/') || access(pathname, F_OK))
+	if (!ft_strchr(pathname, '/'))
 		return (e_command_not_found);
+	else if (access(pathname, F_OK))
+		return (e_no_such_file_or_directory);
 	if (stat(pathname, &buf))
 		return (e_system_call_error);
 	if (S_ISDIR(buf.st_mode))
