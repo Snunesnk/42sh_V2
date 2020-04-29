@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:46:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/29 17:43:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	add_hentry(const char *buf, int size, int mode)
 		}
 		g_hist->capacity = (g_hist->capacity + size) * 3;
 	}
-	ft_strcpy(g_hist->history_content + g_hist->used, buf);
+	ft_strncpy(g_hist->history_content + g_hist->used, buf, size);
 	g_hist->used += size + mode;
 	g_hist->offset = g_hist->used - 1;
 	g_hist->total_lines += 1;
