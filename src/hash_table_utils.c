@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 18:50:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 12:22:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,6 @@ void			test_hash_path(void)
 {
 	static char	*path_remember = NULL;
 
-	if (!(getenv("PATH")))
-	{
-		ft_printf("%s: PATH not set\n", g_progname);
-	}
 	if (!path_remember)
 		path_remember = getenv("PATH");
 	else if (path_remember != getenv("PATH"))
