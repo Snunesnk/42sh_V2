@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 13:45:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 15:14:29 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,10 @@ int	gfp_concatenable(char **argv, struct s_cd *cd)
 					NULL)) == e_cannot_allocate_memory)
 		return (g_errordesc[e_cannot_allocate_memory].code);
 	else if (cd->ret == 3)
+	{
+		cd->path = ft_resolvepath(cd->path);
 		ft_printf("%s\n", cd->path);
+	}
 	else
 	{
 		cd->tmp = cd->path;
