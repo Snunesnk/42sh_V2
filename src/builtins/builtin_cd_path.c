@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 15:06:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 16:17:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	cdpath_concat(char **path, char *env)
 	char	*dir;
 	char	*pathname;
 
-	if (!(beg = get_shell_var("CDPATH", g_env)))
+	if (!(beg = get_shell_var("CDPATH", g_env)) || !beg[0])
 		return (e_success);
 	if (!(env = ft_strdup(beg)))
 		return (e_cannot_allocate_memory);
