@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/30 10:31:47 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/30 11:28:57 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,6 +74,7 @@ SOURCES :=	main.c \
 		treat_shell_variables.c \
 		undo_redir.c \
 		undo_redir2.c \
+		load_config.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
