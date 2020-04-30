@@ -1,0 +1,16 @@
+# Welcome display
+printf "\n"
+printf "            __,__\n"
+printf "   .--.  .-\"     \"-.  .--.\n"
+printf "  / .. \\/  .-. .-.  \\/ .. \\\n"
+printf " | |  \'|  /   Y   \\  |\'  | |\n"
+printf " | \\   \\  \\ 0 | 0 /  /   / |\n"
+printf "  \\ \'- ,\\.-\"`` ``\"-./, -' /\n"
+printf "   `\'-\' /_   ^ ^   _\\ \'-\'`\n"
+printf "       |  \\._   _./  |\n"
+printf "       \\   \\ `~` /   /\n"
+printf "        \'._ \'-=-\' _.\'\n"
+printf "           \'~---~\'\n"
+
+# Aliases
+alias ls='ls --color=auto'
