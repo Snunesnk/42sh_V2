@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 20:19:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/29 23:49:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,4 @@ void	get_start_offset(void)
 		i++;
 	}
 	g_dis.start_offset -= (g_dis.start_offset) ? 1 : 0;
-}
-
-void	count_newline(void)
-{
-	return ;
-	//int	i;
-
-	//i = 0;
-	//g_cursor.v_pos = 0;
 }
