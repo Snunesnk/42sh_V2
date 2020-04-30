@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:22:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 16:30:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #ifndef __unix__
 # define FL1 O_CREAT
 # define FL2 O_TRUNC
-# define TMPFILE "/tmp/tmp.ftsh"
+# define TMPFILE "/tmp/monkeyshell.tmp"
 
 #else
 # define FL1 __O_TMPFILE
