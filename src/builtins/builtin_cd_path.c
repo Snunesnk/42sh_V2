@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 14:11:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 15:06:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	cdpath_concat(char **path, char *env)
 	{
 		if (!(pathname = ft_strnjoin(3, dir, "/", *path)))
 			return (e_cannot_allocate_memory);
-		if (!access(pathname, F_OK))
+		if (!access(pathname, X_OK))
 			break ;
 		ft_memdel((void**)&pathname);
 	}
