@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 18:06:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:12:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ int	test_cd(void)
 
 	i = g_dis.cbpos - 1;
 	if (i < 2)
-		return (1);
+		return (0);
 	while (i > 0 && !ft_strchr(operator, g_line.line[i]))
 		i--;
 	if (i > 0)
 		i++;
 	while (g_line.line[i] && ft_isspace(g_line.line[i]))
 		i++;
-	if (ft_strnequ(g_line.line + i, "cd ", 3))
+	if (g_line.line[i] && ft_strnequ(g_line.line + i, "cd ", 3))
 		return (1);
 	return (0);
 }
