@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 14:23:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 14:31:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int			cmd_cd(int argc, char **argv)
 	cd.path = cd.tmp;
 	if (stat(cd.path, &(cd.buf)))
 		return (stat_failure(argv, &cd));
-	if (access(cd.path, F_OK))
+	if (access(cd.path, X_OK))
 		return (access_failure(argv, &cd));
 	if ((cd.ret = change_dir(cd.path, cd.p)))
 		return (changedir_failure(&cd));
