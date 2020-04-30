@@ -6,32 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 11:12:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 11:19:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ft_readline.h"
 #include "builtins.h"
-
-
-void	monkey(void)
-{
-	ft_printf("\n");
-	ft_printf("            __,__\n");
-	ft_printf("   .--.  .-\"     \"-.  .--.\n");
-	ft_printf("  / .. \\/  .-. .-.  \\/ .. \\\n");
-	ft_printf(" | |  \'|  /   Y   \\  |\'  | |\n");
-	ft_printf(" | \\   \\  \\ 0 | 0 /  /   / |\n");
-	ft_printf("  \\ \'- ,\\.-\"`` ``\"-./, -' /\n");
-	ft_printf("   `\'-\' /_   ^ ^   _\\ \'-\'`\n");
-	ft_printf("       |  \\._   _./  |\n");
-	ft_printf("       \\   \\ `~` /   /\n");
-	ft_printf("        \'._ \'-=-\' _.\'\n");
-	ft_printf("           \'~---~\'\n");
-}
-
-
 
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env = NULL;
@@ -153,7 +134,6 @@ int			main(int argc, char **argv)
 
 	stop = 0;
 	status = 0;
-	monkey();
 	if (init_shell(argv[0], argc))
 		return (EXIT_FAILURE);
 	while (stop == 0)
