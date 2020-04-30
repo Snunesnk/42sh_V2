@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 19:16:58 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 14:32:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ extern char				g_hist_word_delim[];
 
 void	init_history(void);
 void	get_history_loc(void);
-void	add_hentry(const char *buf, int size, int mode);
+void	add_hentry(char *buf, int size, int mode);
 char	*prev_hist(void);
 char	*next_hist(void);
 void	free_hist(void);
