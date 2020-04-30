@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:47:47 by abarthel          #+#    #+#             */
-/*   Updated: 2019/08/27 18:26:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 14:13:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	previousdir_res(char *str)
 	int		i;
 
 	i = 0;
-	while ((ptr = ft_strstr(str, "..")))
+	while ((ptr = ft_strstr(str, "/..")))
 	{
 		next = ptr + 2;
 		ptr -= 2;
@@ -97,6 +97,11 @@ char		*ft_resolvepath(char *str)
 	if (!str || *str != '/')
 	{
 		g_errno = E_EINVAL;
+		return (NULL);
+	}
+	if (ft_strstr(str, "..."))
+	{
+		g_errno = E_ENOENT;
 		return (NULL);
 	}
 	clean_start(str);

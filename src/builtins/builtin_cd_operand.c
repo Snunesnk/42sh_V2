@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 11:34:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 13:45:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	gfp_env(struct s_cd *cd)
 		pbierror("HOME not set");
 		return (1);
 	}
+	if (cd->path && !cd->path[0])
+		return (0);
 	if (cd->p)
 		cd->path = ft_realpath(cd->path, NULL);
 	else
