@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 12:18:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 15:14:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_history(void)
 	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 		return ;
 	while (st.st_size > 0 && get_next_cmd(fd, &buf) > 0)
-		add_hentry(buf, ft_strlen(buf), 1);
+		add_hentry(buf, ft_strlen(buf), 0);
 	g_hist->nb_line = g_hist->total_lines;
 	close(fd);
 }
@@ -71,7 +71,25 @@ void	get_history_loc(void)
 	}
 }
 
-void	add_hentry(const char *buf, int size, int mode)
+static int	remove_newline(char *buf, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		if (buf[i] != '\n')
+		{
+			ft_strncat(g_hist->history_content + g_hist->used, \
+					buf + i, 1);
+			g_hist->used += 1;
+		}
+		i++;
+	}
+	return (size);
+}
+
+void	add_hentry(char *buf, int size, int mode)
 {
 	if (!*buf || ft_str_isspace((char *)buf))
 		return ;
@@ -88,8 +106,11 @@ void	add_hentry(const char *buf, int size, int mode)
 		}
 		g_hist->capacity = (g_hist->capacity + size) * 3;
 	}
-	ft_strncpy(g_hist->history_content + g_hist->used, buf, size);
-	g_hist->used += size + mode;
+	if (mode)
+		size = remove_newline(buf, size);
+	else
+		ft_strncpy(g_hist->history_content + g_hist->used, buf, size);
+	g_hist->used += (mode) ? 1 : size + 1;
 	g_hist->offset = g_hist->used - 1;
 	g_hist->total_lines += 1;
 	g_hist->nb_line = g_hist->total_lines;
