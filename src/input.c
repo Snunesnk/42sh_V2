@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 13:37:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 09:33:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int		get_block(char **line, int len, char separator)
 		else if (c == -1)
 			return (-2);
 		if (c == separator || !c)
-		{	
+		{
 			(*line)[ret] = 0;
 			return (ret);
 		}
