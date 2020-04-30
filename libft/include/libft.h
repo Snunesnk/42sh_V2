@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 11:59:22 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/30 11:10:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -251,6 +251,8 @@ int				ft_unsetenv(const char *name);
 void			ft_tabdel(char ***tables);
 
 int				ft_getch(void);
+
+int				ft_getch_fd(int fd);
 
 void			ft_sortopt(int argc, char **argv, const char *optstring);
 

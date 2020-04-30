@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/29 20:05:44 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/30 11:09:50 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -146,6 +146,7 @@ SOURCES	:= \
 		f_misc/get_next_line.c \
 		f_misc/utf8.c \
 		f_ncurses/ft_getch.c \
+		f_ncurses/ft_getch_fd.c \
 		f_stdio/ft_perror.c \
 		f_stdio/ft_putchar.c \
 		f_stdio/ft_strerror.c \
