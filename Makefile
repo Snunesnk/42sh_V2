@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/30 10:32:10 by abarthel         ###   ########.fr        #
+#    Updated: 2020/04/30 11:30:05 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ all: $(NAME)
 $(NAME): libft/libft.a $(OBJECTS)
 	@$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
-	cp .monkeyshellrc ~/
+	cp .monkeyshellrc ~/ || true
 
 libft/libft.a: dep
 	@$(MAKE) lib -j -C $(PATH_LIB)
