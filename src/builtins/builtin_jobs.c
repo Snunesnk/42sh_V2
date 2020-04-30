@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 19:51:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 09:32:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 static void	display_signo(char c, int status, t_job *j)
 {
 	if (WSTOPSIG(status) == SIGTSTP)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTSTP)\t%s\n", j->pgid, c, \
-				j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTSTP)\t%s\n", j->pgid, \
+				c, j->command);
 	else if (WSTOPSIG(status) == SIGSTOP)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGSTOP)\t%s\n", j->pgid, c, \
-				j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGSTOP)\t%s\n", j->pgid, \
+				c, j->command);
 	else if (WSTOPSIG(status) == SIGTTIN)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTIN)\t%s\n", j->pgid, c, \
-				j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTIN)\t%s\n", j->pgid, \
+				c, j->command);
 	else if (WSTOPSIG(status) == SIGTTOU)
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU)\t%s\n", j->pgid, c, \
-				j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(SIGTTOU)\t%s\n", j->pgid, \
+				c, j->command);
 	else
-		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?)\t%s\n", j->pgid, c, \
-				j->command);
+		ft_dprintf(STDERR_FILENO, "[%d] %c Stopped(?)\t%s\n", j->pgid, \
+				c, j->command);
 }
 
 static void	display_exit_no(char c, int status, t_job *j)
