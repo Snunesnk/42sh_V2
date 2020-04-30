@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 11:59:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 14:11:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,13 +102,9 @@ int	getfullpath(char **argv, struct s_cd *cd)
 	else if (*(argv[g_optind]) == '/')
 		cd->path = ft_strdup(argv[g_optind]);
 	else if (concatenable_operand(argv[g_optind]))
-	{
-		ft_printf("concat:%s\n", argv[g_optind]);
 		return (gfp_concatenable(argv, cd));
-	}
 	else
 	{
-		ft_printf("relative:%s\n", argv[g_optind]);
 		cd->path = ft_strdup(argv[g_optind]);
 		cd->tmp = cd->path;
 		cd->path = ft_strnjoin(3, g_pwd, "/", cd->tmp);

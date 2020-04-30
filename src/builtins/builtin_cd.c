@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 08:20:26 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/30 14:23:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,11 @@ int			cmd_cd(int argc, char **argv)
 		return (cd.ret);
 	if ((cd.ret = getfullpath(argv, &cd)))
 		return (cd.ret);
+	if (cd.path && !cd.path[0])
+		return (0);
 	if (!(cd.tmp = ft_resolvepath(cd.path)))
 	{
+		pbierror("%s: %s", argv[g_optind], ft_strerror(g_errno));
 		ft_memdel((void **)&(cd.path));
 		return (1);
 	}
