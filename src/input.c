@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 09:33:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 11:11:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static char		*create_new_line(char *str, int *len)
 	}
 }
 
-static int		get_block(char **line, int len, char separator)
+static int		get_block(int fd, char **line, int len, char separator)
 {
 	int		ret;
 	char	c;
@@ -42,7 +42,7 @@ static int		get_block(char **line, int len, char separator)
 	ret = 0;
 	while (ret < len)
 	{
-		c = ft_getch();
+		c = ft_getch_fd(fd);
 		if (c == -1 && **line)
 			c = separator;
 		else if (c == -1)
@@ -61,7 +61,7 @@ static int		get_block(char **line, int len, char separator)
 		return (1);
 }
 
-int				get_stdin(char **line)
+int				get_stdin(int fd, char **line)
 {
 	int		len;
 	int		ret;
@@ -77,7 +77,7 @@ int				get_stdin(char **line)
 		if (len == -1 || !new_line)
 			return (-1);
 		*line = new_line;
-		if ((ret = get_block(line, len, '\n')) == -1)
+		if ((ret = get_block(fd, line, len, '\n')) == -1)
 			continue ;
 		if (ret == -2)
 		{
