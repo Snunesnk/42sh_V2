@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 19:51:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 20:14:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@
 # define RED_ARROW "\033[38;5;196m\u279c  \033[0m"
 
 char	*ft_readline(const char *prompt);
+char	*readline_loop(const char *prompt, int *qmode);
+char	*get_quote(int *qmode, char *input);
 
 #endif
