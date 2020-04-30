@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:47:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:51:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,21 @@
 # endif
 
 # define SHELL_SPECIAL_CHARS	"|&;<>()$`\\\"'*?[#˜=% \t\n"
+
+/*
+** List of colors the shell uses, END_OF_COLOR must be \033[0m
+*/
+# define END_OF_COLOR "\033[0m"
+# define HIST_COMPL_COLOR "\033[38;5;8m"
+# define G_LINE_COLOR "\033[38;5;249m"
+# define PROMPT_COLOR "\033[38;5;117m"
+
+/*
+** List of special char the shell prompt uses
+*/
+# define GREEN_ARROW "\033[38;5;47m\u279c  \033[0m"
+# define END_SIGN "\033[0m\033[38;5;231m \u00BB \033[0m"
+# define RED_ARROW "\033[38;5;196m\u279c  \033[0m"
 
 char	*ft_readline(const char *prompt);
 
