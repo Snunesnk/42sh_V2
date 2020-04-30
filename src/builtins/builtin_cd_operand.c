@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/18 21:19:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/04/30 11:34:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ int	concatenable_operand(const char *str)
 int	gfp_env(struct s_cd *cd)
 {
 	if (!(cd->path = get_shell_var("HOME", g_env)))
-		if (!(cd->path = get_shell_var("PWD", g_env)))
-			return (1);
+	{
+		pbierror("HOME not set");
+		return (1);
+	}
 	if (cd->p)
 		cd->path = ft_realpath(cd->path, NULL);
 	else
