@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/04/30 11:28:57 by snunes           ###   ########.fr        #
+#    Updated: 2020/04/30 12:17:09 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,13 +89,11 @@ SOURCES :=	main.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
 		builtins/builtins_dispatcher.c \
-		builtins/builtin_setenv.c \
 		builtins/builtin_truefalse.c \
 		builtins/builtin_type.c \
 		builtins/builtin_hash.c \
 		builtins/builtin_hash_print.c \
 		builtins/builtin_hash_utils.c \
-		builtins/builtin_unsetenv.c \
 		builtins/builtin_export.c \
 		builtins/builtin_set.c \
 		builtins/builtin_set_utils.c \
