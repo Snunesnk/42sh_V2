@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 19:10:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:29:09 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	cd_complete(char *to_complete)
 
 	data = init_data();
 	if (get_shell_var("CDPATH", g_env))
-		path = ft_strdup(get_shell_var("CDPATH", g_env));
+		path = ft_strjoin(".:", (get_shell_var("CDPATH", g_env)));
 	else
 		path = ft_strdup(".");
 	if (!path || !data)
