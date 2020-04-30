@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 11:48:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 12:18:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	init_history(void)
 	struct stat	st;
 
 	buf = NULL;
-	get_history_loc();
-	stat(g_hist_loc, &st);
 	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
@@ -38,6 +36,10 @@ void	init_history(void)
 	g_hist->used = 0;
 	g_hist->capacity = 0;
 	g_hist->total_lines = 0;
+	get_history_loc();
+	if (!g_hist_loc)
+		return ;
+	stat(g_hist_loc, &st);
 	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 		return ;
 	while (st.st_size > 0 && get_next_cmd(fd, &buf) > 0)
@@ -56,6 +58,7 @@ void	get_history_loc(void)
 		free(g_hist_loc);
 		return ;
 	}
+	g_hist_loc = NULL;
 	if (!(user_home = getenv("HOME")))
 	{
 		ft_printf("%s: HOME not set\n", g_progname);

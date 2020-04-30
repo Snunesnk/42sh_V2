@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:32:41 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/22 19:13:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 12:19:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	free_hist(void)
 	unsigned int	i;
 	unsigned int	last;
 
-	if (g_shell_is_interactive && \
+	if (g_shell_is_interactive && g_hist_loc && \
 			(fd = open(g_hist_loc, (O_WRONLY | O_CREAT | O_TRUNC), 0644)) >= 0)
 	{
 		i = 0;
