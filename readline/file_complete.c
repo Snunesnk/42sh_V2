@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 19:12:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:58:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ size_t	ft_str_wchar_len(char *str)
 	return (len);
 }
 
-int	test_cd(void)
+int		test_cd(void)
 {
 	static char	operator[] = "&|;<>";
 	int			i;

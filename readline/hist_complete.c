@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 18:02:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:55:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	print_hist_compl(void)
 	if (hist_compl)
 	{
 		len = g_line.len - g_dis.cbpos;
-		start_col = (g_dis.start_offset + g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
+		start_col = (g_dis.start_offset + g_dis.prompt_l + g_dis.cbpos) \
+					% g_sc.w;
 		while (len--)
 			ft_putstr(g_termcaps.forward_char);
 		ft_printf("%s%s%s", HIST_COMPL_COLOR, hist_compl + \

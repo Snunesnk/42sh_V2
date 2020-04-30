@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 18:28:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 20:04:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,24 +112,14 @@ char		*readline_loop(const char *prompt, int *qmode)
 char		*ft_readline(const char *prompt)
 {
 	char	*input;
-	char	*compl;
 	int		qmode;
-	char	*new;
 
 	input = NULL;
 	qmode = NO_QUOTE;
 	while (!input)
 	{
 		input = readline_loop(prompt, &qmode);
-		while (qmode != NO_QUOTE)
-		{
-			qmode &= ~BSQUOTE;
-			compl = readline_loop("> ", &qmode);
-			new = ft_strjoin(input, compl);
-			free(input);
-			free(compl);
-			input = new;
-		}
+		input = get_quote(&qmode, input);
 		input[ft_strlen(input) - 1] = '\0';
 		if (g_shell_is_interactive && input && input[0] && g_history && \
 				(input = hist_expanse(input)))

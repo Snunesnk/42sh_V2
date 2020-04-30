@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 19:51:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:55:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,5 @@ char			*ft_strjoin_free(char *s1, char *s2, int to_free);
 int				test_dir(char *file);
 char			*stick_path_complete(char *path, char *to_complete);
 int				test_cd(void);
-
 
 #endif
