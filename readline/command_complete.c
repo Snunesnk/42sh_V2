@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 18:03:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:05:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,11 @@ char	*stick_path_complete(char *path, char *to_complete)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin_free(ft_strjoin_free(\
-			ft_strjoin(path, "/"), to_complete, 1), "*", 1);
+	if (*path)
+		tmp = ft_strjoin(path, "/");
+	else
+		tmp = ft_strjoin(path, "");
+	tmp = ft_strjoin_free(ft_strjoin_free(tmp, to_complete, 1), "*", 1);
 	return (tmp);
 }
 
@@ -66,7 +69,7 @@ t_node	*get_cmd_compl(t_node *compl_tree, char *to_complete, char *path, \
 	while ((tmp = ft_strchr(tmp, ':')))
 	{
 		tmp[0] = 0;
-		compl_tree = search_in_path(stick_path_complete(to_complete, path), \
+		compl_tree = search_in_path(stick_path_complete(path, to_complete), \
 				compl_tree, data, is_exec);
 		tmp++;
 		path = tmp;

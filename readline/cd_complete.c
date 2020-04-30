@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 18:05:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 19:10:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ char	*get_filename(char *path)
 	int		i;
 
 	i = ft_strlen(path) - 1;
+	while (i > 0 && path[i] == '/')
+		i--;
 	while (i > 0 && path[i] != '/')
 		i--;
-	if (i < 0)
+	if (i <= 0)
 		tmp = path;
 	else
 		tmp = path + i + 1;
@@ -60,7 +62,7 @@ t_node	*search_in_path(char *to_complete, t_node *compl_tree, t_data *data, \
 	{
 		if (test(gl.gl_pathv[i]) && gl.gl_pathv[i][0])
 			compl_tree = add_node(compl_tree, get_filename(gl.gl_pathv[i]), \
-					data, "\033[37m");
+					data, ((test_cd()) ? "\033[1;34m" : "\033[37m"));
 		i++;
 	}
 	ft_globfree(&gl);
@@ -72,27 +74,19 @@ t_node	*get_cd_compl(char *to_complete, char *path, t_data *data)
 {
 	t_node	*compl_tree;
 	char	*tmp;
-	int		len;
-	int		i;
 
-	len = ft_strlen(to_complete);
-	i = 0;
 	compl_tree = NULL;
 	tmp = path;
-	while ((tmp = ft_strchr(tmp, ':')))
+	while (tmp)
 	{
-		tmp[0] = 0;
+		if ((tmp = ft_strchr(path, ':')))
+		{
+			tmp[0] = 0;
+			tmp++;
+		}
 		compl_tree = search_in_path(stick_path_complete(path, to_complete), \
 				compl_tree, data, test_dir);
-		tmp++;
 		path = tmp;
-	}
-	while (g_builtins[i].key[0])
-	{
-		if (ft_strnequ(to_complete, g_builtins[i].key, len))
-			compl_tree = add_node(compl_tree, (char *)g_builtins[i].key, data, \
-					"\033[37m");
-		i++;
 	}
 	return (compl_tree);
 }
@@ -107,7 +101,7 @@ void	cd_complete(char *to_complete)
 	if (get_shell_var("CDPATH", g_env))
 		path = ft_strdup(get_shell_var("CDPATH", g_env));
 	else
-		path = ft_strdup(get_shell_var(".", g_env));
+		path = ft_strdup(".");
 	if (!path || !data)
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
