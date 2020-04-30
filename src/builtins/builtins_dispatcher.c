@@ -17,8 +17,8 @@ const t_builtins	g_builtins[] =
 {
 	{ "echo", &cmd_echo},
 	{ "exit", &cmd_exit},
-	{ "setenv", &cmd_setenv},
-	{ "unsetenv", &cmd_unsetenv},
+	{ "setenv", &cmd_export},
+	{ "unsetenv", &cmd_unset},
 	{ "cd", &cmd_cd},
 	{ "fg", &cmd_fg},
 	{ "bg", &cmd_bg},
