@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 19:30:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 18:05:55 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int				g_autocompl_on;
 union u_buffer	g_bad_seq;
 
 void			autocomplete(void);
-t_node			*get_cmd_compl(char *to_complete, char *path, t_data *data);
+t_node			*get_cmd_compl(t_node *compl_tree, char *to_complete, char \
+		*path, t_data *data);
 t_node			*get_file_compl(char *to_complete, t_data *data);
 t_node			*get_var_compl(char *to_complete, t_data *data, \
 		int is_bracked);
@@ -63,5 +64,15 @@ void			get_exec_lim(t_data *data, t_node *compl_tree);
 void			print_hist_compl(void);
 void			insert_hist_compl(void);
 void			remove_completion(void);
+void			cd_complete(char *to_complete);
+t_node			*get_cd_compl(char *to_complete, char *path, t_data *data);
+t_node			*search_in_path(char *to_complete, t_node *compl_tree, \
+		t_data *data, int (*test)(char *file));
+char			*get_filename(char *path);
+char			*ft_strjoin_free(char *s1, char *s2, int to_free);
+int				test_dir(char *file);
+char			*stick_path_complete(char *path, char *to_complete);
+int				test_cd(void);
+
 
 #endif
