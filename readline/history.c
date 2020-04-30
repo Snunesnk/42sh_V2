@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 17:43:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 11:48:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	get_history_loc(void)
 		ft_printf("%s: HOME not set\n", g_progname);
 		return ;
 	}
-	if (!(g_hist_loc = ft_strjoin(user_home, "/.ftsh_history")))
+	if (!(g_hist_loc = ft_strjoin(user_home, "/.monkeyshell_history")))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;

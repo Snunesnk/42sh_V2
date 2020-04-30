@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:52:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 11:58:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	remove_home(char **pwd)
 	char	*home;
 	char	*tmp;
 
-	if (!(home = get_shell_var("HOME", g_env)))
+	if (!(home = get_shell_var("HOME", g_env)) || !*home)
 		return (e_success);
 	if (!(tmp = ft_strstr(*pwd, home)))
 		return (e_success);
