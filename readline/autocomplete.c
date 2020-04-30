@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:42:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/04/30 17:17:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,13 @@ void			command_complete(char *to_complete)
 	t_node	*compl_tree;
 	t_data	*data;
 
+	compl_tree = NULL;
 	if (!(data = init_data()))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	if (!(path = ft_strdup(getenv("PATH"))))
+	if (!(path = ft_strdup(get_shell_var("PATH", g_env))))
 	{
 		if (!getenv("PATH"))
 			ft_dprintf(STDERR_FILENO, "%s: PATH not set.\n", g_progname);
@@ -54,7 +55,7 @@ void			command_complete(char *to_complete)
 			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	compl_tree = get_cmd_compl(to_complete, path, data);
+	compl_tree = get_cmd_compl(compl_tree, to_complete, path, data);
 	compl_tree = get_alias_compl(compl_tree, to_complete, data);
 	if (compl_tree)
 		display_compl(compl_tree, data);
@@ -125,12 +126,16 @@ void			autocomplete(void)
 	while (start >= 0 && !ft_isspace(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_dis.cbpos - start - 1);
-	if (ft_strchr(to_complete, '/') || has_operator(to_complete))
+	if ((ft_strchr(to_complete, '/') || has_operator(to_complete)) && test_cd())
+		cd_complete(to_complete);
+	else if (ft_strchr(to_complete, '/') || has_operator(to_complete))
 		file_complete(to_complete);
 	else if (g_line.line[start + 1] == '$')
 		var_complete(to_complete);
 	else if (start <= 0 || has_no_cmd(g_line.line, start))
 		command_complete(to_complete);
+	else if (test_cd())
+		cd_complete(to_complete);
 	else
 		file_complete(to_complete);
 	g_autocompl_on = 0;

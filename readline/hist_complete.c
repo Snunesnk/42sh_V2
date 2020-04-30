@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 23:36:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 18:02:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	insert_hist_compl(void)
 	char				*hist_compl;
 	unsigned int		offset_save;
 
+	if (ft_str_isspace(g_line.line) || !g_dis.cbpos)
+		return ;
 	offset_save = g_hist->offset;
 	hist_compl = g_hist->history_content + g_hist->offset;
 	if (g_hist->offset != 0)
