@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:06:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/04/30 12:16:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ int				ft_putenv_table(char ***env, const char *name,
 		const char *value, int overwrite);
 int				is_a_builtin(char *cmd);
 int				is_a_builtin_command(char **command);
-int				cmd_unsetenv(int argc, char **argv);
-int				cmd_setenv(int argc, char **argv);
 int				cmd_echo(int agrc, char **argv);
 int				cmd_type(int agrc, char **argv);
 int				cmd_exit(int argc, char **argv);
