@@ -6,13 +6,12 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 10:54:55 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/01 16:56:49 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/01 18:25:24 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <time.h>
 #include <stdio.h> //TODO: remove when ft_sprintf is added to libft
-#include <string.h> //TODO: remove when libc functions are replaced
 #include "libft.h"
 #include "animation.h"
 
@@ -42,10 +41,10 @@ static void	load_line(t_anim *anim, uint64_t pix_i)
 		g = (anim->pixels[pix_i + col_i] & GREEN_MASK) >> 8;
 		b = anim->pixels[pix_i + col_i] & BLUE_MASK;
 		sprintf(str, "\e[0;38;2;%03lu;%03lu;%03lum▇▇", r, g, b); //TODO: ADD TO LIBFT
-		strcat(anim->frame_str, str);
+		ft_strcat(anim->frame_str, str);
 		++col_i;
 	}
-	strcat(anim->frame_str, "\n");
+	ft_strcat(anim->frame_str, "\n");
 }
 
 void		exec_animation(t_anim *anim)
@@ -61,15 +60,15 @@ void		exec_animation(t_anim *anim)
 	{
 		tputs(cl, 1, tputchar);
 		line_i = 0;
-		memset((void *)anim->frame_str, 0, sizeof(anim->frame_str));
+		ft_bzero((void *)anim->frame_str, anim->frame_str_len);
 		while (line_i < anim->height)
 		{
 			load_line(anim, pix_i);
 			pix_i += anim->width;
 			++line_i;
 		}
-		printf(anim->frame_str);
-		msleep(65);
+		ft_printf(anim->frame_str);
+		msleep(50);
 	}
-	printf("\e[m");
+	ft_printf("\e[m");
 }
