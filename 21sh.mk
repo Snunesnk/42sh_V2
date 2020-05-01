@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/01 14:45:17 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/01 15:15:44 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -195,4 +195,4 @@ LDFLAGS += $(DEBUG)
 
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
 
-DEBUG += -g3 -fsanitize=address,undefined
+#DEBUG += -fsanitize=address,undefined
