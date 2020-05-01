@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 19:55:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/01 12:55:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,7 @@ void	print_hist_compl(void)
 
 void	remove_completion(void)
 {
-	int	len;
-
-	len = 0;
 	while (g_dis.cbpos < g_line.len)
-	{
 		cursor_r();
-		len++;
-	}
 	ft_putstr(g_termcaps.clreol);
-	while (len--)
-		cursor_l();
 }
