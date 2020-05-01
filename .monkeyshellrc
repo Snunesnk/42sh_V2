@@ -1,5 +1,7 @@
 # Welcome display
 printf "\n"
+printf " Welcome on the MonkeyShell!\n"
+printf "\n"
 printf "            __,__\n"
 printf "   .--.  .-\"     \"-.  .--.\n"
 printf "  / .. \\/  .-. .-.  \\/ .. \\ \n"
