@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:41:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 20:01:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/01 14:44:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void		free_all_processes(t_process *p)
 	}
 }
 
-static void	free_a_job(t_job *j)
+void		free_a_job(t_job *j)
 {
 	free_all_processes(j->first_process);
 	free(j->command);
