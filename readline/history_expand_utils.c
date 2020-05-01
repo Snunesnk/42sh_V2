@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:57:14 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/09 23:26:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/01 12:38:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ char	*do_hist_exp(char **value, char *hist_entry)
 	tmp = *value;
 	while (*tmp && *value && (tmp = ft_strchr(tmp, '!')))
 	{
+		if (*(tmp + 1) == '\'' || *(tmp + 1) == '"')
+		{
+			tmp++;
+			continue ;
+		}
 		if (check_end_bracket(tmp))
 		{
 			tmp = ft_strchr(tmp, ']');

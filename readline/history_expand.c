@@ -6,14 +6,14 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:40:44 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/01 12:43:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "builtins.h"
 
-char	g_hist_word_delim[] = " \t\n;&()|<>";
+char	g_hist_word_delim[] = " \t\n;&()|<>\"'";
 int		g_pattern_length;
 
 char	*hist_expanse(char *value)

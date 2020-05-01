@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 20:04:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/01 12:55:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ char		*readline_loop(const char *prompt, int *qmode)
 	value = readline_internal();
 	deprep_terminal();
 	rl_clear_signals();
-	stack_delete(&g_back, del_stat_line);
 	if (value != NULL)
 		ft_putchar_fd('\n', STDERR_FILENO);
 	if ((*qmode = get_str_qmode(*qmode, value)) & BSQUOTE)
