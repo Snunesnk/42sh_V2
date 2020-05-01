@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/01 12:43:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/01 13:10:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char	*hist_expanse(char *value)
 		g_hist->nb_line = g_hist->total_lines;
 		g_hist->offset = g_hist->used - 1;
 		free(value);
+		g_pattern_length = 0;
 		return (NULL);
 	}
 	else if (g_pattern_length)
