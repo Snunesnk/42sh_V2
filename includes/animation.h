@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 10:54:51 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/01 16:49:33 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/01 17:44:37 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_anim
 	uint64_t	width;
 	uint64_t	frame_count;
 	uint64_t	pixel_count;
+	uint64_t	frame_str_len;
 	uint32_t	*pixels;
 	char		*frame_str;
 }				t_anim;

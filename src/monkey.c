@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/01 15:46:16 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/01 15:59:34 by yforeau          ###   ########.fr       */
+/*   Created: 2020/05/01 17:50:39 by yforeau           #+#    #+#             */
+/*   Updated: 2020/05/01 17:51:36 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -4925,6 +4925,7 @@ t_anim		g_monkey = {
 	.width = 40,
 	.frame_count = 39,
 	.pixel_count = 34320,
+	.frame_str_len= 29063,
 	.pixels = g_monkey_pixel_array,
 	.frame_str = g_monkey_frame_str
 };
