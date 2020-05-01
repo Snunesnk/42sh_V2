@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 11:50:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/01 12:33:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int		two_arg_case(char **argv)
 	if (j == NULL)
 	{
 		pbierror("%d: no such job", ft_atoi(argv[1]));
+		return (1);
+	}
+	if (!ft_str_is_numeric(argv[1]))
+	{
+		pbierror("%s: no such job", argv[1]);
 		return (1);
 	}
 	put_job_in_foreground(j, 1);
