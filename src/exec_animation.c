@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 10:54:55 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/01 18:25:24 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/02 11:41:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		exec_animation(t_anim *anim)
 			pix_i += anim->width;
 			++line_i;
 		}
-		ft_printf(anim->frame_str);
+		ft_putstr(anim->frame_str);
 		msleep(50);
 	}
 	ft_printf("\e[m");

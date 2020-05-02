@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 17:17:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 11:30:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,16 @@ void			command_complete(char *to_complete)
 	t_node	*compl_tree;
 	t_data	*data;
 
+	path = NULL;
 	compl_tree = NULL;
 	if (!(data = init_data()))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	if (!(path = ft_strdup(get_shell_var("PATH", g_env))))
+	if (get_shell_var("PATH", g_env) && !(path = get_shell_var("PATH", g_env)))
 	{
-		if (!getenv("PATH"))
-			ft_dprintf(STDERR_FILENO, "%s: PATH not set.\n", g_progname);
-		else
-			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
 	compl_tree = get_cmd_compl(compl_tree, to_complete, path, data);

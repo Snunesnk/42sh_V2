@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:06:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 10:57:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	put_job_in_foreground(t_job *j, int cont)
 
 void	put_job_in_background(t_job *j, int cont)
 {
+	tcgetattr(g_shell_terminal, &j->tmodes);
 	if (cont)
 	{
 		if (kill(-j->pgid, SIGCONT) < 0)
