@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 18:25:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 23:13:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "error.h"
+#include "shell.h"
 
 struct s_hist	*g_hist = NULL;
 char		*g_vline = NULL;
@@ -71,9 +72,35 @@ void	get_history_loc(void)
 	}
 }
 
+int		is_valid_hentry(char *str)
+{
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isprint(str[i]))
+			return (0);
+		i++;
+	}
+	while (g_hist->nb_line < g_hist->total_lines)
+		next_hist();
+	tmp = prev_hist();
+	next_hist();
+	if (!tmp)
+		return (1);
+	if (ft_strequ(tmp, str))
+		return (0);
+	return (1);
+
+}
+
 void	add_hentry(char *buf, int size, int mode)
 {
-	if (!*buf || ft_str_isspace((char *)buf))
+	if (!*buf || ft_str_isspace((char *)buf) || !g_shell_is_interactive)
+		return ;
+	if (!is_valid_hentry(buf))
 		return ;
 	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
 	{
