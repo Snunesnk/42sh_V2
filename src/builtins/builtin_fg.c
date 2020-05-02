@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:38:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/02 11:58:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ int		cmd_fg(int argc, char **argv)
 	if (argc == 1)
 	{
 		if ((j = find_lastbackgrounded()))
+		{
+			ft_printf("%s\n", j->command);
 			put_job_in_foreground(j, 1);
+		}
 		else
 		{
 			pbierror("current: no such job");
