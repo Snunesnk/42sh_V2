@@ -5,3 +5,4 @@
 *.sw*
 .42Readline
 .*
+!.mailmap
