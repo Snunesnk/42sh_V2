@@ -29,13 +29,13 @@ Revoir l'ensemble du fonctionnement du shell avec env -i et env modifie:
 quotes: dans les heredoc, pas de quotes.
 quotes: dans le subprompt venant du parser les quotes doivent etre fonctionnelles
 
-autocompletion: dans le subprompt venant du parser la suggestion doit etre fonctionnelle, mais pas dans les heredoc. etc (comme un input de base).
+DONE => autocompletion: dans le subprompt venant du parser la suggestion doit etre fonctionnelle, mais pas dans les heredoc. etc (comme un input de base).
 
-autocompletions: suggestions dans cd dysfonctionnelles
+DONE => autocompletions: suggestions dans cd dysfonctionnelles
 
 cd: encore casse, cd -P /lib puis cd - faisait leaks. A tester avec un environnement modifier.
 
-export: parsing de nom de variables (check POSIX, un nom de var ne doit pas commencer par un chiffre etc)
+export: parsing de nom de variables (check POSIX, un nom de var ne doit pas commencer par un chiffre etc). Format de nom de variables : alpha ou underscore pour première lettre, puis alnum pour le reste
 export: verifier tous les messages d'erreurs
 
 env: peut produire des leaks dans certains cas, le comportement n'a pu etre reproduit mais la commande incriminee est: env cmd env
@@ -58,16 +58,10 @@ display: display prompt=> si il n'est pas print sur l'output il ne faut pas avan
 readline: Mauvais term mode (en fait c'est pas le term mode mais les termcapabilities a checker). Le terminal fonctionne meme si on change TERM normalement, a reverifier c'est dans tty.c terminal.c
 ```
 
-Gestion des inhibiteurs
-Segafault quand pas d'env avec l'autocompletion
 Mauvais display d'erreur avec cd
-Mauvais message d'erreur avec nombre trop grand
 Bug avec fc -s
 Leak avec le fc quand mauvaise commande sur fc S
 Écho ////// print toujours 2 /
 Use after free in history
 Ne pas inib dans les heredocs
-Autocompletion chelou sur cd
-Pas le droit à une variable a un chiffre en premier dans export / setenv
-Format de nom de variables : alpha ou underscore pour première lettre, puis alnum pour le reste
-Voir pour les mode insert vi pour les les raccourcis
+Voir pour implementer les raccourcis clavier dans le mode insert de vi
