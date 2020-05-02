@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 12:41:32 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/02 11:44:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	j_status(t_job *j, int foreground)
 {
 	if (!g_shell_is_interactive && foreground)
 		wait_for_job(j);
-	else if (g_subshell)
+	else if (!g_job_control_enabled)
 		wait_for_job(j);
 	else if (foreground)
 		put_job_in_foreground(j, 0);
