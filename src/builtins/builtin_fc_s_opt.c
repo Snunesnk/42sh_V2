@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/18 21:23:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/02 20:10:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,20 @@ char	*fc_do_substitute(char *str, t_sub *sub_list)
 	return (new_cmd);
 }
 
-int		get_subs(t_sub **sub_list, char **args)
+int		get_subs(t_sub **sub_list, char ***args)
 {
 	char	*tmp;
 
-	while (*args && (tmp = ft_strchr(*args, '=')))
+	while (**args && (tmp = ft_strchr(**args, '=')))
 	{
 		*tmp = '\0';
 		tmp += 1;
-		if (!(*sub_list = fill_sub(*sub_list, *args, tmp)))
+		if (!(*sub_list = fill_sub(*sub_list, **args, tmp)))
 			return (e_cannot_allocate_memory);
 		if (!((*sub_list)->next = init_sub(*sub_list)))
 			return (e_cannot_allocate_memory);
 		*sub_list = (*sub_list)->next;
-		args += 1;
+		*args += 1;
 	}
 	while ((*sub_list)->prev)
 		*sub_list = (*sub_list)->prev;
@@ -91,13 +91,15 @@ int		exec_fc_s_opt(char **args)
 		return (e_cannot_allocate_memory);
 	tmp = prev_hist();
 	tmp = prev_hist();
-	if (get_subs(&sub_list, args) == e_cannot_allocate_memory)
+	if (get_subs(&sub_list, &args) == e_cannot_allocate_memory)
 		return (e_cannot_allocate_memory);
 	if (*args && !(get_beg_matching_hist(&tmp, *args)))
 	{
 		pbierror("no command found");
 		if (sub_list->pat)
 			free_substitute(sub_list);
+		while (g_hist->nb_line < g_hist->total_lines)
+			next_hist();
 		return (e_command_not_found);
 	}
 	if (!(tmp = fc_do_substitute(tmp, sub_list)))
