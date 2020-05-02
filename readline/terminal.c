@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 15:24:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/02 15:36:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ int			init_terminal(void)
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
 	if (tgetent(NULL, g_term.terminal_name) <= 0)
+		g_term.terminal_name = "dumb";
+	if (check_term_capabilities())
 	{
 		ft_dprintf(STDERR_FILENO, "Terminal type '%s' is not defined in termcap database (or have too few informations) or database could not be found.\n", g_term.terminal_name);
-		return (-1);
+		exit(1);
 	}
-	if (check_term_capabilities())
-		return (-1);
 	get_term_capabilities();
 	bind_keys();
 	return (0);
