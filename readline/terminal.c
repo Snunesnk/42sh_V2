@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:03:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 15:24:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,23 @@ const struct s_termcaps_string g_tc_strings[] =
 	{"cm", &g_termcaps.cm}
 };
 
+static int	check_term_capabilities(void)
+{
+	register int	i;
+
+	i = 0;
+	while (i < (int)NUM_TC_STRINGS)
+	{
+		if (tgetflag(g_tc_strings[i].var) == ERR)
+		{
+			ft_dprintf(STDERR_FILENO, "Terminal type '%s' is not defined in termcap database (or have too few informations).\n", g_term.terminal_name);
+			return (ERR);
+		}
+		++i;
+	}
+	return (0);
+}
+
 static void	get_term_capabilities(void)
 {
 	register int i;
@@ -91,10 +108,15 @@ void		resize_terminal(int signo)
 int			init_terminal(void)
 {
 	if (g_term.terminal_name == NULL)
-		g_term.terminal_name = "xterm-256color";
+		g_term.terminal_name = "dumb";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
 	if (tgetent(NULL, g_term.terminal_name) <= 0)
+	{
+		ft_dprintf(STDERR_FILENO, "Terminal type '%s' is not defined in termcap database (or have too few informations) or database could not be found.\n", g_term.terminal_name);
+		return (-1);
+	}
+	if (check_term_capabilities())
 		return (-1);
 	get_term_capabilities();
 	bind_keys();
