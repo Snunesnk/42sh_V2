@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 19:05:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 11:32:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_node	*get_cmd_compl(t_node *compl_tree, char *to_complete, char *path, \
 	len = ft_strlen(to_complete);
 	i = 0;
 	tmp = path;
-	while ((tmp = ft_strchr(tmp, ':')))
+	while (path && (tmp = ft_strchr(tmp, ':')))
 	{
 		tmp[0] = 0;
 		compl_tree = search_in_path(stick_path_complete(path, to_complete), \
