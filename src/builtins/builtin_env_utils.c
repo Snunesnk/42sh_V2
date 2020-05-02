@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/28 14:30:37 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/02 11:38:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			exec_env_command(char **argv)
 	ret = 0;
 	envp = get_env_tab();
 	argv = ft_tabcpy(argv);
-	if (g_subshell || !(pid = fork()))
+	if (!g_job_control_enabled || !(pid = fork()))
 	{
 		if (argv)
 			ret = execute_env_process(argv, envp, NULL, NULL);

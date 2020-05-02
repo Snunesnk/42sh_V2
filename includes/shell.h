@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/01 13:37:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/02 11:35:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ t_hash_table					*find_occurence(char *name);
 t_hash_table					*find_prev_occurence(char *name);
 void							free_hash_table(void);
 
-extern int						g_subshell;
+extern int						g_job_control_enabled;
 extern int						g_noexit;
 extern int						g_oneline;
 
