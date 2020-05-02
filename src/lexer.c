@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 11:39:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/02 14:52:23 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,10 @@ t_list			*lexer(const char *input)
 	lst = list_tokens(input);
 	if (lst)
 		check_alias(&lst, TRUE);
+	if (lst && get_tokentype(ft_lst_last(lst)) != NEWLINE)
+	{
+		ft_lstdel(&lst, del);
+		ft_dprintf(STDERR_FILENO, "%s: error: unexepected EOF\n", g_progname);
+	}
 	return (lst);
 }
