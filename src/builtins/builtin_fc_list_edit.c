@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 16:34:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/02 19:07:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,28 @@
 #include "ft_readline.h"
 #include "shell.h"
 
-char		*get_editor(int opt_list)
+static int	get_editor(char **editor, int opt_list)
 {
-	char	*editor;
-
-	editor = NULL;
 	if (opt_list & FC_E_OPTION)
-		editor = ft_strdup(g_needed_arg);
-	else if ((editor = getenv("FCEDIT")))
-		editor = ft_strdup(editor);
-	else if ((editor = getenv("EDITOR")))
-		editor = ft_strdup(editor);
+		*editor = ft_strdup(g_needed_arg);
+	else if ((*editor = get_shell_var("FCEDIT", g_env)))
+		*editor = ft_strdup(*editor);
+	else if ((*editor = get_shell_var("EDITOR", g_env)))
+		*editor = ft_strdup(*editor);
 	else
-		editor = ft_strdup("vi");
-	if (!(editor))
+		*editor = ft_strdup("vim");
+	if (!*editor)
 	{
 		pbierror("cannot allocate memory");
-		return (NULL);
+		return (e_cannot_allocate_memory);
 	}
-	return (editor);
+	if (path_concat(editor, NULL, NULL, NULL) == e_command_not_found)
+	{
+		psherror(e_command_not_found, (g_needed_arg) ? g_needed_arg \
+				: get_shell_var("FCEDIT", g_env), e_cmd_type);
+		return (e_command_not_found);
+	}
+	return (e_success);
 }
 
 void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
@@ -66,8 +69,9 @@ int			re_execute_cmd(int opt_list)
 	char	*command;
 	char	*editor;
 
-	if (!(editor = get_editor(opt_list)))
-		return (e_cannot_allocate_memory);
+	editor = NULL;
+	if ((fd = get_editor(&editor, opt_list)))
+		return (fd);
 	if (!(command = ft_strjoin(editor, " .monkeyshell_tmp_file")) \
 			&& pbierror("cannot allocate memory"))
 		return (e_cannot_allocate_memory);

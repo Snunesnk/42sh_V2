@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 20:14:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 18:40:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 */
 # define END_OF_COLOR "\033[0m"
 # define HIST_COMPL_COLOR "\033[38;5;8m"
-# define G_LINE_COLOR "\033[38;5;249m"
+# define G_LINE_COLOR "\033[38;5;250m"
 # define PROMPT_COLOR "\033[38;5;117m"
 
 /*
