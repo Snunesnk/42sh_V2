@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/03/11 20:39:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 22:38:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int			get_alpha_value(char *args)
 		hist_num = -1;
 	else
 		hist_num = g_hist->nb_line;
-	while (g_hist->nb_line < g_hist->total_lines - 1)
+	while (g_hist->nb_line < g_hist->total_lines)
 		next_hist();
 	return (hist_num);
 }

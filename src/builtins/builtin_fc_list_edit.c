@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/02 19:07:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 23:11:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 		swap_entries(&hist_end, &hist_beg);
 	while (hist_beg < g_hist->nb_line)
 		prev_hist();
-	while (1)
+	while (g_hist->nb_line > 0 && g_hist->nb_line <= g_hist->total_lines)
 	{
 		if (!(opt_list & FC_N_OPTION))
-			ft_dprintf(fd, "%d", g_hist->nb_line + 1);
+			ft_dprintf(fd, "%d", g_hist->nb_line);
 		if (opt_list & FC_L_OPTION)
 			ft_dprintf(fd, "\t");
 		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset \
@@ -127,19 +127,19 @@ int			exec_fc_other_opt(int opt_list, char **args)
 		get_hist_num(args, &opt_list, &h_end, &h_beg);
 	else
 	{
-		h_end = g_hist->nb_line - 1;
+		h_end = g_hist->nb_line;
 		if ((h_beg = (opt_list & FC_L_OPTION) ? h_end - 15 : h_end) < 0)
-			h_beg = 0;
+			h_beg = 1;
 	}
-	if (h_end < 0 || h_beg < 0 || g_hist->total_lines == 1)
+	if (h_end <= 0 || h_beg <= 0 || g_hist->total_lines == 0)
 	{
 		pbierror("history specification out of range");
 		if (g_hist->total_lines != 1 && g_shell_is_interactive)
-			fc_replace_last_hist(NULL);
+			fc_erase_last_hist();
 		return (e_invalid_input);
 	}
 	if (get_fd_and_print(opt_list, h_beg, h_end))
 		return ((opt_list & FC_L_OPTION) ? e_success : 1);
-	(g_shell_is_interactive) ? fc_replace_last_hist(NULL) : rl_void();
+	fc_erase_last_hist();
 	return (re_execute_cmd(opt_list));
 }

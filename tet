@@ -1,0 +1,9 @@
+ls
+fc -l
+ls
+fc
+fc -l
+fc
+ls
+fc -s l=cd s=" ../"
+pwd

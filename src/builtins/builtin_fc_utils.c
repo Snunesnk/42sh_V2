@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 16:44:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/02 23:12:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ void	free_substitute(t_sub *substitute)
 	}
 }
 
-void	fc_replace_last_hist(char *tmp)
+void	fc_erase_last_hist(void)
 {
 	unsigned int	i;
 
-	g_hist->offset = g_hist->used - 1;
+	while (g_hist->nb_line < g_hist->total_lines)
+		next_hist();
 	prev_hist();
 	i = g_hist->offset;
 	while (i < g_hist->used - 1)
@@ -39,9 +40,7 @@ void	fc_replace_last_hist(char *tmp)
 		i++;
 	}
 	g_hist->used = g_hist->offset + 1;
-	g_hist->total_lines -= 1;
-	if (tmp)
-		add_hentry(tmp, ft_strlen(tmp), 1);
+	g_hist->total_lines = g_hist->nb_line;
 }
 
 char	*ft_strreplace(char **str, char *pattern, char *replacement)
