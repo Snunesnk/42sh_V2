@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/02 23:00:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/03 13:06:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ int		exec_fc_s_opt(char **args)
 	if (!(sub_list = init_sub(NULL)))
 		return (e_cannot_allocate_memory);
 	tmp = prev_hist();
-	tmp = prev_hist();
 	if (get_subs(&sub_list, &args) == e_cannot_allocate_memory)
 		return (e_cannot_allocate_memory);
 	if (*args && !(get_beg_matching_hist(&tmp, *args)))
@@ -106,7 +105,6 @@ int		exec_fc_s_opt(char **args)
 		return (e_cannot_allocate_memory);
 	free_substitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
-	fc_erase_last_hist();
 	add_hentry(tmp, ft_strlen(tmp), 1);
 	return (exec_input(tmp));
 }
