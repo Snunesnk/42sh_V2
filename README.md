@@ -11,6 +11,9 @@ This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims 
 
 ```shell=
 valgrind --leak-check=full --track-origins=yes ./21sh
+
+ps -o stat,pid,pgid,ppid,sid,tpgid,comm
+
 ```
 
 
