@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 13:10:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/03 20:14:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 
 # define TRUE		1
 # define FALSE		0
+# define ON		TRUE
+# define OFF		FALSE
 # define BUF_SIZE	32
 # define NB_TOKEN	17
 
