@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 19:35:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 11:11:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 13:17:46 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
 		free(*here);
 		free(*line);
 		*here = *tmp;
-		if (g_shell_is_interactive)
-			*tmp = ft_readline("> ");
-		else
-			get_stdin(STDIN_FILENO, tmp);
+		*tmp = get_input("> ", 0);
 	}
 	g_subprompt = 0;
 }
@@ -34,10 +31,7 @@ static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
 char		*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 {
 	g_subprompt = 1;
-	if (g_shell_is_interactive)
-		tmp = ft_readline("> ");
-	else
-		get_stdin(STDIN_FILENO, &tmp);
+	tmp = get_input("> ", 0);
 	if (g_oneline)
 		return (tmp);
 	loop_heredoc(&eof, &here, &tmp, &line);
