@@ -1,0 +1,46 @@
+
+
+cmd:  ls >/dev/null -l | cat && cat -e &
+
+                            &
+                         /
+                        /
+                       &&
+                     /   \
+                    /    cat -e
+                   /
+        ls >/dev/null -l | cat
+
+
+
+                                                  _
+                            &                      |
+                         /                         |
+                        /  <- fork    _            |
+                       &&              |           |   Shell
+                     /   \             |           |
+                    /    cat -e <-fork | Subshell  |
+                   /                   |           |
+        ls >/dev/null -l | cat <-fork _|           |
+        |___________|                              |
+       |  t_process        |                       |
+       |___________________|                      _|
+             t_job
+
+
+
+
+
+
+
+
+cmd: ls -r 1>& 2 -l > plop popotte
+
+                >
+             /  |  \
+            /   1   plop
+           >&
+         / | \
+        /  1  2
+       /
+     agrv: ls, -r, -l, popotte
