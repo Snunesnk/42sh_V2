@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 14:32:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/03 19:46:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ struct	s_hist
 	unsigned int		capacity;
 	int					nb_line;
 	int					total_lines;
+	int					hist_ignore;
 };
 
 extern struct s_hist	*g_hist;
@@ -37,7 +38,7 @@ extern int				g_pattern_length;
 extern char				g_hist_word_delim[];
 
 void	init_history(void);
-void	get_history_loc(void);
+int		get_history_loc(void);
 void	add_hentry(char *buf, int size, int mode);
 char	*prev_hist(void);
 char	*next_hist(void);
