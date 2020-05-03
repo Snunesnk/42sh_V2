@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 16:18:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 11:31:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ void		wait_for_job(t_job *j)
 
 	if (!g_job_control_enabled)
 	{
-		ft_printf("In the subshell job control\n");
-		/* When subshell is recalled it does not take any input from the shell, processes then cannot be killed from input ls&&cat& */
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-		while (!mark_process_status(pid, status) && !job_is_completed(j))
+		while (!mark_process_status(pid, status) && !job_is_completed(j)) /* Check if this condition is correct */
 			pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 	}
-	pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-	while (!mark_process_status(pid, status) && !job_is_stopped(j)
-			&& !job_is_completed(j))
+	else
+	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+		while (!mark_process_status(pid, status) && !job_is_stopped(j)
+				&& !job_is_completed(j))
+			pid = waitpid(WAIT_ANY, &status, WUNTRACED);
+	}
 }
 
 void		format_job_info(t_job *j, const char *status)
