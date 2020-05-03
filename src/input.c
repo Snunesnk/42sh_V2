@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 11:11:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 13:26:52 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
 static char		*create_new_line(char *str, int *len)
 {
@@ -88,4 +89,56 @@ int				get_stdin(int fd, char **line)
 			return (1);
 	}
 	return (ret);
+}
+
+static char		*append_line(char **last_lines, char *input)
+{
+	char	*tmp;
+	int		qmode;
+
+	if (*last_lines)
+	{
+		tmp = ft_strjoin(*last_lines, input);
+		ft_memdel((void **)last_lines);
+		ft_memdel((void **)&input);
+		input = tmp;
+	}
+	if (input && (qmode = get_str_qmode(NO_QUOTE, input)) != NO_QUOTE)
+	{
+		if (qmode & BSQUOTE)
+		{
+			input[ft_strlen(input) - 1] = '\0';
+			*last_lines = input;
+		}
+		else
+		{
+			*last_lines = ft_strjoin(input, "\n");
+			ft_memdel((void **)&input);
+		}
+		input = NULL;
+	}
+	return (input);
+}
+
+char			*get_input(const char *prompt, int close_quotes)
+{
+	char	*input;
+	int		first_iter;
+	char	*last_lines;
+
+	input = NULL;
+	first_iter = 1;
+	last_lines = NULL;
+	while (first_iter || last_lines)
+	{
+		if (g_shell_is_interactive)
+			input = ft_readline(first_iter ? prompt : "> ");
+		else if (get_stdin(STDIN_FILENO, &input) < 0)
+			break ;
+		if (input && close_quotes)
+			input = append_line(&last_lines, input);
+		first_iter = 0;
+	}
+	ft_memdel((void **)&last_lines);
+	return (input);
 }

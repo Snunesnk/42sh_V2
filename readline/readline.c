@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 17:38:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/03 13:24:48 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,9 @@ static char	*readline_internal(void)
 	return (value);
 }
 
-char		*readline_loop(const char *prompt, int *qmode)
+char		*readline_loop(const char *prompt)
 {
 	char	*value;
-	char	*tmp;
 
 	value = NULL;
 	prep_terminal();
@@ -97,29 +96,17 @@ char		*readline_loop(const char *prompt, int *qmode)
 	rl_clear_signals();
 	if (value != NULL)
 		ft_putchar_fd('\n', STDERR_FILENO);
-	if ((*qmode = get_str_qmode(*qmode, value)) & BSQUOTE)
-		value[ft_strlen(value) - 1] = '\0';
-	else
-	{
-		tmp = value;
-		value = ft_strjoin(tmp, "\n");
-		free(tmp);
-	}
 	return (value);
 }
 
 char		*ft_readline(const char *prompt)
 {
 	char	*input;
-	int		qmode;
 
 	input = NULL;
-	qmode = NO_QUOTE;
 	while (!input)
 	{
-		input = readline_loop(prompt, &qmode);
-		input = get_quote(&qmode, input);
-		input[ft_strlen(input) - 1] = '\0';
+		input = readline_loop(prompt);
 		if (g_shell_is_interactive && input && input[0] && g_history && \
 				(input = hist_expanse(input)))
 			add_hentry(input, ft_strlen(input), 1);
