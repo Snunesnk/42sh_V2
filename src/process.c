@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:44:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 20:14:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 	int			ret;
 
 	g_noexit = 1;
-	g_job_control_enabled = 0;
+	g_job_control_enabled = ON;
 	envp = get_env_tab();
 	perf_redir(p);
 	if (p->argc == -1)

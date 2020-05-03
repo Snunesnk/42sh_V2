@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:33:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 20:13:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			execute_subshell(t_ast *node, int foreground)
 	if ((pid = fork()) == 0)
 	{
 		pid = getpid();
-		g_job_control_enabled = 0;
+		g_job_control_enabled = OFF;
 		restore_procmask();
 		setpgid(pid, pid);
 		exit_clean(execute_node(node, foreground));
