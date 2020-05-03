@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/25 20:08:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/03 19:51:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int			cmd_fc(int argc, char **argv)
 	char	**args;
 	int		opt_list;
 	int		status;
+	char	*tmp;
 
 	(void)argc;
-	if (!argv)
-		return (e_invalid_input);
+	tmp = ft_strdup(prev_hist());
+	fc_erase_last_hist();
 	args = argv + 1;
 	if ((opt_list = parse_fc_option(&args)) == 2)
 		return (e_invalid_input);
@@ -59,6 +60,9 @@ int			cmd_fc(int argc, char **argv)
 		status = exec_fc_s_opt(args);
 	else
 		status = exec_fc_other_opt(opt_list, args);
+	if (opt_list & FC_L_OPTION && !g_hist->hist_ignore)
+		add_hentry(tmp, ft_strlen(tmp), 1);
+	free(tmp);
 	if (g_needed_arg)
 		g_needed_arg = NULL;
 	return (status);

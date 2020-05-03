@@ -6,11 +6,30 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/02 23:12:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/03 20:05:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+
+void	fc_erase_last_hist(void)
+{
+	int	i;
+
+	while (g_hist->nb_line < g_hist->total_lines)
+		next_hist();
+	if (g_hist->hist_ignore)
+		return ;
+	i = 0;
+	prev_hist();
+	while (g_hist->offset + i < g_hist->used - 1)
+	{
+		g_hist->history_content[g_hist->offset + i] = '\0';
+		i++;
+	}
+	g_hist->used = g_hist->offset + 1;
+	g_hist->total_lines = g_hist->nb_line;
+}
 
 void	free_substitute(t_sub *substitute)
 {
@@ -24,23 +43,6 @@ void	free_substitute(t_sub *substitute)
 		free(substitute);
 		substitute = tmp;
 	}
-}
-
-void	fc_erase_last_hist(void)
-{
-	unsigned int	i;
-
-	while (g_hist->nb_line < g_hist->total_lines)
-		next_hist();
-	prev_hist();
-	i = g_hist->offset;
-	while (i < g_hist->used - 1)
-	{
-		g_hist->history_content[i] = '\0';
-		i++;
-	}
-	g_hist->used = g_hist->offset + 1;
-	g_hist->total_lines = g_hist->nb_line;
 }
 
 char	*ft_strreplace(char **str, char *pattern, char *replacement)
