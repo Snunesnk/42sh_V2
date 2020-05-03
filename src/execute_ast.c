@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:33:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 20:55:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,17 @@ int			execute_semi(t_ast *node, int foreground)
 		return (execute_node(node->left, foreground));
 }
 
-static int	parent_shell(int foreground, pid_t pid)
+static int	parent_shell(pid_t pid)
 {
 	t_job	*j;
-	int		status;
 
-	status = 0;
-	if (foreground)
-	{
-		waitpid(pid, &status, WUNTRACED);
-		return (get_exit_value(status));
-	}
-	else
-	{
-		j = (t_job*)ft_memalloc(sizeof(t_job));
-		j->pgid = pid;
-		j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
-		j->first_process->pid = pid;
-		add_job_to_queue(j);
-		return (0);
-	}
+	j = (t_job*)ft_memalloc(sizeof(t_job));
+	j->pgid = pid;
+	j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
+	j->first_process->pid = pid;
+	j->command = ft_strdup("subshell"); /* Should be infix to concatenate elements of command */
+	add_job_to_queue(j);
+	return (0);
 }
 
 int			execute_subshell(t_ast *node, int foreground)
@@ -59,10 +50,18 @@ int			execute_subshell(t_ast *node, int foreground)
 
 	if ((pid = fork()) == 0)
 	{
-		pid = getpid();
-		g_job_control_enabled = 0;
+		/* Set off job control in subshell */
+		g_job_control_enabled = OFF;
+		/* Reset job list in subshell */
+		free_all_jobs();
+		/* Reset signal masks */
 		restore_procmask();
-		setpgid(pid, pid);
+		/* Get pid of process */
+		pid = getpid();
+		g_shell_pgid = pid;
+		if (setpgid(pid, g_shell_pgid))
+			exit_clean(1);
+		/* Continue normal execution of remaining AST */
 		exit_clean(execute_node(node, foreground));
 	}
 	else if (pid < 0)
@@ -70,5 +69,5 @@ int			execute_subshell(t_ast *node, int foreground)
 		ft_printf("Fork subshell failed\n");
 		exit_clean(0);
 	}
-	return (parent_shell(foreground, pid));
+	return (parent_shell(pid));
 }

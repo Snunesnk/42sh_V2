@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:34:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/03 20:13:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ pid_t			g_shell_pgid;
 struct termios	shell_tmodes;
 int				g_shell_terminal;
 int				g_shell_is_interactive;
-int				g_job_control_enabled = 1;
+int				g_job_control_enabled = ON;
 int				g_retval;
 char			g_pwd[] = {0};
 
