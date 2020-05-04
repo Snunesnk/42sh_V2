@@ -7,6 +7,7 @@ static void	print_ast(int fd, t_ast *node)
 	t_list	*lst;
 	t_token *tk;
 
+	(void)side;
 	if (node)
 	{
 		print_ast(fd, node->left);
@@ -18,7 +19,7 @@ static void	print_ast(int fd, t_ast *node)
 		}
 		else
 			n = token_tab[node->type];
-		ft_dprintf(fd, "\"%s %p\";\n", n, n);
+		ft_dprintf(fd, "%lu [label=\"%s\"];\n", (long unsigned)node, n);
 		if (node->left)
 		{
 			if (node->left->type == IO_NB || node->left->type == WORD)
@@ -29,7 +30,7 @@ static void	print_ast(int fd, t_ast *node)
 			}
 			else
 				side = token_tab[node->left->type];
-			ft_dprintf(fd, "\"%s %p\" -> \"%s %p\";\n", n, n, side, side);
+			ft_dprintf(fd, "%lu -- %lu;\n", (long unsigned)node, (long unsigned)node->left);
 		}
 		print_ast(fd, node->right);
 		if (node->right)
@@ -42,7 +43,7 @@ static void	print_ast(int fd, t_ast *node)
 			}
 			else
 				side = token_tab[node->right->type];
-			ft_dprintf(fd, "\"%s %p\" -> \"%s %p\";\n", n, n, side, side);
+			ft_dprintf(fd, "%lu -- %lu;\n", (long unsigned)node, (long unsigned)node->right);
 		}
 	}
 }
@@ -52,7 +53,7 @@ void		graph_ast(t_ast *ast)
 	int fd;
 
 	fd = open("graph.dot", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	ft_dprintf(fd, "digraph finite_state_machine {\nsize=\"8\";\nrankdir=TB;\n");
+	ft_dprintf(fd, "strict graph {\nsize=\"8\";\nrankdir=TB;\n");
 	print_ast(fd, ast);
 	ft_dprintf(fd, "\n}\n");
 	close(fd);
