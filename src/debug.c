@@ -6,43 +6,41 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 21:05:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/04 14:57:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-void		init_tab(char **token_tab)
+char	*token_tab[NB_TOKEN] =
 {
-	token_tab[OR_IF] = "OR_IF";
-	token_tab[PIPE] = "PIPE";
-	token_tab[AND_IF] = "AND_IF";
-	token_tab[AND] = "AND";
-	token_tab[GREATAND] = "GREATAND";
-	token_tab[LESSAND] = "LESSAND";
-	token_tab[ANDGREAT] = "ANDGREAT";
-	token_tab[SEMI] = "SEMI";
-	token_tab[DGREAT] = "DGREAT";
-	token_tab[DLESS] = "DLESS";
-	token_tab[DLESSDASH] = "DLESSDASH";
-	token_tab[GREAT] = "GREAT";
-	token_tab[LESS] = "LESS";
-	token_tab[WORD] = "WORD";
-	token_tab[IO_NB] = "IO_NB";
-	token_tab[NEWLINE] = "NEWLINE";
-}
+	[OR_IF] = "OR_IF",
+	[PIPE] = "PIPE",
+	[AND_IF] = "AND_IF",
+	[AND] = "AND",
+	[GREATAND] = "GREATAND",
+	[LESSAND] = "LESSAND",
+	[ANDGREAT] = "ANDGREAT",
+	[SEMI] = "SEMI",
+	[DGREAT] = "DGREAT",
+	[DLESS] = "DLESS",
+	[DLESSDASH] = "DLESSDASH",
+	[GREAT] = "GREAT",
+	[LESS] = "LESS",
+	[WORD] = "WORD",
+	[IO_NB] = "IO_NB",
+	[NEWLINE] = "NEWLINE",
+};
 
-static void	print(t_list *lst, t_list **elem)
+static void	printg(t_list *lst, t_list **elem)
 {
-	static char	*token_tab[NB_TOKEN];
 	char		*print_content;
 	char		*tmp;
 	size_t		i;
 
 	i = 0;
 	print_content = NULL;
-	init_tab(token_tab);
 	while (i < NB_TOKEN)
 	{
 		tmp = NULL;
@@ -61,5 +59,17 @@ static void	print(t_list *lst, t_list **elem)
 
 void		debug(t_list *lst)
 {
-	ft_lstprint(lst, print);
+	ft_lstprint(lst, printg);
+}
+
+void		printjob(void)
+{
+	ft_printf("\nShell pid: %d\n", g_shell_pgid);
+	for (t_job *j=g_first_job; j; j = j->next)
+	{
+		ft_printf("---------\n");
+		ft_printf("shell level: %d, j->pid %d, pid %d\n", g_shell_pgid, j->pgid, getpid());
+		ft_printf("command: %s\n", j->command);
+		ft_printf("----\n");
+	}
 }

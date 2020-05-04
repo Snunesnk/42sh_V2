@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/03 13:08:24 by yforeau          ###   ########.fr        #
+#    Updated: 2020/05/04 14:05:48 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SOURCES_PATH := ./src/
 
 SOURCES :=	main.c \
 		ast.c \
+		graph.c \
 		ast_utils.c \
 		build_redir.c \
 		check_alias.c \
