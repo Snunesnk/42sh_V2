@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/04 15:01:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/04 17:51:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int			exec_input(char *input)
 		return (status);
 	}
 	ast = build_ast(&lst);
-	graph_ast(ast);
-	exit(1); // DEBUG
+	graph_ast(ast); // BONUS GRAPHVIZ ?
 	status = execute_node(ast, 1);
 	free_ast(ast);
 	g_retval = status;
