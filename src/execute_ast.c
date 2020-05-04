@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 20:55:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/04 12:49:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ static int	parent_shell(pid_t pid)
 	j->pgid = pid;
 	j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
 	j->first_process->pid = pid;
+	j->pgid = pid;
 	j->command = ft_strdup("subshell"); /* Should be infix to concatenate elements of command */
 	add_job_to_queue(j);
+	ft_printf("Parent shellpid: %d, job:%d\n", g_shell_pgid, pid);
+	printjob();
 	return (0);
 }
 
@@ -58,6 +61,7 @@ int			execute_subshell(t_ast *node, int foreground)
 		restore_procmask();
 		/* Get pid of process */
 		pid = getpid();
+		ft_printf("Fork subshell: pid: %d\n", pid);
 		g_shell_pgid = pid;
 		if (setpgid(pid, g_shell_pgid))
 			exit_clean(1);

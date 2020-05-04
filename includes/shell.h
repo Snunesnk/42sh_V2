@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 20:14:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/04 14:53:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@
 # define NOFORK		0x10
 # define REDSUC		0x20
 
+char							*token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
 char							*short_physical_path(char **cwd);
 
@@ -437,5 +438,8 @@ int								check_type(char *pathname);
 int								builtin_keyword_exec(char **argv);
 int								process_execve(char **argv,
 		char **envp, char *pathname);
+
+void            graph_ast(t_ast *ast); // DEBUGG
+void		printjob(void); // debug
 
 #endif
