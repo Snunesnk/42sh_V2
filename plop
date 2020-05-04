@@ -1,0 +1,14 @@
+cmd: -l >2 echo ok > lol | cat
+
+                         |
+                       /  \
+                      /   cat
+                     > lol
+                    /
+                   > 2
+                  /
+                 ok
+                /
+              echo
+              /
+             -l
