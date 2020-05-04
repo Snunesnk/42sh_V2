@@ -18,6 +18,7 @@ static void	print_ast(int fd, t_ast *node)
 		}
 		else
 			n = token_tab[node->type];
+		ft_dprintf(fd, "\"%s %p\";\n", n, n);
 		if (node->left)
 		{
 			if (node->left->type == IO_NB || node->left->type == WORD)
@@ -50,7 +51,7 @@ void		graph_ast(t_ast *ast)
 {
 	int fd;
 
-	fd = open("graph.dot", O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	fd = open("graph.dot", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	ft_dprintf(fd, "digraph finite_state_machine {\nsize=\"8\";\nrankdir=TB;\n");
 	print_ast(fd, ast);
 	ft_dprintf(fd, "\n}\n");
