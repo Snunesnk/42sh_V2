@@ -6,3 +6,4 @@
 .42Readline
 .*
 !.mailmap
+*.dot
