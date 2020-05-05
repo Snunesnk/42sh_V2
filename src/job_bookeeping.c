@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:02:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 12:47:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int		get_job_status(t_job *j, int foreground)
 	t_process	*p;
 	int			status;
 
+	status = 0;
 	if (!foreground)
 		return (0);
 	p = j->first_process;

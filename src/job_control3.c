@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 11:31:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 16:25:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,18 @@ void		do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 		do_job_innerloop(&j, &jlast, &jnext);
 		j = jnext;
 	}
+}
+
+int		are_stopped_jobs(void)
+{
+	t_job	*j;
+
+	j = g_first_job;
+	while (j)
+	{
+		if (job_is_stopped(j))
+			return (1);
+		j = j->next;
+	}
+	return (0);
 }

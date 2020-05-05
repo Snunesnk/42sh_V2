@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/10 16:16:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 12:46:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_redirection	*build_redirections_suite(t_list **lst,
 {
 	t_redirection	**n;
 
+	n = NULL;
 	if (r)
 		n = &(r->next);
 	while (*lst && get_tokentype(*lst) != PIPE)

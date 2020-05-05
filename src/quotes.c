@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 13:00:50 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/05 12:48:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int		rm_quotes(char **str, int old_qmode)
 
 	pstr = *str;
 	dup = NULL;
+	pdup = NULL;
 	while (*pstr)
 	{
 		if ((qmode = get_qmode(old_qmode, *pstr)) != old_qmode && !dup)

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 11:45:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 16:25:29 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "builtins.h"
 
 int	g_noexit = 0;
+int	g_last_exit = 0;
 
 static void		print_exit(void)
 {
@@ -70,6 +71,14 @@ int				cmd_exit(int argc, char **argv)
 	int				i;
 
 	status = g_retval;
+	update_status();
+	if (g_job_control_enabled && are_stopped_jobs() && !g_last_exit)
+	{
+		print_exit();
+		ft_dprintf(STDERR_FILENO, "\nThere are stopped jobs.\n");
+		g_last_exit = 1;
+		return (1);
+	}
 	if (argc > 1)
 	{
 		i = part_sep(argc, argv);
