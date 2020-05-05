@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 17:44:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 22:50:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void			command_complete(char *to_complete)
 	t_node	*compl_tree;
 	t_data	*data;
 
-	ft_printf("to_complete: %s\n", to_complete);
 	path = NULL;
 	compl_tree = NULL;
 	if (!(data = init_data()))
