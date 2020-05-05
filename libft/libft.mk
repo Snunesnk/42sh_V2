@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/02 15:33:01 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/04 19:45:11 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -176,6 +176,7 @@ SOURCES	:= \
 		f_stdio/printf/str_format.c \
 		f_stdio/printf/wrapper.c \
 		f_stdlib/ft_atoi.c \
+		f_stdlib/ft_atol.c \
 		f_stdlib/ft_getenv.c \
 		f_stdlib/ft_realpath.c \
 		f_stdlib/ft_setenv.c \
