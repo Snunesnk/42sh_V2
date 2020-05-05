@@ -6,9 +6,11 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/22 14:15:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 11:45:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <limits.h>
 
 #include "shell.h"
 #include "builtins.h"
@@ -40,21 +42,17 @@ static int		part_sep(int argc, char **argv)
 	return (1);
 }
 
-static int		numarg_exit(int argc, char **argv, int i)
+static int		numarg_exit(int argc, char **argv, int i, int s)
 {
-	unsigned char	status;
-
-	status = g_retval;
 	print_exit();
 	if (argc > i + 1)
 	{
 		pbierror("too many arguments");
 		return (1);
 	}
-	status = (unsigned char)ft_atoi(argv[i]);
 	ft_tabdel(&argv);
 	free_hist();
-	return (exit_clean(status));
+	return (exit_clean(s));
 }
 
 static void		nomatter_exit(char **argv, int i)
@@ -75,10 +73,11 @@ int				cmd_exit(int argc, char **argv)
 	if (argc > 1)
 	{
 		i = part_sep(argc, argv);
-		if (*argv[i]
-	&& (((*argv[i] == '-' || *argv[i] == '+') && ft_str_is_numeric(&argv[i][i]))
-			|| ft_str_is_numeric(argv[i])) && ft_strcmp("--", argv[i]))
-			return (numarg_exit(argc, argv, i));
+		status = ft_atol(argv[i]);
+		if (g_errno == E_EINVAL)
+			nomatter_exit(argv, i);
+		if (g_errno != E_EOVERFLOW)
+			return (numarg_exit(argc, argv, i, ft_atoi(argv[i])));
 		else
 			nomatter_exit(argv, i);
 	}
