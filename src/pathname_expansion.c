@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:13:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 18:38:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 20:49:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+#include "quotes.h"
 
 static int	replace_pattern(t_process *p, int i, t_glob *gl, int *skip)
 {
@@ -40,6 +41,21 @@ static int	replace_pattern(t_process *p, int i, t_glob *gl, int *skip)
 	return (e_success);
 }
 
+static int	has_unquoted_glob_spec_chars(const char *str)
+{
+	int	qmode;
+
+	qmode = NO_QUOTE;
+	while (*str)
+	{
+		if ((qmode = get_qmode(qmode, *str)) == NO_QUOTE
+			&& ft_strchr("{?[*", *str))
+			return (1);
+		++str;
+	}
+	return (0);
+}
+
 /*
 ** TODO: find a way not to copy the string each time and to use GLOB_APPEND
 ** instead of copying the entire argv each time
@@ -50,6 +66,8 @@ int			pathname_expansion(t_process *p, int i, int *skip)
 	t_glob	gl;
 	int		ret;
 
+	if (!has_unquoted_glob_spec_chars(p->argv[i]))
+		return (e_success);
 	ft_bzero(&gl, sizeof(t_glob));
 	ret = ft_glob(p->argv[i], FT_GLOB_BRACE, NULL, &gl);
 	if (!ret)
