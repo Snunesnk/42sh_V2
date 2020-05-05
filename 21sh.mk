@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/05 12:49:27 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/05 19:40:06 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCES :=	main.c \
 		do_redir3.c \
 		error.c \
 		input.c \
+		get_input_fd.c \
 		execute_ast.c \
 		execute_ast2.c \
 		execute_job.c \
@@ -198,6 +199,6 @@ LDLIBS += $(PATH_LIB)libft.a -ltermcap
 LDFLAGS += $(DEBUG)
 
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
-CFLAGS += -fno-builtin -O2
+#CFLAGS += -fno-builtin -O2
 
 DEBUG += -fsanitize=address,undefined

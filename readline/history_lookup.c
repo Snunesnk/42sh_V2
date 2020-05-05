@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:37:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:36:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ static void	get_input_proposal(char value, char **hist_proposal)
 		rl_backspace();
 	g_line.line[g_dis.cbpos] = '\0';
 	user_input = g_line.line;
-	*hist_proposal = g_hist->history_content + g_hist->offset;
-	if (g_hist->nb_line > 1)
-		*hist_proposal += 1;
+	*hist_proposal = g_hist.history_content + g_hist.offset + 1;
 	if (!(get_matching_hist(hist_proposal, user_input)))
 		set_prompt("(failed reverse-i-search)`");
 	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
