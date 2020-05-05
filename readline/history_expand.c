@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/01 13:10:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 19:35:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char	*hist_expanse(char *value)
 	hist_entry = do_hist_exp(&value, hist_entry);
 	if (!hist_entry || !value)
 	{
-		g_hist->nb_line = g_hist->total_lines;
-		g_hist->offset = g_hist->used - 1;
+		while (g_hist.nb_line <= g_hist.total_lines)
+			next_hist();
 		free(value);
 		g_pattern_length = 0;
 		return (NULL);
@@ -72,16 +72,16 @@ char	*expand_num(char *value, int start, int sign)
 	hist_entry = NULL;
 	entry = ft_atoi(value + start) - 1;
 	if (sign < 0)
-		entry = g_hist->nb_line - entry;
-	if (entry > g_hist->total_lines || entry < 0 || g_hist->total_lines <= 1)
+		entry = g_hist.nb_line - entry;
+	if (entry > g_hist.total_lines || entry < 0 || g_hist.total_lines <= 1)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: !%s: event not found\n",
 						g_progname, value);
 		return (NULL);
 	}
-	while (entry > g_hist->nb_line)
+	while (entry > g_hist.nb_line)
 		hist_entry = next_hist();
-	while (entry < g_hist->nb_line)
+	while (entry < g_hist.nb_line)
 		hist_entry = prev_hist();
 	return (hist_entry);
 }
@@ -94,10 +94,10 @@ char	*expand_word(char *value, int start, int sign)
 	hist_entry = NULL;
 	if (sign < 0)
 		value++;
-	while (g_hist->nb_line && ft_strncmp(value, g_hist->history_content + \
-				g_hist->offset + 1, g_pattern_length + sign))
+	while (g_hist.nb_line > 1 && ft_strncmp(value, g_hist.history_content + \
+				g_hist.offset + 1, g_pattern_length + sign))
 		hist_entry = prev_hist();
-	if (ft_strncmp(value, g_hist->history_content + g_hist->offset + 1, \
+	if (ft_strncmp(value, g_hist.history_content + g_hist.offset + 1, \
 				g_pattern_length + sign))
 	{
 		ft_dprintf(STDERR_FILENO, "\n%s: !%s: event not found\n",
@@ -131,7 +131,7 @@ char	*replace_hist_exp(char *value, char *hist_entry)
 	ft_strcpy(new_value + i + ft_strlen(hist_entry), value + i \
 			+ g_pattern_length + 1);
 	free(value);
-	g_hist->offset = g_hist->used - 1;
-	g_hist->nb_line = g_hist->total_lines;
+	while (g_hist.nb_line <= g_hist.total_lines)
+		next_hist();
 	return (new_value);
 }

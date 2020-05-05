@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/01 12:55:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 20:07:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,20 @@
 
 void	insert_hist_compl(void)
 {
-	char				*hist_compl;
-	unsigned int		offset_save;
+	char			*hist_compl;
+	unsigned int	offset_save;
 
-	if (ft_str_isspace(g_line.line) || !g_dis.cbpos)
+	if (ft_str_isspace(g_line.line) || !g_dis.cbpos || !g_hist.total_lines)
 		return ;
-	offset_save = g_hist->offset;
-	hist_compl = g_hist->history_content + g_hist->offset;
-	if (g_hist->offset != 0)
-		hist_compl += 1;
+	offset_save = g_hist.offset;
+	hist_compl = g_hist.history_content + g_hist.offset;
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
 	if (hist_compl)
 	{
 		insert_text(hist_compl + g_dis.cbpos, ft_strlen(hist_compl + \
 					g_dis.cbpos));
 	}
-	while (g_hist->offset < offset_save)
+	while (g_hist.offset < offset_save)
 		next_hist();
 }
 
@@ -68,10 +66,10 @@ void	print_hist_compl(void)
 	int				len;
 	int				start_col;
 
-	offset_save = g_hist->offset;
-	hist_compl = g_hist->history_content + g_hist->offset;
-	if (g_hist->offset != 0)
-		hist_compl += 1;
+	if (g_hist.total_lines == 0)
+		return ;
+	offset_save = g_hist.offset;
+	hist_compl = g_hist.history_content + g_hist.offset + 1;
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
 	if (hist_compl)
 	{
@@ -86,7 +84,7 @@ void	print_hist_compl(void)
 		ft_putstr(tgoto(g_termcaps.ch, 0, start_col));
 		go_up(start_col, hist_compl + g_dis.cbpos);
 	}
-	while (g_hist->offset < offset_save)
+	while (g_hist.offset < offset_save)
 		next_hist();
 }
 
