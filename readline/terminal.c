@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 15:36:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 18:48:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ void		resize_terminal(int signo)
 int			init_terminal(void)
 {
 	if (g_term.terminal_name == NULL)
-		g_term.terminal_name = "dumb";
+		g_term.terminal_name = "xterm-256color"; // Trick for termcaps
+//		g_term.terminal_name = "dumb";
+	if (ft_strcmp(g_term.terminal_name, "xterm-256color")) // Trick for termcaps
+		g_term.terminal_name = "xterm-256color";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
 	if (tgetent(NULL, g_term.terminal_name) <= 0)
