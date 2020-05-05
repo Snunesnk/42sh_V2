@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/04 18:10:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 16:25:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ static int	main_loop(int *status)
 	char	*input;
 
 	input = NULL;
+	prompt = NULL;
 	if (g_shell_is_interactive)
 	{
 		prompt = get_prompt();
