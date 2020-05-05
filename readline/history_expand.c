@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 19:35:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 22:32:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ char	*expand_num(char *value, int start, int sign)
 	int		entry;
 
 	hist_entry = NULL;
-	entry = ft_atoi(value + start) - 1;
+	entry = ft_atoi(value + start);
 	if (sign < 0)
 		entry = g_hist.nb_line - entry;
-	if (entry > g_hist.total_lines || entry < 0 || g_hist.total_lines <= 1)
+	if (entry > g_hist.total_lines || entry <= 0)
 	{
 		ft_dprintf(STDERR_FILENO, "%s: !%s: event not found\n",
 						g_progname, value);
