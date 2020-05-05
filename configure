@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# check ltermcaps
+# check graphviz
+# check prequisitists for job control etc
+# check preauisitis for compilation
+# exports 
+export MAKEFLAGS="-j"
+
+# make
+make
