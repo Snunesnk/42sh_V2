@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/04 14:53:50 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 16:13:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void							free_hash_table(void);
 
 extern int						g_job_control_enabled;
 extern int						g_noexit;
+extern int						g_last_exit;
+extern int						g_force_exit;
 extern int						g_oneline;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
@@ -207,6 +209,7 @@ void							add_job_to_queue(t_job *j);
 void							init_shell_sset(void);
 void							restore_procmask(void);
 int								job_is_stopped(t_job *j);
+int								are_stopped_jobs(void);
 int								job_is_completed(t_job *j);
 void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
