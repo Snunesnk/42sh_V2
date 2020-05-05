@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 08:17:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 11:37:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 11:44:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ long		ft_atol(const char *str)
 	i = 0;
 	nbr = 0;
 	sign = 1;
+	g_errno = E_EINVAL;
 	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
 		++i;
 	if (str[i] == '-' || str[i] == '+')
@@ -58,6 +59,7 @@ long		ft_atol(const char *str)
 	}
 	while (str[i] > 47 && str[i] < 58)
 	{
+		g_errno = 0;
 		nbr = overflow(sign, nbr * 10,
 			(str[i] ^ ((1 << 5) | (1 << 4))));
 		if (g_errno == E_EOVERFLOW)
