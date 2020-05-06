@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 18:48:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 09:40:29 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,7 @@ static int	check_term_capabilities(void)
 	while (i < (int)NUM_TC_STRINGS)
 	{
 		if (tgetflag(g_tc_strings[i].var) == ERR)
-		{
-			ft_dprintf(STDERR_FILENO, "Terminal type '%s' is not defined in termcap database (or have too few informations).\n", g_term.terminal_name);
 			return (ERR);
-		}
 		++i;
 	}
 	return (0);
@@ -108,10 +105,7 @@ void		resize_terminal(int signo)
 int			init_terminal(void)
 {
 	if (g_term.terminal_name == NULL)
-		g_term.terminal_name = "xterm-256color"; // Trick for termcaps
-//		g_term.terminal_name = "dumb";
-	if (ft_strcmp(g_term.terminal_name, "xterm-256color")) // Trick for termcaps
-		g_term.terminal_name = "xterm-256color";
+		g_term.terminal_name = "dumb";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
 	if (tgetent(NULL, g_term.terminal_name) <= 0)
