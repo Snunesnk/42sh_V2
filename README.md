@@ -49,8 +49,8 @@ signaux: implementer CTRL Z et CTRL \ etc
 
 DONE => job control: revoir le comportement des sousshells comme ls && cat &  ou   vim && ls -l &.
 
-exit: revoir la gestion des arguments faite par exit ex: 9999999999999999999999999 etc.
-exit: mettre en place une procedure avec <time.h> pour ne pas quitter le shell lorsque des jobs sont en background.
+DONE => exit: revoir la gestion des arguments faite par exit ex: 9999999999999999999999999 etc.
+DONE => exit: mettre en place une procedure pour ne pas quitter le shell lorsque des jobs sont en background.
 
 fc: modification imprevu de fichier (je me souviens plus comment le bug etait produit).
 
