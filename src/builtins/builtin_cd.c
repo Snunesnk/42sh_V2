@@ -3,6 +3,28 @@
 #include "libft.h"
 #include "error.h"
 
+int cd_internal(char *directory, _Bool p_option);
+
+
+static int	cd_parse_opt(int argc, char **argv, _Bool *p)
+{
+	int	opt;
+
+	*p = 0;
+	g_opterr = 1;
+	g_optind = 1;
+	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
+	{
+		if (opt == 'P')
+			*p |= 1;
+		else if (opt == '?')
+		{
+			pbierror("usage: %s [-L|-P] [dir]", g_builtin_name);
+			return (2);
+		}
+	}
+	return (e_success);
+}
 /*
 int	concatenable_operand_while(const char *str)
 {
@@ -30,30 +52,25 @@ int	concatenable_operand(const char *str)
 	}
 	return (concatenable_operand_while(str));
 }
+*/
 
-int	gfp_env(struct s_cd *cd)
-{ // Case it goes home: cd
-	cd->tmp = cd->path;
-	if (!(cd->path = get_shell_var("HOME", g_env)))
+
+static int	go_home(_Bool p_option)
+{
+	char	*home;
+
+	home = get_shell_var("HOME", g_env);
+	if (!home)
 	{
 		pbierror("HOME not set");
 		return (1);
 	}
-	if (cd->path)
-		ft_memdel((void**)&cd->tmp);
-	if (cd->path && !cd->path[0])
-	{
-		cd->path = NULL;
-		cd->empty = 1;
+	else if (!home[0])
 		return (0);
-	}
-	if (cd->p)
-		cd->path = ft_realpath(cd->path, NULL);
 	else
-		cd->path = ft_strdup(cd->path);
-	return (0);
+		return (cd_internal(home, p_option));
 }
-
+/*
 int	gfp_previous(struct s_cd *cd)
 { // Case it goes previous: cd -
 	if (!(cd->oldpwd = get_shell_var("OLDPWD", g_env)))
@@ -178,26 +195,6 @@ int	cdpath_concat(char **path, char *env)
 	return (e_success);
 }
 
-int	getfullpath(char **argv, struct s_cd *cd)
-{
-	if (!argv[g_optind])
-		return (gfp_env(cd));
-	else if (!ft_strcmp(argv[g_optind], "-"))
-		return (gfp_previous(cd));
-	else if (*(argv[g_optind]) == '/')
-		cd->path = ft_strdup(argv[g_optind]);
-	else if (concatenable_operand(argv[g_optind]))
-		return (gfp_concatenable(argv, cd));
-	else
-	{
-		cd->path = ft_strdup(argv[g_optind]);
-		cd->tmp = cd->path;
-		cd->path = ft_strnjoin(3, g_pwd, "/", cd->tmp);
-		ft_memdel((void**)&(cd->tmp));
-	}
-	return (0);
-}
-
 int	stat_failure(char **argv, struct s_cd *cd)
 {
 	if (!argv[g_optind] || !*argv[g_optind])
@@ -221,27 +218,8 @@ static int	change_dir(const char *path, _Bool p, _Bool empty)
 		return (ret);
 	return (e_success);
 }
-
-static int	cd_parse_opt(int argc, char **argv, _Bool *p)
-{
-	int	opt;
-
-	*p = 0;
-	g_opterr = 1;
-	g_optind = 1;
-	while ((opt = ft_getopt(argc, argv, "+LP")) != -1)
-	{
-		if (opt == 'P')
-			*p |= 1;
-		else if (opt == '?')
-		{
-			pbierror("usage: %s [-L|-P] [dir]", g_builtin_name);
-			return (2);
-		}
-	}
-	return (e_success);
-}
-
+*/
+/*
 static int	access_failure(char **argv, struct s_cd *cd)
 {
 	pbierror("%s: Permission denied", argv[g_optind]);
@@ -266,15 +244,12 @@ static int	changedir_failure(struct s_cd *cd)
 	}
 }
 */
-int			cmd_cd(int argc, char **argv)
-{
-	int	err;
 
-	err = 0;
-	(void)argv;
-	(void)argc;
-/*	if ((err = cd_parse_opt(argc, argv, &cd.p)))
-		return (err);
+int	cd_internal(char *directory, _Bool p_option)
+{
+	if (!directory) // Case: cd | cd -L | cd -P
+		return (go_home(p_option));
+/*
 	if ((cd.ret = getfullpath(argv, &cd)))
 		return (cd.ret);
 	if (cd.empty)
@@ -293,5 +268,17 @@ int			cmd_cd(int argc, char **argv)
 	if ((cd.ret = change_dir(cd.path, cd.p, cd.empty)))
 		return (changedir_failure(&cd));
 	ft_memdel((void **)&(cd.path));
-*/	return (err);
+*/
+	return (1);
+}
+
+int			cmd_cd(int argc, char **argv)
+{
+	_Bool	p_option;
+
+	p_option = 0;
+	if (cd_parse_opt(argc, argv, &p_option))
+		return (2);
+	else
+		return (cd_internal(argv[g_optind], p_option));
 }
