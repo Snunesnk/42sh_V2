@@ -39,7 +39,7 @@ DONE => autocompletions: suggestions dans cd dysfonctionnelles
 cd: encore casse, cd -P /lib puis cd - faisait leaks. A tester avec un environnement modifier.
 
 export: parsing de nom de variables (check POSIX, un nom de var ne doit pas commencer par un chiffre etc). Format de nom de variables : alpha ou underscore pour première lettre, puis alnum pour le reste
-export: verifier tous les messages d'erreurs
+DONE => export: verifier tous les messages d'erreurs
 
 env: peut produire des leaks dans certains cas, le comportement n'a pu etre reproduit mais la commande incriminee est: env cmd env
 
