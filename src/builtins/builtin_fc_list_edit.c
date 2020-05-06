@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/03 12:59:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 22:09:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,30 @@ static int	get_editor(char **editor, int opt_list)
 
 void		print_req_hist(int fd, int opt_list, int hist_beg, int hist_end)
 {
+	char	*tmp;
+
+	tmp = NULL;
 	if (opt_list & FC_R_OPTION)
 		swap_entries(&hist_end, &hist_beg);
-	while (hist_beg < g_hist->nb_line)
-		prev_hist();
-	while (g_hist->nb_line > 0 && g_hist->nb_line <= g_hist->total_lines)
+	while (hist_beg < g_hist.nb_line)
+		tmp = prev_hist();
+	while (g_hist.nb_line <= g_hist.total_lines)
 	{
 		if (!(opt_list & FC_N_OPTION))
-			ft_dprintf(fd, "%d", g_hist->nb_line);
+			ft_dprintf(fd, "%d", g_hist.nb_line);
 		if (opt_list & FC_L_OPTION)
 			ft_dprintf(fd, "\t");
-		ft_dprintf(fd, "%s\n", g_hist->history_content + g_hist->offset \
-				+ ((g_hist->offset == 0) ? 0 : 1));
-		if (g_hist->nb_line == hist_end)
+		ft_dprintf(fd, "%s\n", tmp);
+		if (g_hist.nb_line == hist_end)
 			break ;
 		if (!(opt_list & FC_R_OPTION))
-			next_hist();
+			tmp = next_hist();
+		else if (g_hist.nb_line == 1)
+			break ;
 		else
-			prev_hist();
+			tmp = prev_hist();
 	}
-	while (g_hist->nb_line < g_hist->total_lines)
+	while (g_hist.nb_line <= g_hist.total_lines)
 		next_hist();
 }
 
@@ -80,7 +84,7 @@ int			re_execute_cmd(int opt_list)
 	if ((fd = open(".monkeyshell_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
 			&& pbierror("cannot open temporary file"))
 		return (1);
-	while (get_next_line(fd, &command) > 0)
+	while ((command = get_input_fd(fd)))
 	{
 		if (!add_pending_cmd(command))
 			break ;
@@ -122,16 +126,15 @@ int			exec_fc_other_opt(int opt_list, char **args)
 
 	h_end = -1;
 	h_beg = -1;
-	prev_hist();
-	if (*args && g_hist->used != 0)
+	if (*args && g_hist.total_lines > 0)
 		get_hist_num(args, &opt_list, &h_end, &h_beg);
 	else
 	{
-		h_end = g_hist->nb_line;
+		h_end = g_hist.total_lines;
 		if ((h_beg = (opt_list & FC_L_OPTION) ? h_end - 15 : h_end) < 0)
 			h_beg = 1;
 	}
-	if (h_end <= 0 || h_beg <= 0 || g_hist->total_lines == 0)
+	if (h_end <= 0 || h_beg <= 0)
 	{
 		pbierror("history specification out of range");
 		return (e_invalid_input);

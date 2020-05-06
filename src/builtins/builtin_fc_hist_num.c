@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/02 22:38:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 19:26:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int			get_alpha_value(char *args)
 	if (!(get_beg_matching_hist(&tmp, args)))
 		hist_num = -1;
 	else
-		hist_num = g_hist->nb_line;
-	while (g_hist->nb_line < g_hist->total_lines)
+		hist_num = g_hist.nb_line;
+	while (g_hist.nb_line < g_hist.total_lines)
 		next_hist();
 	return (hist_num);
 }
@@ -34,11 +34,10 @@ int			get_numeric_value(char *args)
 	if (*args == '-' && !args[1])
 		return (get_alpha_value(args));
 	hist_num = ft_atoi(args);
-	if (hist_num < 0)
-	{
-		hist_num -= 1;
-		hist_num = g_hist->total_lines + hist_num;
-	}
+	if (hist_num < 1)
+		hist_num = 1;
+	else if (hist_num > g_hist.total_lines)
+		hist_num = g_hist.total_lines;
 	return (hist_num);
 }
 
@@ -62,7 +61,7 @@ void		get_hist_num(char **args, int *opt_list, int *hist_end, \
 	args += 1;
 	if (!*args)
 	{
-		*hist_end = (*opt_list & FC_L_OPTION) ? g_hist->total_lines - 2 \
+		*hist_end = (*opt_list & FC_L_OPTION) ? g_hist.total_lines \
 					: *hist_beg;
 	}
 	else if (ft_str_is_numeric(*args) || (**args == '-' \

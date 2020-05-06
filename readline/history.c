@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/03 19:46:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 22:14:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,17 @@
 #include "error.h"
 #include "shell.h"
 
-struct s_hist	*g_hist = NULL;
-char		*g_vline = NULL;
-char		*g_hist_loc = NULL;
+struct s_hist	g_hist =
+{
+	.history_content = NULL,
+	.hist_loc = NULL,
+	.offset = 1,
+	.used = 1,
+	.capacity = 1,
+	.nb_line = 1,
+	.total_lines = 0,
+	.hist_ignore = 0,
+};
 
 void	init_history(void)
 {
@@ -27,25 +35,16 @@ void	init_history(void)
 	struct stat	st;
 
 	buf = NULL;
-	if (!(g_hist = (struct s_hist *)ft_memalloc(sizeof(*g_hist))))
-	{
-		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
-		return ;
-	}
-	g_hist->history_content = NULL;
-	g_hist->offset = 0;
-	g_hist->used = 0;
-	g_hist->capacity = 0;
-	g_hist->total_lines = 0;
-	g_hist->hist_ignore = 0;
 	if (!get_history_loc())
 		return ;
-	stat(g_hist_loc, &st);
-	if ((fd = open(g_hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
+	stat(g_hist.hist_loc, &st);
+	if ((fd = open(g_hist.hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 		return ;
-	while (st.st_size > 0 && get_next_cmd(fd, &buf) > 0)
-		add_hentry(buf, ft_strlen(buf), 1);
-	g_hist->nb_line = g_hist->total_lines;
+	while (st.st_size > 0 && (buf = get_input_fd(fd)))
+	{
+		add_hentry(buf, ft_strlen(buf));
+		free(buf);
+	}
 	close(fd);
 }
 
@@ -54,15 +53,15 @@ int		get_history_loc(void)
 	char	*user_home;
 
 	user_home = NULL;
-	if (g_hist_loc)
-		free(g_hist_loc);
-	g_hist_loc = NULL;
-	if (!(user_home = getenv("HOME")))
+	if (g_hist.hist_loc)
+		free(g_hist.hist_loc);
+	g_hist.hist_loc = NULL;
+	if (!(user_home = get_shell_var("HOME", g_env)))
 	{
 		ft_printf("%s: HOME not set\n", g_progname);
 		return (0);
 	}
-	if (!(g_hist_loc = ft_strjoin(user_home, "/.monkeyshell_history")))
+	if (!(g_hist.hist_loc = ft_strjoin(user_home, "/.monkeyshell_history")))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (0);
@@ -76,48 +75,47 @@ int		is_invalid_hentry(char *str)
 	int		i;
 
 	i = 0;
+	while (g_hist.nb_line <= g_hist.total_lines)
+		next_hist();
+	if (ft_str_isspace(str) || !*str)
+		return (1);
 	while (str[i])
 	{
-		if (!ft_isprint(str[i]))
+		if (!ft_isprint(str[i]) && str[i] != '\n')
 			return (1);
 		i++;
 	}
-	while (g_hist->nb_line < g_hist->total_lines)
-		next_hist();
 	tmp = prev_hist();
 	next_hist();
-	if (!tmp)
+	if (!tmp || g_hist.total_lines == 0)
 		return (0);
 	if (ft_strequ(tmp, str))
 		return (1);
 	return (0);
-
 }
 
-void	add_hentry(char *buf, int size, int mode)
+void	add_hentry(char *buf, int size)
 {
-	if (!*buf || ft_str_isspace((char *)buf) || !g_shell_is_interactive)
+	if (!*buf || !g_shell_is_interactive)
 		return ;
-	if ((g_hist->hist_ignore = is_invalid_hentry(buf)))
+	if ((g_hist.hist_ignore = is_invalid_hentry(buf)))
 		return ;
-	if (size + g_hist->used >= g_hist->capacity - 5 || !g_hist->capacity)
+	if (!g_hist.history_content || size + g_hist.used >= g_hist.capacity - 5)
 	{
-		if (!g_hist->capacity)
-			g_hist->capacity = 1;
-		if (!(g_hist->history_content = (char *)ft_memrealloc(\
-						(void **)&(g_hist->history_content), g_hist->used, \
-						sizeof(char) * (g_hist->capacity + size) * 3)))
+		if (!(g_hist.history_content = (char *)ft_memrealloc(\
+						(void **)&(g_hist.history_content), g_hist.used, \
+						sizeof(char) * (g_hist.capacity + size + 1) * 3)))
 		{
 			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 			return ;
 		}
-		g_hist->capacity = (g_hist->capacity + size) * 3;
+		g_hist.capacity = (g_hist.capacity + size + 1) * 3;
 	}
-	ft_strncpy(g_hist->history_content + g_hist->used, buf, size);
-	g_hist->used += size + mode;
-	g_hist->offset = g_hist->used - 1;
-	g_hist->total_lines += 1;
-	g_hist->nb_line = g_hist->total_lines;
+	ft_strncpy(g_hist.history_content + g_hist.used, buf, size);
+	g_hist.used += size + 1;
+	g_hist.offset = g_hist.used;
+	g_hist.total_lines += 1;
+	g_hist.nb_line = g_hist.total_lines + 1;
 }
 
 void	*ft_memrealloc(void **content, size_t old_size, size_t new_size)
@@ -132,7 +130,7 @@ void	*ft_memrealloc(void **content, size_t old_size, size_t new_size)
 		return (NULL);
 	old_ptr = (char *)*content;
 	new_ptr = (char *)new_content;
-	while (i < old_size)
+	while (old_ptr && i < old_size)
 	{
 		new_ptr[i] = old_ptr[i];
 		i++;

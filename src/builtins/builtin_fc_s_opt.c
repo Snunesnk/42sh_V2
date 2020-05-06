@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/03 13:06:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 19:17:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		exec_fc_s_opt(char **args)
 		pbierror("no command found");
 		if (sub_list->pat)
 			free_substitute(sub_list);
-		while (g_hist->nb_line < g_hist->total_lines)
+		while (g_hist.nb_line <= g_hist.total_lines)
 			next_hist();
 		return (e_command_not_found);
 	}
@@ -105,6 +105,6 @@ int		exec_fc_s_opt(char **args)
 		return (e_cannot_allocate_memory);
 	free_substitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
-	add_hentry(tmp, ft_strlen(tmp), 1);
+	add_hentry(tmp, ft_strlen(tmp));
 	return (exec_input(tmp));
 }
