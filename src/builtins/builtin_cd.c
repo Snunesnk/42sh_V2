@@ -140,11 +140,15 @@ static char	*concatenate_oldpwd(void)
 
 	curpath = get_shell_var("OLDPWD", g_env);
 	if (!curpath)
+	{
 		pbierror("OLDPWD not set\n");
+		curpath = ft_strdup("");
+	}
 	else if (curpath && !curpath[0])
-		write(STDOUT_FILENO, "\n", 1);
+		ft_printf("\n");
 	else
 		curpath = ft_strdup(curpath);
+	ft_printf("%s\n", curpath);
 	return (curpath);
 }
 
