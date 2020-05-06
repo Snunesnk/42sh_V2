@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/02 11:38:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 16:47:34 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,18 @@ int			exec_env_command(char **argv)
 	argv = ft_tabcpy(argv);
 	if (!g_job_control_enabled || !(pid = fork()))
 	{
+		restore_procmask();
 		if (argv)
 			ret = execute_env_process(argv, envp, NULL, NULL);
 		exit_clean(ret);
 	}
 	else if (pid < 0)
-	{
 		ft_dprintf(STDERR_FILENO, "fork(2) failed\n");
-		ret = 1;
-	}
 	else if (pid)
 		waitpid(pid, &ret, WUNTRACED);
+	if (pid > 0 && WIFSTOPPED(ret))
+		kill(pid, SIGKILL);
 	ft_tabdel(&envp);
 	ft_tabdel(&argv);
-	return (ret);
+	return (pid < 0 ? 1 : ret);
 }

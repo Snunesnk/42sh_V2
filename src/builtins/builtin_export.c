@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 12:20:11 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/06 17:10:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ static int	exec_export(char **args, int option)
 		if (get_assignment(name, &name, &value) == SUCCESS)
 			*value++ = 0;
 		if (!*name || *name == '=')
-			ret = pbierror(g_builtin_name,
-				"'%s': not a valid identifier", name);
+			ret = pbierror("'%s': not a valid identifier", name);
 		else if (value)
 			set_shell_var(name, value, flags | SET, &g_env);
 		else if (flags)
