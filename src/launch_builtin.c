@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:49 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/27 17:40:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 14:47:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ int			launch_builtin(t_process *p)
 	unset_temp_shell_variables();
 	if (p && p->redir)
 		undo_redirection(p->redir);
+	p->completed = 1;
 	return (ret);
 }
