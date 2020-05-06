@@ -114,10 +114,12 @@ static char	*concatenate_cdpath(char *directory)
 //	   names a directory. In either case, if the resulting string names an existing directory, set curpath to that
 //	   string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all
 //	   pathnames have been tested.
-	cdpath = ft_strdup(get_shell_var("CDPATH", g_env));
+	pathname = NULL;
+	cdpath = get_shell_var("CDPATH", g_env);
 	cdpath_origin = cdpath;
 	if (!cdpath || !cdpath[0])
 		return (NULL);
+	cdpath = ft_strdup(cdpath);
 	while ((dir = ft_strsep(&cdpath, ":")))
 	{
 		pathname = ft_strnjoin(3, dir, "/", directory);
@@ -125,6 +127,7 @@ static char	*concatenate_cdpath(char *directory)
 		ft_printf("test: %s\n", pathname); // DEBUGG
 		if (!access(pathname, X_OK))
 			break ;
+		ft_memdel((void**)&pathname);
 	}
 	ft_printf("returned cdpath: %s\n", pathname); // DEBUGG
 	if (pathname)
@@ -245,10 +248,10 @@ int	cd_internal(char *directory, _Bool p_option)
 		return (go_home(p_option));
 //	3. if the directory operand begins with a <slash> character, set curpath to the operand and proceed to step 7.
 	else if (directory[0] == '/')
-		curpath = directory;
+		curpath = ft_strdup(directory);
 //	4. If the first component of the directory operand is dot or dot-dot, proceed to step 6.
 	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, ".."))
-		(void)directory;
+		curpath = ft_strdup(directory); // 6. Set curpath to the directory operand.
 //	5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH
 //	   (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname,
 //	   a <slash> character if that pathname did not end with a <slash> character, and the directory operand names
@@ -258,9 +261,12 @@ int	cd_internal(char *directory, _Bool p_option)
 //	   pathnames have been tested.
 	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
+
 //	6. Set curpath to the directory operand.
-	if (!curpath)
-		curpath = directory;
+//	if (!curpath)
+//		curpath = directory;
+
+
 //	7. If the -P option is in effect, proceed to step 10. If curpath does not begin with a <slash> character,
 //	   set curpath to the string formed by the concatenation of the value of PWD, a <slash> character if the
 //	   value of PWD did not end with a <slash> character, and curpath.
@@ -309,6 +315,7 @@ int	cd_internal(char *directory, _Bool p_option)
 		return (changedir_failure(&cd));
 	ft_memdel((void **)&(cd.path));
 */
+	ft_memdel((void**)&curpath);
 	return (1);
 }
 
