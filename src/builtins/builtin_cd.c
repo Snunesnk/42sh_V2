@@ -100,8 +100,8 @@ static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 {
 	char	*oldpwd;
 
-	if (!curpath[0])
-		return (1);
+	if (!curpath || !curpath[0])
+		return (0);
 	if (check_access(curpath, directory))
 		return (1);
 	else if (chdir(curpath))
