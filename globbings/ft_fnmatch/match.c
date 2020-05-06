@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 13:26:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 12:04:27 by yforeau          ###   ########.fr       */
+/*   Created: 2020/05/06 12:18:39 by yforeau           #+#    #+#             */
+/*   Updated: 2020/05/06 12:18:41 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int		explicit_match(char string, t_flags *flags)
 {
 	return ((string == '/' && (flags->cur & FT_FNM_PATHNAME))
 		|| (string == '.' && (flags->cur & FT_IFNM_LEADING_PERIOD)));
+
 }
 
 int		match_qmark(const char **pattern, const char **string,
@@ -50,7 +51,7 @@ int		match_star(const char **pattern, const char **string,
 	while ((*pattern)[1] == '*')
 		++(*pattern);
 	if (explicit_match(**string, flags))
-		return (*++(*pattern) && match_reg(pattern, string));
+		return (**string != '.' && *++(*pattern) && match_reg(pattern, string));
 	match = ft_fnmatch_internal(*pattern + 1, *string, *flags);
 	if (match > 0 && **string)
 		match = ft_fnmatch_internal(*pattern, *string + 1, *flags);
