@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 09:40:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 17:55:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ struct termios g_termios;
 struct termios g_termios_backup;
 struct s_termcaps g_termcaps =
 {
-	.gdo = NULL,
-	.gup = NULL,
 	.bl = NULL,
 	.cd = NULL,
 	.clreol = NULL,
@@ -28,7 +26,9 @@ struct s_termcaps g_termcaps =
 	.do1 = NULL,
 	.backspace = NULL,
 	.forward_char = NULL,
-	.up = NULL
+	.up = NULL,
+	.bw = NULL,
+	.am = NULL
 };
 
 struct s_term g_term =
@@ -38,8 +38,6 @@ struct s_term g_term =
 
 const struct s_termcaps_string g_tc_strings[] =
 {
-	{"DO", &g_termcaps.gdo},
-	{"UP", &g_termcaps.gup},
 	{"bl", &g_termcaps.bl},
 	{"cd", &g_termcaps.cd},
 	{"ce", &g_termcaps.clreol},
@@ -50,7 +48,8 @@ const struct s_termcaps_string g_tc_strings[] =
 	{"le", &g_termcaps.backspace},
 	{"nd", &g_termcaps.forward_char},
 	{"up", &g_termcaps.up},
-	{"cm", &g_termcaps.cm}
+	{"bw", &g_termcaps.bw},
+	{"am", &g_termcaps.am}
 };
 
 static int	check_term_capabilities(void)
