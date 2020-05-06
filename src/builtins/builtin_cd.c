@@ -31,7 +31,6 @@ static int	go_home(_Bool p_option)
 	char	*home;
 
 	home = get_shell_var("HOME", g_env);
-//	1. If no directory operand is given and the HOME environment variable is empty or undefined, the default behavior is implementation-defined and no further steps shall be taken.
 	if (!home)
 	{
 		pbierror("HOME not set");
@@ -40,7 +39,6 @@ static int	go_home(_Bool p_option)
 	else if (!home[0])
 		return (0);
 	else
-//	2. If no directory operand is given and the HOME environment variable is set to a non-empty value, the cd utility shall behave as if the directory named in the HOME environment variable was specified as the directory operand.
 		return (cd_internal(home, p_option));
 }
 
@@ -51,85 +49,73 @@ static char	*concatenate_cdpath(const char *directory)
 	char	*dir;
 	char	*pathname;
 
-//	5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH
-//	   (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname,
-//	   a <slash> character if that pathname did not end with a <slash> character, and the directory operand names
-//	   a directory. If the pathname is null, test if the concatenation of dot, a <slash> character, and the operand
-//	   names a directory. In either case, if the resulting string names an existing directory, set curpath to that
-//	   string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all
-//	   pathnames have been tested.
 	pathname = NULL;
 	cdpath = get_shell_var("CDPATH", g_env);
-	cdpath_origin = cdpath;
 	if (!cdpath || !cdpath[0])
 		return (NULL);
 	cdpath = ft_strdup(cdpath);
+	cdpath_origin = cdpath;
 	while ((dir = ft_strsep(&cdpath, ":")))
 	{
 		pathname = ft_strnjoin(3, dir, "/", directory);
 		pathname = ft_resolvepath(pathname);
-		ft_printf("test: %s\n", pathname); // DEBUGG
 		if (!access(pathname, X_OK))
 			break ;
 		ft_memdel((void**)&pathname);
 	}
-	ft_printf("returned cdpath: %s\n", pathname); // DEBUGG
 	if (pathname)
 		ft_printf("%s\n", pathname);
 	ft_memdel((void**)&cdpath_origin);
 	return (pathname);
 }
 
-/*
-int	stat_failure(char **argv, struct s_cd *cd)
+static int	check_access(const char *curpath, const char *directory)
 {
-	if (!argv[g_optind] || !*argv[g_optind])
-		pbierror("%s: No such file or directory", cd->path);
-	else
-		pbierror("%s: No such file or directory",
-			argv[g_optind]);
-	ft_memdel((void**)&(cd->path));
-	return (1);
-}
+	struct stat	bf;
 
-static int	change_dir(const char *path, _Bool p, _Bool empty)
-{
-	int	ret;
-
-	if (chdir(path))
-		return (e_invalid_input);
-	if ((ret = set_oldpwd()))
-		return (ret);
-	if ((ret = refresh_pwd(path, p)))
-		return (ret);
+	if (access(curpath, F_OK))
+	{
+		pbierror("%s: No such file or directory", directory);
+		return (1);
+	}
+	else if (stat(curpath, &bf))
+	{
+		pbierror("stat(2) failed to find `%s'", directory);
+		return (1);
+	}
+	else if (!S_ISDIR(bf.st_mode))
+	{
+		pbierror("%s: Not a directory", directory);
+		return (1);
+	}
+	else if (access(curpath, X_OK))
+	{
+		pbierror("%s: Permission denied", directory);
+		return (1);
+	}
 	return (e_success);
 }
-*/
-/*
-static int	access_failure(char **argv, struct s_cd *cd)
+
+static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 {
-	pbierror("%s: Permission denied", argv[g_optind]);
-	ft_memdel((void**)&cd->path);
-	return (1);
+	char	*oldpwd;
+
+	if (check_access(curpath, directory))
+		return (1);
+	else if (chdir(curpath))
+	{
+		pbierror("%s: chdir(2) failed to change directory", curpath);
+		return (2);
+	}
+	if (p_option)
+		curpath = ft_realpath(curpath, NULL);
+	oldpwd = get_shell_var("PWD", g_env);
+	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
+	set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
+	ft_memdel((void**)&curpath);
+	return (e_success);
 }
 
-static int	changedir_failure(struct s_cd *cd)
-{
-	if (cd->ret != e_invalid_input)
-	{
-		psherror(cd->ret, g_builtin_name, e_cmd_type);
-		ft_memdel((void**)&(cd->path));
-		return (g_errordesc[cd->ret].code);
-	}
-	else
-	{
-		pbierror("%s: %s", cd->path,
-		g_errordesc[e_no_such_file_or_directory].message);
-		ft_memdel((void**)&(cd->path));
-		return (e_invalid_input);
-	}
-}
-*/
 static char	*concatenate_pwd(const char *directory)
 {
 	char	*curpath;
@@ -154,71 +140,25 @@ int	cd_internal(const char *directory, _Bool p_option)
 
 	curpath = NULL;
 	cdpath = NULL;
-//	1. & 2. if no dir, go_home (step 1. and 2.)
-	if (!directory) // Case: cd | cd -L | cd -P
+	if (!directory)
 		return (go_home(p_option));
-//	3. if the directory operand begins with a <slash> character, set curpath to the operand and proceed to step 7.
 	else if (directory[0] == '/')
 		curpath = ft_strdup(directory);
-//	4. If the first component of the directory operand is dot or dot-dot, proceed to step 6.
 	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, ".."))
-		curpath = ft_strdup(directory); // 6. Set curpath to the directory operand.
-//	5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH
+		(void)curpath;
 	else if (!ft_strcmp(directory, "-"))
 	{
 		(void)curpath; /* similar to PWD */
 	}
 	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
-//	7. If the -P option is in effect, proceed to step 10. If curpath does not begin with a <slash> character,
-	if (!p_option && !curpath)
+	if (!curpath)
 		curpath = concatenate_pwd(directory);
-//	8. The curpath value shall then be converted to canonical form as follows, considering each component
 	curpath = ft_resolvepath(curpath);
-	ft_printf("2-curpath: %s\n", curpath); // DEBUGG
-
-
-
-//	9.
-
-
-
-
-
-//	10. The cd utility shall then perform actions equivalent to the chdir() function called with curpath as the
-//	    path argument. If these actions fail for any reason, the cd utility shall display an appropriate error
-//	    message and the remainder of this step shall not be executed. If the -P option is not in effect, the PWD
-//	    environment variable shall be set to the value that curpath had on entry to step 9 (i.e., before conversion
-//	    to a relative pathname). If the -P option is in effect, the PWD environment variable shall be set to the
-//	    string that would be output by pwd -P. If there is insufficient permission on the new directory, or on any
-//	    parent of that directory, to determine the current working directory, the value of the PWD environment
-//	    variable is unspecified.
-	
-
-
-
-/*
-	if ((cd.ret = getfullpath(argv, &cd)))
-		return (cd.ret);
-	if (cd.empty)
-		ft_printf("\n");
-	if (!cd.empty && !(cd.tmp = ft_resolvepath(cd.path)))
-	{
-		pbierror("%s: %s", argv[g_optind], ft_strerror(g_errno));
-		ft_memdel((void **)&(cd.path));
-		return (1);
-	}
-	cd.path = cd.tmp;
-	if (!cd.empty && stat(cd.path, &(cd.buf)))
-		return (stat_failure(argv, &cd));
-	if (!cd.empty && access(cd.path, X_OK))
-		return (access_failure(argv, &cd));
-	if ((cd.ret = change_dir(cd.path, cd.p, cd.empty)))
-		return (changedir_failure(&cd));
-	ft_memdel((void **)&(cd.path));
-*/
-	ft_memdel((void**)&curpath);
-	return (1);
+	ft_printf("curpath: %s\n", curpath); // DEBUGG
+	if (ft_strlen(curpath) + 1 > PATH_MAX)
+		return (2);
+	return (change_dir(curpath, directory, p_option));
 }
 
 int			cmd_cd(int argc, char **argv)
