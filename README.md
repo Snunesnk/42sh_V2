@@ -29,8 +29,8 @@ Revoir l'ensemble du fonctionnement du shell avec env -i et env modifie:
 - input (termcapabilities check)
 - builtins: cd, env, export, historique, etc (ex: env -i HOME=okok puis un cd)
 
-quotes: dans les heredoc, pas de quotes.
-quotes: dans le subprompt venant du parser les quotes doivent etre fonctionnelles
+DONE => quotes: dans les heredoc, pas de quotes.
+DONE => quotes: dans le subprompt venant du parser les quotes doivent etre fonctionnelles
 
 DONE => autocompletion: dans le subprompt venant du parser la suggestion doit etre fonctionnelle, mais pas dans les heredoc. etc (comme un input de base).
 
@@ -47,7 +47,7 @@ singaux: revoir toutes les valeurs de retour des signaux
 signaux: filtrer messages suivant s'ils sont envoyes depuis la ligne de commande ou par le child
 signaux: implementer CTRL Z et CTRL \ etc
 
-job control: revoir le comportement des sousshells comme ls && cat &  ou   vim && ls -l &.
+DONE => job control: revoir le comportement des sousshells comme ls && cat &  ou   vim && ls -l &.
 
 exit: revoir la gestion des arguments faite par exit ex: 9999999999999999999999999 etc.
 exit: mettre en place une procedure avec <time.h> pour ne pas quitter le shell lorsque des jobs sont en background.
@@ -64,7 +64,7 @@ readline: Mauvais term mode (en fait c'est pas le term mode mais les termcapabil
 Mauvais display d'erreur avec cd
 Bug avec fc -s
 Leak avec le fc quand mauvaise commande sur fc S
-Écho ////// print toujours 2 /
+DONE => Écho ////// print toujours 2 /
 Use after free in history
-Ne pas inib dans les heredocs
+DONE => Ne pas inib dans les heredocs
 Voir pour implementer les raccourcis clavier dans le mode insert de vi
