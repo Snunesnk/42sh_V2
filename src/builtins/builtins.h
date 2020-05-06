@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 17:26:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 11:44:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,6 @@ int				g_jump_arg;
 ** Set function to change binding mode
 */
 void			change_binding(t_o_options **option_list, char *name);
-
-struct			s_cd
-{
-	struct stat		buf;
-	char			*path;
-	char			*oldpwd;
-	char			*tmp;
-	int				ret;
-	_Bool			p;
-};
 
 typedef struct	s_builtins
 {
@@ -175,16 +165,6 @@ extern char	*g_builtin_name;
 ** Functions in builtins_dispatcher.c
 */
 int				builtins_dispatcher(char **argv);
-int				concatenable_operand_while(const char *str);
-int				concatenable_operand(const char *str);
-int				gfp_env(struct s_cd *cd);
-int				gfp_previous(struct s_cd *cd);
-int				gfp_concatenable(char **argv, struct s_cd *cd);
-int				set_oldpwd(void);
-int				refresh_pwd(const char *path, _Bool p);
-int				cdpath_concat(char **path, char *env);
-int				getfullpath(char **argv, struct s_cd *cd);
-int				stat_failure(char **argv, struct s_cd *cd);
 
 extern char	*g_pathname;
 

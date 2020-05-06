@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/05 22:50:33 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/06 11:36:40 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,6 @@ SOURCES :=	main.c \
 		dollar_expansions.c \
 		parameter_expansions.c \
 		parser.c \
-		path.c \
 		path_concat.c \
 		pathname_expansion.c \
 		process.c \
@@ -90,8 +89,6 @@ SOURCES :=	main.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \
-		builtins/builtin_cd_path.c \
-		builtins/builtin_cd_operand.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
 		builtins/builtins_dispatcher.c \
@@ -199,6 +196,6 @@ LDLIBS += $(PATH_LIB)libft.a -ltermcap
 LDFLAGS += $(DEBUG)
 
 CFLAGS += -Wall -Wextra -Werror -g3 -D_POSIX_JOB_CONTROL -D_POSIX_C_SOURCE=200809L $(DEBUG)
-CFLAGS += -fno-builtin -O2
+#CFLAGS += -fno-builtin -O2
 
 DEBUG += -fsanitize=address,undefined

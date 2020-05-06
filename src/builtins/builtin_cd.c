@@ -1,23 +1,215 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtin_cd.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 18:56:47 by abarthel         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "shell.h"
 #include "builtins.h"
 #include "libft.h"
 #include "error.h"
 
-extern char	*g_pwd;
+/*
+int	concatenable_operand_while(const char *str)
+{
+	while (*str)
+	{
+		if (*str != '/')
+			return (1);
+		++str;
+	}
+	return (0);
+}
 
-static int	change_dir(const char *path, _Bool p)
+int	concatenable_operand(const char *str)
+{
+	if (*str == '.')
+	{
+		++str;
+		if (*str == '.')
+		{
+			++str;
+			return (concatenable_operand_while(str));
+		}
+		else
+			return (concatenable_operand_while(str));
+	}
+	return (concatenable_operand_while(str));
+}
+
+int	gfp_env(struct s_cd *cd)
+{ // Case it goes home: cd
+	cd->tmp = cd->path;
+	if (!(cd->path = get_shell_var("HOME", g_env)))
+	{
+		pbierror("HOME not set");
+		return (1);
+	}
+	if (cd->path)
+		ft_memdel((void**)&cd->tmp);
+	if (cd->path && !cd->path[0])
+	{
+		cd->path = NULL;
+		cd->empty = 1;
+		return (0);
+	}
+	if (cd->p)
+		cd->path = ft_realpath(cd->path, NULL);
+	else
+		cd->path = ft_strdup(cd->path);
+	return (0);
+}
+
+int	gfp_previous(struct s_cd *cd)
+{ // Case it goes previous: cd -
+	if (!(cd->oldpwd = get_shell_var("OLDPWD", g_env)))
+	{
+		pbierror("OLDPWD not set");
+		g_optind = 1;
+		return (e_invalid_input);
+	}
+	if (cd->oldpwd && !cd->oldpwd[0])
+	{
+		cd->oldpwd = NULL;
+		cd->empty = 1;
+		return (0);
+	}
+	if (cd->p)
+	{
+		cd->oldpwd = ft_realpath(cd->oldpwd, NULL);
+		cd->path = cd->oldpwd;
+	}
+	else
+		cd->path = ft_strdup(cd->oldpwd);
+	ft_printf("%s\n", cd->path);
+	return (0);
+}
+
+int	gfp_concatenable(char **argv, struct s_cd *cd)
+{
+	cd->path = ft_strdup(argv[g_optind]);
+	if ((cd->ret = cdpath_concat(&(cd->path),
+					NULL)) == e_cannot_allocate_memory)
+		return (g_errordesc[e_cannot_allocate_memory].code);
+	else if (cd->ret == 3)
+	{
+		cd->path = ft_resolvepath(cd->path);
+		ft_printf("%s\n", cd->path);
+	}
+	else
+	{
+		cd->tmp = cd->path;
+		cd->path = ft_strnjoin(3, g_pwd, "/", cd->tmp);
+		ft_memdel((void**)&(cd->tmp));
+	}
+	cd->ret = e_success;
+	return (0);
+}
+
+int	set_oldpwd(void)
+{
+	char	*cwd;
+	_Bool	allocated;
+
+	allocated = 0;
+	if (!(cwd = g_pwd))
+	{
+		allocated = 1;
+		if (!(cwd = getcwd(NULL, 0)))
+			return (e_system_call_error);
+	}
+	if (set_shell_var("OLDPWD", cwd, EXPORT | SET, &g_env))
+	{
+		if (allocated)
+			ft_memdel((void**)&cwd);
+		return (e_cannot_allocate_memory);
+	}
+	if (allocated)
+		ft_memdel((void**)&cwd);
+	return (0);
+}
+
+int	refresh_pwd(const char *path, _Bool p)
+{
+	char	*cwd;
+
+	if (p)
+	{
+		if (!(cwd = getcwd(NULL, 0)))
+			return (e_system_call_error);
+		if (set_shell_var("PWD", cwd, EXPORT | SET, &g_env))
+			return (e_cannot_allocate_memory);
+		if (g_pwd)
+			ft_memdel((void**)&g_pwd);
+		g_pwd = ft_strdup(cwd);
+		ft_memdel((void**)&cwd);
+	}
+	else
+	{
+		if (set_shell_var("PWD", path, EXPORT | SET, &g_env))
+			return (e_cannot_allocate_memory);
+		if (g_pwd)
+			ft_memdel((void**)&g_pwd);
+		g_pwd = ft_strdup(path);
+	}
+	return (0);
+}
+
+int	cdpath_concat(char **path, char *env)
+{
+	char	*beg;
+	char	*dir;
+	char	*pathname;
+
+	if (!(beg = get_shell_var("CDPATH", g_env)) || !beg[0])
+		return (e_success);
+	if (!(env = ft_strdup(beg)))
+		return (e_cannot_allocate_memory);
+	beg = env;
+	while ((dir = ft_strsep(&env, ":")))
+	{
+		if (!(pathname = ft_strnjoin(3, dir, "/", *path)))
+			return (e_cannot_allocate_memory);
+		if (!access(pathname, X_OK))
+			break ;
+		ft_memdel((void**)&pathname);
+	}
+	ft_memdel((void**)&beg);
+	if (dir)
+	{
+		ft_memdel((void**)path);
+		*path = pathname;
+		return (3);
+	}
+	return (e_success);
+}
+
+int	getfullpath(char **argv, struct s_cd *cd)
+{
+	if (!argv[g_optind])
+		return (gfp_env(cd));
+	else if (!ft_strcmp(argv[g_optind], "-"))
+		return (gfp_previous(cd));
+	else if (*(argv[g_optind]) == '/')
+		cd->path = ft_strdup(argv[g_optind]);
+	else if (concatenable_operand(argv[g_optind]))
+		return (gfp_concatenable(argv, cd));
+	else
+	{
+		cd->path = ft_strdup(argv[g_optind]);
+		cd->tmp = cd->path;
+		cd->path = ft_strnjoin(3, g_pwd, "/", cd->tmp);
+		ft_memdel((void**)&(cd->tmp));
+	}
+	return (0);
+}
+
+int	stat_failure(char **argv, struct s_cd *cd)
+{
+	if (!argv[g_optind] || !*argv[g_optind])
+		pbierror("%s: No such file or directory", cd->path);
+	else
+		pbierror("%s: No such file or directory",
+			argv[g_optind]);
+	ft_memdel((void**)&(cd->path));
+	return (1);
+}
+
+static int	change_dir(const char *path, _Bool p, _Bool empty)
 {
 	int	ret;
 
@@ -73,31 +265,33 @@ static int	changedir_failure(struct s_cd *cd)
 		return (e_invalid_input);
 	}
 }
-
+*/
 int			cmd_cd(int argc, char **argv)
 {
-	struct s_cd	cd;
+	int	err;
 
-	cd.path = NULL;
-	if ((cd.ret = cd_parse_opt(argc, argv, &cd.p)))
-		return (cd.ret);
+	err = 0;
+	(void)argv;
+	(void)argc;
+/*	if ((err = cd_parse_opt(argc, argv, &cd.p)))
+		return (err);
 	if ((cd.ret = getfullpath(argv, &cd)))
 		return (cd.ret);
-	if (cd.path && !cd.path[0])
-		return (0);
-	if (!(cd.tmp = ft_resolvepath(cd.path)))
+	if (cd.empty)
+		ft_printf("\n");
+	if (!cd.empty && !(cd.tmp = ft_resolvepath(cd.path)))
 	{
 		pbierror("%s: %s", argv[g_optind], ft_strerror(g_errno));
 		ft_memdel((void **)&(cd.path));
 		return (1);
 	}
 	cd.path = cd.tmp;
-	if (stat(cd.path, &(cd.buf)))
+	if (!cd.empty && stat(cd.path, &(cd.buf)))
 		return (stat_failure(argv, &cd));
-	if (access(cd.path, X_OK))
+	if (!cd.empty && access(cd.path, X_OK))
 		return (access_failure(argv, &cd));
-	if ((cd.ret = change_dir(cd.path, cd.p)))
+	if ((cd.ret = change_dir(cd.path, cd.p, cd.empty)))
 		return (changedir_failure(&cd));
 	ft_memdel((void **)&(cd.path));
-	return (cd.ret);
+*/	return (err);
 }
