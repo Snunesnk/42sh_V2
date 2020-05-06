@@ -101,11 +101,7 @@ static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 	char	*oldpwd;
 
 	if (!curpath || !curpath[0])
-	{
-	//	if (!curpath)
-	//		curpath = ft_strdup("");
 		return (0);
-	}
 	if (check_access(curpath, directory))
 		return (1);
 	else if (chdir(curpath))
@@ -146,7 +142,7 @@ static char	*concatenate_oldpwd(void)
 	if (!curpath)
 	{
 		pbierror("OLDPWD not set\n");
-		curpath = ft_strdup("");
+		return (curpath);
 	}
 	else if (curpath[0])
 		curpath = ft_strdup(curpath);
