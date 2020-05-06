@@ -3,7 +3,7 @@
 #include "libft.h"
 #include "error.h"
 
-int cd_internal(const char *directory, _Bool p_option);
+int cd_internal(char *directory, _Bool p_option);
 
 
 static int	cd_parse_opt(int argc, char **argv, _Bool *p)
@@ -96,24 +96,24 @@ static int	check_access(const char *curpath, const char *directory)
 	return (e_success);
 }
 
-static int	change_dir(char *curpath, const char *directory, _Bool p_option)
+static int	change_dir(char **curpath, const char *directory, _Bool p_option)
 {
 	char	*oldpwd;
 
-	if (!curpath || !curpath[0])
+	if (!*curpath || !*curpath[0])
 		return (0);
-	if (check_access(curpath, directory))
+	if (check_access(*curpath, directory))
 		return (1);
-	else if (chdir(curpath))
+	else if (chdir(*curpath))
 	{
-		pbierror("%s: chdir(2) failed to change directory", curpath);
+		pbierror("%s: chdir(2) failed to change directory", *curpath);
 		return (2);
 	}
 	if (p_option)
-		curpath = ft_realpath(curpath, NULL);
+		*curpath = ft_realpath(*curpath, NULL);
 	oldpwd = get_shell_var("PWD", g_env);
 	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
-	set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
+	set_shell_var("PWD", *curpath, SET | EXPORT, &g_env);
 	return (e_success);
 }
 
@@ -140,17 +140,15 @@ static char	*concatenate_oldpwd(void)
 
 	curpath = get_shell_var("OLDPWD", g_env);
 	if (!curpath)
-	{
-		pbierror("OLDPWD not set\n");
-		return (curpath);
-	}
+		pbierror("OLDPWD not set");
 	else if (curpath[0])
 		curpath = ft_strdup(curpath);
-	ft_printf("%s\n", curpath);
+	if (curpath)
+		ft_printf("%s\n", curpath);
 	return (curpath);
 }
 
-int	cd_internal(const char *directory, _Bool p_option)
+int	cd_internal(char *directory, _Bool p_option)
 {
 	char	*curpath;
 	char	*cdpath;
@@ -161,19 +159,19 @@ int	cd_internal(const char *directory, _Bool p_option)
 	if (!directory)
 		return (go_home(p_option));
 	else if (directory[0] == '/')
-		curpath = ft_strdup(directory);
+		curpath = p_option ? directory : ft_strdup(directory);
 	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, ".."))
 		(void)curpath;
 	else if (!ft_strcmp(directory, "-"))
 		curpath = concatenate_oldpwd();
 	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
-	if (!curpath)
+	if (!curpath && ft_strcmp(directory, "-"))
 		curpath = concatenate_pwd(directory);
 	curpath = ft_resolvepath(curpath);
 	if (ft_strlen(curpath) + 1 > PATH_MAX)
 		return (2);
-	err = change_dir(curpath, directory, p_option);
+	err = change_dir(&curpath, directory, p_option);
 	ft_memdel((void**)&curpath);
 	return (err);
 }
