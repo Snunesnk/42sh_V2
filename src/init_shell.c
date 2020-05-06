@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 08:32:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 11:21:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int				g_shell_terminal;
 int				g_shell_is_interactive;
 int				g_job_control_enabled = ON;
 int				g_retval;
-char			*g_pwd = NULL;
 
 static void	get_progname(char *av)
 {
@@ -80,23 +79,6 @@ int			init_shell(char *argv, int argc)
 	return (0);
 }
 
-void		set_minimal_env2(char **tmp)
-{
-	char *pwd;
-
-	pwd = NULL;
-	if (PATH_MAX > 0)
-	{
-		*tmp = ft_getenv("PWD");
-		if (ft_strlen(*tmp) <= PATH_MAX)
-		{
-			pwd = ft_getenv("PWD");
-			if (pwd)
-				g_pwd = ft_strdup(pwd);
-		}
-	}
-}
-
 int			set_minimal_env(void)
 {
 	char	*tmp;
@@ -119,6 +101,5 @@ int			set_minimal_env(void)
 			return (e_cannot_allocate_memory);
 		ft_memdel((void**)&tmp);
 	}
-	set_minimal_env2(&tmp);
 	return (e_success);
 }
