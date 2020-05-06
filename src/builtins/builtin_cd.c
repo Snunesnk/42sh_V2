@@ -101,7 +101,11 @@ static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 	char	*oldpwd;
 
 	if (!curpath || !curpath[0])
+	{
+		if (!curpath)
+			curpath = ft_strdup("");
 		return (0);
+	}
 	if (check_access(curpath, directory))
 		return (1);
 	else if (chdir(curpath))
