@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 16:16:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:24:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "builtins.h"
 #include "error.h"
 
-extern char	g_pwd[];
+extern char	*g_pwd;
 
 int	concatenable_operand_while(const char *str)
 {

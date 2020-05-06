@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 16:17:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:36:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "builtins.h"
 #include "error.h"
 
-extern char	g_pwd[];
+extern char	*g_pwd;
 
 int	set_oldpwd(void)
 {
@@ -50,16 +50,18 @@ int	refresh_pwd(const char *path, _Bool p)
 			return (e_system_call_error);
 		if (set_shell_var("PWD", cwd, EXPORT | SET, &g_env))
 			return (e_cannot_allocate_memory);
-		ft_bzero((void*)g_pwd, sizeof(g_pwd));
-		ft_strncpy(g_pwd, cwd, sizeof(g_pwd));
+		if (g_pwd)
+			ft_memdel((void**)&g_pwd);
+		g_pwd = ft_strdup(cwd);
 		ft_memdel((void**)&cwd);
 	}
 	else
 	{
 		if (set_shell_var("PWD", path, EXPORT | SET, &g_env))
 			return (e_cannot_allocate_memory);
-		ft_bzero((void*)g_pwd, sizeof(g_pwd));
-		ft_strncpy(g_pwd, path, sizeof(g_pwd));
+		if (g_pwd)
+			ft_memdel((void**)&g_pwd);
+		g_pwd = ft_strdup(path);
 	}
 	return (0);
 }
