@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 20:13:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:27:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				g_shell_terminal;
 int				g_shell_is_interactive;
 int				g_job_control_enabled = ON;
 int				g_retval;
-char			g_pwd[] = {0};
+char			*g_pwd = NULL;
 
 static void	get_progname(char *av)
 {
@@ -83,11 +83,18 @@ int			init_shell(char *argv, int argc)
 
 void		set_minimal_env2(char **tmp)
 {
+	char *pwd;
+
+	pwd = NULL;
 	if (PATH_MAX > 0)
 	{
 		*tmp = ft_getenv("PWD");
 		if (ft_strlen(*tmp) <= PATH_MAX)
-			ft_strcpy(g_pwd, ft_getenv("PWD"));
+		{
+			pwd = ft_getenv("PWD");
+			if (pwd)
+				g_pwd = ft_strdup(pwd);
+		}
 	}
 }
 

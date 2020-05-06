@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/05 12:49:12 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/05 19:29:40 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,7 +143,6 @@ SOURCES	:= \
 		f_misc/ft_tabdel.c \
 		f_misc/ft_tablen.c \
 		f_misc/ft_tabmalloc.c \
-		f_misc/get_next_line.c \
 		f_misc/utf8.c \
 		f_ncurses/ft_getch.c \
 		f_ncurses/ft_getch_fd.c \

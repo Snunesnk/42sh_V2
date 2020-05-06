@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 16:13:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 18:55:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char							*token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
 char							*short_physical_path(char **cwd);
 
-extern char						g_pwd[PATH_MAX];
+extern char					*g_pwd;
 extern t_list					*g_env;
 extern t_list					*g_tmp_env;
 extern t_list					*g_pending_cmd;

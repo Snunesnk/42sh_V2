@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 15:14:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 18:56:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft.h"
 #include "error.h"
 
-extern char	g_pwd[];
+extern char	*g_pwd;
 
 static int	change_dir(const char *path, _Bool p)
 {
