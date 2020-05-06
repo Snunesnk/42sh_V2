@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/03 20:05:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/05 20:38:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,24 @@
 
 void	fc_erase_last_hist(void)
 {
-	int	i;
-
-	while (g_hist->nb_line < g_hist->total_lines)
+	while (g_hist.nb_line <= g_hist.total_lines)
 		next_hist();
-	if (g_hist->hist_ignore)
+	if (g_hist.hist_ignore)
 		return ;
-	i = 0;
 	prev_hist();
-	while (g_hist->offset + i < g_hist->used - 1)
+	if (g_hist.total_lines <= 1)
 	{
-		g_hist->history_content[g_hist->offset + i] = '\0';
-		i++;
+		ft_bzero(g_hist.history_content, g_hist.used);
+		g_hist.nb_line = 1;
+		g_hist.offset = 1;
+		g_hist.total_lines = 0;
+		g_hist.used = 1;
+		return ;
 	}
-	g_hist->used = g_hist->offset + 1;
-	g_hist->total_lines = g_hist->nb_line;
+	ft_bzero(g_hist.history_content + g_hist.offset, g_hist.used - \
+			g_hist.offset);
+	g_hist.used = g_hist.offset + 1;
+	g_hist.total_lines = g_hist.nb_line - 1;
 }
 
 void	free_substitute(t_sub *substitute)

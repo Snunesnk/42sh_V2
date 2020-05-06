@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 17:54:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/05 18:55:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				get_stdin(int fd, char **line)
 	return (ret);
 }
 
-static char		*append_line(char **last_lines, char *input)
+char		*append_line(char **last_lines, char *input)
 {
 	char	*tmp;
 	int		qmode;

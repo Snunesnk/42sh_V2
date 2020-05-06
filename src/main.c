@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 16:25:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:09:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char		*get_next_pending_cmd(void)
 	if (input[0] > 0)
 	{
 		ft_dprintf(STDERR_FILENO, "%s\n", input);
-		add_hentry(input, ft_strlen(input), 1);
+		add_hentry(input, ft_strlen(input));
 	}
 	return (input);
 }
@@ -63,7 +63,7 @@ int			exec_input(char *input)
 		return (status);
 	}
 	ast = build_ast(&lst);
-//	graph_ast(ast); // BONUS GRAPHVIZ ?
+	graph_ast(ast); // BONUS GRAPHVIZ ?
 	status = execute_node(ast, 1);
 	free_ast(ast);
 	g_retval = status;
@@ -81,12 +81,7 @@ int			exit_clean(int ret)
 	ft_lstdel(&g_env, &del_env);
 	ft_lstdel(&g_tmp_env, &del_env);
 	ft_lstdel(&g_alias, &del_env);
-	if (g_hist)
-	{
-		free(g_hist->history_content);
-		free(g_hist);
-		free(g_hist_loc);
-	}
+	free_hist();
 	while (g_pending_cmd)
 	{
 		tmp = g_pending_cmd->next;
