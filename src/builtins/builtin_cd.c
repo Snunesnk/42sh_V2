@@ -100,6 +100,8 @@ static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 {
 	char	*oldpwd;
 
+	if (!curpath[0])
+		return (1);
 	if (check_access(curpath, directory))
 		return (1);
 	else if (chdir(curpath))
@@ -112,7 +114,6 @@ static int	change_dir(char *curpath, const char *directory, _Bool p_option)
 	oldpwd = get_shell_var("PWD", g_env);
 	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
 	set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
-	ft_memdel((void**)&curpath);
 	return (e_success);
 }
 
@@ -133,10 +134,25 @@ static char	*concatenate_pwd(const char *directory)
 	return (curpath);
 }
 
+static char	*concatenate_oldpwd(void)
+{
+	char	*curpath;
+
+	curpath = get_shell_var("OLDPWD", g_env);
+	if (!curpath)
+		pbierror("OLDPWD not set\n");
+	else if (curpath && !curpath[0])
+		write(STDOUT_FILENO, "\n", 1);
+	else
+		curpath = ft_strdup(curpath);
+	return (curpath);
+}
+
 int	cd_internal(const char *directory, _Bool p_option)
 {
 	char	*curpath;
 	char	*cdpath;
+	int	err;
 
 	curpath = NULL;
 	cdpath = NULL;
@@ -147,18 +163,17 @@ int	cd_internal(const char *directory, _Bool p_option)
 	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, ".."))
 		(void)curpath;
 	else if (!ft_strcmp(directory, "-"))
-	{
-		(void)curpath; /* similar to PWD */
-	}
+		curpath = concatenate_oldpwd();
 	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
 	if (!curpath)
 		curpath = concatenate_pwd(directory);
 	curpath = ft_resolvepath(curpath);
-	ft_printf("curpath: %s\n", curpath); // DEBUGG
 	if (ft_strlen(curpath) + 1 > PATH_MAX)
 		return (2);
-	return (change_dir(curpath, directory, p_option));
+	err = change_dir(curpath, directory, p_option);
+	ft_memdel((void**)&curpath);
+	return (err);
 }
 
 int			cmd_cd(int argc, char **argv)
