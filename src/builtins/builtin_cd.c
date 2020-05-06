@@ -3,7 +3,7 @@
 #include "libft.h"
 #include "error.h"
 
-int cd_internal(char *directory, _Bool p_option);
+int cd_internal(const char *directory, _Bool p_option);
 
 
 static int	cd_parse_opt(int argc, char **argv, _Bool *p)
@@ -25,35 +25,6 @@ static int	cd_parse_opt(int argc, char **argv, _Bool *p)
 	}
 	return (e_success);
 }
-/*
-static int	concatenable_operand_while(const char *str)
-{
-	while (*str)
-	{
-		if (*str != '/')
-			return (1);
-		++str;
-	}
-	return (0);
-}
-
-static int	concatenable_operand(const char *str)
-{
-	if (*str == '.')
-	{
-		++str;
-		if (*str == '.')
-		{
-			++str;
-			return (concatenable_operand_while(str));
-		}
-		else
-			return (concatenable_operand_while(str));
-	}
-	return (concatenable_operand_while(str));
-}
-*/
-
 
 static int	go_home(_Bool p_option)
 {
@@ -73,34 +44,7 @@ static int	go_home(_Bool p_option)
 		return (cd_internal(home, p_option));
 }
 
-
-/*
-int	gfp_previous(struct s_cd *cd)
-{ // Case it goes previous: cd -
-	if (!(cd->oldpwd = get_shell_var("OLDPWD", g_env)))
-	{
-		pbierror("OLDPWD not set");
-		g_optind = 1;
-		return (e_invalid_input);
-	}
-	if (cd->oldpwd && !cd->oldpwd[0])
-	{
-		cd->oldpwd = NULL;
-		cd->empty = 1;
-		return (0);
-	}
-	if (cd->p)
-	{
-		cd->oldpwd = ft_realpath(cd->oldpwd, NULL);
-		cd->path = cd->oldpwd;
-	}
-	else
-		cd->path = ft_strdup(cd->oldpwd);
-	ft_printf("%s\n", cd->path);
-	return (0);
-}
-*/
-static char	*concatenate_cdpath(char *directory)
+static char	*concatenate_cdpath(const char *directory)
 {
 	char	*cdpath;
 	char	*cdpath_origin;
@@ -135,56 +79,7 @@ static char	*concatenate_cdpath(char *directory)
 	ft_memdel((void**)&cdpath_origin);
 	return (pathname);
 }
-/*
-int	set_oldpwd(void)
-{
-	char	*cwd;
-	_Bool	allocated;
 
-	allocated = 0;
-	if (!(cwd = g_pwd))
-	{
-		allocated = 1;
-		if (!(cwd = getcwd(NULL, 0)))
-			return (e_system_call_error);
-	}
-	if (set_shell_var("OLDPWD", cwd, EXPORT | SET, &g_env))
-	{
-		if (allocated)
-			ft_memdel((void**)&cwd);
-		return (e_cannot_allocate_memory);
-	}
-	if (allocated)
-		ft_memdel((void**)&cwd);
-	return (0);
-}
-
-int	refresh_pwd(const char *path, _Bool p)
-{
-	char	*cwd;
-
-	if (p)
-	{
-		if (!(cwd = getcwd(NULL, 0)))
-			return (e_system_call_error);
-		if (set_shell_var("PWD", cwd, EXPORT | SET, &g_env))
-			return (e_cannot_allocate_memory);
-		if (g_pwd)
-			ft_memdel((void**)&g_pwd);
-		g_pwd = ft_strdup(cwd);
-		ft_memdel((void**)&cwd);
-	}
-	else
-	{
-		if (set_shell_var("PWD", path, EXPORT | SET, &g_env))
-			return (e_cannot_allocate_memory);
-		if (g_pwd)
-			ft_memdel((void**)&g_pwd);
-		g_pwd = ft_strdup(path);
-	}
-	return (0);
-}
-*/
 /*
 int	stat_failure(char **argv, struct s_cd *cd)
 {
@@ -235,8 +130,24 @@ static int	changedir_failure(struct s_cd *cd)
 	}
 }
 */
+static char	*concatenate_pwd(const char *directory)
+{
+	char	*curpath;
+	char	*pwd;
+	int	i;
 
-int	cd_internal(char *directory, _Bool p_option)
+	pwd  = get_shell_var("PWD", g_env);
+	if (!pwd || !pwd[0])
+		return (NULL);
+	i = ft_strlen(pwd);
+	if (pwd[i] != '/')
+		curpath = ft_strnjoin(3, pwd, "/", directory);
+	else
+		curpath = ft_strjoin(pwd, directory);
+	return (curpath);
+}
+
+int	cd_internal(const char *directory, _Bool p_option)
 {
 	char	*curpath;
 	char	*cdpath;
@@ -253,29 +164,20 @@ int	cd_internal(char *directory, _Bool p_option)
 	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, ".."))
 		curpath = ft_strdup(directory); // 6. Set curpath to the directory operand.
 //	5. Starting with the first pathname in the <colon>-separated pathnames of CDPATH
-//	   (see the ENVIRONMENT VARIABLES section) if the pathname is non-null, test if the concatenation of that pathname,
-//	   a <slash> character if that pathname did not end with a <slash> character, and the directory operand names
-//	   a directory. If the pathname is null, test if the concatenation of dot, a <slash> character, and the operand
-//	   names a directory. In either case, if the resulting string names an existing directory, set curpath to that
-//	   string and proceed to step 7. Otherwise, repeat this step with the next pathname in CDPATH until all
-//	   pathnames have been tested.
+	else if (!ft_strcmp(directory, "-"))
+	{
+		(void)curpath; /* similar to PWD */
+	}
 	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
-
-//	6. Set curpath to the directory operand.
-//	if (!curpath)
-//		curpath = directory;
-
-
 //	7. If the -P option is in effect, proceed to step 10. If curpath does not begin with a <slash> character,
-//	   set curpath to the string formed by the concatenation of the value of PWD, a <slash> character if the
-//	   value of PWD did not end with a <slash> character, and curpath.
-//	if (p_option)
+	if (!p_option && !curpath)
+		curpath = concatenate_pwd(directory);
+//	8. The curpath value shall then be converted to canonical form as follows, considering each component
+	curpath = ft_resolvepath(curpath);
+	ft_printf("2-curpath: %s\n", curpath); // DEBUGG
 
 
-
-
-//	8.
 
 //	9.
 
@@ -291,7 +193,7 @@ int	cd_internal(char *directory, _Bool p_option)
 //	    string that would be output by pwd -P. If there is insufficient permission on the new directory, or on any
 //	    parent of that directory, to determine the current working directory, the value of the PWD environment
 //	    variable is unspecified.
-
+	
 
 
 
