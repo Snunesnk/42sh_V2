@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 13:35:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 19:00:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,52 @@
 
 void	end_next_alnum(void)
 {
-	if (g_dis.cbpos < g_line.len)
+	if (g_line.c_pos < g_line.len)
 		cursor_r();
-	if (ft_isspace(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
-		while (ft_isspace(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	if (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+		while (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < \
+				g_line.len)
 			cursor_r();
-	if (ft_isalnum(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	if (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
 	{
-		while (ft_isalnum(g_line.line[g_dis.cbpos + 1])
-			&& g_dis.cbpos + 1 < g_line.len)
+		while (ft_isalnum(g_line.line[g_line.c_pos + 1])
+			&& g_line.c_pos + 1 < g_line.len)
 			cursor_r();
 	}
-	else if (ft_ispunct(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	else if (ft_ispunct(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
 	{
-		while (ft_ispunct(g_line.line[g_dis.cbpos + 1])
-			&& g_dis.cbpos + 1 < g_line.len)
+		while (ft_ispunct(g_line.line[g_line.c_pos + 1])
+			&& g_line.c_pos + 1 < g_line.len)
 			cursor_r();
 	}
 }
 
 void	end_next_wd(void)
 {
-	if (ft_isspace(g_line.line[g_dis.cbpos + 1]))
+	if (ft_isspace(g_line.line[g_line.c_pos + 1]))
 		cursor_r();
-	while (ft_isspace(g_line.line[g_dis.cbpos]) && g_dis.cbpos < g_line.len)
+	while (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
 		cursor_r();
-	while (!ft_isspace(g_line.line[g_dis.cbpos + 1])
-		&& g_dis.cbpos + 1 < g_line.len)
+	while (!ft_isspace(g_line.line[g_line.c_pos + 1])
+		&& g_line.c_pos + 1 < g_line.len)
 		cursor_r();
 }
 
 void	beg_last_alnum(void)
 {
-	if (g_dis.cbpos > 0)
+	if (g_line.c_pos > 0)
 		cursor_l();
-	if (g_dis.cbpos > 0 && ft_isspace(g_line.line[g_dis.cbpos]))
-		while (g_dis.cbpos > 0 && ft_isspace(g_line.line[g_dis.cbpos]))
+	if (g_line.c_pos > 0 && ft_isspace(g_line.line[g_line.c_pos]))
+		while (g_line.c_pos > 0 && ft_isspace(g_line.line[g_line.c_pos]))
 			cursor_l();
-	if (g_dis.cbpos > 0 && ft_isalnum(g_line.line[g_dis.cbpos]))
+	if (g_line.c_pos > 0 && ft_isalnum(g_line.line[g_line.c_pos]))
 	{
-		while (g_dis.cbpos > 0 && ft_isalnum(g_line.line[g_dis.cbpos - 1]))
+		while (g_line.c_pos > 0 && ft_isalnum(g_line.line[g_line.c_pos - 1]))
 			cursor_l();
 	}
-	else if (g_dis.cbpos > 0 && ft_ispunct(g_line.line[g_dis.cbpos]))
+	else if (g_line.c_pos > 0 && ft_ispunct(g_line.line[g_line.c_pos]))
 	{
-		while (g_dis.cbpos > 0 && ft_ispunct(g_line.line[g_dis.cbpos - 1]))
+		while (g_line.c_pos > 0 && ft_ispunct(g_line.line[g_line.c_pos - 1]))
 			cursor_l();
 	}
 }
@@ -73,17 +74,18 @@ void	goto_chr_right(void)
 	{
 		g_last_goto_f = goto_chr_right;
 		c = 0;
-		read(STDIN_FILENO, &c, sizeof(int));
+		if (read(STDIN_FILENO, &c, sizeof(int) < 0))
+			return ;
 	}
-	p = g_dis.cbpos;
+	p = g_line.c_pos;
 	if (ft_isprint(c))
 	{
 		while (p < g_line.len)
 		{
 			if (g_line.line[p] == c)
 			{
-				g_dis.cbpos = p;
-				update_line();
+				g_line.c_pos = p;
+				g_line.is_modified = 1;
 				return ;
 			}
 			++p;
@@ -100,17 +102,18 @@ void	goto_chr_left(void)
 	{
 		g_last_goto_f = goto_chr_left;
 		c = 0;
-		read(STDIN_FILENO, &c, sizeof(int));
+		if (read(STDIN_FILENO, &c, sizeof(int)) < 0)
+			return ;
 	}
-	p = g_dis.cbpos;
+	p = g_line.c_pos;
 	if (ft_isprint(c))
 	{
 		while (p >= 0)
 		{
 			if (g_line.line[p] == c)
 			{
-				g_dis.cbpos = p;
-				update_line();
+				g_line.c_pos = p;
+				g_line.is_modified = 1;
 				return ;
 			}
 			--p;

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 14:09:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 19:20:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	insert_compl(t_node *compl_tree, t_data *data, long int c)
 	}
 	compl = compl_tree->name;
 	len = ft_str_wchar_len(compl);
-	while (g_line.line[g_dis.cbpos] && g_line.line[g_dis.cbpos] != ' '\
-			&& !ft_strchr(operator, g_line.line[g_dis.cbpos]))
+	while (g_line.line[g_line.c_pos] && g_line.line[g_line.c_pos] != ' ' \
+			&& !ft_strchr(operator, g_line.line[g_line.c_pos]))
 		rl_delete();
-	if (g_line.line[g_dis.cbpos] == '/')
+	if (g_line.line[g_line.c_pos] == '/')
 		rl_delete();
-	while (g_dis.cbpos > data->compl_start)
+	while (g_line.c_pos > data->compl_start)
 		rl_backspace();
 	insert_text(compl, len);
-	if (c == '\n' && g_line.line[g_dis.cbpos] != '/')
+	if (c == '\n' && g_line.line[g_line.c_pos] != '/')
 		insert_text(" ", 1);
 }

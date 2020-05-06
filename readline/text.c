@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:16:27 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/25 16:37:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 19:45:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ void		init_line_buffer(void)
 	g_line.size_buf = 512;
 	g_line.line = (char*)malloc(sizeof(char) * g_line.size_buf);
 	ft_bzero(g_line.line, g_line.size_buf);
-	g_dis.cbpos = 0;
-	g_dis.cbpos_prev = 0;
+	g_line.c_pos = 0;
+	g_line.prev_c_pos = 0;
 	g_line.len = 0;
+	g_line.is_modified = 0;
 }
 
 void		l_expand(void)
@@ -55,50 +56,53 @@ void		insert_text(const char *string, int len)
 		return (replace_text(string, len));
 	while (len + g_line.len >= g_line.size_buf)
 		l_expand();
-	if (g_dis.cbpos < g_line.len)
+	if (g_line.c_pos < g_line.len)
 	{
-		ft_memmove(&(g_line.line[g_dis.cbpos + len]),
-				&(g_line.line[g_dis.cbpos]),
-				g_line.len - g_dis.cbpos);
+		ft_memmove(&(g_line.line[g_line.c_pos + len]),
+				&(g_line.line[g_line.c_pos]),
+				g_line.len - g_line.c_pos);
 	}
-	ft_memmove(&(g_line.line[g_dis.cbpos]), string, len);
+	ft_memmove(&(g_line.line[g_line.c_pos]), string, len);
 	g_line.len += len;
-	g_dis.cbpos += len;
-	update_line();
+	g_line.c_pos += len;
+	g_line.is_modified = 1;
 }
 
 void		rl_delete(void)
 {
-	if (g_dis.cbpos < g_line.len && g_line.len > 0)
+	if (g_line.c_pos < g_line.len && g_line.len > 0)
 	{
-		if (g_line.line[g_dis.cbpos] && g_dis.cbpos <= g_line.len)
+		if (g_line.line[g_line.c_pos] && g_line.c_pos <= g_line.len)
 		{
-			ft_memmove(&(g_line.line[g_dis.cbpos]),
-				&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
+			ft_memmove(&(g_line.line[g_line.c_pos]),
+				&(g_line.line[g_line.c_pos + 1]), g_line.len - \
+				g_line.c_pos + 1);
 			g_line.line[g_line.len + 1] = '\0';
 			--g_line.len;
 		}
-		else if (g_dis.cbpos > 0)
+		else if (g_line.c_pos > 0)
 		{
-			g_line.line[g_dis.cbpos] = '\0';
+			g_line.line[g_line.c_pos] = '\0';
 			--g_line.len;
 		}
+		g_line.is_modified = 1;
 	}
 }
 
 void		rl_backspace(void)
 {
-	if (g_dis.cbpos > 0)
+	if (g_line.c_pos > 0)
 	{
 		cursor_l();
-		if (g_line.line[g_dis.cbpos])
+		if (g_line.line[g_line.c_pos])
 		{
-			ft_memmove(&(g_line.line[g_dis.cbpos]),
-				&(g_line.line[g_dis.cbpos + 1]), g_line.len - g_dis.cbpos + 1);
+			ft_memmove(&(g_line.line[g_line.c_pos]),
+				&(g_line.line[g_line.c_pos + 1]), g_line.len - g_line.c_pos + 1);
 			g_line.line[g_line.len + 1] = '\0';
 		}
 		else
-			g_line.line[g_dis.cbpos] = '\0';
+			g_line.line[g_line.c_pos] = '\0';
 		--g_line.len;
+		g_line.is_modified = 0;
 	}
 }

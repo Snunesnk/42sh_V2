@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:02 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 12:20:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 19:49:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ static void	switch_cbpos(void)
 {
 	int	tmp;
 
-	tmp = g_dis.cbpos;
-	g_dis.cbpos = g_dis.cbpos_prev;
-	g_dis.cbpos_prev = tmp;
-	update_line();
+	tmp = g_line.c_pos;
+	g_line.c_pos = g_line.prev_c_pos;
+	g_line.prev_c_pos = tmp;
 }
 
 void		rl_ctrl_mode(union u_buffer u)
