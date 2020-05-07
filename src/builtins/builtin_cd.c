@@ -201,7 +201,7 @@ int	cd_internal(char *directory, _Bool p_option)
 	else	// cd src/
 		curpath = concatenate_pwd(directory);
 	if (!curpath)
-		return (0);
+		return (1);
 	if (curpath[0] == '/') // if path then resolve it
 		curpath = ft_resolvepath(curpath);
 //	ft_printf("directory: %s, curpath: %s\n", directory, curpath);

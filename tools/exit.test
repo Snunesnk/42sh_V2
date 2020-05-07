@@ -1,24 +1,32 @@
+exit 1 | exit 2 | exit 3; echo "stayin' alive"
+echo $?
 ./21sh
 exit 4
+echo $?
 echo shoudlreturn4
 ./21sh
 exit 5555555555555555
+echo $?
 echo shoudlreturn227
 ./21sh
 exit -1
+echo $?
 echo shouldreturn255
 ./21sh
 exit 255
+echo $?
 echo shouldreturn255
 ./21sh
 exit 256
+echo $?
 echo shouldreturn0
 ./21sh
 exit -257
+echo $?
 echo shouldreturn255
 ./21sh
 sfasfdasdfsafsa
-exit 1 | exit 2 | exit 3; echo "stayin' alive"
 exit
+echo $?
 echo shouldreturn127
 exit

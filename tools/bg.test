@@ -1,0 +1,10 @@
+bg
+bg 0
+bg 1
+bg 2
+bg 100
+bg vim
+bg cat
+bg -- 1
+bg -- bg
+bg | bg
