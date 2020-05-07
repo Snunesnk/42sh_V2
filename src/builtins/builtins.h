@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 11:44:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/07 09:17:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ extern char	*g_builtin_name;
 ** Functions in builtins_dispatcher.c
 */
 int				builtins_dispatcher(char **argv);
+int				cd_internal(char *directory, _Bool p_option);
 
 extern char	*g_pathname;
 
