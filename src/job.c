@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 17:39:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:47:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,12 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	else
 	{
 		e->p->pid = e->pid;
-		if (!j->pgid)
-			j->pgid = e->pid;
-		setpgid(e->pid, j->pgid);
+		if (g_job_control_enabled)
+		{
+			if (!j->pgid)
+				j->pgid = e->pid;
+			setpgid(e->pid, j->pgid);
+		}
 		if (g_hashall)
 			add_name_hash_table(e->p->argv[0], 1);
 	}
