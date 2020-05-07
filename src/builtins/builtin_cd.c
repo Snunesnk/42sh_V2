@@ -192,7 +192,7 @@ int	cd_internal(char *directory, _Bool p_option)
 		return (go_home(p_option));
 	else if (directory[0] == '/') // cd /lib
 		curpath = ft_strdup(directory);
-	else if (!ft_strcmp(directory, ".") || !ft_strcmp(directory, "..")) // cd . || cd ..
+	else if (!ft_strncmp(directory, ".", 1) || !ft_strncmp(directory, "..", 2)) // cd . || cd ..
 		curpath = concatenate_pwd(directory);
 	else if (!ft_strcmp(directory, "-")) // cd -
 		curpath = get_oldpwd();
