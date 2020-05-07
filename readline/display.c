@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 14:07:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:24:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,24 @@ void		update_line(void)
 
 void		redisplay_after_sigwinch(void)
 {
+	struct winsize	w_size;
+	int				v_pos;
+	int				c_pos;
+	int				cmd_line;
+
+	v_pos = 0;
+	c_pos = 0;
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
+		return ;
+	g_sc.w = w_size.ws_col;
+	g_sc.height = w_size.ws_row;
+	cmd_line = (g_dis.prompt_l + g_line.cursor_pos) / g_sc.w;
+	get_cursor_position(&v_pos, &c_pos);
+	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos - cmd_line));
+	ft_putstr(g_termcaps.cd);
+	display_prompt();
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	ft_putstr(g_line.line);
 	return ;
 }/*
 	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l % g_sc.w);
