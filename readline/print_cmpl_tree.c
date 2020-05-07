@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 22:43:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:01:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,19 @@ static int	ask_confirmation(t_data *data)
 
 static void	restore_line(int line)
 {
-	ft_putstr(g_termcaps.cd);
-	if (line)
-		place_cursor(g_line.len);
+	int	last_line;
+
+	last_line = g_dis.start_line + line;
+	while (last_line > g_sc.height - 1)
+	{
+		last_line--;
+		(g_dis.start_line)--;
+	}
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+	display_prompt();
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	ft_putstr(g_line.line);
+	ft_putstr(g_termcaps.clreol);
 }
 
 static void	print_compl(t_node *compl_tree, t_data *data)
@@ -70,7 +80,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
-	g_line.cursor_pos += ft_printf("%s", list_compl.content) + 1;
+	ft_printf("%s", list_compl.content);
 	free(list_compl.content);
 	restore_line(data->overflow + line);
 }
@@ -113,5 +123,4 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		insert_compl(compl_tree, data, c.value);
 	else if (!enter_rc(c))
 		g_bad_seq = c;
-	restore_line(0);
 }
