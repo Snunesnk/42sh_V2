@@ -204,6 +204,8 @@ int	cd_internal(char *directory, _Bool p_option)
 		return (0);
 	if (curpath[0] == '/') // if path then resolve it
 		curpath = ft_resolvepath(curpath);
+//	ft_printf("directory: %s, curpath: %s\n", directory, curpath);
+//	return (0);
 	err = change_dir(&curpath, directory, p_option);
 	ft_memdel((void**)&curpath);
 	return (err);
