@@ -1,4 +1,50 @@
 cd -
 setenv CDPTAH /usr:/
+cd -P /lib
+cd -
+cd ~/
+cd
+unset HOME
+cd -P ~/
+cd --
+cd ../
+cd /../
+cd /./
+cd -L -
+cd -P -
+cd /root
+export PWD=
+cd test/
+cd //////
+cd ...............
+cd .../././.../
+cd /bin
+cd -L /lib
+cd -
+cd
+PWD=toto
+cd -
+cd -P -
+cd -
+HOME=plop
+cd ~/
+cd $HOME
 cd src/
+OLDPWD=
+cd -
+cd -
+cd
+unset OLDPWD
+cd -L -
+cd -P -
+cd -
+PWD=/:/home/plop
+CDPATH=/
+cd -P lib
+PWD=
+OLDPWD=
+HOME=
+cd -
+cd lib
+cd ../
 exit
