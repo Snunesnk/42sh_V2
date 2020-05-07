@@ -93,7 +93,8 @@ static int	check_access(const char *curpath, const char *directory)
 	return (e_success);
 }
 
-static int	change_dir(char **curpath, const char *directory, _Bool p_option)
+//static int	change_dir(char **curpath, const char *directory, _Bool p_option)
+int	change_dir(char **curpath, const char *directory, _Bool p_option)
 {
 	char	*oldpwd;
 
@@ -106,12 +107,13 @@ static int	change_dir(char **curpath, const char *directory, _Bool p_option)
 		pbierror("%s: chdir(2) failed to change directory", *curpath);
 		return (2);
 	}
-	if (p_option)
-	{
-		oldpwd = ft_realpath(*curpath, NULL);
-		ft_memdel((void**)curpath);
-		*curpath = oldpwd;
-	}
+	(void)p_option;
+//	if (p_option)
+//	{
+//		oldpwd = ft_realpath(*curpath, NULL);
+//		ft_memdel((void**)curpath);
+//		*curpath = oldpwd;
+//	}
 	oldpwd = get_shell_var("PWD", g_env);
 	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
 	set_shell_var("PWD", *curpath, SET | EXPORT, &g_env);
@@ -123,15 +125,24 @@ static char	*concatenate_pwd(const char *directory)
 	char	*curpath;
 	char	*pwd;
 	int	i;
+	_Bool	allocated;
 
-	pwd  = get_shell_var("PWD", g_env);
+	allocated = 0;
+	pwd = get_shell_var("PWD", g_env);
 	if (!pwd || !pwd[0])
+	{
+		pwd = getcwd(NULL, 0);
+		allocated = 1;
+	}
+	if (!pwd)
 		return (NULL);
 	i = ft_strlen(pwd);
 	if (pwd[i] != '/')
 		curpath = ft_strnjoin(3, pwd, "/", directory);
 	else
 		curpath = ft_strjoin(pwd, directory);
+	if (allocated)
+		ft_memdel((void**)&pwd);
 	return (curpath);
 }
 
