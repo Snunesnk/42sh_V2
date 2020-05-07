@@ -3,8 +3,6 @@
 #include "libft.h"
 #include "error.h"
 
-int cd_internal(char *directory, _Bool p_option);
-
 
 static int	cd_parse_opt(int argc, char **argv, _Bool *p)
 {
