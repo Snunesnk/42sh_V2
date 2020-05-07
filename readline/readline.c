@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 17:14:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:41:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,6 @@ static char	*readline_internal(void)
 	value = NULL;
 	init_line_buffer();
 	value = g_line.line;
-	if (g_shell_is_interactive)
-		get_start_offset();
-	else
-		g_dis.start_offset = 0;
 	update_line();
 	if (g_vim_mode == 0)
 		add_back();
@@ -82,35 +78,26 @@ static char	*readline_internal(void)
 	return (value);
 }
 
-char		*readline_loop(const char *prompt)
-{
-	char	*value;
-
-	value = NULL;
-	prep_terminal();
-	initialize();
-	set_prompt(prompt);
-	rl_set_signals();
-	value = readline_internal();
-	deprep_terminal();
-	rl_clear_signals();
-	if (value != NULL)
-		ft_putchar_fd('\n', STDERR_FILENO);
-	return (value);
-}
-
 char		*ft_readline(const char *prompt)
 {
 	char	*input;
 
+	prep_terminal();
+	initialize();
+	rl_set_signals();
+	set_prompt(prompt);
+	display_prompt();
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	input = NULL;
 	while (!input)
 	{
-		input = readline_loop(prompt);
-		if (g_shell_is_interactive && input && input[0] && g_history && \
-				(input = hist_expanse(input)))
-			add_hentry(input, ft_strlen(input));
+		input = readline_internal();
+		input = hist_expanse(input);
 	}
+	deprep_terminal();
+	rl_clear_signals();
+	if (input != NULL)
+		ft_putchar_fd('\n', STDERR_FILENO);
 	if (g_verbose)
 		ft_printf("%s\n", input);
 	return (input);

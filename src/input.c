@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 18:55:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:41:55 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,7 @@ char			*get_input(const char *prompt, int close_quotes)
 		input = last_lines;
 	else
 		ft_memdel((void **)&last_lines);
+	if (g_shell_is_interactive)
+		add_hentry(input, ft_strlen(input));
 	return (input);
 }
