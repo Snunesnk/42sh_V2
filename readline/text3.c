@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:05 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 20:01:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:47:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	clear_line(void)
 	g_line.len = 0;
 	g_line.c_pos = 0;
 	g_line.is_modified = 1;
+	update_line();
 }
 
 void	rl_home(void)
