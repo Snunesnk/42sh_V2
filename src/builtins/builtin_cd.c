@@ -166,7 +166,7 @@ static char	*get_oldpwd(void)
 		pbierror("OLDPWD not set");
 	else
 		curpath = ft_strdup(curpath);
-	if (!curpath[0])
+	if (curpath && !curpath[0])
 		ft_printf("%s\n", curpath);
 	return (curpath);
 }
