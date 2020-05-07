@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 14:12:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:41:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ char		*ft_readline(const char *prompt)
 	while (!input)
 	{
 		input = readline_internal();
-		if (g_shell_is_interactive && input && input[0] && g_history && \
-				(input = hist_expanse(input)))
-			add_hentry(input, ft_strlen(input));
+		input = hist_expanse(input);
 	}
 	deprep_terminal();
 	rl_clear_signals();
