@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 13:25:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:52:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	get_term_capabilities(char **buffer)
 	{
 		*g_tc_strings[i].value = tgetstr((char *)g_tc_strings[i].var, buffer);
 		if (!*g_tc_strings[i].value && !ft_strequ(g_tc_strings[i].var, "cr"))
-			return (0);
+			ft_printf("%s not supported\n", g_tc_strings[i].var);
 		++i;
 	}
 	return (1);

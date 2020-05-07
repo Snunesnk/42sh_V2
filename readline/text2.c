@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 22:46:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 16:26:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	kill_line(void)
 {
 	write(STDOUT_FILENO, "^C", STDERR_FILENO);
-	place_cursor(g_line.len - g_line.c_pos);
+	place_cursor(g_line.len);
 	ft_bzero(g_line.line, g_line.size_buf);
 	g_line.len = 0;
 	g_line.c_pos = 0;
@@ -24,6 +24,8 @@ void	kill_line(void)
 		g_input_break = 1;
 	else
 		write(STDOUT_FILENO, "\n", 1);
+	display_prompt();
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_line.is_modified = 1;
 }
 
