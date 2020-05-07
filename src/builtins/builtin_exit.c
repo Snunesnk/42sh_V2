@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 19:27:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 18:36:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	g_last_exit = 0;
 
 static void		print_exit(void)
 {
-	if (!g_noexit)
+	if (!g_noexit && g_shell_is_interactive)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 }
 
