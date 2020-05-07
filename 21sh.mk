@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/06 20:50:14 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/07 11:37:17 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SOURCES :=	main.c \
 		execute_process.c \
 		expansions.c \
 		expansion_utils.c \
+		subshell_utils.c \
 		ft_merge_sort.c \
 		ft_putenv_table.c \
 		get_env_list.c \
