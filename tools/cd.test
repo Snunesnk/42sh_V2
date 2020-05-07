@@ -1,5 +1,6 @@
+cd ../.././.././.././
 cd -
-setenv CDPTAH /usr:/
+export CDPTAH=/usr:/
 cd -P /lib
 cd -
 cd ~/
@@ -24,6 +25,9 @@ cd -
 cd
 PWD=toto
 cd -
+cd /../
+cd ..
+cd .
 cd -P -
 cd -
 HOME=plop
@@ -47,4 +51,6 @@ HOME=
 cd -
 cd lib
 cd ../
+cd /../
+cd -P .
 exit
