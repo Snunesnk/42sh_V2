@@ -1,7 +1,13 @@
 #echo "should not print it\n"
+echo $?
 echo "It should prints this" #echo "but not this"
+echo $?
 #echo 'not ok' # echo "neither"
+echo $?
 #
+echo $?
       #
+echo $?
 	  				#
+echo $?
 exit
