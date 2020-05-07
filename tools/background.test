@@ -1,3 +1,8 @@
+ls --color=auto -lR / 2>/dev/null >/dev/null | cat -e && ls >/dev/null 2>/dev/null --color=auto & ls -lR | cat && hostname | cat & ls -lR | cat && hostname | cat & ls & ls & ls & ls -lR & top & echo ok && plop & echo END ; ls && cat && cat || echo & echo ok & ls & echo ok & eecho ok && echo ok & echo $HOME
+ls
+ls --color=auto -lR / 2>/dev/null >/dev/null | cat -e && ls >/dev/null 2>/dev/null --color=auto & ls -lR | cat && hostname | cat & ls -lR | cat && hostname | cat & ls & ls & ls & ls -lR & top & echo ok && plop & echo END ; ls && cat && cat || echo & echo ok & ls & echo ok & eecho ok && echo ok & echo $HOME
+top & top &
+ls --color=auto -lR / 2>/dev/null >/dev/null | cat -e && ls >/dev/null 2>/dev/null --color=auto & ls -lR | cat && hostname | cat & ls -lR | cat && hostname | cat & ls & ls & ls & ls -lR & top & echo ok && plop & echo END ; ls && cat && cat || echo & echo ok & ls & echo ok & eecho ok && echo ok & echo $HOME
 ls --color=auto -lR / 2>/dev/null >/dev/null | cat -e && ls >/dev/null 2>/dev/null --color=auto &
 ls -lR | cat && hostname | cat & ls -lR | cat && hostname | cat &
 ls & ls & ls &
