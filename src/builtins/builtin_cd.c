@@ -93,13 +93,27 @@ static int	check_access(const char *curpath, const char *directory)
 	return (e_success);
 }
 
-//static int	change_dir(char **curpath, const char *directory, _Bool p_option)
-int	change_dir(char **curpath, const char *directory, _Bool p_option)
+void	update_env(char *curpath)
 {
 	char	*oldpwd;
 
-	if (!*curpath || !*curpath[0])
+	oldpwd = get_shell_var("PWD", g_env);
+	if (oldpwd)
+		set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
+	if (curpath && curpath[0])
+		set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
+}
+
+//static int	change_dir(char **curpath, const char *directory, _Bool p_option)
+int	change_dir(char **curpath, const char *directory, _Bool p_option)
+{
+	if (!*curpath)
 		return (0);
+	if (!*curpath[0])
+	{
+		update_env(*curpath);
+		return (0);
+	}
 	if (check_access(*curpath, directory))
 		return (1);
 	else if (chdir(*curpath))
@@ -114,9 +128,7 @@ int	change_dir(char **curpath, const char *directory, _Bool p_option)
 //		ft_memdel((void**)curpath);
 //		*curpath = oldpwd;
 //	}
-	oldpwd = get_shell_var("PWD", g_env);
-	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
-	set_shell_var("PWD", *curpath, SET | EXPORT, &g_env);
+	update_env(*curpath);
 	return (e_success);
 }
 
