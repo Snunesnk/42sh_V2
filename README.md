@@ -45,7 +45,7 @@ env: peut produire des leaks dans certains cas, le comportement n'a pu etre repr
 
 singaux: revoir toutes les valeurs de retour des signaux
 signaux: filtrer messages suivant s'ils sont envoyes depuis la ligne de commande ou par le child
-signaux: implementer CTRL Z et CTRL \ etc
+DONE => signaux: implementer CTRL Z et CTRL \ etc
 
 DONE => job control: revoir le comportement des sousshells comme ls && cat &  ou   vim && ls -l &.
 
