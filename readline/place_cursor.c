@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/07 14:11:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 15:09:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		calc_dcursor(int pos, int *v_pos, int *c_pos)
 	track = 0;
 	while (track < pos)
 	{
-		if (*c_pos == g_sc.w - 1 || g_line.line[*c_pos] == '\n')
+		if (*c_pos == g_sc.w - 1 || g_line.line[track] == '\n')
 		{
 			*c_pos = 0;
 			*v_pos += 1;
