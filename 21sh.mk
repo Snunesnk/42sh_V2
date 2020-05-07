@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/06 10:04:27 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/07 12:28:37 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -129,6 +129,7 @@ SOURCES :=	main.c \
 		../readline/bind.c \
 		../readline/display.c \
 		../readline/display_utils.c \
+		../readline/place_cursor.c \
 		../readline/get_prompt.c \
 		../readline/emacs_keymap.c \
 		../readline/vim_keymap.c \
