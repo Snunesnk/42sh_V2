@@ -66,30 +66,29 @@ static char	*concatenate_cdpath(const char *directory)
 	return (pathname);
 }
 
+static	int	error_cd(const char *msg, const char *curpath, const char *directory)
+{
+	if (ft_strcmp(directory, "-"))
+		pbierror(msg, directory);
+	else
+		pbierror(msg, curpath);
+	return (1);
+}
+
 static int	check_access(const char *curpath, const char *directory)
 {
 	struct stat	bf;
 
 	if (access(curpath, F_OK))
-	{
-		pbierror("%s: No such file or directory", directory);
-		return (1);
-	}
+		return (error_cd("%s: No such file or directory", curpath, directory));
 	else if (stat(curpath, &bf))
-	{
-		pbierror("stat(2) failed to find `%s'", directory);
-		return (1);
-	}
+		return (error_cd("stat(2) failed to find `%s'", curpath, directory));
 	else if (!S_ISDIR(bf.st_mode))
-	{
-		pbierror("%s: Not a directory", directory);
-		return (1);
-	}
+		return (error_cd("%s: Not a directory", curpath, directory));
 	else if (access(curpath, X_OK))
-	{
-		pbierror("%s: Permission denied", directory);
-		return (1);
-	}
+		return (error_cd("%s: Permission denied", curpath, directory));
+	else if (!ft_strcmp(directory, "-"))
+		ft_printf("%s\n", curpath);
 	return (e_success);
 }
 
@@ -102,6 +101,19 @@ void	update_env(char *curpath)
 		set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
 	if (curpath && curpath[0])
 		set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
+}
+
+static char	*absolute_path(char **curpath)
+{
+	char *tmp;
+
+	if (*curpath)
+	{
+		tmp = ft_realpath(*curpath, NULL);
+		ft_memdel((void**)curpath);
+		return (tmp);
+	}
+	return (NULL);
 }
 
 //static int	change_dir(char **curpath, const char *directory, _Bool p_option)
@@ -121,14 +133,10 @@ int	change_dir(char **curpath, const char *directory, _Bool p_option)
 		pbierror("%s: chdir(2) failed to change directory", *curpath);
 		return (2);
 	}
-	(void)p_option;
-//	if (p_option)
-//	{
-//		oldpwd = ft_realpath(*curpath, NULL);
-//		ft_memdel((void**)curpath);
-//		*curpath = oldpwd;
-//	}
-	update_env(*curpath);
+	if (p_option)
+		*curpath = absolute_path(curpath);
+	if (*curpath)
+		update_env(*curpath);
 	return (e_success);
 }
 
@@ -166,10 +174,9 @@ static char	*get_oldpwd(void)
 	if (!curpath)
 		pbierror("OLDPWD not set");
 	else
-	{
 		curpath = ft_strdup(curpath);
+	if (curpath && !curpath[0])
 		ft_printf("%s\n", curpath);
-	}
 	return (curpath);
 }
 
