@@ -106,9 +106,12 @@ static int	change_dir(char **curpath, const char *directory, _Bool p_option)
 		pbierror("%s: chdir(2) failed to change directory", *curpath);
 		return (2);
 	}
-	(void)p_option; // DEBUGG
-//	if (p_option)
-//		*curpath = ft_realpath(*curpath, NULL); // leaks origin ?
+	if (p_option)
+	{
+		oldpwd = ft_realpath(*curpath, NULL);
+		ft_memdel((void**)curpath);
+		*curpath = oldpwd;
+	}
 	oldpwd = get_shell_var("PWD", g_env);
 	set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
 	set_shell_var("PWD", *curpath, SET | EXPORT, &g_env);
