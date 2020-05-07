@@ -6,13 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 23:49:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 13:35:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void	get_start_offset(void)
+void	get_cursor_position(int *row, int *col)
 {
 	int		a;
 	int		i;
@@ -20,8 +20,8 @@ void	get_start_offset(void)
 
 	a = 0;
 	i = 0;
-	g_dis.start_offset = 0;
-	g_dis.start_line = 0;
+	*row = 0;
+	*col = 0;
 	ft_bzero(input, 2);
 	write(0, "\033[6n", 4);
 	while (*input != 'R')
@@ -30,13 +30,13 @@ void	get_start_offset(void)
 		if (*input >= '0' && *input <= '9')
 		{
 			if (a == 0)
-				g_dis.start_line = g_dis.start_line * 10 + ft_atoi(input);
+				*row = *row * 10 + ft_atoi(input);
 			else
-				g_dis.start_offset = g_dis.start_offset * 10 + ft_atoi(input);
+				*col = *col * 10 + ft_atoi(input);
 		}
-		if (*input == ';')
-			a++;
+		a = (*input == ';') ? 1 : a;
 		i++;
 	}
-	g_dis.start_offset -= (g_dis.start_offset) ? 1 : 0;
+	*col -= (*col) ? 1 : 0;
+	*row -= (*row) ? 1 : 0;
 }

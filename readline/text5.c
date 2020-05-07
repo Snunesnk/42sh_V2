@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 16:35:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 19:48:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,18 @@ void	clip_paste(void)
 
 void	clear_befline(void)
 {
-	if (g_dis.cbpos != 0)
+	if (g_line.c_pos != 0)
 	{
 		if (g_clip.str != NULL)
 			free(g_clip.str);
-		g_clip.str = ft_strndup(g_line.line, g_dis.cbpos);
-		g_clip.l = g_dis.cbpos;
-		g_line.len -= g_dis.cbpos;
-		ft_memmove(g_line.line, g_line.line + g_dis.cbpos, g_line.len);
+		g_clip.str = ft_strndup(g_line.line, g_line.c_pos);
+		g_clip.l = g_line.c_pos;
+		g_line.len -= g_line.c_pos;
+		ft_memmove(g_line.line, g_line.line + g_line.c_pos, g_line.len);
 		ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
-		g_dis.cbpos = 0;
+		g_line.c_pos = 0;
 		rl_home();
+		g_line.is_modified = 1;
 	}
 }
 
@@ -37,23 +38,23 @@ void	cut_prev_wd(void)
 {
 	int start;
 
-	if (g_dis.cbpos != 0)
+	if (g_line.c_pos != 0)
 	{
 		if (g_clip.str != NULL)
 			free(g_clip.str);
-		start = g_dis.cbpos;
+		start = g_line.c_pos;
 		while (start && g_line.line[start - 1] == ' ')
 			--start;
 		while (start && g_line.line[start - 1] != ' ')
 			--start;
-		g_clip.l = g_dis.cbpos - start;
+		g_clip.l = g_line.c_pos - start;
 		g_clip.str = ft_strndup(&(g_line.line[start]), g_clip.l);
 		ft_memmove(&(g_line.line[start]),
-		&(g_line.line[g_dis.cbpos]), g_line.len - g_dis.cbpos);
+		&(g_line.line[g_line.c_pos]), g_line.len - g_line.c_pos);
 		g_line.len -= g_clip.l;
 		ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
-		g_dis.cbpos = start;
-		update_line();
+		g_line.c_pos = start;
+		g_line.is_modified = 1;
 	}
 }
 
@@ -63,19 +64,19 @@ void	rl_reversel(void)
 
 	if (g_line.len > 1)
 	{
-		if (g_line.len > 1 && g_dis.cbpos == g_line.len)
+		if (g_line.len > 1 && g_line.c_pos == g_line.len)
 		{
-			c = g_line.line[g_dis.cbpos - 1];
-			g_line.line[g_dis.cbpos - 1] = g_line.line[g_dis.cbpos - 2];
-			g_line.line[g_dis.cbpos - 2] = c;
-			update_line();
+			c = g_line.line[g_line.c_pos - 1];
+			g_line.line[g_line.c_pos - 1] = g_line.line[g_line.c_pos - 2];
+			g_line.line[g_line.c_pos - 2] = c;
 		}
-		else if (g_dis.cbpos > 0)
+		else if (g_line.c_pos > 0)
 		{
-			c = g_line.line[g_dis.cbpos];
-			g_line.line[g_dis.cbpos] = g_line.line[g_dis.cbpos - 1];
-			g_line.line[g_dis.cbpos - 1] = c;
+			c = g_line.line[g_line.c_pos];
+			g_line.line[g_line.c_pos] = g_line.line[g_line.c_pos - 1];
+			g_line.line[g_line.c_pos - 1] = c;
 			cursor_r();
+			g_line.is_modified = 1;
 		}
 	}
 }
@@ -86,16 +87,16 @@ void	cut_next_wd(void)
 
 	if (g_clip.str != NULL)
 		free(g_clip.str);
-	start = g_dis.cbpos;
+	start = g_line.c_pos;
 	while (start < g_line.len && g_line.line[start] == ' ')
 		++start;
 	while (start < g_line.len && g_line.line[start] != ' ')
 		++start;
-	g_clip.l = start - g_dis.cbpos;
-	g_clip.str = ft_strndup(&(g_line.line[g_dis.cbpos]), g_clip.l);
-	ft_memmove(&(g_line.line[g_dis.cbpos]),
+	g_clip.l = start - g_line.c_pos;
+	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+	ft_memmove(&(g_line.line[g_line.c_pos]),
 	&(g_line.line[start]), g_line.len - start);
 	g_line.len -= g_clip.l;
 	ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
-	update_line();
+	g_line.is_modified = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:29 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:08:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 19:01:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void	goto_pchr_left(void)
 	if (!g_got_input)
 	{
 		g_c = 0;
-		read(STDIN_FILENO, &g_c, sizeof(int));
+		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
+			return ;
 	}
-	p = g_dis.cbpos;
+	p = g_line.c_pos;
 	if (ft_isprint(g_c))
 	{
 		while (p - 1 >= 0)
 		{
 			if (g_line.line[p - 1] == g_c)
 			{
-				g_dis.cbpos = p;
-				update_line();
+				g_line.c_pos = p;
+				g_line.is_modified = 1;
 				return ;
 			}
 			--p;
@@ -45,17 +46,18 @@ void	goto_pchr_right(void)
 	if (!g_got_input)
 	{
 		g_c = 0;
-		read(STDIN_FILENO, &g_c, sizeof(int));
+		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
+			return ;
 	}
-	p = g_dis.cbpos;
+	p = g_line.c_pos;
 	if (ft_isprint(g_c))
 	{
 		while (p + 1 < g_line.len)
 		{
 			if (g_line.line[p + 1] == g_c)
 			{
-				g_dis.cbpos = p;
-				update_line();
+				g_line.c_pos = p;
+				g_line.is_modified = 1;
 				return ;
 			}
 			++p;
@@ -81,7 +83,6 @@ void	insert_mode_next(void)
 
 void	insert_mode_last(void)
 {
-	g_dis.cbpos = g_line.len;
+	g_line.c_pos = g_line.len;
 	vim_insert();
-	update_line();
 }

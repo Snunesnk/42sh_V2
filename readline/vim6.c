@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/28 17:15:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/06 19:05:55 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	undo_last(void)
 		prev = stack_pop_get_data(&g_back);
 		ft_strcpy(g_line.line, prev->line);
 		g_line.len = prev->len;
-		g_dis.cbpos = prev->size_buf;
+		g_line.c_pos = prev->size_buf;
 		del_stat_line(prev);
-		update_line();
+		g_line.is_modified = 1;
 	}
 }
 
@@ -52,9 +52,9 @@ void	undo_lastb(void)
 		prev = stack_pop_get_data(&g_back);
 		ft_strcpy(g_line.line, prev->line);
 		g_line.len = prev->len;
-		g_dis.cbpos = 0;
+		g_line.c_pos = 0;
 		del_stat_line(prev);
-		update_line();
+		g_line.is_modified = 1;
 	}
 }
 
