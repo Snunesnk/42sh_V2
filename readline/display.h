@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 18:51:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 14:01:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@ struct	s_line_state
 	char		*line;
 	int			size_buf;
 	int			c_pos;
-	int			prev_c_pos;
-	char		is_modified;
+	int			cursor_pos;
 	int			len;
+	char		is_modified;
 };
 
-extern struct s_line_state	g_line;
 
+extern struct s_line_state	g_line;
 extern struct s_display		g_dis;
-extern struct s_cursor		g_cursor;
 
 void	set_prompt(const char *prompt);
 void	display_prompt(void);
 void	update_line(void);
 void	redisplay_after_sigwinch(void);
 void	init_line_buffer(void);
-void	get_start_offset(void);
+void	get_cursor_position(int *row, int *col);
 void	place_cursor(int pos);
+void	calc_dcursor(int pos, int *v_pos, int *c_pos);
 
 #endif

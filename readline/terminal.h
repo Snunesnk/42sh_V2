@@ -6,29 +6,25 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 17:55:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 13:27:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMINAL_H
 # define TERMINAL_H
 
-# define NUM_TC_STRINGS 12
+# define NUM_TC_STRINGS 8
 
 struct	s_termcaps
 {
 	char	*bl;
 	char	*cd;
 	char	*clreol;
-	char	*ch;
 	char	*clrpag;
 	char	*cr;
-	char	*do1;
-	char	*backspace;
-	char	*forward_char;
-	char	*up;
-	char	*bw;
-	char	*am;
+	char	*sf;
+	char	*sr;
+	char	*cm;
 };
 
 struct	s_termcaps_string
@@ -55,6 +51,9 @@ extern struct termios					g_termios_backup;
 extern struct s_screen					g_sc;
 extern struct s_term					g_term;
 extern const struct s_termcaps_string	g_tc_strings[];
+
+extern char *UP;
+extern char *BC;
 
 int		init_terminal(void);
 void	rl_set_signals(void);

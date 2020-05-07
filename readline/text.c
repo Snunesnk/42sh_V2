@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:16:27 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:45:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 14:12:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		init_line_buffer(void)
 	g_line.line = (char*)malloc(sizeof(char) * g_line.size_buf);
 	ft_bzero(g_line.line, g_line.size_buf);
 	g_line.c_pos = 0;
-	g_line.prev_c_pos = 0;
+	g_line.cursor_pos = 0;
 	g_line.len = 0;
 	g_line.is_modified = 0;
 }
@@ -103,6 +103,6 @@ void		rl_backspace(void)
 		else
 			g_line.line[g_line.c_pos] = '\0';
 		--g_line.len;
-		g_line.is_modified = 0;
+		g_line.is_modified = 1;
 	}
 }
