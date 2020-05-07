@@ -1,56 +1,111 @@
 cd ../.././.././.././
+echo $?
 cd -
+echo $?
 export CDPTAH=/usr:/
+echo $?
 cd -P /lib
+echo $?
 cd -
+echo $?
 cd ~/
+echo $?
 cd
+echo $?
 unset HOME
+echo $?
 cd -P ~/
+echo $?
 cd --
+echo $?
 cd ../
+echo $?
 cd /../
+echo $?
 cd /./
+echo $?
 cd -L -
+echo $?
 cd -P -
+echo $?
 cd /root
+echo $?
 export PWD=
+echo $?
 cd test/
+echo $?
 cd //////
+echo $?
 cd ...............
+echo $?
 cd .../././.../
+echo $?
 cd /bin
+echo $?
 cd -L /lib
+echo $?
 cd -
+echo $?
 cd
+echo $?
 PWD=toto
+echo $?
 cd -
+echo $?
 cd /../
+echo $?
 cd ..
+echo $?
 cd .
+echo $?
 cd -P -
+echo $?
 cd -
+echo $?
 HOME=plop
+echo $?
 cd ~/
+echo $?
 cd $HOME
+echo $?
 cd src/
+echo $?
 OLDPWD=
+echo $?
 cd -
+echo $?
 cd -
+echo $?
 cd
+echo $?
 unset OLDPWD
+echo $?
 cd -L -
+echo $?
 cd -P -
+echo $?
 cd -
+echo $?
 PWD=/:/home/plop
+echo $?
 CDPATH=/
+echo $?
 cd -P lib
+echo $?
 PWD=
+echo $?
 OLDPWD=
+echo $?
 HOME=
+echo $?
 cd -
+echo $?
 cd lib
+echo $?
 cd ../
+echo $?
 cd /../
+echo $?
 cd -P .
+echo $?
 exit
