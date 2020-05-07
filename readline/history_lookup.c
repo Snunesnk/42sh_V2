@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 19:36:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 19:08:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	get_input_proposal(char value, char **hist_proposal)
 		insert_text((char *)&value, 1);
 	else if (value == 127)
 		rl_backspace();
-	g_line.line[g_dis.cbpos] = '\0';
+	g_line.line[g_line.c_pos] = '\0';
 	user_input = g_line.line;
 	*hist_proposal = g_hist.history_content + g_hist.offset + 1;
 	if (!(get_matching_hist(hist_proposal, user_input)))

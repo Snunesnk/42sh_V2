@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 19:58:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 19:21:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		test_cd(void)
 	static char	operator[] = "&|;<>";
 	int			i;
 
-	i = g_dis.cbpos - 1;
+	i = g_line.c_pos - 1;
 	if (i < 2)
 		return (0);
 	while (i > 0 && !ft_strchr(operator, g_line.line[i]))
