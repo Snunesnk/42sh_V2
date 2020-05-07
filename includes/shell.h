@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 11:29:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/07 12:28:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,7 @@ int								ft_atoifd(const char *str);
 int								ft_ismeta(int c);
 char							*ft_join_free(char *s1, char *s2, int op);
 char							*commandline(t_list *lst);
+void							get_job_command(t_ast *ast, char **command);
 void							ft_merge_sort(t_list **lst, \
 		void sort(t_list**, t_list**, t_list**));
 void							ft_sort_name(t_list **lst1, t_list **lst2, \

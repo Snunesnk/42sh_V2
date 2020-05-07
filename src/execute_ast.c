@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 16:15:40 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/07 12:31:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int			execute_semi(t_ast *node, int foreground)
 		return (execute_node(node->left, foreground));
 }
 
-static int	parent_shell(pid_t pid)
+static int	parent_shell(pid_t pid, t_ast *node)
 {
 	t_job	*j;
 
@@ -40,10 +40,8 @@ static int	parent_shell(pid_t pid)
 	j->first_process = (t_process*)ft_memalloc(sizeof(t_process));
 	j->first_process->pid = pid;
 	j->pgid = pid;
-	j->command = ft_strdup("subshell"); /* Should be infix to concatenate elements of command */
+	get_job_command(node, &j->command);
 	add_job_to_queue(j);
-//	ft_printf("Parent shellpid: %d, job:%d\n", g_shell_pgid, pid);
-//	printjob();
 	return (0);
 }
 
@@ -74,5 +72,5 @@ int			execute_subshell(t_ast *node, int foreground)
 		ft_printf("Fork subshell failed\n");
 		exit_clean(0);
 	}
-	return (parent_shell(pid));
+	return (parent_shell(pid, node));
 }
