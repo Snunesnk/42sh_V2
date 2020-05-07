@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:47:47 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/30 14:13:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/07 19:03:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ static void	clean_end(char *str)
 	}
 }
 
-static void	clean_start(char *str)
+static void	remove_doubleslash(char *str)
 {
-	size_t	i;
 	char	*ptr;
 
-	i = 0;
-	(void)i;
 	while ((ptr = ft_strstr(str, "//")))
 	{
 		ft_memmove(ptr, (ptr + 1), ft_strlen((ptr + 1)));
@@ -97,18 +94,18 @@ char		*ft_resolvepath(char *str)
 	if (!str || *str != '/')
 	{
 		g_errno = E_EINVAL;
-		return (NULL);
+		return (str);
 	}
 	if (ft_strstr(str, "..."))
 	{
 		g_errno = E_ENOENT;
-		return (NULL);
+		return (str);
 	}
-	clean_start(str);
+	remove_doubleslash(str);
 	previousdir_res(str);
-	clean_start(str);
+	remove_doubleslash(str);
 	currentdir_trim(str);
-	clean_start(str);
+	remove_doubleslash(str);
 	clean_end(str);
 	return (str);
 }
