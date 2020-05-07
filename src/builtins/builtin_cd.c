@@ -103,6 +103,19 @@ void	update_env(char *curpath)
 		set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
 }
 
+static char	*absolute_path(char **curpath)
+{
+	char *tmp;
+
+	if (*curpath)
+	{
+		tmp = ft_realpath(*curpath, NULL);
+		ft_memdel((void**)curpath);
+		return (tmp);
+	}
+	return (NULL);
+}
+
 //static int	change_dir(char **curpath, const char *directory, _Bool p_option)
 int	change_dir(char **curpath, const char *directory, _Bool p_option)
 {
@@ -120,14 +133,10 @@ int	change_dir(char **curpath, const char *directory, _Bool p_option)
 		pbierror("%s: chdir(2) failed to change directory", *curpath);
 		return (2);
 	}
-	(void)p_option;
-//	if (p_option)
-//	{
-//		oldpwd = ft_realpath(*curpath, NULL);
-//		ft_memdel((void**)curpath);
-//		*curpath = oldpwd;
-//	}
-	update_env(*curpath);
+	if (p_option)
+		*curpath = absolute_path(curpath);
+	if (*curpath)
+		update_env(*curpath);
 	return (e_success);
 }
 
