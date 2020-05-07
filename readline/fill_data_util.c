@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:32:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/06 19:20:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	get_compl_start(void)
 	int			start;
 	static char	operator[] = "&|<>;";
 
-	start = g_dis.cbpos;
+	start = g_line.c_pos;
 	while (start > 0 && !ft_isspace(g_line.line[start - 1]) \
 				&& g_line.line[start - 1] != '/' \
 				&& !ft_strchr(operator, g_line.line[start - 1]))
