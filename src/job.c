@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 17:47:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:43:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	j_status(t_job *j, int foreground)
 	else
 	{
 		put_job_in_background(j, 0);
-		format_job_info(j, "launched");
+		format_job_info(j, "Launched");
 	}
 }
 
