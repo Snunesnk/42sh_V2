@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:06:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:24:29 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void		format_job_info(t_job *j, const char *status)
 	sig = -1;
 	while (p && p->stopped == 0)
 		p = p->next;
-	if (p->stopped == 1)
+	if (p && p->stopped == 1)
 	{
 		if (WIFSIGNALED(p->status))
 			sig = WTERMSIG(p->status);
