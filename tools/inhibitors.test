@@ -1,0 +1,11 @@
+echo "ok
+echo '''
+echo "'"
+echo '"\'
+echo //////
+echo /"/
+echo \$HOME
+echo \\$HOME
+echo \\\ $HOME
+echo \\\$HOME
+exit

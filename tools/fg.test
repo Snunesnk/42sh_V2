@@ -1,0 +1,34 @@
+fg
+echo $?
+fg 0
+echo $?
+fg 1
+echo $?
+fg 2
+echo $?
+fg 100
+echo $?
+fg vim
+echo $?
+fg cat
+echo $?
+fg -- 1
+echo $?
+fg -- fg
+echo $?
+fg | fg
+echo $?
+fg &
+echo $?
+ls && fg || cat & cat -e &
+echo $?
+top && ls &
+echo $?
+fg
+echo $?
+fg&
+echo $?
+fg
+echo $?
+fg &
+echo $?

@@ -1,0 +1,20 @@
+bg
+echo $?
+bg 0
+echo $?
+bg 1
+echo $?
+bg 2
+echo $?
+bg 100
+echo $?
+bg vim
+echo $?
+bg cat
+echo $?
+bg -- 1
+echo $?
+bg -- bg
+echo $?
+bg | bg
+echo $?

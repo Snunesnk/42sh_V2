@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 16:21:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 09:28:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 const t_builtins	g_builtins[] =
 {
 	{ "echo", &cmd_echo},
+	{ "builtin", &cmd_builtin},
 	{ "exit", &cmd_exit},
 	{ "setenv", &cmd_export},
 	{ "unsetenv", &cmd_unset},
@@ -89,7 +90,7 @@ int				builtins_dispatcher(char **argv)
 	int			argc;
 
 	argc = 0;
-	ret = e_command_not_found;
+	ret = e_no_builtin;
 	if ((f = dispatcher(*argv)))
 	{
 		g_builtin_name = *argv;
