@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:57:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 16:20:38 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ static int	single_arg_case(void)
 
 	if ((j = find_lastbackgrounded()))
 	{
+		update_status();
+		if (job_is_completed(j))
+		{
+			pbierror("job has terminated");
+			return (1);
+		}
 		ft_printf("%s\n", j->command);
 		put_job_in_foreground(j, 1);
 		return (get_exit_value(get_job_status(j, 1)));
