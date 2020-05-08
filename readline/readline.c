@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 12:50:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 15:46:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,7 @@ char		*ft_readline(char *prompt)
 	prep_terminal();
 	initialize();
 	rl_set_signals();
-	if (!prompt)
-		prompt = get_prompt();
+	prompt = !prompt ? get_prompt() : ft_strdup(prompt);
 	set_prompt(prompt);
 	free(prompt);
 	display_prompt();
