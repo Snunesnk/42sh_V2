@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:03:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 14:28:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,40 @@ void	restore_procmask(void)
 		exit_clean(1);
 }
 
-const char	*strsig[MAX_SIG] =
+static const t_signal	signalstr[] =
 {
-	"SIGHUP",
-	"SIGINT",
-	"SIGQUIT",
-	"SIGILL",
-	"SIGTRAP",
-	"SIGABRT",
-	"SIGIOT",
-	"SIGBUS",
-	"SIGFPE",
-	"SIGKILL",
-	"SIGUSR1",
-	"SIGSEGV",
-	"SIGUSR2",
-	"SIGPIPE",
-	"SIGALRM",
-	"SIGTERM",
-	"SIGSTKFLT",
-	"SIGCHLD",
-	"SIGCONT",
-	"SIGSTOP",
-	"SIGTSTP",
-	"SIGTTIN",
-	"SIGTTOU",
-	"SIGURG",
-	"SIGXCPU",
-	"SIGXFSZ",
-	"SIGVTALRM",
-	"SIGPROF",
-	"SIGWINCH",
-	"SIGIO",
-	"SIGPWR",
-	"SIGSYS"
+	{ SIGHUP , "SIGHUP" },
+	{ SIGINT , "SIGINT" },
+	{ SIGQUIT , "SIGQUIT" },
+	{ SIGILL , "SIGILL" },
+	{ SIGABRT , "SIGABRT" },
+	{ SIGFPE , "SIGFPE" },
+	{ SIGKILL , "SIGKILL" },
+	{ SIGSEGV , "SIGSEGV" },
+	{ SIGPIPE , "SIGPIPE" },
+	{ SIGALRM , "SIGALRM" },
+	{ SIGTERM , "SIGTERM" },
+	{ SIGUSR1 , "SIGUSR1" },
+	{ SIGUSR2 , "SIGUSR2" },
+	{ SIGCHLD , "SIGCHLD" },
+	{ SIGCONT , "SIGCONT" },
+	{ SIGSTOP , "SIGSTOP" },
+	{ SIGTSTP , "SIGTSTP" },
+	{ SIGTTIN , "SIGTTIN" },
+	{ SIGTTOU , "SIGTTOU" },
+	{ 0 , NULL }
 };
+
+const char	*strsig(int sig)
+{
+	int	i;
+
+	i = 0;
+	while (signalstr[i].str)
+	{
+		if (signalstr[i].sig == sig)
+			return (signalstr[i].str);
+		++i;
+	}
+	return (NULL);
+}

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:15:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 14:26:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ extern t_list					*g_pending_cmd;
 extern int					*g_parse_table[NB_TOKEN];
 
 extern t_list					*g_alias;
+
+typedef struct					s_signal
+{
+	int		sig;
+	char	*str;
+}						t_signal;
 
 typedef struct					s_redirectee
 {
@@ -211,6 +217,7 @@ int								get_job_status(t_job *j, int foreground);
 void							add_job_to_queue(t_job *j);
 void							init_shell_sset(void);
 void							restore_procmask(void);
+const char      				*strsig(int sig);
 int								job_is_stopped(t_job *j);
 int								are_stopped_jobs(void);
 int								job_is_completed(t_job *j);
@@ -218,7 +225,6 @@ void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
 
 extern sigset_t					g_save_procmask;
-extern const char				*strsig[MAX_SIG];
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);
