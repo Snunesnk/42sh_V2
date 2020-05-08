@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 23:10:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 19:15:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,11 @@ void		redisplay_after_sigwinch(void)
 	int				c_pos;
 	int				cmd_line;
 
+	if (g_dumb_term)
+	{
+		ft_printf("\r%.*s\r", g_sc.w, "");
+		return ;
+	}
 	v_pos = 0;
 	c_pos = 0;
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
