@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/08 13:03:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 13:10:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*calc_print_range(int *offset)
 	ft_printf("\r%s\r", to_print);
 	*offset = 0;
 	to_print[0] = 0;
-	while (g_line.c_pos - *offset + g_dis.prompt_l >= g_sc.w)
+	while (g_line.c_pos - *offset + g_dis.prompt_l >= g_sc.w - 1)
 		*offset += g_sc.w / 3;
 	if (*offset < g_dis.prompt_l)
 		to_print = ft_strncat(to_print, g_dis.display_prompt + *offset, g_sc.w);
