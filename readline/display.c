@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 16:53:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 23:10:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void		update_line(void)
 {
 	int	ret;
 
+	if (g_dumb_term)
+		return (update_dumb_line());
 	if (g_line.is_modified)
 	{
 		ret = g_line.cursor_pos;
@@ -90,12 +92,11 @@ void		update_line(void)
 			write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
 					g_line.len - g_line.cursor_pos);
 		g_line.cursor_pos = g_line.len;
-		clear_next();
 		ft_putstr(END_OF_COLOR);
+		clear_next();
 	}
 	place_cursor(g_line.c_pos);
 	g_line.is_modified = 0;
-	return ;
 }
 
 void		redisplay_after_sigwinch(void)
