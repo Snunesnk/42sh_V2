@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:26:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 16:13:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ void		format_job_info(t_job *j, const char *status)
 		else if (WIFSTOPPED(p->status))
 			sig = WSTOPSIG(p->status);
 	}
-	/* Here some signals should go trough different displays */
-	if (strsig(sig))
+	if (sig == SIGINT || sig == SIGQUIT) /* Here some signals should go trough different displays */
+		return ;
+	else if (strsig(sig) && ft_strcmp("Done", status)) // Not sure whether this is correct */
 		ft_dprintf(STDERR_FILENO, "\n[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig(sig), j->command);
 	else
 		ft_dprintf(STDERR_FILENO, "\n[%ld] %s \t %s\n", (long)j->pgid, status, j->command);

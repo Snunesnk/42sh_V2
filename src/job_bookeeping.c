@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:57:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 16:02:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,17 @@ int		get_job_status(t_job *j, int foreground)
 
 int		get_exit_value(int status)
 {
+	int	sig;
+
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
-		return (WTERMSIG(status) + 128);
+	{
+		sig = WTERMSIG(status);
+		if (sig == SIGQUIT)
+			ft_dprintf(STDERR_FILENO, "Quit\n");
+		return (sig + 128);
+	}
 	else if (WIFSTOPPED(status))
 		return (WSTOPSIG(status) + 128);
 	else
