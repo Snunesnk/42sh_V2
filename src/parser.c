@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:58:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 10:46:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ static t_list	*subprompt(void)
 {
 	t_list	*lst;
 	char	*input;
-	char	*tmp;
 
 	g_oneline = 1;
-	tmp = get_heredoc_input(NULL, NULL, NULL, NULL);
+	input = get_heredoc_input(NULL, NULL, NULL, NULL);
 	g_oneline = 0;
 	g_subprompt = 0;
 	if (g_input_break)
@@ -32,9 +31,8 @@ static t_list	*subprompt(void)
 		return (NULL);
 	}
 	g_input_break = 0;
-	input = ft_strjoin(tmp, "\n");
 	lst = lexer(input);
-	free(tmp);
+	free(input);
 	return (lst);
 }
 
@@ -71,6 +69,7 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL;
+		ft_printf("\nrecall subprompt\n");
 		if (!((*lst)->next = subprompt()))
 			return (e_invalid_input);
 		return (e_success);
