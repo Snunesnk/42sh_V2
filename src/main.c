@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 15:36:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 16:07:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ int			exec_input(char *input)
 	lst = lexer(input);
 	free(input);
 	status = lst ? parser(lst) : 2;
-	if (((t_token*)(lst->content))->type == NEWLINE)
-	{
-		do_job_notification(g_first_job, NULL, NULL);
-		free_lst(lst);
-		return (g_retval);
-	}
 	if (status)
 	{
 		g_retval = status;
 		if (!g_shell_is_interactive && status == 2)
 			exit_clean(2);
+		do_job_notification(g_first_job, NULL, NULL);
+		free_lst(lst);
+		return (g_retval);
+	}
+	else if (((t_token*)(lst->content))->type == NEWLINE)
+	{
 		do_job_notification(g_first_job, NULL, NULL);
 		free_lst(lst);
 		return (g_retval);
