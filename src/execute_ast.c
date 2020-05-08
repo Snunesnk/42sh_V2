@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 12:31:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:45:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int	parent_shell(pid_t pid, t_ast *node)
 	j->pgid = pid;
 	get_job_command(node, &j->command);
 	add_job_to_queue(j);
+	format_job_info(j, "Launched");
 	return (0);
 }
 
