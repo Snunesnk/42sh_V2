@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:19:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 14:31:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,13 @@
 #include "shell.h"
 #include "builtins.h"
 
-static void	mark_process_status2(pid_t pid, t_process *p, int status)
+static void	mark_process_status2(t_process *p, int status)
 {
 	p->status = status;
 	if (WIFSTOPPED(status))
 		p->stopped = 1;
 	else
-	{
 		p->completed = 1;
-		if (WIFSIGNALED(status))
-		{
-			ft_dprintf(STDERR_FILENO, "\n%d: Terminated by signal %d.\n", (int)pid, WTERMSIG(p->status));
-		}
-	}
 }
 
 int			mark_process_status(pid_t pid, int status)
@@ -44,7 +38,7 @@ int			mark_process_status(pid_t pid, int status)
 			{
 				if (p->pid == pid)
 				{
-					mark_process_status2(pid, p, status);
+					mark_process_status2(p, status);
 					return (0);
 				}
 				p = p->next;
