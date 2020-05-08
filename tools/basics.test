@@ -1,21 +1,39 @@
 env
+echo $?
 ./21
+echo $?
 echo ok too
+echo $?
 builtin ls
+echo $?
 builtin
+echo $?
 ls
-exit
+echo $?
 /bin
+echo $?
 /bin/ls
+echo $?
 /dev/urandom
+echo $?
 /bin/../bin///ls
+echo $?
 /ls
+echo $?
 /////ls
+echo $?
 ../bin/l
+echo $?
 .
+echo $?
 /
+echo $?
 ../
+echo $?
 ..
+echo $?
 	echo	ok
+echo $?
 	env				
+echo $?
 exit
