@@ -1,0 +1,16 @@
+total 4536
+-rwxr-xr-x 1 antoine 4575432 May  8 09:39 21sh
+-rw-r--r-- 1 antoine    5731 May  7 16:43 21sh.mk
+-rw-r--r-- 1 antoine      24 May  4 12:06 auteur
+-rwxrw-rw- 1 antoine     172 May  5 13:04 configure
+-rwxrw-rw- 1 antoine      43 May  4 15:14 draw.sh
+drwxr-xr-x 5 antoine    4096 May  4 12:06 globbings
+drwxr-xr-x 2 antoine    4096 May  8 09:27 includes
+drwxr-xr-x 4 antoine    4096 May  8 09:39 libft
+-rw-r--r-- 1 antoine    1551 May  4 12:06 Makefile
+-rw-r--r-- 1 antoine       0 May  8 09:40 newfile
+drwxr-xr-x 2 antoine    4096 May  8 09:39 readline
+-rw-r--r-- 1 antoine    3343 May  7 12:32 README.md
+drwxr-xr-x 3 antoine   12288 May  8 09:39 src
+-rw-r--r-- 1 antoine       6 May  7 17:38 test
+drwxr-xr-x 2 antoine    4096 May  8 09:40 tools

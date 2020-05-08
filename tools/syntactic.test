@@ -13,9 +13,9 @@ echo $?
 < toto echo 2>&1
 echo $?
 < echo ls 2>&1 << EOF
-hello
+hello $LOGNAME
 echo ok << EOF
-in second
+in second $PWD
 EOF
 echo $?
 EOF
