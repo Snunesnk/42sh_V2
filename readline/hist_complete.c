@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/06 19:19:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 21:14:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	insert_hist_compl(void)
 	char			*hist_compl;
 	unsigned int	offset_save;
 
+	if (g_dumb_term)
+		return ;
 	if (ft_str_isspace(g_line.line) || !g_line.c_pos || !g_hist.total_lines)
 		return ;
 	offset_save = g_hist.offset;
@@ -30,34 +32,6 @@ void	insert_hist_compl(void)
 	while (g_hist.offset < offset_save)
 		next_hist();
 }
-/*
-void	go_up(int start_col, char *str)
-{
-	int	i;
-	int	col;
-	int	up;
-
-	i = 0;
-	col = start_col;
-	up = 0;
-	while (str[i])
-	{
-		if (col == g_sc.w)
-		{
-			col = 0;
-			up++;
-		}
-		if (str[i] == '\n')
-		{
-			col = 0;
-			up++;
-		}
-		i++;
-		col++;
-	}
-	if (up)
-		ft_putstr(tgoto(g_termcaps.gup, 0, up));
-}*/
 
 void	print_hist_compl(void)
 {
@@ -65,7 +39,7 @@ void	print_hist_compl(void)
 	unsigned int	offset_save;
 	int				c_pos_save;
 
-	if (g_hist.total_lines == 0)
+	if (g_hist.total_lines == 0 || g_dumb_term)
 		return ;
 	offset_save = g_hist.offset;
 	hist_compl = g_hist.history_content + g_hist.offset + 1;
@@ -84,6 +58,8 @@ void	print_hist_compl(void)
 
 void	remove_completion(void)
 {
+	if (g_dumb_term)
+		return ;
 	place_cursor(g_line.len);
 	ft_putstr(g_termcaps.clreol);
 }

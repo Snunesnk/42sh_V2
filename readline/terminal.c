@@ -6,13 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 15:52:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 21:55:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
 
+int				g_dumb_term = 0;
 struct s_screen g_sc;
 struct termios g_termios;
 struct termios g_termios_backup;
@@ -39,10 +40,10 @@ const struct s_termcaps_string g_tc_strings[] =
 	{"cd", &g_termcaps.cd},
 	{"ce", &g_termcaps.clreol},
 	{"cl", &g_termcaps.clrpag},
-	{"cr", &g_termcaps.cr},
 	{"sf", &g_termcaps.sf},
 	{"sr", &g_termcaps.sr},
-	{"cm", &g_termcaps.cm}
+	{"cm", &g_termcaps.cm},
+	{"cr", &g_termcaps.cr}
 };
 
 static int	get_term_capabilities(char **buffer)
@@ -53,10 +54,14 @@ static int	get_term_capabilities(char **buffer)
 	while (i < NUM_TC_STRINGS)
 	{
 		*g_tc_strings[i].value = tgetstr((char *)g_tc_strings[i].var, buffer);
-		if (!*g_tc_strings[i].value && !ft_strequ(g_tc_strings[i].var, "cr"))
-			ft_printf("%s not supported\n", g_tc_strings[i].var);
+		if (!*g_tc_strings[i].value)
+			g_dumb_term = 1;
 		++i;
 	}
+	i = 0;
+	if (g_dumb_term && !ft_strequ("dumb", g_term.terminal_name))
+		ft_printf("Termcaps capability is insuficient for normal use, " \
+				"enter dumb mode.\n");
 	return (1);
 }
 
@@ -84,27 +89,17 @@ void		resize_terminal(int signo)
 
 int			init_terminal(void)
 {
-	char	*buffer;
+	char	buffer[2048];
 
+	ft_bzero(buffer, 2048);
 	BC = NULL;
 	UP = NULL;
-	if (!(buffer = (char *)ft_memalloc(sizeof(char) * 2048)))
-	{
-		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
-		exit(e_cannot_allocate_memory);
-	}
 	if (g_term.terminal_name == NULL)
 		g_term.terminal_name = "dumb";
 	if (get_screensize(STDIN_FILENO) == -1)
 		return (-1);
-	if (tgetent(buffer, g_term.terminal_name) <= 0 \
-			|| !get_term_capabilities(&buffer))
-	{
-		ft_dprintf(STDERR_FILENO, "Terminal type '%s' is not defined in " \
-				"termcap database (or have too few informations) or database " \
-				"could not be found.\n", g_term.terminal_name);
-		exit(1);
-	}
+	tgetent(buffer, g_term.terminal_name);
+	get_term_capabilities((char **)&buffer);
 	bind_keys();
 	return (0);
 }

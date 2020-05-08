@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:57 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 13:27:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/07 20:19:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ extern struct termios					g_termios_backup;
 extern struct s_screen					g_sc;
 extern struct s_term					g_term;
 extern const struct s_termcaps_string	g_tc_strings[];
+extern int								g_dumb_term;
 
 extern char *UP;
 extern char *BC;
