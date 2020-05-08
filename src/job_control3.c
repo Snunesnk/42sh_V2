@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:24:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:42:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void		format_job_info(t_job *j, const char *status)
 	}
 	/* Here some signals should go trough different displays */
 	if (sig >= 0 && sig < MAX_SIG)
-		ft_dprintf(STDERR_FILENO, "[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig[sig], j->command);
+		ft_dprintf(STDERR_FILENO, "\n[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig[sig], j->command);
 	else
-		ft_dprintf(STDERR_FILENO, "[%ld] %s \t %s\n", (long)j->pgid, status, j->command);
+		ft_dprintf(STDERR_FILENO, "\n[%ld] %s \t %s\n", (long)j->pgid, status, j->command);
 }
 
 static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
