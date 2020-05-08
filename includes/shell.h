@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 12:28:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 12:51:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
 int								get_stdin(int fd, char **line);
-char							*get_input(const char *prompt,
+char							*get_input(char *prompt,
 		int close_quotes);
 char							*get_input_fd(int fd);
 char							*append_line(char **last_lines, char * input);

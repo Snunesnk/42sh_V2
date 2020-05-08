@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 12:37:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 12:45:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,19 @@ size_t		get_vis_prompt_len(char *prompt)
 	return (len);
 }
 
-static int	remove_home(char **pwd)
+static char	*remove_home(char *pwd)
 {
 	char	*home;
 	char	*tmp;
 
 	if (!(home = get_shell_var("HOME", g_env)) || !*home)
-		return (e_success);
-	if (!(tmp = ft_strstr(*pwd, home)))
-		return (e_success);
-	if (access(home, F_OK) || (*((*pwd) + ft_strlen(home)) != '/' \
-				&& !ft_strequ(*pwd, home)))
-		return (e_success);
-	if (!(*pwd = ft_strdup(*pwd)))
-	{
-		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
-		return (e_cannot_allocate_memory);
-	}
-	tmp = ft_strstr(*pwd, home);
+		return (pwd);
+	if (!(tmp = ft_strstr(pwd, home)))
+		return (pwd);
+	if (access(home, F_OK) || (*(pwd + ft_strlen(home)) != '/' \
+				&& !ft_strequ(pwd, home)))
+		return (pwd);
+	tmp = ft_strstr(pwd, home);
 	tmp[0] = '\0';
 	tmp = ft_strcat(tmp, tmp + ft_strlen(home) - 1);
 	tmp[0] = '~';
@@ -66,7 +61,30 @@ static int	remove_home(char **pwd)
 		tmp[1] = 0;
 		tmp[2] = 0;
 	}
-	return (e_success);
+	return (pwd);
+}
+
+static char	*get_dumb_prompt(char *prompt, char *pwd)
+{
+	if (!(pwd = remove_home(pwd)))
+		return (NULL);
+	ft_strcat(prompt, pwd);
+	ft_strcat(prompt, "$ ");
+	return (prompt);
+}
+
+static char	*get_normal_prompt(char *prompt, char *pwd)
+{
+	if (g_retval)
+		ft_strcat(prompt, RED_ARROW);
+	else
+		ft_strcat(prompt, GREEN_ARROW);
+	ft_strcat(prompt, PROMPT_COLOR);
+	if (!(pwd = remove_home(pwd)))
+		return (NULL);
+	ft_strcat(prompt, pwd);
+	ft_strcat(prompt, END_SIGN);
+	return (prompt);
 }
 
 char		*get_prompt(void)
@@ -75,25 +93,25 @@ char		*get_prompt(void)
 	char	*pwd;
 	int		len;
 
-	if (!(pwd = get_shell_var("PWD", g_env)))
-		return (ft_strjoin(g_progname, "$ "));
-	len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + ft_strlen(PROMPT_COLOR) \
-		+ ft_strlen(END_SIGN) + 1;
-	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len + 1))))
+	if (!(pwd = getcwd(NULL, 0)))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
-	if (g_retval)
-		ft_strcat(prompt, RED_ARROW);
+	if (g_dumb_term)
+		len = ft_strlen(pwd) + 3;
 	else
-		ft_strcat(prompt, GREEN_ARROW);
-	ft_strcat(prompt, PROMPT_COLOR);
-	if (remove_home(&pwd))
+		len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + \
+			  ft_strlen(PROMPT_COLOR) + ft_strlen(END_SIGN) + 1;
+	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len))))
+	{
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
-	ft_strcat(prompt, pwd);
-	if (!ft_strequ(pwd, get_shell_var("PWD", g_env)))
-		free(pwd);
-	ft_strcat(prompt, END_SIGN);
+	}
+	if (g_dumb_term)
+		prompt = get_dumb_prompt(prompt, pwd);
+	else
+		prompt = get_normal_prompt(prompt, pwd);
+	free(pwd);
 	return (prompt);
 }
