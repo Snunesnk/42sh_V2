@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:52:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 15:36:33 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,34 @@ int			exec_input(char *input)
 	int		status;
 	char	*tmp;
 
-	status = 0;
+//	ft_printf("g_retval: %d\n", g_retval);
 	tmp = ft_strjoin(input, "\n");
 	free(input);
 	input = tmp;
 	lst = lexer(input);
 	free(input);
 	status = lst ? parser(lst) : 2;
-	if (status || ((t_token*)(lst->content))->type == NEWLINE)
+	if (((t_token*)(lst->content))->type == NEWLINE)
 	{
+		do_job_notification(g_first_job, NULL, NULL);
+		free_lst(lst);
+		return (g_retval);
+	}
+	if (status)
+	{
+		g_retval = status;
 		if (!g_shell_is_interactive && status == 2)
 			exit_clean(2);
 		do_job_notification(g_first_job, NULL, NULL);
 		free_lst(lst);
-		g_retval = status;
-		return (status);
+		return (g_retval);
 	}
 	ast = build_ast(&lst);
 //	graph_ast(ast); // BONUS GRAPHVIZ ?
-	status = execute_node(ast, 1);
+	g_retval = execute_node(ast, 1);
 	free_ast(ast);
-	g_retval = status;
 	do_job_notification(g_first_job, NULL, NULL);
-	return (status);
+	return (g_retval);
 }
 
 int			exit_clean(int ret)
@@ -115,6 +120,7 @@ static int	main_loop(int *status)
 	else if (!(input = get_input(NULL, 1)))
 		return (1);
 	*status = exec_input(input);
+//	ft_printf("status: %d\n", *status);
 	if (g_shell_is_interactive)
 		test_hash_path();
 	return (0);
