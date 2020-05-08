@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 12:28:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:03:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@
 # define FDCLOSE	0x8
 # define NOFORK		0x10
 # define REDSUC		0x20
+
+# define MAX_SIG	32
 
 char							*token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
@@ -216,6 +218,7 @@ void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
 
 extern sigset_t					g_save_procmask;
+extern const char				*strsig[MAX_SIG];
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);

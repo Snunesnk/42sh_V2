@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 16:25:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 13:06:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,32 @@ void		wait_for_job(t_job *j)
 
 void		format_job_info(t_job *j, const char *status)
 {
-	ft_dprintf(STDERR_FILENO, "%ld (%s): %s\n",
-			(long)j->pgid, status, j->command);
+	t_process	*p;
+	int		sig;
+
+	p = j->first_process;
+	sig = -1;
+	while (p && p->stopped == 0)
+		p = p->next;
+	if (p->stopped == 1)
+	{
+		if (WIFSIGNALED(p->status))
+			sig = WTERMSIG(p->status);
+		else if (WIFSTOPPED(p->status))
+			sig = WSTOPSIG(p->status);
+	}
+	/* Here some signals should go trough different displays */
+	if (sig >= 0 && sig < MAX_SIG)
+		ft_dprintf(STDERR_FILENO, "[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig[sig], j->command);
+	else
+		ft_dprintf(STDERR_FILENO, "[%ld] %s \t %s\n", (long)j->pgid, status, j->command);
 }
 
 static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
 {
 	if (job_is_completed(*j))
 	{
-		format_job_info(*j, "completed");
+		format_job_info(*j, "Done");
 		if (*jlast)
 		{
 			free_job(*j);
@@ -58,7 +75,7 @@ static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
 	}
 	else if (job_is_stopped(*j) && !(*j)->notified)
 	{
-		format_job_info(*j, "stopped");
+		format_job_info(*j, "Stopped");
 		(*j)->notified = 1;
 		*jlast = *j;
 	}
