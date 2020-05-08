@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 12:51:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 15:51:51 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ char			*get_input(char *prompt, int close_quotes)
 	while (first_iter || last_lines)
 	{
 		if (g_shell_is_interactive)
-			input = ft_readline(first_iter ? prompt : ft_strdup("> "));
+			input = ft_readline(first_iter ? prompt : "> ");
 		else if (get_stdin(STDIN_FILENO, &input) < 0)
 			break ;
 		if (input && close_quotes)
