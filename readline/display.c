@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 19:15:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 23:04:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,55 +99,51 @@ void		update_line(void)
 	g_line.is_modified = 0;
 }
 
+static int	calc_v_pos(void)
+{
+	int	v_pos;
+	int	c_pos;
+	int	track;
+
+	track = 0;
+	v_pos = g_dis.start_offset / g_sc.w;
+	c_pos = g_dis.start_offset % g_sc.w;
+	while (track != g_line.c_pos)
+	{
+		if (c_pos == g_sc.w || g_line.line[track] == '\n')
+		{
+			c_pos = 0;
+			v_pos++;
+		}
+		track++;
+	}
+	return (v_pos);
+}
+
 void		redisplay_after_sigwinch(void)
 {
 	struct winsize	w_size;
 	int				v_pos;
 	int				c_pos;
-	int				cmd_line;
 
+	c_pos = 0;
+	v_pos = 0;
+	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
+		return ;
+	g_sc.w = w_size.ws_col;
+	g_sc.height = w_size.ws_row;
 	if (g_dumb_term)
 	{
 		ft_printf("\r%.*s\r", g_sc.w, "");
 		return ;
 	}
-	v_pos = 0;
-	c_pos = 0;
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
-		return ;
-	g_sc.w = w_size.ws_col;
-	g_sc.height = w_size.ws_row;
-	cmd_line = (g_dis.prompt_l + g_line.cursor_pos) / g_sc.w;
 	get_cursor_position(&v_pos, &c_pos);
-	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos - cmd_line));
+	v_pos -= calc_v_pos();
+	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos));
 	ft_putstr(g_termcaps.cd);
 	display_prompt();
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
-	ft_putstr(g_line.line);
-	return ;
-}/*
-	g_dis.fst_line_l = g_sc.w - (g_dis.prompt_l % g_sc.w);
-	g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
-	g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;
-	g_dis.botl = (g_dis.prompt_l + g_line.len) / g_sc.w;
-	ft_putstr(tgoto(g_termcaps.ch, 0, 0));
-	if ((g_dis.prompt_l + g_line.len) % g_sc.w == 0)
-		--g_cursor.v_pos;
-	if (g_cursor.v_pos > 0)
-		ft_putstr(tgoto(g_termcaps.gup, 0, g_cursor.v_pos));
-	ft_putstr(g_termcaps.cd);
-	if (g_cursor.v_pos < 0)
-		g_cursor.v_pos = 0;
-	display_lines();
-	ft_putstr(END_OF_COLOR);
-	if ((g_dis.prompt_l + g_line.len) % g_sc.w == 0)
-		ft_putstr(tgoto(g_termcaps.do1, 0, 0));
-	ft_putstr(tgoto(g_termcaps.ch, 0, g_cursor.c_pos));
-	if (g_dis.botl - g_cursor.v_pos)
-		ft_putstr(tgoto(g_termcaps.gup, 0, g_dis.botl - g_cursor.v_pos));
-	if (g_cursor.c_pos == g_sc.w)
-	{
-		g_cursor.c_pos = (g_dis.prompt_l + g_dis.cbpos) % g_sc.w;
-		g_cursor.v_pos = (g_dis.prompt_l + g_dis.cbpos) / g_sc.w;
-	}
-}*/
+	g_line.cursor_pos = 0;
+	g_line.is_modified = 1;
+	update_line();
+}
