@@ -1,10 +1,10 @@
 ./21sh < bad
 echo $?
+ls | echo $ENV
+echo $?
+& env
+echo $?
 exit
-#ls | echo $ENV
-#echo $?
-#& env
-#echo $?
 #ls |
 #echo $?
 #echo ok ||
