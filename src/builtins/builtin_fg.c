@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:58:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 14:57:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_job	*find_lastbackgrounded(void)
 	return (NULL);
 }
 
-int		two_arg_case(char **argv)
+static int	two_arg_case(char **argv)
 {
 	t_job	*j;
 
@@ -50,28 +50,32 @@ int		two_arg_case(char **argv)
 	return (0);
 }
 
-int		cmd_fg(int argc, char **argv)
+static int	single_arg_case(void)
 {
 	t_job	*j;
 
+	if ((j = find_lastbackgrounded()))
+	{
+		ft_printf("%s\n", j->command);
+		put_job_in_foreground(j, 1);
+		return (get_exit_value(get_job_status(j, 1)));
+	}
+	else
+	{
+		pbierror("current: no such job");
+		return (1);
+	}
+}
+
+int		cmd_fg(int argc, char **argv)
+{
 	if (!g_job_control_enabled || !g_shell_is_interactive)
 	{
 		return (g_errordesc[psherror(e_no_job_control,
 				argv[0], e_cmd_type)].code);
 	}
 	if (argc == 1)
-	{
-		if ((j = find_lastbackgrounded()))
-		{
-			ft_printf("%s\n", j->command);
-			put_job_in_foreground(j, 1);
-		}
-		else
-		{
-			pbierror("current: no such job");
-			return (1);
-		}
-	}
+		return (single_arg_case());
 	else if (argc == 2)
 		return (two_arg_case(argv));
 	else
