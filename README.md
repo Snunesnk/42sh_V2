@@ -9,15 +9,20 @@ This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims 
 
 #### Testing
 
+Detect leaks and runtime errors:
 ```shell=
 valgrind --leak-check=full --track-origins=yes ./21sh
-
-ps -o stat,pid,pgid,ppid,sid,tpgid,comm
-
 ```
 
+Monitor subshells and child processes:
+```shell=
+ps -o stat,pid,pgid,ppid,sid,tpgid,comm
+```
 
-
+Trace process signals and status updates:
+```shell=
+strace -e 'trace=!all' bash --posix
+```
 
 
 ## Known bugs
