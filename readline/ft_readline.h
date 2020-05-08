@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/03 13:24:25 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/08 12:50:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@
 # define END_SIGN "\033[0m\033[38;5;231m \u00BB \033[0m"
 # define RED_ARROW "\033[38;5;196m\u279c  \033[0m"
 
-char	*ft_readline(const char *prompt);
-char	*readline_loop(const char *prompt);
+char	*ft_readline(char *prompt);
 
 #endif
