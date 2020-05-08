@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 18:57:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 09:08:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ int			execute_process(char **argv, char **envp,
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
-	return (psherror(e_command_not_found, argv[0], e_cmd_type));
+	return (g_errordesc[psherror(e_command_not_found, argv[0], e_cmd_type)].code);
 }

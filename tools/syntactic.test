@@ -1,9 +1,5 @@
 ./21sh < bad
+echo $?
 ls | echo $ENV
+echo $?
 & env
-ls & echo ok
-ls && ls
-/bin/ls -l -G > newfile
-ls || rm newfile
-exit | exit
-exit

@@ -46,6 +46,28 @@ echo $?
 echo $??
 echo $$?
 echo $?$
+PWD=/home/$LOGNAME/$LOGNAMEendf | PWD=/home/$LOGNAME/$LOGNAMEendf | echo $PWD
+28$"LOGNAME"
+29$"LOGNAME"end
+30$LOG_NAME
+31$LOGNAME""
+32$LOGNAME"endif"
+33$LOG""NAME
+34$ LOGNAME
+export LAST=\$LAST
+#setenv LAST \$LAST
+echo $LAST
+env LAST=\$LAST ./21sh
+echo $LAST
+echo $LAST$LAST
+echo $~
+echo $
+echo $$
+echo $$$
+echo $?
+echo $??
+echo $$?
+echo $?$
 $
 $$
 $?
@@ -53,8 +75,5 @@ $?
 $~
 echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsadf$LOGNAME
 exit
-<<<<<<< HEAD
-=======
 while (ls >/dev/null 2>/dev/null); do ((++i)) ; name\=\$i echo $i; done
->>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 exit

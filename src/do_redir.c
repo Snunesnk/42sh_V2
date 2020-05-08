@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/23 14:56:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/08 09:50:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	do_ioread(t_redirection *r)
 	else if (valid_fd(r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
 	else if (access(r->redirector.filename, F_OK))
-		return (psherror(e_no_such_file_or_directory,
+		return (psherror(e_redir_no_file,
 				r->redirector.filename, e_cmd_type));
 	else if (access(r->redirector.filename, R_OK))
 	{

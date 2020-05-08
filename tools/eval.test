@@ -1,33 +1,65 @@
 foo
+echo $?
 /bin/ls
+echo $?
 /bin/ls -laF
+echo $?
 /bin/ls -l -a -F
+echo $?
 ./21sh
+echo $?
 exit
+echo $?
 echo It works
+echo $?
 cd /bin
+echo $?
 /bin/pwd
+echo $?
 cd
+echo $?
 /bin/pwd
+echo $?
 cd -
+echo $?
 /bin/pwd
+echo $?
 env
+echo $?
 setenv FOO bar
+echo $?
 env
+echo $?
 /usr/bin/env
+echo $?
 unsetenv FOO
+echo $?
 env
+echo $?
 unsetenv FOO
+echo $?
 unsetenv PATH
+echo $?
 setenv PATH "/bin:/usr/bin"
+echo $?
 ls
+echo $?
 nano
+echo $?
 unsetenv PATH
+echo $?
 nano
+echo $?
 /usr/bin/nano
+echo $?
 
+echo $?
  
+echo $?
  	 	 	 	 	 	
+echo $?
 		    	ls 	 	 	-G 		
+echo $?
 
+echo $?
 exit

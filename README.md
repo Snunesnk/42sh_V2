@@ -9,15 +9,20 @@ This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims 
 
 #### Testing
 
+Detect leaks and runtime errors:
 ```shell=
 valgrind --leak-check=full --track-origins=yes ./21sh
-
-ps -o stat,pid,pgid,ppid,sid,tpgid,comm
-
 ```
 
+Monitor subshells and child processes:
+```shell=
+ps -o stat,pid,pgid,ppid,sid,tpgid,comm
+```
 
-
+Trace process signals and status updates:
+```shell=
+strace -e 'trace=!all' bash --posix
+```
 
 
 ## Known bugs
@@ -27,7 +32,7 @@ Liste de bugs et description du comportement (du coup c'est pas forcement un bug
 ```
 Revoir l'ensemble du fonctionnement du shell avec env -i et env modifie:
 - input (termcapabilities check)
-- builtins: cd, env, export, historique, etc (ex: env -i HOME=okok puis un cd)
+- builtins: env, export, historique, etc (ex: env -i HOME=okok puis un cd)
 
 DONE => quotes: dans les heredoc, pas de quotes.
 DONE => quotes: dans le subprompt venant du parser les quotes doivent etre fonctionnelles
@@ -36,7 +41,7 @@ DONE => autocompletion: dans le subprompt venant du parser la suggestion doit et
 
 DONE => autocompletions: suggestions dans cd dysfonctionnelles
 
-DONE => cd: encore casse, cd -P /lib puis cd - faisait leaks. A tester avec un environnement modifier.
+subprompt: parser subprompt cases ls || + quotes + exp VS. cat << EOF + quotes + exp
 
 export: parsing de nom de variables (check POSIX, un nom de var ne doit pas commencer par un chiffre etc). Format de nom de variables : alpha ou underscore pour première lettre, puis alnum pour le reste
 DONE => export: verifier tous les messages d'erreurs
@@ -61,7 +66,6 @@ display: display prompt=> si il n'est pas print sur l'output il ne faut pas avan
 readline: Mauvais term mode (en fait c'est pas le term mode mais les termcapabilities a checker). Le terminal fonctionne meme si on change TERM normalement, a reverifier c'est dans tty.c terminal.c
 ```
 
-DONE => Mauvais display d'erreur avec cd
 Bug avec fc -s
 Leak avec le fc quand mauvaise commande sur fc S
 DONE => Écho ////// print toujours 2 /
