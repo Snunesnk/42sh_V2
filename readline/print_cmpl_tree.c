@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 15:01:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/08 21:38:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ static void	restore_line(int line)
 {
 	int	last_line;
 
+	if (g_dumb_term)
+	{
+		ft_putchar('\n');
+		update_dumb_line();
+		return ;
+	}
 	last_line = g_dis.start_line + line;
 	while (last_line > g_sc.height - 1)
 	{
@@ -53,7 +59,8 @@ static void	restore_line(int line)
 	display_prompt();
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	ft_putstr(g_line.line);
-	ft_putstr(g_termcaps.clreol);
+	g_line.cursor_pos = g_line.len;
+	update_line();
 }
 
 static void	print_compl(t_node *compl_tree, t_data *data)
