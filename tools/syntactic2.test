@@ -1,0 +1,44 @@
+ls |
+echo $?
+echo ok ||
+echo $?
+< toto echo 2>&1 ||
+echo $?
+< toto echo 2>&1
+echo $?
+< echo ls 2>&1 << EOF
+hello $LOGNAME
+echo ok << EOF
+in second $PWD
+EOF
+echo $?
+EOF
+echo $?
+EOF
+echo $?
+< echo ls 2>&1 << EOF > /dev/null &>/dev/null
+hello
+echo ok << EOF
+in second
+EOF
+EOF
+echo $?
+EOF
+echo $?
+echo ok & ; ls &
+echo $?
+echo ok&|<auteur echo ok
+echo $?
+(ls && echo ok &) | (cat -e &) &
+echo $?
+ls & echo ok
+echo $?
+ls && ls
+echo $?
+/bin/ls -l -G > newfile
+echo $?
+ls || rm newfile
+echo $?
+exit | exit
+echo $?
+exit

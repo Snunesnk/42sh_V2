@@ -1,12 +1,5 @@
-./21sh < bad
+ls |
 echo $?
-ls | echo $ENV
-echo $?
-& env
-echo $?
-exit
-#ls |
-#echo $?
 #echo ok ||
 #echo $?
 #< toto echo 2>&1 ||
