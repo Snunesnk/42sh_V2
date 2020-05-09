@@ -6,11 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 15:26:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:50:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
+#include "quotes.h"
 
 static char	*get_config_file_loc(void)
 {
@@ -46,7 +47,7 @@ void		load_config(void)
 		g_shell_is_interactive = isatty(g_shell_terminal);
 		return ;
 	}
-	while ((line = get_input_fd(fd, 1, NULL)))
+	while ((line = get_input_fd(fd, FULL_QUOTE, NULL)))
 	{
 		if (*line != '#')
 			exec_input(line, fd);

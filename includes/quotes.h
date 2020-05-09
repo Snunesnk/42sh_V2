@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:12:33 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/29 18:28:40 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/09 17:46:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define DQUOTE		0x01
 # define SQUOTE		0x02
 # define BSQUOTE	0x04
+# define FULL_QUOTE	0x07
 
 int		get_qmode(int qmode, char c);
 char	*ft_strstr_qmode(const char *str, const char *to_find,

@@ -6,13 +6,14 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:37:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:02:16 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "ft_readline.h"
 #include "shell.h"
+#include "quotes.h"
 
 static int	get_editor(char **editor, int opt_list)
 {
@@ -84,7 +85,7 @@ int			re_execute_cmd(int opt_list)
 	if ((fd = open(".monkeyshell_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
 			&& pbierror("cannot open temporary file"))
 		return (1);
-	while ((command = get_input_fd(fd, 1, NULL)))
+	while ((command = get_input_fd(fd, FULL_QUOTE, NULL)))
 	{
 		if (!add_pending_cmd(command))
 			break ;
