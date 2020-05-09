@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 18:01:59 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/09 18:19:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,11 @@ t_list		*subprompt(int fd)
 	input = tmp;
 	g_oneline = 0;
 	g_subprompt = 0;
-	if (g_input_break)
+	if (!input)
+	{
+		return (NULL);
+	}
+	else if (g_input_break)
 	{
 		g_input_break = 0;
 		return (NULL);
