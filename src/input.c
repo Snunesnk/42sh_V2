@@ -6,13 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/27 16:48:52 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 15:50:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:00:37 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-#include "quotes.h"
 
 static char		*create_new_line(char *str, int *len)
 {
@@ -89,33 +88,4 @@ int				get_stdin(int fd, char **line)
 			return (1);
 	}
 	return (ret);
-}
-
-char		*append_line(char **last_lines, char *input)
-{
-	char	*tmp;
-	int		qmode;
-
-	if (*last_lines)
-	{
-		tmp = ft_strjoin(*last_lines, input);
-		ft_memdel((void **)last_lines);
-		ft_memdel((void **)&input);
-		input = tmp;
-	}
-	if (input && (qmode = get_str_qmode(NO_QUOTE, input)) != NO_QUOTE)
-	{
-		if (qmode & BSQUOTE)
-		{
-			input[ft_strlen(input) - 1] = '\0';
-			*last_lines = input;
-		}
-		else
-		{
-			*last_lines = ft_strjoin(input, "\n");
-			ft_memdel((void **)&input);
-		}
-		input = NULL;
-	}
-	return (input);
 }
