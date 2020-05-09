@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 18:19:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:22:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ static char	*get_heredoc_input(int fd, char *eof, char *here)
 	return (free_loop(here, tmp));
 }
 
-t_list		*subprompt(int fd)
-{
+//t_list		*subprompt(int fd)
+int		subprompt(int fd, t_list **list, int qmode)
+{ /* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
 	t_list	*lst;
 	char	*input;
 	char	*tmp;
 
 	g_oneline = 1;
-	input = get_heredoc_input(fd, NULL, NULL);
+	input = get_heredoc_input(fd, NULL, NULL); /* Getting the input */
 	tmp = ft_strjoin(input, "\n");
 	free(input);
 	input = tmp;
@@ -81,7 +82,7 @@ t_list		*subprompt(int fd)
 		return (NULL);
 	}
 	g_input_break = 0;
-	lst = lexer(input);
+	lst = lexer(input); /* Building the tokens */
 	free(input);
 	return (lst);
 }
