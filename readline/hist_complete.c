@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/07 21:14:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 12:08:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,35 @@ void	insert_hist_compl(void)
 		next_hist();
 }
 
+static void	update_start_line(char *compl)
+{
+	int	v_pos;
+	int	c_pos;
+	int	track;
+	int	len;
+
+	len = ft_strlen(compl);
+	calc_dcursor(g_line.len, &v_pos, &c_pos);
+	track = g_line.len;
+	while (track < len)
+	{
+		if (c_pos == g_sc.w - 1 || compl[track] == '\n')
+		{
+			c_pos = 0;
+			v_pos += 1;
+		}
+		else
+			c_pos++;
+		track++;
+	}
+	if (v_pos > g_sc.height - 1)
+		g_dis.start_line -= v_pos - (g_sc.height - 1);
+}
+
 void	print_hist_compl(void)
 {
 	char			*hist_compl;
 	unsigned int	offset_save;
-	int				c_pos_save;
 
 	if (g_hist.total_lines == 0 || g_dumb_term)
 		return ;
@@ -46,11 +70,11 @@ void	print_hist_compl(void)
 	hist_compl = get_beg_matching_hist(&hist_compl, g_line.line);
 	if (hist_compl)
 	{
-		c_pos_save = g_line.c_pos;
 		place_cursor(g_line.len);
 		ft_printf("%s%s%s", HIST_COMPL_COLOR, hist_compl + \
 				g_line.len, END_OF_COLOR);
-		place_cursor(c_pos_save);
+		update_start_line(hist_compl + g_line.len);
+		place_cursor(g_line.c_pos);
 	}
 	while (g_hist.offset < offset_save)
 		next_hist();
