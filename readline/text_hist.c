@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 20:04:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 22:44:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void		history_down(void)
 {
 	char	*s;
 
-	if (!g_hist.total_lines)
+	if (!g_hist.total_lines || g_hist.nb_line > g_hist.total_lines)
 		return ;
 	s = NULL;
 	clear_line();

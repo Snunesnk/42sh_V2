@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 21:55:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:40:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ int			init_terminal(void)
 	char	buffer[2048];
 
 	ft_bzero(buffer, 2048);
-	BC = NULL;
-	UP = NULL;
 	if (g_term.terminal_name == NULL)
 		g_term.terminal_name = "dumb";
 	if (get_screensize(STDIN_FILENO) == -1)

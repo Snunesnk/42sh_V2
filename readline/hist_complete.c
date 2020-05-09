@@ -6,13 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 12:08:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:42:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-void	insert_hist_compl(void)
+void		insert_hist_compl(void)
 {
 	char			*hist_compl;
 	unsigned int	offset_save;
@@ -58,7 +58,7 @@ static void	update_start_line(char *compl)
 		g_dis.start_line -= v_pos - (g_sc.height - 1);
 }
 
-void	print_hist_compl(void)
+void		print_hist_compl(void)
 {
 	char			*hist_compl;
 	unsigned int	offset_save;
@@ -80,7 +80,7 @@ void	print_hist_compl(void)
 		next_hist();
 }
 
-void	remove_completion(void)
+void		remove_completion(void)
 {
 	if (g_dumb_term)
 		return ;
