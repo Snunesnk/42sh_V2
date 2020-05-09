@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 16:33:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:31:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,13 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL;
-		ft_printf("\n\n%s line: %d : current token type:%s, next type:%s\n\n", __FILE__, __LINE__, g_tokval[curr_type], g_tokval[next_type]);//DEBUGG
+//		ft_printf("\n\n%s line: %d : current token type:%s, next type:%s\n\n", __FILE__, __LINE__, g_tokval[curr_type], g_tokval[next_type]);//DEBUGG
 		if (!((*lst)->next = subprompt(fd))) // Subprompt call: parser claim
+		{
+			perror(NULL);
+			ft_printf("HHHHH\n");
 			return (e_invalid_input);
+		}
 		return (e_success);
 	}
 	else
@@ -84,10 +88,10 @@ int				parser(t_list *lst, int fd)
 			return (g_errordesc[ret].code);
 		}
 		else if (ret == e_invalid_input)
-		{
-			ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__);//DEBUGG
+//		{
+//			ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__);//DEBUGG
 			return (130); // Should be removed once signals in place ?
-		}
+//		}
 		lst = lst->next;
 	}
 	return (e_success);

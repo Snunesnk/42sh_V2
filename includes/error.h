@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:49:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:04:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 enum								e_minishell_error
 {
 	e_success,
+	e_heredoc_warning,
 	e_invalid_input,
 	e_no_builtin,
 	e_bad_substitution,
@@ -27,6 +28,7 @@ enum								e_minishell_error
 	e_no_job_control,
 	e_redir_no_file,
 	e_syntax_error,
+	e_unexpected_eof_2,
 	e_filename_arg_required,
 	e_cannot_allocate_memory,
 	e_system_call_error,
@@ -34,7 +36,9 @@ enum								e_minishell_error
 	e_is_a_directory,
 	e_command_not_found,
 	e_no_such_file_or_directory,
-	e_resource_tmp_unavailable
+	e_resource_tmp_unavailable,
+	e_signal_interrupt,
+	e_unexpected_eof_130
 };
 
 enum								e_error_message_types
