@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/08 13:10:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 18:57:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void		update_dumb_line(void)
 		return ;
 	if (offset)
 		to_print[0] = '<';
-	if (ft_strlen(to_print) < (size_t)(g_line.len - offset))
+	if (ft_strlen(to_print) < (size_t)(g_line.len - offset + g_dis.prompt_l ))
 		to_print[g_sc.w - 1] = '>';
 	ft_putstr(to_print);
 	ft_putchar('\r');
