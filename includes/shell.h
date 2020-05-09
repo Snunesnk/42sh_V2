@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:31:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:39:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,7 +367,7 @@ t_token							*get_word(const char *str, size_t *i, \
 int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
-t_list							*subprompt(void);
+t_list							*subprompt(int fd);
 int								check_alias(t_list **lst, int check);
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,
@@ -375,7 +375,7 @@ int								get_assignment(const char *assignment,
 int								only_assignments(t_process *p);
 
 int								heredoc(t_list *lst, int curr, int next);
-int								parser(t_list *lst);
+int								parser(t_list *lst, int fd);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);
 void							print_env(t_list *env, t_list **elem);
