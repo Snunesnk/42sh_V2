@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:58:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:08:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:18:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ char	*get_input_fd(int fd, int close_quotes, char *prompt)
 	while (first_iter || last_lines)
 	{
 		if (g_shell_is_interactive && fd == STDIN_FILENO)
-		{
-			ft_printf("%s, line:%d, first_iter=%d\n",__FILE__, __LINE__, first_iter); // DEBUGG
 			input = ft_readline(first_iter ? prompt : "> ");
-		}
 		else if (get_stdin(fd, &input) < 0)
 			break ;
 		if (input && close_quotes)
