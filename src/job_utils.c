@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:41:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/01 14:44:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:15:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		free_job(t_job *j)
 		j_next = g_first_job;
 		while (j_next && j_next->next)
 		{
-			if (j_next->next->pgid == j->pgid)
+			if (j_next->next == j)
 			{
 				tmp = j_next->next;
 				j_next->next = tmp->next;
