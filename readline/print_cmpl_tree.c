@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 21:38:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 12:21:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,6 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		insert_compl(compl_tree, data, c.value);
 	else if (!enter_rc(c))
 		g_bad_seq = c;
+	g_autocompl_on = 0;
+	clear_next();
 }

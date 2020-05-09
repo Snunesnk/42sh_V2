@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 23:04:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 12:17:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void		set_prompt(const char *prompt)
 	g_dis.real_prompt_l = ft_strlen(g_dis.display_prompt);
 }
 
-static void	clear_next()
+void		clear_next()
 {
 	int	v_pos;
 	int	c_pos;
@@ -99,7 +99,7 @@ void		update_line(void)
 	g_line.is_modified = 0;
 }
 
-static int	calc_v_pos(void)
+int		calc_v_pos(void)
 {
 	int	v_pos;
 	int	c_pos;
