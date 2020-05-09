@@ -52,7 +52,7 @@ void		graph_ast(t_ast *ast)
 {
 	int fd;
 
-	fd = open("graph.dot", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	fd = open("tools/graph.dot", O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	ft_dprintf(fd, "strict graph {\nsize=\"8\";\nrankdir=TB;\n");
 	print_ast(fd, ast);
 	ft_dprintf(fd, "\n}\n");
