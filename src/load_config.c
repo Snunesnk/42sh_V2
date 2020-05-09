@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:37:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:26:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,19 @@ void		load_config(void)
 	char	*line;
 	int		fd;
 
+	g_shell_is_interactive = 0;
 	if (!(congig_file = get_config_file_loc()))
+	{
+		g_shell_is_interactive = isatty(g_shell_terminal);
 		return ;
+	}
 	fd = open(congig_file, (O_RDONLY | O_CREAT), 644);
 	free(congig_file);
 	if (fd < 0)
+	{
+		g_shell_is_interactive = isatty(g_shell_terminal);
 		return ;
+	}
 	while ((line = get_input_fd(fd, 1, NULL)))
 	{
 		if (*line != '#')
@@ -47,4 +54,5 @@ void		load_config(void)
 			free(line);
 	}
 	free(line);
+	g_shell_is_interactive = isatty(g_shell_terminal);
 }

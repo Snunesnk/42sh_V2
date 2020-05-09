@@ -1,0 +1,7 @@
+toto
+echo ok
+& env
+cat << EOF
+ldld
+EOF
+

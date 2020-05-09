@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 14:36:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:13:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,12 @@ extern t_hash_table				*(g_hash_table[HASH_SIZE]);
 
 extern t_job					*g_first_job;
 extern pid_t					g_shell_pgid;
+extern int					g_shell_trap;
 extern struct termios			shell_tmodes;
 extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
 int								get_stdin(int fd, char **line);
-//char							*get_input(char *prompt,
-//		int close_quotes);
 char							*get_input_fd(int fd, int close_quotes, \
 		char *prompt);
 char							*append_line(char **last_lines, char * input);

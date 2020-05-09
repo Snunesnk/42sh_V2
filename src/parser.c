@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 13:24:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 15:13:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
+
+int	g_shell_trap = 0;
 
 static int		lookahead(int fd, t_list *lst, int curr, int next)
 {
