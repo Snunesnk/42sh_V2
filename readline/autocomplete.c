@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 14:26:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 12:55:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void			autocomplete(void)
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
 	if ((ft_strchr(to_complete, '/') || has_operator(to_complete)) \
-			&& test_cd() && !*to_complete)
+			&& test_cd())
 		cd_complete(to_complete);
 	else if (ft_strchr(to_complete, '/') || has_operator(to_complete))
 		file_complete(to_complete);

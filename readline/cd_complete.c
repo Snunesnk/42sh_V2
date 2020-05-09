@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 19:29:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 14:10:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,32 @@ t_node	*get_cd_compl(char *to_complete, char *path, t_data *data)
 	return (compl_tree);
 }
 
+static char	*extract_path(char *to_complete)
+{
+	char	*path;
+	int		i;
+	int		last;
+
+	last = 0;
+	i = 0;
+	if (to_complete[0] != '/')
+		return (ft_strdup(".:"));
+	while (to_complete[i])
+	{
+		if (to_complete[i] == '/')
+			last = i + 1;
+		i++;
+	}
+	if (!(path = (char *)ft_memalloc(sizeof(char) * last + 2)))
+	{
+		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
+		return (NULL);
+	}
+	path = ft_strncat(path, to_complete, last);
+	path = ft_strncat(path, ":", 1);
+	return (path);
+}
+
 void	cd_complete(char *to_complete)
 {
 	char	*path;
@@ -99,9 +125,10 @@ void	cd_complete(char *to_complete)
 
 	data = init_data();
 	if (get_shell_var("CDPATH", g_env))
-		path = ft_strjoin(".:", (get_shell_var("CDPATH", g_env)));
+		path = ft_strjoin_free(extract_path(to_complete), \
+				get_shell_var("CDPATH", g_env), 1);
 	else
-		path = ft_strdup(".");
+		path = extract_path(to_complete);
 	if (!path || !data)
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
