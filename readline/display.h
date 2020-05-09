@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 10:49:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 12:13:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ void	get_cursor_position(int *row, int *col);
 void	place_cursor(int pos);
 void	calc_dcursor(int pos, int *v_pos, int *c_pos);
 void	update_dumb_line(void);
+void	clear_next(void);
 
 #endif
