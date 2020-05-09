@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 12:21:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 18:16:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ static void	restore_line(int line)
 		last_line--;
 		(g_dis.start_line)--;
 	}
-	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
-	display_prompt();
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
-	ft_putstr(g_line.line);
-	g_line.cursor_pos = g_line.len;
-	update_line();
+	ft_putstr(tgoto(g_termcaps.cm, g_dis.start_offset, g_dis.start_line));
+	place_cursor(g_line.c_pos);
 }
 
 static void	print_compl(t_node *compl_tree, t_data *data)
@@ -74,6 +70,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 		return ;
 	ft_putstr(g_termcaps.cd);
 	to_print = data->first_print;
+	list_compl = list_compl_add(list_compl, "\n");
 	while (data->first_print + line < data->last_print + 1)
 	{
 		if (to_print)
@@ -121,10 +118,12 @@ void		display_compl(t_node *compl_tree, t_data *data)
 	while (is_compl_char(c) && data->nb_exec > 1)
 	{
 		insert_compl(compl_tree, data, 0);
+		place_cursor(0);
+		update_line();
+		fill_data(data, compl_tree);
 		print_compl(compl_tree, data);
 		c = read_key();
 		update_exec(c, data);
-		fill_data(data, compl_tree);
 	}
 	if (data->nb_exec == 1)
 		insert_compl(compl_tree, data, c.value);
