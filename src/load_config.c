@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 22:10:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 14:11:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		load_config(void)
 	free(congig_file);
 	if (fd < 0)
 		return ;
-	while ((line = get_input_fd(fd)))
+	while ((line = get_input_fd(fd, 1, NULL)))
 	{
 		if (*line != '#')
 			exec_input(line);

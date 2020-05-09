@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:33:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:12:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ int			exit_clean(int ret)
 	return (ret);
 }
 
-static int	main_loop(int *status)
+static int	main_loop(int fd, int *status)
 {
 	char	*input;
 
 	input = NULL;
 	if (g_shell_is_interactive)
 	{
-		if (!g_pending_cmd && !(input = get_input(NULL, 1)) && !g_pending_cmd)
+		if (!g_pending_cmd && !(input = get_input_fd(fd, 1, NULL)) && !g_pending_cmd)
 			return (1);
 		if (g_pending_cmd && input)
 			free(input);
@@ -117,7 +117,7 @@ static int	main_loop(int *status)
 			if (!(input = get_next_pending_cmd()))
 				return (1);
 	}
-	else if (!(input = get_input(NULL, 1)))
+	else if (!(input = get_input_fd(fd, 1, NULL)))
 		return (1);
 	*status = exec_input(input);
 //	ft_printf("status: %d\n", *status);
@@ -139,7 +139,7 @@ int			main(int argc, char **argv)
 	{
 		if (g_onecmd)
 			stop = 1;
-		if (main_loop(&status))
+		if (main_loop(STDIN_FILENO, &status))
 			break ;
 	}
 	free_hist();

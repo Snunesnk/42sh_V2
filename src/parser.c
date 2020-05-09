@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:44:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 13:24:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
 
-static int		lookahead(t_list *lst, int curr, int next)
+static int		lookahead(int fd, t_list *lst, int curr, int next)
 {
 	int	i;
 	int	ret;
@@ -23,8 +23,11 @@ static int		lookahead(t_list *lst, int curr, int next)
 	{
 		if (g_parse_table[curr][i] == next)
 		{
-			if ((ret = heredoc(lst, curr, next)))
-				return (ret);
+			if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
+			{
+				if ((ret = heredoc(fd, lst))) // Claim heredoc ??
+					return (ret);
+			}
 			return (e_success);
 		}
 		++i;
@@ -32,7 +35,7 @@ static int		lookahead(t_list *lst, int curr, int next)
 	return (e_syntax_error);
 }
 
-static int		parser_input_claim(int fd, t_list **lst, int curr_type, int next_type)
+static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 {
 	if ((curr_type == LESS || curr_type == DLESS || curr_type == GREAT
 		|| curr_type == DGREAT || curr_type == GREATAND || curr_type == LESSAND
@@ -46,7 +49,8 @@ static int		parser_input_claim(int fd, t_list **lst, int curr_type, int next_typ
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL;
-		if (!((*lst)->next = subprompt(fd)))
+		ft_printf("\n\n%s line: %d : current token type:%s, next type:%s\n\n", __FILE__, __LINE__, g_tokval[curr_type], g_tokval[next_type]);//DEBUGG
+		if (!((*lst)->next = subprompt(fd))) // Subprompt call: parser claim
 			return (e_invalid_input);
 		return (e_success);
 	}
@@ -64,7 +68,7 @@ int				parser(t_list *lst, int fd)
 	int	ret;
 
 	curr_type = ((t_token*)(lst->content))->type;
-	if (lookahead(lst, NEWLINE, curr_type))
+	if (lookahead(fd, lst, NEWLINE, curr_type))
 	{
 		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
 		return (g_errordesc[e_syntax_error].code);
@@ -73,9 +77,9 @@ int				parser(t_list *lst, int fd)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
-		if ((ret = lookahead(lst, curr_type, next_type)) == e_syntax_error)
+		if ((ret = lookahead(fd, lst, curr_type, next_type)) == e_syntax_error)
 		{
-			if (!(ret = parser_input_claim(fd, &lst, curr_type, next_type)))
+			if (!(ret = check_syntax(fd, &lst, curr_type, next_type)))
 				continue ;
 			return (g_errordesc[ret].code);
 		}

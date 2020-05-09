@@ -1,3 +1,11 @@
+echo '
+echo \
+echo "
+echo "'
+echo '"
+echo \"
+echo \'
+echo \H\e\l\l\o\!
 echo "ok
 echo '''
 echo "'"

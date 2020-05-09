@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:39:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:09:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,9 +187,10 @@ extern int						g_shell_terminal;
 extern int						g_shell_is_interactive;
 
 int								get_stdin(int fd, char **line);
-char							*get_input(char *prompt,
-		int close_quotes);
-char							*get_input_fd(int fd);
+//char							*get_input(char *prompt,
+//		int close_quotes);
+char							*get_input_fd(int fd, int close_quotes, \
+		char *prompt);
 char							*append_line(char **last_lines, char * input);
 int								exec_input(char *input);
 int								init_shell(char *argv, int argc);
@@ -237,8 +238,6 @@ t_redirection					*set_redirection(t_list **lst, int io_nb);
 char							*dup_token_value(char **argv, int i, \
 		t_list *lst);
 
-char							*get_heredoc_input(char *eof, char *here, \
-		char *tmp, char *line);
 void							free_redirections(t_redirection *r);
 int								undo_redirection(t_redirection *r);
 void							free_redirections(t_redirection *r);
@@ -374,7 +373,7 @@ int								get_assignment(const char *assignment,
 									char **name, char **value);
 int								only_assignments(t_process *p);
 
-int								heredoc(t_list *lst, int curr, int next);
+int								heredoc(int fd, t_list *lst);
 int								parser(t_list *lst, int fd);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);
