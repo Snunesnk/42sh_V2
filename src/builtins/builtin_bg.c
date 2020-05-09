@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/02 11:39:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 09:55:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,9 @@ int	cmd_bg(int argc, char **argv)
 	}
 	if (argc == 2)
 	{
+		update_status();
 		j = find_job(ft_atoi(argv[1]));
-		if (j == NULL)
+		if (j == NULL || job_is_completed(j))
 		{
 			pbierror("%d: no such job", ft_atoi(argv[1]));
 			return (1);
