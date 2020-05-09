@@ -6,14 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 15:13:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 16:33:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
-
-int	g_shell_trap = 0;
 
 static int		lookahead(int fd, t_list *lst, int curr, int next)
 {
@@ -88,7 +86,7 @@ int				parser(t_list *lst, int fd)
 		else if (ret == e_invalid_input)
 		{
 			ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__);//DEBUGG
-			return (130); // Should be removed once signals in place
+			return (130); // Should be removed once signals in place ?
 		}
 		lst = lst->next;
 	}
