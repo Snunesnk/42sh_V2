@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:39:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:15:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,7 @@
 
 int	g_oneline = 0;
 
-t_list		*subprompt(int fd)
-{
-	t_list	*lst;
-	char	*input;
-
-	(void)fd;
-	g_oneline = 1;
-	input = get_heredoc_input(NULL, NULL, NULL, NULL);
-	g_oneline = 0;
-	g_subprompt = 0;
-	if (g_input_break)
-	{
-		g_input_break = 0;
-		return (NULL);
-	}
-	g_input_break = 0;
-	lst = lexer(input);
-	free(input);
-	return (lst);
-}
-
-static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
+static void	loop_heredoc(int fd, char **eof, char **here, char **tmp, char **line)
 {
 	while (*tmp && ft_strcmp(*eof, *tmp) && !g_input_break)
 	{
@@ -46,18 +25,18 @@ static void	loop_heredoc(char **eof, char **here, char **tmp, char **line)
 		free(*here);
 		free(*line);
 		*here = *tmp;
-		*tmp = get_input("> ", 0);
+		*tmp = get_input_fd(fd, 0, "> ");
 	}
 	g_subprompt = 0;
 }
 
-char		*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
+static char	*get_heredoc_input(int fd, char *eof, char *here, char *tmp, char *line)
 {
 	g_subprompt = 1;
-	tmp = get_input("> ", 0);
+	tmp = get_input_fd(fd, 0, "> ");
 	if (g_oneline)
 		return (tmp);
-	loop_heredoc(&eof, &here, &tmp, &line);
+	loop_heredoc(fd, &eof, &here, &tmp, &line);
 	if (g_input_break && !g_eof)
 	{
 		free(tmp);
@@ -73,27 +52,46 @@ char		*get_heredoc_input(char *eof, char *here, char *tmp, char *line)
 	return (here);
 }
 
-int			heredoc(t_list *lst, int curr, int next)
+t_list		*subprompt(int fd)
+{
+	t_list	*lst;
+	char	*input;
+
+	(void)fd;
+	g_oneline = 1;
+	input = get_heredoc_input(fd, NULL, NULL, NULL, NULL);
+	g_oneline = 0;
+	g_subprompt = 0;
+	if (g_input_break)
+	{
+		g_input_break = 0;
+		return (NULL);
+	}
+	g_input_break = 0;
+	lst = lexer(input);
+	free(input);
+	return (lst);
+}
+
+int			heredoc(int fd, t_list *lst)
 {
 	char	*eof;
-	char	*heredoc;
+	char	*input;
 
-	if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
+	(void)fd;
+	eof = ((t_token*)(lst->next->content))->value;
+	input = get_heredoc_input(fd, eof, ft_strdup(""), NULL, NULL);
+	if (!input && !g_input_break)
+		return (e_syntax_error);
+	else if (g_input_break && !g_eof)
 	{
-		eof = ((t_token*)(lst->next->content))->value;
-		heredoc = get_heredoc_input(eof, ft_strdup(""), NULL, NULL);
-		if (!heredoc && !g_input_break)
-			return (e_syntax_error);
-		else if (g_input_break && !g_eof)
-		{
-			g_input_break = 0;
-			g_eof = 0;
-			return (e_invalid_input);
-		}
 		g_input_break = 0;
 		g_eof = 0;
-		free(eof);
-		((t_token*)(lst->next->content))->value = heredoc;
+		return (e_invalid_input);
 	}
+	g_input_break = 0;
+	g_eof = 0;
+	free(eof);
+	((t_token*)(lst->next->content))->value = input;
 	return (e_success);
 }

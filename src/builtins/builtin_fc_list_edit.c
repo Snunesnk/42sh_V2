@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 22:09:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 14:15:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int			re_execute_cmd(int opt_list)
 	if ((fd = open(".monkeyshell_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
 			&& pbierror("cannot open temporary file"))
 		return (1);
-	while ((command = get_input_fd(fd)))
+	while ((command = get_input_fd(fd, 1, NULL)))
 	{
 		if (!add_pending_cmd(command))
 			break ;
