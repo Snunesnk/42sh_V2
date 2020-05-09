@@ -48,15 +48,6 @@ DONE => export: verifier tous les messages d'erreurs
 
 env: peut produire des leaks dans certains cas, le comportement n'a pu etre reproduit mais la commande incriminee est: env cmd env
 
-singaux: revoir toutes les valeurs de retour des signaux
-signaux: filtrer messages suivant s'ils sont envoyes depuis la ligne de commande ou par le child
-DONE => signaux: implementer CTRL Z et CTRL \ etc
-
-DONE => job control: revoir le comportement des sousshells comme ls && cat &  ou   vim && ls -l &.
-
-DONE => exit: revoir la gestion des arguments faite par exit ex: 9999999999999999999999999 etc.
-DONE => exit: mettre en place une procedure pour ne pas quitter le shell lorsque des jobs sont en background.
-
 fc: modification imprevu de fichier (je me souviens plus comment le bug etait produit).
 
 historique:valid string in hist => enlever non-print char (a verifier si bash fait bien ca)
@@ -64,6 +55,8 @@ historique:valid string in hist => enlever non-print char (a verifier si bash fa
 display: display prompt=> si il n'est pas print sur l'output il ne faut pas avancer le curseur (pourquoi pas ouvrir un fd 255 comme bash ?)
 
 readline: Mauvais term mode (en fait c'est pas le term mode mais les termcapabilities a checker). Le terminal fonctionne meme si on change TERM normalement, a reverifier c'est dans tty.c terminal.c
+
+historique: historique dans heredoc et parser subprompt
 ```
 
 Bug avec fc -s

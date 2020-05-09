@@ -6,35 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 10:55:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:30:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
-#include "ft_readline.h"
-
-int	g_oneline = 0;
-
-static t_list	*subprompt(void)
-{
-	t_list	*lst;
-	char	*input;
-
-	g_oneline = 1;
-	input = get_heredoc_input(NULL, NULL, NULL, NULL);
-	g_oneline = 0;
-	g_subprompt = 0;
-	if (g_input_break)
-	{
-		g_input_break = 0;
-		return (NULL);
-	}
-	g_input_break = 0;
-	lst = lexer(input);
-	free(input);
-	return (lst);
-}
 
 static int		lookahead(t_list *lst, int curr, int next)
 {
