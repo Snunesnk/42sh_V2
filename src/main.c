@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 14:12:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:36:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char		*get_next_pending_cmd(void)
 	return (input);
 }
 
-int			exec_input(char *input)
+int			exec_input(char *input, int fd)
 {
 	t_ast	*ast;
 	t_list	*lst;
@@ -54,7 +54,7 @@ int			exec_input(char *input)
 	input = tmp;
 	lst = lexer(input);
 	free(input);
-	status = lst ? parser(lst, STDIN_FILENO) : 2;
+	status = lst ? parser(lst, fd) : 2;
 	if (status)
 	{
 		g_retval = status;
@@ -119,7 +119,7 @@ static int	main_loop(int fd, int *status)
 	}
 	else if (!(input = get_input_fd(fd, 1, NULL)))
 		return (1);
-	*status = exec_input(input);
+	*status = exec_input(input, fd);
 //	ft_printf("status: %d\n", *status);
 	if (g_shell_is_interactive)
 		test_hash_path();

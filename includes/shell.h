@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 14:09:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:36:38 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,7 @@ int								get_stdin(int fd, char **line);
 char							*get_input_fd(int fd, int close_quotes, \
 		char *prompt);
 char							*append_line(char **last_lines, char * input);
-int								exec_input(char *input);
+int								exec_input(char *input, int fd);
 int								init_shell(char *argv, int argc);
 int								launch_job(t_job *j, int foreground);
 void							free_all_processes(t_process *p);

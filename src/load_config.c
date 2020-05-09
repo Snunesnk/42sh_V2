@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:11:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:37:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		load_config(void)
 	while ((line = get_input_fd(fd, 1, NULL)))
 	{
 		if (*line != '#')
-			exec_input(line);
+			exec_input(line, fd);
 		else
 			free(line);
 	}

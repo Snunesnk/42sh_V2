@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:15:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:37:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			re_execute_cmd(int opt_list)
 			&& pbierror("cannot allocate memory"))
 		return (e_cannot_allocate_memory);
 	free(editor);
-	exec_input(command);
+	exec_input(command, fd);
 	if ((fd = open(".monkeyshell_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
 			&& pbierror("cannot open temporary file"))
 		return (1);
