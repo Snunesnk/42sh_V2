@@ -24,6 +24,11 @@ Trace process signals and status updates:
 strace -e 'trace=!all' bash --posix
 ```
 
+Locate source of bug:
+```C=
+ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__); //DEBUGG
+```
+
 
 ## Known bugs
 
