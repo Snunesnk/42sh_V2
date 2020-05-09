@@ -25,7 +25,7 @@ size_t	ft_str_wchar_len(char *str)
 	len = 0;
 	while (str[i])
 	{
-		if (str[i] < 0)
+		if (str[i] < 0 && str[i + 1])
 			i++;
 		i++;
 		len++;
