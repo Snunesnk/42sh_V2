@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 14:50:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 14:53:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,5 @@ int		exec_fc_s_opt(char **args)
 	free_substitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
 	add_hentry(tmp, ft_strlen(tmp));
-	return (exec_input(tmp, STDIN_FILENO));
+	return (exec_input(tmp, STDIN_FILENO)); // In case fc takes "cat << EOF" in batch mode, we were not sure fc would take heredoc input from STDIN or on the same fd used by batch mode.
 }
