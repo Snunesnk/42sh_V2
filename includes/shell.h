@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:26:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:31:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -367,6 +367,7 @@ t_token							*get_word(const char *str, size_t *i, \
 int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
+t_list							*subprompt(void);
 int								check_alias(t_list **lst, int check);
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,

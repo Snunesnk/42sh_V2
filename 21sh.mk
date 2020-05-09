@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/07 14:23:34 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/09 11:30:27 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SOURCES :=	main.c \
 		dollar_expansions.c \
 		parameter_expansions.c \
 		parser.c \
+		subprompt.c \
 		path_concat.c \
 		pathname_expansion.c \
 		process.c \
