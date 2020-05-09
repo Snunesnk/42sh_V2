@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 18:16:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:33:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 		return ;
 	ft_putstr(g_termcaps.cd);
 	to_print = data->first_print;
-	list_compl = list_compl_add(list_compl, "\n");
 	while (data->first_print + line < data->last_print + 1)
 	{
 		if (to_print)

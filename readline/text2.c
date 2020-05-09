@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 19:03:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 22:48:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	cursor_r(void)
 
 void	cursor_d(void)
 {
-	if ((g_line.c_pos + g_dis.start_offset) / (g_sc.w + 1) \
-			!= g_line.len / (g_sc.w + 1))
+	if ((g_line.c_pos + g_dis.start_offset) / (g_sc.w) \
+			!= g_line.len / (g_sc.w))
 	{
 		g_line.c_pos += g_sc.w;
 		if (g_line.c_pos > g_line.len)

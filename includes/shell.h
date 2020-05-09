@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 18:01:30 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/09 23:57:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ extern t_list					*g_env;
 extern t_list					*g_tmp_env;
 extern t_list					*g_pending_cmd;
 
-extern int					*g_parse_table[NB_TOKEN];
+extern int						*g_parse_table[NB_TOKEN];
 
 extern t_list					*g_alias;
 
@@ -99,7 +99,7 @@ typedef struct					s_signal
 {
 	int		sig;
 	char	*str;
-}						t_signal;
+}								t_signal;
 
 typedef struct					s_redirectee
 {
@@ -215,7 +215,7 @@ int								get_job_status(t_job *j, int foreground);
 void							add_job_to_queue(t_job *j);
 void							init_shell_sset(void);
 void							restore_procmask(void);
-const char      				*strsig(int sig);
+const char						*strsig(int sig);
 int								job_is_stopped(t_job *j);
 int								are_stopped_jobs(void);
 int								job_is_completed(t_job *j);
@@ -450,7 +450,10 @@ int								builtin_keyword_exec(char **argv);
 int								process_execve(char **argv,
 		char **envp, char *pathname);
 
-void            graph_ast(t_ast *ast); // DEBUGG
-void		printjob(void); // debug
+/*
+** Debug functions
+*/
+void							graph_ast(t_ast *ast);
+void							printjob(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/04 20:07:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 23:58:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int				ft_tolower(int c);
 
 int				ft_atoi(const char *str) __attribute__((nonnull(1)));
 
-long				ft_atol(const char *str);
+long			ft_atol(const char *str);
 
 int				ft_strcmp(const char *s1, const char *s2);
 
