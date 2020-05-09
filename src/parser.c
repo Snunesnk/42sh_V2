@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:30:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:44:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int		lookahead(t_list *lst, int curr, int next)
 	return (e_syntax_error);
 }
 
-static int		ppar(t_list **lst, int curr_type, int next_type)
+static int		parser_input_claim(int fd, t_list **lst, int curr_type, int next_type)
 {
 	if ((curr_type == LESS || curr_type == DLESS || curr_type == GREAT
 		|| curr_type == DGREAT || curr_type == GREATAND || curr_type == LESSAND
@@ -46,7 +46,7 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL;
-		if (!((*lst)->next = subprompt()))
+		if (!((*lst)->next = subprompt(fd)))
 			return (e_invalid_input);
 		return (e_success);
 	}
@@ -57,7 +57,7 @@ static int		ppar(t_list **lst, int curr_type, int next_type)
 	}
 }
 
-int				parser(t_list *lst)
+int				parser(t_list *lst, int fd)
 {
 	int	curr_type;
 	int	next_type;
@@ -75,12 +75,15 @@ int				parser(t_list *lst)
 		next_type = ((t_token*)(lst->next->content))->type;
 		if ((ret = lookahead(lst, curr_type, next_type)) == e_syntax_error)
 		{
-			if (!(ret = ppar(&lst, curr_type, next_type)))
+			if (!(ret = parser_input_claim(fd, &lst, curr_type, next_type)))
 				continue ;
 			return (g_errordesc[ret].code);
 		}
 		else if (ret == e_invalid_input)
+		{
+			ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__);//DEBUGG
 			return (130); // Should be removed once signals in place
+		}
 		lst = lst->next;
 	}
 	return (e_success);

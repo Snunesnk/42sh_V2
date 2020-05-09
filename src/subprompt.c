@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 11:29:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 11:39:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 int	g_oneline = 0;
 
-t_list		*subprompt(void)
+t_list		*subprompt(int fd)
 {
 	t_list	*lst;
 	char	*input;
 
+	(void)fd;
 	g_oneline = 1;
 	input = get_heredoc_input(NULL, NULL, NULL, NULL);
 	g_oneline = 0;
