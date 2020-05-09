@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 19:04:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 21:14:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,7 @@ int		calc_v_pos(void)
 void		redisplay_after_sigwinch(void)
 {
 	struct winsize	w_size;
-	int				v_pos;
-	int				c_pos;
+	int				ret;
 
 	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
 		return ;
@@ -135,12 +134,14 @@ void		redisplay_after_sigwinch(void)
 		ft_printf("\r%.*s\r", g_sc.w, "");
 		return ;
 	}
-	get_cursor_position(&v_pos, &c_pos);
-	v_pos -= calc_v_pos();
-	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos));
+	if (g_dis.start_line > g_sc.height- 1)
+		g_dis.start_line = g_sc.height - 1;
+	ret = g_dis.start_line;
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
 	ft_putstr(g_termcaps.cd);
 	display_prompt();
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	g_dis.start_line = ret;
 	g_line.cursor_pos = 0;
 	g_line.is_modified = 1;
 	update_line();
