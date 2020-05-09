@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:48:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:00:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*g_progname;
 const struct s_error_desc	g_errordesc[] =
 {
 	{ 0, "no error" },
+	{ 0, "warning: here-document delimited by end-of-file (wanted `EOF')" },
 	{ 1, "invalid input" },
 	{ 1, "no such builtin" },
 	{ 1, "bad substitution" },
@@ -30,6 +31,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "no job control"},
 	{ 1, "no such file or directory"},
 	{ 2, "syntax error near unexpected token" },
+	{ 2, "syntax error: unexpected end of file" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
 	{ 2, "cannot allocate memory" },
 	{ 2, "system call error" },
@@ -37,7 +39,9 @@ const struct s_error_desc	g_errordesc[] =
 	{ 126, "is a directory" },
 	{ 127, "command not found" },
 	{ 127, "no such file or directory" },
-	{ 128, "resource temporarily unavailable" }
+	{ 128, "resource temporarily unavailable" },
+	{ 130, "input interrupted by signal" },
+	{ 130, "syntax error: unexpected end of file" }
 };
 
 int	psherror(int e_error, char *str, int e_message_type)
