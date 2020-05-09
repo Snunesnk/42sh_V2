@@ -6,13 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 14:36:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 17:50:59 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "ft_readline.h"
 #include "builtins.h"
+#include "quotes.h"
 
 t_list		*g_pending_cmd = NULL;
 t_list		*g_env = NULL;
@@ -109,7 +110,7 @@ static int	main_loop(int fd, int *status)
 	input = NULL;
 	if (g_shell_is_interactive)
 	{
-		if (!g_pending_cmd && !(input = get_input_fd(fd, 1, NULL)) && !g_pending_cmd)
+		if (!g_pending_cmd && !(input = get_input_fd(fd, FULL_QUOTE, NULL)) && !g_pending_cmd)
 			return (1);
 		if (g_pending_cmd && input)
 			free(input);
@@ -117,7 +118,7 @@ static int	main_loop(int fd, int *status)
 			if (!(input = get_next_pending_cmd()))
 				return (1);
 	}
-	else if (!(input = get_input_fd(fd, 1, NULL)))
+	else if (!(input = get_input_fd(fd, FULL_QUOTE, NULL)))
 		return (1);
 	*status = exec_input(input, fd);
 //	ft_printf("status: %d\n", *status);

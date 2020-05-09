@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 16:31:50 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 18:01:59 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
 int	g_oneline = 0;
 
@@ -40,7 +41,7 @@ static char	*get_heredoc_input(int fd, char *eof, char *here)
 	tmp = NULL;
 	line = NULL;
 	g_subprompt = 1;
-	tmp = get_input_fd(fd, 0, "> ");
+	tmp = get_input_fd(fd, BSQUOTE, "> ");
 	if (g_oneline)
 		return (tmp);
 	while (tmp && ft_strcmp(eof, tmp) && !g_input_break)
@@ -51,7 +52,7 @@ static char	*get_heredoc_input(int fd, char *eof, char *here)
 		free(here);
 		free(line);
 		here = tmp;
-		tmp = get_input_fd(fd, 0, "> ");
+		tmp = get_input_fd(fd, BSQUOTE, "> ");
 	}
 	g_subprompt = 0;
 	return (free_loop(here, tmp));
