@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 10:37:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 10:45:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ struct sigaction	g_sigint_act;
 static void	sigint_handler(int sig)
 {
 	g_interrupt_immediately = sig;
+	g_retval = sig + 128;
 	/* Case readline ON */
 //	ft_printf("\n\nHello SIGINT: %d\n\n", sig);
 //	kill(getpid(), sig);
