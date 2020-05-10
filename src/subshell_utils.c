@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 11:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 12:50:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:10:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static void	add_node_to_cmd(t_ast *node, char **command)
 	else
 		n = g_tokval[node->type];
 	add_to_commandline(command, n);
-//	ft_printf("====> %s  <===\n ", n); // DEBUGG
 }
 
 static void	next_job_command(t_ast *ast, char **command)
@@ -58,7 +57,7 @@ static void	next_job_command(t_ast *ast, char **command)
 	}
 }
 
-void	get_job_command(t_ast *ast, char **command)
+void		get_job_command(t_ast *ast, char **command)
 {
 	char *tmp;
 
