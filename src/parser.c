@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:02:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:37:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 	else if (next_type == NEWLINE)
 	{
 		free_lst((*lst)->next);
+		(*lst)->next = NULL;
 		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE)))
 			return (ret);
 		return (e_success);
