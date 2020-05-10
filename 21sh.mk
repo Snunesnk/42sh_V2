@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/10 14:41:18 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/10 17:46:30 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SOURCES :=	main.c \
 		build_redir.c \
 		check_alias.c \
 		debug.c \
-		debug_ast.c \
 		del.c \
 		do_redir.c \
 		do_redir2.c \
