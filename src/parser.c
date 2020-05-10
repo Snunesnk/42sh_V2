@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 14:44:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:36:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	parse_error(int err, char *tokval)
 {
 	if (err == e_syntax_error)
 		psherror(e_syntax_error, tokval, e_parsing_type);
+	else if (err == e_unexpected_eof_130 && g_shell_is_interactive)
+		return (g_errordesc[err].code);
 	else
 		psherror(err, NULL, e_invalid_type);
 	return (g_errordesc[err].code);

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:02 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 16:24:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 16:12:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		rl_eot(void)
 {
 	if (g_line.len == 0)
 	{
-		if (g_subprompt && !g_oneline)
+		if (g_subprompt)
 		{
 			g_input_break = 1;
 			g_eof = 1;
