@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:35:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:40:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	subprompt_full_quote(int fd, t_list **lst, int qmode)
 	char	*input;
 	char	*tmp;
 
-	input = NULL;
 	input = get_input_fd(fd, qmode, "> ");
 	if (g_eof || !input)
 	{
@@ -81,7 +80,7 @@ static int	subprompt_full_quote(int fd, t_list **lst, int qmode)
 	}
 	if (g_input_break)
 	{
-		ft_printf("HS"); // BUG FROM HERE, why ?
+		ft_memdel((void**)&input);
 		return (reset_return(e_unexpected_eof_130));
 	}
 	tmp = ft_strjoin(input, "\n");
