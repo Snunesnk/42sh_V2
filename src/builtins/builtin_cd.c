@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
+/*   Updated: 2020/05/10 18:16:42 by abarthel         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "shell.h"
 #include "builtins.h"
 #include "libft.h"
@@ -66,7 +78,8 @@ static char	*concatenate_cdpath(const char *directory)
 	return (pathname);
 }
 
-static	int	error_cd(const char *msg, const char *curpath, const char *directory)
+static	int	error_cd(const char *msg, const char *curpath,
+			const char *directory)
 {
 	if (ft_strcmp(directory, "-"))
 		pbierror(msg, directory);
@@ -116,8 +129,7 @@ static char	*absolute_path(char **curpath)
 	return (NULL);
 }
 
-//static int	change_dir(char **curpath, const char *directory, _Bool p_option)
-int	change_dir(char **curpath, const char *directory, _Bool p_option)
+static int	change_dir(char **curpath, const char *directory, _Bool p_option)
 {
 	if (!*curpath)
 		return (0);
@@ -144,7 +156,7 @@ static char	*concatenate_pwd(const char *directory)
 {
 	char	*curpath;
 	char	*pwd;
-	int	i;
+	int		i;
 	_Bool	allocated;
 
 	allocated = 0;
@@ -184,28 +196,26 @@ int	cd_internal(char *directory, _Bool p_option)
 {
 	char	*curpath;
 	char	*cdpath;
-	int	err;
+	int		err;
 
 	curpath = NULL;
 	cdpath = NULL;
 	if (!directory)
 		return (go_home(p_option));
-	else if (directory[0] == '/') // cd /lib
+	else if (directory[0] == '/')
 		curpath = ft_strdup(directory);
-	else if (!ft_strncmp(directory, ".", 1) || !ft_strncmp(directory, "..", 2)) // cd . || cd ..
+	else if (!ft_strncmp(directory, ".", 1) || !ft_strncmp(directory, "..", 2))
 		curpath = concatenate_pwd(directory);
-	else if (!ft_strcmp(directory, "-")) // cd -
+	else if (!ft_strcmp(directory, "-"))
 		curpath = get_oldpwd();
-	else if ((cdpath = concatenate_cdpath(directory))) // CDPATH=/  cd lib
+	else if ((cdpath = concatenate_cdpath(directory)))
 		curpath = cdpath;
-	else	// cd src/
+	else
 		curpath = concatenate_pwd(directory);
 	if (!curpath)
 		return (1);
-	if (curpath[0] == '/') // if path then resolve it
+	if (curpath[0] == '/')
 		curpath = ft_resolvepath(curpath);
-//	ft_printf("directory: %s, curpath: %s\n", directory, curpath);
-//	return (0);
 	err = change_dir(&curpath, directory, p_option);
 	ft_memdel((void**)&curpath);
 	return (err);

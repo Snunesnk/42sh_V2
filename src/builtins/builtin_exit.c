@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:37:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 18:14:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 int	g_noexit = 0;
 int	g_last_exit = 0;
 
-static void		print_exit(void)
+static void		print_exit(int stopped_jobs)
 {
+	if (stopped_jobs)
+		ft_dprintf(STDERR_FILENO, "\nThere are stopped jobs.\n");
 	if (!g_noexit && g_shell_is_interactive)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 }
@@ -34,7 +36,7 @@ static int		part_sep(int argc, char **argv)
 		if (argc == 2)
 		{
 			ft_tabdel(&argv);
-			print_exit();
+			print_exit(0);
 			exit_clean(status);
 		}
 		return (2);
@@ -44,7 +46,7 @@ static int		part_sep(int argc, char **argv)
 
 static int		numarg_exit(int argc, char **argv, int i, int s)
 {
-	print_exit();
+	print_exit(0);
 	if (argc > i + 1)
 	{
 		pbierror("too many arguments");
@@ -56,7 +58,7 @@ static int		numarg_exit(int argc, char **argv, int i, int s)
 
 static void		nomatter_exit(char **argv, int i)
 {
-	print_exit();
+	print_exit(0);
 	pbierror("%s: numeric argument required", argv[i]);
 	ft_tabdel(&argv);
 	exit_clean(2);
@@ -71,8 +73,7 @@ int				cmd_exit(int argc, char **argv)
 	update_status();
 	if (g_job_control_enabled && are_stopped_jobs() && !g_last_exit)
 	{
-		print_exit();
-		ft_dprintf(STDERR_FILENO, "\nThere are stopped jobs.\n");
+		print_exit(1);
 		g_last_exit = 1;
 		return (1);
 	}
@@ -88,6 +89,6 @@ int				cmd_exit(int argc, char **argv)
 			nomatter_exit(argv, i);
 	}
 	ft_tabdel(&argv);
-	print_exit();
+	print_exit(0);
 	return (exit_clean(status));
 }
