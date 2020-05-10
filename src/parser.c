@@ -6,13 +6,22 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:54:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 14:44:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
 #include "quotes.h"
+
+static int	parse_error(int err, char *tokval)
+{
+	if (err == e_syntax_error)
+		psherror(e_syntax_error, tokval, e_parsing_type);
+	else
+		psherror(err, NULL, e_invalid_type);
+	return (g_errordesc[err].code);
+}
 
 static int		lookahead(int fd, t_list **lst, int curr, int next)
 {
@@ -26,11 +35,8 @@ static int		lookahead(int fd, t_list **lst, int curr, int next)
 		{
 			if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
 			{
-				if ((ret = subprompt(fd, lst, BSQUOTE))) // Heredoc
-				{
-					ft_printf("%s, line: %d: ret: %d %s\n", __FILE__, __LINE__, ret, g_errordesc[ret].message); // DEBUGG
+				if ((ret = subprompt(fd, lst, BSQUOTE)))
 					return (ret);
-				}
 			}
 			return (e_success);
 		}
@@ -53,10 +59,7 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 		free_lst((*lst)->next);
 		(*lst)->next = NULL; // Not needed
 		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE))) // Parser claim
-		{
-			ft_printf("%s, line: %d: ret: %d %s\n", __FILE__, __LINE__, ret, g_errordesc[ret].message); // DEBUGG
 			return (ret);
-		}
 		return (e_success);
 	}
 	else
@@ -70,11 +73,8 @@ int				parser(t_list *lst, int fd)
 	int	ret;
 
 	curr_type = ((t_token*)(lst->content))->type;
-	if (lookahead(fd, &lst, NEWLINE, curr_type))
-	{
-		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
-		return (g_errordesc[e_syntax_error].code);
-	}
+	if ((ret = lookahead(fd, &lst, NEWLINE, curr_type)))
+		return (parse_error(ret, g_tokval[curr_type]));
 	while (lst->next)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
@@ -83,13 +83,9 @@ int				parser(t_list *lst, int fd)
 		{
 			if (!(ret = check_syntax(fd, &lst, curr_type, next_type)))
 				continue ;
-			return (g_errordesc[ret].code);
 		}
-		else if (ret == e_invalid_input) // Check the diff value from subprompt
-//		{
-//			ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__);//DEBUGG
-			return (130); // Should be removed once signals in place ?
-//		}
+		if (ret)
+			return (parse_error(ret, g_tokval[curr_type]));
 		lst = lst->next;
 	}
 	return (e_success);

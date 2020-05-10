@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 12:33:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 14:46:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ int		subprompt(int fd, t_list **lst, int qmode)
 		input = heredoc(fd, ((t_token*)((*lst)->next->content))->value, qmode);
 		free(((t_token*)((*lst)->next->content))->value);
 		((t_token*)((*lst)->next->content))->value = input;
+		if (g_eof)
+		{
+			g_eof = 0;
+			g_input_break = 0;
+			return (e_heredoc_warning);
+		}
+		g_input_break = 0;
+		g_eof = 0;
 		/* if: check all posible errors ctrl C, ctrl D, unexpected EOF, etc */
 		return (e_success);
 	}
