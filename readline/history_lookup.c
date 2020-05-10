@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/06 19:08:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 22:47:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	fill_line(char *hist_proposal, int mode)
 	{
 		insert_text("' : ", 4);
 		insert_text(hist_proposal, hist_len);
-		while (hist_len--)
-			cursor_l();
+		update_line();
+		g_line.c_pos -= hist_len;
 	}
 	else
 	{
@@ -34,11 +34,8 @@ static void	fill_line(char *hist_proposal, int mode)
 static void	get_input_proposal(char value, char **hist_proposal)
 {
 	char	*user_input;
-	int		ret;
 
-	ret = 0;
-	while (ret++ < 4)
-		cursor_l();
+	g_line.c_pos -= 4;
 	if (ft_isprint(value))
 		insert_text((char *)&value, 1);
 	else if (value == 127)
@@ -50,8 +47,12 @@ static void	get_input_proposal(char value, char **hist_proposal)
 		set_prompt("(failed reverse-i-search)`");
 	else if (ft_strequ(g_dis.prompt, "(failed reverse-i-search)`"))
 		set_prompt("(reverse-i-search)`");
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+	display_prompt();
+	g_dis.start_offset = g_dis.prompt_l;
 	g_line.len = ft_strlen(user_input);
 	ft_bzero(g_line.line + g_line.len, g_line.size_buf - g_line.len);
+	g_line.cursor_pos = 0;
 }
 
 static void	prepare_hist_lookup(char **original_prompt)
@@ -63,8 +64,12 @@ static void	prepare_hist_lookup(char **original_prompt)
 	}
 	g_hist_lookup = 1;
 	set_prompt("(reverse-i-search)`");
-	clear_line();
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+	display_prompt();
+	g_dis.start_offset = g_dis.prompt_l;
+	g_line.c_pos = 0;
 	insert_text("' : ", 4);
+	g_line.cursor_pos = 0;
 }
 
 /*
@@ -108,7 +113,11 @@ void		hist_lookup(union u_buffer c)
 		free(original_prompt);
 		original_prompt = NULL;
 		g_hist_lookup = 0;
+		ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+		display_prompt();
+		g_dis.start_offset = g_dis.prompt_l;
 		fill_line(hist_proposal, 0);
+		g_bad_seq.value = c.value;
 		return ;
 	}
 	fill_line(hist_proposal, 1);

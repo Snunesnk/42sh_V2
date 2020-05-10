@@ -6,14 +6,14 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 22:44:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 21:53:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
 
-char		*get_beg_matching_hist(char **line, char *patern)
+char		*get_beg_matching_hist(char **line, char *pattern)
 {
 	char	*tmp;
 	int		pat_len;
@@ -21,12 +21,12 @@ char		*get_beg_matching_hist(char **line, char *patern)
 	tmp = *line;
 	if (!tmp)
 		return (tmp);
-	if (!patern)
+	if (!pattern)
 		return (prev_hist());
-	pat_len = ft_strlen(patern);
-	while (!ft_strnequ(tmp, patern, pat_len) && g_hist.nb_line > 1)
+	pat_len = ft_strlen(pattern);
+	while (!ft_strnequ(tmp, pattern, pat_len) && g_hist.nb_line > 1)
 		tmp = prev_hist();
-	if (ft_strnequ(tmp, patern, pat_len))
+	if (ft_strnequ(tmp, pattern, pat_len))
 		*line = tmp;
 	else
 	{
