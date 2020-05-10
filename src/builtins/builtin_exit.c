@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 18:36:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:37:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static int		part_sep(int argc, char **argv)
 		if (argc == 2)
 		{
 			ft_tabdel(&argv);
-			free_hist();
 			print_exit();
 			exit_clean(status);
 		}
@@ -52,7 +51,6 @@ static int		numarg_exit(int argc, char **argv, int i, int s)
 		return (1);
 	}
 	ft_tabdel(&argv);
-	free_hist();
 	return (exit_clean(s));
 }
 
@@ -61,7 +59,6 @@ static void		nomatter_exit(char **argv, int i)
 	print_exit();
 	pbierror("%s: numeric argument required", argv[i]);
 	ft_tabdel(&argv);
-	free_hist();
 	exit_clean(2);
 }
 
