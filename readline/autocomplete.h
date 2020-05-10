@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/30 19:55:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 21:08:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void			print_hist_compl(void);
 void			insert_hist_compl(void);
 void			remove_completion(void);
 void			cd_complete(char *to_complete);
-t_node			*get_cd_compl(char *to_complete, char *path, t_data *data);
 t_node			*search_in_path(char *to_complete, t_node *compl_tree, \
 		t_data *data, int (*test)(char *file));
 char			*get_filename(char *path);

@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 23:40:03 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 21:16:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,50 +57,41 @@ t_node		*search_in_path(char *to_complete, t_node *compl_tree,\
 	return (compl_tree);
 }
 
-t_node		*get_cd_compl(char *to_complete, char *path, t_data *data)
+t_node		*get_cd_compl(char *path, t_data *data)
 {
 	t_node	*compl_tree;
 	char	*tmp;
 
 	compl_tree = NULL;
 	tmp = path;
-	while (tmp)
+	while (tmp && *tmp)
 	{
 		if ((tmp = ft_strchr(path, ':')))
 		{
 			tmp[0] = 0;
 			tmp++;
 		}
-		compl_tree = search_in_path(stick_path_complete(path, to_complete), \
-				compl_tree, data, test_dir);
+		compl_tree = search_in_path(ft_strjoin(path, "*"), compl_tree, data, \
+				test_dir);
 		path = tmp;
 	}
 	return (compl_tree);
 }
 
-static char	*extract_path(char *to_complete)
+static char	*add_path(char *to_complete, char *real_path)
 {
 	char	*path;
-	int		i;
-	int		last;
+	int		len;
 
-	last = 0;
-	i = 0;
-	if (to_complete[0] != '/' && to_complete[0] != '~')
-		return (ft_strdup(".:"));
-	while (to_complete[i])
-	{
-		if (to_complete[i] == '/')
-			last = i + 1;
-		i++;
-	}
-	if (!(path = (char *)ft_memalloc(sizeof(char) * last + 2)))
+	len = ft_strlen(to_complete) + ft_strlen(real_path) + 2;
+	if (!(path = (char *)ft_memalloc(sizeof(char) * len)))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
-	path = ft_strncat(path, to_complete, last);
-	path = ft_strncat(path, ":", 1);
+	path = ft_strcat(path, to_complete);
+	path = ft_strcat(path, ":");
+	path = ft_strcat(path, real_path);
 	return (path);
 }
 
@@ -111,17 +102,16 @@ void		cd_complete(char *to_complete)
 	t_data	*data;
 
 	data = init_data();
-	if (get_shell_var("CDPATH", g_env))
-		path = ft_strjoin_free(extract_path(to_complete), \
-				get_shell_var("CDPATH", g_env), 1);
+	if (!*to_complete && get_shell_var("CDPATH", g_env))
+		path = add_path(to_complete, get_shell_var("CDPATH", g_env));
 	else
-		path = extract_path(to_complete);
+		path = ft_strdup(to_complete);
 	if (!path || !data)
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	compl_tree = get_cd_compl(to_complete, path, data);
+	compl_tree = get_cd_compl(path, data);
 	if (compl_tree)
 		display_compl(compl_tree, data);
 	free(data);
