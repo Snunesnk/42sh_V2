@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:22:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:57:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*free_loop(char *here, char *tmp)
 	return (here);
 }
 
-static char	*get_heredoc_input(int fd, char *eof, char *here)
+static char	*get_input(int fd, char *eof, char *here)
 {
 	char *tmp;
 	char *line;
@@ -58,53 +58,54 @@ static char	*get_heredoc_input(int fd, char *eof, char *here)
 	return (free_loop(here, tmp));
 }
 
-//t_list		*subprompt(int fd)
-int		subprompt(int fd, t_list **list, int qmode)
-{ /* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
-	t_list	*lst;
+int		subprompt(int fd, t_list **lst, int qmode) // vs. heredoc
+{
+/* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
+	char	*eof;
 	char	*input;
 	char	*tmp;
 
-	g_oneline = 1;
-	input = get_heredoc_input(fd, NULL, NULL); /* Getting the input */
-	tmp = ft_strjoin(input, "\n");
-	free(input);
-	input = tmp;
-	g_oneline = 0;
-	g_subprompt = 0;
-	if (!input)
+	if (qmode == BSQUOTE)
 	{
-		return (NULL);
+		eof = ((t_token*)((*lst)->next->content))->value;
+		input = get_input(fd, eof, ft_strdup(""));
 	}
-	else if (g_input_break)
+	else if (qmode == FULL_QUOTE)
 	{
-		g_input_break = 0;
-		return (NULL);
+		g_oneline = 1;
+		input = get_input(fd, NULL, NULL); /* Getting the input */
+		tmp = ft_strjoin(input, "\n");
+		free(input);
+		input = tmp;
+		g_oneline = 0;
+		g_subprompt = 0; // ??
 	}
-	g_input_break = 0;
-	lst = lexer(input); /* Building the tokens */
-	free(input);
-	return (lst);
-}
-
-int			heredoc(int fd, t_list *lst)
-{
-	char	*eof;
-	char	*input;
-
-	eof = ((t_token*)(lst->next->content))->value;
-	input = get_heredoc_input(fd, eof, ft_strdup(""));
 	if (!input && !g_input_break)
+	{
 		return (e_syntax_error);
+	}
+	else if (!input)
+	{
+		return (e_invalid_input);
+	}
 	else if (g_input_break && !g_eof)
 	{
 		g_input_break = 0;
 		g_eof = 0;
 		return (e_invalid_input);
 	}
+	else if (g_input_break)
+	{
+		g_input_break = 0;
+		return (e_invalid_input);
+	}
 	g_input_break = 0;
 	g_eof = 0;
 	free(eof);
-	((t_token*)(lst->next->content))->value = input;
+	if (BSQUOTE)
+		((t_token*)((*lst)->next->content))->value = input;
+	else if (FULL_QUOTE)
+		*lst = lexer(input); /* Building the tokens */
+	free(input);
 	return (e_success);
 }
