@@ -1,0 +1,8 @@
+ls
+cd ../
+hash
+hash make cat hostname ls
+export Test=test
+unset Test
+export toto
+exit

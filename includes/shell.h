@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 23:57:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 13:21:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ extern int						g_job_control_enabled;
 extern int						g_noexit;
 extern int						g_last_exit;
 extern int						g_force_exit;
+extern int						g_interrupt_immediately;
 extern int						g_oneline;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
@@ -363,14 +364,13 @@ t_token							*get_word(const char *str, size_t *i, \
 int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
-t_list							*subprompt(int fd);
+int								subprompt(int fd, t_list **lst, int qmode);
 int								check_alias(t_list **lst, int check);
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,
 									char **name, char **value);
 int								only_assignments(t_process *p);
 
-int								heredoc(int fd, t_list *lst);
 int								parser(t_list *lst, int fd);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);

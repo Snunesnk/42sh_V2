@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 12:18:39 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/06 12:18:41 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 15:41:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int		explicit_match(char string, t_flags *flags)
 {
 	return ((string == '/' && (flags->cur & FT_FNM_PATHNAME))
 		|| (string == '.' && (flags->cur & FT_IFNM_LEADING_PERIOD)));
-
 }
 
 int		match_qmark(const char **pattern, const char **string,
