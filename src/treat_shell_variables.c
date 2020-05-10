@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:08 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:35:30 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 15:10:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int			treat_shell_variables(t_process *p, uint64_t flags)
 	char			*name;
 	char			*value;
 
-	if (!p->argv[0])
+	if (p->argc < 0 || !p->argv)
+		return (FAILURE);
+	else if (!p->argv[0])
 		return (SUCCESS);
 	while (p->argv && get_assignment(p->argv[0], &name, &value) == SUCCESS)
 	{
