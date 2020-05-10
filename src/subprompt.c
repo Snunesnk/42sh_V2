@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:17:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:35:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,24 @@
 #include "shell.h"
 #include "quotes.h"
 
-int	g_oneline = 0;
+int		g_oneline = 0;
+
+static char	*return_heredoc(char *tmp, char *hereword)
+{
+	if (g_input_break && !g_eof)
+	{
+		free(tmp);
+		free(hereword);
+		return (NULL);
+	}
+	if (!tmp && g_shell_is_interactive)
+	{
+		free(hereword);
+		return (NULL);
+	}
+	free(tmp);
+	return (hereword);
+}
 
 static char	*heredoc(int fd, char *eof, int qmode)
 {
@@ -38,22 +55,10 @@ static char	*heredoc(int fd, char *eof, int qmode)
 		if (!tmp && !g_shell_is_interactive)
 			g_eof = 1;
 	}
-	if (g_input_break && !g_eof)
-	{
-		free(tmp);
-		free(hereword);
-		return (NULL);
-	}
-	if (!tmp && g_shell_is_interactive)
-	{
-		free(hereword);
-		return (NULL);
-	}
-	free(tmp);
-	return (hereword);
+	return (return_heredoc(tmp, hereword));
 }
 
-static inline int	reset_return(int err)
+static int	reset_return(int err)
 {
 	g_eof = 0;
 	g_input_break = 0;
@@ -61,10 +66,35 @@ static inline int	reset_return(int err)
 	return (err);
 }
 
-int		subprompt(int fd, t_list **lst, int qmode)
-{ /* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
+static int	subprompt_full_quote(int fd, t_list **lst, int qmode)
+{
 	char	*input;
 	char	*tmp;
+
+	input = NULL;
+	input = get_input_fd(fd, qmode, "> ");
+	if (g_eof || !input)
+	{
+		psherror(e_unexpected_eof_2, NULL, e_invalid_type);
+		free(input);
+		exit_clean(g_errordesc[e_unexpected_eof_2].code);
+	}
+	if (g_input_break)
+	{
+		ft_printf("HS"); // BUG FROM HERE, why ?
+		return (reset_return(e_unexpected_eof_130));
+	}
+	tmp = ft_strjoin(input, "\n");
+	free(input);
+	input = tmp;
+	*lst = lexer(input);
+	free(input);
+	return (reset_return(e_success));
+}
+
+int			subprompt(int fd, t_list **lst, int qmode)
+{
+	char	*input;
 
 	g_subprompt = 1;
 	if (qmode == BSQUOTE)
@@ -79,22 +109,6 @@ int		subprompt(int fd, t_list **lst, int qmode)
 		return (reset_return(e_success));
 	}
 	else if (qmode == FULL_QUOTE)
-	{
-		input = get_input_fd(fd, qmode, "> ");
-		if (g_eof || !input)
-		{
-			psherror(e_unexpected_eof_2, NULL ,e_invalid_type);
-			free(input);
-			exit_clean(g_errordesc[e_unexpected_eof_2].code);
-		}
-		if (g_input_break)
-			return (reset_return(e_unexpected_eof_130));
-		tmp = ft_strjoin(input, "\n");
-		free(input);
-		input = tmp;
-		*lst = lexer(input);
-		free(input);
-		return (reset_return(e_success));
-	}
+		return (subprompt_full_quote(fd, lst, qmode));
 	return (reset_return(e_success));
 }
