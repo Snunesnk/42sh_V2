@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 18:51:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 16:54:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	get_next_opt(char ***args, const char *options_list)
 	static int	x = 0;
 
 	x++;
-	if (!args || !*args || !**args)
+	if (!args || !*args || !**args || !***args)
 	{
 		x = 0;
 		return (-1);
