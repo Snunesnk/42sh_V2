@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 17:53:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:56:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,13 @@ void		format_job_info(t_job *j, const char *status)
 	if (sig == SIGINT || sig == SIGQUIT)
 		return ;
 	else if (strsig(sig) && ft_strcmp("Done", status))
-		ft_dprintf(STDERR_FILENO, "\n[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig(sig), j->command);
+	{
+		ft_dprintf(STDERR_FILENO, "\n[%ld] %s(%s) \t %s\n",
+			(long)j->pgid, status, strsig(sig), j->command);
+	}
 	else
-		ft_dprintf(STDERR_FILENO, "\n[%ld] %s \t %s\n", (long)j->pgid, status, j->command);
+		ft_dprintf(STDERR_FILENO, "\n[%ld] %s \t %s\n",
+				(long)j->pgid, status, j->command);
 }
 
 static void	do_job_innerloop(t_job **j, t_job **jlast, t_job **jnext)
@@ -95,7 +99,7 @@ void		do_job_notification(t_job *j, t_job *jlast, t_job *jnext)
 	}
 }
 
-int		are_stopped_jobs(void)
+int			are_stopped_jobs(void)
 {
 	t_job	*j;
 
