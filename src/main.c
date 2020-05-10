@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 17:50:59 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 15:00:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ static int	main_loop(int fd, int *status)
 	input = NULL;
 	if (g_shell_is_interactive)
 	{
-		if (!g_pending_cmd && !(input = get_input_fd(fd, FULL_QUOTE, NULL)) && !g_pending_cmd)
+		if (!g_pending_cmd && !(input = get_input_fd(fd, FULL_QUOTE, NULL)) \
+				&& !g_pending_cmd)
 			return (1);
 		if (g_pending_cmd && input)
 			free(input);
