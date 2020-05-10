@@ -18,7 +18,7 @@ static void	print_ast(int fd, t_ast *node)
 			n = tk->value;
 		}
 		else
-			n = token_tab[node->type];
+			n = g_token_tab[node->type];
 		ft_dprintf(fd, "%lu [label=\"%s\"];\n", (long unsigned)node, n);
 		if (node->left)
 		{
@@ -29,7 +29,7 @@ static void	print_ast(int fd, t_ast *node)
 				side = tk->value;
 			}
 			else
-				side = token_tab[node->left->type];
+				side = g_token_tab[node->left->type];
 			ft_dprintf(fd, "%lu -- %lu;\n", (long unsigned)node, (long unsigned)node->left);
 		}
 		print_ast(fd, node->right);
@@ -42,7 +42,7 @@ static void	print_ast(int fd, t_ast *node)
 				side = tk->value;
 			}
 			else
-				side = token_tab[node->right->type];
+				side = g_token_tab[node->right->type];
 			ft_dprintf(fd, "%lu -- %lu;\n", (long unsigned)node, (long unsigned)node->right);
 		}
 	}

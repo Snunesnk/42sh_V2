@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:21:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:38:58 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@
 
 # define MAX_SIG	32
 
-char							*token_tab[NB_TOKEN];
+char							*g_token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
 char							*short_physical_path(char **cwd);
 
@@ -454,6 +454,5 @@ int								process_execve(char **argv,
 ** Debug functions
 */
 void							graph_ast(t_ast *ast);
-void							printjob(void);
 
 #endif
