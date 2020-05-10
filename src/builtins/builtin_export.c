@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 17:10:47 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 16:57:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int			cmd_export(int ac, char **av)
 			return (1);
 		}
 	}
-	if (*av)
+	if (*av && **av)
 		return (exec_export(av, option));
 	print_shell_var(g_env, print_export);
 	return (0);
