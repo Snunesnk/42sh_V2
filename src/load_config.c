@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 17:50:06 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 16:41:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,14 @@ void		load_config(void)
 	}
 	fd = open(congig_file, (O_RDONLY | O_CREAT), 644);
 	free(congig_file);
-	if (fd < 0)
-	{
-		g_shell_is_interactive = isatty(g_shell_terminal);
-		return ;
-	}
-	while ((line = get_input_fd(fd, FULL_QUOTE, NULL)))
+	while (fd >= 0 && (line = get_input_fd(fd, FULL_QUOTE, NULL)))
 	{
 		if (*line != '#')
 			exec_input(line, fd);
 		else
 			free(line);
 	}
-	free(line);
+	if (fd >= 0)
+		free(line);
 	g_shell_is_interactive = isatty(g_shell_terminal);
 }
