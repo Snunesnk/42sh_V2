@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 00:00:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:37:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 
 char	*token_tab[NB_TOKEN] =
 {
-	[OR_IF] = "OR_IF",
-	[PIPE] = "PIPE",
-	[AND_IF] = "AND_IF",
-	[AND] = "AND",
-	[GREATAND] = "GREATAND",
-	[LESSAND] = "LESSAND",
-	[ANDGREAT] = "ANDGREAT",
-	[SEMI] = "SEMI",
-	[DGREAT] = "DGREAT",
-	[DLESS] = "DLESS",
-	[DLESSDASH] = "DLESSDASH",
-	[GREAT] = "GREAT",
-	[LESS] = "LESS",
+	[OR_IF] = "||",
+	[PIPE] = "|",
+	[AND_IF] = "&&",
+	[AND] = "&",
+	[GREATAND] = ">&",
+	[LESSAND] = "<&",
+	[ANDGREAT] = "&>",
+	[SEMI] = ";",
+	[DGREAT] = ">>",
+	[DLESS] = "<<",
+	[DLESSDASH] = "<<-",
+	[GREAT] = ">",
+	[LESS] = "<",
 	[WORD] = "WORD",
-	[IO_NB] = "IO_NB",
-	[NEWLINE] = "NEWLINE",
+	[IO_NB] = "io_nb",
+	[NEWLINE] = "newline",
 };
 
 static void	printg(t_list *lst, t_list **elem)

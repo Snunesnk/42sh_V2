@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 15:36:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:37:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,17 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 		|| curr_type == DGREAT || curr_type == GREATAND || curr_type == LESSAND
 		|| curr_type == ANDGREAT || curr_type == DLESSDASH)
 		&& next_type == NEWLINE)
-		return (psherror(e_syntax_error, "newline", e_parsing_type));
+		return (e_syntax_error);
 	else if (next_type == NEWLINE)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL; // Not needed
-		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE))) // Parser claim
+		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE)))
 			return (ret);
 		return (e_success);
 	}
 	else
-		return (psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type));
+		return (e_syntax_error);
 }
 
 int				parser(t_list *lst, int fd)
@@ -87,7 +87,7 @@ int				parser(t_list *lst, int fd)
 				continue ;
 		}
 		if (ret)
-			return (parse_error(ret, g_tokval[curr_type]));
+			return (parse_error(ret, token_tab[next_type]));
 		lst = lst->next;
 	}
 	return (e_success);
