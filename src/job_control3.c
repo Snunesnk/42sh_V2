@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 16:13:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:53:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void		wait_for_job(t_job *j)
 	if (!g_job_control_enabled)
 	{
 		pid = waitpid(WAIT_ANY, &status, WUNTRACED);
-		while (!mark_process_status(pid, status) && !job_is_completed(j)) /* Check if this condition is correct */
+		while (!mark_process_status(pid, status) && !job_is_completed(j))
 			pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 	}
 	else
@@ -37,7 +37,7 @@ void		wait_for_job(t_job *j)
 void		format_job_info(t_job *j, const char *status)
 {
 	t_process	*p;
-	int		sig;
+	int			sig;
 
 	p = j->first_process;
 	sig = -1;
@@ -50,9 +50,9 @@ void		format_job_info(t_job *j, const char *status)
 		else if (WIFSTOPPED(p->status))
 			sig = WSTOPSIG(p->status);
 	}
-	if (sig == SIGINT || sig == SIGQUIT) /* Here some signals should go trough different displays */
+	if (sig == SIGINT || sig == SIGQUIT)
 		return ;
-	else if (strsig(sig) && ft_strcmp("Done", status)) // Not sure whether this is correct */
+	else if (strsig(sig) && ft_strcmp("Done", status))
 		ft_dprintf(STDERR_FILENO, "\n[%ld] %s(%s) \t %s\n", (long)j->pgid, status, strsig(sig), j->command);
 	else
 		ft_dprintf(STDERR_FILENO, "\n[%ld] %s \t %s\n", (long)j->pgid, status, j->command);
