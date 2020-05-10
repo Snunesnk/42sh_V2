@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 22:32:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 12:46:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*hist_expanse(char *value)
 		return (NULL);
 	}
 	else if (g_pattern_length)
-		ft_printf("%s\n", value);
+		ft_printf("\n%s", value);
 	g_pattern_length = 0;
 	return (value);
 }
@@ -75,9 +75,9 @@ char	*expand_num(char *value, int start, int sign)
 		entry = g_hist.nb_line - entry;
 	if (entry > g_hist.total_lines || entry <= 0)
 	{
-		ft_dprintf(STDERR_FILENO, "%s: !%s: event not found\n",
+		ft_dprintf(STDERR_FILENO, "\n%s: !%s: event not found",
 						g_progname, value);
-		return (NULL);
+		return ("");
 	}
 	while (entry > g_hist.nb_line)
 		hist_entry = next_hist();
@@ -100,9 +100,9 @@ char	*expand_word(char *value, int start, int sign)
 	if (ft_strncmp(value, g_hist.history_content + g_hist.offset + 1, \
 				g_pattern_length + sign))
 	{
-		ft_dprintf(STDERR_FILENO, "\n%s: !%s: event not found\n",
+		ft_dprintf(STDERR_FILENO, "\n%s: !%s: event not found",
 						g_progname, value);
-		return (NULL);
+		return ("");
 	}
 	return (hist_entry);
 }
