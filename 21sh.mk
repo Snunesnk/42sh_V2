@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/10 17:46:30 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/10 18:54:21 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,6 +90,8 @@ SOURCES :=	main.c \
 		builtins/builtin_bg.c \
 		builtins/builtin_jobs.c \
 		builtins/builtin_cd.c \
+		builtins/builtin_cd_concat.c \
+		builtins/builtin_cd_access.c \
 		builtins/builtin_echo.c \
 		builtins/builtin_exit.c \
 		builtins/builtins_dispatcher.c \
