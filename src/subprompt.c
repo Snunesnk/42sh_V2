@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 14:46:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:24:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static char	*heredoc(int fd, char *eof, int qmode)
 		free(line);
 		hereword = tmp;
 		tmp = get_input_fd(fd, qmode, "> ");
+		if (!tmp && !g_shell_is_interactive)
+			g_eof = 1;
 	}
 	g_subprompt = 0;
 	if (g_input_break && !g_eof)
@@ -47,7 +49,7 @@ static char	*heredoc(int fd, char *eof, int qmode)
 		free(hereword);
 		return (NULL);
 	}
-	if (!tmp)
+	if (!tmp && g_shell_is_interactive)
 	{
 		free(hereword);
 		return (NULL);
