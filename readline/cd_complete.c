@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 20:13:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:40:03 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,7 @@
 #include "builtins.h"
 #include "ft_glob.h"
 
-char	*ft_strjoin_free(char *s1, char *s2, int to_free)
-{
-	char	*new_str;
-
-	if (!(new_str = ft_strjoin(s1, s2)))
-		return (NULL);
-	if (to_free & 1)
-		free(s1);
-	if (to_free & 2)
-		free(s2);
-	return (new_str);
-}
-
-char	*get_filename(char *path)
+char		*get_filename(char *path)
 {
 	char	*tmp;
 	int		i;
@@ -44,8 +31,8 @@ char	*get_filename(char *path)
 	return (tmp);
 }
 
-t_node	*search_in_path(char *to_complete, t_node *compl_tree, t_data *data, \
-		int (*test)(char *))
+t_node		*search_in_path(char *to_complete, t_node *compl_tree,\
+		t_data *data, int (*test)(char *))
 {
 	t_glob	gl;
 	int		i;
@@ -70,7 +57,7 @@ t_node	*search_in_path(char *to_complete, t_node *compl_tree, t_data *data, \
 	return (compl_tree);
 }
 
-t_node	*get_cd_compl(char *to_complete, char *path, t_data *data)
+t_node		*get_cd_compl(char *to_complete, char *path, t_data *data)
 {
 	t_node	*compl_tree;
 	char	*tmp;
@@ -117,7 +104,7 @@ static char	*extract_path(char *to_complete)
 	return (path);
 }
 
-void	cd_complete(char *to_complete)
+void		cd_complete(char *to_complete)
 {
 	char	*path;
 	t_node	*compl_tree;

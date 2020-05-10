@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 12:13:49 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:42:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ struct	s_line_state
 	int			len;
 	char		is_modified;
 };
-
 
 extern struct s_line_state	g_line;
 extern struct s_display		g_dis;
