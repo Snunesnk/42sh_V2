@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/19 15:47:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 10:38:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	execute_or(t_ast *node, int foreground)
 
 int	execute_node(t_ast *node, int foreground)
 {
+	if (g_interrupt_immediately == SIGINT) // Check if other signls stoppp command execution
+		return (g_interrupt_immediately + 128);
 	if (node->type == WORD)
 		return (execute_pipeline(node, foreground));
 	else if (node->type == SEMI)

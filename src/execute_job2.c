@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:48:29 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 10:26:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,9 @@ int			execute_job(t_list *lst, int foreground)
 	if (j == NULL)
 		return (FAILURE);
 	add_job_to_queue(j);
-//	printjob();
+//	printjob(); // DEBUGG
 	ret = launch_job(j, foreground);
+//	ft_printf("job return value: %d\n", ret); // DEBUGG
 	if (ret == -1)
 		ret = get_exit_value(get_job_status(j, foreground));
 	if (foreground && job_is_completed(j))

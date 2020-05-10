@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 17:50:59 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/10 10:38:42 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int			exec_input(char *input, int fd)
 	ast = build_ast(&lst);
 //	graph_ast(ast); // BONUS GRAPHVIZ ?
 	g_retval = execute_node(ast, 1);
+	g_interrupt_immediately = 0;
 	free_ast(ast);
 	do_job_notification(g_first_job, NULL, NULL);
 	return (g_retval);
@@ -108,6 +109,7 @@ static int	main_loop(int fd, int *status)
 	char	*input;
 
 	input = NULL;
+	g_interrupt_immediately = 0;
 	if (g_shell_is_interactive)
 	{
 		if (!g_pending_cmd && !(input = get_input_fd(fd, FULL_QUOTE, NULL)) && !g_pending_cmd)

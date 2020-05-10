@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/04 18:18:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 00:00:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		debug(t_list *lst)
 
 void		printjob(void)
 {
-	return ;
+//	return ;
 	ft_printf("\nShell pid: %d\n", g_shell_pgid);
 	for (t_job *j=g_first_job; j; j = j->next)
 	{

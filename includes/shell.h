@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:27:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 10:24:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ extern int						g_job_control_enabled;
 extern int						g_noexit;
 extern int						g_last_exit;
 extern int						g_force_exit;
+extern int						g_interrupt_immediately;
 extern int						g_oneline;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
@@ -223,6 +224,8 @@ void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
 
 extern sigset_t					g_save_procmask;
+extern struct sigaction				g_sigint_oact;
+extern struct sigaction				g_sigint_act;
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);
@@ -363,7 +366,7 @@ t_token							*get_word(const char *str, size_t *i, \
 int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
-t_list							*subprompt(int fd, t_list **lst, int qmode);
+int								subprompt(int fd, t_list **lst, int qmode);
 int								check_alias(t_list **lst, int check);
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,

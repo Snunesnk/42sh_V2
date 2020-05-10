@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:25:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/09 22:54:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "shell.h"
+#include "quotes.h"
 
 static int		lookahead(int fd, t_list **lst, int curr, int next)
 {
@@ -25,8 +26,11 @@ static int		lookahead(int fd, t_list **lst, int curr, int next)
 		{
 			if ((curr == DLESS || curr == DLESSDASH) && next == WORD)
 			{
-				if ((ret = subprompt(fd, &lst, SBQUOTES))) // Heredoc
+				if ((ret = subprompt(fd, lst, BSQUOTE))) // Heredoc
+				{
+					ft_printf("%s, line: %d: ret: %d %s\n", __FILE__, __LINE__, ret, g_errordesc[ret].message); // DEBUGG
 					return (ret);
+				}
 			}
 			return (e_success);
 		}
@@ -48,9 +52,9 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 	{
 		free_lst((*lst)->next);
 		(*lst)->next = NULL; // Not needed
-		if ((ret = subprompt(fd, &(*lst)->next, FULL_MODE))) // Parser claim
+		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE))) // Parser claim
 		{
-			ft_printf("%s, line: %s: ret: %d %s\n", __FILE__, __LINE__, ret, g_errordesc[ret]); // DEBUGG
+			ft_printf("%s, line: %d: ret: %d %s\n", __FILE__, __LINE__, ret, g_errordesc[ret].message); // DEBUGG
 			return (ret);
 		}
 		return (e_success);
@@ -66,7 +70,7 @@ int				parser(t_list *lst, int fd)
 	int	ret;
 
 	curr_type = ((t_token*)(lst->content))->type;
-	if (lookahead(fd, lst, NEWLINE, curr_type))
+	if (lookahead(fd, &lst, NEWLINE, curr_type))
 	{
 		psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type);
 		return (g_errordesc[e_syntax_error].code);
@@ -75,7 +79,7 @@ int				parser(t_list *lst, int fd)
 	{
 		curr_type = ((t_token*)(lst->content))->type;
 		next_type = ((t_token*)(lst->next->content))->type;
-		if ((ret = lookahead(fd, lst, curr_type, next_type)) == e_syntax_error)
+		if ((ret = lookahead(fd, &lst, curr_type, next_type)) == e_syntax_error)
 		{
 			if (!(ret = check_syntax(fd, &lst, curr_type, next_type)))
 				continue ;
