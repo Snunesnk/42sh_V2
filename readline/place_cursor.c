@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 18:57:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:48:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** This function scroll the screen, to access a line that is after or \
 ** before the displayed lines
 */
+
 static void	ft_scroll(char *direction)
 {
 	if (ft_strequ("down", direction))
@@ -36,6 +37,7 @@ static void	ft_scroll(char *direction)
 /*
 ** Determine the coordinates of the wanted position
 */
+
 void		calc_dcursor(int pos, int *v_pos, int *c_pos)
 {
 	int	track;
@@ -59,6 +61,7 @@ void		calc_dcursor(int pos, int *v_pos, int *c_pos)
 /*
 ** I need to calculate the part of the string I'm going to display
 */
+
 static char	*calc_print_range(int *offset)
 {
 	char	*to_print;
@@ -97,7 +100,7 @@ void		update_dumb_line(void)
 		return ;
 	if (offset)
 		to_print[0] = '<';
-	if (ft_strlen(to_print) < (size_t)(g_line.len - offset + g_dis.prompt_l ))
+	if (ft_strlen(to_print) < (size_t)(g_line.len - offset + g_dis.prompt_l))
 		to_print[g_sc.w - 1] = '>';
 	ft_putstr(to_print);
 	ft_putchar('\r');
@@ -109,6 +112,7 @@ void		update_dumb_line(void)
 ** calculate the coordinates of the wanted position, then perform scroll if \
 ** needed, then use cm to place the cursor at the wanted position
 */
+
 void		place_cursor(int pos)
 {
 	int	v_pos;
@@ -130,4 +134,3 @@ void		place_cursor(int pos)
 	ft_putstr(tgoto(g_termcaps.cm, c_pos, v_pos));
 	g_line.cursor_pos = pos;
 }
-

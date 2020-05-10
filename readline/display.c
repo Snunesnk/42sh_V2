@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 21:14:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:46:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ struct s_line_state	g_line =
 	.is_modified = 0
 };
 
-void		display_prompt(void)
+void	display_prompt(void)
 {
 	if (write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l) < 0)
 		return ;
 }
 
-void		set_prompt(const char *prompt)
+void	set_prompt(const char *prompt)
 {
 	if (g_dis.prompt != NULL)
 		free(g_dis.prompt);
@@ -54,7 +54,7 @@ void		set_prompt(const char *prompt)
 	g_dis.real_prompt_l = ft_strlen(g_dis.display_prompt);
 }
 
-void		clear_next()
+void	clear_next(void)
 {
 	int	v_pos;
 	int	c_pos;
@@ -70,7 +70,7 @@ void		clear_next()
 	ft_putstr(tgoto(g_termcaps.cm, c_pos, v_pos));
 }
 
-void		update_line(void)
+void	update_line(void)
 {
 	int	ret;
 
@@ -99,28 +99,7 @@ void		update_line(void)
 	g_line.is_modified = 0;
 }
 
-int		calc_v_pos(void)
-{
-	int	v_pos;
-	int	c_pos;
-	int	track;
-
-	track = 0;
-	v_pos = g_dis.start_offset / g_sc.w;
-	c_pos = g_dis.start_offset % g_sc.w;
-	while (track != g_line.c_pos)
-	{
-		if (c_pos == g_sc.w || g_line.line[track] == '\n')
-		{
-			c_pos = 0;
-			v_pos++;
-		}
-		track++;
-	}
-	return (v_pos);
-}
-
-void		redisplay_after_sigwinch(void)
+void	redisplay_after_sigwinch(void)
 {
 	struct winsize	w_size;
 	int				ret;
@@ -134,7 +113,7 @@ void		redisplay_after_sigwinch(void)
 		ft_printf("\r%.*s\r", g_sc.w, "");
 		return ;
 	}
-	if (g_dis.start_line > g_sc.height- 1)
+	if (g_dis.start_line > g_sc.height - 1)
 		g_dis.start_line = g_sc.height - 1;
 	ret = g_dis.start_line;
 	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));

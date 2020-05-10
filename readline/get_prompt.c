@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/08 12:45:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:40:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char		*get_prompt(void)
 		len = ft_strlen(pwd) + 3;
 	else
 		len = ft_strlen(pwd) + ft_strlen(GREEN_ARROW) + \
-			  ft_strlen(PROMPT_COLOR) + ft_strlen(END_SIGN) + 1;
+			ft_strlen(PROMPT_COLOR) + ft_strlen(END_SIGN) + 1;
 	if (!(prompt = (char *)ft_memalloc(sizeof(char) * (len))))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);

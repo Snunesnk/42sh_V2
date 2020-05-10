@@ -6,13 +6,13 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 21:41:45 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 20:49:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/09 23:39:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 
-int	has_no_cmd(char *line, int start)
+int		has_no_cmd(char *line, int start)
 {
 	int	i;
 	int	k;
@@ -41,7 +41,7 @@ int	has_no_cmd(char *line, int start)
 	return (1);
 }
 
-int	has_operator(char *to_complete)
+int		has_operator(char *to_complete)
 {
 	static char	operator[] = "&|<>;";
 	int			i;
@@ -54,4 +54,17 @@ int	has_operator(char *to_complete)
 		i++;
 	}
 	return (0);
+}
+
+char	*ft_strjoin_free(char *s1, char *s2, int to_free)
+{
+	char	*new_str;
+
+	if (!(new_str = ft_strjoin(s1, s2)))
+		return (NULL);
+	if (to_free & 1)
+		free(s1);
+	if (to_free & 2)
+		free(s2);
+	return (new_str);
 }
