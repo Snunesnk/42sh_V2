@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:37:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:37:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	parse_error(int err, char *tokval)
 	return (g_errordesc[err].code);
 }
 
-static int		lookahead(int fd, t_list **lst, int curr, int next)
+static int	lookahead(int fd, t_list **lst, int curr, int next)
 {
 	int	i;
 	int	ret;
@@ -47,7 +47,7 @@ static int		lookahead(int fd, t_list **lst, int curr, int next)
 	return (e_syntax_error);
 }
 
-static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
+static int	check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 {
 	int	ret;
 
@@ -59,7 +59,7 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 	else if (next_type == NEWLINE)
 	{
 		free_lst((*lst)->next);
-		(*lst)->next = NULL; // Not needed
+		(*lst)->next = NULL;
 		if ((ret = subprompt(fd, &(*lst)->next, FULL_QUOTE)))
 			return (ret);
 		return (e_success);
@@ -68,7 +68,7 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 		return (e_syntax_error);
 }
 
-int				parser(t_list *lst, int fd)
+int			parser(t_list *lst, int fd)
 {
 	int	curr_type;
 	int	next_type;
@@ -87,7 +87,7 @@ int				parser(t_list *lst, int fd)
 				continue ;
 		}
 		if (ret)
-			return (parse_error(ret, token_tab[next_type]));
+			return (parse_error(ret, g_token_tab[next_type]));
 		lst = lst->next;
 	}
 	return (e_success);

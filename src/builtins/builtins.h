@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:16:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:59:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,17 @@ extern char	*g_builtin_name;
 ** Functions in builtins_dispatcher.c
 */
 int				builtins_dispatcher(char **argv);
+
+/*
+** Builtins utils
+*/
+int				go_home(_Bool p_option);
+char			*concatenate_cdpath(const char *directory);
+char			*absolute_path(char **curpath);
+char			*concatenate_pwd(const char *directory);
+char			*get_oldpwd(void);
+int				change_dir(char **curpath, const char *directory, \
+						_Bool p_option);
 int				cd_internal(char *directory, _Bool p_option);
 
 extern char	*g_pathname;
