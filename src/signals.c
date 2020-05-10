@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 10:45:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 10:55:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	sigint_handler(int sig)
 {
 	g_interrupt_immediately = sig;
 	g_retval = sig + 128;
+//	write(STDOUT_FILENO, "^C", 2); // Should ask readline to ouput ^C
 	/* Case readline ON */
 //	ft_printf("\n\nHello SIGINT: %d\n\n", sig);
 //	kill(getpid(), sig);
@@ -45,7 +46,6 @@ void	init_shell_sset(void)
 	sigemptyset(&sigint_mask);
 //	sigaddset(&sigint_mask, SIGINT);
 	g_sigint_act.sa_handler = sigint_handler; // Set sigint handler
-	ft_printf("SET");
 	g_sigint_act.sa_mask = sigint_mask; // Block sigint during sigint handler execution
 	g_sigint_act.sa_flags = 0; // Sigcall not auto restarted
 	if (sigaction(SIGINT, &g_sigint_act, &g_sigint_oact))
