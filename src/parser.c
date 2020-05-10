@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:37:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:44:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int				parser(t_list *lst, int fd)
 				continue ;
 		}
 		if (ret)
-			return (parse_error(ret, token_tab[next_type]));
+			return (parse_error(ret, g_token_tab[next_type]));
 		lst = lst->next;
 	}
 	return (e_success);

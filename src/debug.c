@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:37:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:44:38 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-char	*token_tab[NB_TOKEN] =
+char	*g_token_tab[NB_TOKEN] =
 {
 	[OR_IF] = "||",
 	[PIPE] = "|",
@@ -48,7 +48,7 @@ static void	printg(t_list *lst, t_list **elem)
 		{
 			if (i == WORD || i == IO_NB)
 				tmp = ((t_token*)(lst->content))->value;
-			ft_asprintf(&print_content, "%s -> [%s]\n", token_tab[i], tmp);
+			ft_asprintf(&print_content, "%s -> [%s]\n", g_token_tab[i], tmp);
 			break ;
 		}
 		i++;
@@ -64,13 +64,17 @@ void		debug(t_list *lst)
 
 void		printjob(void)
 {
-//	return ;
+	t_job	*j;
+
 	ft_printf("\nShell pid: %d\n", g_shell_pgid);
-	for (t_job *j=g_first_job; j; j = j->next)
+	j = g_first_job;
+	while (j)
 	{
 		ft_printf("---------\n");
-		ft_printf("shell level: %d, j->pid %d, pid %d\n", g_shell_pgid, j->pgid, getpid());
+		ft_printf("shell level: %d, ", g_shell_pgid);
+		ft_printf("j->pid %d, pid %d\n", j->pgid, getpid());
 		ft_printf("command: %s\n", j->command);
 		ft_printf("----\n");
+		j = j->next;
 	}
 }
