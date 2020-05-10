@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:57:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 12:33:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,64 +16,62 @@
 
 int	g_oneline = 0;
 
-static char	*free_loop(char *here, char *tmp)
-{
-	if (g_input_break && !g_eof)
-	{
-		free(tmp);
-		free(here);
-		return (NULL);
-	}
-	if (!tmp)
-	{
-		free(here);
-		return (NULL);
-	}
-	free(tmp);
-	return (here);
-}
-
-static char	*get_input(int fd, char *eof, char *here)
+static char	*heredoc(int fd, char *eof, int qmode)
 {
 	char *tmp;
+	char *hereword;
 	char *line;
 
 	tmp = NULL;
 	line = NULL;
+	hereword = ft_strdup("");
 	g_subprompt = 1;
-	tmp = get_input_fd(fd, BSQUOTE, "> ");
+	tmp = get_input_fd(fd, qmode, "> ");
 	if (g_oneline)
 		return (tmp);
 	while (tmp && ft_strcmp(eof, tmp) && !g_input_break)
 	{
 		line = ft_strjoin(tmp, "\n");
 		free(tmp);
-		tmp = ft_strjoin(here, line);
-		free(here);
+		tmp = ft_strjoin(hereword, line);
+		free(hereword);
 		free(line);
-		here = tmp;
-		tmp = get_input_fd(fd, BSQUOTE, "> ");
+		hereword = tmp;
+		tmp = get_input_fd(fd, qmode, "> ");
 	}
 	g_subprompt = 0;
-	return (free_loop(here, tmp));
+	if (g_input_break && !g_eof)
+	{
+		g_input_break = 0;
+		free(tmp);
+		free(hereword);
+		return (NULL);
+	}
+	if (!tmp)
+	{
+		free(hereword);
+		return (NULL);
+	}
+	free(tmp);
+	return (hereword);
 }
 
-int		subprompt(int fd, t_list **lst, int qmode) // vs. heredoc
-{
-/* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
-	char	*eof;
+int		subprompt(int fd, t_list **lst, int qmode)
+{ /* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
 	char	*input;
-	char	*tmp;
 
 	if (qmode == BSQUOTE)
 	{
-		eof = ((t_token*)((*lst)->next->content))->value;
-		input = get_input(fd, eof, ft_strdup(""));
+		input = heredoc(fd, ((t_token*)((*lst)->next->content))->value, qmode);
+		free(((t_token*)((*lst)->next->content))->value);
+		((t_token*)((*lst)->next->content))->value = input;
+		/* if: check all posible errors ctrl C, ctrl D, unexpected EOF, etc */
+		return (e_success);
 	}
-	else if (qmode == FULL_QUOTE)
+/*	else if (qmode == FULL_QUOTE)
 	{
 		g_oneline = 1;
-		input = get_input(fd, NULL, NULL); /* Getting the input */
+		input = get_input(fd, NULL, NULL);
 		tmp = ft_strjoin(input, "\n");
 		free(input);
 		input = tmp;
@@ -105,7 +103,7 @@ int		subprompt(int fd, t_list **lst, int qmode) // vs. heredoc
 	if (BSQUOTE)
 		((t_token*)((*lst)->next->content))->value = input;
 	else if (FULL_QUOTE)
-		*lst = lexer(input); /* Building the tokens */
+		*lst = lexer(input);
 	free(input);
-	return (e_success);
+*/	return (e_success);
 }
