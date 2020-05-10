@@ -6,32 +6,12 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/02 14:31:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:33:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:37:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
-/*
-char	*token_tab[NB_TOKEN] =
-{
-	[OR_IF] = "OR_IF",
-	[PIPE] = "PIPE",
-	[AND_IF] = "AND_IF",
-	[AND] = "AND",
-	[GREATAND] = "GREATAND",
-	[LESSAND] = "LESSAND",
-	[ANDGREAT] = "ANDGREAT",
-	[SEMI] = "SEMI",
-	[DGREAT] = "DGREAT",
-	[DLESS] = "DLESS",
-	[DLESSDASH] = "DLESSDASH",
-	[GREAT] = "GREAT",
-	[LESS] = "LESS",
-	[WORD] = "WORD",
-	[IO_NB] = "IO_NB",
-	[NEWLINE] = "newline",
-};*/
 
 char	*token_tab[NB_TOKEN] =
 {
