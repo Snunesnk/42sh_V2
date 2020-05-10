@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:20:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:47:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	execute_or(t_ast *node, int foreground)
 		return (SIGINT + 128);
 	else if (err)
 		return (execute_node(node->right, foreground));
-	return (ASTERROR);
+	return (err);
 }
 
 int	execute_node(t_ast *node, int foreground)
