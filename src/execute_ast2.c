@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 10:38:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 13:20:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,30 @@ int	execute_and(t_ast *node, int foreground)
 
 int	execute_andand(t_ast *node, int foreground)
 {
-	if (!execute_node(node->left, foreground))
+	int err;
+
+	err = execute_node(node->left, foreground);
+	if (err == SIGINT + 128)
+		return (SIGINT + 128);
+	else if (!err)
 		return (execute_node(node->right, foreground));
 	return (ASTERROR);
 }
 
 int	execute_or(t_ast *node, int foreground)
 {
-	if (execute_node(node->left, foreground))
+	int err;
+
+	err = execute_node(node->left, foreground);
+	if (err == SIGINT + 128)
+		return (SIGINT + 128);
+	else if (err)
 		return (execute_node(node->right, foreground));
-	return (0);
+	return (ASTERROR);
 }
 
 int	execute_node(t_ast *node, int foreground)
 {
-	if (g_interrupt_immediately == SIGINT) // Check if other signls stoppp command execution
-		return (g_interrupt_immediately + 128);
 	if (node->type == WORD)
 		return (execute_pipeline(node, foreground));
 	else if (node->type == SEMI)
