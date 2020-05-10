@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:39:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 19:15:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int			exec_input(char *input, int fd)
 	int		status;
 	char	*tmp;
 
-//	ft_printf("g_retval: %d\n", g_retval);
 	tmp = ft_strjoin(input, "\n");
 	free(input);
 	input = tmp;
@@ -72,7 +71,6 @@ int			exec_input(char *input, int fd)
 		return (g_retval);
 	}
 	ast = build_ast(&lst);
-//	graph_ast(ast); // BONUS GRAPHVIZ ?
 	g_retval = execute_node(ast, 1);
 	free_ast(ast);
 	do_job_notification(g_first_job, NULL, NULL);
@@ -122,7 +120,6 @@ static int	main_loop(int fd, int *status)
 	else if (!(input = get_input_fd(fd, FULL_QUOTE, NULL)))
 		return (1);
 	*status = exec_input(input, fd);
-//	ft_printf("status: %d\n", *status);
 	if (g_shell_is_interactive)
 		test_hash_path();
 	return (0);

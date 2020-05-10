@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:21:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 18:08:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,34 @@
 
 sigset_t		g_save_procmask;
 
-void	init_shell_sset(void)
+static const t_signal	g_signalstr[] =
+{
+	{ SIGHUP, "SIGHUP" },
+	{ SIGINT, "SIGINT" },
+	{ SIGQUIT, "SIGQUIT" },
+	{ SIGILL, "SIGILL" },
+	{ SIGABRT, "SIGABRT" },
+	{ SIGFPE, "SIGFPE" },
+	{ SIGKILL, "SIGKILL" },
+	{ SIGSEGV, "SIGSEGV" },
+	{ SIGPIPE, "SIGPIPE" },
+	{ SIGALRM, "SIGALRM" },
+	{ SIGTERM, "SIGTERM" },
+	{ SIGUSR1, "SIGUSR1" },
+	{ SIGUSR2, "SIGUSR2" },
+	{ SIGCHLD, "SIGCHLD" },
+	{ SIGCONT, "SIGCONT" },
+	{ SIGSTOP, "SIGSTOP" },
+	{ SIGTSTP, "SIGTSTP" },
+	{ SIGTTIN, "SIGTTIN" },
+	{ SIGTTOU, "SIGTTOU" },
+	{ 0, NULL }
+};
+
+void			init_shell_sset(void)
 {
 	sigset_t		newmask;
 
-	/* Other SIG */
 	sigemptyset(&newmask);
 	sigaddset(&newmask, SIGINT);
 	sigaddset(&newmask, SIGQUIT);
@@ -30,45 +53,21 @@ void	init_shell_sset(void)
 		exit_clean(2);
 }
 
-void	restore_procmask(void)
+void			restore_procmask(void)
 {
 	if (sigprocmask(SIG_SETMASK, &g_save_procmask, NULL))
 		exit_clean(2);
 }
 
-static const t_signal	signalstr[] =
-{
-	{ SIGHUP , "SIGHUP" },
-	{ SIGINT , "SIGINT" },
-	{ SIGQUIT , "SIGQUIT" },
-	{ SIGILL , "SIGILL" },
-	{ SIGABRT , "SIGABRT" },
-	{ SIGFPE , "SIGFPE" },
-	{ SIGKILL , "SIGKILL" },
-	{ SIGSEGV , "SIGSEGV" },
-	{ SIGPIPE , "SIGPIPE" },
-	{ SIGALRM , "SIGALRM" },
-	{ SIGTERM , "SIGTERM" },
-	{ SIGUSR1 , "SIGUSR1" },
-	{ SIGUSR2 , "SIGUSR2" },
-	{ SIGCHLD , "SIGCHLD" },
-	{ SIGCONT , "SIGCONT" },
-	{ SIGSTOP , "SIGSTOP" },
-	{ SIGTSTP , "SIGTSTP" },
-	{ SIGTTIN , "SIGTTIN" },
-	{ SIGTTOU , "SIGTTOU" },
-	{ 0 , NULL }
-};
-
-const char	*strsig(int sig)
+const char		*strsig(int sig)
 {
 	int	i;
 
 	i = 0;
-	while (signalstr[i].str)
+	while (g_signalstr[i].str)
 	{
-		if (signalstr[i].sig == sig)
-			return (signalstr[i].str);
+		if (g_signalstr[i].sig == sig)
+			return (g_signalstr[i].str);
 		++i;
 	}
 	return (NULL);
