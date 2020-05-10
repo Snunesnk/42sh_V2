@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 20:10:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 20:44:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,10 @@ int		test_dir(char *file)
 char	*stick_path_complete(char *path, char *to_complete)
 {
 	char	*tmp;
+	int		len;
 
-	if (*path)
+	len = ft_strlen(path);
+	if (*path && (len == 0 || path[len - 1] != '/'))
 		tmp = ft_strjoin(path, "/");
 	else
 		tmp = ft_strjoin(path, "");
