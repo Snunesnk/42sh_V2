@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:18:34 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 17:49:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,14 @@ int			execute_subshell(t_ast *node, int foreground)
 
 	if ((pid = fork()) == 0)
 	{
-		/* Set off job control in subshell */
 		g_job_control_enabled = OFF;
 		g_shell_is_interactive = OFF;
 		free_all_jobs();
-		/* Reset signal masks */
 		restore_procmask();
-		/* Get pid of process */
 		pid = getpid();
-//		ft_printf("Fork subshell: pid: %d\n", pid);
 		g_shell_pgid = pid;
 		if (setpgid(pid, g_shell_pgid))
 			exit_clean(1);
-		/* Continue normal execution of remaining AST */
 		exit_clean(execute_node(node, foreground));
 	}
 	else if (pid < 0)
