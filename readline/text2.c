@@ -6,15 +6,18 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 19:03:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 11:45:21 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
 #include "ft_readline.h"
 
 void	kill_line(void)
 {
 	write(STDOUT_FILENO, "^C", STDERR_FILENO);
+	g_retval = SIGINT + 128;
+	g_interrupt_immediately = SIGINT + 128;
 	if (!g_dumb_term)
 		place_cursor(g_line.len);
 	ft_bzero(g_line.line, g_line.size_buf);
