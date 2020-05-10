@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/15 12:02:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 15:36:10 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:29:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 		|| curr_type == DGREAT || curr_type == GREATAND || curr_type == LESSAND
 		|| curr_type == ANDGREAT || curr_type == DLESSDASH)
 		&& next_type == NEWLINE)
-		return (psherror(e_syntax_error, "newline", e_parsing_type));
+		return (e_syntax_error); // 1/2 find way to display error
 	else if (next_type == NEWLINE)
 	{
 		free_lst((*lst)->next);
@@ -65,7 +65,7 @@ static int		check_syntax(int fd, t_list **lst, int curr_type, int next_type)
 		return (e_success);
 	}
 	else
-		return (psherror(e_syntax_error, g_tokval[curr_type], e_parsing_type));
+		return (e_syntax_error); // 2/2 to find way for return error display
 }
 
 int				parser(t_list *lst, int fd)
