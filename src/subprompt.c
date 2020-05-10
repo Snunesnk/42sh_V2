@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 15:24:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:36:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static char	*heredoc(int fd, char *eof, int qmode)
 	g_subprompt = 0;
 	if (g_input_break && !g_eof)
 	{
-		g_input_break = 0;
 		free(tmp);
 		free(hereword);
 		return (NULL);
@@ -58,6 +57,13 @@ static char	*heredoc(int fd, char *eof, int qmode)
 	return (hereword);
 }
 
+static inline int	reset_return(int err)
+{
+	g_eof = 0;
+	g_input_break = 0;
+	return (err);
+}
+
 int		subprompt(int fd, t_list **lst, int qmode)
 { /* FULL_QUOTE: parser input claim, BSQUOTE: heredoc */
 	char	*input;
@@ -68,15 +74,10 @@ int		subprompt(int fd, t_list **lst, int qmode)
 		free(((t_token*)((*lst)->next->content))->value);
 		((t_token*)((*lst)->next->content))->value = input;
 		if (g_eof)
-		{
-			g_eof = 0;
-			g_input_break = 0;
-			return (e_heredoc_warning);
-		}
-		g_input_break = 0;
-		g_eof = 0;
-		/* if: check all posible errors ctrl C, ctrl D, unexpected EOF, etc */
-		return (e_success);
+			return (reset_return(e_heredoc_warning));
+		else if (g_input_break)
+			return (reset_return(e_unexpected_eof_130));
+		return (reset_return(e_success));
 	}
 /*	else if (qmode == FULL_QUOTE)
 	{
