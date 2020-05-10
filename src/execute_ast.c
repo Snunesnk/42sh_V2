@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:45:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 13:18:34 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ int			execute_pipeline(t_ast *node, int foreground)
 
 int			execute_semi(t_ast *node, int foreground)
 {
+	int err;
+
 	if (node->right)
 	{
-		execute_node(node->left, foreground);
-		return (execute_node(node->right, foreground));
+		err = execute_node(node->left, foreground);
+		if (err != SIGINT + 128)
+			return (execute_node(node->right, foreground));
+		else
+			return (SIGINT + 128);
 	}
 	else
 		return (execute_node(node->left, foreground));
@@ -55,7 +60,6 @@ int			execute_subshell(t_ast *node, int foreground)
 		/* Set off job control in subshell */
 		g_job_control_enabled = OFF;
 		g_shell_is_interactive = OFF;
-		/* Reset job list in subshell */
 		free_all_jobs();
 		/* Reset signal masks */
 		restore_procmask();

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:08:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 15:53:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,16 @@ int			process_execve(char **argv, char **envp, char *pathname)
 	return (0);
 }
 
+static int	free_path_and_return(int ret, char **pathname, char *process_name)
+{
+	ft_memdel((void**)pathname);
+	return (g_errordesc[psherror(ret, process_name, e_cmd_type)].code);
+}
+
 int			execute_process(char **argv, char **envp,
 		t_hash_table *tmp, char *pathname)
 {
-	int				ret;
+	int	ret;
 
 	if (!argv || !argv[0][0])
 		return (0);
@@ -68,19 +74,14 @@ int			execute_process(char **argv, char **envp,
 	if ((ret = check_type(pathname)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
-	{
-		ft_memdel((void**)&pathname);
-		return (g_errordesc[psherror(ret, argv[0], e_cmd_type)].code);
-	}
+		return (free_path_and_return(ret, &pathname, argv[0]));
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
-	{
-		ft_memdel((void**)&pathname);
-		return (g_errordesc[psherror(ESH, argv[0], e_cmd_type)].code);
-	}
+		return (free_path_and_return(ESH, &pathname, argv[0]));
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
-	return (g_errordesc[psherror(e_command_not_found, argv[0], e_cmd_type)].code);
+	return (g_errordesc[psherror(e_command_not_found, argv[0], \
+				e_cmd_type)].code);
 }

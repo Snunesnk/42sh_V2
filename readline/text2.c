@@ -6,15 +6,17 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:48:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/10 13:23:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "shell.h"
 #include "ft_readline.h"
 
 void	kill_line(void)
-{
+{ /* Should break input and return 130 to main */
 	write(STDOUT_FILENO, "^C", STDERR_FILENO);
+	g_retval = SIGINT + 128; // Should break input
 	if (!g_dumb_term)
 		place_cursor(g_line.len);
 	ft_bzero(g_line.line, g_line.size_buf);

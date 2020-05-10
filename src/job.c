@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 13:43:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 13:12:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,5 @@ int			launch_job(t_job *j, int foreground)
 		e.p = e.p->next;
 	}
 	j_status(j, foreground);
-	return (-1);
+	return (get_exit_value(get_job_status(j, foreground)));
 }

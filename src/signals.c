@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 14:28:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 13:21:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ sigset_t		g_save_procmask;
 
 void	init_shell_sset(void)
 {
-	sigset_t	newmask;
+	sigset_t		newmask;
 
+	/* Other SIG */
 	sigemptyset(&newmask);
 	sigaddset(&newmask, SIGINT);
 	sigaddset(&newmask, SIGQUIT);
@@ -26,13 +27,13 @@ void	init_shell_sset(void)
 	sigaddset(&newmask, SIGTTOU);
 	sigaddset(&newmask, SIGCHLD);
 	if (sigprocmask(SIG_BLOCK, &newmask, &g_save_procmask))
-		exit_clean(1);
+		exit_clean(2);
 }
 
 void	restore_procmask(void)
 {
 	if (sigprocmask(SIG_SETMASK, &g_save_procmask, NULL))
-		exit_clean(1);
+		exit_clean(2);
 }
 
 static const t_signal	signalstr[] =

@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 16:20:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/10 16:09:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
 
-t_job	*find_lastbackgrounded(void)
+t_job		*find_lastbackgrounded(void)
 {
 	t_job	*jlast;
 	t_job	*j;
@@ -73,7 +73,7 @@ static int	single_arg_case(void)
 	}
 }
 
-int		cmd_fg(int argc, char **argv)
+int			cmd_fg(int argc, char **argv)
 {
 	if (!g_job_control_enabled || !g_shell_is_interactive)
 	{
