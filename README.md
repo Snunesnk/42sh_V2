@@ -46,8 +46,6 @@ DONE => autocompletion: dans le subprompt venant du parser la suggestion doit et
 
 DONE => autocompletions: suggestions dans cd dysfonctionnelles
 
-subprompt: parser subprompt cases ls || + quotes + exp VS. cat << EOF + quotes + exp
-
 export: parsing de nom de variables (check POSIX, un nom de var ne doit pas commencer par un chiffre etc). Format de nom de variables : alpha ou underscore pour première lettre, puis alnum pour le reste
 DONE => export: verifier tous les messages d'erreurs
 
@@ -59,14 +57,10 @@ historique:valid string in hist => enlever non-print char (a verifier si bash fa
 
 display: display prompt=> si il n'est pas print sur l'output il ne faut pas avancer le curseur (pourquoi pas ouvrir un fd 255 comme bash ?)
 
-readline: Mauvais term mode (en fait c'est pas le term mode mais les termcapabilities a checker). Le terminal fonctionne meme si on change TERM normalement, a reverifier c'est dans tty.c terminal.c
-
 historique: historique dans heredoc et parser subprompt
 ```
 
 Bug avec fc -s
 Leak avec le fc quand mauvaise commande sur fc S
-DONE => Écho ////// print toujours 2 /
 Use after free in history
-DONE => Ne pas inib dans les heredocs
 Voir pour implementer les raccourcis clavier dans le mode insert de vi
