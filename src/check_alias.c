@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 16:26:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/24 17:51:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 18:08:23 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,17 @@ static t_list	**get_first_word(t_list **lst)
 {
 	t_token	*token;
 
-	while (*lst && (token = (*lst)->content)
-		&& token->type == WORD
-		&& is_valid_assignment(token->value))
-		lst = &(*lst)->next;
+	while (*lst && (token = (*lst)->content))
+	{
+		if (token->type == WORD && is_valid_assignment(token->value))
+			lst = &(*lst)->next;
+		else if (token->type == IO_NB && is_valid_redir((*lst)->next))
+			lst = &(*lst)->next->next->next;
+		else if (is_valid_redir(*lst))
+			lst = &(*lst)->next->next;
+		else
+			break ;
+	}
 	return (lst);
 }
 
