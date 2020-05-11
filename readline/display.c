@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 19:12:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 21:48:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	update_line(void)
 		if (g_line.c_pos < g_line.cursor_pos)
 			place_cursor(g_line.c_pos);
 		clear_next();
-		place_cursor(ret);
+	place_cursor(ret);
 		write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
 				g_line.len - g_line.cursor_pos);
 		g_line.cursor_pos = g_line.len;
