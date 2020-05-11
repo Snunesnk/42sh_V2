@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/09 11:28:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:40:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 16:48:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static char	*heredoc(int fd, char *eof, int qmode)
 		if (!tmp && !g_shell_is_interactive)
 			g_eof = 1;
 	}
+	add_hentry(hereword, ft_strlen(hereword));
 	return (return_heredoc(tmp, hereword));
 }
 

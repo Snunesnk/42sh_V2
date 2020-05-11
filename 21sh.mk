@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/10 18:54:21 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/11 18:40:08 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SOURCES :=	main.c \
 		hash_table.c \
 		hash_table_utils.c \
 		init_shell.c \
+		is_valid_redir.c \
 		parse_table.c \
 		job.c \
 		job_utils.c \
