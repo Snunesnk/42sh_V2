@@ -1,0 +1,12 @@
+./21sh
+./21sh
+./21sh
+./21sh
+./21sh
+./21sh
+./21sh
+./21sh
+ps -o comm,pid,pgid,ppid,stat
+exit
+echo AFTER
+./21sh

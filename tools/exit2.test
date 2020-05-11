@@ -1,0 +1,423 @@
+./21sh
+exit "     "
+echo $?
+./21sh
+exit " '"
+echo $?
+./21sh
+exit \1
+echo $?
+./21sh
+exit \'
+echo $?
+./21sh
+exit \\
+echo $?
+./21sh
+exit "\n"
+echo $?
+./21sh
+exit "\0"
+echo $?
+./21sh
+exit a
+echo $?
+./21sh
+exit abc
+echo $?
+./21sh
+exit sdlkjfffffffffffffffffffffffffffffffjflksdjfsdijfoijsdoifjsoidjfoisjfoijsdoijsdoifjsdoijfsdoifjsdoifjsdoifjsdofijsdfoijs
+echo $?
+./21sh
+exit exit
+echo $?
+./21sh
+exit 0
+echo $?
+./21sh
+exit -0
+echo $?
+./21sh
+exit 1
+echo $?
+./21sh
+exit 2
+echo $?
+./21sh
+exit 3
+echo $?
+./21sh
+exit -1
+echo $?
+./21sh
+exit -2
+echo $?
+./21sh
+exit -3
+echo $?
+./21sh
+exit 256
+echo $?
+./21sh
+exit 257
+echo $?
+./21sh
+exit 258
+echo $?
+./21sh
+exit 259
+echo $?
+./21sh
+exit -256
+echo $?
+./21sh
+exit -257
+echo $?
+./21sh
+exit -258
+echo $?
+./21sh
+exit -259
+echo $?
+./21sh
+exit -2147483647
+echo $?
+./21sh
+exit -2147483648
+echo $?
+./21sh
+exit -2147483649
+echo $?
+./21sh
+exit 2147483646
+echo $?
+./21sh
+exit 2147483647
+echo $?
+./21sh
+exit 2147483648
+echo $?
+./21sh
+exit 2147483649
+echo $?
+./21sh
+exit 18446744073709551614
+echo $?
+./21sh
+exit 18446744073709551615
+echo $?
+./21sh
+exit 18446744073709551616
+echo $?
+./21sh
+exit 18446744073709551617
+echo $?
+./21sh
+exit 18446744073709551618
+echo $?
+./21sh
+exit -18446744073709551614
+echo $?
+./21sh
+exit -18446744073709551615
+echo $?
+./21sh
+exit -18446744073709551616
+echo $?
+./21sh
+exit -18446744073709551617
+echo $?
+./21sh
+exit -18446744073709551618
+echo $?
+./21sh
+exit 9999999999999999999999999
+echo $?
+./21sh
+exit -999999999999999999999999
+echo $?
+./21sh
+exit "     "
+echo $?
+./21sh
+exit "' "
+echo $?
+./21sh
+exit 1\
+echo $?
+./21sh
+exit '\
+echo $?
+./21sh
+exit \\
+echo $?
+./21sh
+exit "n\"
+echo $?
+./21sh
+exit "0\"
+echo $?
+./21sh
+exit a
+echo $?
+./21sh
+exit cba
+echo $?
+./21sh
+exit sjiofdsjifodsjfiodsjfiodsjfiodsfjiodsjfiodsjiodsjiofjsiofjdiosjfiodsjiofjidsfjdsklfjfffffffffffffffffffffffffffffffjklds
+echo $?
+./21sh
+exit tixe
+echo $?
+./21sh
+exit 0
+echo $?
+./21sh
+exit 0-
+echo $?
+./21sh
+exit 1
+echo $?
+./21sh
+exit 2
+echo $?
+./21sh
+exit 3
+echo $?
+./21sh
+exit 1-
+echo $?
+./21sh
+exit 2-
+echo $?
+./21sh
+exit 3-
+echo $?
+./21sh
+exit 652
+echo $?
+./21sh
+exit 752
+echo $?
+./21sh
+exit 852
+echo $?
+./21sh
+exit 952
+echo $?
+./21sh
+exit 652-
+echo $?
+./21sh
+exit 752-
+echo $?
+./21sh
+exit 852-
+echo $?
+./21sh
+exit 952-
+echo $?
+./21sh
+exit 7463847412-
+echo $?
+./21sh
+exit 8463847412-
+echo $?
+./21sh
+exit 9463847412-
+echo $?
+./21sh
+exit 6463847412
+echo $?
+./21sh
+exit 7463847412
+echo $?
+./21sh
+exit 8463847412
+echo $?
+./21sh
+exit 9463847412
+echo $?
+./21sh
+exit 41615590737044764481
+echo $?
+./21sh
+exit 51615590737044764481
+echo $?
+./21sh
+exit 61615590737044764481
+echo $?
+./21sh
+exit 71615590737044764481
+echo $?
+./21sh
+exit 81615590737044764481
+echo $?
+./21sh
+exit 41615590737044764481-
+echo $?
+./21sh
+exit 51615590737044764481-
+echo $?
+./21sh
+exit 61615590737044764481-
+echo $?
+./21sh
+exit 71615590737044764481-
+echo $?
+./21sh
+exit 81615590737044764481-
+echo $?
+./21sh
+exit 9999999999999999999999999
+echo $?
+./21sh
+exit 999999999999999999999999-
+echo $?
+./21sh
+exit " "
+echo $?
+./21sh
+exit " "
+echo $?
+./21sh
+exit " "
+echo $?
+./21sh
+exit '" '"
+echo $?
+./21sh
+exit \1 \1
+echo $?
+./21sh
+exit \' \'
+echo $?
+./21sh
+exit \\ \\
+echo $?
+./21sh
+exit "\n" "\n"
+echo $?
+./21sh
+exit "\0" "\0"
+echo $?
+./21sh
+exit a a
+echo $?
+./21sh
+./21sh
+echo $?
+exit abc abc
+./21sh
+echo $?
+exit sdlkjfffffffffffffffffffffffffffffffjflksdjfsdijfoijsdoifjsoidjfoisjfoijsdoijsdoifjsdoijfsdoifjsdoifjsdoifjsdofijsdfoijs sdlkjfffffffffffffffffffffffffffffffjflksdjfsdijfoijsdoifjsoidjfoisjfoijsdoijsdoifjsdoijfsdoifjsdoifjsdoifjsdofijsdfoijs
+./21sh
+echo $?
+exit exit exit
+./21sh
+echo $?
+exit 0 0
+./21sh
+echo $?
+exit -0 -0
+exit 1 1
+echo $?
+./21sh
+exit 2 2
+echo $?
+./21sh
+exit 3 3
+echo $?
+./21sh
+exit -1 -1
+echo $?
+./21sh
+exit -2 -2
+echo $?
+./21sh
+./21sh
+echo $?
+exit -3 -3
+./21sh
+echo $?
+exit 256 256
+./21sh
+echo $?
+exit 257 257
+./21sh
+echo $?
+exit 258 258
+./21sh
+echo $?
+exit 259 259
+./21sh
+echo $?
+exit -256 -256
+./21sh
+echo $?
+exit -257 -257
+./21sh
+echo $?
+./21sh
+exit -258 -258
+echo $?
+./21sh
+exit -259 -259
+echo $?
+./21sh
+exit -2147483647 -2147483647
+echo $?
+./21sh
+exit -2147483648 -2147483648
+echo $?
+./21sh
+exit -2147483649 -2147483649
+echo $?
+./21sh
+exit 2147483646 2147483646
+echo $?
+./21sh
+exit 2147483647 2147483647
+echo $?
+./21sh
+exit 2147483648 2147483648
+echo $?
+./21sh
+exit 2147483649 2147483649
+echo $?
+./21sh
+exit 18446744073709551614 18446744073709551614
+echo $?
+./21sh
+exit 18446744073709551615 18446744073709551615
+echo $?
+./21sh
+exit 18446744073709551616 18446744073709551616
+echo $?
+./21sh
+exit 18446744073709551617 18446744073709551617
+echo $?
+./21sh
+exit 18446744073709551618 18446744073709551618
+echo $?
+./21sh
+exit -18446744073709551614 -18446744073709551614
+echo $?
+./21sh
+exit -18446744073709551615 -18446744073709551615
+echo $?
+./21sh
+exit -18446744073709551616 -18446744073709551616
+echo $?
+./21sh
+exit -18446744073709551617 -18446744073709551617
+echo $?
+./21sh
+exit -18446744073709551618 -18446744073709551618
+echo $?
+./21sh
+exit 9999999999999999999999999 9999999999999999999999999
+echo $?
+./21sh
+exit -999999999999999999999999 -999999999999999999999999
+echo $?
