@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:09:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 21:27:38 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,8 @@ static int	single_arg_case(void)
 
 int			cmd_fg(int argc, char **argv)
 {
-	if (!g_job_control_enabled || !g_shell_is_interactive)
+	if (g_shell_pgid != getpgid(getpid()) ||
+		!g_job_control_enabled || !g_shell_is_interactive)
 	{
 		return (g_errordesc[psherror(e_no_job_control,
 				argv[0], e_cmd_type)].code);
