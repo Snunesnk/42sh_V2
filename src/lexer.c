@@ -6,14 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:00:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:29:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
-char	*g_tokval[NB_TOKEN] = {
+char		*g_tokval[NB_TOKEN] = {
 	[SEMI] = ";",
 	[OR_IF] = "||",
 	[PIPE] = "|",
@@ -32,6 +33,33 @@ char	*g_tokval[NB_TOKEN] = {
 	[WORD] = NULL,
 	[NONE] = NULL
 };
+
+static char	g_quote_val[] =
+{
+	[NO_QUOTE] = '\0',
+	[DQUOTE] = '\"',
+	[SQUOTE] = '\'',
+	[BSQUOTE] = '`',
+	[FULL_QUOTE] = '\0',
+};
+
+static void		display_lex_error(t_list *lst)
+{
+	t_token	*t;
+	int		quote;
+
+	if (!lst)
+		return ;
+	t = lst->content;
+	if (t && t->value)
+	{
+		quote = get_str_qmode(NO_QUOTE, t->value);
+		ft_dprintf(STDERR_FILENO,
+			"%s: unexpected EOF while looking for matching `%c'\n",
+			g_progname, g_quote_val[quote]);
+	}
+	psherror(e_unexpected_eof_2, NULL, e_invalid_type);
+}
 
 static t_token	*get_next_token(const char *str, size_t *i, int prevtype)
 {
@@ -101,7 +129,7 @@ t_list			*lexer(const char *input)
 {
 	t_list	*lst;
 
-	while (ft_isblank(*input))
+	while (input && *input && ft_isblank(*input))
 		++input;
 	if (!input)
 		return (NULL);
@@ -109,6 +137,9 @@ t_list			*lexer(const char *input)
 	if (lst)
 		check_alias(&lst, TRUE);
 	if (lst && get_tokentype(ft_lst_last(lst)) != NEWLINE)
+	{
+		display_lex_error(ft_lst_last(lst));
 		ft_lstdel(&lst, del);
+	}
 	return (lst);
 }
