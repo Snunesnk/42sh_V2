@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 14:27:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 17:55:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,15 @@ void	update_line(void)
 		ret = g_line.cursor_pos;
 		place_cursor(g_line.len);
 		place_cursor(ret);
-		ft_putstr_fd(G_LINE_COLOR, STDOUT_FILENO);
+		ft_putstr(G_LINE_COLOR);
 		if (g_line.c_pos < g_line.cursor_pos)
-		{
 			place_cursor(g_line.c_pos);
-			write(STDOUT_FILENO, g_line.line + g_line.c_pos, \
-					g_line.len - g_line.c_pos);
-		}
-		else
-			write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
-					g_line.len - g_line.cursor_pos);
-		g_line.cursor_pos = g_line.len;
-		ft_putstr_fd(END_OF_COLOR, STDOUT_FILENO);
 		clear_next();
+		place_cursor(ret);
+		write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
+				g_line.len - g_line.cursor_pos);
+		g_line.cursor_pos = g_line.len;
+		ft_putstr(END_OF_COLOR);
 	}
 	place_cursor(g_line.c_pos);
 	g_line.is_modified = 0;
@@ -130,8 +126,8 @@ void	redisplay_after_sigwinch(void)
 	if (g_dis.start_line > g_sc.height - 1)
 		g_dis.start_line = g_sc.height - 1;
 	ret = g_dis.start_line;
-	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
-	ft_putstr(g_termcaps.cd);
+	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), STDERR_FILENO);
+	ft_putstr_fd(g_termcaps.cd, STDERR_FILENO);
 	display_prompt();
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_dis.start_line = ret;

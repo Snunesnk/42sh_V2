@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:58:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 12:39:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 17:03:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ char		*get_input_fd(int fd, int quote_set, char *prompt)
 		input = last_lines;
 	else
 		ft_memdel((void **)&last_lines);
-	if (fd == STDIN_FILENO && input && g_shell_is_interactive)
+	if (fd == STDIN_FILENO && input && g_shell_is_interactive \
+			&& quote_set == FULL_QUOTE)
 		add_hentry(input, ft_strlen(input));
 	return (input);
 }
