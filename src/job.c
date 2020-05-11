@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:12:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 21:07:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	else
 	{
 		e->p->pid = e->pid;
-		if (g_job_control_enabled)
+		if (g_job_control_enabled && g_shell_is_interactive) // add interactive cdt Attempt batch mode and exit trap
 		{
 			if (!j->pgid)
 				j->pgid = e->pid;
