@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 08:17:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 11:44:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 16:04:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static long	overflow(int sign, long a, long b)
 {
 	if (sign < 0)
 	{
-		if (a >= LONG_MIN + b)
+		if (a * 10 >= LONG_MIN + b)
 			return (a - b);
 		else
 		{
@@ -30,7 +30,7 @@ static long	overflow(int sign, long a, long b)
 	}
 	else
 	{
-		if (a > LONG_MAX - b)
+		if (a * 10 > LONG_MAX - b)
 		{
 			g_errno = E_EOVERFLOW;
 			return (-1);
@@ -60,7 +60,7 @@ long		ft_atol(const char *str)
 	while (str[i] > 47 && str[i] < 58)
 	{
 		g_errno = 0;
-		nbr = overflow(sign, nbr * 10,
+		nbr = overflow(sign, nbr,
 			(str[i] ^ ((1 << 5) | (1 << 4))));
 		if (g_errno == E_EOVERFLOW)
 			return (-1);
