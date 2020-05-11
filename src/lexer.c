@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 12:28:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 13:59:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,29 @@ char	*g_tokval[NB_TOKEN] = {
 	[WORD] = NULL,
 	[NONE] = NULL
 };
+
+static void	display_lex_error(t_list *lst)
+{
+	t_token	*t;
+	char	*value;
+	int		len;
+
+	if (!lst)
+		return ;
+	t = lst->content;
+	if (t && t->value)
+	{
+		value = t->value;
+		len = ft_strlen(value);
+		if (len - 3 >= 0)
+		{
+			ft_dprintf(STDERR_FILENO,
+			"%s: unexpected EOF while looking for matching `%c\'\n",
+			g_progname, value[len - 3]);
+		}
+	}
+	psherror(e_unexpected_eof_2, NULL, e_invalid_type);
+}
 
 static t_token	*get_next_token(const char *str, size_t *i, int prevtype)
 {
@@ -110,7 +133,7 @@ t_list			*lexer(const char *input)
 		check_alias(&lst, TRUE);
 	if (lst && get_tokentype(ft_lst_last(lst)) != NEWLINE)
 	{
-		
+		display_lex_error(ft_lst_last(lst));
 		ft_lstdel(&lst, del);
 	}
 	return (lst);
