@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 17:55:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 19:12:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	clear_next(void)
 	v_pos = 0;
 	c_pos = 0;
 	ft_putstr(g_termcaps.clreol);
-	calc_dcursor(g_line.len, &v_pos, &c_pos);
+	calc_dcursor(g_line.c_pos, &v_pos, &c_pos);
 	if (v_pos >= g_sc.height - 1 || g_autocompl_on)
 		return ;
 	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos + 1));
