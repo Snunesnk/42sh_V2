@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 12:29:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 21:41:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int			exit_clean(int ret)
 	extern char	**environ;
 	t_list		*tmp;
 
+	if (!g_shell_is_interactive)
+		kill(0, SIGTERM);
 	free_hash_table();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);
