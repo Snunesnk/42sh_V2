@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 11:21:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 21:15:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ pid_t			g_shell_pgid;
 struct termios	shell_tmodes;
 int				g_shell_terminal;
 int				g_shell_is_interactive;
-int				g_job_control_enabled = ON;
+int				g_job_control_enabled = OFF;
 int				g_retval;
 
 static void	get_progname(char *av)
@@ -62,6 +62,7 @@ int			init_shell(char *argv, int argc)
 	g_shell_is_interactive = isatty(g_shell_terminal);
 	if (g_shell_is_interactive)
 	{
+		g_job_control_enabled = ON;
 		while (tcgetpgrp(g_shell_terminal) != (g_shell_pgid = getpgrp()))
 			kill(-g_shell_pgid, SIGTTIN);
 		init_shell_sset();
