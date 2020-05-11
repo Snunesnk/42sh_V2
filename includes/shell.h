@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 18:40:47 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/11 19:30:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,7 @@ void							add_job_to_queue(t_job *j);
 void							init_shell_sset(void);
 void							restore_procmask(void);
 const char						*strsig(int sig);
+void							exit_trap(int sig);
 int								job_is_stopped(t_job *j);
 int								are_stopped_jobs(void);
 int								job_is_completed(t_job *j);
@@ -235,7 +236,8 @@ int								do_redirection(t_redirection *r);
 t_redirection					*set_redirection(t_list **lst, int io_nb);
 char							*dup_token_value(char **argv, int i, \
 		t_list *lst);
-
+char							**dup_tok_argv(t_list *lst, int argc, \
+		char **argv);
 void							free_redirections(t_redirection *r);
 int								undo_redirection(t_redirection *r);
 void							free_redirections(t_redirection *r);

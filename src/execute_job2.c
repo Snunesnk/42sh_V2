@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 17:49:21 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 19:24:40 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,10 @@
 char		**build_argv(t_list *lst, int argc)
 {
 	char	**argv;
-	int		i;
 
-	i = 0;
-	if ((argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1))))
-	{
-		while (lst && i < argc)
-		{
-			if (get_tokentype(lst) == IO_NB)
-				lst = lst->next->next->next;
-			if (is_redir_type(get_tokentype(lst)))
-				lst = lst->next->next;
-			if (get_tokentype(lst) == WORD)
-			{
-				if (!dup_token_value(argv, i, lst))
-					return (NULL);
-				++i;
-			}
-			if (get_tokentype(lst) == PIPE)
-				break ;
-			lst = lst->next;
-		}
-		return (argv);
-	}
+	argv = (char**)ft_memalloc(sizeof(char*) * (argc + 1));
+	if (argv)
+		return (dup_tok_argv(lst, argc, argv));
 	return (NULL);
 }
 
