@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 23:48:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 13:24:12 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ static void	ft_scroll(char *direction)
 {
 	if (ft_strequ("down", direction))
 	{
-		ft_putstr(tgoto(g_termcaps.cm, 0, 0));
-		ft_putstr(g_termcaps.sr);
+		ft_putstr_fd(tgoto(g_termcaps.cm, 0, 0), STDOUT_FILENO);
+		ft_putstr_fd(g_termcaps.sr, STDOUT_FILENO);
 		g_dis.start_line += 1;
 	}
 	else
 	{
-		ft_putstr(tgoto(g_termcaps.cm, g_sc.w - 1, g_sc.height - 1));
-		ft_putstr(g_termcaps.sf);
+		ft_putstr_fd(tgoto(g_termcaps.cm, g_sc.w - 1, g_sc.height - 1), \
+				STDOUT_FILENO);
+		ft_putstr_fd(g_termcaps.sf, STDOUT_FILENO);
 		g_dis.start_line -= 1;
 	}
 }
@@ -74,7 +75,7 @@ static char	*calc_print_range(int *offset)
 	}
 	while (*offset < g_sc.w)
 		to_print[(*offset)++] = ' ';
-	ft_printf("\r%s\r", to_print);
+	ft_dprintf(STDOUT_FILENO, "\r%s\r", to_print);
 	*offset = 0;
 	to_print[0] = 0;
 	while (g_line.c_pos - *offset + g_dis.prompt_l >= g_sc.w - 1)
@@ -102,8 +103,8 @@ void		update_dumb_line(void)
 		to_print[0] = '<';
 	if (ft_strlen(to_print) < (size_t)(g_line.len - offset + g_dis.prompt_l))
 		to_print[g_sc.w - 1] = '>';
-	ft_putstr(to_print);
-	ft_putchar('\r');
+	ft_putstr_fd(to_print, STDOUT_FILENO);
+	ft_putchar_fd('\r', STDOUT_FILENO);
 	write(STDOUT_FILENO, to_print, g_line.c_pos + g_dis.prompt_l - offset);
 	free(to_print);
 }
@@ -131,6 +132,6 @@ void		place_cursor(int pos)
 		ft_scroll("down");
 		v_pos += 1;
 	}
-	ft_putstr(tgoto(g_termcaps.cm, c_pos, v_pos));
+	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
 	g_line.cursor_pos = pos;
 }

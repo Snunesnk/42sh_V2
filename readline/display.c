@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 12:58:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 14:27:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
+#include "shell.h"
 
 struct s_display	g_dis =
 {
@@ -34,8 +35,21 @@ struct s_line_state	g_line =
 
 void	display_prompt(void)
 {
+	char	*prompt;
+
+	if (g_retval == 130)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		if (!g_dumb_term)
+		{
+			prompt = get_prompt();
+			set_prompt(prompt);
+			free(prompt);
+		}
+	}
 	if (write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l) < 0)
 		return ;
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 }
 
 void	set_prompt(const char *prompt)
@@ -81,7 +95,7 @@ void	update_line(void)
 		ret = g_line.cursor_pos;
 		place_cursor(g_line.len);
 		place_cursor(ret);
-		ft_putstr(G_LINE_COLOR);
+		ft_putstr_fd(G_LINE_COLOR, STDOUT_FILENO);
 		if (g_line.c_pos < g_line.cursor_pos)
 		{
 			place_cursor(g_line.c_pos);
@@ -92,7 +106,7 @@ void	update_line(void)
 			write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
 					g_line.len - g_line.cursor_pos);
 		g_line.cursor_pos = g_line.len;
-		ft_putstr(END_OF_COLOR);
+		ft_putstr_fd(END_OF_COLOR, STDOUT_FILENO);
 		clear_next();
 	}
 	place_cursor(g_line.c_pos);
