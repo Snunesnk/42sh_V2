@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:05 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:50:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 18:55:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,25 @@
 
 void	cursor_u(void)
 {
-	if ((g_line.c_pos + g_dis.start_offset) / (g_sc.w) > 0)
+	int	c_pos;
+	int	v_pos;
+	int	start_v_pos;
+	int	start_c_pos;
+
+	calc_dcursor(g_line.c_pos, &v_pos, &c_pos);
+	start_c_pos = c_pos;
+	start_v_pos = v_pos;
+	if (v_pos == g_dis.start_line)
+		return ;
+	while (g_line.c_pos && (start_v_pos == v_pos || c_pos > start_c_pos))
 	{
-		g_line.c_pos -= g_sc.w;
-		if (g_line.c_pos < 0)
-			g_line.c_pos = 0;
+		g_line.c_pos -= 1;
+		calc_dcursor(g_line.c_pos, &v_pos, &c_pos);
+		if (start_v_pos - v_pos >= 2)
+		{
+			g_line.c_pos--;
+			break ;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 13:24:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 17:33:11 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static void	ft_scroll(char *direction)
 {
 	if (ft_strequ("down", direction))
 	{
-		ft_putstr_fd(tgoto(g_termcaps.cm, 0, 0), STDOUT_FILENO);
-		ft_putstr_fd(g_termcaps.sr, STDOUT_FILENO);
+		ft_putstr(tgoto(g_termcaps.cm, 0, 0));
+		ft_putstr(g_termcaps.sr);
 		g_dis.start_line += 1;
 	}
 	else
 	{
 		ft_putstr_fd(tgoto(g_termcaps.cm, g_sc.w - 1, g_sc.height - 1), \
-				STDOUT_FILENO);
-		ft_putstr_fd(g_termcaps.sf, STDOUT_FILENO);
+				STDERR_FILENO);
+		ft_putstr_fd(g_termcaps.sf, STDERR_FILENO);
 		g_dis.start_line -= 1;
 	}
 }
@@ -132,6 +132,6 @@ void		place_cursor(int pos)
 		ft_scroll("down");
 		v_pos += 1;
 	}
-	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
+	ft_putstr(tgoto(g_termcaps.cm, c_pos, v_pos));
 	g_line.cursor_pos = pos;
 }
