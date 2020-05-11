@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:00:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 12:28:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ t_list			*lexer(const char *input)
 {
 	t_list	*lst;
 
-	while (ft_isblank(*input))
+	while (input && *input && ft_isblank(*input))
 		++input;
 	if (!input)
 		return (NULL);
@@ -109,6 +109,9 @@ t_list			*lexer(const char *input)
 	if (lst)
 		check_alias(&lst, TRUE);
 	if (lst && get_tokentype(ft_lst_last(lst)) != NEWLINE)
+	{
+		
 		ft_lstdel(&lst, del);
+	}
 	return (lst);
 }
