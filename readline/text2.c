@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 19:04:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:05:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	kill_line(void)
 	g_line.is_modified = 1;
 	if (g_subprompt)
 		g_input_break = 1;
-	else
-		write(STDOUT_FILENO, "\n", 1);
 	if (!g_dumb_term)
 		display_prompt();
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
