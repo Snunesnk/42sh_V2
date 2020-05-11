@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 17:33:11 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 19:53:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	ft_scroll(char *direction)
 		ft_putstr_fd(g_termcaps.sf, STDERR_FILENO);
 		g_dis.start_line -= 1;
 	}
+	g_line.cursor_pos = 0;
+	g_line.is_modified = 1;
 }
 
 /*
