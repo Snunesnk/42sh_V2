@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 17:49:17 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/11 19:07:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_history(void)
 	stat(g_hist.hist_loc, &st);
 	if ((fd = open(g_hist.hist_loc, (O_RDWR | O_CREAT), 0644)) < 0)
 		return ;
-	while (st.st_size > 0 && (buf = get_input_fd(fd, FULL_QUOTE, NULL)))
+	while (st.st_size > 0 && (buf = get_input_fd(fd, NO_QUOTE, NULL)))
 	{
 		add_hentry(buf, ft_strlen(buf));
 		free(buf);

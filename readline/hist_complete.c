@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 13:07:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 17:41:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	update_start_line(char *compl)
 
 	len = ft_strlen(compl);
 	calc_dcursor(g_line.len, &v_pos, &c_pos);
+	v_pos = 0;
 	track = g_line.len;
 	while (track < len)
 	{
@@ -54,8 +55,10 @@ static void	update_start_line(char *compl)
 			c_pos++;
 		track++;
 	}
-	if (v_pos > g_sc.height - 1)
-		g_dis.start_line -= v_pos - (g_sc.height - 1);
+	if (v_pos)
+		v_pos++;
+	while (g_dis.start_line + v_pos > g_sc.height - 1)
+		g_dis.start_line--;
 }
 
 void		print_hist_compl(void)
@@ -71,8 +74,9 @@ void		print_hist_compl(void)
 	if (hist_compl)
 	{
 		place_cursor(g_line.len);
-		ft_printf("%s%s%s", HIST_COMPL_COLOR, hist_compl + \
-				g_line.len, END_OF_COLOR);
+		ft_putstr(HIST_COMPL_COLOR);
+		ft_putstr(hist_compl + g_line.len);
+		ft_putstr(END_OF_COLOR);
 		update_start_line(hist_compl + g_line.len);
 		place_cursor(g_line.c_pos);
 	}
