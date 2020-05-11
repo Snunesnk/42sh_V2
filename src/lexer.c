@@ -6,14 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 17:04:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 13:59:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/11 14:29:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+#include "quotes.h"
 
-char	*g_tokval[NB_TOKEN] = {
+char		*g_tokval[NB_TOKEN] = {
 	[SEMI] = ";",
 	[OR_IF] = "||",
 	[PIPE] = "|",
@@ -33,25 +34,29 @@ char	*g_tokval[NB_TOKEN] = {
 	[NONE] = NULL
 };
 
-static void	display_lex_error(t_list *lst)
+static char	g_quote_val[] =
+{
+	[NO_QUOTE] = '\0',
+	[DQUOTE] = '\"',
+	[SQUOTE] = '\'',
+	[BSQUOTE] = '`',
+	[FULL_QUOTE] = '\0',
+};
+
+static void		display_lex_error(t_list *lst)
 {
 	t_token	*t;
-	char	*value;
-	int		len;
+	int		quote;
 
 	if (!lst)
 		return ;
 	t = lst->content;
 	if (t && t->value)
 	{
-		value = t->value;
-		len = ft_strlen(value);
-		if (len - 3 >= 0)
-		{
-			ft_dprintf(STDERR_FILENO,
-			"%s: unexpected EOF while looking for matching `%c\'\n",
-			g_progname, value[len - 3]);
-		}
+		quote = get_str_qmode(NO_QUOTE, t->value);
+		ft_dprintf(STDERR_FILENO,
+			"%s: unexpected EOF while looking for matching `%c'\n",
+			g_progname, g_quote_val[quote]);
 	}
 	psherror(e_unexpected_eof_2, NULL, e_invalid_type);
 }
