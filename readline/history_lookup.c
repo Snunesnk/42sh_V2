@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/10 22:47:24 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 12:53:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	get_input_proposal(char value, char **hist_proposal)
 		set_prompt("(reverse-i-search)`");
 	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
 	display_prompt();
-	g_dis.start_offset = g_dis.prompt_l;
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_line.len = ft_strlen(user_input);
 	ft_bzero(g_line.line + g_line.len, g_line.size_buf - g_line.len);
 	g_line.cursor_pos = 0;
@@ -66,7 +66,7 @@ static void	prepare_hist_lookup(char **original_prompt)
 	set_prompt("(reverse-i-search)`");
 	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
 	display_prompt();
-	g_dis.start_offset = g_dis.prompt_l;
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_line.c_pos = 0;
 	insert_text("' : ", 4);
 	g_line.cursor_pos = 0;
