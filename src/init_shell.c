@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 10:04:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 17:45:32 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ int			init_shell(char *argv, int argc)
 		tcsetpgrp(g_shell_terminal, g_shell_pgid);
 		tcgetattr(g_shell_terminal, &shell_tmodes);
 	}
-	else
-		g_exit_trap = ON;
 	if (init_shell_suite())
 		return (1);
 	return (0);

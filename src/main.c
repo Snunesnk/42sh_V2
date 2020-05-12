@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 17:39:33 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 17:45:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ t_list		*g_pending_cmd = NULL;
 t_list		*g_env = NULL;
 t_list		*g_tmp_env = NULL;
 t_list		*g_alias = NULL;
-int		g_exit_trap = OFF;
-
 
 char		*get_next_pending_cmd(void)
 {
@@ -84,8 +82,6 @@ int			exit_clean(int ret)
 	extern char	**environ;
 	t_list		*tmp;
 
-//	if (!g_shell_is_interactive && g_exit_trap)
-//		kill(0, SIGINT);
 	free_hash_table();
 	ft_tabdel(&environ);
 	ft_lstdel(&g_env, &del_env);

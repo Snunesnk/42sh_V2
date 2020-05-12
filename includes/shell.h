@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 10:03:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 17:46:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,7 +224,6 @@ void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
 
 extern sigset_t					g_save_procmask;
-extern int					g_exit_trap;
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);
