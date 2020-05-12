@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 16:57:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 20:22:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			cmd_export(int ac, char **av)
 			ft_dprintf(STDERR_FILENO,
 					"%1$s: usage: %1$s [-n] [name[=value ...]] or %1$s -p\n",
 					g_builtin_name);
-			return (1);
+			return (2);
 		}
 	}
 	if (*av && **av)

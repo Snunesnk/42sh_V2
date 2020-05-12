@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 08:22:43 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/12 20:23:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			cmd_unalias(int argc, char **argv)
 	{
 		ret = SUCCESS;
 		if (!(argv = unalias_opt(argc, argv)))
-			return (FAILURE);
+			return (2);
 		while (*argv)
 		{
 			if (unset_shell_var(*argv, &g_alias) == FAILURE)
