@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 21:48:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 23:29:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ void	update_line(void)
 		ret = g_line.cursor_pos;
 		place_cursor(g_line.len);
 		place_cursor(ret);
-		ft_putstr(G_LINE_COLOR);
+		ft_putstr_fd(G_LINE_COLOR, STDOUT_FILENO);
 		if (g_line.c_pos < g_line.cursor_pos)
 			place_cursor(g_line.c_pos);
 		clear_next();
-	place_cursor(ret);
+		place_cursor(ret);
 		write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
 				g_line.len - g_line.cursor_pos);
 		g_line.cursor_pos = g_line.len;
-		ft_putstr(END_OF_COLOR);
+		ft_putstr_fd(END_OF_COLOR, STDOUT_FILENO);
 	}
 	place_cursor(g_line.c_pos);
 	g_line.is_modified = 0;

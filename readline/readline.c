@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 13:28:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 23:29:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char		*ft_readline(char *prompt)
 	deprep_terminal();
 	rl_clear_signals();
 	if (input)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', fileno(stdout));
 	if (g_verbose)
 		ft_printf("%s\n", input);
 	return (input);
