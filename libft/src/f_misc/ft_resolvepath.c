@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:47:47 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 13:50:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 14:35:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,24 +80,32 @@ static void	currentdir_trim(char *str)
 	}
 }
 
-//static void	previousdir_res(char *str)
-void	previousdir_res(char *str)
+static void	previousdir_res(char *str)
 {
 	char	*ptr;
 	char	*next;
 	int		i;
 
 	i = 0;
-	while ((ptr = ft_strstr(str, "/..")))
+	while ((ptr = ft_strstr(str, "../")))
 	{
-		next = ptr + 2;
-		ptr -= 2;
-		while (ptr > str && *ptr != '/')
-			--ptr;
+		next = ptr + 3;
 		if (ptr < str)
 			ptr = str;
+		while (ptr > str && *ptr != '/')
+			--ptr;
 		i = ft_strlen(next);
-		ft_memmove(ptr, next, i + 1);
+		ft_memmove(ptr, next, i);
+		ptr[i] = '\0';
+	}
+	if (*str)
+	{
+		i = ft_strlen(str);
+		if ((i >= 2 && !ft_strncmp(&str[i - 2], "..", 2)))
+		{
+			str[i - 2] = '/';
+			str[i - 1] = '\0';
+		}
 	}
 }
 
