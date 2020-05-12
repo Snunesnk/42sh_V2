@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/12 23:35:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/13 00:18:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,27 @@ void		update_dumb_line(void)
 ** needed, then use cm to place the cursor at the wanted position
 */
 
+static void	ft_scroll(int v_pos)
+{
+	while (v_pos < 0)
+	{
+		v_pos++;
+		g_dis.start_line++;
+	}
+	while (v_pos > g_sc.height - 1)
+	{
+		v_pos--;
+		g_dis.start_line--;
+	}
+	g_line.cursor_pos = 0;
+	g_line.is_modified = 1;
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+	ft_putstr(g_termcaps.cd);
+	display_prompt();
+	clear_next();
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+}
+
 void		place_cursor(int pos)
 {
 	int	v_pos;
@@ -107,4 +128,6 @@ void		place_cursor(int pos)
 	calc_dcursor(pos, &v_pos, &c_pos);
 	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
 	g_line.cursor_pos = pos;
+	if (v_pos < 0 || v_pos > g_sc.height - 1)
+		ft_scroll(v_pos);
 }
