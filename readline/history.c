@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:35:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 19:07:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 18:29:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,7 @@ int		get_history_loc(void)
 		free(g_hist.hist_loc);
 	g_hist.hist_loc = NULL;
 	if (!(user_home = get_shell_var("HOME", g_env)))
-	{
-		ft_printf("%s: HOME not set\n", g_progname);
 		return (0);
-	}
 	if (!(g_hist.hist_loc = ft_strjoin(user_home, "/.monkeyshell_history")))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
