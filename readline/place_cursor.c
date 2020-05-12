@@ -6,36 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 23:09:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 12:20:56 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
-
-/*
-** This function scroll the screen, to access a line that is after or \
-** before the displayed lines
-*/
-
-static void	ft_scroll(char *direction)
-{
-	if (ft_strequ("down", direction))
-	{
-		ft_putstr(tgoto(g_termcaps.cm, 0, 0));
-		ft_putstr(g_termcaps.sr);
-		g_dis.start_line += 1;
-	}
-	else
-	{
-		ft_putstr_fd(tgoto(g_termcaps.cm, g_sc.w - 1, g_sc.height - 1), \
-				STDERR_FILENO);
-		ft_putstr_fd(g_termcaps.sf, STDERR_FILENO);
-		g_dis.start_line -= 1;
-	}
-	g_line.cursor_pos = 0;
-	g_line.is_modified = 1;
-}
 
 /*
 ** Determine the coordinates of the wanted position
@@ -124,16 +100,6 @@ void		place_cursor(int pos)
 	v_pos = 0;
 	c_pos = 0;
 	calc_dcursor(pos, &v_pos, &c_pos);
-	while (v_pos > g_sc.height - 1)
-	{
-		ft_scroll("up");
-		v_pos -= 1;
-	}
-	while (v_pos < 0)
-	{
-		ft_scroll("down");
-		v_pos += 1;
-	}
 	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
 	g_line.cursor_pos = pos;
 }
