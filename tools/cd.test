@@ -1,111 +1,194 @@
 cd ../.././.././.././
 echo $?
+pwd
 cd -
 echo $?
+pwd
 export CDPTAH=/usr:/
 echo $?
+pwd
 cd -P /lib
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd ~/
 echo $?
+pwd
 cd
 echo $?
+pwd
 unset HOME
 echo $?
+pwd
 cd -P ~/
 echo $?
+pwd
 cd --
 echo $?
+pwd
 cd ../
 echo $?
+pwd
 cd /../
 echo $?
+pwd
 cd /./
 echo $?
+pwd
 cd -L -
 echo $?
+pwd
 cd -P -
 echo $?
+pwd
 cd /root
 echo $?
+pwd
 export PWD=
 echo $?
+pwd
 cd test/
 echo $?
+pwd
 cd //////
 echo $?
+pwd
 cd ...............
 echo $?
+pwd
 cd .../././.../
 echo $?
+pwd
 cd /bin
 echo $?
+pwd
 cd -L /lib
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd
 echo $?
+pwd
 PWD=toto
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd /../
 echo $?
+pwd
 cd ..
 echo $?
+pwd
 cd .
 echo $?
+pwd
 cd -P -
 echo $?
+pwd
 cd -
 echo $?
+pwd
 HOME=plop
 echo $?
+pwd
 cd ~/
 echo $?
+pwd
 cd $HOME
 echo $?
+pwd
 cd src/
 echo $?
+pwd
 OLDPWD=
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd
 echo $?
+pwd
 unset OLDPWD
 echo $?
+pwd
 cd -L -
 echo $?
+pwd
 cd -P -
 echo $?
+pwd
 cd -
 echo $?
+pwd
 PWD=/:/home/plop
 echo $?
+pwd
 CDPATH=/
 echo $?
+pwd
 cd -P lib
 echo $?
+pwd
 PWD=
 echo $?
+pwd
 OLDPWD=
 echo $?
+pwd
 HOME=
 echo $?
+pwd
 cd -
 echo $?
+pwd
 cd lib
 echo $?
+pwd
 cd ../
 echo $?
+pwd
 cd /../
 echo $?
+pwd
 cd -P .
 echo $?
+pwd
+CDPATH=/lib
+echo $?
+pwd
+cd -P apg
+echo $?
+pwd
+cd -P ~/
+echo $?
+pwd
+cd -P $CDPATH
+echo $?
+pwd
+CDPATH=/../../../../root/./../
+echo $?
+pwd
+cd -L lib
+echo $?
+pwd
+cd -L home/
+HOME=.././
+echo $?
+pwd
+cd -
+echo $?
+pwd
+cd ~/
+echo $?
+pwd
 exit

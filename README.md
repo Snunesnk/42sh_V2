@@ -28,15 +28,3 @@ Locate source of bug:
 ```C
 ft_printf("%s line: %d : e_invalid_input\n", __FILE__, __LINE__); //DEBUGG
 ```
-
----
-
-## Known bugs
-
-Test list generating bugs:
-
-```shell
-./21sh 2>/dev/null
-./21sh >&-
-echo -E "ok\\\'" | ./21sh
-```
