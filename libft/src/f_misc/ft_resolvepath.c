@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:47:47 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:35:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 14:56:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include "ft_errno.h"
 #include "libft.h"
 
-//static void	clean_end(char *str)
-void	clean_end(char *str)
+static void	clean_end(char *str)
 {
 	char	*beg;
 
@@ -35,8 +34,7 @@ void	clean_end(char *str)
 	}
 }
 
-//static void	remove_doubleslash(char *str)
-void	remove_doubleslash(char *str)
+static void	remove_doubleslash(char *str)
 {
 	char	*ptr;
 
@@ -87,25 +85,16 @@ static void	previousdir_res(char *str)
 	int		i;
 
 	i = 0;
-	while ((ptr = ft_strstr(str, "../")))
+	while ((ptr = ft_strstr(str, "..")))
 	{
-		next = ptr + 3;
-		if (ptr < str)
-			ptr = str;
+		next = ptr + 2;
+		ptr -= 2;
 		while (ptr > str && *ptr != '/')
 			--ptr;
+		if (ptr < str)
+			ptr = str;
 		i = ft_strlen(next);
-		ft_memmove(ptr, next, i);
-		ptr[i] = '\0';
-	}
-	if (*str)
-	{
-		i = ft_strlen(str);
-		if ((i >= 2 && !ft_strncmp(&str[i - 2], "..", 2)))
-		{
-			str[i - 2] = '/';
-			str[i - 1] = '\0';
-		}
+		ft_memmove(ptr, next, i + 1);
 	}
 }
 
@@ -121,16 +110,10 @@ char		*ft_resolvepath(char *str)
 		g_errno = E_ENOENT;
 		return (str);
 	}
-	ft_printf("1. %s\n", str);
-	remove_doubleslash(str); // valid
-	ft_printf("2. %s\n", str);
+	remove_doubleslash(str);
 	currentdir_trim(str);
-	ft_printf("3. %s\n", str);
 	previousdir_res(str);
-	ft_printf("4. %s\n", str);
-//	remove_doubleslash(str);
-//	ft_printf("6. %s\n", str);
-//	clean_end(str);
-//	ft_printf("7. %s\n", str);
+	remove_doubleslash(str);
+	clean_end(str);
 	return (str);
 }
