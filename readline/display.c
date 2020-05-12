@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:37:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 19:32:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,12 @@ void	display_prompt(void)
 {
 	char	*prompt;
 
-	if (g_retval == 130)
+	if (g_retval == 130 && !g_dumb_term)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		if (!g_dumb_term)
-		{
-			prompt = get_prompt();
-			set_prompt(prompt);
-			free(prompt);
-		}
+		prompt = get_prompt();
+		set_prompt(prompt);
+		free(prompt);
 	}
 	if (write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l) < 0)
 		return ;
