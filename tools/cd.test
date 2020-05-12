@@ -22,7 +22,7 @@ echo n7 $? "home:$HOME pwd:$PWD old:$OLDPWD cdpath:$CDPATH"
 unset HOME
 echo n8 $? "home:$HOME pwd:$PWD old:$OLDPWD cdpath:$CDPATH"
 /bin/pwd
-cd ~/
+cd -P ~/
 echo n9 $? "home:$HOME pwd:$PWD old:$OLDPWD cdpath:$CDPATH"
 /bin/pwd
 cd --
