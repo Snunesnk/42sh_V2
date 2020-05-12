@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 12:55:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 23:40:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void			autocomplete(void)
 		var_complete(to_complete);
 	else if (start <= 0 || has_no_cmd(g_line.line, start))
 		command_complete(to_complete);
-	else if (test_cd() && !*to_complete)
+	else if (test_cd())
 		cd_complete(to_complete);
 	else
 		file_complete(to_complete);

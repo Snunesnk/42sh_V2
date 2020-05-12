@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/10 21:28:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 23:39:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void		cd_complete(char *to_complete)
 	if (!*to_complete && get_shell_var("CDPATH", g_env))
 		path = add_path(to_complete, get_shell_var("CDPATH", g_env));
 	else
-		path = ft_strdup(to_complete);
+		path = add_path(to_complete, "");
 	if (!path || !data)
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
