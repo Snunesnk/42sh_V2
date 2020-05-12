@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/11 22:30:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/11 23:09:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ void		place_cursor(int pos)
 		ft_scroll("down");
 		v_pos += 1;
 	}
-	ft_putstr(tgoto(g_termcaps.cm, c_pos, v_pos));
+	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
 	g_line.cursor_pos = pos;
 }
