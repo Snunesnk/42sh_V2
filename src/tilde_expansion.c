@@ -6,15 +6,30 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:39:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/12 16:23:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <pwd.h>
 
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+
+static char	*get_home_value(void)
+{
+	struct passwd	*pwd;
+	char			*home;
+
+	home = get_shell_var("HOME", g_env);
+	if (home)
+		return (home);
+	pwd = getpwuid(getuid());
+	if (pwd)
+		home = pwd->pw_dir;
+	return (home);
+}
 
 static int	replace_tilde(char **str, char *start, char *env)
 {
@@ -40,7 +55,7 @@ static void	test_syntax(size_t *index, char **str, int *ret)
 
 	if (!(*str)[1] || (*str)[1] == '/')
 	{
-		env = get_shell_var("HOME", g_env);
+		env = get_home_value();
 		*index = ft_strlen(env);
 		*ret = replace_tilde(str, &(*str)[1], env);
 	}
