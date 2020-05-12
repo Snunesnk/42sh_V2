@@ -1,194 +1,194 @@
 cd ../.././.././.././
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 export CDPTAH=/usr:/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P /lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ~/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 unset HOME
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P ~/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd --
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /./
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -L -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /root
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 export PWD=
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd test/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd //////
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ...............
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd .../././.../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /bin
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -L /lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 PWD=toto
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ..
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd .
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 HOME=plop
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ~/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd $HOME
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd src/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 OLDPWD=
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 unset OLDPWD
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -L -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 PWD=/:/home/plop
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 CDPATH=/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 PWD=
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 OLDPWD=
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 HOME=
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd /../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P .
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 CDPATH=/lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P apg
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P ~/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -P $CDPATH
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 CDPATH=/../../../../root/./../
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -L lib
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -L home/
 HOME=.././
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd -
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 cd ~/
-echo $?
-pwd
+echo $? "$HOME, $PWD, $OLDPWD, $CDPATH"
+/bin/pwd
 exit
