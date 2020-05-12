@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:57:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 17:04:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static void	update_env(char *curpath)
 		set_shell_var("OLDPWD", oldpwd, SET | EXPORT, &g_env);
 	if (curpath && curpath[0])
 		set_shell_var("PWD", curpath, SET | EXPORT, &g_env);
+	else
+	{
+		oldpwd = getcwd(NULL, 0);
+		set_shell_var("PWD", oldpwd, SET | EXPORT, &g_env);
+		free(oldpwd);
+	}
 }
 
 int			change_dir(char **curpath, const char *directory, _Bool p_option)
