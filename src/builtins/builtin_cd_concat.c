@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:57:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 11:58:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*concatenate_pwd(const char *directory)
 		curpath = ft_strjoin(pwd, directory);
 	if (allocated)
 		ft_memdel((void**)&pwd);
+	ft_printf("curpath after pwd concat:%s\n", curpath);
 	return (curpath);
 }
 
