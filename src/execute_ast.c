@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 17:49:05 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 10:03:48 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			execute_subshell(t_ast *node, int foreground)
 	{
 		g_job_control_enabled = OFF;
 		g_shell_is_interactive = OFF;
+		ft_printf("|%d|\n", g_exit_trap);
 		free_all_jobs();
 		restore_procmask();
 		pid = getpid();
