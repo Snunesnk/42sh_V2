@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:14:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 19:30:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,9 @@ int				cmd_exit(int argc, char **argv)
 		status = ft_atol(argv[i]);
 		if (g_errno == E_EINVAL)
 			nomatter_exit(argv, i);
-		if (g_errno != E_EOVERFLOW)
+		else if (g_errno == E_EOVERFLOW)
 			return (numarg_exit(argc, argv, i, ft_atoi(argv[i])));
-		else
-			nomatter_exit(argv, i);
+		status = ft_atoi(argv[i]);
 	}
 	ft_tabdel(&argv);
 	print_exit(0);
