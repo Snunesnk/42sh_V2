@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 18:17:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/27 15:31:58 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/12 20:18:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	get_env_opt(char *arg, int *end_opt)
 		pbierror("%s: invalid option%c.", arg, ft_strlen(arg) == 2 ? 0 : 's');
 		pbierror("usage: %s [name[=value] ...] [-i [command]]",
 			g_builtin_name);
-		return (1);
+		return (2);
 	}
 	return (0);
 }
@@ -73,8 +73,8 @@ int			cmd_env(int argc, char **argv)
 	++argv;
 	--argc;
 	ret = 0;
-	if (argc && get_env_options_and_assignments(&argc, &argv))
-		return (1);
+	if (argc && (ret = get_env_options_and_assignments(&argc, &argv)))
+		return (ret);
 	if (!argc)
 		print_shell_var(g_env, print_env_var);
 	else
