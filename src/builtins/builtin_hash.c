@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/10 16:54:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/12 14:41:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ int		exec_hash_builtin(int options_list, char **args)
 
 	status = e_success;
 	if ((!*args && !(options_list & HASH_R_OPTION)) \
-			|| (*args && !(*args + 1) && options_list & HASH_P_OPTION))
+			|| (*args && !(*args + 1) && options_list & HASH_P_OPTION) \
+			|| !options_list)
 		return (print_hashed_commands(options_list));
 	if (options_list & HASH_R_OPTION)
 		free_hash_table();
