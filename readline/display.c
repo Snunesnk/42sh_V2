@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 19:32:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/13 16:31:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	clear_next(void)
 	v_pos = 0;
 	c_pos = 0;
 	ft_putstr(g_termcaps.clreol);
-	calc_dcursor(g_line.c_pos, &v_pos, &c_pos);
+	calc_dcursor(g_line.cursor_pos, &v_pos, &c_pos);
 	if (v_pos >= g_sc.height - 1 || g_autocompl_on)
 		return ;
 	ft_putstr(tgoto(g_termcaps.cm, 0, v_pos + 1));
@@ -83,24 +83,19 @@ void	clear_next(void)
 
 void	update_line(void)
 {
-	int	ret;
-
 	if (g_dumb_term)
 		return (update_dumb_line());
 	if (g_line.is_modified)
 	{
-		ret = g_line.cursor_pos;
-		place_cursor(g_line.len);
-		place_cursor(ret);
-		ft_putstr_fd(G_LINE_COLOR, STDOUT_FILENO);
+		ft_putstr(G_LINE_COLOR);
 		if (g_line.c_pos < g_line.cursor_pos)
-			place_cursor(g_line.c_pos);
+			g_line.cursor_pos = g_line.c_pos;
+		place_cursor(g_line.cursor_pos);
 		clear_next();
-		place_cursor(ret);
-		write(STDOUT_FILENO, g_line.line + g_line.cursor_pos, \
-				g_line.len - g_line.cursor_pos);
+		place_cursor(g_line.cursor_pos);
+		ft_putstr(g_line.line + g_line.cursor_pos);
 		g_line.cursor_pos = g_line.len;
-		ft_putstr_fd(END_OF_COLOR, STDOUT_FILENO);
+		ft_putstr(END_OF_COLOR);
 	}
 	place_cursor(g_line.c_pos);
 	g_line.is_modified = 0;
