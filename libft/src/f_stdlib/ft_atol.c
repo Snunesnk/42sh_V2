@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 08:17:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 19:21:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 13:58:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@
 #include "libft.h"
 #include "ft_errno.h"
 
-static long	overflow(int sign, long a, long b)
+static long	overflow(long a, long b, int sign)
 {
-	if (sign < 0)
+	long	maxdiv;
+	long	maxmod;
+
+	maxdiv = sign == 1 ? LONG_MAX / 10 : LONG_MIN / 10;
+	maxmod = sign == 1 ? LONG_MAX % 10 : LONG_MIN % 10;
+	if (a == maxdiv)
 	{
-		if (a * 10 >= LONG_MIN + b)
-			return (a - b);
+		if (b <= maxmod * sign)
+			return (a * 10 + (b * sign));
 		else
 		{
-			g_errno = E_EOVERFLOW;
+			g_errno = E_ERANGE;
 			return (-1);
 		}
 	}
-	else
+	else if ((sign == 1 && a > maxdiv) || (sign == -1 && a < maxdiv))
 	{
-		if (a * 10 > LONG_MAX - b)
-		{
-			g_errno = E_EOVERFLOW;
-			return (-1);
-		}
-		else
-			return (a + b);
+		g_errno = E_ERANGE;
+		return (-1);
 	}
+	return (a * 10 + (b * sign));
 }
 
 long		ft_atol(const char *str)
@@ -49,7 +50,7 @@ long		ft_atol(const char *str)
 	i = 0;
 	nbr = 0;
 	sign = 1;
-	g_errno = E_EINVAL;
+	g_errno = E_ERANGE;
 	while (str[i] == ' ' || (str[i] > 8 && str[i] < 14))
 		++i;
 	if (str[i] == '-' || str[i] == '+')
@@ -60,9 +61,9 @@ long		ft_atol(const char *str)
 	while (str[i] > 47 && str[i] < 58)
 	{
 		g_errno = 0;
-		nbr = overflow(sign, nbr,
-			(str[i] ^ ((1 << 5) | (1 << 4))));
-		if (g_errno == E_EOVERFLOW)
+		nbr = overflow(nbr,
+			(str[i] ^ ((1 << 5) | (1 << 4))), sign);
+		if (g_errno == E_ERANGE)
 			return (-1);
 		++i;
 	}
