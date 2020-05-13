@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 17:46:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/12 21:41:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ void							free_lst(t_list *lst);
 void							free_process(t_process *p);
 int								execute_process(char **argv, char **envp, \
 		t_hash_table *tmp, char *pathname);
+int								free_path_and_return(int ret, char **pathname,
+		char *process_name);
 void							put_job_in_foreground(t_job *j, int cont);
 void							put_job_in_background(t_job *j, int cont);
 void							update_status(void);
