@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 21:40:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/13 10:28:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			process_execve(char **argv, char **envp, char *pathname)
 	return (0);
 }
 
-int			free_path_and_return(int ret, char **pathname, char *process_name)
+static int	free_path_and_return(int ret, char **pathname, char *process_name)
 {
 	ft_memdel((void**)pathname);
 	return (g_errordesc[psherror(ret, process_name, e_cmd_type)].code);

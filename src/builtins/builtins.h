@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 11:28:57 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 13:59:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,8 @@ void			fc_erase_last_hist(void);
 */
 int				set_temp_variable(char *assignment);
 void			empty_env(t_list **svar_lst);
-int				exec_env_command(char **argv);
+int				execute_env_process(char **argv, char **envp,
+		t_hash_table *tmp, char *pathname);
 
 /*
 ** Global var util for get_next_opt
