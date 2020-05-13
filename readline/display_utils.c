@@ -6,11 +6,23 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/07 13:35:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/13 19:51:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
+
+static char	get_first_input(void)
+{
+	char	input[2];
+
+	input[0] = 0;
+	input[1] = 0;
+	read(0, &input, 1);
+	while (*input != 27)
+		read(0, &input, 1);
+	return (*input);
+}
 
 void	get_cursor_position(int *row, int *col)
 {
@@ -22,8 +34,8 @@ void	get_cursor_position(int *row, int *col)
 	i = 0;
 	*row = 0;
 	*col = 0;
-	ft_bzero(input, 2);
 	write(0, "\033[6n", 4);
+	*input = get_first_input();
 	while (*input != 'R')
 	{
 		read(0, &input, 1);
