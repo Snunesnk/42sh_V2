@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 17:16:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 20:33:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ static int	main_loop(int fd, int *status)
 	*status = exec_input(input, fd);
 	if (g_shell_is_interactive)
 		test_hash_path();
+	if (g_shell_is_interactive && g_retval == 130)
+		ft_putchar('\n');
 	return (0);
 }
 
