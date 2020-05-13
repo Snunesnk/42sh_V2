@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/09 16:47:47 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:56:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 16:47:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	remove_doubleslash(char *str)
 static void	currentdir_trim(char *str)
 {
 	char	*ptr;
-	int	l;
+	int		l;
 
 	while (!ft_strncmp(str, "./", 2))
 	{
@@ -65,9 +65,9 @@ static void	currentdir_trim(char *str)
 	ptr = str;
 	while ((ptr = ft_strstr(ptr, "/./")))
 	{
-			l = ft_strlen(ptr + 2);
-			ft_memmove(ptr, ptr + 2, l);
-			ptr[l] = '\0';
+		l = ft_strlen(ptr + 2);
+		ft_memmove(ptr, ptr + 2, l);
+		ptr[l] = '\0';
 	}
 	if (*str)
 	{

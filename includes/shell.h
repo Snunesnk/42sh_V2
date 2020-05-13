@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 10:28:16 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/13 17:16:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,6 +373,7 @@ int								get_assignment(const char *assignment,
 int								only_assignments(t_process *p);
 
 int								parser(t_list *lst, int fd);
+int								main_error(int status, t_list *lst);
 int								path_concat(char **bin, char *beg, char *env, \
 		char *dir);
 void							print_env(t_list *env, t_list **elem);
