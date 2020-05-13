@@ -6,9 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 19:30:49 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 13:58:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** https://pubs.opengroup.org/onlinepubs/009695399/utilities/exit.html
+*/
 
 #include <limits.h>
 
@@ -44,7 +48,7 @@ static int		part_sep(int argc, char **argv)
 	return (1);
 }
 
-static int		numarg_exit(int argc, char **argv, int i, int s)
+static int		exit_arg(int argc, char **argv, int i, int s)
 {
 	print_exit(0);
 	if (argc > i + 1)
@@ -80,12 +84,10 @@ int				cmd_exit(int argc, char **argv)
 	if (argc > 1)
 	{
 		i = part_sep(argc, argv);
-		status = ft_atol(argv[i]);
-		if (g_errno == E_EINVAL)
+		(void)ft_atol(argv[i]);
+		if (g_errno == E_ERANGE)
 			nomatter_exit(argv, i);
-		else if (g_errno == E_EOVERFLOW)
-			return (numarg_exit(argc, argv, i, ft_atoi(argv[i])));
-		status = ft_atoi(argv[i]);
+		return (exit_arg(argc, argv, i, ft_atoi(argv[i])));
 	}
 	ft_tabdel(&argv);
 	print_exit(0);
