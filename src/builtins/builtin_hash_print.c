@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/19 21:35:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/13 15:23:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int		change_hash_entry(char *path, char *name)
 	struct stat		path_stat;
 	int				status;
 
+	ft_bzero(&path_stat, sizeof(struct stat));
 	status = e_success;
 	stat(path, &path_stat);
 	if (S_ISDIR(path_stat.st_mode))

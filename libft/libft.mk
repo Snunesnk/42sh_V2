@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/10 14:41:33 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/13 16:36:57 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -220,5 +220,6 @@ DEPENDS := $(patsubst %.c,%.d,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
 ARFLAGS := rc
 
-CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -g3 -D_POSIX_C_SOURCE -fsanitize=address,undefined
-#-fno-builtin -O2
+CFLAGS += -Wall -Werror -Wextra -ansi -std=c99 -g3 -D_POSIX_C_SOURCE 
+CFLAGS += -fsanitize=address,undefined
+#CFLAGS += -fno-builtin -O2
