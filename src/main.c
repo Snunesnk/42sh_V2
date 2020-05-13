@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 17:45:44 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 16:59:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int			exec_input(char *input, int fd)
 	lst = lexer(input);
 	free(input);
 	status = lst ? parser(lst, fd) : 2;
-	if (status)
+	if ((status = lst ? parser(lst, fd) : 2))
 	{
 		g_retval = status;
 		if (!g_shell_is_interactive && status == 2)
