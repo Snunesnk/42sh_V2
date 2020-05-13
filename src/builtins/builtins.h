@@ -6,9 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:59:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/13 11:28:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+** All builtins are POSIX compliant, following:
+** https://pubs.opengroup.org/onlinepubs/009695399/idx/sbi.html
+*/
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
