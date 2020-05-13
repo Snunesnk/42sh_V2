@@ -6,15 +6,13 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/13 09:54:38 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/13 10:58:39 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "builtins.h"
-
-#define ESH e_command_not_found
 
 int			set_temp_variable(char *assignment)
 {
@@ -77,55 +75,30 @@ static int	env_path_concat(char **bin, char *beg, char *env, char *dir)
 	return (e_command_not_found);
 }
 
-static int	execute_env_process(char **argv, char **envp,
+static int	free_and_return(int ret, char **pathname, char *command_name)
+{
+	ft_memdel((void**)pathname);
+	pbierror("'%s': %s", command_name, g_errordesc[ret].message);
+	return (g_errordesc[ret].code);
+}
+
+int			execute_env_process(char **argv, char **envp,
 		t_hash_table *tmp, char *pathname)
 {
 	int	ret;
 
 	if (!argv || !argv[0][0])
 		return (0);
-	if (is_a_builtin(argv[0]))
-		return (builtins_dispatcher(argv));
 	pathname = ft_strdup(argv[0]);
 	if ((ret = check_type(pathname)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
-		return (free_path_and_return(ret, &pathname, argv[0]));
+		return (free_and_return(ret, &pathname, argv[0]));
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (env_path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
-		return (free_path_and_return(ESH, &pathname, argv[0]));
+		return (free_and_return(e_command_not_found, &pathname, argv[0]));
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
-	ft_memdel((void**)&pathname);
-	return (g_errordesc[psherror(e_command_not_found, argv[0], \
-				e_cmd_type)].code);
-}
-
-int			exec_env_command(char **argv)
-{
-	char	**envp;
-	int		ret;
-	pid_t	pid;
-
-	pid = 0;
-	ret = 0;
-	envp = get_env_tab();
-	argv = ft_tabcpy(argv);
-	if (!g_job_control_enabled || !(pid = fork()))
-	{
-		restore_procmask();
-		if (argv)
-			ret = execute_env_process(argv, envp, NULL, NULL);
-		exit_clean(ret);
-	}
-	else if (pid < 0)
-		ft_dprintf(STDERR_FILENO, "fork(2) failed\n");
-	else if (pid)
-		waitpid(pid, &ret, WUNTRACED);
-	if (pid > 0 && WIFSTOPPED(ret))
-		kill(pid, SIGKILL);
-	ft_tabdel(&envp);
-	ft_tabdel(&argv);
-	return (pid < 0 ? 1 : WEXITSTATUS(ret));
+	return (free_and_return(e_command_not_found, &pathname, argv[0]));
 }

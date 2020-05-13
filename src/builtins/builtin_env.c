@@ -6,13 +6,41 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 18:17:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/12 20:18:50 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/13 10:30:24 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "builtins.h"
+
+static int	exec_env_command(char **argv)
+{
+	char	**envp;
+	int		ret;
+	pid_t	pid;
+
+	pid = 0;
+	ret = 0;
+	envp = get_env_tab();
+	argv = ft_tabcpy(argv);
+	if (!g_job_control_enabled || !(pid = fork()))
+	{
+		restore_procmask();
+		if (argv)
+			ret = execute_env_process(argv, envp, NULL, NULL);
+		exit_clean(ret);
+	}
+	else if (pid < 0)
+		ft_dprintf(STDERR_FILENO, "fork(2) failed\n");
+	else if (pid)
+		waitpid(pid, &ret, WUNTRACED);
+	if (pid > 0 && WIFSTOPPED(ret))
+		kill(pid, SIGKILL);
+	ft_tabdel(&envp);
+	ft_tabdel(&argv);
+	return (pid < 0 ? 1 : WEXITSTATUS(ret));
+}
 
 static int	print_env_var(t_shell_var *svar)
 {
