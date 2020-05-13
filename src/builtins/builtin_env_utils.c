@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/06 16:47:34 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/13 09:54:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ static int	env_path_concat(char **bin, char *beg, char *env, char *dir)
 static int	execute_env_process(char **argv, char **envp,
 		t_hash_table *tmp, char *pathname)
 {
-	int				ret;
+	int	ret;
 
-	if (!argv)
+	if (!argv || !argv[0][0])
 		return (0);
 	if (is_a_builtin(argv[0]))
 		return (builtins_dispatcher(argv));
@@ -90,21 +90,16 @@ static int	execute_env_process(char **argv, char **envp,
 	if ((ret = check_type(pathname)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
-	{
-		ft_memdel((void**)&pathname);
-		return (g_errordesc[psherror(ret, argv[0], e_cmd_type)].code);
-	}
+		return (free_path_and_return(ret, &pathname, argv[0]));
 	if ((tmp = find_occurence(pathname)))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (env_path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
-	{
-		ft_memdel((void**)&pathname);
-		return (g_errordesc[psherror(ESH, argv[0], e_cmd_type)].code);
-	}
+		return (free_path_and_return(ESH, &pathname, argv[0]));
 	else if (check_type(pathname) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
-	return (psherror(e_command_not_found, argv[0], e_cmd_type));
+	return (g_errordesc[psherror(e_command_not_found, argv[0], \
+				e_cmd_type)].code);
 }
 
 int			exec_env_command(char **argv)
@@ -132,5 +127,5 @@ int			exec_env_command(char **argv)
 		kill(pid, SIGKILL);
 	ft_tabdel(&envp);
 	ft_tabdel(&argv);
-	return (pid < 0 ? 1 : ret);
+	return (pid < 0 ? 1 : WEXITSTATUS(ret));
 }
