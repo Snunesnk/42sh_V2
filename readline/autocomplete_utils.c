@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 21:41:45 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/14 14:15:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 14:35:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char	*ft_strjoin_free(char *s1, char *s2, int to_free)
 	return (new_str);
 }
 
-int	stop_cmd(char c)
+int		stop_cmd(char c)
 {
 	static char	operator[] = "&|;<>";
 

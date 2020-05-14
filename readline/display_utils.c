@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/13 21:23:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 14:36:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	get_first_input(void)
 	return (input);
 }
 
-void	get_cursor_position(int *row, int *col)
+void		get_cursor_position(int *row, int *col)
 {
 	int		a;
 	char	input[2];
