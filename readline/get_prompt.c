@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/12 12:07:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 16:15:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ char		*get_prompt(void)
 	char	*pwd;
 	int		len;
 
-	if (!(pwd = getcwd(NULL, 0)))
+	if (!(pwd = getcwd(NULL, 0)) && !(pwd = \
+				ft_strdup(get_shell_var("PWD", g_env))))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
@@ -108,10 +109,8 @@ char		*get_prompt(void)
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
-	if (g_dumb_term)
-		prompt = get_dumb_prompt(prompt, pwd);
-	else
-		prompt = get_normal_prompt(prompt, pwd);
+	prompt = (g_dumb_term) ? get_dumb_prompt(prompt, pwd) : \
+			 get_normal_prompt(prompt, pwd);
 	free(pwd);
 	return (prompt);
 }
