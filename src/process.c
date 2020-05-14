@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 11:13:59 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:19:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int			launch_process(t_process *p, pid_t pgid, int foreground)
 	g_noexit = 1;
 	envp = get_env_tab();
 	perf_redir(p);
-	if (p->argc == -1)
-		exit_clean(0);
+	if (p->status)
+		exit_clean(p->status);
 	if (g_shell_is_interactive)
 	{
 		pid = getpid();
