@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 21:41:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 14:05:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,24 @@ static int	ask_confirmation(t_data *data)
 
 	c.value = 'a';
 	ft_printf("\nDisplay all %d possibilities ? (y or n)", data->nb_exec);
+	g_line.is_modified = 1;
 	while (ft_isprint(c.value) || ft_isspace(c.value))
 	{
 		c = read_key();
-		if (c.value == 'y' || c.value == 'Y' || c.value == ' ')
-		{
-			ft_putchar('\n');
-			return (1);
-		}
+		if (c.value == 'y' || c.value == 'Y' || c.value == ' ' || c.value == 9)
+			break ;
 		if (c.value == 'n' || c.value == 'N')
-		{
-			update_line();
-			return (0);
-		}
+			break ;
 	}
-	g_bad_seq = c;
+	ft_putchar('\n');
+	if (c.value == 'y' || c.value == 'Y' || c.value == ' ' || c.value == '\t')
+		return (1);
+	if (c.value != 'n' && c.value != 'N')
+		g_bad_seq = c;
+	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line + 2));
+	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	g_line.cursor_pos = 0;
+	display_prompt();
 	update_line();
 	return (0);
 }
