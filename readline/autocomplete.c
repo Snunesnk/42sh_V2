@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 14:18:58 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 15:20:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,7 @@ void			autocomplete(void)
 	while (start >= 0 && !stop_cmd(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
-	if ((ft_strchr(to_complete, '/') || has_operator(to_complete)) \
-			&& test_cd())
+	if (test_cd())
 		cd_complete(to_complete);
 	else if (ft_strchr(to_complete, '/') || !*to_complete)
 		file_complete(to_complete);
@@ -123,8 +122,6 @@ void			autocomplete(void)
 		var_complete(to_complete);
 	else if (start <= 0 || has_no_cmd(g_line.line, start))
 		command_complete(to_complete);
-	else if (test_cd())
-		cd_complete(to_complete);
 	else
 		file_complete(to_complete);
 	g_autocompl_on = 0;
