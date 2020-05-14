@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/13 17:16:45 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/14 15:42:51 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,9 +80,6 @@ SOURCES :=	main.c \
 		undo_redir.c \
 		undo_redir2.c \
 		load_config.c \
-		anim_mode.c \
-		exec_animation.c \
-		monkey.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
@@ -111,7 +108,6 @@ SOURCES :=	main.c \
 		builtins/builtin_env.c \
 		builtins/builtin_env_utils.c \
 		builtins/builtin_builtin.c \
-		builtins/builtin_monkey.c \
 		../globbings/ft_fnmatch/char_class_functions_1.c \
 		../globbings/ft_fnmatch/char_class_functions_2.c \
 		../globbings/ft_fnmatch/char_class_functions_3.c \

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/08 09:28:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 15:43:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ const t_builtins	g_builtins[] =
 	{ "unalias", &cmd_unalias},
 	{ "env", &cmd_env},
 	{ "builtin", &cmd_builtin},
-	{ "monkey", &cmd_monkey },
-	{ "sl", &cmd_monkey }, //TODO: remove this when it is in monkeyshellrc
 	{ "\0", NULL}
 };
 
