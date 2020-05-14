@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 21:11:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:18:59 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
 
 static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 {
-	if (treat_expansions(p))
-		p->argc = -1;
+	p->status = treat_expansions(p);
 	if (p->next)
 	{
 		if (pipe(mypipe) < 0)
