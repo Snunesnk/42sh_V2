@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 13:59:50 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 15:44:07 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int				cmd_alias(int argc, char **argv);
 int				cmd_unalias(int argc, char **argv);
 int				cmd_env(int argc, char **argv);
 int				cmd_builtin(int argc, char **argv);
-int				cmd_monkey(int argc, char **argv);
 
 /*
 ** Hash functions
