@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/13 16:33:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 18:34:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*calc_print_range(int *offset)
 			&& g_line.len - *offset + g_dis.prompt_l != g_sc.w - 1)
 		*offset += g_sc.w / 3;
 	while (g_line.c_pos - *offset + g_dis.prompt_l <= 0 \
-			|| (g_line.len + g_dis.prompt_l < g_sc.w - 1 && *offset > 0))
+			|| (g_line.c_pos + g_dis.prompt_l < g_sc.w - 1 && *offset > 0))
 		*offset -= g_sc.w / 3;
 	if (*offset < g_dis.prompt_l)
 		to_print = ft_strncat(to_print, g_dis.display_prompt + *offset, g_sc.w);
@@ -103,17 +103,14 @@ static void	ft_scroll(int v_pos)
 	{
 		v_pos++;
 		g_dis.start_line++;
+		ft_putstr(g_termcaps.sr);
 	}
 	while (v_pos > g_sc.height - 1)
 	{
 		v_pos--;
 		g_dis.start_line--;
+		ft_putstr(g_termcaps.sf);
 	}
-	g_line.cursor_pos = 0;
-	g_line.is_modified = 1;
-	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
-	display_prompt();
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 }
 
 void		place_cursor(int pos)

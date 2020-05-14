@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 10:53:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 17:56:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 17:01:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void		wait_for_job(t_job *j)
 				&& !job_is_completed(j))
 			pid = waitpid(WAIT_ANY, &status, WUNTRACED);
 	}
+	if (WIFSIGNALED(status) && WTERMSIG(status) == 2)
+		ft_putchar('\n');
 }
 
 void		format_job_info(t_job *j, const char *status)

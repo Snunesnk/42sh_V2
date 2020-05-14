@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/12 14:32:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 18:19:41 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	print_range(char *compl)
 	track = 0;
 	while (track < len)
 	{
-		if (c_pos == g_sc.w - 1 || compl[track] == '\n')
+		if (c_pos == g_sc.w || compl[track] == '\n')
 		{
 			c_pos = 0;
 			v_pos += 1;

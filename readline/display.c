@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 20:33:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 18:28:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,15 @@ void	clear_next(void)
 
 void	update_line(void)
 {
+	int	ret;
+
 	if (g_dumb_term)
 		return (update_dumb_line());
 	if (g_line.is_modified)
 	{
+		ret = g_line.cursor_pos;
+		place_cursor(g_line.len);
+		g_line.cursor_pos = ret;
 		ft_putstr(G_LINE_COLOR);
 		if (g_line.c_pos < g_line.cursor_pos)
 			g_line.cursor_pos = g_line.c_pos;
