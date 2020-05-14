@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 23:40:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 14:18:58 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,26 +87,15 @@ void			var_complete(char *to_complete)
 
 void			file_complete(char *to_complete)
 {
-	int			i;
 	t_node		*compl_tree;
 	t_data		*data;
-	static char	operator[] = "&|;<>";
-	int			start;
 
-	start = 0;
-	i = 0;
-	while (to_complete[i])
-	{
-		if (ft_strchr(operator, to_complete[i]))
-			start = i + 1;
-		i++;
-	}
 	if (!(data = init_data()))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	compl_tree = get_file_compl(to_complete + start, data);
+	compl_tree = get_file_compl(to_complete, data);
 	if (compl_tree)
 		display_compl(compl_tree, data);
 	free(data);
@@ -122,13 +111,13 @@ void			autocomplete(void)
 		return ;
 	g_autocompl_on = 1;
 	start = g_line.c_pos - 1;
-	while (start >= 0 && !ft_isspace(g_line.line[start]))
+	while (start >= 0 && !stop_cmd(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
 	if ((ft_strchr(to_complete, '/') || has_operator(to_complete)) \
 			&& test_cd())
 		cd_complete(to_complete);
-	else if (ft_strchr(to_complete, '/') || has_operator(to_complete))
+	else if (ft_strchr(to_complete, '/') || !*to_complete)
 		file_complete(to_complete);
 	else if (g_line.line[start + 1] == '$')
 		var_complete(to_complete);

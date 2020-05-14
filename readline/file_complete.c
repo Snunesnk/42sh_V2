@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 20:12:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/14 14:31:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,9 @@ int		test_cd(void)
 	int			i;
 
 	i = g_line.c_pos - 1;
-	if (i < 2)
-		return (0);
 	while (i > 0 && !ft_strchr(operator, g_line.line[i]))
 		i--;
-	if (i > 0)
+	if (ft_strchr(operator, g_line.line[i]))
 		i++;
 	while (g_line.line[i] && ft_isspace(g_line.line[i]))
 		i++;
