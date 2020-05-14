@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2019/07/21 19:13:09 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/14 18:56:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,16 @@
 
 int	cmd_echo(int argc, char **argv)
 {
-	int	i;
-
-	(void)argc;
-	i = 1;
-	while (argv[i])
+	--argc;
+	++argv;
+	while (argc > 0)
 	{
-		if (argv[i + 1])
-		{
-			ft_printf("%s ", argv[i]);
-		}
-		else
-		{
-			ft_printf("%s\n", argv[i]);
-		}
-		++i;
+		ft_printf("%s", argv[0]);
+		--argc;
+		++argv;
+		if (argc > 0)
+			ft_printf(" ");
 	}
+	ft_printf("\n");
 	return (0);
 }
