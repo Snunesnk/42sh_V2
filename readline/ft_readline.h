@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 18:38:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 19:23:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@
 # define END_OF_COLOR "\033[0m"
 # define HIST_COMPL_COLOR "\033[38;5;8m"
 # define G_LINE_COLOR "\033[38;5;250m"
-# define PROMPT_COLOR "\033[38;5;117m"
+# define PROMPT_COLOR "\033[38;5;45m"
 
 /*
 ** List of special char the shell prompt uses
 */
-# define GREEN_ARROW "\033[38;5;47m\u279c  \033[0m"
+# define GREEN_ARROW "\033[38;5;40m\u279c  \033[0m"
 # define END_SIGN "\033[0m\033[38;5;231m \u00BB \033[0m"
 # define RED_ARROW "\033[38;5;196m\u279c  \033[0m"
 
