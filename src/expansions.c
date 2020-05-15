@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 13:43:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 20:18:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,16 @@ int			treat_single_exp(char **str, int tilde)
 	return (e_success);
 }
 
+static int	empty_exp(t_process *p, int i)
+{
+	if (p->argv[i][0])
+		return (0);
+	free(p->argv[i]);
+	ft_memcpy(p->argv + i, p->argv + i + 1, (p->argc - i) * sizeof(char *));
+	--p->argc;
+	return (1);
+}
+
 int			treat_expansions(t_process *p)
 {
 	int	i;
@@ -118,6 +128,8 @@ int			treat_expansions(t_process *p)
 	{
 		fields = 1;
 		ret = treat_single_exp(p->argv + i, 1);
+		if (!ret && empty_exp(p, i))
+			continue ;
 		ret = !ret ? field_split(p, i, &fields) : ret;
 		while (!ret && fields--)
 		{
