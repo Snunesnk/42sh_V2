@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 17:16:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 10:15:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,6 +384,7 @@ int								treat_shell_variables(t_process *p,
 void							unset_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
+void							trim_argv(t_process *p);
 
 int								execute_pipeline(t_ast *node, int foreground);
 int								execute_semi(t_ast *node, int foreground);
