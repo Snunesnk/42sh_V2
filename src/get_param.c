@@ -6,13 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:36:32 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 16:57:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+#include "quotes.h"
 
 static char	*get_retval(const char *str)
 {
@@ -30,7 +31,7 @@ static char	*get_content(const char *str)
 
 	cpy = NULL;
 	if ((content = get_shell_var(str, g_env)))
-		cpy = ft_strdup(content);
+		cpy = ft_escape_spec(content, SHELL_QUOTES);
 	return (cpy);
 }
 

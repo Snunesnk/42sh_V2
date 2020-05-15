@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/13 16:36:57 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/15 17:18:47 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -202,6 +202,7 @@ SOURCES	:= \
 		f_string/ft_strsep.c \
 		f_string/ft_strstr.c \
 		f_string/ft_strtok.c \
+		f_string/ft_escape_spec.c \
 		f_strings/ft_bzero.c \
 		f_strings/ft_strcasecmp.c \
 		f_unistd/ft_getopt_gnu.c \

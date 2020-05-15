@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 23:58:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 16:54:45 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,6 +269,8 @@ char			*ft_realpath(const char *path, char *resolved_path);
 void			ft_nmemdel(size_t n, void **ptr, ...);
 
 void			ft_free_tab(int ac, char ***av);
+
+char			*ft_escape_spec(const char *str, const char *spec);
 
 void			ft_swap_p(uintptr_t *p1, uintptr_t *p2);
 char			**ft_lst_to_char_tab(t_list *lst, char *(*f)(t_list *));
