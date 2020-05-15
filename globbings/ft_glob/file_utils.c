@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 17:47:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 17:31:32 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int			is_dir(const char *pathname, t_glob_internal *gl)
 t_file_data	*init_file(t_file_data *dest, const char *path, \
 			const char *name, t_glob_internal *gl)
 {
+	char	*tmp;
+
 	dest->name = name;
 	if (!(dest->pathname = (const char *)check_mem(gl,
 		(void *)add_to_path(path, name))))
@@ -62,7 +64,12 @@ t_file_data	*init_file(t_file_data *dest, const char *path, \
 		return (NULL);
 	}
 	if (gl->flags & FT_GLOB_ESCAPE)
-		dest->pathname = add_esc_to_path((char *)(dest->pathname));
+	{
+		tmp = (char *)check_mem(gl, (void *)ft_escape_spec(dest->pathname,
+			SHELL_SPECIAL_CHARS));
+		ft_memdel((void **)&dest->pathname);
+		dest->pathname = tmp;
+	}
 	return (dest);
 }
 

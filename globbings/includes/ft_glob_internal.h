@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 13:20:50 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/17 14:18:53 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 17:33:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ enum	e_pathtype {GL_NONE, GL_END, GL_RAWPATH, GL_WILDCARD};
 void			set_read_error(t_glob_internal *gl,
 				const char *pathname, int err);
 char			*add_to_path(const char *path, const char *to_add);
-char			*add_esc_to_path(char *path);
 int				is_dir(const char *pathname, t_glob_internal *gl);
 t_file_data		*init_file(t_file_data *dest, const char *path,
 				const char *name, t_glob_internal *gl);
