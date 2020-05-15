@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 14:47:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 15:58:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -427,6 +427,9 @@ int								tilde_expansion(size_t *index, char **str, \
 		const char *opentag, const char *closetag);
 int								pathname_expansion(t_process *p, int i, \
 		int *skip);
+int								replace_fields(t_process *p, int i,
+		char **av, int ac);
+int								field_split(t_process *p, int i, int *fields);
 void							load_config(void);
 int								is_valid_redir(t_list *lst);
 
