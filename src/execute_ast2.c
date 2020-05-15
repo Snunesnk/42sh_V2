@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 16:39:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 18:13:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,9 @@ int	execute_andand(t_ast *node, int foreground)
 	int err;
 
 	err = execute_node(node->left, foreground);
-	if (err == SIGINT + 128)
-		return (SIGINT + 128);
-	else if (!err)
+	if (!err)
 		return (execute_node(node->right, foreground));
-	return (ASTERROR);
+	return (err);
 }
 
 int	execute_or(t_ast *node, int foreground)
