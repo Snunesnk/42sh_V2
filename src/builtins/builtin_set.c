@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 08:27:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 13:52:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	print_set(void)
 	{
 		var = ((t_shell_var*)(list->content));
 		if ((var->flag & SET))
-			ft_printf("%s=\"%s\"\n", var->name, var->value);
+			ft_printf("%s=%s\n", var->name, var->value);
 		list = list->next;
 	}
 }
