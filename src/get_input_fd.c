@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:58:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 11:58:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 18:35:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	*append_line(char **last_lines, char *input, int quote_set)
 	return (input);
 }
 
-char		*get_input_fd(int fd, int quote_set, char *prompt)
+static char	*recup_input(int fd, int quote_set, char *prompt)
 {
 	char	*input;
 	int		first_iter;
@@ -51,22 +51,37 @@ char		*get_input_fd(int fd, int quote_set, char *prompt)
 	input = NULL;
 	first_iter = 1;
 	last_lines = NULL;
-	g_retval = (g_retval == 130) ? 1 : g_retval;
-	while ((first_iter-- > 0 || last_lines) && g_retval != 130)
+	while ((first_iter-- > 0 || last_lines))
 	{
 		if (g_shell_is_interactive && fd == STDIN_FILENO)
 			input = ft_readline(!first_iter ? prompt : "> ");
 		else if (get_stdin(fd, &input) < 0)
 			break ;
-		if (input && quote_set != NO_QUOTE && g_retval != 130)
+		if (g_retval == 130)
+			break ;
+		if (input && quote_set != NO_QUOTE)
 			input = append_line(&last_lines, input, quote_set);
 	}
 	if (!input && last_lines)
 		input = last_lines;
 	else
 		ft_memdel((void **)&last_lines);
+	return (input);
+}
+
+char		*get_input_fd(int fd, int quote_set, char *prompt)
+{
+	char	*input;
+	int		ret;
+
+	ret = g_retval;
+	if (g_retval)
+		g_retval = 1;
+	input = recup_input(fd, quote_set, prompt);
 	if (fd == STDIN_FILENO && input && g_shell_is_interactive \
 			&& quote_set == FULL_QUOTE)
 		add_hentry(input, ft_strlen(input));
+	if (g_retval == 1)
+		g_retval = ret;
 	return (input);
 }
