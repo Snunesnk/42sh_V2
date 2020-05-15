@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 10:20:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 13:37:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,46 +58,4 @@ size_t		ft_varlen(const char *s, const char *closetag)
 		len = (size_t)(end - s);
 	}
 	return (len);
-}
-
-static int	count_argc(t_process *p)
-{
-	int	argc;
-	int	i;
-
-	i = 0;
-	argc = 0;
-	while (i < p->argc)
-	{
-		if (p->argv[i][0])
-			++argc;
-		++i;
-	}
-	return (argc);
-}
-
-void		trim_argv(t_process *p)
-{
-	char	**argv;
-	int		argc;
-	int		i;
-
-	i = 0;
-	argc = count_argc(p);
-	argv = ft_memalloc(sizeof(char*) * (argc + 1));
-	argc = 0;
-	while (i < p->argc)
-	{
-		if (p->argv[i][0])
-		{
-			argv[argc] = p->argv[i];
-			++argc;
-		}
-		else
-			ft_memdel((void**)&p->argv[i]);
-		++i;
-	}
-	ft_memdel((void**)&p->argv);
-	p->argv = argv;
-	p->argc = argc;
 }
