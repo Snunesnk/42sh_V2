@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 12:48:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 12:37:44 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,28 +51,6 @@ char	*ft_strstr_qmode(const char *str, const char *to_find,
 	return (l ? 0 : (char *)str);
 }
 
-char	*unquote_str(char *quoted_str)
-{
-	char	*cpy;
-	int		i;
-	int		qmode;
-	int		old_qmode;
-
-	if (!quoted_str || !(cpy = ft_strnew(ft_strlen(quoted_str))))
-		return (NULL);
-	i = 0;
-	old_qmode = NO_QUOTE;
-	while (*quoted_str)
-	{
-		qmode = get_qmode(old_qmode, *quoted_str);
-		if (qmode == old_qmode || qmode == (old_qmode & ~BSQUOTE))
-			cpy[i++] = *quoted_str;
-		++quoted_str;
-	}
-	cpy[i] = 0;
-	return (cpy);
-}
-
 int		rm_quotes(char **str, int old_qmode)
 {
 	char	*dup;
@@ -100,6 +78,21 @@ int		rm_quotes(char **str, int old_qmode)
 	*str = dup ? ft_strcpy(*str, dup) : *str;
 	free(dup);
 	return (e_success);
+}
+
+int		has_unquoted_spec_chars(const char *str, const char *spec)
+{
+	int	qmode;
+
+	qmode = NO_QUOTE;
+	while (*str)
+	{
+		if ((qmode = get_qmode(qmode, *str)) == NO_QUOTE
+			&& ft_strchr(spec, *str))
+			return (1);
+		++str;
+	}
+	return (0);
 }
 
 int		get_str_qmode(int qmode, char *s)

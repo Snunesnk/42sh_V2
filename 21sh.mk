@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/15 14:26:43 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/15 15:58:42 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SOURCES :=	main.c \
 		undo_redir.c \
 		undo_redir2.c \
 		load_config.c \
+		field_split.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
