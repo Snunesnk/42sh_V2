@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 13:37:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 14:47:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 # define SHVAR_RM_MASK			0x00ff00
 # define SHVAR_OVERWRITE_MASK	0xff0000
 
+# define IONONE		0x0
 # define IOTYPE		0xF
 # define IOREAD		0x1
 # define IOWRITE	0x2
@@ -227,6 +228,7 @@ extern sigset_t					g_save_procmask;
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);
+int								fd_need_be_open(t_redirection *r);
 int								is_redir_type(int type);
 t_redirection					*build_redirections(t_list **lst);
 int								get_tokentype(t_list *lst);
