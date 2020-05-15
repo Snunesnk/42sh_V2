@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 12:36:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 19:12:17 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 19:52:13 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_redirection	*type_less_redirection(t_list **lst, int io_nb)
 	r->instruction = IOREAD;
 	(*lst) = (*lst)->next;
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	expand_filename(r);
+	expand_filename(r, &r->redirector.filename);
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -59,7 +59,7 @@ t_redirection	*type_lessand_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP | IOREAD;
 	(*lst) = (*lst)->next;
 	r->redirector.filename = ft_strdup(get_tokvalue(*lst));
-	expand_filename(r);
+	expand_filename(r, &r->redirector.filename);
 	if (r->redirector.filename[0] == '-')
 		r->flags |= FDCLOSE;
 	else if (ft_str_is_numeric(r->redirector.filename))

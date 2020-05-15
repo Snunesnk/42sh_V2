@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 13:03:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 18:32:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 19:51:20 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_redirection	*subtype_great_redirection(t_list **lst, int io_nb)
 		r->redirector.dest = io_nb;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	expand_filename(r);
+	expand_filename(r, &r->redirectee.filename);
 	(*lst) = (*lst)->next;
 	return (r);
 }
@@ -82,7 +82,7 @@ t_redirection	*type_greatand_redirection(t_list **lst, int io_nb)
 		psherror(e_ambiguous_redirect, r->redirectee.filename, e_cmd_type);
 		return (r);
 	}
-	else if (expand_filename(r))
+	else if (expand_filename(r, &r->redirectee.filename))
 		return (r);
 	return (suite_great_and(lst, &r));
 }
