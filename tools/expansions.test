@@ -76,4 +76,10 @@ $~
 echo $?$?$?$?$?$?$?$?sadfsdafsadfas$?asdfsadf$LOGNAME
 exit
 while (ls >/dev/null 2>/dev/null); do ((++i)) ; name\=\$i echo $i; done
+echo ${sdfsdfsf} o ${okok} k ${d} ${d} lo | cat -e
+echo ${sdfsdfsf} o ${okok} k ${d} ${d} lo ${dfd} | cat -e
+${sfd}
+echo ${sdfsdfsf} o ${okok} k ${d} ${d**d} lo ${dfd} | cat -e
+echo ok | ${s*dfsdfsf} | cat -e
+${sdf*sd_f} | ${s*dfsdfsf} | cat -e
 exit

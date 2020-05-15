@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 13:03:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/03/11 15:14:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 18:33:45 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_redirection	*type_andgreat_redirection(t_list **lst, int io_nb)
 	r->instruction = IODUP | IOWRITE;
 	(*lst) = (*lst)->next;
 	r->redirectee.filename = ft_strdup(get_tokvalue(*lst));
-	if (treat_single_exp(&(r->redirectee.filename), 1))
-		r->error = e_bad_substitution;
+	expand_filename(r);
 	(*lst) = (*lst)->next;
 	return (r);
 }
