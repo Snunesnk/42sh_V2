@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 18:48:06 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 19:53:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include "shell.h"
 #include "quotes.h"
 
-int				expand_filename(t_redirection *r)
+int				expand_filename(t_redirection *r, char **word)
 {
-	if (treat_single_exp(&(r->redirectee.filename), 1))
+	if (treat_single_exp(word, 1))
 		r->error = e_bad_substitution;
-	else if (rm_quotes(&(r->redirectee.filename), NO_QUOTE))
+	else if (rm_quotes(word, NO_QUOTE))
 		r->error = e_cannot_allocate_memory;
 	else
 		return (0);
