@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 10:15:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 13:37:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,5 @@ int			treat_expansions(t_process *p)
 			ret = rm_quotes(p->argv + i, NO_QUOTE);
 		i += skip ? skip : 1;
 	}
-	trim_argv(p);
 	return (e_success);
 }
