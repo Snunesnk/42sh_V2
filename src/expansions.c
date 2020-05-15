@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 23:05:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 10:15:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,53 +22,6 @@ const struct s_tags	g_tags[] =
 	{"~", &tilde_expansion, ""},
 	{"\0", NULL, NULL}
 };
-
-static int	count_argc(t_process *p)
-{
-	int	argc;
-	int	i;
-
-	i = 0;
-	argc = 0;
-	while (i < p->argc)
-	{
-		if (p->argv[i][0])
-			++argc;
-		++i;
-	}
-	return (argc);
-}
-
-/*
-** This function need further tests
-*/
-static void	trim_argv(t_process *p)
-{
-	int	argc;
-	char	**argv;
-	int	i;
-
-	i = 0;
-	argc = count_argc(p);
-//	ft_printf("argc:%d\n", argc);
-	argv = ft_memalloc(sizeof(char*) * (argc + 1));
-	argc = 0;
-	while (i < p->argc)
-	{
-		if (p->argv[i][0])
-		{
-//			ft_printf("|%s|\n", p->argv[i]);
-			argv[argc] = p->argv[i];
-			++argc;
-		}
-		else
-			ft_memdel((void**)&p->argv[i]);
-		++i;
-	}
-	ft_memdel((void**)&p->argv);
-	p->argv = argv;
-	p->argc = argc;
-}
 
 static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 {
