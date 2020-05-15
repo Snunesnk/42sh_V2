@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 21:00:17 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/13 15:23:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 13:04:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		print_hashed_commands(int options_list)
 		i++;
 	}
 	if (!nb)
-		pbierror("hash table empty");
+		ft_printf("%s: hash table empty\n", g_builtin_name);
 	return (0);
 }
 
