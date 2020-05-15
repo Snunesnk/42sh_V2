@@ -3,7 +3,7 @@
 
 An implementation of a small **shell** [a 42 project].
 
-This project follows [21sh](https://github.com/Ant0wan/21sh) and aims at getting a better grasp of the parsing theories, job control and general programming in Unix environment.
+This project follows [Minishell](https://github.com/Ant0wan/Minishell) and aims at getting a better grasp of the parsing theories, job control and general programming in Unix environment.
 
 ---
 
