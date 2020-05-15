@@ -6,12 +6,14 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:12:33 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/15 12:39:19 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 16:56:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef QUOTES_H
 # define QUOTES_H
+
+# define SHELL_QUOTES	"\"\'\\"
 
 # define NO_QUOTE	0x00
 # define DQUOTE		0x01
