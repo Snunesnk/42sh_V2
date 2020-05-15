@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:03:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/12 20:23:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/15 19:36:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char	**unalias_opt(int argc, char **argv)
 	unset_all = 0;
 	g_opterr = 1;
 	g_optind = 1;
-	while ((opt = ft_getopt(argc, argv, "a")) != -1)
+	while ((opt = ft_getopt(argc, argv, "+a")) != -1)
 	{
 		if (opt == 'a')
 			unset_all = 1;
@@ -30,7 +30,10 @@ static char	**unalias_opt(int argc, char **argv)
 			return (NULL);
 	}
 	if (unset_all)
+	{
 		ft_lstdel(&g_alias, del_env);
+		return (argv + argc);
+	}
 	return (argv + g_optind);
 }
 
@@ -40,7 +43,7 @@ int			cmd_unalias(int argc, char **argv)
 
 	ret = FAILURE;
 	if (argc == 1)
-		pbierror("no argument");
+		pbierror("usage: %s [-a] name [name ...]", g_builtin_name);
 	else
 	{
 		ret = SUCCESS;
