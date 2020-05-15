@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:03:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:51:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 17:33:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	mvctrlkey(union u_buffer c)
 
 int	enter_rc(union u_buffer c)
 {
-	if (c.buf[0] == 13 && c.buf[1] == 0)
+	if (c.buf[0] == 10 && c.buf[1] == 0)
 		return (1);
 	return (0);
 }

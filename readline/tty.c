@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:23:05 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 13:01:58 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 17:31:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	prep_terminal(void)
 	g_termios.c_lflag &= ~ISIG;
 	g_termios.c_cc[VMIN] = 1;
 	g_termios.c_cc[VTIME] = 0;
-	g_termios.c_iflag &= ~(ICRNL | INLCR);
+	g_termios.c_iflag &= ~(INLCR);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &g_termios);
 }
 
