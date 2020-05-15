@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:20:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 15:56:56 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 16:41:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static int	dup_open(t_redirection *r)
 	int				fd;
 
 	origin = r;
-	fd = r->redirectee.dest;
+	fd = r->redirector.dest;
 	r = r->next;
 	while (r)
 	{
 		if ((r->instruction & IOWRITE || r->instruction & IOCAT
 			|| r->instruction & IODUP)
-			&& r->redirectee.dest == fd)
+			&& r->redirector.dest == fd)
 		{
 			origin->instruction = IONONE;
 			return (1);

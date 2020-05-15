@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 15:54:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 17:20:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,8 @@ int	do_iodup(t_redirection *r)
 			r->save[0] = dup(r->redirector.dest);
 		dup2(r->redirectee.dest, r->redirector.dest);
 	}
-	else if (r->flags & FDCLOSE)
+	else if (r->flags & FDCLOSE && !fd_need_be_open(r))
 	{
-		if (fd_need_be_open(r))
-			return (0);
 		if (r->flags & NOFORK)
 			r->save[0] = dup(r->redirector.dest);
 		close(r->redirector.dest);
