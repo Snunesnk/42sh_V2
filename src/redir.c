@@ -6,13 +6,25 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/09 17:33:06 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 18:48:06 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+#include "quotes.h"
+
+int				expand_filename(t_redirection *r)
+{
+	if (treat_single_exp(&(r->redirectee.filename), 1))
+		r->error = e_bad_substitution;
+	else if (rm_quotes(&(r->redirectee.filename), NO_QUOTE))
+		r->error = e_cannot_allocate_memory;
+	else
+		return (0);
+	return (1);
+}
 
 int				has_redirections(int type)
 {
