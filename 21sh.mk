@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/14 15:42:51 by yforeau          ###   ########.fr        #
+#    Updated: 2020/05/15 14:26:43 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,6 +70,7 @@ SOURCES :=	main.c \
 		process.c \
 		quotes.c \
 		redir.c \
+		redir_utils.c \
 		redir_less.c \
 		redir_great.c \
 		redir_great2.c \
