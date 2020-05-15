@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 10:15:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 13:43:14 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,21 +108,24 @@ int			treat_expansions(t_process *p)
 	int	i;
 	int	ret;
 	int	skip;
+	int	fields;
 
 	i = 0;
+	ret = 0;
 	if (!p->argv || !*p->argv)
 		return (e_invalid_input);
-	while (i < p->argc)
+	while (!ret && i < p->argc)
 	{
-		skip = 0;
-		ret = treat_single_exp(p->argv + i, 1)
-			|| pathname_expansion(p, i, &skip);
-		if (ret)
-			return (ret);
-		else if (!skip)
-			ret = rm_quotes(p->argv + i, NO_QUOTE);
-		i += skip ? skip : 1;
+		fields = 1;
+		ret = treat_single_exp(p->argv + i, 1);
+		ret = !ret ? field_split(p, i, &fields) : ret;
+		while (!ret && fields--)
+		{
+			skip = 0;
+			ret = !ret ? pathname_expansion(p, i, &skip) : ret;
+			ret = !ret && !skip ? rm_quotes(p->argv + i, NO_QUOTE) : ret;
+			i += skip ? skip : 1;
+		}
 	}
-	trim_argv(p);
 	return (e_success);
 }

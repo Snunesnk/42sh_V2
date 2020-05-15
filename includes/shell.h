@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 10:15:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/15 15:58:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 # define SHVAR_RM_MASK			0x00ff00
 # define SHVAR_OVERWRITE_MASK	0xff0000
 
+# define IONONE		0x0
 # define IOTYPE		0xF
 # define IOREAD		0x1
 # define IOWRITE	0x2
@@ -227,6 +228,7 @@ extern sigset_t					g_save_procmask;
 
 int								launch_builtin(t_process *p);
 int								has_redirections(int type);
+int								fd_need_be_open(t_redirection *r);
 int								is_redir_type(int type);
 t_redirection					*build_redirections(t_list **lst);
 int								get_tokentype(t_list *lst);
@@ -384,7 +386,6 @@ int								treat_shell_variables(t_process *p,
 void							unset_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
-void							trim_argv(t_process *p);
 
 int								execute_pipeline(t_ast *node, int foreground);
 int								execute_semi(t_ast *node, int foreground);
@@ -426,6 +427,9 @@ int								tilde_expansion(size_t *index, char **str, \
 		const char *opentag, const char *closetag);
 int								pathname_expansion(t_process *p, int i, \
 		int *skip);
+int								replace_fields(t_process *p, int i,
+		char **av, int ac);
+int								field_split(t_process *p, int i, int *fields);
 void							load_config(void);
 int								is_valid_redir(t_list *lst);
 
