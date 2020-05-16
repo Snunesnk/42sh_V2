@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/17 18:19:12 by yforeau           #+#    #+#             */
-/*   Updated: 2020/04/18 02:08:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/16 17:37:16 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,14 +88,16 @@ int				set_shell_var(const char *name, const char *value,
 	if (!(new_var.name = ft_strdup(name))
 		|| (value && !(new_var.value = ft_strdup(value))))
 		ret = FAILURE;
+	if (ret == SUCCESS)
+		treat_single_exp(&(new_var.value), 1);
 	if (ret == SUCCESS && orig_var && (flags & TEMP))
 		ret = set_shell_var_internal(NULL, orig_var, &g_tmp_env);
-	if (ret == SUCCESS)
-		ret = set_shell_var_internal(orig_var, &new_var, svar_lst);
 	if (ret == FAILURE)
 	{
 		ft_strdel(&new_var.name);
 		ft_strdel(&new_var.value);
 	}
+	else
+		ret = set_shell_var_internal(orig_var, &new_var, svar_lst);
 	return (ret);
 }
