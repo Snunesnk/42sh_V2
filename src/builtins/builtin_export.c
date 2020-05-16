@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 20:22:09 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/16 10:21:39 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,30 @@ static int	print_export(t_shell_var *svar)
 	return (0);
 }
 
+static void	export_var(char *name, char *value, uint64_t flags)
+{
+	if (unset_shell_var(name, &g_tmp_env) == SUCCESS)
+	{
+		if (value)
+			set_shell_var(name, value, TEMP >> SHVAR_RM_OFF, &g_env);
+		else
+			flag_shell_var(name, TEMP >> SHVAR_RM_OFF, g_env);
+	}
+	else if (value)
+		set_shell_var(name, value, flags | SET, &g_env);
+	else if (flags)
+	{
+		if (flag_shell_var(name, flags >> SHVAR_ADD_OFF, g_env) == FAILURE)
+			set_shell_var(name, value, flags, &g_env);
+	}
+	else
+		flag_shell_var(name, EXPORT >> SHVAR_RM_OFF, g_env);
+}
+
 static int	exec_export(char **args, int option)
 {
-	char		*name;
 	char		*value;
+	char		*name;
 	uint64_t	flags;
 	int			ret;
 
@@ -40,15 +60,8 @@ static int	exec_export(char **args, int option)
 			*value++ = 0;
 		if (!*name || *name == '=')
 			ret = pbierror("'%s': not a valid identifier", name);
-		else if (value)
-			set_shell_var(name, value, flags | SET, &g_env);
-		else if (flags)
-		{
-			if (flag_shell_var(name, flags >> SHVAR_ADD_OFF, g_env) == FAILURE)
-				set_shell_var(name, value, flags, &g_env);
-		}
 		else
-			flag_shell_var(name, EXPORT >> SHVAR_RM_OFF, g_env);
+			export_var(name, value, flags);
 	}
 	return (!!ret);
 }
