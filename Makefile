@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/16 15:00:00 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/16 15:02:39 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ $(NAME): $(PATH_LIB)libft.a $(OBJECTS)
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
 	@cp -n .monkeyshellrc ~/ || true
 
-libft/libft.a: dep
+$(PATH_LIB)libft.a: dep
 	@$(MAKE) lib -j -C $(PATH_LIB)
 
 dep:
