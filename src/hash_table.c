@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 21:01:22 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/24 20:10:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/15 20:17:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int				add_name_hash_table(char *name, int nb)
 	char	*pathname;
 	int		status;
 
-	if (!name)
+	if (!name || !*name)
 		return (e_command_not_found);
 	if (is_a_builtin(name))
 		return (e_command_not_found);
