@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/16 10:21:39 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/16 10:41:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ static void	export_var(char *name, char *value, uint64_t flags)
 	{
 		if (value)
 			set_shell_var(name, value, TEMP >> SHVAR_RM_OFF, &g_env);
-		else
-			flag_shell_var(name, TEMP >> SHVAR_RM_OFF, g_env);
 	}
 	else if (value)
 		set_shell_var(name, value, flags | SET, &g_env);
@@ -43,6 +41,7 @@ static void	export_var(char *name, char *value, uint64_t flags)
 	}
 	else
 		flag_shell_var(name, EXPORT >> SHVAR_RM_OFF, g_env);
+	flag_shell_var(name, TEMP >> SHVAR_RM_OFF, g_env);
 }
 
 static int	exec_export(char **args, int option)
