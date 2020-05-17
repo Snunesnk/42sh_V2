@@ -6,12 +6,19 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 12:02:24 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/17 18:23:26 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
+
+int		is_valid_identifier(const char *str, const char *stop)
+{
+	while (*str && str != stop && (*str == '_' || ft_isalnum(*str)))
+		++str;
+	return (stop ? str == stop : !*str);
+}
 
 char	*is_valid_assignment(const char *str)
 {
@@ -19,9 +26,7 @@ char	*is_valid_assignment(const char *str)
 
 	if (!str || !(equal = ft_strchr(str, '=')) || equal == str)
 		return (NULL);
-	while (*str && (*str == '_' || ft_isalnum(*str)))
-		++str;
-	return (str == equal ? equal : NULL);
+	return (is_valid_identifier(str, equal) ? equal : NULL);
 }
 
 int		get_assignment(const char *assignment, char **name, char **value)

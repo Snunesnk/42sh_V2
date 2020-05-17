@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 16:44:23 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/17 18:30:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,6 +369,8 @@ t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
 int								subprompt(int fd, t_list **lst, int qmode);
 int								check_alias(t_list **lst, int check);
+int								is_valid_identifier(const char *str,
+		const char *stop);
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,
 									char **name, char **value);
