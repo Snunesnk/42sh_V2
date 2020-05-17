@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 15:44:07 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/17 16:46:05 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ extern _Bool	g_onecmd;
 extern _Bool	g_verbose;
 extern _Bool	g_emacs;
 extern _Bool	g_vim;
-int				g_jump_arg;
+extern int		g_jump_arg;
 
 /*
 ** Set function to change binding mode
