@@ -18,9 +18,9 @@ static int	print_export(t_shell_var *svar)
 	if (svar->flag & EXPORT)
 	{
 		if (svar->value == NULL)
-			ft_printf("declare -x %s\n", svar->name);
+			ft_printf("export %s\n", svar->name);
 		else
-			ft_printf("declare -x %s=\"%s\"\n", svar->name, svar->value);
+			ft_printf("export %s=\"%s\"\n", svar->name, svar->value);
 	}
 	return (0);
 }

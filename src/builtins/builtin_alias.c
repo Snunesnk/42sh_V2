@@ -16,7 +16,7 @@
 
 static int	print_alias(t_shell_var *svar)
 {
-	ft_printf("alias %s='%s'\n", svar->name, svar->value);
+	ft_printf("%s='%s'\n", svar->name, svar->value);
 	return (0);
 }
 

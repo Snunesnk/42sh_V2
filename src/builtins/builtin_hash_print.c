@@ -33,8 +33,6 @@ int		print_hashed_commands(int options_list)
 		}
 		i++;
 	}
-	if (!nb)
-		ft_printf("%s: hash table empty\n", g_builtin_name);
 	return (0);
 }
 
