@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 20:18:20 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/17 16:00:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,15 @@ int			treat_single_exp(char **str, int tilde)
 	int		ret;
 	int		qmode;
 	char	*next;
+	char	*equal;
 
-	next = *str;
+	equal = is_valid_assignment(*str);
+	next = equal ? ++equal : *str;
 	qmode = NO_QUOTE;
 	while ((next = get_closest_exp(next, tilde, &ref, &qmode)))
 	{
-		if (tilde && (next > *str || (next[1] && next[1] != '/')))
+		if (tilde && ((equal ? next > equal : next > *str)
+			|| (next[1] && next[1] != '/')))
 			tilde = 0;
 		if (!tilde && *next == '~')
 			continue ;
