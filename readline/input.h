@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 12:08:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/17 16:43:18 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INPUT_H
 # define INPUT_H
 
-int						g_add_back_buf;
+extern int				g_add_back_buf;
 extern struct s_stack	*g_back;
 
 union					u_buffer
