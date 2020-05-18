@@ -23,12 +23,11 @@ static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 	*ref = -1;
 	closest = NULL;
 	orig_qmode = *qmode;
-	while (*(g_tags[i].opentag))
+	while (*g_tags[i].opentag && (tilde || *g_tags[i].opentag != '~'))
 	{
 		tmp_qmode = orig_qmode;
-		if (!tilde && !ft_strcmp("~", g_tags[i].opentag))
-			break ;
-		ptr = ft_strstr_qmode(str, g_tags[i].opentag, DQUOTE, &tmp_qmode);
+		ptr = ft_strstr_qmode(str, g_tags[i].opentag,
+			*g_tags[i].opentag == '~' ? NO_QUOTE : DQUOTE, &tmp_qmode);
 		if (ptr && (!closest || ptr < closest))
 		{
 			*qmode = tmp_qmode;
