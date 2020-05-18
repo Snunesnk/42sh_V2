@@ -39,6 +39,37 @@ int			replace_fields(t_process *p, int i, char **av, int ac)
 	return (e_success);
 }
 
+static char		*build_glob_pattern(const char *arg)
+{
+	int	qmode;
+	int	old_qmode;
+	char	*ptr;
+	char	*pattern;
+
+	if (!(pattern = ft_strnew(ft_strlen(arg) * 2)))
+		return (NULL);
+	ft_strcpy(pattern, arg);
+	ptr = pattern;
+	qmode = NO_QUOTE;
+	while (*ptr)
+	{
+		old_qmode = qmode;
+		qmode = get_qmode(old_qmode, *ptr);
+		if (qmode != (old_qmode & ~BSQUOTE) && qmode != BSQUOTE)
+			ft_memmove((void *)ptr, (void *)ptr + 1, ft_strlen(ptr + 1) + 1);
+		else if ((qmode & ~BSQUOTE) && !(qmode & BSQUOTE)
+			&& !(old_qmode & BSQUOTE) && ft_strchr("\\{}?[]*", *ptr))
+		{
+			ft_memmove((void *)ptr + 1, (void *)ptr, ft_strlen(ptr) + 1);
+			*ptr = '\\';
+			ptr += 2;
+		}
+		else
+			++ptr;
+	}
+	return (pattern);
+}
+
 /*
 ** TODO: find a way not to copy the string each time and to use GLOB_APPEND
 ** instead of copying the entire argv each time
@@ -48,11 +79,15 @@ int			pathname_expansion(t_process *p, int i, int *skip)
 {
 	t_glob	gl;
 	int		ret;
+	char	*pattern;
 
 	if (!has_unquoted_spec_chars(p->argv[i], "{?[*"))
 		return (e_success);
 	ft_bzero(&gl, sizeof(t_glob));
-	ret = ft_glob(p->argv[i], FT_GLOB_BRACE, NULL, &gl);
+	if (!(pattern = build_glob_pattern(p->argv[i])))
+		return (e_cannot_allocate_memory);
+	ret = ft_glob(pattern, FT_GLOB_BRACE, NULL, &gl);
+	ft_memdel((void **)&pattern);
 	if (!ret)
 	{
 		*skip = gl.gl_pathc;
