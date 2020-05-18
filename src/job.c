@@ -62,7 +62,7 @@ static void	execute(t_job *j, t_exec *e, int foreground)
 	{
 		if (e->infile != e->mypipe[0] && e->mypipe[0] != -1)
 			close(e->mypipe[0]);
-		treat_shell_variables(e->p, SET | EXPORT);
+		treat_shell_variables(e->p, SET | EXPORT | TEMP);
 		e->p->infile = e->infile;
 		e->p->errfile = j->stderr;
 		e->p->outfile = e->outfile;
