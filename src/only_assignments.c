@@ -15,6 +15,8 @@
 
 int		is_valid_identifier(const char *str, const char *stop)
 {
+	if (!str || !*str)
+		return (0);
 	while (*str && str != stop && (*str == '_' || ft_isalnum(*str)))
 		++str;
 	return (stop ? str == stop : !*str);
