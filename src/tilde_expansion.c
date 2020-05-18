@@ -35,59 +35,34 @@ static int	replace_tilde(char **str, char *start, char *env)
 {
 	char	*cpy;
 
-	if (!env)
-	{
-		if (!(cpy = ft_strjoin("", start)))
-			return (e_cannot_allocate_memory);
-	}
-	else
-	{
-		if (!(cpy = ft_strjoin(env, start)))
-			return (e_cannot_allocate_memory);
-	}
+	if (!(cpy = ft_strjoin(env, start)))
+		return (e_cannot_allocate_memory);
 	*str = cpy;
 	return (e_success);
-}
-
-static void	test_syntax(size_t *index, char **str, int *ret)
-{
-	char	*env;
-
-	if (!(*str)[1] || (*str)[1] == '/')
-	{
-		env = get_home_value();
-		*index = ft_strlen(env);
-		*ret = replace_tilde(str, &(*str)[1], env);
-	}
-	else if ((*str)[1] == '-' && ((*str)[2] == '/' || !(*str)[2]))
-	{
-		env = get_shell_var("OLDPWD", g_env);
-		*index = ft_strlen(env);
-		*ret = replace_tilde(str, &(*str)[2], env);
-	}
-	else if ((*str)[1] == '+' && ((*str)[2] == '/' || !(*str)[2]))
-	{
-		env = get_shell_var("PWD", g_env);
-		*index = ft_strlen(env);
-		*ret = replace_tilde(str, &(*str)[2], env);
-	}
-	else
-	{
-		*ret = replace_tilde(str, &(*str)[1], "~");
-		*index = 1;
-	}
 }
 
 int			tilde_expansion(size_t *index, char **str, const char *opentag,
 		const char *closetag)
 {
 	int	ret;
+	char	*env;
 
 	(void)opentag;
 	(void)closetag;
 	ret = e_success;
 	if (!*index)
-		test_syntax(index, str, &ret);
+	{
+		if ((*str)[1] == '-')
+			env = get_shell_var("OLDPWD", g_env);
+		else if ((*str)[1] == '+')
+			env = get_shell_var("PWD", g_env);
+		else
+			env = get_home_value();
+		env = !env ? "~" : env;
+		*index = ft_strlen(env);
+		ret = replace_tilde(str, (*str) + 1
+			+ ((*str)[1] && ft_strchr("+-", (*str)[1])), env);
+	}
 	else
 	{
 		ret = replace_tilde(str, &(*str)[1], "~");

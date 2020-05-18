@@ -35,7 +35,8 @@ SOURCES :=	main.c \
 		execute_job2.c \
 		execute_job3.c \
 		execute_process.c \
-		expansions.c \
+		treat_expansions.c \
+		treat_single_exp.c \
 		expansion_utils.c \
 		subshell_utils.c \
 		ft_merge_sort.c \
