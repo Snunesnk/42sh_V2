@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 17:26:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/18 14:42:25 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,14 @@ char		*ft_readline(char *prompt)
 	set_prompt(prompt);
 	free(prompt);
 	display_prompt();
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	input = NULL;
 	input = readline_internal();
 	input = hist_expanse(input);
 	deprep_terminal();
 	rl_clear_signals();
-	if (input)
+	if (g_input_break)
+		ft_putchar('\r');
+	else if (input)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	if (g_verbose)
 		ft_printf("%s\n", input);
