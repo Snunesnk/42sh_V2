@@ -91,8 +91,9 @@ int			cmd_export(int ac, char **av)
 			return (2);
 		}
 	}
-	if (*av && **av)
-		return (exec_export(av, option));
-	print_shell_var(g_env, print_export);
-	return (0);
+	if (!*av)
+		print_shell_var(g_env, print_export);
+	ret = exec_export(av, option);
+	set_temp_shell_variables();
+	return (ret);
 }
