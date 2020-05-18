@@ -386,6 +386,7 @@ int								set_minimal_env(void);
 int								treat_shell_variables(t_process *p,
 		uint64_t flags);
 void							unset_temp_shell_variables(void);
+void							set_temp_shell_variables(void);
 int								treat_single_exp(char **str, int tilde);
 int								treat_expansions(t_process *p);
 int								expand_filename(t_redirection *r, char **word);

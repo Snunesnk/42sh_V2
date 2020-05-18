@@ -41,6 +41,24 @@ void		unset_temp_shell_variables(void)
 	ft_merge_sort(&g_env, alpha_sort);
 }
 
+void		set_temp_shell_variables(void)
+{
+	t_list		*lst;
+	t_shell_var	*svar;
+
+	lst = g_env;
+	while (lst)
+	{
+		svar = (t_shell_var *)lst->content;
+		if (svar->flag & TEMP)
+		{
+			svar->flag &= ~TEMP;
+			unset_shell_var(svar->name, &g_tmp_env);
+		}
+		lst = lst->next;
+	}
+}
+
 int			treat_shell_variables(t_process *p, uint64_t flags)
 {
 	char			*name;
