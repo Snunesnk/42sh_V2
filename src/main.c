@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 13:27:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 16:31:09 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/18 14:29:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int			exit_clean(int ret)
 		g_pending_cmd = tmp;
 	}
 	free(g_dis.prompt);
-	free_hash_table();
 	exit(ret);
 	return (ret);
 }
