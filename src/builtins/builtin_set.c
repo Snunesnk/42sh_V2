@@ -26,13 +26,16 @@ static void	print_set(void)
 {
 	t_shell_var	*var;
 	t_list		*list;
+	char		*value;
 
 	list = g_env;
 	while (list)
 	{
 		var = ((t_shell_var*)(list->content));
-		if ((var->flag & SET))
-			ft_printf("%s=%s\n", var->name, var->value);
+		value = var->flag & TEMP ? get_shell_var(var->name, g_tmp_env)
+			: var->value;
+		if (value)
+			ft_printf("%s=%s\n", var->name, value);
 		list = list->next;
 	}
 }

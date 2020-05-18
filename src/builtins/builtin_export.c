@@ -15,12 +15,16 @@
 
 static int	print_export(t_shell_var *svar)
 {
-	if (svar->flag & EXPORT)
+	char	*value;
+
+	if ((svar->flag & EXPORT) && !(svar->flag & TEMP))
 	{
-		if (svar->value == NULL)
+		value = svar->flag & TEMP ? get_shell_var(svar->name, g_tmp_env)
+			: svar->value;
+		if (value == NULL)
 			ft_printf("export %s\n", svar->name);
 		else
-			ft_printf("export %s=\"%s\"\n", svar->name, svar->value);
+			ft_printf("export %s=\"%s\"\n", svar->name, value);
 	}
 	return (0);
 }
