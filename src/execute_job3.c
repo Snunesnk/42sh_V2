@@ -6,14 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:30 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/11 19:24:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/18 13:47:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 
-char	**dup_tok_argv(t_list *lst, int argc, char **argv)
+char		**dup_tok_argv(t_list *lst, int argc, char **argv)
 {
 	int i;
 
@@ -39,26 +39,45 @@ char	**dup_tok_argv(t_list *lst, int argc, char **argv)
 	return (argv);
 }
 
-int		ft_atoifd(const char *str)
+static int	sum_over(int a, int b, int mxd, int mxm)
 {
-	unsigned long	nbr;
-	int				i;
-	unsigned short	val;
+	if (a == mxd)
+	{
+		if (b <= mxm)
+			return (a * 10 + b);
+		else
+			return (-1);
+	}
+	else if (a > mxd)
+		return (-1);
+	else
+		return (a * 10 + b);
+}
+
+int			ft_atoifd(const char *str)
+{
+	int	nbr;
+	int	i;
+	int	val;
+	int	mxd;
+	int	mxm;
 
 	i = 0;
 	nbr = 0;
+	mxd = INT_MAX / 10;
+	mxm = INT_MAX % 10;
 	while (str[i] && str[i] > 47 && str[i] < 58)
 	{
 		val = str[i] ^ ((1 << 5) | (1 << 4));
-		if (nbr > nbr * 10 + val)
+		nbr = sum_over(nbr, val, mxd, mxm);
+		if (nbr == -1)
 			return (-1);
-		nbr = nbr * 10 + val;
 		++i;
 	}
 	return (nbr);
 }
 
-char	*dup_token_value(char **argv, int i, t_list *lst)
+char		*dup_token_value(char **argv, int i, t_list *lst)
 {
 	char	**wt;
 
