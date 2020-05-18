@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:58:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 18:35:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/18 13:37:48 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,17 @@ static char	*recup_input(int fd, int quote_set, char *prompt)
 	input = NULL;
 	first_iter = 1;
 	last_lines = NULL;
-	while ((first_iter-- > 0 || last_lines))
+	while (first_iter || last_lines)
 	{
 		if (g_shell_is_interactive && fd == STDIN_FILENO)
-			input = ft_readline(!first_iter ? prompt : "> ");
+			input = ft_readline(first_iter ? prompt : "> ");
 		else if (get_stdin(fd, &input) < 0)
 			break ;
 		if (g_retval == 130)
 			break ;
 		if (input && quote_set != NO_QUOTE)
 			input = append_line(&last_lines, input, quote_set);
+		first_iter = 0;
 	}
 	if (!input && last_lines)
 		input = last_lines;

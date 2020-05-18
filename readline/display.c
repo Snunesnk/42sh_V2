@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 18:21:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/18 13:41:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	display_prompt(void)
 {
 	char	*prompt;
 
-	if (g_retval == 130 && !g_dumb_term)
+	if (g_retval == 130 && !g_dumb_term && !g_hist_lookup)
 	{
 		prompt = get_prompt();
 		set_prompt(prompt);
