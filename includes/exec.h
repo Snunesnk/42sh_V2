@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:27:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/16 17:30:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 09:22:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ struct	s_exec
 	int			mypipe[2];
 	int			infile;
 	int			outfile;
+	int			only_assignments;
 };
 
 typedef struct s_exec	t_exec;
