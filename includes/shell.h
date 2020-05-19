@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 09:59:01 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 17:27:04 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,8 +387,11 @@ int								treat_shell_variables(t_process *p,
 		uint64_t flags);
 void							unset_temp_shell_variables(void);
 void							set_temp_shell_variables(void);
+int								replace_expansion(char **token,
+	char **next, int ref);
 int								treat_single_exp(char **str,
 	int tilde, char *equal);
+int								expand_heredoc(char **hereword);
 int								treat_expansions(t_process *p,
 	int *only_assignments);
 int								expand_filename(t_redirection *r, char **word);
@@ -413,6 +416,8 @@ struct							s_tags
 	int		(*f)(size_t*, char**, const char*, const char*);
 	char	*closetag;
 };
+
+extern const struct s_tags		g_tags[];
 
 struct							s_param
 {
