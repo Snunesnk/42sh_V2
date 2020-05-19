@@ -84,6 +84,7 @@ SOURCES :=	main.c \
 		load_config.c \
 		field_split.c \
 		heredoc.c \
+		get_str_qmode.c \
 		builtins/builtin_fg.c \
 		builtins/builtin_fc.c \
 		builtins/builtin_fc_list_edit.c \
