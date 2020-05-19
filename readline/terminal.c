@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 23:40:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 13:09:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,25 @@ void		resize_terminal(int signo)
 	redisplay_after_sigwinch();
 }
 
+static int	set_fd(void)
+{
+	char	*name;
+
+	name = ttyname(STDOUT_FILENO);
+	if (name)
+		g_dis.fd = open(name, O_RDWR);
+	if (g_dis.fd == -1)
+		return (-1);
+	return (e_success);
+}
+
 int			init_terminal(void)
 {
 	char	buffer[2048];
 
 	ft_bzero(buffer, 2048);
+	if (set_fd())
+		return (-1);
 	if (g_term.terminal_name == NULL)
 		g_term.terminal_name = "dumb";
 	if (get_screensize(STDIN_FILENO) == -1)
