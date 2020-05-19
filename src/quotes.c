@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 12:37:44 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 22:47:17 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,29 @@ char	*ft_strstr_qmode(const char *str, const char *to_find,
 	return (l ? 0 : (char *)str);
 }
 
+static char	*get_new_str(char **str)
+{
+	char	*ptr;
+	char	c;
+	int		i;
+
+	i = 0;
+	ptr = *str;
+	c = 0;
+	while (ptr[i])
+	{
+		if (ptr[i] == '$' && !c && ptr[i + 1])
+		{
+			if (ft_strchr("'\"", ptr[i + 1]))
+				ft_memmove(ptr + i, ptr + i + 1, ft_strlen(ptr + i));
+		}
+		if (ft_strchr("'\"", ptr[i]))
+			c = (c) ? 0 : ptr[i];
+		i++;
+	}
+	return (ptr);
+}
+
 int		rm_quotes(char **str, int old_qmode)
 {
 	char	*dup;
@@ -58,7 +81,7 @@ int		rm_quotes(char **str, int old_qmode)
 	char	*pstr;
 	int		qmode;
 
-	pstr = *str;
+	pstr = get_new_str(str);
 	dup = NULL;
 	pdup = NULL;
 	while (*pstr)
@@ -75,7 +98,7 @@ int		rm_quotes(char **str, int old_qmode)
 		old_qmode = qmode;
 		++pstr;
 	}
-	*str = dup ? ft_strcpy(*str, dup) : *str;
+	*str = (dup) ? ft_strcpy(*str, dup) : *str;
 	free(dup);
 	return (e_success);
 }

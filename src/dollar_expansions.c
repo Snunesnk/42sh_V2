@@ -6,15 +6,16 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/14 22:04:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 20:00:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+#include "quotes.h"
 
-int	dollar_expansions(size_t *index, char **str, const char *opentag,
+int			dollar_expansions(size_t *index, char **str, const char *opentag,
 		const char *closetag)
 {
 	struct s_param_exp	exp;
@@ -24,8 +25,7 @@ int	dollar_expansions(size_t *index, char **str, const char *opentag,
 	exp.lclose = ft_strlen(closetag);
 	exp.rest = &(*str)[exp.lopen + exp.lvarname + exp.lclose];
 	exp.lrest = ft_strlen(exp.rest);
-	if ((exp.ret = getenv_content(&exp.content, &(*str)[exp.lopen],
-					closetag)))
+	if ((exp.ret = getenv_content(&exp.content, &(*str)[exp.lopen], closetag)))
 		return (exp.ret);
 	exp.lcontent = ft_strlen(exp.content);
 	if (!(exp.new = (char*)ft_memalloc(sizeof(char)
