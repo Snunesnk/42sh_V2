@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 18:39:27 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 18:40:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,6 +390,7 @@ void							unset_temp_shell_variables(void);
 void							set_temp_shell_variables(void);
 int								treat_single_exp(char **str,
 	int tilde, char *equal);
+int								expand_heredoc(char **hereword);
 int								treat_expansions(t_process *p,
 	int *only_assignments);
 char							*get_user_home(char *start, char *end);
@@ -415,6 +416,8 @@ struct							s_tags
 	int		(*f)(size_t*, char**, const char*, const char*);
 	char	*closetag;
 };
+
+extern const struct s_tags		g_tags[];
 
 struct							s_param
 {

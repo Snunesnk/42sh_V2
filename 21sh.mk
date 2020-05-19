@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/19 18:37:38 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/19 18:40:46 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,6 +84,7 @@ SOURCES :=	main.c \
 		load_config.c \
 		field_split.c \
 		heredoc.c \
+		expand_heredoc.c \
 		get_str_qmode.c \
 		userpwd.c \
 		builtins/builtin_fg.c \
