@@ -21,13 +21,9 @@ static char	*return_heredoc(char *tmp, char *hereword)
 
 static int	get_heredoc_qmode(char **eof, int qmode)
 {
-	size_t	orig;
-
-	orig = ft_strlen(*eof);
+	qmode = ft_strchr(*eof, '"') || ft_strchr(*eof, '\'') ? NO_QUOTE : qmode;
 	rm_quotes(eof, NO_QUOTE);
-	if (ft_strlen(*eof) == orig)
-		return (qmode);
-	return (NO_QUOTE);
+	return (qmode);
 }
 
 char		*heredoc(int fd, char **eof, int qmode)
