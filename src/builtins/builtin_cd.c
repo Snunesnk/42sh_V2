@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 12:28:39 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:27:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ static int	cd_parse_opt(int argc, char **argv, _Bool *p)
 			pbierror("usage: %s [-L|-P] [dir]", g_builtin_name);
 			return (2);
 		}
+	}
+	if (g_optind != argc - 1)
+	{
+			pbierror("%s: too many arguments", g_builtin_name);
+			return (1);
 	}
 	return (e_success);
 }
@@ -67,10 +72,11 @@ int			cd_internal(char *directory, _Bool p_option)
 int			cmd_cd(int argc, char **argv)
 {
 	_Bool	p_option;
+	int	err;
 
 	p_option = 0;
-	if (cd_parse_opt(argc, argv, &p_option))
-		return (2);
+	if ((err = cd_parse_opt(argc, argv, &p_option)))
+		return (err);
 	else
 		return (cd_internal(argv[g_optind], p_option));
 }
