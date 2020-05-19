@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 16:27:00 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 20:39:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	cd_parse_opt(int argc, char **argv, _Bool *p)
 			return (2);
 		}
 	}
-	if (g_optind != argc - 1)
+	if (argc - g_optind >1)
 	{
 			pbierror("%s: too many arguments", g_builtin_name);
 			return (1);
