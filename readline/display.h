@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:46 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 23:42:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 13:07:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ struct	s_display
 	int		real_prompt_l;
 	int		start_offset;
 	int		start_line;
+	int		fd;
 };
 
 struct	s_line_state
