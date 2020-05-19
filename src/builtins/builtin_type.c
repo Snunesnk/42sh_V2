@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/21 08:22:22 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 11:26:44 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,9 @@ int				cmd_type(int argc, char **argv)
 	error = 0;
 	while (*++argv)
 	{
-		if ((str = get_shell_var(*argv, g_alias)))
+		if (!access(*argv, F_OK))
+			ft_printf("%s is %s\n", *argv, *argv);
+		else if ((str = get_shell_var(*argv, g_alias)))
 			ft_printf("%s is aliased to `%s'\n", *argv, str);
 		else if (is_a_builtin(*argv))
 			ft_printf("%s is a shell builtin\n", *argv);
