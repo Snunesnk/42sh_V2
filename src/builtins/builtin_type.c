@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 11:37:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 12:09:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int				cmd_type(int argc, char **argv)
 	error = 0;
 	while (*++argv)
 	{
-		if (!access(*argv, F_OK))
+		if (!access(*argv, X_OK) && ft_strstr(*argv, "/"))
 			ft_printf("%s is %s\n", *argv, *argv);
 		else if ((str = get_shell_var(*argv, g_alias)))
 			ft_printf("%s is aliased to `%s'\n", *argv, str);
