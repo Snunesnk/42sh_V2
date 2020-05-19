@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/17 13:39:56 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 16:10:22 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,37 @@
 #include "shell.h"
 #include "error.h"
 
-int	path_concat(char **bin, char *beg, char *env, char *dir)
+static void	remove_doubleslash(char *str)
+{
+	char	*ptr;
+
+	while ((ptr = ft_strstr(str, "//")))
+	{
+		ft_memmove(ptr, (ptr + 1), ft_strlen((ptr + 1)));
+		while (*(ptr + 1))
+			++ptr;
+		while (*ptr)
+		{
+			*ptr = '\0';
+			++ptr;
+		}
+	}
+}
+
+char		*fullpath_concat(char *dir)
+{
+	char	*path;
+	char	*wd;
+
+	wd = getcwd(NULL, 0);
+	path = ft_strnjoin(3, wd, "/", dir);
+	free(wd);
+	free(dir);
+	remove_doubleslash(path);
+	return (path);
+}
+
+int			path_concat(char **bin, char *beg, char *env, char *dir)
 {
 	char	*pathname;
 

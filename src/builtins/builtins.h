@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 16:46:05 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 16:11:14 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ char			*get_oldpwd(void);
 int				change_dir(char **curpath, const char *directory, \
 						_Bool p_option);
 int				cd_internal(char *directory, _Bool p_option);
+char			*fullpath_concat(char *dir);
 
 extern char	*g_pathname;
 
