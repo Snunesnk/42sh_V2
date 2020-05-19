@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/18 14:31:50 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 15:15:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	clear_scr(void)
 
 void	rl_void(void)
 {
-	ft_putstr(g_termcaps.bl);
+	ft_putstr_fd(g_termcaps.bl, g_dis.fd);
 }
 
 void	paste_via_input(unsigned long v)
