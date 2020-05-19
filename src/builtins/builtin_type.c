@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 12:09:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 16:07:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,11 @@ static char		*getbinpath(char *bin)
 	if (!(cpy = ft_strdup(bin)))
 		return (NULL);
 	if (path_concat(&cpy, NULL, NULL, NULL) == e_success)
+	{
+		if (cpy && *cpy != '/')
+			cpy = fullpath_concat(cpy);
 		return (cpy);
+	}
 	else
 	{
 		ft_memdel((void**)&cpy);
