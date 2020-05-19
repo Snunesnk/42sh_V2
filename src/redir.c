@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:03 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 19:53:18 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 09:47:12 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 int				expand_filename(t_redirection *r, char **word)
 {
-	if (treat_single_exp(word, 1))
+	if (treat_single_exp(word, 1, NULL))
 		r->error = e_bad_substitution;
 	else if (rm_quotes(word, NO_QUOTE))
 		r->error = e_cannot_allocate_memory;
