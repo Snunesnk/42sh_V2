@@ -43,7 +43,6 @@ t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
 	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
-	expand_filename(r, &r->redirector.hereword);
 	(*lst) = (*lst)->next;
 	return (r);
 }

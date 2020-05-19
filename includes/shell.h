@@ -368,6 +368,7 @@ int								initialize_prompt_fd(void);
 t_list							*lexer(const char *str);
 t_list							*list_tokens(const char *input);
 int								subprompt(int fd, t_list **lst, int qmode);
+char							*heredoc(int fd, char **eof, int qmode);
 int								check_alias(t_list **lst, int check);
 int								is_valid_identifier(const char *str,
 		const char *stop);
