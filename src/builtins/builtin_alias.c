@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/26 18:43:06 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 10:22:15 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	add_alias(char **av)
 	{
 		ret = FAILURE;
 		name = *av;
-		if (get_assignment(*av, &name, &value) == SUCCESS && value[1])
+		if (get_assignment(*av, &name, &value) == SUCCESS)
 		{
 			*value = 0;
 			ret = set_shell_var(name, value + 1, 0, &g_alias);
