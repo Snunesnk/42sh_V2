@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 14:58:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 12:28:39 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			cd_internal(char *directory, _Bool p_option)
 		curpath = concatenate_pwd(directory);
 	if (!curpath)
 		return (1);
-	if (curpath[0] == '/')
+	if (curpath[0] == '/' && !access(curpath, F_OK))
 		curpath = ft_resolvepath(curpath);
 	err = change_dir(&curpath, directory, p_option);
 	ft_memdel((void**)&curpath);
