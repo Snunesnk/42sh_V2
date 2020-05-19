@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 11:26:44 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/19 11:37:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,17 @@ static void		display_err_msg(_Bool *error, char *name)
 	pbierror("%s: not found", name);
 }
 
+static void		tests_suite(char **argv, _Bool *error, char *str)
+{
+	if ((str = getbinpath(*argv)))
+	{
+		ft_printf("%s is %s\n", *argv, str);
+		ft_memdel((void**)&str);
+	}
+	else
+		display_err_msg(error, *argv);
+}
+
 int				cmd_type(int argc, char **argv)
 {
 	_Bool			error;
@@ -90,13 +101,8 @@ int				cmd_type(int argc, char **argv)
 			ft_printf("%s is a shell keyword\n", *argv);
 		else if ((path = find_occurence(*argv)))
 			ft_printf("%s is hashed (%s)\n", *argv, path->command_path);
-		else if ((str = getbinpath(*argv)))
-		{
-			ft_printf("%s is %s\n", *argv, str);
-			ft_memdel((void**)&str);
-		}
 		else
-			display_err_msg(&error, *argv);
+			tests_suite(argv, &error, str);
 	}
 	return (error);
 }
