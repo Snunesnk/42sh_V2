@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/14 18:19:41 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 14:36:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	print_range(char *compl)
 			break ;
 		track++;
 	}
-	write(STDOUT_FILENO, compl, track);
+	write(g_dis.fd, compl, track);
 	if (g_dis.start_line + v_pos >= g_sc.height)
 		g_dis.start_line -= g_dis.start_line + v_pos - g_sc.height + 1;
 }
@@ -75,9 +75,9 @@ void		print_hist_compl(void)
 	if (hist_compl)
 	{
 		place_cursor(g_line.len);
-		ft_putstr(HIST_COMPL_COLOR);
+		ft_putstr_fd(HIST_COMPL_COLOR, g_dis.fd);
 		print_range(hist_compl + g_line.len);
-		ft_putstr(END_OF_COLOR);
+		ft_putstr_fd(END_OF_COLOR, g_dis.fd);
 		place_cursor(g_line.c_pos);
 	}
 	while (g_hist.offset < offset_save)
@@ -89,5 +89,5 @@ void		remove_completion(void)
 	if (g_dumb_term)
 		return ;
 	place_cursor(g_line.len);
-	ft_putstr(g_termcaps.clreol);
+	ft_putstr_fd(g_termcaps.clreol, g_dis.fd);
 }

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/18 14:42:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 14:40:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*readline_internal(void)
 		add_back();
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
 	remove_completion();
-	ft_putstr(g_termcaps.cd);
+	ft_putstr_fd(g_termcaps.cd, g_dis.fd);
 	return (value);
 }
 
@@ -95,10 +95,10 @@ char		*ft_readline(char *prompt)
 	deprep_terminal();
 	rl_clear_signals();
 	if (g_input_break)
-		ft_putchar('\r');
+		ft_putchar_fd('\r', g_dis.fd);
 	else if (input)
-		ft_putchar_fd('\n', STDOUT_FILENO);
+		ft_putchar_fd('\n', g_dis.fd);
 	if (g_verbose)
-		ft_printf("%s\n", input);
+		ft_dprintf(g_dis.fd, "%s\n", input);
 	return (input);
 }
