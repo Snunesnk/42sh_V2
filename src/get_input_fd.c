@@ -25,7 +25,7 @@ static char	*append_line(char **last_lines, char *input, int quote_set)
 		ft_memdel((void **)&input);
 		input = tmp;
 	}
-	if (input && ((qmode = get_str_qmode(NO_QUOTE, input)) & quote_set))
+	if (input && (qmode = get_str_qmode_set(NO_QUOTE, input, quote_set)))
 	{
 		if ((qmode & BSQUOTE) && (quote_set & BSQUOTE))
 		{

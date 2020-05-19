@@ -26,6 +26,7 @@ char	*ft_strstr_qmode(const char *str, const char *to_find,
 			int allowed_qmodes, int *qmode);
 int		rm_quotes(char **str, int old_qmode);
 int		has_unquoted_spec_chars(const char *str, const char *spec);
+int		get_str_qmode_set(int qmode, char *s, int quote_set);
 int		get_str_qmode(int qmode, char *s);
 
 #endif

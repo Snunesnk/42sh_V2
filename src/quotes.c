@@ -94,10 +94,3 @@ int		has_unquoted_spec_chars(const char *str, const char *spec)
 	}
 	return (0);
 }
-
-int		get_str_qmode(int qmode, char *s)
-{
-	while (*s)
-		qmode = get_qmode(qmode, *s++);
-	return (qmode);
-}
