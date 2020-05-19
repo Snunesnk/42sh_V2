@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   only_assignments.c                                 :+:      :+:    :+:   */
+/*   assignments.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/16 13:55:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 18:23:26 by yforeau          ###   ########.fr       */
+/*   Created: 2020/05/19 09:57:43 by yforeau           #+#    #+#             */
+/*   Updated: 2020/05/19 09:57:45 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,4 @@ int		get_assignment(const char *assignment, char **name, char **value)
 	if (!(*value = is_valid_assignment(assignment)))
 		return (FAILURE);
 	return (SUCCESS);
-}
-
-int		only_assignments(t_process *p)
-{
-	int i;
-
-	i = 0;
-	while (is_valid_assignment(p->argv[i]))
-		++i;
-	return (i > 0 && i == p->argc);
 }

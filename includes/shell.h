@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/17 18:30:04 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 09:59:01 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,7 +374,6 @@ int								is_valid_identifier(const char *str,
 char							*is_valid_assignment(const char *str);
 int								get_assignment(const char *assignment,
 									char **name, char **value);
-int								only_assignments(t_process *p);
 
 int								parser(t_list *lst, int fd);
 int								main_error(int status, t_list *lst);
@@ -387,8 +386,10 @@ int								treat_shell_variables(t_process *p,
 		uint64_t flags);
 void							unset_temp_shell_variables(void);
 void							set_temp_shell_variables(void);
-int								treat_single_exp(char **str, int tilde);
-int								treat_expansions(t_process *p);
+int								treat_single_exp(char **str,
+	int tilde, char *equal);
+int								treat_expansions(t_process *p,
+	int *only_assignments);
 int								expand_filename(t_redirection *r, char **word);
 
 int								execute_pipeline(t_ast *node, int foreground);

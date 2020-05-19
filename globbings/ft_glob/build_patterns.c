@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:14 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 12:05:58 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 09:47:49 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ t_list			*build_patterns(const char *pattern, t_glob_internal *gl)
 	if (!gl->ret && (gl->flags & FT_GLOB_BRACE))
 		expand_pattern_list(&pattern_list, gl);
 	if (!gl->ret && (gl->flags & FT_GLOB_TILDE))
-		treat_single_exp((char **)&(pattern_list->content), 1);
+		treat_single_exp((char **)&(pattern_list->content), 1, NULL);
 	return (pattern_list);
 }

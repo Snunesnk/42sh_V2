@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/15 17:45:06 by yforeau          ###   ########.fr        #
+#    Updated: 2020/05/19 09:57:21 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ SOURCES :=	main.c \
 		lexer.c \
 		lexer_utils.c \
 		manage_shell_var.c \
-		only_assignments.c \
+		assignments.c \
 		dollar_expansions.c \
 		parameter_expansions.c \
 		parser.c \

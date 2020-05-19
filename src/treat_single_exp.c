@@ -101,16 +101,15 @@ static int		expand_assignment_tildes(char **str, char *equal)
 	return (ret);
 }
 
-int			treat_single_exp(char **str, int tilde)
+int			treat_single_exp(char **str, int tilde, char *equal)
 {
 	int		ref;
 	int		ret;
 	int		qmode;
 	char	*next;
-	char	*equal;
 
 	ret = e_success;
-	if ((equal = is_valid_assignment(*str)) && tilde)
+	if (equal && tilde)
 	{
 		ret = expand_assignment_tildes(str, equal + 1);
 		tilde = 0;
