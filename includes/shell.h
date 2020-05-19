@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 09:59:01 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/19 18:39:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <pwd.h>
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -391,6 +392,7 @@ int								treat_single_exp(char **str,
 	int tilde, char *equal);
 int								treat_expansions(t_process *p,
 	int *only_assignments);
+char							*get_user_home(char *start, char *end);
 int								expand_filename(t_redirection *r, char **word);
 
 int								execute_pipeline(t_ast *node, int foreground);
