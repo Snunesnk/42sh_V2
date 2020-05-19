@@ -39,7 +39,7 @@ static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 	return (closest);
 }
 
-int			replace_expansion(char **token, char **next, int ref)
+static int		replace_expansion(char **token, char **next, int ref)
 {
 	size_t	lcontent;
 	char	*new;
