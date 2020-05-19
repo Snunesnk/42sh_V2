@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 10:03:00 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/14 18:34:40 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 14:04:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,16 +79,16 @@ void		update_dumb_line(void)
 		prev_w = g_sc.w;
 		offset = 0;
 	}
-	ft_printf("\r%*s\r", g_sc.w, "");
+	ft_dprintf(g_dis.fd, "\r%*s\r", g_sc.w, "");
 	if (!(to_print = calc_print_range(&offset)))
 		return ;
 	if (offset)
 		to_print[0] = '<';
 	if (ft_strlen(to_print) < (size_t)(g_line.len - offset + g_dis.prompt_l))
 		to_print[g_sc.w - 1] = '>';
-	ft_putstr_fd(to_print, STDOUT_FILENO);
-	ft_putchar_fd('\r', STDOUT_FILENO);
-	write(STDOUT_FILENO, to_print, g_line.c_pos + g_dis.prompt_l - offset);
+	ft_putstr_fd(to_print, g_dis.fd);
+	ft_putchar_fd('\r', g_dis.fd);
+	write(g_dis.fd, to_print, g_line.c_pos + g_dis.prompt_l - offset);
 	free(to_print);
 }
 
@@ -121,7 +121,7 @@ void		place_cursor(int pos)
 	v_pos = 0;
 	c_pos = 0;
 	calc_dcursor(pos, &v_pos, &c_pos);
-	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), STDOUT_FILENO);
+	ft_putstr_fd(tgoto(g_termcaps.cm, c_pos, v_pos), g_dis.fd);
 	g_line.cursor_pos = pos;
 	if (v_pos < 0 || v_pos > g_sc.height - 1)
 		ft_scroll(v_pos);

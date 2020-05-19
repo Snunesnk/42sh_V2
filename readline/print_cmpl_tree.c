@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 14:05:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/19 14:11:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ static int	ask_confirmation(t_data *data)
 	union u_buffer	c;
 
 	c.value = 'a';
-	ft_printf("\nDisplay all %d possibilities ? (y or n)", data->nb_exec);
+	ft_dprintf(g_dis.fd, "\nDisplay all %d possibilities ? (y or n)", \
+			data->nb_exec);
 	g_line.is_modified = 1;
 	while (ft_isprint(c.value) || ft_isspace(c.value))
 	{
@@ -48,7 +49,7 @@ static void	restore_line(int line)
 
 	if (g_dumb_term)
 	{
-		ft_putchar('\n');
+		ft_putchar_fd('\n', g_dis.fd);
 		update_dumb_line();
 		return ;
 	}
@@ -58,7 +59,7 @@ static void	restore_line(int line)
 		last_line--;
 		(g_dis.start_line)--;
 	}
-	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
+	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	display_prompt();
 	g_dis.start_offset = g_dis.prompt_l;
 	place_cursor(g_line.c_pos);
@@ -73,7 +74,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 	line = 0;
 	if (!(get_list_compl(&list_compl, data)))
 		return ;
-	ft_putstr(g_termcaps.cd);
+	ft_putstr_fd(g_termcaps.cd, g_dis.fd);
 	to_print = data->first_print;
 	while (data->first_print + line < data->last_print + 1)
 	{
@@ -88,7 +89,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
-	ft_printf("%s", list_compl.content);
+	ft_dprintf(g_dis.fd, "%s", list_compl.content);
 	free(list_compl.content);
 	restore_line(data->overflow + line);
 }
