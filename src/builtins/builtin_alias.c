@@ -25,7 +25,7 @@ static int	print_single_alias(char *name, char *value)
 	value = !value ? get_shell_var(name, g_alias) : value;
 	if (!value)
 		return (FAILURE);
-	ft_printf("alias %s='%s'\n", name, value);
+	ft_printf("%s='%s'\n", name, value);
 	return (SUCCESS);
 }
 
@@ -36,19 +36,18 @@ static int	add_alias(char **av)
 	char		*value;
 
 	ret = SUCCESS;
-	while (*++av && ret == SUCCESS)
+	while (*++av)
 	{
-		ret = FAILURE;
 		name = *av;
 		if (get_assignment(*av, &name, &value) == SUCCESS)
 		{
 			*value = 0;
-			ret = set_shell_var(name, value + 1, 0, &g_alias);
+			set_shell_var(name, value + 1, 0, &g_alias);
 		}
 		else if (!*name || *name == '=')
-			pbierror("'%s': invalid alias name", name);
-		else if ((ret = print_single_alias(name, NULL)) == FAILURE)
-			pbierror("'%s': not found", name);
+			ret = pbierror("'%s': invalid alias name", name);
+		else if (print_single_alias(name, NULL) == FAILURE)
+			ret = pbierror("'%s': not found", name);
 	}
 	ft_merge_sort(&g_alias, alpha_sort);
 	return (!!ret);
