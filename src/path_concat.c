@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 13:03:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 16:10:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 13:42:24 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ int			path_concat(char **bin, char *beg, char *env, char *dir)
 {
 	char	*pathname;
 
-	if (!(beg = get_shell_var("PATH", g_env)))
-	{
-		ft_memdel((void**)bin);
-		return (e_command_not_found);
-	}
-	env = ft_strdup(beg);
+	beg = get_shell_var("PATH", g_env);
+	if (!beg || !*beg)
+		env = ft_strdup(".");
+	else
+		env = ft_strdup(beg);
 	beg = env;
 	while ((dir = ft_strsep(&env, ":")))
 	{
