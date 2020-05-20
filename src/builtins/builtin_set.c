@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 08:43:11 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 13:52:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 22:01:00 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
+#include "quotes.h"
 
 _Bool	g_hashall = 1;
 _Bool	g_history = 1;
@@ -35,7 +36,16 @@ static void	print_set(void)
 		value = var->flag & TEMP ? get_shell_var(var->name, g_tmp_env)
 			: var->value;
 		if (value)
-			ft_printf("%s=%s\n", var->name, value);
+		{
+			if (has_unquoted_spec_chars(value, IFS_SHELL_QUOTES))
+			{
+				ft_printf("%s=", var->name);
+				double_quote_print_fd(value, STDOUT_FILENO);
+				write(STDOUT_FILENO, "\n", 1);
+			}
+			else
+				ft_printf("%s=%s\n", var->name, value);
+		}
 		list = list->next;
 	}
 }

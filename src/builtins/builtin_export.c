@@ -6,12 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 12:08:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/16 10:41:09 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 22:00:46 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 #include "builtins.h"
+#include "quotes.h"
 
 static int	print_export(t_shell_var *svar)
 {
@@ -24,7 +25,11 @@ static int	print_export(t_shell_var *svar)
 		if (value == NULL)
 			ft_printf("export %s\n", svar->name);
 		else
-			ft_printf("export %s=\"%s\"\n", svar->name, value);
+		{
+			ft_printf("export %s=", svar->name);
+			double_quote_print_fd(value, STDOUT_FILENO);
+			write(STDOUT_FILENO, "\n", 1);
+		}
 	}
 	return (0);
 }

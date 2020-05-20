@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 13:34:08 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 21:55:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
-
-#define IFS_SHELL_QUOTES	"\t \n\"\'\\"
 
 static int	replace_tilde(char **str, char *start, char *env)
 {

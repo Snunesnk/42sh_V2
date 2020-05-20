@@ -6,17 +6,20 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:04:33 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/19 10:22:15 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 21:47:35 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "builtins.h"
+#include "quotes.h"
 
 static int	print_alias(t_shell_var *svar)
 {
-	ft_printf("%s='%s'\n", svar->name, svar->value);
+	ft_printf("%s=", svar->name);
+	single_quote_print_fd(svar->value, STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
 	return (0);
 }
 
@@ -25,7 +28,9 @@ static int	print_single_alias(char *name, char *value)
 	value = !value ? get_shell_var(name, g_alias) : value;
 	if (!value)
 		return (FAILURE);
-	ft_printf("%s='%s'\n", name, value);
+	ft_printf("%s=", name);
+	single_quote_print_fd(value, STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
 	return (SUCCESS);
 }
 

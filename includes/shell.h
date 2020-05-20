@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 18:26:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 22:07:31 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,9 @@
 
 # define MAX_SIG	32
 
-#define IFS	"\t \n"
+#define IFS					"\t \n"
+#define IFS_SHELL_QUOTES	"\t \n\"\'\\"
+
 
 extern char						*g_token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
