@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 18:40:55 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:08:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ t_redirection					*type_greatand_redirection(t_list **lst, \
 t_redirection					*type_andgreat_redirection(t_list **lst, \
 		int io_nb);
 
-int								valid_fd(int fd, int open);
+int								valid_fd(char *s, int fd, int open);
 int								check_if_directory(char *filename);
 int								do_iowrite(t_redirection *r);
 int								do_iocat(t_redirection *r);
