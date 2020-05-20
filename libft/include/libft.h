@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:55:45 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 16:54:45 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 11:57:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 void			ft_bzero(void *s, size_t n) __attribute__
 				((nonnull(1)));
+
+int				ft_is_posix_portable_charset(char c);
 
 int				ft_isblank(int c);
 
