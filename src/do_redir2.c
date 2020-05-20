@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:07:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:11:19 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int	do_iodread(t_redirection *r)
 					r->redirector.filename, e_cmd_type));
 	else if (r->flags & DEST)
 	{
-		if (valid_fd(r->redirector.filename, r->redirector.dest, 1))
-			return (e_bad_file_descriptor);
 		if (r->redirectee.dest == r->redirector.dest)
 			return (0);
+		if (valid_fd(r->redirector.filename, r->redirector.dest, 1))
+			return (e_bad_file_descriptor);
 		if (r->flags & NOFORK)
 			r->save[0] = dup(r->redirectee.dest);
 		dup2(r->redirector.dest, r->redirectee.dest);
