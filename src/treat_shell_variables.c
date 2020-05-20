@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:54:08 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 15:10:09 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 14:22:50 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,17 @@ int			treat_shell_variables(t_process *p, uint64_t flags)
 
 	if (p->argc < 0 || !p->argv)
 		return (FAILURE);
-	else if (!p->argv[0])
+	else if (!p->argv[0] || !p->assignments_count)
 		return (SUCCESS);
-	while (p->argv && get_assignment(p->argv[0], &name, &value) == SUCCESS)
+	while (p->argv && p->assignments_count)
 	{
+		if (get_assignment(p->argv[0], &name, &value) == FAILURE)
+			return (FAILURE);
 		*value++ = 0;
 		if (set_shell_var(name, value, flags, &g_env) == FAILURE)
 			return (FAILURE);
 		tab_remove_first_elem(&p->argc, &p->argv);
+		--p->assignments_count;
 	}
 	ft_merge_sort(&g_env, alpha_sort);
 	return (SUCCESS);
