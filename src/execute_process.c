@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:31:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 18:27:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int			execute_process(char **argv, char **envp,
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 		return (free_path_and_return(ret, &pathname, argv[0]));
-	if ((tmp = find_occurence(pathname)))
+	tmp = find_occurence(pathname);
+	if (tmp && !access(tmp->command_path, F_OK))
 		return (process_execve(argv, envp, ft_strdup(tmp->command_path)));
 	if (path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (free_path_and_return(ESH, &pathname, argv[0]));
