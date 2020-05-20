@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/20 13:36:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 14:29:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ t_hash_table	*find_occurence(char *name)
 	while (tmp && !ft_strequ(tmp->command_name, name))
 		tmp = tmp->next;
 	if (tmp && access(tmp->command_path, F_OK))
-	{
-		psherror(e_no_such_file_or_directory,
-			tmp->command_path, e_cmd_type);
 		return (NULL);
-	}
 	return (tmp);
 }
 
