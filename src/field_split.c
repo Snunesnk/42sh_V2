@@ -6,15 +6,13 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 11:44:09 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/15 13:50:02 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 13:20:29 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "shell.h"
 #include "quotes.h"
-
-#define IFS	"\t \n"
 
 static int	unquoted_ifs(char const *ifs, char c, int *qmode)
 {
