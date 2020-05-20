@@ -34,7 +34,7 @@ static int	treat_word_expansion(t_process *p, int *i)
 	return (ret);
 }
 
-int			treat_expansions(t_process *p, int *only_assignments)
+int			treat_expansions(t_process *p)
 {
 	int		i;
 	int		ret;
@@ -46,8 +46,9 @@ int			treat_expansions(t_process *p, int *only_assignments)
 		return (e_invalid_input);
 	while (!ret && i < p->argc)
 	{
-		equal = is_valid_assignment(p->argv[i]);
-		*only_assignments = !equal ? 0 : *only_assignments;
+		if ((equal = is_valid_assignment(p->argv[i]))
+			&& p->assignments_count == i)
+			++p->assignments_count;
 		ret = treat_single_exp(p->argv + i, 1, equal);
 		if (!ret && equal)
 			ret = rm_quotes(p->argv + i++, NO_QUOTE);

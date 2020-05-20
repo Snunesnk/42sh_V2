@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 13:09:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:40:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
+
+#define LINEFD 255
 
 int				g_dumb_term = 0;
 struct s_screen g_sc;
@@ -90,10 +92,21 @@ void		resize_terminal(int signo)
 static int	set_fd(void)
 {
 	char	*name;
+	int		new;
 
 	name = ttyname(STDOUT_FILENO);
 	if (name)
 		g_dis.fd = open(name, O_RDWR);
+	if (g_dis.fd == -1)
+		return (-1);
+	if (LINEFD >= sysconf(_SC_OPEN_MAX))
+		return (-1);
+	if (fcntl(LINEFD, F_GETFL) < 0)
+	{
+		new = dup2(g_dis.fd, LINEFD);
+		close(g_dis.fd);
+		g_dis.fd = new;
+	}
 	if (g_dis.fd == -1)
 		return (-1);
 	return (e_success);
