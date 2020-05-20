@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 10:54:58 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/10 16:41:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 14:43:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,6 @@ void		load_config(void)
 	}
 	if (fd >= 0)
 		free(line);
+	close(fd);
 	g_shell_is_interactive = isatty(g_shell_terminal);
 }
