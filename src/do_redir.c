@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:08:22 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 15:34:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	valid_fd(char *s, int fd, int open)
 	{
 		if (fd >= sysconf(_SC_OPEN_MAX) || fcntl(fd, F_GETFL) < 0)
 		{
-			ft_printf("%s: %s: Bad file descriptor\n", g_progname, s);
+			ft_dprintf(STDERR_FILENO, "%s: %s: Bad file descriptor\n", g_progname, s);
 			return (1);
 		}
 	}
 	else if (fd >= sysconf(_SC_OPEN_MAX))
 	{
-		ft_printf("%s: %s: Bad file descriptor\n", g_progname, s);
+		ft_dprintf(STDERR_FILENO, "%s: %s: Bad file descriptor\n", g_progname, s);
 		return (1);
 	}
 	return (0);
