@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/15 17:18:47 by yforeau          ###   ########.fr        #
+#    Updated: 2020/05/20 12:04:13 by yforeau          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ SOURCES	:= \
 		ds_singly_linked_list/ft_lst_pop.c \
 		ds_singly_linked_list/ft_lst_quicksort.c \
 		ds_singly_linked_list/ft_lst_size.c \
+		f_ctype/ft_is_posix_portable_charset.c \
 		f_ctype/ft_isalnum.c \
 		f_ctype/ft_isblank.c \
 		f_ctype/ft_isalpha.c \

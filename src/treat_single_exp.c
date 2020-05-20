@@ -66,16 +66,28 @@ static int		replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-static int		valid_tilde(const char *start, const char *tilde, int assignment)
+static int		valid_tilde(const char *start, const char *tilde,
+	int assignment)
 {
 	const char	*end;
 
 	if (!start || !tilde || *tilde != '~')
 		return (0);
-	end = tilde + 1 + (tilde[1] == '+' || tilde[1] == '-');
-	if (*end && !(*end == '/' || (assignment && *end == ':')))
+	if (tilde != start && !(assignment && tilde > start && *(tilde - 1) == ':'))
 		return (0);
-	return (tilde == start || (assignment && tilde > start && *(tilde - 1) == ':'));
+	end = tilde + 1;
+	if (*end == '+' || *end == '-')
+	{
+		++end;
+		while (ft_isdigit(*end))
+			++end;
+	}
+	else
+	{
+		while (ft_is_posix_portable_charset(*end))
+			++end;
+	}
+	return (!*end || *end == '/' || (assignment && *end == ':'));
 }
 
 static int		expand_assignment_tildes(char **str, char *equal)
