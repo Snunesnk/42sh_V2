@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 21:01:22 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/20 14:19:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 18:26:36 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,15 @@ int				add_name_hash_table(char *name, int nb)
 	while (ft_strnequ("./", name, 2))
 		ft_memmove(name, name + 2, ft_strlen(name) - 1);
 	status = path_concat(&pathname, NULL, NULL, NULL);
-	if (status != e_command_not_found)
+	if (status != e_command_not_found || find_occurence(name))
 	{
 		if (!path || !*path)
 			add_to_hash_table(name, name, nb);
 		else
 			add_to_hash_table(pathname, name, nb);
 	}
+	else
+		find_occurence(name);
 	free(pathname);
 	return (status);
 }

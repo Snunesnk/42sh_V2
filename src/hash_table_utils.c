@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 14:37:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/20 14:36:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/20 18:27:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ t_hash_table	*find_occurence(char *name)
 		return (NULL);
 	while (tmp && !ft_strequ(tmp->command_name, name))
 		tmp = tmp->next;
-	if (tmp && access(tmp->command_path, F_OK))
-	{
-		tmp->nb_called++;
-		return (NULL);
-	}
 	return (tmp);
 }
 
