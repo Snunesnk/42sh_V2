@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/01 17:07:44 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 12:55:51 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 13:34:08 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "libft.h"
 #include "error.h"
 #include "shell.h"
+
+#define IFS_SHELL_QUOTES	"\t \n\"\'\\"
 
 static int	replace_tilde(char **str, char *start, char *env)
 {
@@ -84,6 +86,7 @@ static char	*get_home_value(char *start, char *end)
 int			tilde_expansion(size_t *index, char **str, const char *opentag,
 		const char *closetag)
 {
+	int		ret;
 	char	*env;
 	char	*end;
 
@@ -97,10 +100,12 @@ int			tilde_expansion(size_t *index, char **str, const char *opentag,
 			env = get_dir(*str + 1, end);
 		if (!env && (*str)[1] != '+')
 			env = get_home_value(*str + 1, end);
-		if (env)
+		if (env && (env = ft_escape_spec(env, IFS_SHELL_QUOTES)))
 		{
 			*index = ft_strlen(env);
-			return (replace_tilde(str, end, env));
+			ret = replace_tilde(str, end, env);
+			free(env);
+			return (ret);
 		}
 	}
 	*index = 1;

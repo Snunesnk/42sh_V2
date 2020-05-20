@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 13:55:12 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 14:35:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 13:58:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int				is_new_path(void)
 
 	old_path = path;
 	path = get_shell_var("PATH", g_env);
+	if (!path || !*path)
+		path = get_shell_var("PWD", g_env);
 	return (old_path != path);
 }
 

@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:08:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:09:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@
 # define REDSUC		0x20
 
 # define MAX_SIG	32
+
+#define IFS	"\t \n"
 
 extern char						*g_token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
