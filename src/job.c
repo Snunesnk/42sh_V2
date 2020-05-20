@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 09:55:32 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/20 14:27:42 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
 	*infile = mypipe;
 }
 
-static int	set_mypipe(t_process *p, t_job *j,
-	int mypipe[2], int *only_assignments)
+static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 {
-	*only_assignments = 1;
-	p->status = treat_expansions(p, only_assignments);
+	p->assignments_count = 0;
+	p->status = treat_expansions(p);
 	if (p->next)
 	{
 		if (pipe(mypipe) < 0)
@@ -96,8 +95,8 @@ int			launch_job(t_job *j, int foreground)
 	e.p = j->first_process;
 	while (e.p)
 	{
-		e.outfile = set_mypipe(e.p, j, e.mypipe, &e.only_assignments);
-		if (!j->first_process->next && e.only_assignments)
+		e.outfile = set_mypipe(e.p, j, e.mypipe);
+		if (!j->first_process->next && e.p->assignments_count == e.p->argc)
 		{
 			treat_shell_variables(e.p, SET >> SHVAR_ADD_OFF);
 			e.p->completed = 1;
