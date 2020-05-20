@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:09:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/20 14:34:56 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ struct							s_process
 	int						infile;
 	int						outfile;
 	int						errfile;
+	int						assignments_count;
 };
 
 struct							s_job
@@ -393,8 +394,7 @@ void							set_temp_shell_variables(void);
 int								treat_single_exp(char **str,
 	int tilde, char *equal);
 int								expand_heredoc(char **hereword);
-int								treat_expansions(t_process *p,
-	int *only_assignments);
+int								treat_expansions(t_process *p);
 char							*get_user_home(char *start, char *end);
 int								expand_filename(t_redirection *r, char **word);
 
