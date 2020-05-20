@@ -20,7 +20,7 @@ static int	treat_word_expansion(t_process *p, int *i)
 	int	fields;
 	
 	ret = 0;
-	if (empty_exp(p, *i))
+	if ((ret = treat_single_exp(p->argv + *i, 1, NULL)) || empty_exp(p, *i))
 		return (ret);
 	fields = 1;
 	ret = field_split(p, *i, &fields);
@@ -44,16 +44,13 @@ int			treat_expansions(t_process *p)
 	ret = 0;
 	if (!p->argv || !*p->argv)
 		return (e_invalid_input);
-	while (!ret && i < p->argc)
+	while (!ret && i < p->argc && (equal = is_valid_assignment(p->argv[i])))
 	{
-		if ((equal = is_valid_assignment(p->argv[i]))
-			&& p->assignments_count == i)
-			++p->assignments_count;
+		++p->assignments_count;
 		ret = treat_single_exp(p->argv + i, 1, equal);
-		if (!ret && equal)
-			ret = rm_quotes(p->argv + i++, NO_QUOTE);
-		else if (!ret)
-			ret = treat_word_expansion(p, &i);
+		ret = !ret ? rm_quotes(p->argv + i++, NO_QUOTE) : ret;
 	}
+	while (!ret && i < p->argc)
+		ret = treat_word_expansion(p, &i);
 	return (ret);
 }
