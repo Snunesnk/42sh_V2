@@ -44,9 +44,10 @@ int			subprompt(int fd, t_list **lst, int qmode)
 	g_subprompt = 1;
 	if (qmode == BSQUOTE)
 	{
-		input = heredoc(fd, &((t_token*)((*lst)->next->content))->value, qmode);
+		input = heredoc(fd, &((t_token*)((*lst)->next->content))->value, &qmode);
 		free(((t_token*)((*lst)->next->content))->value);
 		((t_token*)((*lst)->next->content))->value = input;
+		((t_token*)((*lst)->next->content))->expand_heredoc = !!qmode;
 		if (g_eof)
 			return (reset_return(e_heredoc_warning));
 		else if (g_input_break)

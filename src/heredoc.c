@@ -42,17 +42,17 @@ static int	get_heredoc_qmode(char **eof, int qmode)
 	return (NO_QUOTE);
 }
 
-char		*heredoc(int fd, char **eof, int qmode)
+char		*heredoc(int fd, char **eof, int *qmode)
 {
 	char	*tmp;
 	char	*hereword;
 	char	*line;
 
-	qmode = get_heredoc_qmode(eof, qmode);
+	*qmode = get_heredoc_qmode(eof, *qmode);
 	tmp = NULL;
 	line = NULL;
 	hereword = ft_strdup("");
-	tmp = get_input_fd(fd, qmode, "> ");
+	tmp = get_input_fd(fd, *qmode, "> ");
 	while (tmp && ft_strcmp(*eof, tmp) && !g_input_break)
 	{
 		line = ft_strjoin(tmp, "\n");
@@ -61,7 +61,7 @@ char		*heredoc(int fd, char **eof, int qmode)
 		free(hereword);
 		free(line);
 		hereword = tmp;
-		tmp = get_input_fd(fd, qmode, "> ");
+		tmp = get_input_fd(fd, *qmode, "> ");
 		if (!tmp && !g_shell_is_interactive)
 			g_eof = 1;
 	}
