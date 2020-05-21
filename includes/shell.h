@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 18:05:37 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 21:51:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,8 @@
 
 # define MAX_SIG	32
 
-#define IFS					"\t \n"
-#define IFS_SHELL_QUOTES	"\t \n\"\'\\"
-
+# define IFS					"\t \n"
+# define IFS_SHELL_QUOTES		"\t \n\"\'\\"
 
 extern char						*g_token_tab[NB_TOKEN];
 char							*short_logical_path(char **cwd);
@@ -321,7 +320,7 @@ typedef struct					s_token
 {
 	enum e_token	type;
 	char			*value;
-	int		expand_heredoc;
+	int				expand_heredoc;
 }								t_token;
 
 typedef struct					s_ast
