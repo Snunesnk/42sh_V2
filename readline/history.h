@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/05 19:10:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 11:11:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*hist_expanse(char *value);
 char	*get_hist_entry(char *tmp);
 char	*expand_num(char *value, int start, int sign);
 char	*expand_word(char *value, int start, int sign);
-char	*replace_hist_exp(char *value, char *hist_entry);
+char	*replace_hist_exp(char *value, char *hist_entry, int i);
 char	*get_matching_hist(char **line, char *patern);
 char	*get_beg_matching_hist(char **line, char *patern);
 int		check_end_bracket(char *tmp);
