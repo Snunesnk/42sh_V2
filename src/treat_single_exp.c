@@ -87,7 +87,7 @@ static int		valid_tilde(const char *start, const char *tilde,
 		while (ft_is_posix_portable_charset(*end))
 			++end;
 	}
-	return (!*end || *end == '/' || (assignment && *end == ':'));
+	return (!*end || *end == '/' || *end == ':');
 }
 
 static int		expand_assignment_tildes(char **str, char *equal)
