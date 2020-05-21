@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   treat_expansions.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/21 21:51:34 by yforeau           #+#    #+#             */
+/*   Updated: 2020/05/21 21:52:44 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
@@ -18,7 +30,7 @@ static int	treat_word_expansion(t_process *p, int *i)
 	int	ret;
 	int	skip;
 	int	fields;
-	
+
 	ret = 0;
 	if ((ret = treat_single_exp(p->argv + *i, 1, NULL)) || empty_exp(p, *i))
 		return (ret);

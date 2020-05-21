@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:13:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 12:57:00 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 22:01:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int			replace_fields(t_process *p, int i, char **av, int ac)
 	return (e_success);
 }
 
-static char		*build_glob_pattern(const char *arg)
+static char	*build_glob_pattern(const char *arg)
 {
-	int	qmode;
-	int	old_qmode;
+	int		qmode;
+	int		old_qmode;
 	char	*ptr;
 	char	*pattern;
 

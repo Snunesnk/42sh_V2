@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   treat_single_exp.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/21 21:58:46 by yforeau           #+#    #+#             */
+/*   Updated: 2020/05/21 21:59:56 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 #include "error.h"
@@ -39,7 +51,7 @@ static char	*get_closest_exp(char *str, int tilde, int *ref, int *qmode)
 	return (closest);
 }
 
-static int		replace_expansion(char **token, char **next, int ref)
+static int	replace_expansion(char **token, char **next, int ref)
 {
 	size_t	lcontent;
 	char	*new;
@@ -66,7 +78,7 @@ static int		replace_expansion(char **token, char **next, int ref)
 	return (ret);
 }
 
-static int		valid_tilde(const char *start, const char *tilde,
+static int	valid_tilde(const char *start, const char *tilde,
 	int assignment)
 {
 	const char	*end;
@@ -90,11 +102,11 @@ static int		valid_tilde(const char *start, const char *tilde,
 	return (!*end || *end == '/' || *end == ':');
 }
 
-static int		expand_assignment_tildes(char **str, char *equal)
+static int	expand_assignment_tildes(char **str, char *equal)
 {
-	int	ref;
-	int	ret;
-	int	qmode;
+	int		ref;
+	int		ret;
+	int		qmode;
 	char	*next;
 
 	ret = e_success;

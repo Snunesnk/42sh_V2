@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   subprompt.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/21 21:54:32 by abarthel          #+#    #+#             */
+/*   Updated: 2020/05/21 21:56:10 by snunes           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "shell.h"
 #include "quotes.h"
@@ -44,7 +56,8 @@ int			subprompt(int fd, t_list **lst, int qmode)
 	g_subprompt = 1;
 	if (qmode == BSQUOTE)
 	{
-		input = heredoc(fd, &((t_token*)((*lst)->next->content))->value, &qmode);
+		input = heredoc(fd, &((t_token*)((*lst)->next->content))->value, \
+				&qmode);
 		free(((t_token*)((*lst)->next->content))->value);
 		((t_token*)((*lst)->next->content))->value = input;
 		((t_token*)((*lst)->next->content))->expand_heredoc = !!qmode;

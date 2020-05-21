@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/21 11:37:33 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 22:02:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "error.h"
 #include "quotes.h"
 
-int		get_qmode(int qmode, char c)
+int			get_qmode(int qmode, char c)
 {
 	if (c && (qmode & BSQUOTE))
 		return (qmode & ~BSQUOTE);
@@ -28,7 +28,7 @@ int		get_qmode(int qmode, char c)
 	return (qmode);
 }
 
-char	*ft_strstr_qmode(const char *str, const char *to_find,
+char		*ft_strstr_qmode(const char *str, const char *to_find,
 			int allowed_qmodes, int *qmode)
 {
 	int			l;
@@ -74,7 +74,7 @@ static char	*get_new_str(char **str)
 	return (ptr);
 }
 
-int		rm_quotes(char **str, int old_qmode)
+int			rm_quotes(char **str, int old_qmode)
 {
 	char	*dup;
 	char	*pdup;
@@ -103,7 +103,7 @@ int		rm_quotes(char **str, int old_qmode)
 	return (e_success);
 }
 
-int		has_unquoted_spec_chars(const char *str, const char *spec)
+int			has_unquoted_spec_chars(const char *str, const char *spec)
 {
 	int	qmode;
 

@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 16:38:12 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/19 18:24:14 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 22:01:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	rm_quotes_heredoc(char *str, char *spec, int n)
 	return (count);
 }
 
-static int		replace_expansion_heredoc(char **token, char **next, int ref)
+static int	replace_expansion_heredoc(char **token, char **next, int ref)
 {
 	size_t	lcontent;
 	char	*new;
