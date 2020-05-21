@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 18:17:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/13 10:30:24 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 10:19:10 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ static int	exec_env_command(char **argv)
 	int		ret;
 	pid_t	pid;
 
-	pid = 0;
 	ret = 0;
 	envp = get_env_tab();
 	argv = ft_tabcpy(argv);
-	if (!g_job_control_enabled || !(pid = fork()))
+	if (!(pid = fork()))
 	{
 		restore_procmask();
 		if (argv)
