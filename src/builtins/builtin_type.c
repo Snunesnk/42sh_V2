@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 18:28:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 13:59:00 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static _Bool	is_a_keyword(char *word)
 
 static char		*getbinpath(char *bin)
 {
-	char *cpy;
+	char	*cpy;
 
 	if (!(cpy = ft_strdup(bin)))
 		return (NULL);
@@ -59,6 +59,11 @@ static char		*getbinpath(char *bin)
 	{
 		if (cpy && *cpy != '/')
 			cpy = fullpath_concat(cpy);
+		if (access(cpy, X_OK))
+		{
+			ft_memdel((void**)&cpy);
+			return (NULL);
+		}
 		return (cpy);
 	}
 	else
