@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 23:19:15 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/10 12:46:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 11:10:39 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,18 +107,13 @@ char	*expand_word(char *value, int start, int sign)
 	return (hist_entry);
 }
 
-char	*replace_hist_exp(char *value, char *hist_entry)
+char	*replace_hist_exp(char *value, char *hist_entry, int i)
 {
 	char	*new_value;
 	int		size;
-	int		i;
 
 	if (g_pattern_length == 0)
 		g_pattern_length += 1;
-	i = 0;
-	while (value[i] && (value[i] != '!' || ft_strchr(g_hist_word_delim, \
-				value[i + 1])))
-		i++;
 	size = ft_strlen(value) - g_pattern_length + ft_strlen(hist_entry);
 	if (!(new_value = (char *)ft_memalloc(sizeof(char) * (size + 2))))
 	{

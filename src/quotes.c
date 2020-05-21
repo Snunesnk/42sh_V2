@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 14:28:32 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/19 22:47:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 11:37:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int		has_unquoted_spec_chars(const char *str, const char *spec)
 	qmode = NO_QUOTE;
 	while (*str)
 	{
-		if ((qmode = get_qmode(qmode, *str)) == NO_QUOTE
-			&& ft_strchr(spec, *str))
+		if (qmode == NO_QUOTE && ft_strchr(spec, *str))
 			return (1);
+		qmode = get_qmode(qmode, *str);
 		++str;
 	}
 	return (0);
