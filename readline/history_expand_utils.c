@@ -40,10 +40,10 @@ char	*do_hist_exp(char **value, char *hist_entry)
 
 	tmp = *value;
 	qmode = NO_QUOTE;
-	while (*tmp && *value && (tmp = ft_strstr_qmode(tmp, "!", DQUOTE, &qmode)))
+	while (*tmp && *value
+		&& (tmp = ft_strstr_qmode(tmp, "!", NO_QUOTE, &qmode)))
 	{
-		if ((qmode == DQUOTE && tmp[1] == '"')
-			|| (tmp > *value && *(tmp - 1) == '['))
+		if (tmp > *value && *(tmp - 1) == '[')
 		{
 			tmp++;
 			continue ;
