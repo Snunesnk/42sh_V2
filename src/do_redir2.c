@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:37:30 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:07:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	do_iohere(t_redirection *r, t_redirection *beg)
 	r->instruction = IOREAD;
 	if (r->flags & NOFORK)
 		r->save[0] = dupit(r->redirectee.dest, beg);
-	dup2(r->redirector.dest, r->redirectee.dest);
+	if (r->redirector.dest != r->redirectee.dest)
+		dup2(r->redirector.dest, r->redirectee.dest);
 	return (0);
 }
 
@@ -65,9 +66,12 @@ int	do_iodfile(t_redirection *r, t_redirection *beg)
 		r->save[0] = dupit(STDOUT_FILENO, beg);
 	if (r->flags & NOFORK)
 		r->save[1] = dupit(STDERR_FILENO, beg);
-	dup2(r->redirectee.dest, STDOUT_FILENO);
-	dup2(r->redirectee.dest, STDERR_FILENO);
-	close(r->redirectee.dest);
+	if (r->redirectee.dest != STDOUT_FILENO && r->redirectee.dest != STDERR_FILENO)
+	{
+		dup2(r->redirectee.dest, STDOUT_FILENO);
+		dup2(r->redirectee.dest, STDERR_FILENO);
+		close(r->redirectee.dest);
+	}
 	return (0);
 }
 
@@ -121,7 +125,8 @@ int	do_iodup(t_redirection *r, t_redirection *beg)
 	{
 		if (r->flags & NOFORK)
 			r->save[0] = dupit(r->redirector.dest, beg);
-		close(r->redirector.dest);
+		if (r->redirectee.dest != r->redirector.dest)
+			close(r->redirector.dest);
 	}
 	return (0);
 }
