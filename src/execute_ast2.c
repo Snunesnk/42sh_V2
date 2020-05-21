@@ -6,13 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:22 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/15 18:13:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 18:07:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "shell.h"
 
 #define ASTERROR 125
+
+int	g_trap = OFF;
 
 int	execute_and(t_ast *node, int foreground)
 {
@@ -52,6 +54,8 @@ int	execute_or(t_ast *node, int foreground)
 
 int	execute_node(t_ast *node, int foreground)
 {
+	if (g_trap == ON)
+		return (1);
 	if (node->type == WORD)
 		return (execute_pipeline(node, foreground));
 	else if (node->type == SEMI)
