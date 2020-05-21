@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:20:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:43:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:48:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int			fd_need_be_open(t_redirection *r)
 static int	unsued_fd(t_redirection *r)
 {
 	t_redirection	*origin;
-	int			fd;
+	int				fd;
 
 	fd = FD_BASE;
 	origin = r;
@@ -88,7 +88,7 @@ static int	unsued_fd(t_redirection *r)
 	return (fd);
 }
 
-int	dupit(int fd, t_redirection *r)
+int			dupit(int fd, t_redirection *r)
 {
 	int	save_fd;
 	int	available_fd;
@@ -101,5 +101,4 @@ int	dupit(int fd, t_redirection *r)
 		return (-1);
 	fcntl(save_fd, F_SETFD, FD_CLOEXEC);
 	return (save_fd);
-
 }
