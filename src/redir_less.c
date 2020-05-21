@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/11 12:36:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 17:03:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 17:06:33 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_redirection	*type_dless_redirection(t_list **lst, int io_nb)
 	r->instruction = IOHERE;
 	(*lst) = (*lst)->next;
 	r->redirector.hereword = ft_strdup(get_tokvalue(*lst));
-	expand_filename(r, &r->redirector.hereword); // Test for heredoc expansions
+	expand_filename(r, &r->redirector.hereword);
 	(*lst) = (*lst)->next;
 	return (r);
 }
