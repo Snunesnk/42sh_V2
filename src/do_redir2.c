@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:22:12 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:33:57 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	do_iohere(t_redirection *r, t_redirection *beg)
 	r->instruction = IOREAD;
 	if (r->flags & NOFORK)
 	{
-		(void)beg;
-		r->save[0] = dup(r->redirectee.dest);
+//		(void)beg;
+		r->save[0] = dupit(r->redirectee.dest, beg);
+		//r->save[0] = dup(r->redirectee.dest);
 	}
 	dup2(r->redirector.dest, r->redirectee.dest);
 	return (0);
@@ -66,13 +67,15 @@ int	do_iodfile(t_redirection *r, t_redirection *beg)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
 	{
-		(void)beg;
-		r->save[0] = dup(STDOUT_FILENO);
+	//	(void)beg;
+		r->save[0] = dupit(STDOUT_FILENO, beg);
+	//	r->save[0] = dup(STDOUT_FILENO);
 	}
 	if (r->flags & NOFORK)
 	{
-		(void)beg;
-		r->save[1] = dup(STDERR_FILENO);
+	//	(void)beg;
+		r->save[1] = dupit(STDERR_FILENO, beg);
+	//	r->save[1] = dup(STDERR_FILENO);
 	}
 	dup2(r->redirectee.dest, STDOUT_FILENO);
 	dup2(r->redirectee.dest, STDERR_FILENO);
@@ -88,8 +91,9 @@ int	do_iodread(t_redirection *r, t_redirection *beg)
 			return (0);
 		if (r->flags & NOFORK)
 		{
-			(void)beg;
-			r->save[0] = dup(r->redirectee.dest);
+		//	(void)beg;
+			r->save[0] = dupit(r->redirectee.dest, beg);
+		//	r->save[0] = dup(r->redirectee.dest);
 		}
 		close(r->redirectee.dest);
 	}
@@ -104,8 +108,9 @@ int	do_iodread(t_redirection *r, t_redirection *beg)
 			return (e_bad_file_descriptor);
 		if (r->flags & NOFORK)
 		{
-			(void)beg;
-			r->save[0] = dup(r->redirectee.dest);
+		//	(void)beg;
+			r->save[0] = dupit(r->redirectee.dest, beg);
+		//	r->save[0] = dup(r->redirectee.dest);
 		}
 		dup2(r->redirector.dest, r->redirectee.dest);
 	}
@@ -136,8 +141,8 @@ int	do_iodup(t_redirection *r, t_redirection *beg)
 	{
 		if (r->flags & NOFORK)
 		{
-			dupfd(r->redirector.dest, beg);
-			r->save[0] = dup(r->redirector.dest);
+			r->save[0] = dupit(r->redirector.dest, beg);
+		//	r->save[0] = dup(r->redirector.dest);
 		}
 		close(r->redirector.dest);
 	}
