@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:49:35 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:03:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	do_iowrite(t_redirection *r, t_redirection *beg)
 	}
 	if (r->flags & NOFORK)
 		r->save[0] = dupit(r->redirector.dest, beg);
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
@@ -95,6 +97,8 @@ int	do_iocat(t_redirection *r, t_redirection *beg)
 	}
 	if (r->flags & NOFORK)
 		r->save[0] = dupit(r->redirector.dest, beg);
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
 	dup2(r->redirectee.dest, r->redirector.dest);
 	close(r->redirectee.dest);
 	return (0);
@@ -119,6 +123,8 @@ int	do_ioread(t_redirection *r, t_redirection *beg)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
 		r->save[0] = dupit(r->redirectee.dest, beg);
+	if (r->redirectee.dest == r->redirector.dest)
+		return (0);
 	dup2(r->redirector.dest, r->redirectee.dest);
 	close(r->redirector.dest);
 	return (0);
