@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 11:06:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:38:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,17 @@ int		undo_iodfile(t_redirection *r)
 {
 	if (r->redirectee.dest == r->redirector.dest)
 		return (0);
-	// Check how not to undo if fd are not used i.e. where not open then not duped
 	close(r->redirectee.dest);
-	dup2(r->save[0], STDOUT_FILENO);
-	close(r->save[0]);
-	dup2(r->save[1], STDERR_FILENO);
-	close(r->save[1]);
+	if (r->save[0] != -1)
+	{
+		dup2(r->save[0], STDOUT_FILENO);
+		close(r->save[0]);
+	}
+	if (r->save[1] != -1)
+	{
+		dup2(r->save[1], STDERR_FILENO);
+		close(r->save[1]);
+	}
 	return (0);
 }
 

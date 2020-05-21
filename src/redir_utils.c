@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:20:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:33:24 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:43:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	unsued_fd(t_redirection *r)
 	t_redirection	*origin;
 	int			fd;
 
-	fd = 0; // Should be replaced by FD_BASE if algro works
+	fd = FD_BASE;
 	origin = r;
 	while (r)
 	{
@@ -80,7 +80,6 @@ static int	unsued_fd(t_redirection *r)
 			|| fcntl(fd, F_GETFD) >= 0)
 		{
 			++fd;
-			ft_dprintf(255, "|%d|\n", fd);
 			r = origin;
 			continue;
 		}
@@ -97,7 +96,6 @@ int	dupit(int fd, t_redirection *r)
 	if (fcntl(fd, F_GETFD) < 0)
 		return (-1);
 	available_fd = unsued_fd(r);
-	ft_dprintf(255, "%d\n", available_fd);
 	save_fd = fcntl(fd, F_DUPFD, available_fd);
 	if (save_fd < 0)
 		return (-1);
