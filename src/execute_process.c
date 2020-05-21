@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 18:27:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 16:34:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ int			check_type(char *pathname)
 	else if (!ft_strchr(pathname, '/'))
 		return (e_command_not_found);
 	if (access(pathname, F_OK))
+	{
+		lstat(pathname, &buf);
+		if (S_ISLNK(buf.st_mode))
+			return (e_too_many_lvl_symlink);
 		return (e_no_such_file_or_directory);
+	}
 	if (stat(pathname, &buf))
 		return (e_system_call_error);
 	if (S_ISDIR(buf.st_mode))

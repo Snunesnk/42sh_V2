@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 15:14:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:32:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 2, "system call error" },
 	{ 126, "permission denied" },
 	{ 126, "is a directory" },
+	{ 126, "Too many levels of symbolic links" },
 	{ 127, "command not found" },
 	{ 127, "no such file or directory" },
 	{ 128, "resource temporarily unavailable" },
