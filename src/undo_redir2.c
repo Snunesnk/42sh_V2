@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:33:28 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/29 13:31:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 11:06:51 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@
 
 int		undo_iowrite(t_redirection *r)
 {
-	dup2(r->save[0], r->redirector.dest);
-	close(r->save[0]);
+	if (r->save[0] != -1)
+	{
+		dup2(r->save[0], r->redirector.dest);
+		close(r->save[0]);
+	}
 	return (0);
 }
 
@@ -25,8 +28,11 @@ int		undo_ioread(t_redirection *r)
 {
 	if (r->redirectee.dest == r->redirector.dest && !(r->flags & FDCLOSE))
 		return (0);
-	dup2(r->save[0], r->redirectee.dest);
-	close(r->save[0]);
+	if (r->save[0] != -1)
+	{
+		dup2(r->save[0], r->redirectee.dest);
+		close(r->save[0]);
+	}
 	return (0);
 }
 
@@ -34,8 +40,11 @@ int		undo_iodup(t_redirection *r)
 {
 	if (r->redirectee.dest == r->redirector.dest && !(r->flags & FDCLOSE))
 		return (0);
-	dup2(r->save[0], r->redirector.dest);
-	close(r->save[0]);
+	if (r->save[0] != -1)
+	{
+		dup2(r->save[0], r->redirector.dest);
+		close(r->save[0]);
+	}
 	return (0);
 }
 
@@ -43,6 +52,7 @@ int		undo_iodfile(t_redirection *r)
 {
 	if (r->redirectee.dest == r->redirector.dest)
 		return (0);
+	// Check how not to undo if fd are not used i.e. where not open then not duped
 	close(r->redirectee.dest);
 	dup2(r->save[0], STDOUT_FILENO);
 	close(r->save[0]);
