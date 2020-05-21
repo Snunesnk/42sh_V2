@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/19 15:56:57 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/19 16:38:30 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 16:50:30 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char		*heredoc(int fd, char **eof, int qmode)
 			g_eof = 1;
 	}
 	add_hentry(hereword, ft_strlen(hereword));
-	if (qmode)
-		expand_heredoc(&hereword);
+//	if (qmode)
+//		expand_heredoc(&hereword);
 	return (return_heredoc(tmp, hereword));
 }
