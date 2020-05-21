@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:19:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:33:41 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,7 @@ int								undo_redirection_internal(t_redirection *r);
 
 int								has_redirections(int type);
 int								ha(char *str);
-int								dupfd(int fd, t_redirection *r);
+int								dupit(int fd, t_redirection *r);
 t_redirection					*set_redirection(t_list **lst, int io_nb);
 t_redirection					*type_less_redirection(t_list **lst, int io_nb);
 t_redirection					*type_dless_redirection(t_list **lst, \

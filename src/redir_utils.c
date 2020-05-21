@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:20:26 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:22:35 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 12:33:24 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,19 @@ static int	unsued_fd(t_redirection *r)
 	return (fd);
 }
 
-int	dupfd(int fd, t_redirection *r)
+int	dupit(int fd, t_redirection *r)
 {
 	int	save_fd;
-	int	flag;
+	int	available_fd;
 
 	if (fcntl(fd, F_GETFD) < 0)
 		return (-1);
-	flag = unsued_fd(r);
-	ft_dprintf(255, "%d\n", flag);
-	save_fd = fcntl(fd, F_GETFD);
+	available_fd = unsued_fd(r);
+	ft_dprintf(255, "%d\n", available_fd);
+	save_fd = fcntl(fd, F_DUPFD, available_fd);
+	if (save_fd < 0)
+		return (-1);
+	fcntl(save_fd, F_SETFD, FD_CLOEXEC);
 	return (save_fd);
 
 }
