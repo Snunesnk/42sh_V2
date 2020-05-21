@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:31:40 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:34:01 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:35:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_access(char *arg)
 int			check_type(char *pathname)
 {
 	struct stat	buf;
-	char			*path;
+	char		*path;
 
 	buf = (struct stat){.st_mode = 0};
 	path = get_shell_var("PATH", g_env);
