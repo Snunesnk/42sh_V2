@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 17:48:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/21 12:22:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 #endif
 
-int	do_iohere(t_redirection *r)
+int	do_iohere(t_redirection *r, t_redirection *beg)
 {
 	if (valid_fd(r->redirectee.filename, r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
@@ -41,12 +41,15 @@ int	do_iohere(t_redirection *r)
 	lseek(r->redirector.dest, 0, SEEK_SET);
 	r->instruction = IOREAD;
 	if (r->flags & NOFORK)
+	{
+		(void)beg;
 		r->save[0] = dup(r->redirectee.dest);
+	}
 	dup2(r->redirector.dest, r->redirectee.dest);
 	return (0);
 }
 
-int	do_iodfile(t_redirection *r)
+int	do_iodfile(t_redirection *r, t_redirection *beg)
 {
 	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
 		return (e_is_a_directory);
@@ -62,23 +65,32 @@ int	do_iodfile(t_redirection *r)
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
+	{
+		(void)beg;
 		r->save[0] = dup(STDOUT_FILENO);
+	}
 	if (r->flags & NOFORK)
+	{
+		(void)beg;
 		r->save[1] = dup(STDERR_FILENO);
+	}
 	dup2(r->redirectee.dest, STDOUT_FILENO);
 	dup2(r->redirectee.dest, STDERR_FILENO);
 	close(r->redirectee.dest);
 	return (0);
 }
 
-int	do_iodread(t_redirection *r)
+int	do_iodread(t_redirection *r, t_redirection *beg)
 {
 	if (r->flags & FDCLOSE)
 	{
 		if (fd_need_be_open(r))
 			return (0);
 		if (r->flags & NOFORK)
+		{
+			(void)beg;
 			r->save[0] = dup(r->redirectee.dest);
+		}
 		close(r->redirectee.dest);
 	}
 	else if (r->flags & FILENAME)
@@ -91,13 +103,16 @@ int	do_iodread(t_redirection *r)
 		if (valid_fd(r->redirector.filename, r->redirector.dest, 1))
 			return (e_bad_file_descriptor);
 		if (r->flags & NOFORK)
+		{
+			(void)beg;
 			r->save[0] = dup(r->redirectee.dest);
+		}
 		dup2(r->redirector.dest, r->redirectee.dest);
 	}
 	return (0);
 }
 
-int	do_iodup(t_redirection *r)
+int	do_iodup(t_redirection *r, t_redirection *beg)
 {
 	if (r->flags & FILENAME && r->redirector.dest != STDOUT_FILENO)
 		return (psherror(e_ambiguous_redirect,
@@ -105,7 +120,7 @@ int	do_iodup(t_redirection *r)
 	else if (r->flags & FILENAME)
 	{
 		r->instruction |= IOWRITE;
-		return (do_iodfile(r));
+		return (do_iodfile(r, beg));
 	}
 	else if (r->flags & DEST)
 	{
@@ -120,7 +135,10 @@ int	do_iodup(t_redirection *r)
 	else if (r->flags & FDCLOSE && !fd_need_be_open(r))
 	{
 		if (r->flags & NOFORK)
+		{
+			dupfd(r->redirector.dest, beg);
 			r->save[0] = dup(r->redirector.dest);
+		}
 		close(r->redirector.dest);
 	}
 	return (0);

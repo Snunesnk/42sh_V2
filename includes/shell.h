@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 22:07:31 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/21 12:19:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,7 @@ int								undo_redirection_internal(t_redirection *r);
 
 int								has_redirections(int type);
 int								ha(char *str);
+int								dupfd(int fd, t_redirection *r);
 t_redirection					*set_redirection(t_list **lst, int io_nb);
 t_redirection					*type_less_redirection(t_list **lst, int io_nb);
 t_redirection					*type_dless_redirection(t_list **lst, \
@@ -275,13 +276,20 @@ t_redirection					*type_andgreat_redirection(t_list **lst, \
 
 int								valid_fd(char *s, int fd, int open);
 int								check_if_directory(char *filename);
-int								do_iowrite(t_redirection *r);
-int								do_iocat(t_redirection *r);
-int								do_ioread(t_redirection *r);
-int								do_iohere(t_redirection *r);
-int								do_iodfile(t_redirection *r);
-int								do_iodread(t_redirection *r);
-int								do_iodup(t_redirection *r);
+int								do_iowrite(t_redirection *r, \
+		t_redirection *beg);
+int								do_iocat(t_redirection *r, \
+		t_redirection *beg);
+int								do_ioread(t_redirection *r, \
+		t_redirection *beg);
+int								do_iohere(t_redirection *r, \
+		t_redirection *beg);
+int								do_iodfile(t_redirection *r, \
+		t_redirection *beg);
+int								do_iodread(t_redirection *r, \
+		t_redirection *beg);
+int								do_iodup(t_redirection *r, \
+		t_redirection *beg);
 int								do_redirection(t_redirection *r);
 
 extern char						*g_filename_redir_error;
