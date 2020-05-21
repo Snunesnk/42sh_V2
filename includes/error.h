@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 22:04:03 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 16:33:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum								e_minishell_error
 	e_system_call_error,
 	e_permission_denied,
 	e_is_a_directory,
+	e_too_many_lvl_symlink,
 	e_command_not_found,
 	e_no_such_file_or_directory,
 	e_resource_tmp_unavailable,
