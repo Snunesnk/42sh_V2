@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 12:33:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 18:05:37 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ extern int						g_last_exit;
 extern int						g_force_exit;
 extern int						g_interrupt_immediately;
 extern int						g_oneline;
+extern int						g_trap;
 
 extern t_hash_table				*(g_hash_table[HASH_SIZE]);
 

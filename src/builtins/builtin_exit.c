@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/13 13:58:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/21 18:04:47 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int				cmd_exit(int argc, char **argv)
 
 	status = g_retval;
 	update_status();
+	g_trap = ON;
 	if (g_job_control_enabled && are_stopped_jobs() && !g_last_exit)
 	{
 		print_exit(1);
