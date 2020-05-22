@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:09:16 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:26:13 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	do_iohere(t_redirection *r, t_redirection *beg)
 
 int	do_iodfile(t_redirection *r, t_redirection *beg)
 {
-	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
-		return (e_is_a_directory);
+	if (check_if_directory(r->redirectee.filename) == e_redir_directory)
+		return (e_redir_directory);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
