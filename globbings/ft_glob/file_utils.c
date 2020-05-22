@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 17:31:32 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 18:11:29 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int			is_dir(const char *pathname, t_glob_internal *gl)
 	struct stat	statbuf;
 
 	ft_bzero((void *)&statbuf, sizeof(struct stat));
-	if (stat(pathname, &statbuf) == -1)
+	if (stat(pathname, &statbuf) == -1 && lstat(pathname, &statbuf) == -1)
 	{
 		set_read_error(gl, pathname, errno);
 		return (-1);
