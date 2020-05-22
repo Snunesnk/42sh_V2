@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 18:55:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/22 15:20:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	vim_hash(void)
 	g_input_break = 1;
 	g_line.c_pos = 0;
 	insert_text("#", 1);
+	place_cursor(0);
+	update_line();
 }
 
 void	call_fc(void)
@@ -41,11 +43,12 @@ void	call_fc(void)
 	if (g_line.len > 0 && !ft_str_isspace(g_line.line))
 		add_hentry(g_line.line, g_line.len);
 	add_hentry("fc", 2);
-	argv[0] = "fc";
+	argv[0] = ft_strdup("fc");
 	argv[1] = NULL;
 	deprep_terminal();
 	rl_clear_signals();
 	cmd_fc(1, argv);
+	free(argv[0]);
 	rl_set_signals();
 	prep_terminal();
 	g_bad_seq.value = '\n';
