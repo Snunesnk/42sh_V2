@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/22 15:10:05 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 18:08:45 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int			execute_env_process(char **argv, char **envp,
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 		return (free_and_return(ret, &pathname, argv[0]));
-	if ((tmp = find_occurence(pathname)))
+	tmp = find_occurence(pathname);
+	if (tmp && !access(tmp->command_path, F_ok))
 		return (process_execve(argv, envp, tmp->command_path));
 	if (env_path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (free_and_return(e_command_not_found, &pathname, argv[0]));
