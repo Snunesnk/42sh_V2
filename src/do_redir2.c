@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:07:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:28:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,27 @@ int	do_iohere(t_redirection *r, t_redirection *beg)
 	return (0);
 }
 
-int	do_iodfile(t_redirection *r, t_redirection *beg)
+int	do_iodfile(t_redirection *r, t_redirection *b)
 {
-	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
-		return (e_is_a_directory);
+	int	err;
+
+	if ((err = check_if_directory(r->redirectee.filename)))
+		return (err);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied,
-					r->redirectee.filename, e_cmd_type));
+		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+	r->save[0] = r->flags & NOFORK ? dupit(STDOUT_FILENO, b) : r->save[0];
 	if (r->flags & NOFORK)
-		r->save[0] = dupit(STDOUT_FILENO, beg);
-	if (r->flags & NOFORK)
-		r->save[1] = dupit(STDERR_FILENO, beg);
-	if (r->redirectee.dest != STDOUT_FILENO && r->redirectee.dest != STDERR_FILENO)
+		r->save[1] = dupit(STDERR_FILENO, b);
+	if (r->redirectee.dest != STDOUT_FILENO
+		&& r->redirectee.dest != STDERR_FILENO)
 	{
 		dup2(r->redirectee.dest, STDOUT_FILENO);
 		dup2(r->redirectee.dest, STDERR_FILENO);
@@ -117,8 +118,7 @@ int	do_iodup(t_redirection *r, t_redirection *beg)
 			return (0);
 		if (valid_fd(r->redirectee.filename, r->redirectee.dest, 1))
 			return (e_bad_file_descriptor);
-		if (r->flags & NOFORK)
-			r->save[0] = dup(r->redirector.dest);
+		r->save[0] = r->flags & NOFORK ? dup(r->redirector.dest) : r->save[0];
 		dup2(r->redirectee.dest, r->redirector.dest);
 	}
 	else if (r->flags & FDCLOSE && !fd_need_be_open(r))

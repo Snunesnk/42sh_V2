@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/13 10:58:39 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 14:29:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,18 @@ int			set_temp_variable(char *assignment)
 {
 	char	*name;
 	char	*value;
+	int		already_exist;
 
 	if (get_assignment(assignment, &name, &value) == SUCCESS)
 	{
+		already_exist = !!get_shell_var(name, g_env);
 		*value++ = 0;
 		if (set_shell_var(name, value, SET | EXPORT | TEMP, &g_env) == SUCCESS)
+		{
+			if (!already_exist)
+				ft_lstaddend(&g_env, ft_lst_pop(&g_env, 0));
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -39,7 +45,7 @@ void		empty_env(t_list **svar_lst)
 	{
 		svar = cur->content;
 		if (svar->flag & TEMP)
-			ft_lstaddend(&new_env, cur);
+			unset_shell_var(svar->name, &cur);
 		else
 			ft_lstaddend(&g_tmp_env, cur);
 	}
@@ -90,7 +96,7 @@ int			execute_env_process(char **argv, char **envp,
 	if (!argv || !argv[0][0])
 		return (0);
 	pathname = ft_strdup(argv[0]);
-	if ((ret = check_type(pathname)) == e_success)
+	if ((ret = check_type(pathname, 1)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 		return (free_and_return(ret, &pathname, argv[0]));
@@ -98,7 +104,7 @@ int			execute_env_process(char **argv, char **envp,
 		return (process_execve(argv, envp, tmp->command_path));
 	if (env_path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (free_and_return(e_command_not_found, &pathname, argv[0]));
-	else if (check_type(pathname) == e_success)
+	else if (check_type(pathname, 1) == e_success)
 		return (process_execve(argv, envp, pathname));
 	return (free_and_return(e_command_not_found, &pathname, argv[0]));
 }
