@@ -1,10 +1,10 @@
-<<<<<<< HEAD
-=======
+touch file ; chmod 0000 file ; cat < file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat > file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat >> file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat &> file ; echo $? ; chmod 0766 file ; rm file
 echo Hello | ${${dfdf}} | cat -e
 echo Hello | ${${dfdf}} | cat -e | echo ok
 echo Hello 1>&2 | ${${dfdf}} | cat -e | echo ok
-
->>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 echo ok -1<2
 echo ok auteur<auteur
 echo ok --1<2
