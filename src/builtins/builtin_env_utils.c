@@ -90,7 +90,7 @@ int			execute_env_process(char **argv, char **envp,
 	if (!argv || !argv[0][0])
 		return (0);
 	pathname = ft_strdup(argv[0]);
-	if ((ret = check_type(pathname)) == e_success)
+	if ((ret = check_type(pathname, 1)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 		return (free_and_return(ret, &pathname, argv[0]));
@@ -98,7 +98,7 @@ int			execute_env_process(char **argv, char **envp,
 		return (process_execve(argv, envp, tmp->command_path));
 	if (env_path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (free_and_return(e_command_not_found, &pathname, argv[0]));
-	else if (check_type(pathname) == e_success)
+	else if (check_type(pathname, 1) == e_success)
 		return (process_execve(argv, envp, pathname));
 	return (free_and_return(e_command_not_found, &pathname, argv[0]));
 }
