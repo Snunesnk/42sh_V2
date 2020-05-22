@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 18:17:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/22 13:26:52 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 17:21:28 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,19 @@ static int	exec_env_command(char **argv)
 	char	**envp;
 	int		ret;
 	pid_t	pid;
+//	pid_t	pgid;
 
+//	pgid = 0;
 	ret = 0;
 	envp = get_env_tab();
 	argv = ft_tabcpy(argv);
 	if (!(pid = fork()))
 	{
+/*		pid = getpid();
+		pgid = pid;
+		setpgid(pid, pgid);
+		if (g_job_control_enabled)
+			tcsetpgrp(g_shell_terminal, pgid); */
 		restore_procmask();
 		if (argv)
 			ret = execute_env_process(argv, envp, NULL, NULL);
@@ -32,10 +39,24 @@ static int	exec_env_command(char **argv)
 	}
 	else if (pid < 0)
 		ft_dprintf(STDERR_FILENO, "fork(2) failed\n");
-	else if (pid)
+	else
+	{
+/*		if (g_job_control_enabled)
+		{
+			pgid = pid;
+			setpgid(pid, pgid);
+		} */
 		waitpid(pid, &ret, WUNTRACED);
-	if (pid > 0 && WIFSTOPPED(ret))
-		kill(pid, SIGKILL);
+		if (WIFSTOPPED(ret))
+		{
+			kill(pid, SIGKILL);
+			waitpid(pid, &ret, WUNTRACED); //HERE BECAUSE ZOMBIE
+		}
+		if (g_job_control_enabled)
+			tcsetpgrp(g_shell_terminal, g_shell_pgid); //HERE BECAUSE IT WORKS
+//		tcgetattr(g_shell_terminal, &j->tmodes);
+//		tcsetattr(g_shell_terminal, TCSADRAIN, &shell_tmodes);
+	}
 	ft_tabdel(&envp);
 	ft_tabdel(&argv);
 	return (pid < 0 ? 1 : WEXITSTATUS(ret));

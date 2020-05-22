@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/22 14:29:47 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 15:10:05 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int			set_temp_variable(char *assignment)
 
 	if (get_assignment(assignment, &name, &value) == SUCCESS)
 	{
-		already_exist = !!get_shell_var(name, g_env);
 		*value++ = 0;
+		already_exist = !!get_shell_var(name, g_env);
 		if (set_shell_var(name, value, SET | EXPORT | TEMP, &g_env) == SUCCESS)
 		{
 			if (!already_exist)
