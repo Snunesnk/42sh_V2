@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:27:19 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:17:06 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "no such file or directory"},
 	{ 1, "is a directory" },
 	{ 1, "permission denied" },
+	{ 1, "Too many levels of symbolic links" },
 	{ 2, "syntax error near unexpected token" },
 	{ 2, "syntax error: unexpected end of file" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },

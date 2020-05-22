@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:26:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:28:26 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ int	do_iohere(t_redirection *r, t_redirection *beg)
 	return (0);
 }
 
-int	do_iodfile(t_redirection *r, t_redirection *beg)
+int	do_iodfile(t_redirection *r, t_redirection *b)
 {
-	if (check_if_directory(r->redirectee.filename) == e_redir_directory)
-		return (e_redir_directory);
+	int	err;
+
+	if ((err = check_if_directory(r->redirectee.filename)))
+		return (err);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -61,10 +63,9 @@ int	do_iodfile(t_redirection *r, t_redirection *beg)
 	O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+	r->save[0] = r->flags & NOFORK ? dupit(STDOUT_FILENO, b) : r->save[0];
 	if (r->flags & NOFORK)
-		r->save[0] = dupit(STDOUT_FILENO, beg);
-	if (r->flags & NOFORK)
-		r->save[1] = dupit(STDERR_FILENO, beg);
+		r->save[1] = dupit(STDERR_FILENO, b);
 	if (r->redirectee.dest != STDOUT_FILENO
 		&& r->redirectee.dest != STDERR_FILENO)
 	{
