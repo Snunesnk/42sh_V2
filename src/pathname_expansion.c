@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 15:13:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/21 22:01:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/22 09:11:24 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,15 @@ int			replace_fields(t_process *p, int i, char **av, int ac)
 	return (e_success);
 }
 
-static char	*build_glob_pattern(const char *arg)
+static char	*build_glob_pattern(const char *arg, int qmode)
 {
-	int		qmode;
 	int		old_qmode;
 	char	*ptr;
 	char	*pattern;
 
 	if (!(pattern = ft_strnew(ft_strlen(arg) * 2)))
 		return (NULL);
-	ft_strcpy(pattern, arg);
-	ptr = pattern;
-	qmode = NO_QUOTE;
+	ptr = ft_strcpy(pattern, arg);
 	while (*ptr)
 	{
 		old_qmode = qmode;
@@ -84,7 +81,7 @@ int			pathname_expansion(t_process *p, int i, int *skip)
 	if (!has_unquoted_spec_chars(p->argv[i], "{?[*"))
 		return (e_success);
 	ft_bzero(&gl, sizeof(t_glob));
-	if (!(pattern = build_glob_pattern(p->argv[i])))
+	if (!(pattern = build_glob_pattern(p->argv[i], NO_QUOTE)))
 		return (e_cannot_allocate_memory);
 	ret = ft_glob(pattern, FT_GLOB_BRACE, NULL, &gl);
 	ft_memdel((void **)&pattern);

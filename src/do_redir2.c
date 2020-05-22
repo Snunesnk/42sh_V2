@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:07:47 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 09:16:17 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int	do_iodfile(t_redirection *r, t_redirection *beg)
 		r->save[0] = dupit(STDOUT_FILENO, beg);
 	if (r->flags & NOFORK)
 		r->save[1] = dupit(STDERR_FILENO, beg);
-	if (r->redirectee.dest != STDOUT_FILENO && r->redirectee.dest != STDERR_FILENO)
+	if (r->redirectee.dest != STDOUT_FILENO
+		&& r->redirectee.dest != STDERR_FILENO)
 	{
 		dup2(r->redirectee.dest, STDOUT_FILENO);
 		dup2(r->redirectee.dest, STDERR_FILENO);
@@ -117,8 +118,7 @@ int	do_iodup(t_redirection *r, t_redirection *beg)
 			return (0);
 		if (valid_fd(r->redirectee.filename, r->redirectee.dest, 1))
 			return (e_bad_file_descriptor);
-		if (r->flags & NOFORK)
-			r->save[0] = dup(r->redirector.dest);
+		r->save[0] = r->flags & NOFORK ? dup(r->redirector.dest) : r->save[0];
 		dup2(r->redirectee.dest, r->redirector.dest);
 	}
 	else if (r->flags & FDCLOSE && !fd_need_be_open(r))
