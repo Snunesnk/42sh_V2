@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 15:43:47 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 19:28:24 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int				is_a_builtin(char *cmd)
 	{
 		if (f != &cmd_exit)
 			g_last_exit = 0;
+		if (f == cmd_env)
+			g_is_motherfucking_env = 1;
 		return (1);
 	}
 	else

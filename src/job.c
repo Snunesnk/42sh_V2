@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 18:06:12 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/22 19:39:31 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 
 static void	execute(t_job *j, t_exec *e, int foreground)
 {
+	g_is_motherfucking_env = 0;
 	e->pid = fork();
 	if (e->pid == 0)
 	{
@@ -103,7 +104,8 @@ int			launch_job(t_job *j, int foreground)
 			return (0);
 		}
 		else if (foreground && e.outfile == j->stdout && \
-			is_a_builtin_command(e.p->argv) && !j->first_process->next)
+			is_a_builtin_command(e.p->argv) && !j->first_process->next
+			&& !g_is_motherfucking_env)
 			return (launch_builtin(e.p));
 		else
 			execute(j, &e, foreground);
