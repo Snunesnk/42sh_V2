@@ -1,6 +1,0 @@
-cat << eof
-'bonjour
-toi"
-mon \
-ami
-eof

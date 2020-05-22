@@ -1,9 +1,0 @@
-cat << eof
-$
-\\$\$
-$'
-$"
-$USER
-${PWD}
-${NONO}
-eof
