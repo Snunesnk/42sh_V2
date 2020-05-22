@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 14:11:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/22 14:34:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static void	restore_line(int line)
 	}
 	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	display_prompt();
-	g_dis.start_offset = g_dis.prompt_l;
 	place_cursor(g_line.c_pos);
 }
 
@@ -76,7 +75,8 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 		return ;
 	ft_putstr_fd(g_termcaps.cd, g_dis.fd);
 	to_print = data->first_print;
-	while (data->first_print + line < data->last_print + 1)
+	while (data->first_print + line < data->last_print + 1 \
+			&& to_print <= data->nb_exec)
 	{
 		if (to_print)
 			list_compl = add_compl(list_compl, to_print, data, compl_tree);

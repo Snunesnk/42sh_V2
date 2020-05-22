@@ -1,5 +1,0 @@
-cat << eof
-$
-$USER$
-${PWD}$
-eof
