@@ -2,6 +2,11 @@ touch file ; chmod 0000 file ; cat < file ; echo $? ; chmod 0766 file ; rm file
 touch file ; chmod 0000 file ; cat > file ; echo $? ; chmod 0766 file ; rm file
 touch file ; chmod 0000 file ; cat >> file ; echo $? ; chmod 0766 file ; rm file
 touch file ; chmod 0000 file ; cat &> file ; echo $? ; chmod 0766 file ; rm file
+mkdir dir; cat < src/ ; echo $? ; rm -rf dir
+mkdir dir; cat > src/ ; echo $? ; rm -rf dir
+mkdir dir; cat >> src/ ; echo $? ; rm -rf dir
+mkdir dir; cat &> src/ ; echo $? ; rm -rf dir
+
 echo Hello | ${${dfdf}} | cat -e
 echo Hello | ${${dfdf}} | cat -e | echo ok
 echo Hello 1>&2 | ${${dfdf}} | cat -e | echo ok
