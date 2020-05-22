@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:51:41 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:33:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:07:56 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ enum								e_minishell_error
 	e_bad_file_descriptor,
 	e_no_job_control,
 	e_redir_no_file,
+	e_redir_denied,
 	e_syntax_error,
 	e_unexpected_eof_2,
 	e_filename_arg_required,

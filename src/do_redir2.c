@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 09:16:17 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 13:09:16 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ int	do_iodfile(t_redirection *r, t_redirection *beg)
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied,
-					r->redirectee.filename, e_cmd_type));
+		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);

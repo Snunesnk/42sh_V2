@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:03:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:08:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,7 @@ int	do_iowrite(t_redirection *r, t_redirection *beg)
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied,
-					r->redirectee.filename, e_cmd_type));
+		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -83,8 +82,7 @@ int	do_iocat(t_redirection *r, t_redirection *beg)
 		r->redirectee.dest = open(r->redirectee.filename,
 		O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
-		return (psherror(e_permission_denied,
-						r->redirectee.filename, e_cmd_type));
+		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -114,10 +112,7 @@ int	do_ioread(t_redirection *r, t_redirection *beg)
 		return (psherror(e_redir_no_file,
 				r->redirector.filename, e_cmd_type));
 	else if (access(r->redirector.filename, R_OK))
-	{
-		return (psherror(e_permission_denied,
-					r->redirector.filename, e_cmd_type));
-	}
+		return (psherror(e_redir_denied, r->redirector.filename, e_cmd_type));
 	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
 	if (r->redirector.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));

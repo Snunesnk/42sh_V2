@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 16:56:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/21 16:32:52 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:06:50 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ const struct s_error_desc	g_errordesc[] =
 	{ 1, "Bad file descriptor" },
 	{ 1, "no job control"},
 	{ 1, "no such file or directory"},
+	{ 1, "permission denied" },
 	{ 2, "syntax error near unexpected token" },
 	{ 2, "syntax error: unexpected end of file" },
 	{ 2, "filename argument required\n.: usage: . filename [arguments]" },
