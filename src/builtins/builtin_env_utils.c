@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/22 14:22:38 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 14:29:47 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int			set_temp_variable(char *assignment)
 {
 	char	*name;
 	char	*value;
+	int		already_exist;
 
 	if (get_assignment(assignment, &name, &value) == SUCCESS)
 	{
+		already_exist = !!get_shell_var(name, g_env);
 		*value++ = 0;
 		if (set_shell_var(name, value, SET | EXPORT | TEMP, &g_env) == SUCCESS)
 		{
-			ft_lstaddend(&g_env, ft_lst_pop(&g_env, 0));
+			if (!already_exist)
+				ft_lstaddend(&g_env, ft_lst_pop(&g_env, 0));
 			return (0);
 		}
 	}
