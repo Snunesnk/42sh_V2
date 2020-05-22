@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:08:54 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 13:25:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ int	check_if_directory(char *filename)
 	if (stat(filename, &buf))
 		return (e_system_call_error);
 	if (S_ISDIR(buf.st_mode))
-		return (psherror(e_is_a_directory, filename, e_cmd_type));
+		return (psherror(e_redir_directory, filename, e_cmd_type));
 	return (0);
 }
 
 int	do_iowrite(t_redirection *r, t_redirection *beg)
 {
-	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
-		return (e_is_a_directory);
+	if (check_if_directory(r->redirectee.filename) == e_redir_directory)
+		return (e_redir_directory);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -76,8 +76,8 @@ int	do_iowrite(t_redirection *r, t_redirection *beg)
 
 int	do_iocat(t_redirection *r, t_redirection *beg)
 {
-	if (check_if_directory(r->redirectee.filename) == e_is_a_directory)
-		return (e_is_a_directory);
+	if (check_if_directory(r->redirectee.filename) == e_redir_directory)
+		return (e_redir_directory);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
 		O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
@@ -104,8 +104,8 @@ int	do_iocat(t_redirection *r, t_redirection *beg)
 
 int	do_ioread(t_redirection *r, t_redirection *beg)
 {
-	if (check_if_directory(r->redirector.filename) == e_is_a_directory)
-		return (e_is_a_directory);
+	if (check_if_directory(r->redirector.filename) == e_redir_directory)
+		return (e_redir_directory);
 	else if (valid_fd(r->redirectee.filename, r->redirectee.dest, 0))
 		return (e_bad_file_descriptor);
 	else if (access(r->redirector.filename, F_OK))

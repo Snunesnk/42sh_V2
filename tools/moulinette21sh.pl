@@ -23,7 +23,7 @@ sub test_shell{
 
 	foreach my $arg (@ARGV)
 	{
-		# Put content of test in variable for substitution	
+		# Put content of test in variable for substitution
 		my $content;
 		open(my $fh, '<', $arg) or die "cannot open file $arg";
 		{
@@ -34,13 +34,13 @@ sub test_shell{
 
 		# Replace with the name of the tested shell in file content
 		$content =~ s/\.\/minishell/$shell/g;
-		
+
 		# Put content into a file for shell test
 		my $filename = "input.test.tmp";
 		open(FH, '>', $filename) or die $!;
 		print FH $content;
 		close(FH);
-		
+
 		# Test the shell
 		my $output =  `$shell < $filename 2>&1`;
 		$output =~ s/$refname_shell//g;
@@ -57,12 +57,12 @@ sub logError{
 	open(FH, '>', $filename1) or die $!;
 	print FH $_[0];
 	close(FH);
-	
+
 	my $filename2 = "error_b.log";
 	open(FH, '>', $filename2) or die $!;
 	print FH $_[1];
 	close(FH);
-	
+
 	# Comment these two lines to avoid making the diff and removing output files
 	system("diff ${filename1} ${filename2} > diff_test.log");
 	system("rm -f error_a.log");
