@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:18 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:51:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/22 16:11:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void		swap_words(void)
 		g_line.c_pos += spaces;
 		g_line.is_modified = 1;
 		insert_text(w1, ft_strlen(w1));
+		g_line.cursor_pos = 0;
 		free(w1);
 		free(w2);
 	}
