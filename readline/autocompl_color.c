@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/11 21:55:19 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:27:32 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/22 14:50:38 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char		*get_color(char *file)
 	no_esc_file = remove_esc(file);
 	lstat(no_esc_file, &st);
 	tmp = color[0];
-	if (S_ISDIR(st.st_mode))
+	if (S_ISDIR(st.st_mode) && !S_ISLNK(st.st_mode))
 		tmp = get_sp_color(st);
 	else if (S_ISCHR(st.st_mode))
 		tmp = color[1];
