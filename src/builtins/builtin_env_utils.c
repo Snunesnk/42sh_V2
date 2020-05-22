@@ -6,7 +6,7 @@
 /*   By: yforeau <yforeau@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 11:04:17 by yforeau           #+#    #+#             */
-/*   Updated: 2020/05/13 10:58:39 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/22 14:22:38 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int			set_temp_variable(char *assignment)
 	{
 		*value++ = 0;
 		if (set_shell_var(name, value, SET | EXPORT | TEMP, &g_env) == SUCCESS)
+		{
+			ft_lstaddend(&g_env, ft_lst_pop(&g_env, 0));
 			return (0);
+		}
 	}
 	return (1);
 }
@@ -39,7 +42,7 @@ void		empty_env(t_list **svar_lst)
 	{
 		svar = cur->content;
 		if (svar->flag & TEMP)
-			ft_lstaddend(&new_env, cur);
+			unset_shell_var(svar->name, &cur);
 		else
 			ft_lstaddend(&g_tmp_env, cur);
 	}
