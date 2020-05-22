@@ -27,13 +27,14 @@ static int	check_access(char *arg)
 	return (e_success);
 }
 
-int			check_type(char *pathname)
+int			check_type(char *pathname, int is_env)
 {
 	struct stat	buf;
 	char		*path;
 
 	buf = (struct stat){.st_mode = 0};
-	path = get_shell_var("PATH", g_env);
+	if (!(path = get_shell_var("PATH", g_env)) && is_env)
+		path = get_shell_var("PATH", g_tmp_env);
 	if ((!path || !path[0]))
 		(void)path;
 	else if (!ft_strchr(pathname, '/'))
@@ -80,7 +81,7 @@ int			execute_process(char **argv, char **envp,
 	if (is_a_builtin(argv[0]))
 		return (builtins_dispatcher(argv));
 	pathname = ft_strdup(argv[0]);
-	if ((ret = check_type(pathname)) == e_success)
+	if ((ret = check_type(pathname, 0)) == e_success)
 		return (process_execve(argv, envp, pathname));
 	else if (ret != e_command_not_found)
 		return (free_path_and_return(ret, &pathname, argv[0]));
@@ -89,7 +90,7 @@ int			execute_process(char **argv, char **envp,
 		return (process_execve(argv, envp, ft_strdup(tmp->command_path)));
 	if (path_concat(&pathname, NULL, NULL, NULL) == e_command_not_found)
 		return (free_path_and_return(ESH, &pathname, argv[0]));
-	else if (check_type(pathname) == e_success)
+	else if (check_type(pathname, 0) == e_success)
 		return (process_execve(argv, envp, pathname));
 	ft_memdel((void**)&pathname);
 	return (g_errordesc[psherror(e_command_not_found, argv[0], \

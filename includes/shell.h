@@ -477,7 +477,8 @@ int								exit_clean(int status);
 ** TODO: delete builtin env, make functions static again, and delete
 ** these prototyes
 */
-int								check_type(char *pathname);
+int								check_type(char *pathname,
+		int is_env);
 int								builtin_keyword_exec(char **argv);
 int								process_execve(char **argv,
 		char **envp, char *pathname);
