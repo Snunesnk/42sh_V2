@@ -1,10 +1,38 @@
-<<<<<<< HEAD
-=======
+touch file ; chmod 0000 file ; cat < file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat > file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat >> file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; cat &> file ; echo $? ; chmod 0766 file ; rm file
+mkdir dir; cat < src/ ; echo $? ; rm -rf dir
+mkdir dir; cat > src/ ; echo $? ; rm -rf dir
+mkdir dir; cat >> src/ ; echo $? ; rm -rf dir
+mkdir dir; cat &> src/ ; echo $? ; rm -rf dir
+ln -s link1 link2 ; ln -s link2 link1 ; cat < link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; cat > link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; cat >> link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; cat &> link1 ; echo $? ; rm link1 link2
+ln -s sym1 auteur ; cat < sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; cat > sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; cat >> sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; cat &> sym1 ; echo $? ; rm sym1
+touch file ; chmod 0000 file ; echo ok plop toto < file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; echo ok plop toto > file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; echo ok plop toto >> file ; echo $? ; chmod 0766 file ; rm file
+touch file ; chmod 0000 file ; echo ok plop toto &> file ; echo $? ; chmod 0766 file ; rm file
+mkdir dir; echo ok plop totocat < src/ ; echo $? ; rm -rf dir
+mkdir dir; echo ok plop totocat > src/ ; echo $? ; rm -rf dir
+mkdir dir; echo ok plop totocat >> src/ ; echo $? ; rm -rf dir
+mkdir dir; echo ok plop totocat &> src/ ; echo $? ; rm -rf dir
+ln -s link1 link2 ; ln -s link2 link1 ; echo ok plop toto < link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; echo ok plop toto > link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; echo ok plop toto >> link1 ; echo $? ; rm link1 link2
+ln -s link1 link2 ; ln -s link2 link1 ; echo ok plop toto &> link1 ; echo $? ; rm link1 link2
+ln -s sym1 auteur ; echo ok tot plop < sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; echo ok tot plop > sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; echo ok tot plop >> sym1 ; echo $? ; rm sym1
+ln -s sym1 auteur ; echo ok tot plop &> sym1 ; echo $? ; rm sym1
 echo Hello | ${${dfdf}} | cat -e
 echo Hello | ${${dfdf}} | cat -e | echo ok
 echo Hello 1>&2 | ${${dfdf}} | cat -e | echo ok
-
->>>>>>> 008fcb1163d9ac68288f0971374c12c9ff50a2f1
 echo ok -1<2
 echo ok auteur<auteur
 echo ok --1<2
