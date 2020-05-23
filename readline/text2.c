@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 16:51:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 01:16:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,12 @@ void	cursor_l(void)
 
 void	cursor_r(void)
 {
+	if (g_vim_mode && g_vim_cmd)
+	{
+		if (g_line.c_pos < g_line.len - 1)
+			g_line.c_pos++;
+		return ;
+	}
 	if (g_line.c_pos < g_line.len)
 		g_line.c_pos++;
 	else
