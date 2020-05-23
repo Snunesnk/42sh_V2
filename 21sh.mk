@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/23 13:22:23 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/23 15:29:16 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -143,6 +143,7 @@ SOURCES :=	main.c \
 		../readline/vim4.c \
 		../readline/vim5.c \
 		../readline/vim6.c \
+		../readline/vim7.c \
 		../readline/get_vim_cmd_count.c \
 		../readline/history.c \
 		../readline/history_expand.c \
