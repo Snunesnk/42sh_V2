@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 13:45:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 16:49:52 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ static char	*readline_internal(void)
 	init_line_buffer();
 	value = g_line.line;
 	update_line();
-	if (g_vim_mode == 0)
-		add_back();
+//	if (g_vim_mode == 0)
+//		add_back();
+	if (g_back)
+		stack_delete(&g_back, del_stat_line);
 	readline_internal_keys((union u_buffer){.value = 1}, &value);
 	remove_completion();
 	ft_putstr_fd(g_termcaps.cd, g_dis.fd);

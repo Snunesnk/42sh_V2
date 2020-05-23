@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:09:11 by abarthel          #+#    #+#             */
-/*   Updated: 2020/04/06 17:15:15 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 16:31:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 #include "ft_stack.h"
 
-extern inline void	*stack_pop_get_data(struct s_stack **top)
+void	*stack_pop_get_data(struct s_stack **top)
 {
 	struct s_stack	*previous;
-	void *restrict	data;
+	void			*data;
 
 	data = NULL;
 	if (*top)
