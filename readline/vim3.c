@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:29 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 18:09:43 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 21:29:49 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	goto_pchr_left(void)
 
 	if (!g_got_input)
 	{
+		g_last_goto = 'T';
 		g_c = 0;
 		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
@@ -43,6 +44,7 @@ void	goto_pchr_right(void)
 
 	if (!g_got_input)
 	{
+		g_last_goto = 't';
 		g_c = 0;
 		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
@@ -63,12 +65,29 @@ void	goto_pchr_right(void)
 
 void	last_goto(void)
 {
-	if (g_last_goto_f)
+	static t_goto_func	goto_function[] = {
+		{ 'f', goto_chr_right },
+		{ 'F', goto_chr_left },
+		{ 't', goto_pchr_right },
+		{ 'T', goto_pchr_left }};
+	int					i;
+
+	i = 0;
+	while (i < 4 && goto_function[i].letter != g_last_goto)
+		i++;
+	if (i == 4)
+	{
+		vim_insert();
+		return ;
+	}
+	while (1)
 	{
 		g_got_input = 1;
-		((void (*)(void))g_last_goto_f)();
-		g_got_input = 0;
+		(*goto_function[i].func)();
+		if (--g_vim_cmd_count <= 0)
+			break ;
 	}
+	g_got_input = 0;
 }
 
 void	insert_mode_next(void)
