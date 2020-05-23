@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:00:16 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 16:53:57 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	end_next_alnum(void)
 			&& g_line.c_pos + 1 < g_line.len)
 			cursor_r();
 	}
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+		end_next_alnum();
 }
 
 void	end_next_wd(void)
@@ -44,6 +46,8 @@ void	end_next_wd(void)
 	while (!ft_isspace(g_line.line[g_line.c_pos + 1])
 		&& g_line.c_pos + 1 < g_line.len)
 		cursor_r();
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+		end_next_wd();
 }
 
 void	beg_last_alnum(void)
@@ -63,6 +67,8 @@ void	beg_last_alnum(void)
 		while (g_line.c_pos > 0 && ft_ispunct(g_line.line[g_line.c_pos - 1]))
 			cursor_l();
 	}
+	if (--g_vim_cmd_count > 0 && g_line.c_pos > 0)
+		beg_last_alnum();
 }
 
 void	goto_chr_right(void)
