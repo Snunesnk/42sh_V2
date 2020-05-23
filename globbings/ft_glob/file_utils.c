@@ -6,13 +6,12 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/22 18:11:29 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:33:43 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_glob_internal.h"
 #include <sys/stat.h>
-#include <errno.h>
 
 void		set_read_error(t_glob_internal *gl, const char *pathname, int err)
 {
@@ -43,7 +42,7 @@ int			is_dir(const char *pathname, t_glob_internal *gl)
 	ft_bzero((void *)&statbuf, sizeof(struct stat));
 	if (stat(pathname, &statbuf) == -1 && lstat(pathname, &statbuf) == -1)
 	{
-		set_read_error(gl, pathname, errno);
+		set_read_error(gl, pathname, 1);
 		return (-1);
 	}
 	return (S_ISDIR(statbuf.st_mode));
