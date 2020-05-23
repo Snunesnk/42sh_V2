@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 19:17:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 00:33:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void			replace_wd(void);
 void			replace_text(const char *string, int len);
 void			replace_mode(void);
 void			l_expand(void);
-void			c_motion(union u_buffer d);
+void			c_motion(void);
 void			d_motion(union u_buffer d);
 void			cmaj_motion(void);
 void			clear_all_l(void);
