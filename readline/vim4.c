@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:37 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:06:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 00:04:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,22 @@ void	insert_mode_first(void)
 void	replace_wd(void)
 {
 	int	c;
+	int	i;
 
+	i = 0;
 	c = 0;
 	if (read(STDIN_FILENO, &c, sizeof(int)) < 0)
 		return ;
 	if (ft_isprint(c))
 	{
-		g_line.line[g_line.c_pos] = c;
-		g_line.is_modified = 1;
+		while (g_line.c_pos + i <= g_line.len \
+				&& (i < g_vim_cmd_count || i == 0))
+		{
+			g_line.line[g_line.c_pos + i] = c;
+			g_line.is_modified = 1;
+			i++;
+		}
+		g_line.c_pos += i - 1;
 	}
 }
 
