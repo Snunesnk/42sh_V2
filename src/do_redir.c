@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 14:27:20 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 09:38:43 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	check_if_directory(char *filename)
 
 	buf = (struct stat){.st_mode = 0};
 	if (lstat(filename, &buf))
-		return (e_system_call_error);
+		return (0);
 	if (S_ISDIR(buf.st_mode))
 		return (psherror(e_redir_directory, filename, e_cmd_type));
 	if (S_ISLNK(buf.st_mode))
