@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 19:39:31 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/23 11:21:33 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
 
 static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 {
+	g_is_motherfucking_env = 0;
 	p->assignments_count = 0;
 	p->status = treat_expansions(p);
 	if (p->next)
@@ -58,7 +59,6 @@ static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 
 static void	execute(t_job *j, t_exec *e, int foreground)
 {
-	g_is_motherfucking_env = 0;
 	e->pid = fork();
 	if (e->pid == 0)
 	{
