@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 15:22:52 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 16:51:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	kill_line(void)
 {
 	write(g_dis.fd, "^C", STDERR_FILENO);
 	g_retval = SIGINT + 128;
+	if (g_back)
+		stack_delete(&g_back, del_stat_line);
 	if (!g_dumb_term)
 		place_cursor(g_line.len);
 	ft_bzero(g_line.line, g_line.size_buf);
