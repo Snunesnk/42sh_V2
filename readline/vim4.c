@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:37 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 01:21:56 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 01:25:13 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	clear_all_l(void)
 	g_line.c_pos = 0;
 	vim_insert();
 	g_line.is_modified = 1;
+	g_line.len = 0;
 }
 
 void	c_motion(void)
