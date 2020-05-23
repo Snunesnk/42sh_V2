@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 15:23:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 16:50:18 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	paste_via_input(unsigned long v)
 	union u_buffer	u;
 	int				len;
 
-	if (g_back)
-		stack_delete(&g_back, del_stat_line);
 	len = 0;
 	u.value = v;
 	while (len < 8 && u.buf[len])

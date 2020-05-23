@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 11:40:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 16:46:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,25 @@ void	undo_last(void)
 {
 	struct s_line_state	*prev;
 
-	if (!stack_isempty(&g_back))
+	g_add_back_buf = 0;
+	if (g_back)
+	{
+		ft_memdel((void**)&g_line.line);
+		prev = stack_pop_get_data(&g_back);
+		g_line.line = prev->line;
+		g_line.size_buf = prev->size_buf;
+		g_line.c_pos = prev->c_pos;
+		g_line.cursor_pos = prev->cursor_pos;
+		g_line.len = prev->len;
+		g_line.is_modified = prev->is_modified;
+		ft_memdel((void**)&prev);
+	}
+	else
 	{
 		ft_bzero(g_line.line, g_line.len);
-		prev = stack_pop_get_data(&g_back);
-		ft_strcpy(g_line.line, prev->line);
-		g_line.len = prev->len;
-		g_line.c_pos = prev->size_buf;
-		del_stat_line(prev);
+		g_line.c_pos = 0;
+		g_line.cursor_pos = 0;
+		g_line.len = 0;
 		g_line.is_modified = 1;
 	}
 }

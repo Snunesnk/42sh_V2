@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:20 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 11:46:36 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 16:48:05 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ void	add_back(void)
 	struct s_line_state	*prev;
 
 	prev = ft_memalloc(sizeof(struct s_line_state));
+	prev->size_buf = g_line.size_buf;
 	prev->len = g_line.len;
-	prev->line = ft_strdup(g_line.line);
-	prev->size_buf = g_line.c_pos;
+	prev->line = ft_strndup(g_line.line, g_line.size_buf);
+	prev->c_pos = g_line.c_pos;
+	prev->cursor_pos = g_line.cursor_pos;
+	prev->is_modified = 1;
 	stack_push(&g_back, prev);
 }
