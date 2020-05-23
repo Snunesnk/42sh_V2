@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 12:33:53 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/27 12:05:45 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/23 12:33:09 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "ft_fnmatch.h"
 #include <sys/stat.h>
 #include <dirent.h>
-#include <errno.h>
 
 void		del_match(void *string, size_t size)
 {
@@ -68,7 +67,7 @@ t_list		*match_files(const char *path, const char *cur_pattern,
 	match = NULL;
 	if (!(dirp = opendir(path ? path : ".")))
 	{
-		set_read_error(gl, path, errno);
+		set_read_error(gl, path, 1);
 		return (NULL);
 	}
 	while (!gl->ret && (fp = readdir(dirp)))
@@ -80,8 +79,6 @@ t_list		*match_files(const char *path, const char *cur_pattern,
 		else if (fid.pathname)
 			ft_memdel((void **)&fid.pathname);
 	}
-	if (errno)
-		set_read_error(gl, path, errno);
 	closedir(dirp);
 	return (match);
 }
