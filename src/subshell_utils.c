@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/07 11:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:10:07 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 12:07:54 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ static void	add_to_commandline(char **line, char *cmd)
 	char	*tmp;
 
 	if (!*line)
-		*line = ft_strdup(cmd);
+		*line = cmd;
 	else
 	{
 		tmp = ft_strnjoin(3, *line, " ", cmd);
+		free(cmd);
 		ft_memdel((void**)line);
 		*line = tmp;
 	}
@@ -30,18 +31,16 @@ static void	add_node_to_cmd(t_ast *node, char **command)
 {
 	char	*n;
 	t_list	*lst;
-	t_token	*tk;
 
 	if (!node)
 		return ;
 	if (node->type == IO_NB || node->type == WORD)
 	{
 		lst = node->content;
-		tk = lst->content;
-		n = tk->value;
+		n = commandline(lst);
 	}
 	else
-		n = g_tokval[node->type];
+		n = ft_strdup(g_tokval[node->type]);
 	add_to_commandline(command, n);
 }
 
