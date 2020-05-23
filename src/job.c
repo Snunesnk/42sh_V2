@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 11:21:33 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/23 11:36:53 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,8 @@ int			launch_job(t_job *j, int foreground)
 			e.p->completed = 1;
 			return (0);
 		}
-		else if (foreground && e.outfile == j->stdout && \
-			is_a_builtin_command(e.p->argv) && !j->first_process->next
-			&& !g_is_motherfucking_env)
+		else if (foreground && e.outfile == j->stdout && !j->first_process->next
+			&& is_a_builtin_command(e.p->argv) && !g_is_motherfucking_env)
 			return (launch_builtin(e.p));
 		else
 			execute(j, &e, foreground);
