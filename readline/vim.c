@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 15:12:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 16:30:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	beg_next_wd(void)
 		cursor_r();
 	while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len)
 		cursor_r();
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+		beg_next_wd();
 }
 
 void	beg_next_alnum(void)
@@ -84,4 +86,6 @@ void	beg_next_alnum(void)
 		while (!ft_isalnum(g_line.line[g_line.c_pos])
 			&& g_line.c_pos < g_line.len)
 			cursor_r();
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+		beg_next_alnum();
 }
