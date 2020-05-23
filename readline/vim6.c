@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 17:55:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 21:38:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,27 @@ void	undo_lastb(void)
 
 void	next_goto(void)
 {
-	if (g_last_goto_b)
+	static t_goto_func	goto_function[] = {
+		{ 'f', goto_chr_left },
+		{ 'F', goto_chr_right },
+		{ 't', goto_pchr_left },
+		{ 'T', goto_pchr_right }};
+	int					i;
+
+	i = 0;
+	while (i < 4 && goto_function[i].letter != g_last_goto)
+		i++;
+	if (i == 4)
+	{
+		vim_insert();
+		return ;
+	}
+	while (1)
 	{
 		g_got_input = 1;
-		((void (*)(void))g_last_goto_b)();
-		g_got_input = 0;
+		(*goto_function[i].func)();
+		if (--g_vim_cmd_count <= 0)
+			break ;
 	}
+	g_got_input = 0;
 }
