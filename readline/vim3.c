@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:29 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:01:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 18:09:43 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	goto_pchr_left(void)
 {
-	int			p;
+	int	p;
 
 	if (!g_got_input)
 	{
@@ -23,17 +23,15 @@ void	goto_pchr_left(void)
 		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
 	}
-	p = g_line.c_pos;
+	p = g_line.c_pos - 1;
 	if (ft_isprint(g_c))
 	{
 		while (p - 1 >= 0)
 		{
 			if (g_line.line[p - 1] == g_c)
-			{
 				g_line.c_pos = p;
-				g_line.is_modified = 1;
+			if (g_line.line[p - 1] == g_c && --g_vim_cmd_count <= 0)
 				return ;
-			}
 			--p;
 		}
 	}
@@ -41,7 +39,7 @@ void	goto_pchr_left(void)
 
 void	goto_pchr_right(void)
 {
-	int			p;
+	int	p;
 
 	if (!g_got_input)
 	{
@@ -49,17 +47,15 @@ void	goto_pchr_right(void)
 		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
 	}
-	p = g_line.c_pos;
+	p = g_line.c_pos + 1;
 	if (ft_isprint(g_c))
 	{
 		while (p + 1 < g_line.len)
 		{
 			if (g_line.line[p + 1] == g_c)
-			{
 				g_line.c_pos = p;
-				g_line.is_modified = 1;
+			if (g_line.line[p + 1] == g_c && --g_vim_cmd_count <= 0)
 				return ;
-			}
 			++p;
 		}
 	}
