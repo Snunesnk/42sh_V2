@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 17:55:38 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/23 18:42:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,32 @@
 void	paste_all_l(void)
 {
 	cursor_r();
-	insert_text(g_clip.str, g_clip.l);
-	cursor_l();
+	if (g_vim_cmd_count == 0)
+		++g_vim_cmd_count;
+	if (g_clip.str && g_clip.l)
+	{
+		while (g_vim_cmd_count > 0)
+		{
+			insert_text(g_clip.str, g_clip.l);
+			--g_vim_cmd_count;
+		}
+		cursor_l();
+	}
 }
 
 void	paste_all_r(void)
 {
-	insert_text(g_clip.str, g_clip.l);
-	cursor_l();
+	if (g_vim_cmd_count == 0)
+		++g_vim_cmd_count;
+	if (g_clip.str && g_clip.l)
+	{
+		while (g_vim_cmd_count > 0)
+		{
+			insert_text(g_clip.str, g_clip.l);
+			--g_vim_cmd_count;
+		}
+		cursor_l();
+	}
 }
 
 void	undo_last(void)
@@ -31,30 +49,32 @@ void	undo_last(void)
 	struct s_line_state	*prev;
 
 	g_add_back_buf = 0;
-	if (g_back)
+	if (g_vim_cmd_count == 0)
+		++g_vim_cmd_count;
+	while (g_vim_cmd_count > 0)
 	{
-		ft_memdel((void**)&g_line.line);
-		prev = stack_pop_get_data(&g_back);
-		g_line.line = prev->line;
-		g_line.size_buf = prev->size_buf;
-		g_line.c_pos = prev->c_pos;
-		g_line.cursor_pos = prev->cursor_pos;
-		g_line.len = prev->len;
-		g_line.is_modified = prev->is_modified;
-		ft_memdel((void**)&prev);
+		if (g_back)
+		{
+			ft_memdel((void**)&g_line.line);
+			prev = stack_pop_get_data(&g_back);
+			g_line.line = prev->line;
+			g_line.size_buf = prev->size_buf;
+			g_line.c_pos = prev->c_pos;
+			g_line.cursor_pos = prev->cursor_pos;
+			g_line.len = prev->len;
+			g_line.is_modified = prev->is_modified;
+			ft_memdel((void**)&prev);
+		}
+		else
+		{
+			ft_bzero(g_line.line, g_line.len);
+			g_line.c_pos = 0;
+			g_line.cursor_pos = 0;
+			g_line.len = 0;
+			g_line.is_modified = 1;
+		}
+		--g_vim_cmd_count;
 	}
-	else
-	{
-		ft_bzero(g_line.line, g_line.len);
-		g_line.c_pos = 0;
-		g_line.cursor_pos = 0;
-		g_line.len = 0;
-		g_line.is_modified = 1;
-	}
-	--g_vim_cmd_count;
-	if (g_vim_cmd_count > 0)
-		undo_last();
-	g_vim_cmd_count = 0;
 }
 
 void	undo_lastb(void)
