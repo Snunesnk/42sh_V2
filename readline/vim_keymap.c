@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 16:14:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 17:16:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -504,7 +504,7 @@ struct s_keymap_entry g_vim_standard_cmd_keymap[] =
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
-	{ ISFUNC, rl_home },
+	{ ISFUNC, goto_first_non_blank },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, insert_mode_next },

@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 15:20:55 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/23 16:13:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 17:29:18 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	vim_cmd_cursor_l(void)
 		return ;
 	while (--g_vim_cmd_count > 0 && g_line.c_pos > 0)
 		cursor_l();
+}
+
+void	goto_first_non_blank(void)
+{
+	g_line.c_pos = 0;
+	while (g_line.c_pos < g_line.len && ft_isblank(g_line.line[g_line.c_pos]))
+		g_line.c_pos++;
 }
