@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 13:23:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 15:27:20 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "../src/builtins/builtins.h"
+
+static int	g_yank_cursor_move = 0;
 
 void	cmaj_motion(void)
 {
@@ -39,9 +41,9 @@ void	d_motion(void)
 		return ;
 	}
 	if (ret < g_line.c_pos)
-		del_from_to(ret, g_line.c_pos + 1, SAVE);
+		del_from_to(ret, g_line.c_pos, SAVE);
 	else
-		del_from_to(ret, g_line.c_pos + 1, NO_SAVE);
+		del_from_to(g_line.c_pos, ret, NO_SAVE);
 }
 
 
@@ -51,58 +53,31 @@ void	dmaj_motion(void)
 	cursor_l();
 }
 
-/*
-** 
-**
-**
-*/
-
 void	yank_c(void)
 {
 	union u_buffer	c;
+	static char		poss[] = " 0biFlW^$;EfTw|,Behty";
+	int				ret;
 
-	c = read_key();
 	add_back();
+	ret = g_line.c_pos;
+	c = read_key();
 	if (isctrlkey(c))
-	{
-		if (c.buf[2] == 67)
-		{
-			clear_eol();
-			vim_insert();
-		}
-		else if (c.buf[2] == 68)
-		{
-			clear_eol();
-			cursor_l();
-		}
-		else if (c.buf[2] == 65) // up
-		{
-			rl_end();
-			vim_insert();
-		}
-		else if (c.buf[2] == 66) // down
-			rl_home();
+		return (arrow_yank(c));
+	if (!ft_strchr(poss, c.value))
 		return ;
-	}
-//	ft_printf("\n\n%d, %d, %d, %d, %d, %d\n\n", c.buf[0], c.buf[1], c.buf[2], c.buf[3], c.buf[4], c.buf[5]);
-//	else if (c == 'b') // copy the word till ; before cursor but no move
-//	if (c == 'B') // copy the whole word before cursor but no move
-//	else if (c == 'E') // from cursor till end no cursor move
-//	else if (c == 'e') // from cursor till find ; or this kind of char
-//	else if (c == 'y') // copy all line no move
-//	else if (c == )
-//	ft_printf("\n\nOKOKOKi\n\n");
-	g_clip.l = 1;
+	if (c.value != 'y')
+		(g_standard_keymap[c.value].func)(c.value);
 	if (g_clip.str != NULL)
 		free(g_clip.str);
-	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+	update_clipboard(ret, c.value);
+	if (!g_yank_cursor_move)
+		g_line.c_pos = ret;
 }
 
 void	yank_eol(void)
 {
-	ft_printf("\n\nOKOKOKi\n\n");
-	g_clip.l = g_line.len - g_line.c_pos;
-	if (g_clip.str != NULL)
-		free(g_clip.str);
-	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+	g_yank_cursor_move = 1;
+	yank_c();
+	g_yank_cursor_move = 0;
 }

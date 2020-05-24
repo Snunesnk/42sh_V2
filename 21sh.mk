@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/23 17:43:46 by snunes           ###   ########.fr        #
+#    Updated: 2020/05/24 14:44:19 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,6 +145,7 @@ SOURCES :=	main.c \
 		../readline/vim6.c \
 		../readline/vim7.c \
 		../readline/vim8.c \
+		../readline/vim9.c \
 		../readline/get_vim_cmd_count.c \
 		../readline/history.c \
 		../readline/history_expand.c \
@@ -184,7 +185,7 @@ SOURCES :=	main.c \
 		../readline/tty.c \
 		../readline/utils.c \
 		../readline/utils_suite2.c \
-		../readline/utils_suite.c \
+		../readline/utils_suite.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
