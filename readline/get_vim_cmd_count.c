@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 12:52:13 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/23 16:20:18 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 15:09:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ union u_buffer	get_vim_cmd_count(union u_buffer c)
 		{
 			put_prompt_back();
 			c = read_key();
-				return (get_vim_cmd_count(c));
+			return (get_vim_cmd_count(c));
 		}
 		print_count();
 		c = read_key();
