@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 11:47:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 13:23:37 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,40 @@
 
 void	cmaj_motion(void)
 {
-	ft_bzero(g_line.line + g_line.c_pos, g_line.len - g_line.c_pos);
+	del_from_to(g_line.c_pos, g_line.len, NO_SAVE);
 	vim_insert();
-	g_line.len = g_line.c_pos;
-	g_line.is_modified = 1;
 }
 
-void	d_motion(union u_buffer d)
+void	d_motion(void)
 {
 	union u_buffer	c;
+	static char		poss[] = " 0biFlW^$;EfTw|,Behtd";
+	int				ret;
 
+	ret = g_line.c_pos;
 	c.value = 0;
-	c = read_key();
-	if (c.value == d.value)
+	if (read(STDIN_FILENO, c.buf, sizeof(int)) < 0)
+		return ;
+	if (!ft_strchr(poss, c.value))
+		return ;
+	if (c.value != 'd')
+		(g_standard_keymap[c.value].func)(c.value);
+	else
 	{
-		g_clip.l = g_line.len;
-		if (g_clip.str != NULL)
-			free(g_clip.str);
-		g_clip.str = ft_strdup(g_line.line);
-		ft_bzero(g_line.line, g_line.len);
-		g_line.len = 0;
-		g_line.c_pos = 0;
-		g_line.is_modified = 1;
+		del_from_to(0, g_line.len, SAVE);
+		return ;
 	}
+	if (ret < g_line.c_pos)
+		del_from_to(ret, g_line.c_pos + 1, SAVE);
+	else
+		del_from_to(ret, g_line.c_pos + 1, NO_SAVE);
 }
+
 
 void	dmaj_motion(void)
 {
-	g_clip.l = g_line.len - g_line.c_pos;
-	if (g_clip.str != NULL)
-		free(g_clip.str);
-	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
-	ft_bzero(&(g_line.line[g_line.c_pos]), g_clip.l);
-	g_line.len -= g_clip.l;
+	del_from_to(g_line.c_pos, g_line.len, SAVE);
 	cursor_l();
-	g_line.is_modified = 1;
 }
 
 /*

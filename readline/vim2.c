@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 21:46:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 14:35:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,41 @@ char	g_last_goto = 0;
 
 void	end_next_alnum(void)
 {
-	if (g_line.c_pos < g_line.len)
+	if (g_line.c_pos < g_line.len - 1)
 		cursor_r();
-	if (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+	if (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len - 1)
 		while (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < \
-				g_line.len)
+				g_line.len - 1)
 			cursor_r();
-	if (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+	if (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len - 1)
 	{
 		while (ft_isalnum(g_line.line[g_line.c_pos + 1])
-			&& g_line.c_pos + 1 < g_line.len)
+			&& g_line.c_pos + 1 < g_line.len - 1)
 			cursor_r();
 	}
-	else if (ft_ispunct(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+	else if (ft_ispunct(g_line.line[g_line.c_pos]) && g_line.c_pos < \
+			g_line.len - 1)
 	{
 		while (ft_ispunct(g_line.line[g_line.c_pos + 1])
-			&& g_line.c_pos + 1 < g_line.len)
+			&& g_line.c_pos + 1 < g_line.len - 1)
 			cursor_r();
 	}
-	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len - 1)
 		end_next_alnum();
 }
 
 void	end_next_wd(void)
 {
-	if (ft_isspace(g_line.line[g_line.c_pos + 1]))
+	if (ft_isspace(g_line.line[g_line.c_pos + 1]) && g_line.c_pos < \
+			g_line.len - 1)
 		cursor_r();
-	while (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+	while (ft_isspace(g_line.line[g_line.c_pos]) && g_line.c_pos < \
+			g_line.len - 1)
 		cursor_r();
 	while (!ft_isspace(g_line.line[g_line.c_pos + 1])
-		&& g_line.c_pos + 1 < g_line.len)
+		&& g_line.c_pos + 1 < g_line.len - 1)
 		cursor_r();
-	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len - 1)
 		end_next_wd();
 }
 

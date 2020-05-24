@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:37 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 01:25:13 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 13:22:26 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	clear_all_l(void)
 void	c_motion(void)
 {
 	union u_buffer	c;
-	static char		poss[] = " 0biFlW^$;EfTw|,Beht";
+	static char		poss[] = " 0biFlW^$;EfTw|,BehtC";
 	int				ret;
 
 	ret = g_line.c_pos;
@@ -69,18 +69,14 @@ void	c_motion(void)
 		return ;
 	if (!ft_strchr(poss, c.value))
 		return ;
+	if (c.value == 'C')
+		g_line.c_pos = 0;
 	(g_standard_keymap[c.value].func)(c.value);
+	if (c.value == 'C')
+		return ;
 	if (ret < g_line.c_pos)
-	{
-		ft_memmove(g_line.line + ret, g_line.line + g_line.c_pos + 1, \
-				g_line.len - g_line.c_pos + 1);
-		g_line.c_pos = ret;
-	}
+		del_from_to(ret, g_line.c_pos + 1, NO_SAVE);
 	else
-		ft_memmove(g_line.line + g_line.c_pos, g_line.line + ret, \
-				g_line.len - ret + 1);
-	g_line.is_modified = 1;
-	g_line.len = ft_strlen(g_line.line);
-	ft_bzero(g_line.line + g_line.len, g_line.size_buf - g_line.len);
+		del_from_to(g_line.c_pos, ret, NO_SAVE);
 	vim_insert();
 }
