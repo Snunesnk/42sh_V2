@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 19:29:15 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 09:46:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 void	cmaj_motion(void)
 {
-	ft_bzero(&g_line.line[g_line.c_pos], g_line.len - g_line.c_pos);
+	ft_bzero(g_line.line + g_line.c_pos, g_line.len - g_line.c_pos);
 	vim_insert();
+	g_line.len = g_line.c_pos;
 	g_line.is_modified = 1;
 }
 
