@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 17:34:10 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 14:54:14 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 15:45:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	vim_backspace(void)
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	g_clip.l = len;
+	g_clip.l = g_line.c_pos - len;
 	while (g_line.c_pos > len)
 		rl_backspace();
 }
