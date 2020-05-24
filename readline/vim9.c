@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 14:36:02 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 14:41:53 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 14:56:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ void	update_clipboard(int ret, int c)
 	{
 		g_clip.l = g_line.c_pos - ret;
 		g_clip.str = ft_strndup(g_line.line + ret, g_clip.l);
+	}
+	else if (ret == g_line.c_pos)
+	{
+		g_clip.l = 1;
+		g_clip.str = ft_strndup(&g_line.line[ret], 1);
 	}
 	else
 	{
