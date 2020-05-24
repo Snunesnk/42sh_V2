@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 14:42:51 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 15:07:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,5 +110,6 @@ void			vim_delete(void);
 void			vim_backspace(void);
 void			arrow_yank(union u_buffer c);
 void			update_clipboard(int ret, int c);
+void			inside_undo(void);
 
 #endif
