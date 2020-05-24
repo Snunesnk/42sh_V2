@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/06 19:06:59 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 19:29:15 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,18 @@ void	dmaj_motion(void)
 
 void	yank_c(void)
 {
+	int	c;
+
+	c = 0;
+	if (read(STDIN_FILENO, &c, sizeof(int)) < 0)
+		return ;
+	if (c == 'b') // copy the word till ; before cursor but no move
+	if (c == 'B') // copy the whole word before cursor but no move
+	else if (c == 'E') // from cursor till end no cursor move
+	else if (c == 'e') // from cursor till find ; or this kind of char
+	else if (c == 'y') // copy all line no move
+	else if (c == )
+	ft_printf("\n\nOKOKOKi\n\n");
 	g_clip.l = 1;
 	if (g_clip.str != NULL)
 		free(g_clip.str);
