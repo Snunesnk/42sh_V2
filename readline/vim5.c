@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 11:47:46 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 12:32:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,20 @@ void	yank_c(void)
 		return ;
 	}
 //	ft_printf("\n\n%d, %d, %d, %d, %d, %d\n\n", c.buf[0], c.buf[1], c.buf[2], c.buf[3], c.buf[4], c.buf[5]);
-//	else if (c == 'b') // copy the word till ; before cursor but no move
+	else if (c.value == 'b') // copy the word till ; before cursor but no move
+	{
+		cp_prev_wd();
+	}
 //	if (c == 'B') // copy the whole word before cursor but no move
 //	else if (c == 'E') // from cursor till end no cursor move
 //	else if (c == 'e') // from cursor till find ; or this kind of char
 //	else if (c == 'y') // copy all line no move
 //	else if (c == )
 //	ft_printf("\n\nOKOKOKi\n\n");
-	g_clip.l = 1;
-	if (g_clip.str != NULL)
-		free(g_clip.str);
-	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+//	g_clip.l = 1;
+//	if (g_clip.str != NULL)
+//		free(g_clip.str);
+//	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
 }
 
 void	yank_eol(void)
