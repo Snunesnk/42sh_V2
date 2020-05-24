@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 14:25:48 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 14:32:31 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "../src/builtins/builtins.h"
+
+static int	g_yank_cursor_move = 0;
 
 void	cmaj_motion(void)
 {
@@ -107,13 +109,13 @@ void	yank_c(void)
 		g_clip.l = ret - g_line.c_pos;
 		g_clip.str = ft_strndup(g_line.line + g_line.c_pos, g_clip.l);
 	}
-	g_line.c_pos = ret;
+	if (!g_yank_cursor_move)
+		g_line.c_pos = ret;
 }
 
 void	yank_eol(void)
 {
-	g_clip.l = g_line.len - g_line.c_pos;
-	if (g_clip.str != NULL)
-		free(g_clip.str);
-	g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+	g_yank_cursor_move = 1;
+	yank_c();
+	g_yank_cursor_move = 0;
 }
