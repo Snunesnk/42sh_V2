@@ -6,12 +6,14 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:23 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 18:00:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/23 21:46:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "../src/builtins/builtins.h"
+
+char	g_last_goto = 0;
 
 void	end_next_alnum(void)
 {
@@ -74,23 +76,21 @@ void	beg_last_alnum(void)
 void	goto_chr_right(void)
 {
 	int			p;
-	static int	c;
 
 	if (!g_got_input)
 	{
-		g_last_goto_f = goto_chr_right;
-		c = 0;
-		if (read(STDIN_FILENO, &c, sizeof(int)) < 0)
+		g_last_goto = 'f';
+		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
 	}
 	p = g_line.c_pos + 1;
-	if (ft_isprint(c))
+	if (ft_isprint(g_c))
 	{
 		while (p < g_line.len)
 		{
-			if (g_line.line[p] == c)
+			if (g_line.line[p] == g_c)
 				g_line.c_pos = p;
-			if (g_line.line[p] == c && --g_vim_cmd_count <= 0)
+			if (g_line.line[p] == g_c && --g_vim_cmd_count <= 0)
 				return ;
 			++p;
 		}
@@ -100,23 +100,21 @@ void	goto_chr_right(void)
 void	goto_chr_left(void)
 {
 	int			p;
-	static int	c;
 
 	if (!g_got_input)
 	{
-		g_last_goto_f = goto_chr_left;
-		c = 0;
-		if (read(STDIN_FILENO, &c, sizeof(int)) < 0)
+		g_last_goto = 'F';
+		if (read(STDIN_FILENO, &g_c, sizeof(int)) < 0)
 			return ;
 	}
 	p = g_line.c_pos - 1;
-	if (ft_isprint(c))
+	if (ft_isprint(g_c))
 	{
 		while (p >= 0)
 		{
-			if (g_line.line[p] == c)
+			if (g_line.line[p] == g_c)
 				g_line.c_pos = p;
-			if (g_line.line[p] == c && --g_vim_cmd_count <= 0)
+			if (g_line.line[p] == g_c && --g_vim_cmd_count <= 0)
 				return ;
 			--p;
 		}
