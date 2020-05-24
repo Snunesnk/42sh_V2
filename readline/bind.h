@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 00:33:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 11:58:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,7 @@ void			vim_cmd_cursor_r(void);
 void			vim_cmd_cursor_l(void);
 void			goto_first_non_blank(void);
 void			goto_n_char(void);
+void			vim_delete(void);
+void			vim_backspace(void);
 
 #endif
