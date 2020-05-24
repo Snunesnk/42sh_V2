@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 14:32:31 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 14:42:17 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,51 +64,14 @@ void	yank_c(void)
 	ret = g_line.c_pos;
 	c = read_key();
 	if (isctrlkey(c))
-	{
-		if (c.buf[2] == 67)
-		{
-			clear_eol();
-			vim_insert();
-		}
-		else if (c.buf[2] == 68)
-		{
-			clear_eol();
-			cursor_l();
-		}
-		else if (c.buf[2] == 65)
-		{
-			rl_end();
-			vim_insert();
-		}
-		else if (c.buf[2] == 66)
-			rl_home();
-		return ;
-	}
+		return (arrow_yank(c));
 	if (!ft_strchr(poss, c.value))
 		return ;
 	if (c.value != 'y')
 		(g_standard_keymap[c.value].func)(c.value);
-	if (c.value == 'y')
-	{
-		if (g_clip.str != NULL)
-			free(g_clip.str);
-		g_clip.l = g_line.len;
-		g_clip.str = ft_strndup(g_line.line, g_line.len);
-	}
-	else if (ret < g_line.c_pos)
-	{
-		if (g_clip.str != NULL)
-			free(g_clip.str);
-		g_clip.l = g_line.c_pos - ret;
-		g_clip.str = ft_strndup(g_line.line + ret, g_clip.l);
-	}
-	else
-	{
-		if (g_clip.str != NULL)
-			free(g_clip.str);
-		g_clip.l = ret - g_line.c_pos;
-		g_clip.str = ft_strndup(g_line.line + g_line.c_pos, g_clip.l);
-	}
+	if (g_clip.str != NULL)
+		free(g_clip.str);
+	update_clipboard(ret, c.value);
 	if (!g_yank_cursor_move)
 		g_line.c_pos = ret;
 }
