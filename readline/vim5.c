@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 11:29:26 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 11:40:45 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ void	yank_c(void)
 	add_back();
 	if (isctrlkey(c))
 	{
-		if (c.buf[2] == 67)
+		if (c.buf[2] == 67 || c.buf[2] == 68)
 			clear_eol();
-		vim_insert();
+		if (c.buf[2] == 68)
+			cursor_l();
+		if (c.buf[2] == 67)
+			vim_insert();
 		return ;
 	}
 		ft_printf("\n\n%d, %d, %d, %d, %d, %d\n\n", c.buf[0], c.buf[1], c.buf[2], c.buf[3], c.buf[4], c.buf[5]);
