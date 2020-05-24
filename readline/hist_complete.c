@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/19 14:36:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 15:19:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		print_hist_compl(void)
 	char			*hist_compl;
 	unsigned int	offset_save;
 
-	if (g_hist.total_lines == 0 || g_dumb_term)
+	if (g_hist.total_lines == 0 || g_dumb_term || (g_vim_mode && g_vim_cmd))
 		return ;
 	offset_save = g_hist.offset;
 	hist_compl = g_hist.history_content + g_hist.offset + 1;
