@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 11:40:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/24 11:47:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,27 @@ void	yank_c(void)
 	add_back();
 	if (isctrlkey(c))
 	{
-		if (c.buf[2] == 67 || c.buf[2] == 68)
-			clear_eol();
-		if (c.buf[2] == 68)
-			cursor_l();
 		if (c.buf[2] == 67)
+		{
+			clear_eol();
 			vim_insert();
+		}
+		else if (c.buf[2] == 68)
+		{
+			clear_eol();
+			cursor_l();
+		}
+		else if (c.buf[2] == 65) // up
+		{
+			rl_end();
+			vim_insert();
+		}
+		else if (c.buf[2] == 66) // down
+			rl_home();
 		return ;
 	}
-		ft_printf("\n\n%d, %d, %d, %d, %d, %d\n\n", c.buf[0], c.buf[1], c.buf[2], c.buf[3], c.buf[4], c.buf[5]);
-//	if (c == 'b') // copy the word till ; before cursor but no move
+//	ft_printf("\n\n%d, %d, %d, %d, %d, %d\n\n", c.buf[0], c.buf[1], c.buf[2], c.buf[3], c.buf[4], c.buf[5]);
+//	else if (c == 'b') // copy the word till ; before cursor but no move
 //	if (c == 'B') // copy the whole word before cursor but no move
 //	else if (c == 'E') // from cursor till end no cursor move
 //	else if (c == 'e') // from cursor till find ; or this kind of char
