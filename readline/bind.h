@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 11:58:10 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 14:42:59 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "input.h"
 # include "keymaps.h"
+
+# define SAVE 1
+# define NO_SAVE 0
 
 extern struct s_keymap_entry	*g_standard_keymap;
 extern struct s_keymap_entry	*g_ctlx_keymap;
@@ -87,7 +90,7 @@ void			replace_text(const char *string, int len);
 void			replace_mode(void);
 void			l_expand(void);
 void			c_motion(void);
-void			d_motion(union u_buffer d);
+void			d_motion(void);
 void			cmaj_motion(void);
 void			clear_all_l(void);
 void			dmaj_motion(void);
@@ -107,5 +110,6 @@ void			goto_first_non_blank(void);
 void			goto_n_char(void);
 void			vim_delete(void);
 void			vim_backspace(void);
+void			del_from_to(int start, int end, int save_mode);
 
 #endif

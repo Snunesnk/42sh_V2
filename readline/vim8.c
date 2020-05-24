@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 17:34:10 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 12:12:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 14:54:14 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	vim_delete(void)
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
+	g_clip.l = len;
 	while (len--)
 		rl_delete();
 	if (g_line.c_pos == g_line.len)
@@ -61,6 +62,29 @@ void	vim_backspace(void)
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
+	g_clip.l = len;
 	while (g_line.c_pos > len)
 		rl_backspace();
+}
+
+void	del_from_to(int start, int end, int save_mode)
+{
+	int	len;
+
+	len = end - start;
+	if (save_mode == SAVE)
+	{
+		if (g_clip.str)
+			free(g_clip.str);
+		if (!(g_clip.str = ft_strndup(g_line.line + start, len)))
+		{
+			psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
+			return ;
+		}
+		g_clip.l = len;
+	}
+	ft_memmove(g_line.line + start, g_line.line + end, g_line.size_buf - end);
+	g_line.is_modified = 1;
+	g_line.len -= len;
+	g_line.c_pos = start;
 }

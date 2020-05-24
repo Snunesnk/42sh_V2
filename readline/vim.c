@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 16:30:05 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 14:27:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,29 +63,30 @@ void	call_fc(void)
 
 void	beg_next_wd(void)
 {
-	while (g_line.line[g_line.c_pos] != ' ' && g_line.c_pos < g_line.len)
+	while (g_line.line[g_line.c_pos] != ' ' && g_line.c_pos < g_line.len - 1)
 		cursor_r();
-	while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len)
+	while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len - 1)
 		cursor_r();
-	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len - 1)
 		beg_next_wd();
 }
 
 void	beg_next_alnum(void)
 {
-	if (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len)
+	if (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < g_line.len - 1)
 	{
 		while (ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < \
-				g_line.len)
+				g_line.len - 1)
 			cursor_r();
-		while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len)
+		while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len \
+				- 1)
 			cursor_r();
 	}
 	else if (!ft_isalnum(g_line.line[g_line.c_pos]) && g_line.c_pos < \
-			g_line.len)
+			g_line.len - 1)
 		while (!ft_isalnum(g_line.line[g_line.c_pos])
-			&& g_line.c_pos < g_line.len)
+			&& g_line.c_pos < g_line.len - 1)
 			cursor_r();
-	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len)
+	if (--g_vim_cmd_count > 0 && g_line.c_pos < g_line.len - 1)
 		beg_next_alnum();
 }
