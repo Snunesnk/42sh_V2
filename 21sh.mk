@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/24 11:56:39 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/24 14:22:08 by abarthel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -184,8 +184,7 @@ SOURCES :=	main.c \
 		../readline/tty.c \
 		../readline/utils.c \
 		../readline/utils_suite2.c \
-		../readline/utils_suite.c \
-		../readline/yank_vim.c
+		../readline/utils_suite.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
