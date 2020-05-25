@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 18:08:28 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/25 15:25:25 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,50 @@ const char		*strsig(int sig)
 		++i;
 	}
 	return (NULL);
+}
+
+void			display_sigmsg(int sig)
+{
+	if (sig == SIGHUP)
+		ft_dprintf(STDERR_FILENO, "Hangup\n");
+	else if (sig == SIGQUIT)
+		ft_dprintf(STDERR_FILENO, "Quit\n");
+	else if (sig == SIGILL)
+		ft_dprintf(STDERR_FILENO, "Illegal instruction\n");
+	else if (sig == SIGABRT)
+		ft_dprintf(STDERR_FILENO, "Aborted\n");
+	else if (sig == SIGFPE)
+		ft_dprintf(STDERR_FILENO, "Floating point exception\n");
+	else if (sig == SIGKILL)
+		ft_dprintf(STDERR_FILENO, "Killed\n");
+	else if (sig == SIGBUS)
+		ft_dprintf(STDERR_FILENO, "Bus error\n");
+	else if (sig == SIGTRAP)
+		ft_dprintf(STDERR_FILENO, "Trace/breakpoint trap\n");
+	else if (sig == SIGALRM)
+		ft_dprintf(STDERR_FILENO, "Alarm clock\n");
+	else if (sig == SIGTERM)
+		ft_dprintf(STDERR_FILENO, "Terminated\n");
+	else if (sig == SIGUSR1)
+		ft_dprintf(STDERR_FILENO, "User defined signal 1\n");
+	else if (sig == SIGUSR2)
+		ft_dprintf(STDERR_FILENO, "User defined signal 2\n");
+	else
+		display_sigmsg2(sig);
+}
+
+void		display_sigmsg2(int sig)
+{
+	if (sig == SIGPOLL)
+		ft_dprintf(STDERR_FILENO, "I/O possible\n");
+	else if (sig == SIGPROF)
+		ft_dprintf(STDERR_FILENO, "Profiling timer expired\n");
+	else if (sig == SIGSYS)
+		ft_dprintf(STDERR_FILENO, "Bad system call\n");
+	else if (sig == SIGVTALRM)
+		ft_dprintf(STDERR_FILENO, "Virtual timer expired\n");
+	else if (sig == SIGXCPU)
+		ft_dprintf(STDERR_FILENO, "CPU time limit exceeded\n");
+	else if (sig == SIGXFSZ)
+		ft_dprintf(STDERR_FILENO, "File size limit exceeded\n");
 }
