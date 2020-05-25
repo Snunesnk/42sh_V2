@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:02:30 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 22:19:07 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	undo_last(void)
 		inside_undo();
 		--g_vim_cmd_count;
 	}
+	g_line.cursor_pos = 0;
 }
 
 void	undo_lastb(void)
@@ -80,6 +81,7 @@ void	undo_lastb(void)
 		g_line.is_modified = prev->is_modified;
 		ft_memdel((void**)&prev);
 		g_line.c_pos = 0;
+		g_line.cursor_pos = 0;
 	}
 }
 
