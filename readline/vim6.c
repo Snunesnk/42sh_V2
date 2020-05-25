@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 15:16:18 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/25 22:02:30 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	undo_lastb(void)
 		g_line.len = prev->len;
 		g_line.is_modified = prev->is_modified;
 		ft_memdel((void**)&prev);
+		g_line.c_pos = 0;
 	}
 }
 
