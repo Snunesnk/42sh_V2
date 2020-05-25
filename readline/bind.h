@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 15:30:45 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 22:55:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 extern struct s_keymap_entry	*g_standard_keymap;
 extern struct s_keymap_entry	*g_ctlx_keymap;
 extern struct s_keymap_entry	*g_meta_keymap;
-extern _Bool			g_ctrl_mode;
 extern _Bool			g_vim_mode;
 extern _Bool			g_replace_mode;
 extern _Bool			g_vim_cmd;
