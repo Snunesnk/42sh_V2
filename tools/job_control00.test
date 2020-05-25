@@ -1,0 +1,4 @@
+cat &
+ls &
+ls -lR ~/ &>/dev/null &
+fg

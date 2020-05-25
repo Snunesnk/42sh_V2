@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/14 16:49:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 15:24:49 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ int		get_exit_value(int status)
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		if (sig == SIGQUIT)
-			ft_dprintf(STDERR_FILENO, "Quit\n");
+		display_sigmsg(sig);
 		return (sig + 128);
 	}
 	else if (WIFSTOPPED(status))
