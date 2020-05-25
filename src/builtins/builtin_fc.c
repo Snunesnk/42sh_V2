@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 13:02:44 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 16:40:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	parse_fc_option(char ***args)
 		else if (opt == 's')
 			opt_list |= FC_S_OPTION;
 		else if (opt == 'e')
-			opt_list |= FC_E_OPTION;
+			return (opt_list | FC_E_OPTION);
 		else
 		{
 			if (ft_isprint(opt))
@@ -63,7 +63,6 @@ int			cmd_fc(int argc, char **argv)
 	if ((opt_list & FC_L_OPTION) && !g_hist.hist_ignore)
 		add_hentry(tmp, ft_strlen(tmp));
 	free(tmp);
-	if (g_needed_arg)
-		g_needed_arg = NULL;
+	g_needed_arg = NULL;
 	return (status);
 }

@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/21 16:30:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 15:22:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	deal_with_spe_opt(char ***args, int *x)
 		*args += 1;
 		*x = 0;
 	}
+	get_next_opt(NULL, NULL);
 	return (spe);
 }
 

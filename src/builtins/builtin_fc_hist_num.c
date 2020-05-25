@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 19:26:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 16:45:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			get_numeric_value(char *args)
 		return (get_alpha_value(args));
 	hist_num = ft_atoi(args);
 	if (hist_num < 1)
-		hist_num = 1;
+		hist_num = g_hist.total_lines + hist_num + 1;
 	else if (hist_num > g_hist.total_lines)
 		hist_num = g_hist.total_lines;
 	return (hist_num);
