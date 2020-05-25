@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:20 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 15:23:42 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/25 13:37:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ void	add_back(void)
 {
 	struct s_line_state	*prev;
 
-	if (g_back && !ft_strcmp(((struct s_line_state*)g_back->data)->line, g_line.line))
-		return;
+	if (g_back && !ft_strcmp(((struct s_line_state*)g_back->data)->line, \
+				g_line.line))
+		return ;
 	prev = ft_memalloc(sizeof(struct s_line_state));
 	prev->size_buf = g_line.size_buf;
 	prev->len = g_line.len;
