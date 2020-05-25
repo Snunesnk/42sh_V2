@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:05 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:40:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 21:35:39 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,22 @@ void	rl_home(void)
 void	rl_end(void)
 {
 	g_line.c_pos = g_line.len;
+	if (g_vim_mode)
+		g_line.c_pos--;
 }
 
 void	wd_right(void)
 {
 	while (g_line.line[g_line.c_pos] == ' ' && g_line.c_pos < g_line.len)
+	{
 		cursor_r();
+		if (g_line.c_pos == g_line.len - 1 && g_vim_mode)
+			return ;
+	}
 	while (g_line.line[g_line.c_pos] != ' ' && g_line.c_pos < g_line.len)
+	{
 		cursor_r();
+		if (g_line.c_pos == g_line.len - 1 && g_vim_mode)
+			return ;
+	}
 }
