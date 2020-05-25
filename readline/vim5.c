@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:43 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 15:30:34 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 13:36:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	g_yank_cursor_move = 0;
 
 void	cmaj_motion(void)
 {
+	add_back();
 	del_from_to(g_line.c_pos, g_line.len, NO_SAVE);
 	vim_insert();
 }
@@ -40,15 +41,16 @@ void	d_motion(void)
 		del_from_to(0, g_line.len, SAVE);
 		return ;
 	}
+	add_back();
 	if (ret < g_line.c_pos)
 		del_from_to(ret, g_line.c_pos, SAVE);
 	else
 		del_from_to(g_line.c_pos, ret, NO_SAVE);
 }
 
-
 void	dmaj_motion(void)
 {
+	add_back();
 	del_from_to(g_line.c_pos, g_line.len, SAVE);
 	cursor_l();
 }
