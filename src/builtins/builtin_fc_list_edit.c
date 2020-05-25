@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 16:10:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 15:27:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int			exec_fc_other_opt(int opt_list, char **args)
 
 	h_end = -1;
 	h_beg = -1;
-	if (*args && g_hist.total_lines > 0)
+	if (*args && **args && g_hist.total_lines > 0)
 		get_hist_num(args, &opt_list, &h_end, &h_beg);
 	else
 	{
