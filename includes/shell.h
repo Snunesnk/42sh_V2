@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 19:30:51 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/25 15:24:08 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,8 @@ int								are_stopped_jobs(void);
 int								job_is_completed(t_job *j);
 void							put_job_in_foreground(t_job *j, int cont);
 t_job							*find_job(pid_t pgid);
+void							display_sigmsg(int sig);
+void							display_sigmsg2(int sig);
 
 extern sigset_t					g_save_procmask;
 
