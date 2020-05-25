@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/16 17:41:59 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/09 15:15:47 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/25 20:01:31 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,20 @@ void		free_a_job(t_job *j)
 	free_all_processes(j->first_process);
 	free(j->command);
 	free(j);
+	j = NULL;
 }
 
 void		free_job(t_job *j)
 {
 	t_job	*j_next;
 	t_job	*tmp;
+	t_job	*ret;
 
 	if (j == g_first_job)
 	{
+		ret = g_first_job->next;
 		free_a_job(j);
-		g_first_job = NULL;
+		g_first_job = ret;
 	}
 	else
 	{

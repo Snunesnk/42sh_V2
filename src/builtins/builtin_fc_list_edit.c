@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 15:27:51 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 20:17:21 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int			re_execute_cmd(int opt_list)
 	editor = NULL;
 	if ((fd = get_editor(&editor, opt_list)))
 		return (fd);
-	if (!(command = ft_strjoin(editor, " .monkeyshell_tmp_file")) \
+	if (!(command = ft_strjoin(editor, " /tmp/.monkeyshell_tmp_file")) \
 			&& pbierror("cannot allocate memory"))
 		return (e_cannot_allocate_memory);
 	free(editor);
-	exec_input(command, fd);
-	if ((fd = open(".monkeyshell_tmp_file", (O_RDONLY | O_CREAT), 0644)) < 0 \
-			&& pbierror("cannot open temporary file"))
+	exec_input(command, 255);
+	if ((fd = open("/tmp/.monkeyshell_tmp_file", (O_RDONLY | O_CREAT), \
+					0644)) < 0 && pbierror("cannot open temporary file"))
 		return (1);
 	while ((command = get_input_fd(fd, FULL_QUOTE, NULL)))
 	{
@@ -106,7 +106,7 @@ int			get_fd_and_print(int opt_list, int hist_beg, int hist_end)
 	else
 	{
 		opt_list |= FC_N_OPTION;
-		if ((fd = open(".monkeyshell_tmp_file", \
+		if ((fd = open("/tmp/.monkeyshell_tmp_file", \
 			O_WRONLY | O_CREAT | O_TRUNC, 0644)) < 0)
 		{
 			pbierror("cannot open temporary file");
@@ -114,9 +114,9 @@ int			get_fd_and_print(int opt_list, int hist_beg, int hist_end)
 		}
 	}
 	print_req_hist(fd, opt_list, hist_beg, hist_end);
-	if (fd != STDOUT_FILENO)
+	if (!(opt_list & FC_L_OPTION))
 		close(fd);
-	if (opt_list & FC_L_OPTION)
+	else
 		return (1);
 	return (0);
 }
