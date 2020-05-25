@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 09:38:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/25 16:40:04 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	do_iowrite(t_redirection *r, t_redirection *b)
 		return (err);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
-				O_CREAT | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
 		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
-				O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (valid_fd(r->redirector.filename, r->redirector.dest, 0))
@@ -86,12 +86,12 @@ int	do_iocat(t_redirection *r, t_redirection *b)
 		return (err);
 	else if (access(r->redirectee.filename, F_OK))
 		r->redirectee.dest = open(r->redirectee.filename,
-		O_CREAT | O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		O_CREAT | O_APPEND | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (access(r->redirectee.filename, R_OK))
 		return (psherror(e_redir_denied, r->redirectee.filename, e_cmd_type));
 	else
 		r->redirectee.dest = open(r->redirectee.filename,
-				O_APPEND | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+				O_APPEND | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (valid_fd(r->redirector.filename, r->redirector.dest, 0))
@@ -120,7 +120,7 @@ int	do_ioread(t_redirection *r, t_redirection *b)
 				r->redirector.filename, e_cmd_type));
 	else if (access(r->redirector.filename, R_OK))
 		return (psherror(e_redir_denied, r->redirector.filename, e_cmd_type));
-	r->redirector.dest = open(r->redirector.filename, O_RDONLY);
+	r->redirector.dest = open(r->redirector.filename, O_RDWR);
 	if (r->redirector.dest < 0)
 		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
 	if (r->flags & NOFORK)
