@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:37 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 13:22:26 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/24 16:14:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	c_motion(void)
 	(g_standard_keymap[c.value].func)(c.value);
 	if (c.value == 'C')
 		return ;
+	add_back();
 	if (ret < g_line.c_pos)
 		del_from_to(ret, g_line.c_pos + 1, NO_SAVE);
 	else
