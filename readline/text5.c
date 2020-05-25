@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 16:18:02 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 22:31:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	clear_befline(void)
 		g_clip.str = ft_strndup(g_line.line, g_line.c_pos);
 		g_clip.l = g_line.c_pos;
 		g_line.len -= g_line.c_pos;
+		add_back();
 		ft_memmove(g_line.line, g_line.line + g_line.c_pos, g_line.len);
 		ft_bzero(&(g_line.line[g_line.len]), g_clip.l);
 		g_line.c_pos = 0;
@@ -42,6 +43,7 @@ void	cut_prev_wd(void)
 	{
 		if (g_clip.str != NULL)
 			free(g_clip.str);
+		add_back();
 		start = g_line.c_pos;
 		while (start && g_line.line[start - 1] == ' ')
 			--start;
@@ -64,6 +66,7 @@ void	rl_reversel(void)
 
 	if (g_line.len > 1)
 	{
+		add_back();
 		if (g_line.len > 1 && g_line.c_pos == g_line.len)
 		{
 			c = g_line.line[g_line.c_pos - 1];
@@ -88,6 +91,7 @@ void	cut_next_wd(void)
 
 	if (g_clip.str != NULL)
 		free(g_clip.str);
+	add_back();
 	start = g_line.c_pos;
 	while (start < g_line.len && g_line.line[start] == ' ')
 		++start;

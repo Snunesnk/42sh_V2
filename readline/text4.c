@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 21:07:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/25 22:23:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	clear_eol(void)
 		if (g_clip.str != NULL)
 			free(g_clip.str);
 		g_clip.str = ft_strndup(&(g_line.line[g_line.c_pos]), g_clip.l);
+		add_back();
 		ft_bzero(&(g_line.line[g_line.c_pos]), g_clip.l);
 		g_line.len -= g_clip.l;
 		g_line.is_modified = 1;
