@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:18:04 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/09 18:02:16 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/05/24 16:10:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 static int	get_editor(char **editor, int opt_list)
 {
 	if (opt_list & FC_E_OPTION)
-		*editor = ft_strdup(g_needed_arg);
+		*editor = ft_strdup(get_filename(g_needed_arg));
 	else if ((*editor = get_shell_var("FCEDIT", g_env)))
-		*editor = ft_strdup(*editor);
+		*editor = ft_strdup(get_filename(*editor));
 	else if ((*editor = get_shell_var("EDITOR", g_env)))
-		*editor = ft_strdup(*editor);
+		*editor = ft_strdup(get_filename(*editor));
 	else
 		*editor = ft_strdup("vim");
 	if (!*editor)
@@ -33,7 +33,8 @@ static int	get_editor(char **editor, int opt_list)
 	if (path_concat(editor, NULL, NULL, NULL) == e_command_not_found)
 	{
 		psherror(e_command_not_found, (g_needed_arg) ? g_needed_arg \
-				: get_shell_var("FCEDIT", g_env), e_cmd_type);
+				: *editor, e_cmd_type);
+		free(*editor);
 		return (e_command_not_found);
 	}
 	return (e_success);
