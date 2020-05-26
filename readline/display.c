@@ -6,13 +6,15 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 12:28:57 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:50:01 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
 #include "shell.h"
+
+int					g_is_readline = 0;
 
 struct s_display	g_dis =
 {
@@ -112,7 +114,7 @@ void	redisplay_after_sigwinch(void)
 	struct winsize	w_size;
 	int				ret;
 
-	if (ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
+	if (!g_is_readline || ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
 		return ;
 	g_sc.w = w_size.ws_col;
 	g_sc.height = w_size.ws_row;
@@ -127,7 +129,6 @@ void	redisplay_after_sigwinch(void)
 	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	ft_putstr_fd(g_termcaps.cd, g_dis.fd);
 	display_prompt();
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_dis.start_line = ret;
 	g_line.cursor_pos = 0;
 	g_line.is_modified = 1;

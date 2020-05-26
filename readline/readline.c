@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 13:03:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:50:34 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char		*ft_readline(char *prompt)
 {
 	char	*input;
 
+	g_is_readline = 1;
 	prep_terminal();
 	initialize();
 	rl_set_signals();
@@ -99,5 +100,6 @@ char		*ft_readline(char *prompt)
 		ft_putchar_fd('\n', g_dis.fd);
 	if (g_verbose)
 		ft_dprintf(g_dis.fd, "%s\n", input);
+	g_is_readline = 0;
 	return (input);
 }

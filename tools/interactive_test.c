@@ -91,16 +91,13 @@ static void	send_input(char *input, int fd)
 			usleep(DELAY_TIME * INPUT_DELAY);
 			nb_time_tried++;
 		}
-		if (nb_time_tried >= 4)
+		if (PROCESS_STOPPED || access(g_process_input, F_OK) > 0)
 		{
-			if (PROCESS_STOPPED)
-			{
-				dprintf(2, "process quit\n");
-				exit (1);
-			}
-			else
-				stop = 4;
+			dprintf(2, "process quit\n");
+			exit (1);
 		}
+		if (nb_time_tried >= 4)
+			stop = 4;
 	}
 	if (strstr(input, "exit") && PROCESS_STOPPED)
 		send_input(PROCESS_NAME, fd);
