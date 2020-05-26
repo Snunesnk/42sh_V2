@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 13:11:13 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/20 14:40:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/26 14:14:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	set_fd(void)
 	char	*name;
 	int		new;
 
-	name = ttyname(STDOUT_FILENO);
+	name = ttyname(STDIN_FILENO);
 	if (name)
 		g_dis.fd = open(name, O_RDWR);
 	if (g_dis.fd == -1)
