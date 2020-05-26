@@ -30,7 +30,7 @@
 #define TEST_EXT ".test"
 
 //test if process is still running
-#define PROCESS_STOPPED access(g_process_input, F_OK) > 0 ? 1 : 0
+#define PROCESS_STOPPED (kill(g_pid, 0) != 0 || access(g_process_input, F_OK) > 0) ? 1 : 0
 
 //Time waiting for input to be available before sending SIGINT, in ms
 #define DELAY_TIME 300
@@ -38,8 +38,8 @@
 //Time bewteen write of each chars to target process, multiplied by DELAY_TIME. Final wait is in ns.
 #define INPUT_DELAY 30
 
-//Name of target process
-#define PROCESS_NAME "./21sh"
+//Name of target process, must end with a newline to be able to re-launch it
+#define PROCESS_NAME "./21sh\n"
 
 int		g_pid;
 char	*g_process_input;
@@ -71,16 +71,18 @@ static void	send_input(char *input, int fd)
 		usleep(DELAY_TIME * INPUT_DELAY);
 	}
 	usleep(DELAY_TIME * INPUT_DELAY);
-	//Wait for the input to become available, or timeout after 1 seconds
-	//if process didn't respond in time, quit. Not great, but don't know how to make it better now.
 	if (!strchr(input, '\n'))
 		return ;
 	int		nb_time_tried;
 	char	stop = 3;
 
 	nb_time_tried = 0;
+	//Wait for the input to become available, or timeout after 1 seconds
+	//if process didn't respond in time, quit. Not great, but don't know how to make it better now.
 	while ((status = poll(&fds, 1, DELAY_TIME)) <= 0)
 	{
+		if (strstr(input, "exit") && PROCESS_STOPPED)
+			break ;
 		if (status == 0 || nb_time_tried > 0)
 		{
 			if (ioctl(fd, TIOCSTI, &stop) < 0)
@@ -91,16 +93,13 @@ static void	send_input(char *input, int fd)
 			usleep(DELAY_TIME * INPUT_DELAY);
 			nb_time_tried++;
 		}
-		if (PROCESS_STOPPED || access(g_process_input, F_OK) > 0)
+		if (PROCESS_STOPPED)
 		{
 			dprintf(2, "process quit\n");
 			exit (1);
 		}
 		if (nb_time_tried >= 4)
-		{
-			sleep(100);
 			stop = 4;
-		}
 	}
 	if (strstr(input, "exit") && PROCESS_STOPPED)
 		send_input(PROCESS_NAME, fd);
@@ -119,7 +118,7 @@ static void	open_and_exec_file(char *file, int fd)
 
 	char	line[1024];
 
-	while (fgets(line, 1023, fp) != NULL)
+	while (fgets(line, 1024, fp) != NULL)
 		send_input(line, fd);
 	printf("\033[37m[done]\033[0m\n");
 	fclose(fp);
@@ -160,7 +159,7 @@ static void	exec_all_tests(int fd, int pid)
 			if (PROCESS_STOPPED)
 			{
 				dprintf(2, "process quit\n");
-				exit (1);
+				exit (0);
 			}
 		}
 	}
@@ -209,7 +208,7 @@ int			main(int argc, char **argv)
 			if (PROCESS_STOPPED)
 			{
 				dprintf(2, "process quit\n");
-				exit (1);
+				exit (0);
 			}
 			i++;
 		}
