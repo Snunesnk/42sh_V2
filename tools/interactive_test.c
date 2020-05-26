@@ -30,7 +30,7 @@
 #define TEST_EXT ".test"
 
 //test if process is still running
-#define PROCESS_STOPPED(pid) getpgid(pid) == -1 ? 1 : 0
+#define PROCESS_STOPPED access(g_process_input, F_OK) > 0 ? 1 : 0
 
 //Time waiting for input to be available before sending SIGINT, in ms
 #define DELAY_TIME 300
@@ -41,7 +41,8 @@
 //Name of target process
 #define PROCESS_NAME "./21sh"
 
-int	g_pid;
+int		g_pid;
+char	*g_process_input;
 
 // This function send a cmd to a process with ioctl, storing the
 // input into the queue of desired process.
@@ -78,9 +79,9 @@ static void	send_input(char *input, int fd)
 	char	stop = 3;
 
 	nb_time_tried = 0;
-	while ((status = poll(&fds, 1, DELAY_TIME)) < 0)
+	while ((status = poll(&fds, 1, DELAY_TIME)) <= 0)
 	{
-		if (status == 0)
+		if (status == 0 || nb_time_tried > 0)
 		{
 			if (ioctl(fd, TIOCSTI, &stop) < 0)
 			{
@@ -90,10 +91,18 @@ static void	send_input(char *input, int fd)
 			usleep(DELAY_TIME * INPUT_DELAY);
 			nb_time_tried++;
 		}
-		if (nb_time_tried == 4)
-			stop = 4;
+		if (nb_time_tried >= 4)
+		{
+			if (PROCESS_STOPPED)
+			{
+				dprintf(2, "process quit\n");
+				exit (1);
+			}
+			else
+				stop = 4;
+		}
 	}
-	if (strstr(input, "exit") && PROCESS_STOPPED(g_pid))
+	if (strstr(input, "exit") && PROCESS_STOPPED)
 		send_input(PROCESS_NAME, fd);
 }
 
@@ -148,9 +157,9 @@ static void	exec_all_tests(int fd, int pid)
 					&& file->d_name[0] != '.')
 		{
 			open_and_exec_file(file->d_name, fd);
-			if (PROCESS_STOPPED(pid))
+			if (PROCESS_STOPPED)
 			{
-				dprintf(2, "shell quit\n");
+				dprintf(2, "process quit\n");
 				exit (1);
 			}
 		}
@@ -171,23 +180,21 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 
-	char	*process_input;
 	int		fd;
 
-	if (!(process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
+	if (!(g_process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
 						+ strlen(argv[1]) + 1))))
 	{
 		perror("malloc");
 		exit(1);
 	}
 	//open input fd of desired process
-	sprintf(process_input, "/proc/%s/fd/0", argv[1]);
-	if ((fd = open(process_input, O_WRONLY)) < 0)
+	sprintf(g_process_input, "/proc/%s/fd/0", argv[1]);
+	if ((fd = open(g_process_input, O_WRONLY)) < 0)
 	{
 		perror("open");
 		return (1);
 	}
-	free(process_input);
 
 	int				i = 2;
 	int				status;
@@ -199,9 +206,9 @@ int			main(int argc, char **argv)
 		while (argv[i])
 		{
 			open_and_exec_file(argv[i], fd);
-			if (PROCESS_STOPPED(g_pid))
+			if (PROCESS_STOPPED)
 			{
-				dprintf(2, "shell quit\n");
+				dprintf(2, "process quit\n");
 				exit (1);
 			}
 			i++;
@@ -210,5 +217,6 @@ int			main(int argc, char **argv)
 	// else exec all *.test in current directory
 	else
 		exec_all_tests(fd, g_pid);
+	free(g_process_input);
 	close(fd);
 }
