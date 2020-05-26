@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 21:10:46 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/20 13:18:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 17:56:44 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ char		*get_prompt(void)
 	char	*pwd;
 	int		len;
 
-	if (!(pwd = ft_strdup(get_shell_var("PWD", g_env))))
+	if (!(pwd = get_shell_var("PWD", g_env)))
+		pwd = getcwd(NULL, 0);
+	else if (!(pwd = ft_strdup(get_shell_var("PWD", g_env))))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
