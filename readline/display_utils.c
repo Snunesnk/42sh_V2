@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/26 14:12:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:25:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void		get_cursor_position(int *row, int *col)
 	a = 0;
 	*row = 0;
 	*col = 0;
- 	write(g_dis.fd, "\033[6n", 4);
+	write(g_dis.fd, "\033[6n", 4);
 	input[0] = get_first_input();
 	while (*input != 'R')
 	{
