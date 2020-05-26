@@ -6,13 +6,13 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/16 15:02:39 by abarthel         ###   ########.fr        #
+#    Updated: 2020/05/26 23:51:13 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 -include 21sh.mk
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re test interactive_test
 
 all: $(NAME)
 
@@ -38,6 +38,9 @@ re: fclean $(NAME)
 
 test: all
 	@$(TEST)
+
+interactive_test: all
+	@$(INTERACTIVE_TEST)
 
 -include $(DEPENDS)
 
