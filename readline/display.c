@@ -6,15 +6,13 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 18:50:01 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 19:03:46 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_readline.h"
 #include "error.h"
 #include "shell.h"
-
-int					g_is_readline = 0;
 
 struct s_display	g_dis =
 {
@@ -114,7 +112,7 @@ void	redisplay_after_sigwinch(void)
 	struct winsize	w_size;
 	int				ret;
 
-	if (!g_is_readline || ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
+	if (!g_line.line || ioctl(STDIN_FILENO, TIOCGWINSZ, &w_size) == -1)
 		return ;
 	g_sc.w = w_size.ws_col;
 	g_sc.height = w_size.ws_row;

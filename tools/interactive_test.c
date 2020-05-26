@@ -97,7 +97,10 @@ static void	send_input(char *input, int fd)
 			exit (1);
 		}
 		if (nb_time_tried >= 4)
+		{
+			sleep(100);
 			stop = 4;
+		}
 	}
 	if (strstr(input, "exit") && PROCESS_STOPPED)
 		send_input(PROCESS_NAME, fd);

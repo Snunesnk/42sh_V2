@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:06 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 18:49:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 19:03:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@
 # define GREEN_ARROW "\033[38;5;40m\u279c  \033[0m"
 # define END_SIGN "\033[0m\033[38;5;231m \u00BB \033[0m"
 # define RED_ARROW "\033[38;5;196m\u279c  \033[0m"
-
-extern int	g_is_readline;
 
 char	*ft_readline(char *prompt);
 
