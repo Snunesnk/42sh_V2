@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 13:12:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 18:26:33 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ union u_buffer	read_key(void)
 
 	buffer_u.value = 0;
 	while ((status = read(STDIN_FILENO, buffer_u.buf, sizeof(buffer_u.buf))) \
-			< 0);
+			< 0)
+		continue ;
 	return (buffer_u);
 }
 
