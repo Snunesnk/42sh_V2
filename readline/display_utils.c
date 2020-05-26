@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/24 13:21:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/26 13:01:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 14:12:27 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static char	get_first_input(void)
 	char	input;
 	int		status;
 
-	status = read(g_dis.fd, &input, 1);
+	status = read(STDIN_FILENO, &input, 1);
 	while (status > 0 && input != 27)
-		status = read(g_dis.fd, &input, 1);
+		status = read(STDIN_FILENO, &input, 1);
 	return (input);
 }
 
@@ -36,7 +36,7 @@ void		get_cursor_position(int *row, int *col)
 	input[0] = get_first_input();
 	while (*input != 'R')
 	{
-		read(g_dis.fd, input, 1);
+		read(STDIN_FILENO, input, 1);
 		if (*input >= '0' && *input <= '9')
 		{
 			if (a == 0)
