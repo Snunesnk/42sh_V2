@@ -43,7 +43,6 @@ static void	send_input(char *input, int fd)
 	fds.events = (POLLIN);
 	fds.revents = 0;
 
-	printf("input: |%s|\n", input);
 	i = 0;
 	while (input[i])
 	{
@@ -57,12 +56,12 @@ static void	send_input(char *input, int fd)
 		// one char, causing the input to not behave properly.
 		usleep(1000);
 	}
-	usleep(1000);
-	//Wait for the input to become available, or timeout after 3 seconds
+	usleep(1000 * strlen(input));
+	//Wait for the input to become available, or timeout after 1 seconds
 	//if process didn't respond in time, quit. Not great, but don't know how to make it better now.
 	if (!strchr(input, '\n'))
 		return ;
-	while ((status = poll(&fds, 1, 3000)) <= 0)
+	while ((status = poll(&fds, 1, 1000)) <= 0)
 	{
 		if (status == 0)
 		{
