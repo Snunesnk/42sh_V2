@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:14:17 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 01:16:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:17:53 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	rl_insert(int c)
 	char s[1];
 
 	s[0] = (char)c;
-	insert_text(s, 1);
+	insert_text(s, 1, 1);
 }
 
 void	cursor_l(void)

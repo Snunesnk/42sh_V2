@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/07 14:45:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:16:01 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	insert_compl(t_node *compl_tree, t_data *data, long int c)
 		rl_delete();
 	while (g_line.c_pos > data->compl_start)
 		rl_backspace();
-	insert_text(compl, len);
+	insert_text(compl, len, 1);
 	if (c == '\n' && g_line.line[g_line.c_pos] != '/')
-		insert_text(" ", 1);
+		insert_text(" ", 1, 1);
 }

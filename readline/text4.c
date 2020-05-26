@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:58 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:23:32 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:18:20 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	paste_via_input(unsigned long v)
 	u.value = v;
 	while (len < 8 && u.buf[len])
 		++len;
-	insert_text(&(u.buf[0]), len);
+	insert_text(&(u.buf[0]), len, 1);
 }
 
 void	clear_eol(void)

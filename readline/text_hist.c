@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:37:05 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 15:19:15 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:19:35 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void		history_up(void)
 	clear_line();
 	s = prev_hist();
 	if (!*s && g_original_cmd)
-		insert_text(g_original_cmd, ft_strlen(g_original_cmd));
+		insert_text(g_original_cmd, ft_strlen(g_original_cmd), 1);
 	else
-		insert_text(s, ft_strlen(s));
+		insert_text(s, ft_strlen(s), 1);
 }
 
 void		history_down(void)
@@ -114,7 +114,7 @@ void		history_down(void)
 	clear_line();
 	s = next_hist();
 	if (!*s && g_original_cmd)
-		insert_text(g_original_cmd, ft_strlen(g_original_cmd));
+		insert_text(g_original_cmd, ft_strlen(g_original_cmd), 1);
 	else
-		insert_text(s, ft_strlen(s));
+		insert_text(s, ft_strlen(s), 1);
 }

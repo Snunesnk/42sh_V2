@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 16:20:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/18 13:40:20 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:15:23 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ static void	fill_line(char *hist_proposal, int mode)
 	hist_len = ft_strlen(hist_proposal);
 	if (mode == 1)
 	{
-		insert_text("' : ", 4);
-		insert_text(hist_proposal, hist_len);
+		insert_text("' : ", 4, 0);
+		insert_text(hist_proposal, hist_len, 0);
 		update_line();
 		g_line.c_pos -= hist_len;
 	}
 	else
 	{
 		clear_line();
-		insert_text(hist_proposal, hist_len);
+		insert_text(hist_proposal, hist_len, 1);
 	}
 }
 
@@ -37,7 +37,7 @@ static void	get_input_proposal(char value, char **hist_proposal)
 
 	g_line.c_pos -= 4;
 	if (ft_isprint(value))
-		insert_text((char *)&value, 1);
+		insert_text((char *)&value, 1, 0); // NOT SURE
 	else if (value == 127)
 		rl_backspace();
 	g_line.line[g_line.c_pos] = '\0';
@@ -66,7 +66,7 @@ static void	prepare_hist_lookup(char **original_prompt)
 	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line));
 	display_prompt();
 	g_line.c_pos = 0;
-	insert_text("' : ", 4);
+	insert_text("' : ", 4, 0);
 	g_line.cursor_pos = 0;
 }
 

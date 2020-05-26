@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:16:27 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 16:47:40 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/26 10:12:03 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void		l_expand(void)
 	g_line.line = new;
 }
 
-void		insert_text(const char *string, int len)
+void		insert_text(const char *string, int len, int addb)
 {
 	if (g_vim_mode == 0)
 	{
 		g_add_back_buf += len;
-		if (g_add_back_buf > 20)
+		if (g_add_back_buf > 20 && addb)
 		{
 			g_add_back_buf = 0;
 			add_back();

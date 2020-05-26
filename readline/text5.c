@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 14:13:39 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:31:04 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:18:36 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	clip_paste(void)
 {
-	insert_text(g_clip.str, g_clip.l);
+	insert_text(g_clip.str, g_clip.l, 1);
 }
 
 void	clear_befline(void)
