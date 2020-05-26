@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:55:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:22:02 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct	s_goto_func
 	void	(*func)(void);
 }				t_goto_func;
 
-void			insert_text(const char *string, int len);
+void			insert_text(const char *string, int len, int addb);
 void			clear_line(void);
 void			bind_keys(void);
 void			cut_prev_wd(void);

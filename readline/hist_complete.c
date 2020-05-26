@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 12:12:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 15:19:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:13:28 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		insert_hist_compl(void)
 	if (hist_compl)
 	{
 		insert_text(hist_compl + g_line.c_pos, ft_strlen(hist_compl + \
-					g_line.c_pos));
+					g_line.c_pos), 1);
 	}
 	while (g_hist.offset < offset_save)
 		next_hist();

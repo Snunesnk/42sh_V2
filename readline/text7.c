@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:37:18 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:37:17 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:12:46 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,10 @@ void		swap_words(void)
 				&& ++spaces)
 			--g_line.c_pos;
 		w1 = get_pword();
-		insert_text(w2, ft_strlen(w2));
+		insert_text(w2, ft_strlen(w2), 0);
 		g_line.c_pos += spaces;
 		g_line.is_modified = 1;
-		insert_text(w1, ft_strlen(w1));
+		insert_text(w1, ft_strlen(w1), 0);
 		g_line.cursor_pos = 0;
 		free(w1);
 		free(w2);

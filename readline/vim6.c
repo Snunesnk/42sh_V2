@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:51 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 22:19:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:21:10 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	paste_all_l(void)
 	{
 		while (g_vim_cmd_count > 0)
 		{
-			insert_text(g_clip.str, g_clip.l);
+			insert_text(g_clip.str, g_clip.l, 1);
 			--g_vim_cmd_count;
 		}
 		cursor_l();
@@ -41,7 +41,7 @@ void	paste_all_r(void)
 	{
 		while (g_vim_cmd_count > 0)
 		{
-			insert_text(g_clip.str, g_clip.l);
+			insert_text(g_clip.str, g_clip.l, 1);
 			--g_vim_cmd_count;
 		}
 		cursor_l();

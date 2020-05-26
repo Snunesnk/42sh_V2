@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:35:10 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/24 14:27:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/26 10:21:27 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	vim_hash(void)
 {
 	g_input_break = 1;
 	g_line.c_pos = 0;
-	insert_text("#", 1);
+	insert_text("#", 1, 1);
 	place_cursor(0);
 	update_line();
 }
