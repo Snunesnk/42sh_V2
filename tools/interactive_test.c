@@ -25,10 +25,7 @@
 
 char	cmd[][999] =
 {
-	"ls\n",
-	"slee\t 1\n",
-	"exit\n",
-	0
+	"hola!\n"
 };
 
 // This function send a cmd to a process with ioctl, storing the
@@ -105,7 +102,7 @@ int			main(int argc, char **argv)
 	}
 	i = 0;
 	// Execute all cmd stored in cmd[][].
-	while (i < 3)
+	while (i < 1)
 	{
 		send_input(cmd[i], fd);
 		while ((status = poll(&fds, 1, 30000)) < 0);

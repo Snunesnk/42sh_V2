@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 16:37:13 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/26 13:12:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ struct s_stack	*g_back;
 union u_buffer	read_key(void)
 {
 	union u_buffer	buffer_u;
+	int				status;
 
 	buffer_u.value = 0;
-	read(STDIN_FILENO, buffer_u.buf, sizeof(buffer_u.buf));
+	while ((status = read(STDIN_FILENO, buffer_u.buf, sizeof(buffer_u.buf))) \
+			< 0);
 	return (buffer_u);
 }
 
