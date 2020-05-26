@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 15:25:25 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/05/26 15:37:11 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,16 @@ void			display_sigmsg(int sig)
 		ft_dprintf(STDERR_FILENO, "Terminated\n");
 	else if (sig == SIGUSR1)
 		ft_dprintf(STDERR_FILENO, "User defined signal 1\n");
-	else if (sig == SIGUSR2)
-		ft_dprintf(STDERR_FILENO, "User defined signal 2\n");
 	else
 		display_sigmsg2(sig);
 }
 
-void		display_sigmsg2(int sig)
+void			display_sigmsg2(int sig)
 {
 	if (sig == SIGPOLL)
 		ft_dprintf(STDERR_FILENO, "I/O possible\n");
+	else if (sig == SIGUSR2)
+		ft_dprintf(STDERR_FILENO, "User defined signal 2\n");
 	else if (sig == SIGPROF)
 		ft_dprintf(STDERR_FILENO, "Profiling timer expired\n");
 	else if (sig == SIGSYS)
