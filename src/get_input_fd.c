@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/05 18:58:12 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/18 13:37:48 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/27 10:13:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ char		*get_input_fd(int fd, int quote_set, char *prompt)
 	input = recup_input(fd, quote_set, prompt);
 	if (fd == STDIN_FILENO && input && g_shell_is_interactive \
 			&& quote_set == FULL_QUOTE)
-		add_hentry(input, ft_strlen(input));
+	{
+		if (!g_dumb_term)
+			add_hentry(input, ft_strlen(input));
+	}
 	if (g_retval == 1)
 		g_retval = ret;
 	return (input);
