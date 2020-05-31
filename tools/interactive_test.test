@@ -1,0 +1,4 @@
+echo -e "coucou\n"
+printf "l0\n"
+res='	'
+printf 'l%s\n' "$res"

@@ -1,4 +1,3 @@
-DO NOT FORGET TO ERASE BOTH ~/.bash_history AND ~/.21sh_history OR IT WILL MOST LIKELY FAIL DUE TO DIFFERENT HISTORIES
 fc -l;
 ls; fc -l;
 fc -lr;
@@ -38,4 +37,5 @@ fc -- -l ls w
 fc ls w make
 fc ls w amke
 fc --l
-exit
+ls; fc -s l="cd " s="../"
+ls -; fc -s ls=cd;

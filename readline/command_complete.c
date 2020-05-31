@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:38:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/10 21:33:38 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/31 11:34:10 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_node	*get_cmd_compl(t_node *compl_tree, char *to_complete, char *path, \
 	}
 	while (g_builtins[i].key[0])
 	{
-		if (ft_strnequ(to_complete, g_builtins[i].key, len))
+		if (!*to_complete || ft_strnequ(to_complete, g_builtins[i].key, len))
 			compl_tree = add_node(compl_tree, (char *)g_builtins[i].key, data, \
 					"\033[37m");
 		i++;
