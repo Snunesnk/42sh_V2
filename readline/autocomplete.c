@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 14:22:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/05/31 11:32:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,15 @@ void			autocomplete(void)
 	char	*to_complete;
 	int		start;
 
-	if (g_line.len == 0 || ft_str_isspace(g_line.line))
-		return ;
 	clear_next();
 	g_autocompl_on = 1;
 	start = g_line.c_pos - 1;
 	while (start >= 0 && !stop_cmd(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
-	if (test_cd())
+	if (g_line.len == 0 || ft_str_isspace(g_line.line))
+		command_complete("");
+	else if (test_cd())
 		cd_complete(to_complete);
 	else if (ft_strchr(to_complete, '/') || !*to_complete)
 		file_complete(to_complete);
