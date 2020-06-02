@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/23 11:45:26 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/06/02 12:14:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,11 @@ static int	ask_confirmation(t_data *data)
 		if (c.value == 'n' || c.value == 'N')
 			break ;
 	}
-	ft_putchar('\n');
+	ft_putchar_fd('\n', g_dis.fd);
 	if (c.value == 'y' || c.value == 'Y' || c.value == ' ' || c.value == '\t')
 		return (1);
 	if (c.value != 'n' && c.value != 'N')
 		g_bad_seq = c;
-	ft_putstr(tgoto(g_termcaps.cm, 0, g_dis.start_line + 2));
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 	g_line.cursor_pos = 0;
 	display_prompt();
 	update_line();
@@ -61,7 +59,7 @@ static void	restore_line(int line)
 	}
 	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	display_prompt();
-	place_cursor(g_line.c_pos);
+	place_cursor(g_line.cursor_pos);
 }
 
 static void	print_compl(t_node *compl_tree, t_data *data)
@@ -73,7 +71,6 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 	line = 0;
 	if (!(get_list_compl(&list_compl, data)))
 		return ;
-	ft_putstr_fd(g_termcaps.cd, g_dis.fd);
 	to_print = data->first_print;
 	while (data->first_print + line < data->last_print + 1 \
 			&& to_print <= data->nb_exec)
@@ -121,11 +118,10 @@ void		display_compl(t_node *compl_tree, t_data *data)
 		return ;
 	while (is_compl_char(c) && data->nb_exec > 1)
 	{
-		insert_compl(compl_tree, data, 0);
-		place_cursor(0);
-		update_line();
 		fill_data(data, compl_tree);
+		insert_compl(compl_tree, data, 0);
 		print_compl(compl_tree, data);
+		update_line();
 		c = read_key();
 		update_exec(c, data);
 	}

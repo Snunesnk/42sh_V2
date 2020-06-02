@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/31 11:32:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/01 11:56:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void			autocomplete(void)
 	int		start;
 
 	clear_next();
+	update_line();
 	g_autocompl_on = 1;
 	start = g_line.c_pos - 1;
 	while (start >= 0 && !stop_cmd(g_line.line[start]))
