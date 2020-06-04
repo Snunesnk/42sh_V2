@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/04 12:47:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 18:44:02 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,19 +116,19 @@ void			autocomplete(void)
 	while (start >= 0 && !stop_cmd(g_line.line[start]))
 		start--;
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
-	if (g_line.len == 0 || ft_str_isspace(g_line.line))
+	if (g_line.len == 0 || ft_str_isspace(g_line.line) || start <= 0)
 		command_complete("");
 	else if (test_cmd("cd ", 3))
 		cd_complete(to_complete);
-	else if ((ft_strchr(to_complete, '/') || !*to_complete) \
+	else if (ft_strchr(to_complete, '/') \
 			&& !test_cmd("unset ", 6) && !test_cmd("export ", 7))
 		file_complete(to_complete);
 	else if (g_line.line[start + 1] == '$' || test_cmd("export ", 7) \
 				|| test_cmd("unset ", 6))
 		var_complete(to_complete);
 	else
-		(start <= 0 || has_no_cmd(g_line.line, start)) ? \
-				command_complete(to_complete) : file_complete(to_complete);
+		(compl_with_cmd(start)) ? command_complete(to_complete) : \
+			file_complete(to_complete);
 	g_autocompl_on = 0;
 	free(to_complete);
 }

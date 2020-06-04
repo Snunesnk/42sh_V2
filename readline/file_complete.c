@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/04 12:24:22 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 16:27:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,14 @@ size_t	ft_str_wchar_len(char *str)
 
 int		test_cmd(char *to_find, int len)
 {
-	static char	operator[] = "&|;<>";
 	int			i;
 
 	if (g_line.len < len)
 		return (0);
 	i = g_line.c_pos - 1;
-	while (i > 0 && !ft_strchr(operator, g_line.line[i]))
+	while (i > 0 && !ft_strchr(OPERATOR, g_line.line[i]))
 		i--;
-	if (ft_strchr(operator, g_line.line[i]))
+	if (ft_strchr(OPERATOR, g_line.line[i]))
 		i++;
 	while (g_line.line[i] && ft_isspace(g_line.line[i]))
 		i++;
