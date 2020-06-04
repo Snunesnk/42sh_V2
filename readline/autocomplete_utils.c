@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 21:41:45 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/14 14:35:58 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 18:45:12 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,12 @@ int		has_no_cmd(char *line, int start)
 
 int		has_operator(char *to_complete)
 {
-	static char	operator[] = "&|<>;";
 	int			i;
 
 	i = 0;
 	while (to_complete[i])
 	{
-		if (ft_strchr(operator, to_complete[i]))
+		if (ft_strchr(OPERATOR, to_complete[i]))
 			return (1);
 		i++;
 	}
@@ -71,9 +70,20 @@ char	*ft_strjoin_free(char *s1, char *s2, int to_free)
 
 int		stop_cmd(char c)
 {
-	static char	operator[] = "&|;<>";
+	if (ft_strchr(OPERATOR, c) || ft_isspace(c))
+		return (1);
+	return (0);
+}
 
-	if (ft_strchr(operator, c) || ft_isspace(c))
+int		compl_with_cmd(int pos)
+{
+	while (pos > 0 && ft_isspace(g_line.line[pos]))
+		pos--;
+	if (pos <= 0)
+		return (1);
+	else if (ft_strchr(OPERATOR, g_line.line[pos]))
+		return (1);
+	else if (has_no_cmd(g_line.line, pos))
 		return (1);
 	return (0);
 }

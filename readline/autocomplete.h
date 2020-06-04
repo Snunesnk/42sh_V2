@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/04 12:22:23 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 16:38:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # define SPACES "                                                           "
 # define DOLLAR	1
 # define BRACE	2
+
+# define OPERATOR "&|;"
 
 typedef struct	s_print_list
 {
@@ -71,5 +73,6 @@ int				test_dir(char *file);
 char			*stick_path_complete(char *path, char *to_complete);
 int				test_cmd(char *cmd, int len);
 int				stop_cmd(char c);
+int				compl_with_cmd(int start);
 
 #endif
