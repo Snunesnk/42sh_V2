@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/02 12:14:08 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/02 13:08:42 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,18 @@ static int	ask_confirmation(t_data *data)
 	return (0);
 }
 
-static void	restore_line(int line)
+static void	print_and_restore_line(int line, char *lst)
 {
 	int	last_line;
+	int	ret;
 
+	ret = g_line.cursor_pos;
+	place_cursor(g_line.len);
+	g_line.cursor_pos = ret;
+	if (!g_dumb_term)
+		ft_dprintf(g_dis.fd, "%s\n%s%s", g_termcaps.clreol, g_termcaps.cd, lst);
+	else
+		ft_dprintf(g_dis.fd, "\n%s", lst);
 	if (g_dumb_term)
 	{
 		ft_putchar_fd('\n', g_dis.fd);
@@ -85,9 +93,8 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
-	ft_dprintf(g_dis.fd, "%s", list_compl.content);
+	print_and_restore_line(data->overflow + line, list_compl.content);
 	free(list_compl.content);
-	restore_line(data->overflow + line);
 }
 
 static int	is_compl_char(union u_buffer c)

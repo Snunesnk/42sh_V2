@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 19:33:11 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/01 12:08:07 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/02 12:31:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ t_print_list	*get_list_compl(t_print_list *list_compl, t_data *data)
 	}
 	list_compl->used = 0;
 	list_compl->capacity = data->row * data->column * 3;
-	*list_compl = list_compl_add(*list_compl, "\n");
 	return (list_compl);
 }
 

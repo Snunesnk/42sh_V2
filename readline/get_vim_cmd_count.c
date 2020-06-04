@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 12:52:13 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/24 15:09:45 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/04 11:45:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,38 @@
 
 int	g_vim_cmd_count = 0;
 
+static void		print_dumb_count(void)
+{
+	ft_putstr_fd("\r", g_dis.fd);
+	if (g_line.c_pos + g_dis.start_offset > g_sc.w)
+		ft_dprintf(g_dis.fd, "(arg: %d)<", g_vim_cmd_count);
+	else
+		ft_dprintf(g_dis.fd, "(arg: %d)", g_vim_cmd_count);
+}
+
 static void		print_count(void)
 {
-	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
-	ft_dprintf(g_dis.fd, "(arg: %d) ", g_vim_cmd_count);
-	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	if (g_dumb_term)
+		print_dumb_count();
+	else
+	{
+		ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
+		ft_dprintf(g_dis.fd, "(arg: %d) ", g_vim_cmd_count);
+		get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
+	}
 	g_line.is_modified = 1;
 	g_line.cursor_pos = 0;
-	update_line();
+	if (!g_dumb_term)
+		update_line();
 }
 
 static void		put_prompt_back(void)
 {
+	if (g_dumb_term)
+	{
+		update_line();
+		return ;
+	}
 	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	display_prompt();
 	g_line.is_modified = 1;
