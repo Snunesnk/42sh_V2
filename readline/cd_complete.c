@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/30 15:51:38 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/31 11:28:31 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 12:23:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_node		*search_in_path(char *to_complete, t_node *compl_tree,\
 	{
 		if (!g_line.len || (test(gl.gl_pathv[i]) && gl.gl_pathv[i][0]))
 			compl_tree = add_node(compl_tree, get_filename(gl.gl_pathv[i]), \
-					data, ((test_cd()) ? "\033[1;34m" : "\033[37m"));
+					data, ((test_cmd("cd ", 3)) ? "\033[1;34m" : "\033[37m"));
 		i++;
 	}
 	ft_globfree(&gl);

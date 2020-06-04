@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/01 11:56:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 12:47:54 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ void			var_complete(char *to_complete)
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return ;
 	}
-	if (to_complete[1] == '{')
-		is_bracked = 1;
-	compl_tree = get_var_compl(to_complete + 1 + is_bracked, data, is_bracked);
+	if (to_complete[0] && to_complete[1] == '{')
+		is_bracked = BRACE;
+	else if (to_complete[0] == '$')
+		is_bracked = DOLLAR;
+	compl_tree = get_var_compl(to_complete + is_bracked, data, is_bracked);
 	if (compl_tree)
 		display_compl(compl_tree, data);
 	free(data);
@@ -116,16 +118,17 @@ void			autocomplete(void)
 	to_complete = ft_strsub(g_line.line, start + 1, g_line.c_pos - start - 1);
 	if (g_line.len == 0 || ft_str_isspace(g_line.line))
 		command_complete("");
-	else if (test_cd())
+	else if (test_cmd("cd ", 3))
 		cd_complete(to_complete);
-	else if (ft_strchr(to_complete, '/') || !*to_complete)
+	else if ((ft_strchr(to_complete, '/') || !*to_complete) \
+			&& !test_cmd("unset ", 6) && !test_cmd("export ", 7))
 		file_complete(to_complete);
-	else if (g_line.line[start + 1] == '$')
+	else if (g_line.line[start + 1] == '$' || test_cmd("export ", 7) \
+				|| test_cmd("unset ", 6))
 		var_complete(to_complete);
-	else if (start <= 0 || has_no_cmd(g_line.line, start))
-		command_complete(to_complete);
 	else
-		file_complete(to_complete);
+		(start <= 0 || has_no_cmd(g_line.line, start)) ? \
+				command_complete(to_complete) : file_complete(to_complete);
 	g_autocompl_on = 0;
 	free(to_complete);
 }
