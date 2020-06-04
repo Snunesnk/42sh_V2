@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/02 13:08:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 16:18:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	print_and_restore_line(int line, char *lst)
 	}
 	ft_putstr_fd(tgoto(g_termcaps.cm, 0, g_dis.start_line), g_dis.fd);
 	display_prompt();
-	place_cursor(g_line.cursor_pos);
+	g_line.cursor_pos = 0;
 }
 
 static void	print_compl(t_node *compl_tree, t_data *data)
@@ -93,6 +93,7 @@ static void	print_compl(t_node *compl_tree, t_data *data)
 				list_compl = list_compl_add(list_compl, "\n");
 		}
 	}
+	line += (g_dis.start_offset + g_line.len) / (g_sc.w - 1);
 	print_and_restore_line(data->overflow + line, list_compl.content);
 	free(list_compl.content);
 }
@@ -127,6 +128,7 @@ void		display_compl(t_node *compl_tree, t_data *data)
 	{
 		fill_data(data, compl_tree);
 		insert_compl(compl_tree, data, 0);
+		get_exec_lim(data, compl_tree);
 		print_compl(compl_tree, data);
 		update_line();
 		c = read_key();
