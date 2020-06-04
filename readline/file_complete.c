@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/31 11:26:25 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 12:24:22 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ size_t	ft_str_wchar_len(char *str)
 	return (len);
 }
 
-int		test_cd(void)
+int		test_cmd(char *to_find, int len)
 {
 	static char	operator[] = "&|;<>";
 	int			i;
 
-	if (g_line.len < 2)
+	if (g_line.len < len)
 		return (0);
 	i = g_line.c_pos - 1;
 	while (i > 0 && !ft_strchr(operator, g_line.line[i]))
@@ -47,7 +47,7 @@ int		test_cd(void)
 		i++;
 	while (g_line.line[i] && ft_isspace(g_line.line[i]))
 		i++;
-	if (g_line.line[i] && ft_strnequ(g_line.line + i, "cd ", 3))
+	if (g_line.line[i] && ft_strnequ(g_line.line + i, to_find, len))
 		return (1);
 	return (0);
 }

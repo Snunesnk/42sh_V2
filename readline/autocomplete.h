@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/17 16:45:00 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/06/04 12:22:23 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # define ARROW_RIGHT	4414235
 
 # define SPACES "                                                           "
+# define DOLLAR	1
+# define BRACE	2
 
 typedef struct	s_print_list
 {
@@ -67,7 +69,7 @@ char			*get_filename(char *path);
 char			*ft_strjoin_free(char *s1, char *s2, int to_free);
 int				test_dir(char *file);
 char			*stick_path_complete(char *path, char *to_complete);
-int				test_cd(void);
+int				test_cmd(char *cmd, int len);
 int				stop_cmd(char c);
 
 #endif

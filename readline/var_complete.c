@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/14 16:34:21 by snunes            #+#    #+#             */
-/*   Updated: 2020/04/29 14:37:43 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/04 12:37:15 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ static char	*get_var_form(char *var_name, int is_bracked)
 	char	*var_form;
 
 	if (!(var_form = (char *)ft_memalloc(sizeof(char) * \
-					(ft_strlen(var_name) + 2 + is_bracked * 2))))
+					(ft_strlen(var_name) + is_bracked + 2))))
 	{
 		psherror(e_cannot_allocate_memory, g_progname, e_cmd_type);
 		return (NULL);
 	}
-	ft_strcat(var_form, "$");
-	if (is_bracked)
+	if (is_bracked > 0)
+		ft_strcat(var_form, "$");
+	if (is_bracked & BRACE)
 		ft_strcat(var_form, "{");
 	ft_strcat(var_form, var_name);
-	if (is_bracked)
+	if (is_bracked & BRACE)
 		ft_strcat(var_form, "}");
+	if (is_bracked == 0 && test_cmd("export ", 7))
+		ft_strcat(var_form, "=");
 	return (var_form);
 }
 
