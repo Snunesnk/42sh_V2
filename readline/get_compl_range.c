@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/26 13:28:52 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/02 13:41:54 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/04 16:07:53 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,10 @@ static void	get_lines(int *chosen_exec_line, int *taken_lines, t_data *data)
 		*taken_lines = data->taken_lines;
 	if (*taken_lines != data->taken_lines)
 	{
-		if (*taken_lines > data->taken_lines)
+		if (*taken_lines > data->taken_lines && data->last_print \
+				!= data->nb_line)
 			data->last_print += *taken_lines - data->taken_lines;
-		else
+		else if (g_dis.start_line + data->taken_lines - 1 > g_sc.height - 1)
 			data->last_print -= data->taken_lines - *taken_lines;
 		*taken_lines = data->taken_lines;
 	}
