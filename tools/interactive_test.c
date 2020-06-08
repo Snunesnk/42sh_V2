@@ -44,6 +44,13 @@
 int		g_pid;
 char	*g_process_input;
 
+static int	ft_isprint(char c)
+{
+	if (c >= 32 || c <= 126)
+		return (1);
+	return (0);
+}
+
 // This function send a cmd to a process with ioctl, storing the
 // input into the queue of desired process.
 static void	send_input(char *input, int fd)
@@ -68,7 +75,8 @@ static void	send_input(char *input, int fd)
 		i++;
 		// Wait between each sent char, otherwise process's read will return more than
 		// one char, causing the input to not behave properly.
-		usleep(DELAY_TIME * INPUT_DELAY);
+		if (input[i + 1] && !ft_isprint(input[i + 1]))
+			usleep(DELAY_TIME * INPUT_DELAY);
 	}
 	usleep(DELAY_TIME * INPUT_DELAY);
 	if (!strchr(input, '\n'))
