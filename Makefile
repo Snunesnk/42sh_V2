@@ -6,11 +6,11 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/26 23:51:13 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/08 21:28:49 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
--include 21sh.mk
+-include 42sh.mk
 
 .PHONY: all clean fclean re test interactive_test
 
