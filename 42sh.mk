@@ -6,11 +6,11 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/05/26 23:52:07 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/08 14:29:42 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = 21sh
+NAME = 42sh
 
 SOURCES_PATH := ./src/
 

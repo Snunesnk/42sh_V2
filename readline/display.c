@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:42 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/01 11:50:42 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/08 21:32:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	display_prompt(void)
 		set_prompt(prompt);
 		free(prompt);
 	}
-	if (write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l) < 0)
-		return ;
+	write(STDERR_FILENO, g_dis.display_prompt, g_dis.real_prompt_l);
 	get_cursor_position(&(g_dis.start_line), &(g_dis.start_offset));
 }
 

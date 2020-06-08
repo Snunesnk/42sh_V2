@@ -26,6 +26,9 @@
 //To read dir files
 #include <dirent.h>
 
+//To test if the programm has received several pid with isdigit
+#include <ctype.h>
+
 //test file extension
 #define TEST_EXT ".test"
 
@@ -38,11 +41,17 @@
 //Time bewteen write of each chars to target process, multiplied by DELAY_TIME. Final wait is in ns.
 #define INPUT_DELAY 30
 
-//Name of target process, must end with a newline to be able to re-launch it
-#define PROCESS_NAME "./21sh\n"
+// pid of target
+int		g_pid = 0;
+// input fd of target
+int		g_fd = -1;
+// location target's fd 0
+char	*g_process_input = NULL;
+// content of /proc/[g_pid]/cmdline, which is how the programm was started.
+char	*g_cmdline = NULL;
 
-int		g_pid;
-char	*g_process_input;
+static void	send_input(char *input);
+static int	ft_strequ(char *s1, char *s2);
 
 static int	ft_isprint(char c)
 {
@@ -51,23 +60,145 @@ static int	ft_isprint(char c)
 	return (0);
 }
 
+static int	ft_strequ(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	while (s1[i] && s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (0);
+		i++;
+	}
+	return (s1[i] == s2[i]);
+}
+
+static void	add_to_cmdline(char *buf)
+{
+	char	*tmp;
+	int		len;
+
+	tmp = g_cmdline;
+	len = strlen(buf);
+	if (g_cmdline)
+		len += strlen(g_cmdline);
+	if (!(g_cmdline = malloc(sizeof(char) * (len + 1))))
+	{
+		perror("malloc");
+		exit(1);
+	}
+	if (tmp)
+		strcat(g_cmdline, tmp);
+	strcat(g_cmdline, buf);
+	free(tmp);
+}
+
+// Open desired process input
+static void	load_target_info(char *pid)
+{
+	char	*cmdline_file;
+	int		cmdline_fd;
+	char	tmp_buf[1024];
+
+	if (g_process_input)
+	{
+		free(g_process_input);
+		g_process_input = NULL;
+	}
+	if (g_cmdline)
+	{
+		free(g_cmdline);
+		g_cmdline = NULL;
+	}
+	if (!(g_process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
+						+ strlen(pid) + 1))))
+	{
+		perror("malloc");
+		exit(1);
+	}
+	if (!(cmdline_file = (char *)malloc(sizeof(char) * (strlen("/proc//cmdline") \
+						+ strlen(pid) + 1))))
+	{
+		perror("malloc");
+		exit(1);
+	}
+	sprintf(g_process_input, "/proc/%s/fd/0", pid);
+	sprintf(cmdline_file, "/proc/%s/cmdline", pid);
+	//open input fd of desired process
+	if ((g_fd = open(g_process_input, O_WRONLY)) < 0)
+	{
+		perror("open");
+		exit(1);
+	}
+	// open cmdline file of process, to know how was it launch, to be able to launch
+	// it in the exact same way
+	if ((cmdline_fd = open(cmdline_file, O_RDONLY)) < 0)
+	{
+		perror("open");
+		exit(1);
+	}
+	free(cmdline_file);
+	bzero(tmp_buf, 1024);
+	while (read(cmdline_fd, tmp_buf, 1023) > 0)
+	{
+		add_to_cmdline(tmp_buf);
+		bzero(tmp_buf, strlen(tmp_buf));
+	}
+	close(cmdline_fd);
+}
+
+// This is experimental, and i'm sure it can be improved.
+// For now, I'm gonna get the new pid of the revived process by looking into
+// each dir of /proc for the file 'cmdline', which contains the cmdline of how
+// the programm was started.
+static char	*get_new_process_pid(void)
+{
+	return (NULL) ;
+}
+
+// This function "revive" the process if it was exit by "exit"
+// Maybe I'm gonna add other cases where it is acceptable for the shell to quit
+// and so revive it too.
+static void	re_launch_process(void)
+{
+	char	*pid;
+	char	*cmd;
+
+	if (!(cmd = (char *)malloc(sizeof(char) * (strlen(g_cmdline) + 2))))
+	{
+		perror("malloc");
+		exit (1);
+	}
+	strcat(cmd, g_cmdline);
+	strcat(cmd, "\n");
+	send_input(cmd);
+	free(cmd);
+	exit(1);
+	pid = get_new_process_pid();
+	load_target_info(pid);
+	free(pid);
+}
+
 // This function send a cmd to a process with ioctl, storing the
 // input into the queue of desired process.
-static void	send_input(char *input, int fd)
+static void	send_input(char *input)
 {
 	int				i;
 	struct pollfd	fds;
 	int				status;
 
 	//init struct for poll, to wait till input in process become available
-	fds.fd = fd;
+	fds.fd = g_fd;
 	fds.events = (POLLIN);
 	fds.revents = 0;
 
 	i = 0;
 	while (input[i])
 	{
-		if (ioctl(fd, TIOCSTI, &(input[i])) < 0)
+		if (ioctl(g_fd, TIOCSTI, &(input[i])) < 0)
 		{
 			perror("ioctl");
 			exit(1);
@@ -89,11 +220,9 @@ static void	send_input(char *input, int fd)
 	//if process didn't respond in time, quit. Not great, but don't know how to make it better now.
 	while ((status = poll(&fds, 1, DELAY_TIME)) <= 0)
 	{
-		if (strstr(input, "exit") && PROCESS_STOPPED)
-			break ;
 		if (status == 0 || nb_time_tried > 0)
 		{
-			if (ioctl(fd, TIOCSTI, &stop) < 0)
+			if (ioctl(g_fd, TIOCSTI, &stop) < 0)
 			{
 				perror("ioctl");
 				exit(1);
@@ -102,18 +231,25 @@ static void	send_input(char *input, int fd)
 			nb_time_tried++;
 		}
 		if (PROCESS_STOPPED)
-		{
-			dprintf(2, "process quit\n");
-			exit (1);
-		}
+			break ;
 		if (nb_time_tried >= 4)
 			stop = 4;
 	}
-	if (strstr(input, "exit") && PROCESS_STOPPED)
-		send_input(PROCESS_NAME, fd);
+	input[strlen(input) - 1] = '\0';
+	if (PROCESS_STOPPED && !ft_strequ(input, g_cmdline))
+	{
+		printf("input: %s, g_cmdline: %s, equ: %d\n", input, g_cmdline, ft_strequ(input, g_cmdline));
+		if (strstr(input, "exit"))
+			re_launch_process();
+		else
+		{
+			dprintf(2, "process quit\n");
+			exit(1);
+		}
+	}
 }
 
-static void	open_and_exec_file(char *file, int fd)
+static void	open_and_exec_file(char *file)
 {
 	FILE	*fp;
 
@@ -127,29 +263,12 @@ static void	open_and_exec_file(char *file, int fd)
 	char	line[1024];
 
 	while (fgets(line, 1024, fp) != NULL)
-		send_input(line, fd);
+		send_input(line);
 	printf("\033[37m[done]\033[0m\n");
 	fclose(fp);
 }
 
-static int	ft_strequ(char *s1, char *s2)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (!s1 || !s2)
-		return (0);
-	while (s1[i] == s2[j] && s1[i] && s2[i])
-	{
-		i++;
-		j++;
-	}
-	return (s1[i] == s2[j]);
-}
-
-static void	exec_all_tests(int fd, int pid)
+static void	exec_all_tests(int pid)
 {
 	DIR				*dirp;
 	struct dirent	*file;
@@ -163,15 +282,23 @@ static void	exec_all_tests(int fd, int pid)
 		if (name_len > ext_name && ft_strequ(file->d_name + name_len - ext_name, TEST_EXT) \
 					&& file->d_name[0] != '.')
 		{
-			open_and_exec_file(file->d_name, fd);
-			if (PROCESS_STOPPED)
-			{
-				dprintf(2, "process quit\n");
-				exit (0);
-			}
+			open_and_exec_file(file->d_name);
 		}
 	}
 	closedir(dirp);
+}
+
+static int	is_str_digit(char *str)
+{
+	int	i = 0;
+
+	while (str[i])
+	{
+		if (!isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 int			main(int argc, char **argv)
@@ -179,51 +306,41 @@ int			main(int argc, char **argv)
 	// Some basic verifications
 	if (argc < 2)
 	{
-		dprintf(2, "Interactive_test: no path given.\n");
-		dprintf(2, "Usage: \033[31m./a.out\033[0m \033[1;34m<process_pid>\033[0m "\
-				"[cmd1, cmd2, ...]\n");
-		dprintf(2, "You can get the pid with \033[1;37mpidof <process>\033[0m."\
-				"See you soon\n");
+		dprintf(2, "Interactive_test: no pid given, make sure an instance of wanted"\
+				" program is already running, and then use 'make interactive_test" \
+				" [FILES=\"file1 file2 ...\"]'.\n");
 		return (1);
 	}
 
-	int		fd;
+	if (ft_strequ(argv[2], "-h"))
+	{
+		printf("interactive_test send each line of your test files to your interactive"\
+				" program.\nTo use it, just run an instance of your program in another terminal, and run 'make interactive_test [FILES=\"file1 file2 ...\"]'.\n"\
+				"Each 'file' should be placed in the same directory as interactive_test.c."\
+				" If several instance of your program are runnning, Interactive_test is gonna test one of the running instance, but you cannot know wich one." \
+				" Having only running instance is advised.\n");
+	}
 
-	if (!(g_process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
-						+ strlen(argv[1]) + 1))))
-	{
-		perror("malloc");
-		exit(1);
-	}
-	//open input fd of desired process
-	sprintf(g_process_input, "/proc/%s/fd/0", argv[1]);
-	if ((fd = open(g_process_input, O_WRONLY)) < 0)
-	{
-		perror("open");
-		return (1);
-	}
+	load_target_info(argv[1]);
 
 	int				i = 2;
 	int				status;
 
 	g_pid = atoi(argv[1]);
-	// If the user send command through cmd line, execute them.
-	if (argc > 2)
+	while (argv[i] && is_str_digit(argv[i]))
+		i++;
+	// If the user specify file test, launch them.
+	if (argv[i])
 	{
 		while (argv[i])
 		{
-			open_and_exec_file(argv[i], fd);
-			if (PROCESS_STOPPED)
-			{
-				dprintf(2, "process quit\n");
-				exit (0);
-			}
+			open_and_exec_file(argv[i]);
 			i++;
 		}
 	}
 	// else exec all *.test in current directory
 	else
-		exec_all_tests(fd, g_pid);
+		exec_all_tests(g_pid);
 	free(g_process_input);
-	close(fd);
+	close(g_fd);
 }
