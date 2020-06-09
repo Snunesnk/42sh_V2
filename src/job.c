@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:32:35 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/28 15:31:27 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/09 11:44:37 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static void	set_outfiles(t_job *j, int *infile, int *outfile, int mypipe)
 
 static int	set_mypipe(t_process *p, t_job *j, int mypipe[2])
 {
-	g_is_motherfucking_env = 0;
 	p->assignments_count = 0;
 	p->status = treat_expansions(p);
 	if (p->next)
@@ -104,7 +103,7 @@ int			launch_job(t_job *j, int foreground)
 			return (0);
 		}
 		else if (foreground && e.outfile == j->stdout && !j->first_process->next
-			&& is_a_builtin_command(e.p->argv) && !g_is_motherfucking_env)
+			&& is_a_builtin_command(e.p->argv))
 			return (launch_builtin(e.p));
 		else
 			execute(j, &e, foreground);

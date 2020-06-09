@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/06 20:52:32 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 19:28:24 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/06/09 11:43:24 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ const t_builtins	g_builtins[] =
 	{ "set", &cmd_set},
 	{ "alias", &cmd_alias},
 	{ "unalias", &cmd_unalias},
-	{ "env", &cmd_env},
 	{ "builtin", &cmd_builtin},
 	{ "\0", NULL}
 };
@@ -63,8 +62,6 @@ int				is_a_builtin(char *cmd)
 	{
 		if (f != &cmd_exit)
 			g_last_exit = 0;
-		if (f == cmd_env)
-			g_is_motherfucking_env = 1;
 		return (1);
 	}
 	else
