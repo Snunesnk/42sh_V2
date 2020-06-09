@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 13:18:01 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 15:24:08 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/09 11:45:17 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ char							*short_physical_path(char **cwd);
 extern t_list					*g_env;
 extern t_list					*g_tmp_env;
 extern t_list					*g_pending_cmd;
-
-extern int						g_is_motherfucking_env;
 
 extern int						*g_parse_table[NB_TOKEN];
 
