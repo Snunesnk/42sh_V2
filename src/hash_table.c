@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 21:01:22 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/20 18:26:36 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/09 19:40:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int				add_name_hash_table(char *name, int nb)
 	if (!name || !*name)
 		return (e_command_not_found);
 	if (is_a_builtin(name))
-		return (e_command_not_found);
+		return (e_success);
 	status = e_success;
 	path = get_shell_var("PATH", g_env);
 	pathname = ft_strdup(name);

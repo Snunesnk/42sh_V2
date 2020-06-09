@@ -19,9 +19,9 @@
 #include <unistd.h>
 
 //Needed for poll(2);
-#include <poll.h>
+#define _GNU_SOURCE         /* See feature_test_macros(7) */
 #include <signal.h>
-#define _GNU_SOURCE
+#include <poll.h>
 
 //To read dir files
 #include <dirent.h>
@@ -41,14 +41,11 @@
 //Time bewteen write of each chars to target process, multiplied by DELAY_TIME. Final wait is in ns.
 #define INPUT_DELAY 30
 
-// pid of target
-int		g_pid = 0;
-// input fd of target
-int		g_fd = -1;
-// location target's fd 0
-char	*g_process_input = NULL;
-// content of /proc/[g_pid]/cmdline, which is how the programm was started.
-char	*g_cmdline = NULL;
+int		g_pid = 0; // target's pid
+int		g_fd = -1; // target's fd 0
+char	*g_process_input = NULL; // location of target's fd 0
+char	*g_cmdline = NULL; // content of /proc/[g_pid]/cmdline, which is how the programm was started.
+char	g_wchan = NULL; // content of /proc/[g_pid]/wchan, which contains target's state, waiting for input or waiting for a cmd.
 
 static void	send_input(char *input);
 static int	ft_strequ(char *s1, char *s2);
@@ -73,7 +70,9 @@ static int	ft_strequ(char *s1, char *s2)
 			return (0);
 		i++;
 	}
-	return (s1[i] == s2[i]);
+	if (s1[i] == s2[i])
+		return (1);
+	return (0);
 }
 
 static void	add_to_cmdline(char *buf)
@@ -101,6 +100,7 @@ static void	load_target_info(char *pid)
 {
 	char	*cmdline_file;
 	int		cmdline_fd;
+	char	*out;
 	char	tmp_buf[1024];
 
 	if (g_process_input)
@@ -113,7 +113,17 @@ static void	load_target_info(char *pid)
 		free(g_cmdline);
 		g_cmdline = NULL;
 	}
+	if (g_fd)
+		close(g_fd);
+	if (g_fd_one)
+		close(g_fd_one);
 	if (!(g_process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
+						+ strlen(pid) + 1))))
+	{
+		perror("malloc");
+		exit(1);
+	}
+	if (!(out = (char *)malloc(sizeof(char) * (strlen("/proc//fd/1") \
 						+ strlen(pid) + 1))))
 	{
 		perror("malloc");
@@ -126,13 +136,20 @@ static void	load_target_info(char *pid)
 		exit(1);
 	}
 	sprintf(g_process_input, "/proc/%s/fd/0", pid);
+	sprintf(out, "/proc/%s/fd/1", pid);
 	sprintf(cmdline_file, "/proc/%s/cmdline", pid);
 	//open input fd of desired process
-	if ((g_fd = open(g_process_input, O_WRONLY)) < 0)
+	if ((g_fd = open(g_process_input, O_RDWR)) < 0)
 	{
 		perror("open");
 		exit(1);
 	}
+	if ((g_fd_one = open(out, O_RDONLY)) < 0)
+	{
+		perror("open");
+		exit(1);
+	}
+	free(out);
 	// open cmdline file of process, to know how was it launch, to be able to launch
 	// it in the exact same way
 	if ((cmdline_fd = open(cmdline_file, O_RDONLY)) < 0)
@@ -182,18 +199,20 @@ static void	re_launch_process(void)
 	free(pid);
 }
 
+static void	wait_end_cmd(void)
+{
+	char	*wchan;
+	int		nb_tried;
+	int		stop = 3;
+
+
+}
+
 // This function send a cmd to a process with ioctl, storing the
 // input into the queue of desired process.
 static void	send_input(char *input)
 {
 	int				i;
-	struct pollfd	fds;
-	int				status;
-
-	//init struct for poll, to wait till input in process become available
-	fds.fd = g_fd;
-	fds.events = (POLLIN);
-	fds.revents = 0;
 
 	i = 0;
 	while (input[i])
@@ -209,36 +228,15 @@ static void	send_input(char *input)
 		if (input[i + 1] && !ft_isprint(input[i + 1]))
 			usleep(DELAY_TIME * INPUT_DELAY);
 	}
-	usleep(DELAY_TIME * INPUT_DELAY);
 	if (!strchr(input, '\n'))
 		return ;
-	int		nb_time_tried;
-	char	stop = 3;
 
-	nb_time_tried = 0;
-	//Wait for the input to become available, or timeout after 1 seconds
-	//if process didn't respond in time, quit. Not great, but don't know how to make it better now.
-	while ((status = poll(&fds, 1, DELAY_TIME)) <= 0)
-	{
-		if (status == 0 || nb_time_tried > 0)
-		{
-			if (ioctl(g_fd, TIOCSTI, &stop) < 0)
-			{
-				perror("ioctl");
-				exit(1);
-			}
-			usleep(DELAY_TIME * INPUT_DELAY);
-			nb_time_tried++;
-		}
-		if (PROCESS_STOPPED)
-			break ;
-		if (nb_time_tried >= 4)
-			stop = 4;
-	}
+	usleep(DELAY_TIME * INPUT_DELAY);
+	wait_end_cmd();
+
 	input[strlen(input) - 1] = '\0';
 	if (PROCESS_STOPPED && !ft_strequ(input, g_cmdline))
 	{
-		printf("input: %s, g_cmdline: %s, equ: %d\n", input, g_cmdline, ft_strequ(input, g_cmdline));
 		if (strstr(input, "exit"))
 			re_launch_process();
 		else

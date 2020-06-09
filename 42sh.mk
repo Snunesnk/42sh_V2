@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    21sh.mk                                            :+:      :+:    :+:    #
+#    42sh.mk                                            :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/06/08 14:29:42 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/09 12:02:42 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -203,7 +203,7 @@ TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
 
-INTERACTIVE_TEST := cd $(TESTS_PATH) && $(CC) interactive_test.c && sudo ./a.out `pidof $(NAME)` $(FILES)
+INTERACTIVE_TEST := cd $(TESTS_PATH) && $(CC) -pthread interactive_test.c && sudo ./a.out `pidof $(NAME)` $(FILES)
 
 LDLIBS += $(PATH_LIB)libft.a -ltermcap
 
