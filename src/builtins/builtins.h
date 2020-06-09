@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/19 16:11:14 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/09 11:40:58 by yforeau          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int				cmd_export(int argc, char **argv);
 int				cmd_unset(int argc, char **argv);
 int				cmd_alias(int argc, char **argv);
 int				cmd_unalias(int argc, char **argv);
-int				cmd_env(int argc, char **argv);
 int				cmd_builtin(int argc, char **argv);
 
 /*
@@ -151,14 +150,6 @@ int				exec_fc_s_opt(char **args);
 void			swap_entries(int *hist_end, int *hist_beg);
 int				add_pending_cmd(char *command);
 void			fc_erase_last_hist(void);
-
-/*
-** Env functions
-*/
-int				set_temp_variable(char *assignment);
-void			empty_env(t_list **svar_lst);
-int				execute_env_process(char **argv, char **envp,
-		t_hash_table *tmp, char *pathname);
 
 /*
 ** Global var util for get_next_opt
