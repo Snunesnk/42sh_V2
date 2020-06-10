@@ -15,7 +15,7 @@ int		is_str_digit(char *str)
 
 int		ft_isprint(char c)
 {
-	if (c >= 32 || c <= 126)
+	if (c >= 32 && c <= 126)
 		return (1);
 	return (0);
 }
@@ -45,8 +45,6 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1)
 		return (strdup(s2));
-	if (!s2)
-		return (s1);
 	len = strlen(s1) + strlen(s2) + 1;
 	if (!(joined = (char *)malloc(sizeof(char) * len)))
 	{
