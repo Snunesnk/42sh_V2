@@ -1,28 +1,5 @@
 #include "interactive_test.h"
 
-static t_process	add_to_cmdline(t_process process, char *buf)
-{
-	char	*tmp;
-	int		len;
-
-	tmp = process.cmdline;
-	len = strlen(buf);
-	if (process.cmdline)
-		len += strlen(process.cmdline);
-	if (!(process.cmdline = malloc(sizeof(char) * (len + 1))))
-	{
-		perror("malloc");
-		exit(1);
-	}
-	bzero(process.cmdline, len + 1);
-	if (tmp)
-		strcat(process.cmdline, tmp);
-	strcat(process.cmdline, buf);
-	process.cmdline[len] = '\0';
-	free(tmp);
-	return (process);
-}
-
 int			get_process_group(char *pid)
 {
 	char	*autogroup;
@@ -108,9 +85,14 @@ t_process	load_target_info(t_process process, char *pid)
 	}
 	free(cmdline_file);
 	bzero(tmp_buf, 1024);
+
+	char	*tmp;
+
 	while (read(cmdline_fd, tmp_buf, 1023))
 	{
-		process = add_to_cmdline(process, tmp_buf);
+		tmp = process.cmdline;
+		process.cmdline = ft_strjoin(process.cmdline, tmp_buf);
+		free(tmp);
 		bzero(tmp_buf, strlen(tmp_buf));
 	}
 	close(cmdline_fd);
