@@ -146,7 +146,7 @@ echo $?
 exit 1\
 echo $?
 ./21sh
-exit '\
+exit \'
 echo $?
 ./21sh
 exit \\
@@ -284,7 +284,7 @@ echo $?
 exit " "
 echo $?
 ./21sh
-exit '" '"
+exit "' '"
 echo $?
 ./21sh
 exit \1 \1

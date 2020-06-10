@@ -1,0 +1,16 @@
+fifo
+get_process_info.c
+get_process_info.d
+get_process_info.o
+main.c
+main.d
+main.o
+send_input.c
+send_input.d
+send_input.o
+utils.c
+utils.d
+utils.o
+wait.c
+wait.d
+wait.o
