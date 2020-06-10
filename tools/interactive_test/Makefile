@@ -6,42 +6,27 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:03:51 by abarthel          #+#    #+#              #
-#    Updated: 2020/06/10 17:20:48 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/09 18:05:39 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
--include 42sh.mk
+-include interactive_test.mk
 
-.PHONY: all clean fclean re test interactive_test
+.PHONY: all clean fclean re
 
 all: $(NAME)
 
-$(NAME): $(PATH_LIB)libft.a $(OBJECTS)
-	@$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
+$(NAME): $(OBJECTS)
+	@$(CC) $^ -o $@
 	@printf "\n\e[38;5;44m%4s [\e[1m$(NAME) built]\n\n\e[0m"
-	@cp -n .monkeyshellrc ~/ || true
-
-$(PATH_LIB)libft.a: dep
-	@$(MAKE) lib -j -C $(PATH_LIB)
-
-dep:
 
 clean:
 	@$(RM) $(OBJECTS) $(DEPENDS)
-	@$(MAKE) clean -C $(PATH_LIB)
 
 fclean:
 	@$(RM) $(OBJECTS) $(DEPENDS) $(NAME)
-	@$(MAKE) fclean -C $(PATH_LIB)
 
 re: fclean $(NAME)
-
-test: all
-	@$(TEST)
-
-interactive_test: all
-	$(MAKE) -C tools/interactive_test/
-	cd tools/interactive_test/ && sudo ./interactive_test `pidof $(NAME)` $(FILES)
 
 -include $(DEPENDS)
 

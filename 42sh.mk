@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/06/09 19:41:19 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/10 17:19:27 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -200,8 +200,6 @@ TESTS_PATH := ./tools/
 TESTS_SCRIPT := launch_test.sh "launch from makefile"
 
 TEST := $(SH) $(TESTS_PATH)$(TESTS_SCRIPT)
-
-INTERACTIVE_TEST := cd $(TESTS_PATH) && $(CC) -pthread interactive_test.c && sudo ./a.out `pidof $(NAME)` $(FILES)
 
 LDLIBS += $(PATH_LIB)libft.a -ltermcap
 

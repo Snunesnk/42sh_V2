@@ -1,0 +1,25 @@
+echo This is a line quite simple, not too short, a bit too long
+echo short
+echo ,h egjh kjfh kjhv kjehvkje hvje rhvkje vhkjeh vjkehvjkeh vkjh ejkrvh ekjrvh ekjvhekjh vrkerjvhekrjvh erkjvh ekjrvkjerhv kjeh verjklong line
+ls
+make
+cd ../
+cd -
+cat << EOF
+ls
+echo "first echo should be printed"
+EOF
+ls
+echo "first echo should not be printed"
+./42sh
+ls
+ls
+cd 
+cd -
+ls;ls;ls;ls;ls
+exit
+ls
+exit
+ls
+make
+w
