@@ -36,7 +36,7 @@ static void	open_and_exec_file(char *file)
 	input = NULL;
 	bzero(line, 1024);
 	process = g_target_process;
-	while (fgets(line, 1024, fp) != NULL)
+	while (fgets(line, 1023, fp) != NULL)
 	{
 		i = 0;
 		dont = 0;
@@ -46,14 +46,15 @@ static void	open_and_exec_file(char *file)
 		while (!strchr(input, '\n'))
 		{
 			bzero(line, 1024);
-			fgets(line, 1023, fp);
+			if (fgets(line, 1023, fp) == NULL)
+				break ;
 			tmp = input;
 			input = ft_strjoin(input, line);
 			free(tmp);
 		}
 		while (unsupported[i])
 		{
-			if (strstr(unsupported[i], line))
+			if (strstr(input, unsupported[i]))
 			{
 				dont = 1;
 				break ;
@@ -63,12 +64,19 @@ static void	open_and_exec_file(char *file)
 		if (dont)
 		{
 			bzero(line, 1024);
+			free(input);
+			input = NULL;
 			continue ;
 		}
-		send_input(line, process);
-		usleep(INPUT_DELAY);
-		process = get_active_process(process, line);
+		send_input(input, process);
+		is_ready(process.wchan); // when process is still receiving input / processing,
+		// wchan contains 0. is_ready() is gonna loop while wchan contains 0, then return
+		// when wchan contains wait_woken or do_wait, or something else indicating that
+		// process has red input and is executing a cmd / waiting for input
+		process = get_active_process(process, input);
 		bzero(line, 1024);
+		free(input);
+		input = NULL;
 	}
 	printf("\033[37m[done]\033[0m\n");
 	fclose(fp);
@@ -132,8 +140,5 @@ int			main(int argc, char **argv)
 	// else exec all *.test in current directory
 	else
 		exec_all_tests();
-	free(g_target_process.process_input);
-	free(g_target_process.cmdline);
-	free(g_target_process.wchan);
-	close(g_target_process.fd);
+	free_process(&g_target_process);
 }
