@@ -64,7 +64,7 @@ static char	*get_new_process_pid(void)
 	return (pid);
 }
 
-static void	free_process(t_process *process)
+void		free_process(t_process *process)
 {
 	close(process->fd);
 	free(process->process_input);
@@ -75,28 +75,15 @@ static void	free_process(t_process *process)
 	process->wchan = NULL;
 }
 
-// This function "revive" the process if it was exit by "exit"
-// Maybe I'm gonna add other cases where it is acceptable for the shell to quit
-// and so revive it too.
-static void	re_launch_process(void)
-{
-	char	*pid;
-
-	send_input(g_target_process.cmdline, g_target_process);
-	send_input("\n", g_target_process);
-	usleep(INPUT_DELAY);
-	pid = get_new_process_pid();
-	free_process(&g_target_process);
-	g_target_process = load_target_info(g_target_process, pid);
-	free(pid);
-}
-
-int		is_ready(char *wchan)
+// Scan /proc/[pid]/wchan file to see if process is waiting for input or not
+int			is_ready(char *wchan)
 {
 	char	line[1024];
 	int		fd;
 	int		status;
 
+	if (!wchan)
+		return (0);
 	bzero(line, 1024);
 	if (!(fd = open(wchan, O_RDONLY)))
 	{
@@ -107,9 +94,9 @@ int		is_ready(char *wchan)
 	close(fd);
 	if (ft_strequ(line, "0"))
 	{
-		usleep(INPUT_DELAY);
+		usleep(INPUT_DELAY(wchan));
 		status = is_ready(wchan);
-		usleep(INPUT_DELAY);
+		usleep(CHAR_DELAY);
 		return (status);
 	}
 	if (ft_strequ(line, "wait_woken"))
@@ -117,7 +104,8 @@ int		is_ready(char *wchan)
 	return (0);
 }
 
-static void	wait_for_process(t_process process)
+// Wait until process is ready, or timeout if it is not ready before TIMEOUT seconds
+void		wait_for_process(t_process process)
 {
 	int		nb_tried;
 	char	stop[2];
@@ -158,6 +146,26 @@ static void	wait_for_process(t_process process)
 			exit(1);
 		}
 	}
+	usleep(INPUT_DELAY("tempo"));
+	if (!is_ready(process.wchan))
+		wait_for_process(process);
+}
+
+// This function "revive" the process if it was exit by "exit"
+// Maybe I'm gonna add other cases where it is acceptable for the shell to quit
+// and so revive it too.
+static void	re_launch_process(void)
+{
+	char	*pid;
+
+	send_input(g_target_process.cmdline, g_target_process);
+	send_input("\n", g_target_process);
+	usleep(INPUT_DELAY("tempo"));
+	pid = get_new_process_pid();
+	free_process(&g_target_process);
+	g_target_process = load_target_info(g_target_process, pid);
+	wait_for_process(g_target_process);
+	free(pid);
 }
 
 t_process	find_active_process(void)
@@ -211,11 +219,12 @@ t_process	get_active_process(t_process process, char *cmd)
 		re_launch_process();
 		return (g_target_process);
 	}
-	else if (is_ready(g_target_process.wchan))
-		return (g_target_process);
 	else if (is_ready(process.wchan))
+	{
+		wait_for_process(process);
 		return (process);
-	else if (process_stopped(process))
+	}
+	else if (process_stopped(process) && process.pid != g_target_process.pid)
 		free_process(&process);
 	return (find_active_process());
 }

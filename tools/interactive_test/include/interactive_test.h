@@ -48,3 +48,5 @@ char		*ft_strjoin(char *s1, char *s2);
 char		*get_filename(char *path);
 t_process	get_active_process(t_process process, char *cmd);
 int			get_process_group(char *pid);
+void		free_process(t_process *process);
+int			is_ready(char *wchan);

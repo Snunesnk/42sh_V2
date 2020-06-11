@@ -46,6 +46,7 @@ t_process	load_target_info(t_process process, char *pid)
 	int			cmdline_fd;
 	char		tmp_buf[1024];
 
+	process.cmdline = NULL;
 	if (!(process.process_input = (char *)malloc(sizeof(char) * (strlen("/proc//fd/0") \
 						+ strlen(pid) + 1))))
 	{
