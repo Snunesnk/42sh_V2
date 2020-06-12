@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:14:15 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 15:37:11 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/12 18:51:07 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void			display_sigmsg(int sig)
 		ft_dprintf(STDERR_FILENO, "Aborted\n");
 	else if (sig == SIGFPE)
 		ft_dprintf(STDERR_FILENO, "Floating point exception\n");
+	else if (sig == SIGSEGV)
+		ft_dprintf(STDERR_FILENO, "Segmentation fault\n");
 	else if (sig == SIGKILL)
 		ft_dprintf(STDERR_FILENO, "Killed\n");
 	else if (sig == SIGBUS)
