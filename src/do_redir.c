@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 16:40:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/12 16:23:12 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	do_iowrite(t_redirection *r, t_redirection *b)
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
-		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+		return (psherror(e_redir_no_file, r->redirectee.filename, e_cmd_type));
 	if (valid_fd(r->redirector.filename, r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
@@ -93,7 +93,7 @@ int	do_iocat(t_redirection *r, t_redirection *b)
 		r->redirectee.dest = open(r->redirectee.filename,
 				O_APPEND | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
-		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+		return (psherror(e_redir_no_file, r->redirectee.filename, e_cmd_type));
 	if (valid_fd(r->redirector.filename, r->redirector.dest, 0))
 	{
 		close(r->redirectee.dest);
@@ -122,7 +122,7 @@ int	do_ioread(t_redirection *r, t_redirection *b)
 		return (psherror(e_redir_denied, r->redirector.filename, e_cmd_type));
 	r->redirector.dest = open(r->redirector.filename, O_RDWR);
 	if (r->redirector.dest < 0)
-		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+		return (psherror(e_redir_no_file, r->redirector.filename, e_cmd_type));
 	if (r->flags & NOFORK)
 		r->save[0] = dupit(r->redirectee.dest, b);
 	if (r->redirectee.dest == r->redirector.dest)
