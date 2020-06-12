@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 15:30:53 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/25 16:42:41 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/12 16:25:55 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	do_iodfile(t_redirection *r, t_redirection *b)
 		r->redirectee.dest = open(r->redirectee.filename,
 	O_TRUNC | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (r->redirectee.dest < 0)
-		return (psherror(e_system_call_error, "open(2)", e_cmd_type));
+		return (psherror(e_redir_no_file, r->redirectee.filename, e_cmd_type));
 	r->save[0] = r->flags & NOFORK ? dupit(STDOUT_FILENO, b) : r->save[0];
 	if (r->flags & NOFORK)
 		r->save[1] = dupit(STDERR_FILENO, b);
