@@ -37,6 +37,7 @@ typedef struct	s_process
 }				t_process;
 
 extern t_process	g_target_process;
+extern t_process	g_base_process;
 
 void		send_input(char *input, t_process process);
 int			ft_strequ(char *s1, char *s2);

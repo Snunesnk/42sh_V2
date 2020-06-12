@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/29 17:30:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 15:22:39 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/12 15:14:51 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	return_next_opt(char ***args, int *x, const char *options_list)
 	}
 	if ((tmp = ft_strchr(options_list, (**args)[*x])))
 	{
-		if (*(tmp + 1) == ':')
+		if (*tmp && *(tmp + 1) == ':')
 			return (deal_with_spe_opt(args, x));
 		return ((**args)[*x]);
 	}
