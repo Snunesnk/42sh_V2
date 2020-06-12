@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:21:56 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/10 13:19:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/12 16:23:28 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,8 @@ union u_buffer	read_key(void)
 	int				status;
 
 	buffer_u.value = 0;
-	while ((status = read(STDIN_FILENO, buffer_u.buf, sizeof(char))) \
-			< 0)
-		continue ;
-	if (buffer_u.value != '\033')
-		return (buffer_u);
-	while ((status = read(STDIN_FILENO, buffer_u.buf + sizeof(char), \
-					sizeof(buffer_u.buf) - sizeof(char))) < 0)
+	while ((status = read(STDIN_FILENO, buffer_u.buf, \
+					sizeof(buffer_u.buf)) < 0))
 		continue ;
 	return (buffer_u);
 }
