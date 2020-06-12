@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:36:48 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/09 23:46:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/12 22:47:05 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void			autocomplete(void)
 	if (ft_strchr(to_complete, '/') && !test_cmd("cd ", 3)\
 			&& !test_cmd("unset ", 6) && !test_cmd("export ", 7))
 		file_complete(to_complete);
-	else if (g_line.len == 0 || ft_str_isspace(g_line.line) || start <= 0)
+	else if ((g_line.len == 0 || ft_str_isspace(g_line.line)))
 		command_complete("");
 	else if (test_cmd("cd ", 3))
 		cd_complete(to_complete);
