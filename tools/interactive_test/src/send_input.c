@@ -2,8 +2,14 @@
 
 int			process_stopped(t_process process)
 {
-	if (kill(process.pid, 0) < 0 || access(process.process_input, F_OK))
+	if (is_ready(process.wchan) < 0)
 		return (1);
+	if (kill(process.pid, 0) < 0 || access(process.process_input, F_OK))
+	{
+		printf("n'a pas suffit\n");
+		sleep(10);
+		return (1);
+	}
 	return (0);
 }
 
@@ -16,14 +22,16 @@ void		send_input(char *input, t_process process)
 	i = 0;
 	while (input[i])
 	{
-		// Wait between each sent char, otherwise process's read will return more than
+		// Wait for the process to be ready between each sent char, otherwise process's read will return more than
 		// one char, causing the input to not behave properly.
-		usleep(CHAR_DELAY);
+		is_ready(process.wchan);
 		if (ioctl(process.fd, TIOCSTI, &(input[i])) < 0)
 		{
 			perror("ioctl");
 			exit(1);
 		}
 		i++;
+		printf("input: %s\n", input);
+		usleep(CHAR_DELAY);
 	}
 }

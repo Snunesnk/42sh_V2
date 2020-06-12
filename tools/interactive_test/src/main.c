@@ -9,6 +9,15 @@ t_process g_target_process = {
 	.wchan = NULL
 };
 
+t_process g_base_process = {
+	.pid = 0,
+	.fd = -1,
+	.group = 0,
+	.process_input = NULL,
+	.cmdline = NULL,
+	.wchan = NULL
+};
+
 static void	open_and_exec_file(char *file)
 {
 	FILE		*fp;
@@ -68,6 +77,7 @@ static void	open_and_exec_file(char *file)
 			input = NULL;
 			continue ;
 		}
+		is_ready(process.wchan); // when process is still receiving input / processing,
 		send_input(input, process);
 		is_ready(process.wchan); // when process is still receiving input / processing,
 		// wchan contains 0. is_ready() is gonna loop while wchan contains 0, then return
@@ -102,6 +112,32 @@ static void	exec_all_tests(void)
 	closedir(dirp);
 }
 
+char	*get_base_proc_pid(void)
+{
+	DIR				*dirp;
+	struct dirent	*file;
+	char			line[1024];
+
+	bzero(line, 1024);
+	if (!(dirp = opendir("/proc")))
+	{
+		perror("opendir failed in get_base_proc_pid");
+		exit(1);
+	}
+	while ((file = readdir(dirp)))
+	{
+		if (file->d_name[0] == '.' || !is_str_digit(file->d_name))
+			continue ;
+		bzero(line, 1024);
+		if (g_target_process.group != get_process_group(file->d_name))
+			continue ;
+		break ;
+	}
+	strcpy(line, file->d_name);
+	closedir(dirp);
+	return (strdup(line));
+}
+
 int			main(int argc, char **argv)
 {
 	// Some basic verifications
@@ -115,14 +151,21 @@ int			main(int argc, char **argv)
 
 	if (ft_strequ(argv[2], "-h"))
 	{
-		printf("interactive_test send each line of your test files to your interactive"\
+		printf("\ninteractive_test send each line of your test files to your interactive"\
 				" program.\nTo use it, just run an instance of your program in another terminal, and run 'make interactive_test [FILES=\"file1 file2 ...\"]'.\n"\
-				"Each 'file' should be placed in the same directory as interactive_test.c."\
-				" If several instance of your program are runnning, Interactive_test is gonna test one of the running instance, but you cannot know wich one." \
-				" Having only running instance is advised.\n");
+				"Each 'file' should be placed in the same directory as interactive_test.c.\n"\
+				"If several instance of your program are runnning, Interactive_test is gonna test one of the running instance, but you cannot know wich one." \
+				" Having only one running instance is advised.\n");
+		printf("You can change time between each char sent, time before stopping a process and time between each line sent in include/define.h\n");
+		return (0);
 	}
 
 	g_target_process = load_target_info(g_target_process, argv[1]);
+
+	char	*b_pid;
+	b_pid = get_base_proc_pid();
+	g_base_process = load_target_info(g_base_process, b_pid);
+	free(b_pid);
 
 	int				i = 2;
 
@@ -141,4 +184,5 @@ int			main(int argc, char **argv)
 	else
 		exec_all_tests();
 	free_process(&g_target_process);
+	free_process(&g_base_process);
 }

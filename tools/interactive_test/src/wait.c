@@ -6,6 +6,8 @@ static int	is_same_process(char *cmdline)
 	int		status;
 
 	status = 0;
+	if (access(cmdline, F_OK))
+		return (0);
 	if (!(fp = fopen(cmdline, "r")))
 	{
 		perror("open in is_same_process");
@@ -57,7 +59,7 @@ static char	*get_new_process_pid(void)
 		pid = strdup(file->d_name);
 	else
 	{
-		printf("no proc found\n");
+		printf("no process found\n");
 		exit (1);
 	}
 	closedir(dirp);
@@ -80,7 +82,6 @@ int			is_ready(char *wchan)
 {
 	char	line[1024];
 	int		fd;
-	int		status;
 
 	if (!wchan)
 		return (0);
@@ -92,15 +93,23 @@ int			is_ready(char *wchan)
 	}
 	read(fd, line, 1023);
 	close(fd);
-	if (ft_strequ(line, "0"))
+	printf("line: %s\n", line);
+	while (ft_strequ(line, "0") || ft_strequ(line, "pipe_wait"))
 	{
-		usleep(INPUT_DELAY(wchan));
-		status = is_ready(wchan);
-		usleep(CHAR_DELAY);
-		return (status);
+		usleep(CHAR_DELAY * 10);
+		bzero(line, 1024);
+		if (!(fd = open(wchan, O_RDONLY)))
+		{
+			perror("open in is_ready");
+			exit(1);
+		}
+		read(fd, line, 1023);
+		close(fd);
 	}
 	if (ft_strequ(line, "wait_woken"))
 		return (1);
+	if (ft_strequ(line, "ptrace_stop"))
+		return (-1);
 	return (0);
 }
 
@@ -146,9 +155,11 @@ void		wait_for_process(t_process process)
 			exit(1);
 		}
 	}
-	usleep(INPUT_DELAY("tempo"));
 	if (!is_ready(process.wchan))
+	{
+		sleep(1);
 		wait_for_process(process);
+	}
 }
 
 // This function "revive" the process if it was exit by "exit"
@@ -158,9 +169,12 @@ static void	re_launch_process(void)
 {
 	char	*pid;
 
-	send_input(g_target_process.cmdline, g_target_process);
-	send_input("\n", g_target_process);
-	usleep(INPUT_DELAY("tempo"));
+	send_input(g_target_process.cmdline, g_base_process);
+	send_input("\n", g_base_process);
+	while (is_ready(g_target_process.wchan));
+	is_ready(g_base_process.wchan);
+	usleep(CHAR_DELAY);
+	is_ready(g_base_process.wchan);
 	pid = get_new_process_pid();
 	free_process(&g_target_process);
 	g_target_process = load_target_info(g_target_process, pid);
@@ -191,7 +205,7 @@ t_process	find_active_process(void)
 		if (g_target_process.group != get_process_group(file->d_name))
 			continue ;
 		sprintf(line, "/proc/%s/wchan", file->d_name);
-		if (is_ready(line))
+		if (is_ready(line) > 0)
 		{
 			new_process = 1;
 			process = load_target_info(process, file->d_name);
@@ -209,6 +223,7 @@ t_process	find_active_process(void)
 
 t_process	get_active_process(t_process process, char *cmd)
 {
+	is_ready(process.wchan);
 	if (process_stopped(g_target_process) && !strstr(cmd, "exit"))
 	{
 		dprintf(2, "process was killed\n");
@@ -219,12 +234,12 @@ t_process	get_active_process(t_process process, char *cmd)
 		re_launch_process();
 		return (g_target_process);
 	}
-	else if (is_ready(process.wchan))
+	else if (is_ready(process.wchan) > 0)
 	{
 		wait_for_process(process);
 		return (process);
 	}
-	else if (process_stopped(process) && process.pid != g_target_process.pid)
+	else if (process_stopped(process))
 		free_process(&process);
 	return (find_active_process());
 }

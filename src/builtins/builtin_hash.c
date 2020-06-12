@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 22:06:23 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/15 20:17:28 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/12 15:13:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	get_next_opt(char ***args, const char *options_list)
 	if ((**args)[0] == '-' && !(**args)[1])
 	{
 		x = 0;
-		return (-1);
+		return ((**args)[0]);
 	}
 	if (!(**args)[x] && (**args)[0] == '-')
 	{
