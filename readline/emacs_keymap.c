@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/28 14:38:54 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/22 13:36:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/14 16:09:00 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ struct s_keymap_entry g_emacs_ctlx_keymap[] =
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_void },
-	{ ISFUNC, rl_void },
+	{ ISFUNC, highlight },
 	{ ISFUNC, rl_void },
 	{ ISFUNC, rl_delete },
 	{ ISFUNC, rl_void },

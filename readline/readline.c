@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:22:31 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/27 10:12:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/14 15:56:32 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	readline_internal_test_cvalue(union u_buffer c)
 	{
 		if (mvctrlkey(c))
 			c.buf[2] = c.buf[5] + 20;
-		(g_ctlx_keymap[(int)c.buf[2]].func)();
+		(g_ctlx_keymap[(int)c.buf[2]].func)(c);
 	}
 	else if (ismetachar(c))
 		(g_meta_keymap[(int)c.buf[1]].func)();

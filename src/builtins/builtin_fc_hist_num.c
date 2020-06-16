@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 16:45:00 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/16 12:13:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void		get_hist_num(char **args, int *opt_list, int *hist_end, \
 	else
 		*hist_beg = get_alpha_value(*args);
 	args += 1;
+	if (!hist_end)
+		return ;
 	if (!*args)
 	{
 		*hist_end = (*opt_list & FC_L_OPTION) ? g_hist.total_lines \

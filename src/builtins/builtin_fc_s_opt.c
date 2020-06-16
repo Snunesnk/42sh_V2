@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 19:46:33 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/16 12:59:55 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,14 @@ t_sub	*fill_sub(t_sub *sub_list, char *pat, char *rep)
 	return (sub_list);
 }
 
-char	*fc_do_substitute(char *str, t_sub *sub_list)
+char	*fc_do_substitute(int nb_cmd, t_sub *sub_list)
 {
 	char	*new_cmd;
+	char	*str;
 
+	while (nb_cmd < g_hist.nb_line && g_hist.nb_line > 1)
+		prev_hist();
+	str = g_hist.history_content + g_hist.offset + 1;
 	if (!(new_cmd = ft_strdup(str)))
 	{
 		pbierror("cannot allocate memory");
@@ -86,22 +90,23 @@ int		exec_fc_s_opt(char **args)
 {
 	char	*tmp;
 	t_sub	*sub_list;
+	int		nb_cmd;
 
+	nb_cmd = -1;
+	sub_list = NULL;
 	if (!(sub_list = init_sub(NULL)))
 		return (e_cannot_allocate_memory);
 	tmp = prev_hist();
 	if (get_subs(&sub_list, &args) == e_cannot_allocate_memory)
 		return (e_cannot_allocate_memory);
-	if (*args && !(get_beg_matching_hist(&tmp, *args)))
+	get_hist_num(args, NULL, NULL, &nb_cmd);
+	if (nb_cmd == -1)
 	{
 		pbierror("no command found");
-		if (sub_list->pat)
-			free_substitute(sub_list);
-		while (g_hist.nb_line <= g_hist.total_lines)
-			next_hist();
+		free_substitute(sub_list);
 		return (e_command_not_found);
 	}
-	if (!(tmp = fc_do_substitute(tmp, sub_list)))
+	if (!(tmp = fc_do_substitute(nb_cmd, sub_list)))
 		return (e_cannot_allocate_memory);
 	free_substitute(sub_list);
 	ft_dprintf(STDERR_FILENO, "%s\n", tmp);
