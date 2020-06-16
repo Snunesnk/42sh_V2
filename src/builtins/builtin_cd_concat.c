@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/10 18:14:34 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/12 16:58:04 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/16 16:52:09 by abarthel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*concatenate_pwd(const char *directory)
 
 	allocated = 0;
 	pwd = get_shell_var("PWD", g_env);
-	if (!pwd || !pwd[0])
+	if (!pwd || !pwd[0] || access(pwd, F_OK))
 	{
 		pwd = getcwd(NULL, 0);
 		allocated = 1;
