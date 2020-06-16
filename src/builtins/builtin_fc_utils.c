@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/05 20:38:37 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/16 12:50:19 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,16 @@ char	*ft_strreplace(char **str, char *pattern, char *replacement)
 	found = 0;
 	pat_len = (int)ft_strlen(pattern);
 	rep_len = (int)ft_strlen(replacement);
-	while ((tmp = ft_strstr(tmp, pattern)))
+	while (pat_len && (tmp = ft_strstr(tmp, pattern)))
 	{
 		found++;
-		tmp += pat_len;
+		tmp += (pat_len == 0) ? 1 : pat_len;
 	}
 	if (pat_len < rep_len && !(*str = ft_memrealloc((void **)str, \
 		ft_strlen(*str), ft_strlen(*str) + ((rep_len - pat_len) * found) + 1)))
 		return (NULL);
 	tmp = *str;
-	while ((tmp = ft_strstr(tmp, pattern)))
+	while ((tmp = ft_strstr(tmp, pattern)) || (!pat_len && *(tmp++)))
 	{
 		ft_memmove(tmp + rep_len, tmp + pat_len, ft_strlen(tmp) - pat_len + 1);
 		ft_memmove(tmp, replacement, rep_len);

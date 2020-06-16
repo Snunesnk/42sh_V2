@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 17:20:25 by abarthel          #+#    #+#             */
-/*   Updated: 2020/05/26 10:22:02 by abarthel         ###   ########.fr       */
+/*   Updated: 2020/06/14 16:08:06 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,6 @@ void			del_from_to(int start, int end, int save_mode);
 void			arrow_yank(union u_buffer c);
 void			update_clipboard(int ret, int c);
 void			inside_undo(void);
+void			highlight(union u_buffer c);
 
 #endif

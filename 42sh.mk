@@ -6,7 +6,7 @@
 #    By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/06/25 14:45:47 by abarthel          #+#    #+#              #
-#    Updated: 2020/06/10 17:19:27 by snunes           ###   ########.fr        #
+#    Updated: 2020/06/14 16:08:35 by snunes           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -183,7 +183,8 @@ SOURCES :=	main.c \
 		../readline/tty.c \
 		../readline/utils.c \
 		../readline/utils_suite2.c \
-		../readline/utils_suite.c
+		../readline/utils_suite.c \
+		../readline/highlight.c
 
 OBJECTS := $(patsubst %.c,%.o,$(addprefix $(SOURCES_PATH), $(SOURCES)))
 
