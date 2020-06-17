@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 13:40:00 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/02 12:09:06 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/16 14:25:04 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	insert_compl(t_node *compl_tree, t_data *data, long int c)
 {
 	char		*compl;
 	size_t		len;
-	static char	operator[] = "&|<>;";
+	static char	operator[] = "&|<>;=";
 
 	while (compl_tree && data->chosen_exec != compl_tree->nb_node)
 	{
