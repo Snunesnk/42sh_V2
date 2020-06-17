@@ -6,7 +6,7 @@
 /*   By: snunes <snunes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/09 22:28:07 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/04 16:38:29 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/16 14:25:35 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define DOLLAR	1
 # define BRACE	2
 
-# define OPERATOR "&|;"
+# define OPERATOR "&|;="
 
 typedef struct	s_print_list
 {
