@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 21:33:44 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/16 12:59:55 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/18 15:21:08 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_sub	*fill_sub(t_sub *sub_list, char *pat, char *rep)
 
 char	*fc_do_substitute(int nb_cmd, t_sub *sub_list)
 {
+	char	*tmp;
 	char	*new_cmd;
 	char	*str;
 
@@ -56,11 +57,13 @@ char	*fc_do_substitute(int nb_cmd, t_sub *sub_list)
 	}
 	while (sub_list && sub_list->pat && sub_list->rep)
 	{
-		if (!(new_cmd = ft_strreplace(&new_cmd, sub_list->pat, sub_list->rep)))
+		tmp = new_cmd;
+		if (!(new_cmd = ft_strreplace(new_cmd, sub_list->pat, sub_list->rep)))
 		{
 			pbierror("cannot allocate memory");
 			return (NULL);
 		}
+		free(tmp);
 		sub_list = sub_list->next;
 	}
 	return (new_cmd);
@@ -92,11 +95,10 @@ int		exec_fc_s_opt(char **args)
 	t_sub	*sub_list;
 	int		nb_cmd;
 
-	nb_cmd = -1;
+	nb_cmd = g_hist.total_lines;
 	sub_list = NULL;
 	if (!(sub_list = init_sub(NULL)))
 		return (e_cannot_allocate_memory);
-	tmp = prev_hist();
 	if (get_subs(&sub_list, &args) == e_cannot_allocate_memory)
 		return (e_cannot_allocate_memory);
 	get_hist_num(args, NULL, NULL, &nb_cmd);

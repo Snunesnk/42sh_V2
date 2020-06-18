@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/10 19:41:25 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/16 12:13:35 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/17 18:00:50 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void		swap_entries(int *hist_end, int *hist_beg)
 void		get_hist_num(char **args, int *opt_list, int *hist_end, \
 		int *hist_beg)
 {
+	if (!args || !*args)
+		return ;
 	if (ft_str_is_numeric(*args) || (**args == '-' \
 				&& ft_str_is_numeric(*args + 1)))
 		*hist_beg = get_numeric_value(*args);
