@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 17:22:01 by snunes            #+#    #+#             */
-/*   Updated: 2020/06/16 12:50:19 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/18 14:57:40 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,30 @@ void	free_substitute(t_sub *substitute)
 	}
 }
 
-char	*ft_strreplace(char **str, char *pattern, char *replacement)
+char	*ft_strreplace(char *str, char *pattern, char *replacement)
 {
-	char	*tmp;
-	int		found;
+	char	*new_str;
 	int		pat_len;
-	int		rep_len;
 
-	tmp = *str;
-	found = 0;
 	pat_len = (int)ft_strlen(pattern);
-	rep_len = (int)ft_strlen(replacement);
-	while (pat_len && (tmp = ft_strstr(tmp, pattern)))
-	{
-		found++;
-		tmp += (pat_len == 0) ? 1 : pat_len;
-	}
-	if (pat_len < rep_len && !(*str = ft_memrealloc((void **)str, \
-		ft_strlen(*str), ft_strlen(*str) + ((rep_len - pat_len) * found) + 1)))
+	if (!(new_str = (char *)ft_memalloc(sizeof(char) * (ft_strlen(str) * \
+						(ft_strlen(replacement) + 1) + 1))))
 		return (NULL);
-	tmp = *str;
-	while ((tmp = ft_strstr(tmp, pattern)) || (!pat_len && *(tmp++)))
+	while (*str)
 	{
-		ft_memmove(tmp + rep_len, tmp + pat_len, ft_strlen(tmp) - pat_len + 1);
-		ft_memmove(tmp, replacement, rep_len);
-		tmp += rep_len;
+		if ((pat_len && ft_strnequ(str, pattern, pat_len)) \
+				|| (!pat_len && *replacement))
+		{
+			new_str = ft_strcat(new_str, replacement);
+			str += (pat_len == 0) ? 1 : pat_len;
+		}
+		else
+		{
+			ft_strncat(new_str, str, 1);
+			str++;
+		}
 	}
-	return (*str);
+	return (new_str);
 }
 
 int		fc_invalid_input(char *args, char opt)

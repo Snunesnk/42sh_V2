@@ -6,7 +6,7 @@
 /*   By: abarthel <abarthel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/20 18:33:04 by abarthel          #+#    #+#             */
-/*   Updated: 2020/06/09 11:40:58 by yforeau          ###   ########.fr       */
+/*   Updated: 2020/06/18 14:07:52 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ typedef struct	s_sub
 ** Fc functions
 */
 int				exec_fc_other_opt(int opt_list, char **args);
-char			*ft_strreplace(char **str, char *pattern, char *replacement);
+char			*ft_strreplace(char *str, char *pattern, char *replacement);
 void			free_substitute(t_sub *substitute);
 void			get_hist_num(char **args, int *opt_list, int *hist_end, \
 		int *hist_beg);
