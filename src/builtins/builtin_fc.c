@@ -6,7 +6,7 @@
 /*   By: snunes <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:52:16 by snunes            #+#    #+#             */
-/*   Updated: 2020/05/25 16:40:46 by snunes           ###   ########.fr       */
+/*   Updated: 2020/06/18 15:43:29 by snunes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	parse_fc_option(char ***args)
 	int	opt_list;
 
 	opt_list = 0;
-	while ((opt = get_next_opt(args, "e:lnrs")) != -1)
+	while ((opt = get_next_opt(args, "e:lnrs")) != -1 && !ft_isdigit(opt))
 	{
 		if (opt == 'n')
 			opt_list |= FC_N_OPTION;
