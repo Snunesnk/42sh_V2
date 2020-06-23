@@ -1,0 +1,31 @@
+arr=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+y=asfasfasdfdsa
+y[s]=asfd
+y[@]=safd
+arr[1]=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+araDSr[10]=([2]=asdfsdf [4]=asfsafdasf [5]=safasdfasdf)
+ok[9223372036854775810]=qwerqewrq
+ok[0]=weq
+ok[9223372036854775810]=aaaaa
+ok[9223372036854775811]=bbbbb
+ok[9223372036854775807]=ccccc
+hello=lllllllllllllllllllllllllllllllllllllll
+hello[343]=pppppppppppppppppp
+hello[W]=asdf
+ok=ploop
+KKO[42]=qwerty
+second=sdfasdfploop
+THIRD=dsfploop
+THIRD[6]=dsfploop
+arr=(dsfploop (sdgf), sdfg )
+ARRAYO=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )
+ARRAYO[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )
+okk=ploop
+KKOO[42]=qwerty
+wer=sdfasdfploop
+THIRDd=dsfploop
+THIRDd[6]=dsfploop
+Arr=(dsfploop (sdgf), sdfg )
+ARryo=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )
+ARryo[42]=([2]=dsfploopi [66]=(sdgf), [547456734]=sdfg )
+exit

@@ -1,0 +1,28 @@
+first_var=42
+set | grep first_var
+multivar1=1 multivar2=2 multivar3=3
+echo $multivar1$multivar2$multivar3
+unset multivar2
+echo $multivar1$multivar2$multivar3
+export notinitialized
+export | grep notinitialized
+set | grep notinitialized
+notinitialized="hello I am very well initialized now !!!"
+echo $notinitialized
+export | grep notinitialized
+set | grep notinitialized
+echo $HOME
+HOME=/tmp cd | echo $PWD
+echo $PWD
+HOME=lol newenvar=olilol TERM=wut env | grep -e HOME -e newenvar -e TERM
+export -n HOME
+notexported=42
+set | grep notexported
+export | grep notexported
+export notexported
+set | grep notexported
+export | grep notexported
+unset HOME
+HOME=/tmp
+echo $HOME
+exit

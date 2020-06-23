@@ -12,7 +12,7 @@ This project follows [21sh](https://github.com/Ant0wan/21sh) and aims at getting
 
 ## Demo
 
-[![asciicast](https://asciinema.org/a/pwgqLz2bphIzeWLxUZmDp6TyJ.svg)](https://asciinema.org/a/pwgqLz2bphIzeWLxUZmDp6TyJ)
+[![demo](/tools/demo.gif)](/tools/demo.gif)
 
 
 
