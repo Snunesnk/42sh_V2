@@ -5,6 +5,17 @@ An implementation of a small **shell** [a 42 project].
 
 This project follows [21sh](https://github.com/Ant0wan/21sh) and aims at getting a better grasp of the parsing theories, job control and general programming in Unix environment.
 
+
+
+
+---
+
+## Demo
+
+[![asciicast](https://asciinema.org/a/pwgqLz2bphIzeWLxUZmDp6TyJ.svg)](https://asciinema.org/a/pwgqLz2bphIzeWLxUZmDp6TyJ)
+
+
+
 ---
 
 #### Debugging
