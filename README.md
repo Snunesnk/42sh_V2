@@ -7,6 +7,13 @@ This project follows [21sh](https://github.com/Ant0wan/21sh) and aims at getting
 
 ---
 
+## Demo
+
+[![demo](/tools/demo.gif)](/tools/demo.gif)
+
+
+---
+
 #### Debugging
 
 Detect leaks and runtime errors:
